@@ -1,0 +1,718 @@
+{
+  "empty_reason": null,
+  "extractor": {
+    "name": "sql-migrations",
+    "version": "1.0.0"
+  },
+  "facts": [
+    {
+      "default_kind": null,
+      "id": "column:customer.code",
+      "kind": "column",
+      "name": "code",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:customer",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:customer.display_name",
+      "kind": "column",
+      "name": "display_name",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:customer",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:customer.email",
+      "kind": "column",
+      "name": "email",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:customer",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:customer.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:customer",
+      "type": "serial"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:order_events.created_at",
+      "kind": "column",
+      "name": "created_at",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_events",
+      "type": "timestamp"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_events.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_events",
+      "type": "bigserial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_events.order_id",
+      "kind": "column",
+      "name": "order_id",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_events",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_events.status",
+      "kind": "column",
+      "name": "status",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_events",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_item.order_id",
+      "kind": "column",
+      "name": "order_id",
+      "nullable": false,
+      "source": {
+        "line": 12,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_item",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_item.product_id",
+      "kind": "column",
+      "name": "product_id",
+      "nullable": false,
+      "source": {
+        "line": 12,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_item",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_item.quantity",
+      "kind": "column",
+      "name": "quantity",
+      "nullable": false,
+      "source": {
+        "line": 12,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_item",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_item.unit_price_cents",
+      "kind": "column",
+      "name": "unit_price_cents",
+      "nullable": false,
+      "source": {
+        "line": 12,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_item",
+      "type": "integer"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:order_status_history.changed_at",
+      "kind": "column",
+      "name": "changed_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_status_history",
+      "type": "timestamp"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_status_history.from_status",
+      "kind": "column",
+      "name": "from_status",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_status_history",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_status_history.order_id",
+      "kind": "column",
+      "name": "order_id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_status_history",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:order_status_history.to_status",
+      "kind": "column",
+      "name": "to_status",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_status_history",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:orders.archived_at",
+      "kind": "column",
+      "name": "archived_at",
+      "nullable": true,
+      "source": {
+        "line": 4,
+        "path": "db/migrations/003_orders_created_at.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders",
+      "type": "timestamp"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:orders.created_at",
+      "kind": "column",
+      "name": "created_at",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/003_orders_created_at.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders",
+      "type": "timestamp"
+    },
+    {
+      "default_kind": null,
+      "id": "column:orders.customer_id",
+      "kind": "column",
+      "name": "customer_id",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:orders.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:orders.status",
+      "kind": "column",
+      "name": "status",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:orders.total_cents",
+      "kind": "column",
+      "name": "total_cents",
+      "nullable": false,
+      "source": {
+        "line": 3,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:product.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 9,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:product",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:product.name",
+      "kind": "column",
+      "name": "name",
+      "nullable": false,
+      "source": {
+        "line": 9,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:product",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:product.price_cents",
+      "kind": "column",
+      "name": "price_cents",
+      "nullable": false,
+      "source": {
+        "line": 9,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:product",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:product.sku",
+      "kind": "column",
+      "name": "sku",
+      "nullable": false,
+      "source": {
+        "line": 9,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:product",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:shipment.carrier_code",
+      "kind": "column",
+      "name": "carrier_code",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/006_create_shipment.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:shipment",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:shipment.order_id",
+      "kind": "column",
+      "name": "order_id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/006_create_shipment.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:shipment",
+      "type": "integer"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:shipment.shipped_at",
+      "kind": "column",
+      "name": "shipped_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/006_create_shipment.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:shipment",
+      "type": "timestamp"
+    },
+    {
+      "columns": [
+        "created_at"
+      ],
+      "id": "index:order_events_created_at_idx",
+      "kind": "index",
+      "name": "order_events_created_at_idx",
+      "source": {
+        "line": 10,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_events"
+    },
+    {
+      "columns": [
+        "order_id"
+      ],
+      "id": "index:order_status_history_order_id_idx",
+      "kind": "index",
+      "name": "order_status_history_order_id_idx",
+      "source": {
+        "line": 9,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:order_status_history"
+    },
+    {
+      "columns": [
+        "created_at"
+      ],
+      "id": "index:orders_created_at_idx",
+      "kind": "index",
+      "name": "orders_created_at_idx",
+      "source": {
+        "line": 6,
+        "path": "db/migrations/003_orders_created_at.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders"
+    },
+    {
+      "columns": [
+        "customer_id"
+      ],
+      "id": "index:orders_customer_id_idx",
+      "kind": "index",
+      "name": "orders_customer_id_idx",
+      "source": {
+        "line": 10,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:orders"
+    },
+    {
+      "id": "migration:001_create_customer_and_product",
+      "kind": "migration",
+      "name": "001_create_customer_and_product",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:002_create_orders",
+      "kind": "migration",
+      "name": "002_create_orders",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:003_orders_created_at",
+      "kind": "migration",
+      "name": "003_orders_created_at",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/003_orders_created_at.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:004_add_order_events",
+      "kind": "migration",
+      "name": "004_add_order_events",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:005_order_status_history",
+      "kind": "migration",
+      "name": "005_order_status_history",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:006_create_shipment",
+      "kind": "migration",
+      "name": "006_create_shipment",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/006_create_shipment.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:customer.id",
+        "column:customer.code",
+        "column:customer.display_name",
+        "column:customer.email"
+      ],
+      "foreign_keys": [],
+      "id": "table:customer",
+      "kind": "table",
+      "name": "customer",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 2,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:order_events.id",
+        "column:order_events.order_id",
+        "column:order_events.status",
+        "column:order_events.created_at"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "references": "table:orders"
+        }
+      ],
+      "id": "table:order_events",
+      "kind": "table",
+      "name": "order_events",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 3,
+        "path": "db/migrations/004_add_order_events.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:order_item.order_id",
+        "column:order_item.product_id",
+        "column:order_item.quantity",
+        "column:order_item.unit_price_cents"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "references": "table:orders"
+        },
+        {
+          "columns": [
+            "product_id"
+          ],
+          "references": "table:product"
+        }
+      ],
+      "id": "table:order_item",
+      "kind": "table",
+      "name": "order_item",
+      "primary_key": [
+        "order_id",
+        "product_id"
+      ],
+      "source": {
+        "line": 12,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:order_status_history.order_id",
+        "column:order_status_history.from_status",
+        "column:order_status_history.to_status",
+        "column:order_status_history.changed_at"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "references": "table:orders"
+        }
+      ],
+      "id": "table:order_status_history",
+      "kind": "table",
+      "name": "order_status_history",
+      "primary_key": [],
+      "source": {
+        "line": 2,
+        "path": "db/migrations/005_order_status_history.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:orders.id",
+        "column:orders.customer_id",
+        "column:orders.status",
+        "column:orders.total_cents",
+        "column:orders.created_at",
+        "column:orders.archived_at"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "customer_id"
+          ],
+          "references": "table:customer"
+        }
+      ],
+      "id": "table:orders",
+      "kind": "table",
+      "name": "orders",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 3,
+        "path": "db/migrations/002_create_orders.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:product.id",
+        "column:product.sku",
+        "column:product.name",
+        "column:product.price_cents"
+      ],
+      "foreign_keys": [],
+      "id": "table:product",
+      "kind": "table",
+      "name": "product",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 9,
+        "path": "db/migrations/001_create_customer_and_product.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:shipment.order_id",
+        "column:shipment.carrier_code",
+        "column:shipment.shipped_at"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "references": "table:orders"
+        }
+      ],
+      "id": "table:shipment",
+      "kind": "table",
+      "name": "shipment",
+      "primary_key": [
+        "order_id"
+      ],
+      "source": {
+        "line": 2,
+        "path": "db/migrations/006_create_shipment.sql",
+        "repo": "sample-system"
+      }
+    }
+  ],
+  "schema": "context-facts.v1",
+  "section": "db-schema",
+  "sources": {
+    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+  },
+  "unresolved": []
+}

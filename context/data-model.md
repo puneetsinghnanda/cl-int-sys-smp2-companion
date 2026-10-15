@@ -3,8 +3,8 @@ schema: context-section.v1
 section: data-model
 owner: eng-db6b
 origin: human
-status: drafted
-verified_at: null
+status: reviewed
+verified_at: {sample-system: 7cf61b938808101b7195cc80e8da2238ac370a23}
 ---
 
 # Data model {#data-model}

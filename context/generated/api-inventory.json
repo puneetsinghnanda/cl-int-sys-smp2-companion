@@ -1,0 +1,176 @@
+{
+  "empty_reason": null,
+  "extractor": {
+    "name": "js-routes",
+    "version": "1.0.0"
+  },
+  "facts": [
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/customers/:id",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/customers/:id",
+      "source": {
+        "line": 9,
+        "path": "api/src/routes/customers.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/health",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/health",
+      "source": {
+        "line": 7,
+        "path": "api/src/routes/health.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/orders",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/orders",
+      "source": {
+        "line": 13,
+        "path": "api/src/routes/orders.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/orders/:id",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/orders/:id",
+      "source": {
+        "line": 46,
+        "path": "api/src/routes/orders.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/products",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/products",
+      "source": {
+        "line": 8,
+        "path": "api/src/routes/products.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:PATCH:/api/orders/:id/status",
+      "kind": "http",
+      "method": "PATCH",
+      "path": "/api/orders/:id/status",
+      "source": {
+        "line": 74,
+        "path": "api/src/routes/orders.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/orders",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/orders",
+      "source": {
+        "line": 55,
+        "path": "api/src/routes/orders.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:*",
+      "kind": "ui",
+      "path": "*",
+      "source": {
+        "line": 20,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/",
+      "kind": "ui",
+      "path": "/",
+      "source": {
+        "line": 14,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/customers/:id",
+      "kind": "ui",
+      "path": "/customers/:id",
+      "source": {
+        "line": 18,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/orders",
+      "kind": "ui",
+      "path": "/orders",
+      "source": {
+        "line": 15,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/orders/:id",
+      "kind": "ui",
+      "path": "/orders/:id",
+      "source": {
+        "line": 17,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/orders/new",
+      "kind": "ui",
+      "path": "/orders/new",
+      "source": {
+        "line": 16,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/products",
+      "kind": "ui",
+      "path": "/products",
+      "source": {
+        "line": 19,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    }
+  ],
+  "schema": "context-facts.v1",
+  "section": "api-inventory",
+  "sources": {
+    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+  },
+  "unresolved": []
+}

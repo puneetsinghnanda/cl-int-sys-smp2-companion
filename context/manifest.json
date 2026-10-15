@@ -1,0 +1,248 @@
+{
+  "built_by": "tsl@0.1.0",
+  "extractors": [
+    {
+      "name": "js-routes",
+      "version": "1.0.0"
+    },
+    {
+      "name": "js-test-layout",
+      "version": "1.0.0"
+    },
+    {
+      "name": "npm-manifests",
+      "version": "1.0.0"
+    },
+    {
+      "name": "repo-tree",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sql-migrations",
+      "version": "1.0.0"
+    }
+  ],
+  "limits": {
+    "generated_file_bytes": 2097152,
+    "judgement_tokens": 40000,
+    "section_tokens": 8000
+  },
+  "redaction": {
+    "blocking_hits": 0,
+    "paths_excluded": 5,
+    "rules_version": "1",
+    "values_masked": 0
+  },
+  "schema": "context-pack.v1",
+  "sections": [
+    {
+      "empty_reason": null,
+      "fact_count": 14,
+      "id": "api-inventory",
+      "kind": "fact",
+      "path": "context/generated/api-inventory.json",
+      "required": true,
+      "sha256": "d08d58e60bd07f9d89024af6e1643c190729a3714769106c2d26250cc17e25e0",
+      "tokens_est": 972
+    },
+    {
+      "anchors": [
+        "architecture",
+        "components",
+        "jobs",
+        "deployment-shape",
+        "open-points"
+      ],
+      "id": "architecture",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/architecture.md",
+      "required": true,
+      "sha256": "d373010fd95f1a6f36ec8989fc6dff86fb02aab7fb0c4c8bffba31e959ddfefa",
+      "status": "reviewed",
+      "tokens_est": 232,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    },
+    {
+      "anchors": [
+        "conventions",
+        "code-layout",
+        "errors",
+        "database-changes",
+        "open-points"
+      ],
+      "id": "conventions",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/conventions.md",
+      "required": true,
+      "sha256": "cc71810aa569dc894a6bc4ff0609c5e78e7830a66880ebf12bdbd3496bdcfb82",
+      "status": "reviewed",
+      "tokens_est": 215,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    },
+    {
+      "anchors": [
+        "data-model",
+        "orders",
+        "order-events",
+        "data-retention",
+        "statuses"
+      ],
+      "id": "data-model",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/data-model.md",
+      "required": true,
+      "sha256": "0c2c9f50bb4e491064d17461ab51fe674a71454a45b3ddf8cb3f9dda93c54e0b",
+      "status": "reviewed",
+      "tokens_est": 276,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    },
+    {
+      "empty_reason": null,
+      "fact_count": 46,
+      "id": "db-schema",
+      "kind": "fact",
+      "path": "context/generated/db-schema.json",
+      "required": true,
+      "sha256": "30e520c91af1bef30e80773a278a8a6e97dfdf0497f3a9427361b56664276e65",
+      "tokens_est": 4442
+    },
+    {
+      "empty_reason": null,
+      "fact_count": 28,
+      "id": "dependency-graph",
+      "kind": "fact",
+      "path": "context/generated/dependency-graph.json",
+      "required": true,
+      "sha256": "54e9484acff3f0bf2b56bd6ae8c77df583e0c85dd0d1f5da3a2faa65fa83a093",
+      "tokens_est": 2211
+    },
+    {
+      "anchors": [
+        "glossary",
+        "order",
+        "order-history",
+        "recent-activity",
+        "status-history",
+        "archived-order",
+        "shippd"
+      ],
+      "id": "glossary",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/glossary.md",
+      "required": true,
+      "sha256": "5f73bd0d339c2ef136e417d68fe041a54f4d8ce29619225fcb7de77674516044",
+      "status": "reviewed",
+      "tokens_est": 213,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    },
+    {
+      "anchors": [
+        "intent-baseline",
+        "goals",
+        "constraints",
+        "order-history"
+      ],
+      "id": "intent-baseline",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/intent-baseline.md",
+      "required": false,
+      "sha256": "fe5abd6e231a94224afb75fbe43590ec9c100401d6f093cbe518c87def05142b",
+      "status": "reviewed",
+      "tokens_est": 173,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    },
+    {
+      "empty_reason": null,
+      "fact_count": 113,
+      "id": "module-map",
+      "kind": "fact",
+      "path": "context/generated/module-map.json",
+      "required": true,
+      "sha256": "dde388f9c186e7fac93d6b1ae31cce9cf8d4b8e3e8b7503c8a15c26b990f3255",
+      "tokens_est": 8144
+    },
+    {
+      "anchors": [
+        "system-baseline",
+        "purpose",
+        "modules",
+        "key-flows",
+        "open-points"
+      ],
+      "id": "system-baseline",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/system-baseline.md",
+      "required": true,
+      "sha256": "bcf9e79a3a6d266a8397465b651d36c788ccf3fadc1c8568d0ee52ec863895db",
+      "status": "reviewed",
+      "tokens_est": 238,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    },
+    {
+      "empty_reason": null,
+      "fact_count": 9,
+      "id": "test-layout",
+      "kind": "fact",
+      "path": "context/generated/test-layout.json",
+      "required": true,
+      "sha256": "17e0279fd066a2d787924f0c12ff05c4a0b9e478a5f1e22db98b50b80989f7dc",
+      "tokens_est": 1517
+    },
+    {
+      "anchors": [
+        "test-strategy",
+        "layers",
+        "how-to-run",
+        "gaps"
+      ],
+      "id": "test-strategy",
+      "kind": "judgement",
+      "origin": "human",
+      "owner": "eng-db6b",
+      "path": "context/test-strategy.md",
+      "required": true,
+      "sha256": "7ee82f030a71005782fc7b743e114662376d3d636bada810d9d3ab05722abf1b",
+      "status": "reviewed",
+      "tokens_est": 176,
+      "verified_at": {
+        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "commit": "7cf61b938808101b7195cc80e8da2238ac370a23",
+      "default_branch": "main",
+      "files_excluded": 5,
+      "files_scanned": 113,
+      "repo": "sample-system",
+      "scope": "."
+    }
+  ],
+  "system": "SYS-SMP2",
+  "tokens_total_est": 18809
+}

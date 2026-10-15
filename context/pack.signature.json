@@ -1,0 +1,14 @@
+{
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "manifest_sha256": "9d8f2c40b49d85f88d7c408d00858bf428da03757cf4d75d64610ccc1d77672b",
+  "role": "tech_lead",
+  "schema": "pack-signature.v1",
+  "signature": "iQDG7v_Lduz00uN-H8_wyvM5oIeHogQNhR4nHuqNA_9j9ViVs43nMxEwsvPL-48B63InLEC5-RGcQ1a-vRGRBQ",
+  "signed_at": "2026-10-15T09:10:09Z",
+  "signed_by": "eng-db6b",
+  "sources": {
+    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+  },
+  "system": "SYS-SMP2",
+  "tsl": "0.1.0"
+}

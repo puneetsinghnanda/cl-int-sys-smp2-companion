@@ -1,0 +1,197 @@
+{
+  "empty_reason": null,
+  "extractor": {
+    "name": "js-test-layout",
+    "version": "1.0.0"
+  },
+  "facts": [
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/customers-products.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/customers-products.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "GET /api/customers/:id returns a summary of non-archived orders",
+        "GET /api/customers/:id returns 404 for an unknown customer",
+        "GET /api/products lists the catalogue by SKU",
+        "archive job hides orders older than 24 months and leaves recent ones"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/health.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/health.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "reports ok when the database answers",
+        "returns a JSON 404 for unknown routes"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/lib.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/lib.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "price",
+        "adds tax and rounds to whole cents",
+        "is zero for an empty order",
+        "totals a single-line order",
+        "status rules",
+        "follows PLACED -> PACKED -> SHIPPED -> DELIVERED",
+        "treats the legacy SHIPPD spelling as SHIPPED",
+        "params",
+        "accepts YYYY-MM-DD and rejects other forms",
+        "accepts positive integer ids only",
+        "config",
+        "defaults to loopback, port 3000 and 7 days of history",
+        "needs a database location in production"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/orders.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/orders.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "GET /api/orders",
+        "lists non-archived orders in the range, newest first",
+        "includes items and the customer name",
+        "filters by customer",
+        "hides archived orders",
+        "sorts by total when asked",
+        "rejects a malformed date",
+        "returns an empty first page by default when nothing is recent",
+        "GET /api/orders/:id",
+        "returns items, status history and shipment",
+        "returns 404 for an unknown order",
+        "rejects a non-numeric id",
+        "POST /api/orders",
+        "creates an order with prices from the catalogue",
+        "rejects an unknown product",
+        "rejects an unknown customer",
+        "rejects a missing items list",
+        "rejects a non-integer quantity",
+        "PATCH /api/orders/:id/status",
+        "moves PLACED to PACKED and records history",
+        "creates a shipment when an order ships",
+        "accepts the legacy SHIPPD status on old orders",
+        "refuses an invalid transition",
+        "refuses an unknown status"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:db/test/seed.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:db",
+      "source": {
+        "line": 1,
+        "path": "db/test/seed.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "seed generator (TC-SAM-002)",
+        "is deterministic for the same seed and anchor",
+        "changes when the seed changes",
+        "produces the TST-01 volumes with invented identities only",
+        "keeps the legacy SHIPPD status on old orders",
+        "rejects an invalid anchor",
+        "re-running migrations is a no-op",
+        "loads the full seed"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/OrdersPage.test.tsx",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/OrdersPage.test.tsx",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "OrdersPage",
+        "loads order history with the filters from the URL",
+        "shows the API error message"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/Pagination.test.tsx",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/Pagination.test.tsx",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "Pagination",
+        "shows the page count and disables Previous on the first page",
+        "asks for the next page"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/lib.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/lib.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "format",
+        "formats cents as dollars",
+        "formats a timestamp to the minute",
+        "labels the legacy SHIPPD status as Shipped",
+        "price (single-line orders)",
+        "adds tax to the subtotal",
+        "is zero with no lines",
+        "status",
+        "offers the next step only"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/setup.ts",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/setup.ts",
+        "repo": "sample-system"
+      },
+      "titles": []
+    }
+  ],
+  "schema": "context-facts.v1",
+  "section": "test-layout",
+  "sources": {
+    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+  },
+  "unresolved": []
+}

@@ -1,0 +1,372 @@
+{
+  "empty_reason": null,
+  "extractor": {
+    "name": "npm-manifests",
+    "version": "1.0.0"
+  },
+  "facts": [
+    {
+      "dev": true,
+      "id": "dep:sample-system:api/package.json:@types/express",
+      "kind": "dependency",
+      "locked": "4.17.25",
+      "name": "@types/express",
+      "range": "^4.17.21",
+      "source": {
+        "line": 1,
+        "path": "api/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:api/package.json:@types/pg",
+      "kind": "dependency",
+      "locked": "8.23.1",
+      "name": "@types/pg",
+      "range": "^8.11.10",
+      "source": {
+        "line": 1,
+        "path": "api/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:api/package.json:@types/supertest",
+      "kind": "dependency",
+      "locked": "6.0.3",
+      "name": "@types/supertest",
+      "range": "^6.0.2",
+      "source": {
+        "line": 1,
+        "path": "api/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": false,
+      "id": "dep:sample-system:api/package.json:express",
+      "kind": "dependency",
+      "locked": "4.22.3",
+      "name": "express",
+      "range": "^4.21.1",
+      "source": {
+        "line": 1,
+        "path": "api/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": false,
+      "id": "dep:sample-system:api/package.json:pg",
+      "kind": "dependency",
+      "locked": "8.23.1",
+      "name": "pg",
+      "range": "^8.13.1",
+      "source": {
+        "line": 1,
+        "path": "api/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:api/package.json:supertest",
+      "kind": "dependency",
+      "locked": "7.3.1",
+      "name": "supertest",
+      "range": "^7.0.0",
+      "source": {
+        "line": 1,
+        "path": "api/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:db/package.json:@types/pg",
+      "kind": "dependency",
+      "locked": "8.23.1",
+      "name": "@types/pg",
+      "range": "^8.11.10",
+      "source": {
+        "line": 1,
+        "path": "db/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": false,
+      "id": "dep:sample-system:db/package.json:pg",
+      "kind": "dependency",
+      "locked": "8.23.1",
+      "name": "pg",
+      "range": "^8.13.1",
+      "source": {
+        "line": 1,
+        "path": "db/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:@eslint/js",
+      "kind": "dependency",
+      "locked": "9.39.5",
+      "name": "@eslint/js",
+      "range": "^9.15.0",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:@types/node",
+      "kind": "dependency",
+      "locked": "22.20.5",
+      "name": "@types/node",
+      "range": "^22.10.0",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:eslint",
+      "kind": "dependency",
+      "locked": "9.39.5",
+      "name": "eslint",
+      "range": "^9.15.0",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:eslint-plugin-react-hooks",
+      "kind": "dependency",
+      "locked": "5.2.0",
+      "name": "eslint-plugin-react-hooks",
+      "range": "^5.0.0",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:globals",
+      "kind": "dependency",
+      "locked": "15.15.0",
+      "name": "globals",
+      "range": "^15.12.0",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:tsx",
+      "kind": "dependency",
+      "locked": "4.23.15",
+      "name": "tsx",
+      "range": "^4.19.2",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:typescript",
+      "kind": "dependency",
+      "locked": "5.6.3",
+      "name": "typescript",
+      "range": "~5.6.3",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:typescript-eslint",
+      "kind": "dependency",
+      "locked": "8.71.2",
+      "name": "typescript-eslint",
+      "range": "^8.16.0",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:package.json:vitest",
+      "kind": "dependency",
+      "locked": "2.1.9",
+      "name": "vitest",
+      "range": "~2.1.9",
+      "source": {
+        "line": 1,
+        "path": "package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:@testing-library/dom",
+      "kind": "dependency",
+      "locked": "10.4.2",
+      "name": "@testing-library/dom",
+      "range": "^10.4.0",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:@testing-library/react",
+      "kind": "dependency",
+      "locked": "16.3.3",
+      "name": "@testing-library/react",
+      "range": "^16.0.1",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:@types/react",
+      "kind": "dependency",
+      "locked": "18.3.31",
+      "name": "@types/react",
+      "range": "^18.3.12",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:@types/react-dom",
+      "kind": "dependency",
+      "locked": "18.3.7",
+      "name": "@types/react-dom",
+      "range": "^18.3.1",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:@vitejs/plugin-react",
+      "kind": "dependency",
+      "locked": "4.7.0",
+      "name": "@vitejs/plugin-react",
+      "range": "^4.3.4",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:jsdom",
+      "kind": "dependency",
+      "locked": "25.0.1",
+      "name": "jsdom",
+      "range": "^25.0.1",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": false,
+      "id": "dep:sample-system:web/package.json:react",
+      "kind": "dependency",
+      "locked": "18.3.1",
+      "name": "react",
+      "range": "18.3.1",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": false,
+      "id": "dep:sample-system:web/package.json:react-dom",
+      "kind": "dependency",
+      "locked": "18.3.1",
+      "name": "react-dom",
+      "range": "18.3.1",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": false,
+      "id": "dep:sample-system:web/package.json:react-router-dom",
+      "kind": "dependency",
+      "locked": "6.30.6",
+      "name": "react-router-dom",
+      "range": "^6.28.0",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "dev": true,
+      "id": "dep:sample-system:web/package.json:vite",
+      "kind": "dependency",
+      "locked": "5.4.21",
+      "name": "vite",
+      "range": "^5.4.11",
+      "source": {
+        "line": 1,
+        "path": "web/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "from": "api",
+      "id": "import:api->db",
+      "kind": "import",
+      "to": "db"
+    }
+  ],
+  "schema": "context-facts.v1",
+  "section": "dependency-graph",
+  "sources": {
+    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+  },
+  "unresolved": []
+}
