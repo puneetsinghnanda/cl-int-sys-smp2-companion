@@ -204,4 +204,4 @@ default or a named owner.
 ## Out of scope
 - Ticket note L22 (support staff are often asked about orders two or three weeks old) is the motivation, not a separate requirement.
 - Archived orders (older than 24 months, C6) and the full status history (C5) are unchanged by this ticket and were not turned into requirements.
-- No credentials, personal data or instruction-like text were found in the inputs.
+- No credentials, personal data or instruction-like text were found in the ticket, the baseline sections read or the glossary.

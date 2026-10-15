@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "db0f244e56e75f7cc500993beba392e6a65cf76ed7156619f1de47a2e965c2cb",
+  "artifact_sha256": "29c2184031d38ea11be8561adb2b584a76dc469de8df8840cd9c20b850b6dea0",
   "attempt": 1,
-  "finished_at": "2026-10-15T09:24:54Z",
+  "finished_at": "2026-10-15T09:28:40Z",
   "gates": [
     {
       "codes": [],
@@ -52,7 +52,7 @@
       "codes": [
         "E-POL-04"
       ],
-      "detail": "tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review",
+      "detail": "tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Edit not permitted for skill requirement-review",
       "id": "H7",
       "pass": false,
       "status": "fail"
@@ -84,9 +84,9 @@
       "pass": true
     }
   ],
-  "started_at": "2026-10-15T09:24:54Z",
+  "started_at": "2026-10-15T09:28:39Z",
   "step": "req",
-  "tool_log_sha256": "0124df7170cab46cc6edd489a600892b9058eefb421dc1a0118cfcfb19e3616e",
+  "tool_log_sha256": "ac4b7b1fd2d5b26cf94e3d7d78f5e1a8e71946e6971976f00e83011f3eccaaab",
   "tsl_version": "0.1.0",
   "verifier": null
 }
