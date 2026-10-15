@@ -1,0 +1,23 @@
+schema: tsl-config.v1
+system:
+  code: SYS-SMP2
+  project: PRJ-SMP
+  client: CL-INT
+companion:
+  repo: puneetsinghnanda/cl-int-sys-smp2-companion
+  default_branch: main
+product_repos:
+- name: sample-system
+  url: https://github.com/puneetsinghnanda/sample-health-mgmt-app.git
+  path: .
+  default_branch: main
+  verifier_profile: node-22@1
+gates:
+  self_approval: false
+  lock_timeout_hours: 24
+pr:
+  branch_prefix: tsl/
+  labels:
+  - truminds
+telemetry:
+  enabled: true

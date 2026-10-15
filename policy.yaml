@@ -1,0 +1,2 @@
+schema: policy.v2
+merge_and_deploy: never
