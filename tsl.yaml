@@ -21,3 +21,15 @@ pr:
   - truminds
 telemetry:
   enabled: true
+context:
+  max_commits_behind: 50
+  drift_files: 50
+  critical_paths:
+    - "sample-system:db/migrations/**"
+    - "sample-system:api/src/auth/**"
+  extractors:
+    migrations: ["db/migrations/*.sql"]
+change_limits:
+  lines: 400
+  files: 15
+  sensitive_paths: ["**/auth/**", "**/migrations/**", ".github/**"]
