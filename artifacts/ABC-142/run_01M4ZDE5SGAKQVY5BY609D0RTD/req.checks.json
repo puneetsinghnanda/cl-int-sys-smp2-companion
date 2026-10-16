@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "29c2184031d38ea11be8561adb2b584a76dc469de8df8840cd9c20b850b6dea0",
+  "artifact_sha256": "81b542b796d8ce178e0f4cd40d7e8aee51b8cfe7d8e71a80b4c918848ef2448b",
   "attempt": 1,
-  "finished_at": "2026-10-15T09:28:40Z",
+  "finished_at": "2026-10-15T10:09:27Z",
   "gates": [
     {
       "codes": [],
@@ -50,9 +50,10 @@
         "GEN-TOOLS-01"
       ],
       "codes": [
-        "E-POL-04"
+        "E-POL-04",
+        "E-POL-03"
       ],
-      "detail": "tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Edit not permitted for skill requirement-review",
+      "detail": "tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Edit not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool mcp__ccd_session_mgmt__search_session_transcripts not permitted for skill requirement-review; denied mcp__ccd_turn__update_plan recorded in the tool log; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review",
       "id": "H7",
       "pass": false,
       "status": "fail"
@@ -65,6 +66,10 @@
   "soft": [
     {
       "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "GEN-UNK-01",
       "pass": true
     },
     {
@@ -84,9 +89,9 @@
       "pass": true
     }
   ],
-  "started_at": "2026-10-15T09:28:39Z",
+  "started_at": "2026-10-15T10:09:27Z",
   "step": "req",
-  "tool_log_sha256": "ac4b7b1fd2d5b26cf94e3d7d78f5e1a8e71946e6971976f00e83011f3eccaaab",
+  "tool_log_sha256": "4228cddd72fbafe6ca704a361cdaae7bc61c01ad602717397fdb19c2a68b05e3",
   "tsl_version": "0.1.0",
   "verifier": null
 }
