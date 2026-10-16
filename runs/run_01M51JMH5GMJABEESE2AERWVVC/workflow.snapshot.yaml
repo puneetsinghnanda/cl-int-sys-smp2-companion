@@ -1,0 +1,23 @@
+schema: workflow.v1
+id: security-review
+version: 1.0.0
+title: Security review
+description: Threat-model an existing system from its architecture section and get
+  the threat list approved.
+owner: wf-owner-2b
+kind: read_only
+status: draft
+requires_fresh_pack: true
+inputs:
+  ticket:
+    required: true
+steps:
+- id: threat
+  skill: threat-model@1.0.1
+- gate: G-threat-review
+  role: tech_lead
+  after:
+  - threat
+  artifacts:
+  - threat
+  on_reject: threat
