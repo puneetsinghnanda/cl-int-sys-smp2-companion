@@ -2,14 +2,17 @@
   "active_session": {
     "host_hash": "h_8a7e4e5f",
     "session_id": "2a827056-fa91-435b-b0e3-b866d24ab35d",
-    "since": "2026-10-16T06:46:14Z"
+    "since": "2026-10-16T07:10:33Z"
   },
   "branch": {},
   "created_at": "2026-10-16T06:46:14Z",
-  "cursor": null,
+  "cursor": {
+    "attempt": 1,
+    "step": "req"
+  },
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-16T06:46:14Z",
+  "heartbeat_at": "2026-10-16T07:10:33Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -50,13 +53,29 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 0,
+  "rev": 2,
   "run_id": "run_01M51QC4QGKBFNZJBVN70D2TSZ",
   "schema": "run-state.v1",
   "status": "RUNNING",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/ABC-180/run_01M51QC4QGKBFNZJBVN70D2TSZ/req.md",
+          "artifact_sha256": null,
+          "band": null,
+          "cause": "first",
+          "decided_at": null,
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": null,
+          "record": null,
+          "skill": "requirement-review@1.0.0",
+          "started_at": "2026-10-16T06:46:31Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -65,7 +84,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -178,7 +197,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "ABC-180",
-  "updated_at": "2026-10-16T06:46:14Z",
+  "updated_at": "2026-10-16T07:10:33Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "0c5c6b595fa7e56b5c3c33d4cc6e8a720be055f1dceb21b0e9ac324c4746e6bf"
 }
