@@ -6,15 +6,16 @@
   },
   "facts": [
     {
-      "files": 19,
+      "files": 10,
       "id": "module:sample-system:.",
       "kind": "module",
       "languages": {
         "json": 3,
-        "md": 10,
+        "md": 2,
         "mjs": 1,
-        "none": 3,
-        "yml": 2
+        "none": 2,
+        "yaml": 1,
+        "yml": 1
       },
       "name": ".",
       "source": {
@@ -24,13 +25,13 @@
       }
     },
     {
-      "files": 38,
+      "files": 45,
       "id": "module:sample-system:api",
       "kind": "module",
       "languages": {
         "json": 3,
         "mts": 1,
-        "ts": 34
+        "ts": 41
       },
       "name": "api",
       "source": {
@@ -40,13 +41,13 @@
       }
     },
     {
-      "files": 17,
+      "files": 15,
       "id": "module:sample-system:db",
       "kind": "module",
       "languages": {
         "json": 2,
         "mts": 1,
-        "sql": 6,
+        "sql": 4,
         "ts": 8
       },
       "name": "db",
@@ -57,7 +58,7 @@
       }
     },
     {
-      "files": 39,
+      "files": 41,
       "id": "module:sample-system:web",
       "kind": "module",
       "languages": {
@@ -65,8 +66,8 @@
         "html": 1,
         "json": 2,
         "mts": 2,
-        "ts": 8,
-        "tsx": 25
+        "ts": 6,
+        "tsx": 29
       },
       "name": "web",
       "source": {
@@ -76,34 +77,78 @@
       }
     },
     {
-      "end_line": 28,
+      "end_line": 48,
       "id": "sym:sample-system:api/src/app.ts:createApp",
       "kind": "symbol",
       "name": "createApp",
       "source": {
-        "line": 11,
+        "line": 16,
         "path": "api/src/app.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 22,
+      "end_line": 52,
+      "id": "sym:sample-system:api/src/auth/identity.ts:actorOf",
+      "kind": "symbol",
+      "name": "actorOf",
+      "source": {
+        "line": 48,
+        "path": "api/src/auth/identity.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 34,
+      "id": "sym:sample-system:api/src/auth/identity.ts:allows",
+      "kind": "symbol",
+      "name": "allows",
+      "source": {
+        "line": 32,
+        "path": "api/src/auth/identity.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 28,
+      "id": "sym:sample-system:api/src/auth/identity.ts:identify",
+      "kind": "symbol",
+      "name": "identify",
+      "source": {
+        "line": 25,
+        "path": "api/src/auth/identity.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 45,
+      "id": "sym:sample-system:api/src/auth/identity.ts:requirePermission",
+      "kind": "symbol",
+      "name": "requirePermission",
+      "source": {
+        "line": 37,
+        "path": "api/src/auth/identity.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 27,
       "id": "sym:sample-system:api/src/config.ts:intEnv",
       "kind": "symbol",
       "name": "intEnv",
       "source": {
-        "line": 16,
+        "line": 21,
         "path": "api/src/config.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 35,
+      "end_line": 44,
       "id": "sym:sample-system:api/src/config.ts:loadConfig",
       "kind": "symbol",
       "name": "loadConfig",
       "source": {
-        "line": 23,
+        "line": 28,
         "path": "api/src/config.ts",
         "repo": "sample-system"
       }
@@ -131,84 +176,62 @@
       }
     },
     {
-      "end_line": 6,
-      "id": "sym:sample-system:api/src/jobs/archive-orders.ts:ARCHIVE_AFTER",
+      "end_line": 9,
+      "id": "sym:sample-system:api/src/lib/codes.ts:formatCode",
       "kind": "symbol",
-      "name": "ARCHIVE_AFTER",
+      "name": "formatCode",
       "source": {
         "line": 6,
-        "path": "api/src/jobs/archive-orders.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 15,
-      "id": "sym:sample-system:api/src/jobs/archive-orders.ts:archiveOrders",
-      "kind": "symbol",
-      "name": "archiveOrders",
-      "source": {
-        "line": 8,
-        "path": "api/src/jobs/archive-orders.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 7,
-      "id": "sym:sample-system:api/src/jobs/purge-events.ts:EVENT_RETENTION",
-      "kind": "symbol",
-      "name": "EVENT_RETENTION",
-      "source": {
-        "line": 7,
-        "path": "api/src/jobs/purge-events.ts",
+        "path": "api/src/lib/codes.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 16,
-      "id": "sym:sample-system:api/src/jobs/purge-events.ts:purgeOrderEvents",
+      "id": "sym:sample-system:api/src/lib/codes.ts:idFromCode",
       "kind": "symbol",
-      "name": "purgeOrderEvents",
+      "name": "idFromCode",
       "source": {
-        "line": 9,
-        "path": "api/src/jobs/purge-events.ts",
+        "line": 12,
+        "path": "api/src/lib/codes.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 24,
-      "id": "sym:sample-system:api/src/jobs/run-job.ts:main",
+      "id": "sym:sample-system:api/src/lib/codes.ts:parseId",
       "kind": "symbol",
-      "name": "main",
+      "name": "parseId",
       "source": {
-        "line": 10,
-        "path": "api/src/jobs/run-job.ts",
+        "line": 21,
+        "path": "api/src/lib/codes.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 6,
-      "id": "sym:sample-system:api/src/lib/dates.ts:daysAgo",
+      "end_line": 28,
+      "id": "sym:sample-system:api/src/lib/codes.ts:parseOptionalId",
       "kind": "symbol",
-      "name": "daysAgo",
+      "name": "parseOptionalId",
       "source": {
-        "line": 4,
-        "path": "api/src/lib/dates.ts",
+        "line": 25,
+        "path": "api/src/lib/codes.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 32,
+      "id": "sym:sample-system:api/src/lib/codes.ts:parsePage",
+      "kind": "symbol",
+      "name": "parsePage",
+      "source": {
+        "line": 29,
+        "path": "api/src/lib/codes.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 11,
-      "id": "sym:sample-system:api/src/lib/dates.ts:toIso",
-      "kind": "symbol",
-      "name": "toIso",
-      "source": {
-        "line": 9,
-        "path": "api/src/lib/dates.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 10,
       "id": "sym:sample-system:api/src/lib/errors.ts:HttpError",
       "kind": "symbol",
       "name": "HttpError",
@@ -219,21 +242,10 @@
       }
     },
     {
-      "end_line": 11,
-      "id": "sym:sample-system:api/src/lib/errors.ts:badRequest",
+      "end_line": 19,
+      "id": "sym:sample-system:api/src/lib/errors.ts:ValidationError",
       "kind": "symbol",
-      "name": "badRequest",
-      "source": {
-        "line": 11,
-        "path": "api/src/lib/errors.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 14,
-      "id": "sym:sample-system:api/src/lib/errors.ts:conflict",
-      "kind": "symbol",
-      "name": "conflict",
+      "name": "ValidationError",
       "source": {
         "line": 14,
         "path": "api/src/lib/errors.ts",
@@ -241,145 +253,288 @@
       }
     },
     {
-      "end_line": 13,
-      "id": "sym:sample-system:api/src/lib/errors.ts:notFound",
+      "end_line": 20,
+      "id": "sym:sample-system:api/src/lib/errors.ts:badRequest",
       "kind": "symbol",
-      "name": "notFound",
+      "name": "badRequest",
       "source": {
-        "line": 13,
+        "line": 20,
         "path": "api/src/lib/errors.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 13,
-      "id": "sym:sample-system:api/src/lib/params.ts:parseDay",
+      "end_line": 24,
+      "id": "sym:sample-system:api/src/lib/errors.ts:conflict",
       "kind": "symbol",
-      "name": "parseDay",
+      "name": "conflict",
       "source": {
-        "line": 7,
-        "path": "api/src/lib/params.ts",
+        "line": 24,
+        "path": "api/src/lib/errors.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 19,
-      "id": "sym:sample-system:api/src/lib/params.ts:parseId",
+      "end_line": 22,
+      "id": "sym:sample-system:api/src/lib/errors.ts:fieldError",
       "kind": "symbol",
-      "name": "parseId",
+      "name": "fieldError",
       "source": {
-        "line": 16,
-        "path": "api/src/lib/params.ts",
+        "line": 22,
+        "path": "api/src/lib/errors.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 26,
+      "id": "sym:sample-system:api/src/lib/errors.ts:forbidden",
+      "kind": "symbol",
+      "name": "forbidden",
+      "source": {
+        "line": 26,
+        "path": "api/src/lib/errors.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 23,
-      "id": "sym:sample-system:api/src/lib/params.ts:parseOptionalId",
+      "id": "sym:sample-system:api/src/lib/errors.ts:notFound",
       "kind": "symbol",
-      "name": "parseOptionalId",
+      "name": "notFound",
       "source": {
-        "line": 20,
-        "path": "api/src/lib/params.ts",
+        "line": 23,
+        "path": "api/src/lib/errors.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 27,
-      "id": "sym:sample-system:api/src/lib/params.ts:parsePage",
+      "end_line": 29,
+      "id": "sym:sample-system:api/src/lib/errors.ts:pgError",
       "kind": "symbol",
-      "name": "parsePage",
+      "name": "pgError",
       "source": {
-        "line": 24,
-        "path": "api/src/lib/params.ts",
+        "line": 29,
+        "path": "api/src/lib/errors.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 5,
-      "id": "sym:sample-system:api/src/lib/price.ts:TAX_RATE",
+      "end_line": 64,
+      "id": "sym:sample-system:api/src/lib/slots.ts:availabilityProblem",
       "kind": "symbol",
-      "name": "TAX_RATE",
+      "name": "availabilityProblem",
       "source": {
-        "line": 5,
-        "path": "api/src/lib/price.ts",
+        "line": 48,
+        "path": "api/src/lib/slots.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 15,
-      "id": "sym:sample-system:api/src/lib/price.ts:lineTotalCents",
+      "end_line": 39,
+      "id": "sym:sample-system:api/src/lib/slots.ts:daySlots",
       "kind": "symbol",
-      "name": "lineTotalCents",
+      "name": "daySlots",
       "source": {
-        "line": 13,
-        "path": "api/src/lib/price.ts",
+        "line": 39,
+        "path": "api/src/lib/slots.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 20,
-      "id": "sym:sample-system:api/src/lib/price.ts:orderTotalCents",
+      "end_line": 25,
+      "id": "sym:sample-system:api/src/lib/slots.ts:isSlot",
       "kind": "symbol",
-      "name": "orderTotalCents",
+      "name": "isSlot",
       "source": {
-        "line": 18,
-        "path": "api/src/lib/price.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 5,
-      "id": "sym:sample-system:api/src/lib/status.ts:ORDER_STATUSES",
-      "kind": "symbol",
-      "name": "ORDER_STATUSES",
-      "source": {
-        "line": 5,
-        "path": "api/src/lib/status.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 27,
-      "id": "sym:sample-system:api/src/lib/status.ts:canTransition",
-      "kind": "symbol",
-      "name": "canTransition",
-      "source": {
-        "line": 24,
-        "path": "api/src/lib/status.ts",
+        "line": 21,
+        "path": "api/src/lib/slots.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 18,
-      "id": "sym:sample-system:api/src/lib/status.ts:isOrderStatus",
+      "id": "sym:sample-system:api/src/lib/slots.ts:slotStarts",
       "kind": "symbol",
-      "name": "isOrderStatus",
+      "name": "slotStarts",
       "source": {
-        "line": 15,
-        "path": "api/src/lib/status.ts",
+        "line": 10,
+        "path": "api/src/lib/slots.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 31,
-      "id": "sym:sample-system:api/src/lib/status.ts:nextStatuses",
+      "end_line": 36,
+      "id": "sym:sample-system:api/src/lib/slots.ts:withinAvailability",
       "kind": "symbol",
-      "name": "nextStatuses",
+      "name": "withinAvailability",
       "source": {
         "line": 28,
-        "path": "api/src/lib/status.ts",
+        "path": "api/src/lib/slots.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 23,
-      "id": "sym:sample-system:api/src/lib/status.ts:normaliseStatus",
+      "end_line": 9,
+      "id": "sym:sample-system:api/src/lib/time.ts:DAY_MS",
       "kind": "symbol",
-      "name": "normaliseStatus",
+      "name": "DAY_MS",
+      "source": {
+        "line": 9,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 8,
+      "id": "sym:sample-system:api/src/lib/time.ts:MINUTE",
+      "kind": "symbol",
+      "name": "MINUTE",
+      "source": {
+        "line": 8,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 92,
+      "id": "sym:sample-system:api/src/lib/time.ts:addDays",
+      "kind": "symbol",
+      "name": "addDays",
+      "source": {
+        "line": 90,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 95,
+      "id": "sym:sample-system:api/src/lib/time.ts:dayBounds",
+      "kind": "symbol",
+      "name": "dayBounds",
+      "source": {
+        "line": 95,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 36,
+      "id": "sym:sample-system:api/src/lib/time.ts:formatHhmm",
+      "kind": "symbol",
+      "name": "formatHhmm",
+      "source": {
+        "line": 33,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 26,
+      "id": "sym:sample-system:api/src/lib/time.ts:isDay",
+      "kind": "symbol",
+      "name": "isDay",
       "source": {
         "line": 21,
-        "path": "api/src/lib/status.ts",
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 18,
+      "id": "sym:sample-system:api/src/lib/time.ts:isValidTimeZone",
+      "kind": "symbol",
+      "name": "isValidTimeZone",
+      "source": {
+        "line": 10,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 87,
+      "id": "sym:sample-system:api/src/lib/time.ts:isoWeekday",
+      "kind": "symbol",
+      "name": "isoWeekday",
+      "source": {
+        "line": 84,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 64,
+      "id": "sym:sample-system:api/src/lib/time.ts:localDay",
+      "kind": "symbol",
+      "name": "localDay",
+      "source": {
+        "line": 62,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 59,
+      "id": "sym:sample-system:api/src/lib/time.ts:localParts",
+      "kind": "symbol",
+      "name": "localParts",
+      "source": {
+        "line": 44,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 72,
+      "id": "sym:sample-system:api/src/lib/time.ts:offsetMs",
+      "kind": "symbol",
+      "name": "offsetMs",
+      "source": {
+        "line": 67,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 32,
+      "id": "sym:sample-system:api/src/lib/time.ts:parseHhmm",
+      "kind": "symbol",
+      "name": "parseHhmm",
+      "source": {
+        "line": 29,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 81,
+      "id": "sym:sample-system:api/src/lib/time.ts:zonedToUtc",
+      "kind": "symbol",
+      "name": "zonedToUtc",
+      "source": {
+        "line": 75,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 116,
+      "id": "sym:sample-system:api/src/lib/validate.ts:Fields",
+      "kind": "symbol",
+      "name": "Fields",
+      "source": {
+        "line": 8,
+        "path": "api/src/lib/validate.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 120,
+      "id": "sym:sample-system:api/src/lib/validate.ts:bodyOf",
+      "kind": "symbol",
+      "name": "bodyOf",
+      "source": {
+        "line": 117,
+        "path": "api/src/lib/validate.ts",
         "repo": "sample-system"
       }
     },
@@ -395,7 +550,7 @@
       }
     },
     {
-      "end_line": 21,
+      "end_line": 22,
       "id": "sym:sample-system:api/src/middleware/errorHandler.ts:errorHandler",
       "kind": "symbol",
       "name": "errorHandler",
@@ -428,156 +583,101 @@
       }
     },
     {
-      "end_line": 8,
-      "id": "sym:sample-system:api/src/repositories/customerRepo.ts:customerExists",
+      "end_line": 156,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo",
       "kind": "symbol",
-      "name": "customerExists",
+      "name": "AppointmentRepo",
       "source": {
-        "line": 4,
-        "path": "api/src/repositories/customerRepo.ts",
+        "line": 57,
+        "path": "api/src/repositories/appointmentRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 41,
-      "id": "sym:sample-system:api/src/repositories/customerRepo.ts:findCustomerSummary",
+      "end_line": 20,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:SUMMARY_SELECT",
       "kind": "symbol",
-      "name": "findCustomerSummary",
+      "name": "SUMMARY_SELECT",
       "source": {
-        "line": 9,
-        "path": "api/src/repositories/customerRepo.ts",
+        "line": 20,
+        "path": "api/src/repositories/appointmentRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 7,
-      "id": "sym:sample-system:api/src/repositories/orderEventRepo.ts:insertOrderEvent",
+      "end_line": 38,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:toSummary",
       "kind": "symbol",
-      "name": "insertOrderEvent",
+      "name": "toSummary",
       "source": {
-        "line": 5,
-        "path": "api/src/repositories/orderEventRepo.ts",
+        "line": 27,
+        "path": "api/src/repositories/appointmentRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 134,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:findOrder",
+      "end_line": 170,
+      "id": "sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorRepo",
       "kind": "symbol",
-      "name": "findOrder",
+      "name": "DoctorRepo",
       "source": {
-        "line": 93,
-        "path": "api/src/repositories/orderRepo.ts",
+        "line": 73,
+        "path": "api/src/repositories/doctorRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 135,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:insertOrder",
+      "end_line": 207,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
       "kind": "symbol",
-      "name": "insertOrder",
+      "name": "PatientRepo",
       "source": {
-        "line": 135,
-        "path": "api/src/repositories/orderRepo.ts",
+        "line": 76,
+        "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 180,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:insertShipment",
+      "end_line": 37,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:ageOn",
       "kind": "symbol",
-      "name": "insertShipment",
+      "name": "ageOn",
       "source": {
-        "line": 177,
-        "path": "api/src/repositories/orderRepo.ts",
+        "line": 32,
+        "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 165,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:insertStatusChange",
+      "end_line": 75,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:normalizePhone",
       "kind": "symbol",
-      "name": "insertStatusChange",
+      "name": "normalizePhone",
       "source": {
-        "line": 165,
-        "path": "api/src/repositories/orderRepo.ts",
+        "line": 72,
+        "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 59,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:listItems",
+      "id": "sym:sample-system:api/src/repositories/referenceRepo.ts:ReferenceRepo",
       "kind": "symbol",
-      "name": "listItems",
+      "name": "ReferenceRepo",
       "source": {
-        "line": 43,
-        "path": "api/src/repositories/orderRepo.ts",
+        "line": 16,
+        "path": "api/src/repositories/referenceRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 92,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:listOrders",
+      "end_line": 7,
+      "id": "sym:sample-system:api/src/routes/appointments.ts:appointmentsRouter",
       "kind": "symbol",
-      "name": "listOrders",
+      "name": "appointmentsRouter",
       "source": {
-        "line": 62,
-        "path": "api/src/repositories/orderRepo.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 160,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:lockOrderStatus",
-      "kind": "symbol",
-      "name": "lockOrderStatus",
-      "source": {
-        "line": 157,
-        "path": "api/src/repositories/orderRepo.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 42,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:toSummary",
-      "kind": "symbol",
-      "name": "toSummary",
-      "source": {
-        "line": 31,
-        "path": "api/src/repositories/orderRepo.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 164,
-      "id": "sym:sample-system:api/src/repositories/orderRepo.ts:updateStatus",
-      "kind": "symbol",
-      "name": "updateStatus",
-      "source": {
-        "line": 161,
-        "path": "api/src/repositories/orderRepo.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 24,
-      "id": "sym:sample-system:api/src/repositories/productRepo.ts:findProductsByIds",
-      "kind": "symbol",
-      "name": "findProductsByIds",
-      "source": {
-        "line": 17,
-        "path": "api/src/repositories/productRepo.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 16,
-      "id": "sym:sample-system:api/src/repositories/productRepo.ts:listProducts",
-      "kind": "symbol",
-      "name": "listProducts",
-      "source": {
-        "line": 12,
-        "path": "api/src/repositories/productRepo.ts",
+        "line": 7,
+        "path": "api/src/routes/appointments.ts",
         "repo": "sample-system"
       }
     },
@@ -594,12 +694,34 @@
     },
     {
       "end_line": 5,
-      "id": "sym:sample-system:api/src/routes/customers.ts:customersRouter",
+      "id": "sym:sample-system:api/src/routes/dashboard.ts:dashboardRouter",
       "kind": "symbol",
-      "name": "customersRouter",
+      "name": "dashboardRouter",
       "source": {
         "line": 5,
-        "path": "api/src/routes/customers.ts",
+        "path": "api/src/routes/dashboard.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 5,
+      "id": "sym:sample-system:api/src/routes/departments.ts:departmentsRouter",
+      "kind": "symbol",
+      "name": "departmentsRouter",
+      "source": {
+        "line": 5,
+        "path": "api/src/routes/departments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 9,
+      "id": "sym:sample-system:api/src/routes/doctors.ts:doctorsRouter",
+      "kind": "symbol",
+      "name": "doctorsRouter",
+      "source": {
+        "line": 9,
+        "path": "api/src/routes/doctors.ts",
         "repo": "sample-system"
       }
     },
@@ -615,24 +737,35 @@
       }
     },
     {
-      "end_line": 9,
-      "id": "sym:sample-system:api/src/routes/orders.ts:ordersRouter",
+      "end_line": 7,
+      "id": "sym:sample-system:api/src/routes/patients.ts:patientsRouter",
       "kind": "symbol",
-      "name": "ordersRouter",
+      "name": "patientsRouter",
       "source": {
-        "line": 9,
-        "path": "api/src/routes/orders.ts",
+        "line": 7,
+        "path": "api/src/routes/patients.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 4,
-      "id": "sym:sample-system:api/src/routes/products.ts:productsRouter",
+      "end_line": 26,
+      "id": "sym:sample-system:api/src/routes/reference.ts:referenceHandlers",
       "kind": "symbol",
-      "name": "productsRouter",
+      "name": "referenceHandlers",
       "source": {
-        "line": 4,
-        "path": "api/src/routes/products.ts",
+        "line": 12,
+        "path": "api/src/routes/reference.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 5,
+      "id": "sym:sample-system:api/src/routes/specializations.ts:specializationsRouter",
+      "kind": "symbol",
+      "name": "specializationsRouter",
+      "source": {
+        "line": 5,
+        "path": "api/src/routes/specializations.ts",
         "repo": "sample-system"
       }
     },
@@ -648,67 +781,188 @@
       }
     },
     {
-      "end_line": 14,
-      "id": "sym:sample-system:api/src/services/customerService.ts:CustomerService",
+      "end_line": 163,
+      "id": "sym:sample-system:api/src/services/appointmentService.ts:AppointmentService",
       "kind": "symbol",
-      "name": "CustomerService",
+      "name": "AppointmentService",
       "source": {
-        "line": 5,
-        "path": "api/src/services/customerService.ts",
+        "line": 17,
+        "path": "api/src/services/appointmentService.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 29,
+      "end_line": 75,
+      "id": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService",
+      "kind": "symbol",
+      "name": "DashboardService",
+      "source": {
+        "line": 27,
+        "path": "api/src/services/dashboardService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 7,
+      "id": "sym:sample-system:api/src/services/dashboardService.ts:PERIODS",
+      "kind": "symbol",
+      "name": "PERIODS",
+      "source": {
+        "line": 7,
+        "path": "api/src/services/dashboardService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 188,
+      "id": "sym:sample-system:api/src/services/doctorService.ts:DoctorService",
+      "kind": "symbol",
+      "name": "DoctorService",
+      "source": {
+        "line": 25,
+        "path": "api/src/services/doctorService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 40,
       "id": "sym:sample-system:api/src/services/index.ts:createContext",
       "kind": "symbol",
       "name": "createContext",
       "source": {
-        "line": 18,
+        "line": 26,
         "path": "api/src/services/index.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 58,
-      "id": "sym:sample-system:api/src/services/orderService.ts:OrderService",
+      "end_line": 130,
+      "id": "sym:sample-system:api/src/services/patientService.ts:PatientService",
       "kind": "symbol",
-      "name": "OrderService",
+      "name": "PatientService",
       "source": {
-        "line": 12,
-        "path": "api/src/services/orderService.ts",
+        "line": 13,
+        "path": "api/src/services/patientService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 71,
+      "id": "sym:sample-system:api/src/services/referenceService.ts:ReferenceService",
+      "kind": "symbol",
+      "name": "ReferenceService",
+      "source": {
+        "line": 10,
+        "path": "api/src/services/referenceService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 8,
+      "id": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS",
+      "kind": "symbol",
+      "name": "BLOOD_GROUPS",
+      "source": {
+        "line": 8,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 6,
+      "id": "sym:sample-system:api/src/types.ts:GENDERS",
+      "kind": "symbol",
+      "name": "GENDERS",
+      "source": {
+        "line": 6,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 9,
+      "id": "sym:sample-system:api/src/types.ts:SLOT_MINUTES",
+      "kind": "symbol",
+      "name": "SLOT_MINUTES",
+      "source": {
+        "line": 9,
+        "path": "api/src/types.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 11,
-      "id": "sym:sample-system:api/src/services/productService.ts:ProductService",
+      "id": "sym:sample-system:api/test/helpers.ts:MONDAY",
       "kind": "symbol",
-      "name": "ProductService",
+      "name": "MONDAY",
       "source": {
-        "line": 4,
-        "path": "api/src/services/productService.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 54,
-      "id": "sym:sample-system:api/test/helpers.ts:loadFixture",
-      "kind": "symbol",
-      "name": "loadFixture",
-      "source": {
-        "line": 16,
+        "line": 11,
         "path": "api/test/helpers.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 10,
+      "id": "sym:sample-system:api/test/helpers.ts:NOW",
+      "kind": "symbol",
+      "name": "NOW",
+      "source": {
+        "line": 10,
+        "path": "api/test/helpers.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 12,
+      "id": "sym:sample-system:api/test/helpers.ts:TUESDAY",
+      "kind": "symbol",
+      "name": "TUESDAY",
+      "source": {
+        "line": 12,
+        "path": "api/test/helpers.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 14,
+      "id": "sym:sample-system:api/test/helpers.ts:at",
+      "kind": "symbol",
+      "name": "at",
+      "source": {
+        "line": 14,
+        "path": "api/test/helpers.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 56,
+      "id": "sym:sample-system:api/test/helpers.ts:book",
+      "kind": "symbol",
+      "name": "book",
+      "source": {
+        "line": 54,
+        "path": "api/test/helpers.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 51,
+      "id": "sym:sample-system:api/test/helpers.ts:loadFixture",
+      "kind": "symbol",
+      "name": "loadFixture",
+      "source": {
+        "line": 26,
+        "path": "api/test/helpers.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 18,
       "id": "sym:sample-system:api/test/helpers.ts:testApp",
       "kind": "symbol",
       "name": "testApp",
       "source": {
-        "line": 7,
+        "line": 15,
         "path": "api/test/helpers.ts",
         "repo": "sample-system"
       }
@@ -736,12 +990,23 @@
       }
     },
     {
-      "end_line": 37,
+      "end_line": 54,
+      "id": "sym:sample-system:db/scripts/migrate.ts:applyPending",
+      "kind": "symbol",
+      "name": "applyPending",
+      "source": {
+        "line": 24,
+        "path": "db/scripts/migrate.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 21,
       "id": "sym:sample-system:db/scripts/migrate.ts:migrate",
       "kind": "symbol",
       "name": "migrate",
       "source": {
-        "line": 8,
+        "line": 11,
         "path": "db/scripts/migrate.ts",
         "repo": "sample-system"
       }
@@ -835,145 +1100,79 @@
       }
     },
     {
-      "end_line": 24,
+      "end_line": 43,
       "id": "sym:sample-system:web/src/App.tsx:App",
       "kind": "symbol",
       "name": "App",
       "source": {
-        "line": 9,
+        "line": 18,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 32,
-      "id": "sym:sample-system:web/src/__tests__/OrdersPage.test.tsx:stubFetch",
+      "end_line": 17,
+      "id": "sym:sample-system:web/src/api/client.ts:ApiError",
       "kind": "symbol",
-      "name": "stubFetch",
+      "name": "ApiError",
       "source": {
-        "line": 27,
-        "path": "web/src/__tests__/OrdersPage.test.tsx",
+        "line": 5,
+        "path": "web/src/api/client.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 84,
+      "id": "sym:sample-system:web/src/api/client.ts:api",
+      "kind": "symbol",
+      "name": "api",
+      "source": {
+        "line": 46,
+        "path": "web/src/api/client.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 45,
+      "id": "sym:sample-system:web/src/api/client.ts:query",
+      "kind": "symbol",
+      "name": "query",
+      "source": {
+        "line": 39,
+        "path": "web/src/api/client.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 19,
+      "id": "sym:sample-system:web/src/api/client.ts:send",
+      "kind": "symbol",
+      "name": "send",
+      "source": {
+        "line": 18,
+        "path": "web/src/api/client.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 13,
+      "id": "sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable",
+      "kind": "symbol",
+      "name": "AppointmentTable",
+      "source": {
+        "line": 12,
+        "path": "web/src/components/AppointmentTable.tsx",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 11,
-      "id": "sym:sample-system:web/src/api/client.ts:ApiError",
+      "id": "sym:sample-system:web/src/components/AvailabilityEditor.tsx:AvailabilityEditor",
       "kind": "symbol",
-      "name": "ApiError",
+      "name": "AvailabilityEditor",
       "source": {
-        "line": 2,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 51,
-      "id": "sym:sample-system:web/src/api/client.ts:changeOrderStatus",
-      "kind": "symbol",
-      "name": "changeOrderStatus",
-      "source": {
-        "line": 47,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 43,
-      "id": "sym:sample-system:web/src/api/client.ts:createOrder",
-      "kind": "symbol",
-      "name": "createOrder",
-      "source": {
-        "line": 42,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 55,
-      "id": "sym:sample-system:web/src/api/client.ts:fetchCustomer",
-      "kind": "symbol",
-      "name": "fetchCustomer",
-      "source": {
-        "line": 52,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 41,
-      "id": "sym:sample-system:web/src/api/client.ts:fetchOrder",
-      "kind": "symbol",
-      "name": "fetchOrder",
-      "source": {
-        "line": 38,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 37,
-      "id": "sym:sample-system:web/src/api/client.ts:fetchOrders",
-      "kind": "symbol",
-      "name": "fetchOrders",
-      "source": {
-        "line": 30,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 59,
-      "id": "sym:sample-system:web/src/api/client.ts:fetchProducts",
-      "kind": "symbol",
-      "name": "fetchProducts",
-      "source": {
-        "line": 56,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 29,
-      "id": "sym:sample-system:web/src/api/client.ts:send",
-      "kind": "symbol",
-      "name": "send",
-      "source": {
-        "line": 12,
-        "path": "web/src/api/client.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 6,
-      "id": "sym:sample-system:web/src/components/ActivityFeed.tsx:ActivityFeed",
-      "kind": "symbol",
-      "name": "ActivityFeed",
-      "source": {
-        "line": 6,
-        "path": "web/src/components/ActivityFeed.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 9,
-      "id": "sym:sample-system:web/src/components/DateRangeFilter.tsx:DateRangeFilter",
-      "kind": "symbol",
-      "name": "DateRangeFilter",
-      "source": {
-        "line": 8,
-        "path": "web/src/components/DateRangeFilter.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 1,
-      "id": "sym:sample-system:web/src/components/EmptyState.tsx:EmptyState",
-      "kind": "symbol",
-      "name": "EmptyState",
-      "source": {
-        "line": 1,
-        "path": "web/src/components/EmptyState.tsx",
+        "line": 11,
+        "path": "web/src/components/AvailabilityEditor.tsx",
         "repo": "sample-system"
       }
     },
@@ -990,6 +1189,17 @@
     },
     {
       "end_line": 13,
+      "id": "sym:sample-system:web/src/components/Field.tsx:Field",
+      "kind": "symbol",
+      "name": "Field",
+      "source": {
+        "line": 13,
+        "path": "web/src/components/Field.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 13,
       "id": "sym:sample-system:web/src/components/Layout.tsx:Layout",
       "kind": "symbol",
       "name": "Layout",
@@ -1000,7 +1210,18 @@
       }
     },
     {
-      "end_line": 7,
+      "end_line": 10,
+      "id": "sym:sample-system:web/src/components/ListInput.tsx:ListInput",
+      "kind": "symbol",
+      "name": "ListInput",
+      "source": {
+        "line": 10,
+        "path": "web/src/components/ListInput.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 3,
       "id": "sym:sample-system:web/src/components/Loading.tsx:Loading",
       "kind": "symbol",
       "name": "Loading",
@@ -1011,57 +1232,13 @@
       }
     },
     {
-      "end_line": 15,
+      "end_line": 16,
       "id": "sym:sample-system:web/src/components/NavBar.tsx:NavBar",
       "kind": "symbol",
       "name": "NavBar",
       "source": {
         "line": 2,
         "path": "web/src/components/NavBar.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 4,
-      "id": "sym:sample-system:web/src/components/OrderItemsTable.tsx:OrderItemsTable",
-      "kind": "symbol",
-      "name": "OrderItemsTable",
-      "source": {
-        "line": 3,
-        "path": "web/src/components/OrderItemsTable.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 21,
-      "id": "sym:sample-system:web/src/components/OrderTable.tsx:OrderTable",
-      "kind": "symbol",
-      "name": "OrderTable",
-      "source": {
-        "line": 20,
-        "path": "web/src/components/OrderTable.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 19,
-      "id": "sym:sample-system:web/src/components/OrderTable.tsx:directionOf",
-      "kind": "symbol",
-      "name": "directionOf",
-      "source": {
-        "line": 14,
-        "path": "web/src/components/OrderTable.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 4,
-      "id": "sym:sample-system:web/src/components/OrderTotal.tsx:OrderTotal",
-      "kind": "symbol",
-      "name": "OrderTotal",
-      "source": {
-        "line": 3,
-        "path": "web/src/components/OrderTotal.tsx",
         "repo": "sample-system"
       }
     },
@@ -1077,24 +1254,24 @@
       }
     },
     {
-      "end_line": 10,
-      "id": "sym:sample-system:web/src/components/ProductPicker.tsx:ProductPicker",
+      "end_line": 19,
+      "id": "sym:sample-system:web/src/components/Picker.tsx:Picker",
       "kind": "symbol",
-      "name": "ProductPicker",
+      "name": "Picker",
       "source": {
-        "line": 9,
-        "path": "web/src/components/ProductPicker.tsx",
+        "line": 19,
+        "path": "web/src/components/Picker.tsx",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 1,
-      "id": "sym:sample-system:web/src/components/SortIcon.tsx:SortIcon",
+      "end_line": 10,
+      "id": "sym:sample-system:web/src/components/SlotPicker.tsx:SlotPicker",
       "kind": "symbol",
-      "name": "SortIcon",
+      "name": "SlotPicker",
       "source": {
-        "line": 1,
-        "path": "web/src/components/SortIcon.tsx",
+        "line": 10,
+        "path": "web/src/components/SlotPicker.tsx",
         "repo": "sample-system"
       }
     },
@@ -1110,17 +1287,6 @@
       }
     },
     {
-      "end_line": 4,
-      "id": "sym:sample-system:web/src/components/StatusHistoryList.tsx:StatusHistoryList",
-      "kind": "symbol",
-      "name": "StatusHistoryList",
-      "source": {
-        "line": 3,
-        "path": "web/src/components/StatusHistoryList.tsx",
-        "repo": "sample-system"
-      }
-    },
-    {
       "end_line": 29,
       "id": "sym:sample-system:web/src/hooks/useAsync.ts:useAsync",
       "kind": "symbol",
@@ -1132,10 +1298,32 @@
       }
     },
     {
-      "end_line": 5,
-      "id": "sym:sample-system:web/src/lib/format.ts:formatCents",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/hooks/useSettings.tsx:SettingsProvider",
       "kind": "symbol",
-      "name": "formatCents",
+      "name": "SettingsProvider",
+      "source": {
+        "line": 6,
+        "path": "web/src/hooks/useSettings.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 14,
+      "id": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings",
+      "kind": "symbol",
+      "name": "useSettings",
+      "source": {
+        "line": 12,
+        "path": "web/src/hooks/useSettings.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 2,
+      "id": "sym:sample-system:web/src/lib/format.ts:WEEKDAYS",
+      "kind": "symbol",
+      "name": "WEEKDAYS",
       "source": {
         "line": 2,
         "path": "web/src/lib/format.ts",
@@ -1143,90 +1331,233 @@
       }
     },
     {
+      "end_line": 25,
+      "id": "sym:sample-system:web/src/lib/format.ts:dateTime",
+      "kind": "symbol",
+      "name": "dateTime",
+      "source": {
+        "line": 20,
+        "path": "web/src/lib/format.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 12,
-      "id": "sym:sample-system:web/src/lib/format.ts:formatDateTime",
+      "id": "sym:sample-system:web/src/lib/format.ts:rupees",
       "kind": "symbol",
-      "name": "formatDateTime",
+      "name": "rupees",
       "source": {
-        "line": 8,
+        "line": 10,
         "path": "web/src/lib/format.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 17,
-      "id": "sym:sample-system:web/src/lib/format.ts:statusLabel",
+      "end_line": 29,
+      "id": "sym:sample-system:web/src/lib/format.ts:time",
       "kind": "symbol",
-      "name": "statusLabel",
+      "name": "time",
       "source": {
-        "line": 13,
+        "line": 26,
         "path": "web/src/lib/format.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 5,
-      "id": "sym:sample-system:web/src/lib/price.ts:TAX_RATE",
-      "kind": "symbol",
-      "name": "TAX_RATE",
-      "source": {
-        "line": 5,
-        "path": "web/src/lib/price.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 19,
-      "id": "sym:sample-system:web/src/lib/price.ts:orderTotalCents",
+      "id": "sym:sample-system:web/src/lib/format.ts:toPaise",
       "kind": "symbol",
-      "name": "orderTotalCents",
+      "name": "toPaise",
       "source": {
-        "line": 17,
-        "path": "web/src/lib/price.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 14,
-      "id": "sym:sample-system:web/src/lib/price.ts:subtotalCents",
-      "kind": "symbol",
-      "name": "subtotalCents",
-      "source": {
-        "line": 11,
-        "path": "web/src/lib/price.ts",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "end_line": 21,
-      "id": "sym:sample-system:web/src/lib/status.ts:nextStatuses",
-      "kind": "symbol",
-      "name": "nextStatuses",
-      "source": {
-        "line": 18,
-        "path": "web/src/lib/status.ts",
+        "line": 15,
+        "path": "web/src/lib/format.ts",
         "repo": "sample-system"
       }
     },
     {
       "end_line": 34,
-      "id": "sym:sample-system:web/src/pages/CustomerPage.tsx:CustomerPage",
+      "id": "sym:sample-system:web/src/lib/format.ts:todayIn",
       "kind": "symbol",
-      "name": "CustomerPage",
+      "name": "todayIn",
       "source": {
-        "line": 7,
-        "path": "web/src/pages/CustomerPage.tsx",
+        "line": 32,
+        "path": "web/src/lib/format.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 72,
-      "id": "sym:sample-system:web/src/pages/NewOrderPage.tsx:NewOrderPage",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/lib/format.ts:weekdayName",
       "kind": "symbol",
-      "name": "NewOrderPage",
+      "name": "weekdayName",
       "source": {
-        "line": 16,
-        "path": "web/src/pages/NewOrderPage.tsx",
+        "line": 4,
+        "path": "web/src/lib/format.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 102,
+      "id": "sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage",
+      "kind": "symbol",
+      "name": "AppointmentDetailPage",
+      "source": {
+        "line": 22,
+        "path": "web/src/pages/AppointmentDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 121,
+      "id": "sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:Cancel",
+      "kind": "symbol",
+      "name": "Cancel",
+      "source": {
+        "line": 120,
+        "path": "web/src/pages/AppointmentDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 104,
+      "id": "sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:Reschedule",
+      "kind": "symbol",
+      "name": "Reschedule",
+      "source": {
+        "line": 103,
+        "path": "web/src/pages/AppointmentDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 39,
+      "id": "sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:act",
+      "kind": "symbol",
+      "name": "act",
+      "source": {
+        "line": 29,
+        "path": "web/src/pages/AppointmentDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 55,
+      "id": "sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage",
+      "kind": "symbol",
+      "name": "AppointmentsPage",
+      "source": {
+        "line": 11,
+        "path": "web/src/pages/AppointmentsPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 118,
+      "id": "sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage",
+      "kind": "symbol",
+      "name": "BookAppointmentPage",
+      "source": {
+        "line": 15,
+        "path": "web/src/pages/BookAppointmentPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 64,
+      "id": "sym:sample-system:web/src/pages/BookAppointmentPage.tsx:submit",
+      "kind": "symbol",
+      "name": "submit",
+      "source": {
+        "line": 41,
+        "path": "web/src/pages/BookAppointmentPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 62,
+      "id": "sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage",
+      "kind": "symbol",
+      "name": "DashboardPage",
+      "source": {
+        "line": 17,
+        "path": "web/src/pages/DashboardPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 64,
+      "id": "sym:sample-system:web/src/pages/DashboardPage.tsx:Tile",
+      "kind": "symbol",
+      "name": "Tile",
+      "source": {
+        "line": 63,
+        "path": "web/src/pages/DashboardPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 134,
+      "id": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage",
+      "kind": "symbol",
+      "name": "DoctorDetailPage",
+      "source": {
+        "line": 13,
+        "path": "web/src/pages/DoctorDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 30,
+      "id": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:remove",
+      "kind": "symbol",
+      "name": "remove",
+      "source": {
+        "line": 21,
+        "path": "web/src/pages/DoctorDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 147,
+      "id": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:DoctorFormPage",
+      "kind": "symbol",
+      "name": "DoctorFormPage",
+      "source": {
+        "line": 40,
+        "path": "web/src/pages/DoctorFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 37,
+      "id": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor",
+      "kind": "symbol",
+      "name": "fromDoctor",
+      "source": {
+        "line": 30,
+        "path": "web/src/pages/DoctorFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 89,
+      "id": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:submit",
+      "kind": "symbol",
+      "name": "submit",
+      "source": {
+        "line": 58,
+        "path": "web/src/pages/DoctorFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 89,
+      "id": "sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage",
+      "kind": "symbol",
+      "name": "DoctorsPage",
+      "source": {
+        "line": 11,
+        "path": "web/src/pages/DoctorsPage.tsx",
         "repo": "sample-system"
       }
     },
@@ -1242,35 +1573,112 @@
       }
     },
     {
-      "end_line": 61,
-      "id": "sym:sample-system:web/src/pages/OrderDetailPage.tsx:OrderDetailPage",
+      "end_line": 79,
+      "id": "sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage",
       "kind": "symbol",
-      "name": "OrderDetailPage",
+      "name": "PatientDetailPage",
       "source": {
-        "line": 15,
-        "path": "web/src/pages/OrderDetailPage.tsx",
+        "line": 14,
+        "path": "web/src/pages/PatientDetailPage.tsx",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 57,
-      "id": "sym:sample-system:web/src/pages/OrdersPage.tsx:OrdersPage",
+      "end_line": 28,
+      "id": "sym:sample-system:web/src/pages/PatientDetailPage.tsx:remove",
       "kind": "symbol",
-      "name": "OrdersPage",
+      "name": "remove",
       "source": {
-        "line": 13,
-        "path": "web/src/pages/OrdersPage.tsx",
+        "line": 19,
+        "path": "web/src/pages/PatientDetailPage.tsx",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 34,
-      "id": "sym:sample-system:web/src/pages/ProductsPage.tsx:ProductsPage",
+      "end_line": 166,
+      "id": "sym:sample-system:web/src/pages/PatientFormPage.tsx:PatientFormPage",
       "kind": "symbol",
-      "name": "ProductsPage",
+      "name": "PatientFormPage",
       "source": {
-        "line": 6,
-        "path": "web/src/pages/ProductsPage.tsx",
+        "line": 47,
+        "path": "web/src/pages/PatientFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 44,
+      "id": "sym:sample-system:web/src/pages/PatientFormPage.tsx:fromPatient",
+      "kind": "symbol",
+      "name": "fromPatient",
+      "source": {
+        "line": 35,
+        "path": "web/src/pages/PatientFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 88,
+      "id": "sym:sample-system:web/src/pages/PatientFormPage.tsx:save",
+      "kind": "symbol",
+      "name": "save",
+      "source": {
+        "line": 63,
+        "path": "web/src/pages/PatientFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 94,
+      "id": "sym:sample-system:web/src/pages/PatientFormPage.tsx:submit",
+      "kind": "symbol",
+      "name": "submit",
+      "source": {
+        "line": 89,
+        "path": "web/src/pages/PatientFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 72,
+      "id": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage",
+      "kind": "symbol",
+      "name": "PatientsPage",
+      "source": {
+        "line": 11,
+        "path": "web/src/pages/PatientsPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 23,
+      "id": "sym:sample-system:web/src/pages/SettingsPage.tsx:RefList",
+      "kind": "symbol",
+      "name": "RefList",
+      "source": {
+        "line": 22,
+        "path": "web/src/pages/SettingsPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 21,
+      "id": "sym:sample-system:web/src/pages/SettingsPage.tsx:SettingsPage",
+      "kind": "symbol",
+      "name": "SettingsPage",
+      "source": {
+        "line": 11,
+        "path": "web/src/pages/SettingsPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 37,
+      "id": "sym:sample-system:web/src/pages/SettingsPage.tsx:run",
+      "kind": "symbol",
+      "name": "run",
+      "source": {
+        "line": 28,
+        "path": "web/src/pages/SettingsPage.tsx",
         "repo": "sample-system"
       }
     }
@@ -1278,7 +1686,7 @@
   "schema": "context-facts.v1",
   "section": "module-map",
   "sources": {
-    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
   },
   "unresolved": []
 }

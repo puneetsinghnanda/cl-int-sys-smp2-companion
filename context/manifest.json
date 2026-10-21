@@ -29,7 +29,7 @@
   },
   "redaction": {
     "blocking_hits": 0,
-    "paths_excluded": 5,
+    "paths_excluded": 4,
     "rules_version": "1",
     "values_masked": 0
   },
@@ -37,19 +37,21 @@
   "sections": [
     {
       "empty_reason": null,
-      "fact_count": 14,
+      "fact_count": 44,
       "id": "api-inventory",
       "kind": "fact",
       "path": "context/generated/api-inventory.json",
       "required": true,
-      "sha256": "d08d58e60bd07f9d89024af6e1643c190729a3714769106c2d26250cc17e25e0",
-      "tokens_est": 972
+      "sha256": "8dfdbde2e1d64359cb29b8f710a2a467d5e19b383d90def7c856e7738d4ca104",
+      "tokens_est": 3144
     },
     {
       "anchors": [
         "architecture",
         "components",
-        "jobs",
+        "identity",
+        "time-and-slots",
+        "double-booking",
         "deployment-shape",
         "open-points"
       ],
@@ -59,11 +61,11 @@
       "owner": "eng-db6b",
       "path": "context/architecture.md",
       "required": true,
-      "sha256": "d373010fd95f1a6f36ec8989fc6dff86fb02aab7fb0c4c8bffba31e959ddfefa",
+      "sha256": "9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a",
       "status": "reviewed",
-      "tokens_est": 232,
+      "tokens_est": 494,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     },
     {
@@ -71,7 +73,9 @@
         "conventions",
         "code-layout",
         "errors",
+        "lists",
         "database-changes",
+        "logging-and-data",
         "open-points"
       ],
       "id": "conventions",
@@ -80,20 +84,22 @@
       "owner": "eng-db6b",
       "path": "context/conventions.md",
       "required": true,
-      "sha256": "cc71810aa569dc894a6bc4ff0609c5e78e7830a66880ebf12bdbd3496bdcfb82",
+      "sha256": "dc53d94ec34eb193eeb06fdd0db19eb86a24c29f7d3c434e7c212d61038ca852",
       "status": "reviewed",
-      "tokens_est": 215,
+      "tokens_est": 372,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     },
     {
       "anchors": [
         "data-model",
-        "orders",
-        "order-events",
-        "data-retention",
-        "statuses"
+        "reference-lists",
+        "doctors",
+        "patients",
+        "appointments",
+        "codes",
+        "data-rules"
       ],
       "id": "data-model",
       "kind": "judgement",
@@ -101,22 +107,22 @@
       "owner": "eng-db6b",
       "path": "context/data-model.md",
       "required": true,
-      "sha256": "0c2c9f50bb4e491064d17461ab51fe674a71454a45b3ddf8cb3f9dda93c54e0b",
+      "sha256": "2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55",
       "status": "reviewed",
-      "tokens_est": 276,
+      "tokens_est": 518,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     },
     {
       "empty_reason": null,
-      "fact_count": 46,
+      "fact_count": 94,
       "id": "db-schema",
       "kind": "fact",
       "path": "context/generated/db-schema.json",
       "required": true,
-      "sha256": "30e520c91af1bef30e80773a278a8a6e97dfdf0497f3a9427361b56664276e65",
-      "tokens_est": 4442
+      "sha256": "43f6d599b6cbbd10eeb62bfbc1f7b947dea565e519d28b267856a8570f6de2dc",
+      "tokens_est": 9536
     },
     {
       "empty_reason": null,
@@ -125,18 +131,20 @@
       "kind": "fact",
       "path": "context/generated/dependency-graph.json",
       "required": true,
-      "sha256": "54e9484acff3f0bf2b56bd6ae8c77df583e0c85dd0d1f5da3a2faa65fa83a093",
-      "tokens_est": 2211
+      "sha256": "a06a398fd3b0172972f32e806baa3c2032444d364458f6cc7dbce5f3e229a5a8",
+      "tokens_est": 2212
     },
     {
       "anchors": [
         "glossary",
-        "order",
-        "order-history",
-        "recent-activity",
-        "status-history",
-        "archived-order",
-        "shippd"
+        "availability-block",
+        "slot",
+        "scheduled",
+        "no-show",
+        "inactive",
+        "medical-history",
+        "actor",
+        "paise"
       ],
       "id": "glossary",
       "kind": "judgement",
@@ -144,19 +152,21 @@
       "owner": "eng-db6b",
       "path": "context/glossary.md",
       "required": true,
-      "sha256": "5f73bd0d339c2ef136e417d68fe041a54f4d8ce29619225fcb7de77674516044",
+      "sha256": "9bfd556283382d3d3835bf3b12514acc4f6941dc24f21cba0c8eaa4cd658a36c",
       "status": "reviewed",
-      "tokens_est": 213,
+      "tokens_est": 284,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     },
     {
       "anchors": [
         "intent-baseline",
         "goals",
-        "constraints",
-        "order-history"
+        "booking-rules",
+        "closed-appointments",
+        "data-protection",
+        "constraints"
       ],
       "id": "intent-baseline",
       "kind": "judgement",
@@ -164,22 +174,22 @@
       "owner": "eng-db6b",
       "path": "context/intent-baseline.md",
       "required": false,
-      "sha256": "fe5abd6e231a94224afb75fbe43590ec9c100401d6f093cbe518c87def05142b",
+      "sha256": "9bfd821aeb2fb9524863e346707e049e4fcfb949a6e55b90223a79194946a215",
       "status": "reviewed",
-      "tokens_est": 173,
+      "tokens_est": 385,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     },
     {
       "empty_reason": null,
-      "fact_count": 113,
+      "fact_count": 150,
       "id": "module-map",
       "kind": "fact",
       "path": "context/generated/module-map.json",
       "required": true,
-      "sha256": "dde388f9c186e7fac93d6b1ae31cce9cf8d4b8e3e8b7503c8a15c26b990f3255",
-      "tokens_est": 8144
+      "sha256": "31d9ca15805fc1b6488e8da89fdb0ee7714adbcdfda176d69581ab8f3d6482da",
+      "tokens_est": 10688
     },
     {
       "anchors": [
@@ -187,6 +197,7 @@
         "purpose",
         "modules",
         "key-flows",
+        "environments",
         "open-points"
       ],
       "id": "system-baseline",
@@ -195,27 +206,29 @@
       "owner": "eng-db6b",
       "path": "context/system-baseline.md",
       "required": true,
-      "sha256": "bcf9e79a3a6d266a8397465b651d36c788ccf3fadc1c8568d0ee52ec863895db",
+      "sha256": "ba0f64bf3d26d83cd2c7b7ccb94b5857fb74d3ed14cb71c46da7d1ea7944f1ff",
       "status": "reviewed",
-      "tokens_est": 238,
+      "tokens_est": 420,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     },
     {
       "empty_reason": null,
-      "fact_count": 9,
+      "fact_count": 12,
       "id": "test-layout",
       "kind": "fact",
       "path": "context/generated/test-layout.json",
       "required": true,
-      "sha256": "17e0279fd066a2d787924f0c12ff05c4a0b9e478a5f1e22db98b50b80989f7dc",
-      "tokens_est": 1517
+      "sha256": "bd0686fe34afae476a1ec3105bcf1039ce7e5c510941d1bcdc09ab2ca8e74f3c",
+      "tokens_est": 2168
     },
     {
       "anchors": [
         "test-strategy",
         "layers",
+        "requirement-ids",
+        "database-for-tests",
         "how-to-run",
         "gaps"
       ],
@@ -225,24 +238,24 @@
       "owner": "eng-db6b",
       "path": "context/test-strategy.md",
       "required": true,
-      "sha256": "7ee82f030a71005782fc7b743e114662376d3d636bada810d9d3ab05722abf1b",
+      "sha256": "1869d3aed8521e40123c46f16539c5ea10ae5ac8c9d872ebc8a1f48b704ce150",
       "status": "reviewed",
-      "tokens_est": 176,
+      "tokens_est": 329,
       "verified_at": {
-        "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
       }
     }
   ],
   "sources": [
     {
-      "commit": "7cf61b938808101b7195cc80e8da2238ac370a23",
+      "commit": "415369398bdad3122ac084a00766a01a3034f900",
       "default_branch": "main",
-      "files_excluded": 5,
-      "files_scanned": 113,
+      "files_excluded": 4,
+      "files_scanned": 111,
       "repo": "sample-system",
       "scope": "."
     }
   ],
   "system": "SYS-SMP2",
-  "tokens_total_est": 18809
+  "tokens_total_est": 30550
 }

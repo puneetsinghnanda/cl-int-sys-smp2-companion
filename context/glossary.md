@@ -4,25 +4,31 @@ section: glossary
 owner: eng-db6b
 origin: human
 status: reviewed
-verified_at: {sample-system: 7cf61b938808101b7195cc80e8da2238ac370a23}
+verified_at: {sample-system: 415369398bdad3122ac084a00766a01a3034f900}
 ---
 
 # Glossary {#glossary}
 
-## Order {#order}
-A purchase placed by one customer. It has one current status and one or more lines.
+## Availability block {#availability-block}
+A weekly window when a doctor sees patients: weekday, start time, end time, in hospital local time.
 
-## Order history {#order-history}
-The list of a customer's orders in a date range, newest first, 20 per page.
+## Slot {#slot}
+One bookable interval of a doctor's slot length, starting at the start of an availability block.
 
-## Recent activity {#recent-activity}
-The status changes of one order shown on the order page, read from `order_events`.
+## Scheduled {#scheduled}
+An appointment that is booked and still open. Only Scheduled appointments can change.
 
-## Status history {#status-history}
-The full audit trail of an order's status changes, kept for the life of the order.
+## No-show {#no-show}
+A past appointment the patient did not attend, closed instead of staying Scheduled.
 
-## Archived order {#archived-order}
-An order older than 24 months. It is kept but hidden from order history.
+## Inactive {#inactive}
+A doctor, patient, department or specialization kept for history but not offered for new use.
 
-## SHIPPD {#shippd}
-Legacy spelling of SHIPPED written by an old export. Still accepted.
+## Medical history {#medical-history}
+Blood group, allergies, chronic conditions, current medications and notes of one patient.
+
+## Actor {#actor}
+Who made a change. In the MVP always `staff`; recorded in created_by, updated_by and appointment history.
+
+## Paise {#paise}
+One hundredth of a rupee. Fees are stored and sent as integer paise.

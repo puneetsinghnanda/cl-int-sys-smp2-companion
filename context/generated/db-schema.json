@@ -7,704 +7,1430 @@
   "facts": [
     {
       "default_kind": null,
-      "id": "column:customer.code",
+      "id": "column:appointment.cancellation_reason",
       "kind": "column",
-      "name": "code",
-      "nullable": false,
+      "name": "cancellation_reason",
+      "nullable": true,
       "source": {
         "line": 2,
-        "path": "db/migrations/001_create_customer_and_product.sql",
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:customer",
+      "table": "table:appointment",
       "type": "text"
-    },
-    {
-      "default_kind": null,
-      "id": "column:customer.display_name",
-      "kind": "column",
-      "name": "display_name",
-      "nullable": false,
-      "source": {
-        "line": 2,
-        "path": "db/migrations/001_create_customer_and_product.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:customer",
-      "type": "text"
-    },
-    {
-      "default_kind": null,
-      "id": "column:customer.email",
-      "kind": "column",
-      "name": "email",
-      "nullable": false,
-      "source": {
-        "line": 2,
-        "path": "db/migrations/001_create_customer_and_product.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:customer",
-      "type": "text"
-    },
-    {
-      "default_kind": null,
-      "id": "column:customer.id",
-      "kind": "column",
-      "name": "id",
-      "nullable": false,
-      "source": {
-        "line": 2,
-        "path": "db/migrations/001_create_customer_and_product.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:customer",
-      "type": "serial"
     },
     {
       "default_kind": "function",
-      "id": "column:order_events.created_at",
+      "id": "column:appointment.created_at",
       "kind": "column",
       "name": "created_at",
       "nullable": false,
       "source": {
-        "line": 3,
-        "path": "db/migrations/004_add_order_events.sql",
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_events",
-      "type": "timestamp"
+      "table": "table:appointment",
+      "type": "timestamptz"
     },
     {
       "default_kind": null,
-      "id": "column:order_events.id",
+      "id": "column:appointment.created_by",
+      "kind": "column",
+      "name": "created_by",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment.doctor_id",
+      "kind": "column",
+      "name": "doctor_id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment.ends_at",
+      "kind": "column",
+      "name": "ends_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment.id",
       "kind": "column",
       "name": "id",
       "nullable": false,
       "source": {
-        "line": 3,
-        "path": "db/migrations/004_add_order_events.sql",
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_events",
-      "type": "bigserial"
+      "table": "table:appointment",
+      "type": "serial"
     },
     {
       "default_kind": null,
-      "id": "column:order_events.order_id",
+      "id": "column:appointment.patient_id",
       "kind": "column",
-      "name": "order_id",
+      "name": "patient_id",
       "nullable": false,
       "source": {
-        "line": 3,
-        "path": "db/migrations/004_add_order_events.sql",
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_events",
+      "table": "table:appointment",
       "type": "integer"
     },
     {
       "default_kind": null,
-      "id": "column:order_events.status",
+      "id": "column:appointment.reason",
+      "kind": "column",
+      "name": "reason",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment.starts_at",
+      "kind": "column",
+      "name": "starts_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:appointment.status",
       "kind": "column",
       "name": "status",
       "nullable": false,
       "source": {
-        "line": 3,
-        "path": "db/migrations/004_add_order_events.sql",
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_events",
+      "table": "table:appointment",
+      "type": "text"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:appointment.updated_at",
+      "kind": "column",
+      "name": "updated_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment.updated_by",
+      "kind": "column",
+      "name": "updated_by",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment",
       "type": "text"
     },
     {
       "default_kind": null,
-      "id": "column:order_item.order_id",
+      "id": "column:appointment_event.actor",
       "kind": "column",
-      "name": "order_id",
+      "name": "actor",
       "nullable": false,
       "source": {
-        "line": 12,
-        "path": "db/migrations/002_create_orders.sql",
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_item",
-      "type": "integer"
+      "table": "table:appointment_event",
+      "type": "text"
     },
     {
       "default_kind": null,
-      "id": "column:order_item.product_id",
+      "id": "column:appointment_event.appointment_id",
       "kind": "column",
-      "name": "product_id",
+      "name": "appointment_id",
       "nullable": false,
       "source": {
-        "line": 12,
-        "path": "db/migrations/002_create_orders.sql",
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_item",
-      "type": "integer"
-    },
-    {
-      "default_kind": null,
-      "id": "column:order_item.quantity",
-      "kind": "column",
-      "name": "quantity",
-      "nullable": false,
-      "source": {
-        "line": 12,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:order_item",
-      "type": "integer"
-    },
-    {
-      "default_kind": null,
-      "id": "column:order_item.unit_price_cents",
-      "kind": "column",
-      "name": "unit_price_cents",
-      "nullable": false,
-      "source": {
-        "line": 12,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:order_item",
+      "table": "table:appointment_event",
       "type": "integer"
     },
     {
       "default_kind": "function",
-      "id": "column:order_status_history.changed_at",
+      "id": "column:appointment_event.at",
       "kind": "column",
-      "name": "changed_at",
+      "name": "at",
       "nullable": false,
       "source": {
-        "line": 2,
-        "path": "db/migrations/005_order_status_history.sql",
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_status_history",
-      "type": "timestamp"
+      "table": "table:appointment_event",
+      "type": "timestamptz"
     },
     {
       "default_kind": null,
-      "id": "column:order_status_history.from_status",
+      "id": "column:appointment_event.event",
       "kind": "column",
-      "name": "from_status",
-      "nullable": true,
+      "name": "event",
+      "nullable": false,
       "source": {
-        "line": 2,
-        "path": "db/migrations/005_order_status_history.sql",
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_status_history",
+      "table": "table:appointment_event",
       "type": "text"
     },
     {
       "default_kind": null,
-      "id": "column:order_status_history.order_id",
+      "id": "column:appointment_event.from_starts_at",
       "kind": "column",
-      "name": "order_id",
-      "nullable": false,
+      "name": "from_starts_at",
+      "nullable": true,
       "source": {
-        "line": 2,
-        "path": "db/migrations/005_order_status_history.sql",
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_status_history",
+      "table": "table:appointment_event",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment_event.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment_event",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment_event.note",
+      "kind": "column",
+      "name": "note",
+      "nullable": true,
+      "source": {
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment_event",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:appointment_event.to_starts_at",
+      "kind": "column",
+      "name": "to_starts_at",
+      "nullable": true,
+      "source": {
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment_event",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:availability_block.doctor_id",
+      "kind": "column",
+      "name": "doctor_id",
+      "nullable": false,
+      "source": {
+        "line": 22,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:availability_block",
       "type": "integer"
     },
     {
       "default_kind": null,
-      "id": "column:order_status_history.to_status",
+      "id": "column:availability_block.end_time",
       "kind": "column",
-      "name": "to_status",
+      "name": "end_time",
       "nullable": false,
       "source": {
-        "line": 2,
-        "path": "db/migrations/005_order_status_history.sql",
+        "line": 22,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
         "repo": "sample-system"
       },
-      "table": "table:order_status_history",
-      "type": "text"
+      "table": "table:availability_block",
+      "type": "time"
     },
     {
       "default_kind": null,
-      "id": "column:orders.archived_at",
+      "id": "column:availability_block.id",
       "kind": "column",
-      "name": "archived_at",
-      "nullable": true,
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 22,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:availability_block",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:availability_block.start_time",
+      "kind": "column",
+      "name": "start_time",
+      "nullable": false,
+      "source": {
+        "line": 22,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:availability_block",
+      "type": "time"
+    },
+    {
+      "default_kind": null,
+      "id": "column:availability_block.weekday",
+      "kind": "column",
+      "name": "weekday",
+      "nullable": false,
+      "source": {
+        "line": 22,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:availability_block",
+      "type": "smallint"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:department.created_at",
+      "kind": "column",
+      "name": "created_at",
+      "nullable": false,
       "source": {
         "line": 4,
-        "path": "db/migrations/003_orders_created_at.sql",
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       },
-      "table": "table:orders",
-      "type": "timestamp"
-    },
-    {
-      "default_kind": "function",
-      "id": "column:orders.created_at",
-      "kind": "column",
-      "name": "created_at",
-      "nullable": false,
-      "source": {
-        "line": 3,
-        "path": "db/migrations/003_orders_created_at.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:orders",
-      "type": "timestamp"
+      "table": "table:department",
+      "type": "timestamptz"
     },
     {
       "default_kind": null,
-      "id": "column:orders.customer_id",
+      "id": "column:department.created_by",
       "kind": "column",
-      "name": "customer_id",
+      "name": "created_by",
       "nullable": false,
       "source": {
-        "line": 3,
-        "path": "db/migrations/002_create_orders.sql",
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       },
-      "table": "table:orders",
-      "type": "integer"
-    },
-    {
-      "default_kind": null,
-      "id": "column:orders.id",
-      "kind": "column",
-      "name": "id",
-      "nullable": false,
-      "source": {
-        "line": 3,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:orders",
-      "type": "serial"
-    },
-    {
-      "default_kind": null,
-      "id": "column:orders.status",
-      "kind": "column",
-      "name": "status",
-      "nullable": false,
-      "source": {
-        "line": 3,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:orders",
+      "table": "table:department",
       "type": "text"
     },
     {
       "default_kind": null,
-      "id": "column:orders.total_cents",
-      "kind": "column",
-      "name": "total_cents",
-      "nullable": false,
-      "source": {
-        "line": 3,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:orders",
-      "type": "integer"
-    },
-    {
-      "default_kind": null,
-      "id": "column:product.id",
+      "id": "column:department.id",
       "kind": "column",
       "name": "id",
       "nullable": false,
       "source": {
-        "line": 9,
-        "path": "db/migrations/001_create_customer_and_product.sql",
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       },
-      "table": "table:product",
+      "table": "table:department",
       "type": "serial"
     },
     {
       "default_kind": null,
-      "id": "column:product.name",
+      "id": "column:department.name",
       "kind": "column",
       "name": "name",
       "nullable": false,
       "source": {
-        "line": 9,
-        "path": "db/migrations/001_create_customer_and_product.sql",
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       },
-      "table": "table:product",
+      "table": "table:department",
       "type": "text"
     },
     {
-      "default_kind": null,
-      "id": "column:product.price_cents",
+      "default_kind": "literal",
+      "id": "column:department.status",
       "kind": "column",
-      "name": "price_cents",
+      "name": "status",
       "nullable": false,
       "source": {
-        "line": 9,
-        "path": "db/migrations/001_create_customer_and_product.sql",
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       },
-      "table": "table:product",
-      "type": "integer"
-    },
-    {
-      "default_kind": null,
-      "id": "column:product.sku",
-      "kind": "column",
-      "name": "sku",
-      "nullable": false,
-      "source": {
-        "line": 9,
-        "path": "db/migrations/001_create_customer_and_product.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:product",
+      "table": "table:department",
       "type": "text"
-    },
-    {
-      "default_kind": null,
-      "id": "column:shipment.carrier_code",
-      "kind": "column",
-      "name": "carrier_code",
-      "nullable": false,
-      "source": {
-        "line": 2,
-        "path": "db/migrations/006_create_shipment.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:shipment",
-      "type": "text"
-    },
-    {
-      "default_kind": null,
-      "id": "column:shipment.order_id",
-      "kind": "column",
-      "name": "order_id",
-      "nullable": false,
-      "source": {
-        "line": 2,
-        "path": "db/migrations/006_create_shipment.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:shipment",
-      "type": "integer"
     },
     {
       "default_kind": "function",
-      "id": "column:shipment.shipped_at",
+      "id": "column:department.updated_at",
       "kind": "column",
-      "name": "shipped_at",
+      "name": "updated_at",
+      "nullable": false,
+      "source": {
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:department",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:department.updated_by",
+      "kind": "column",
+      "name": "updated_by",
+      "nullable": false,
+      "source": {
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:department",
+      "type": "text"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:doctor.created_at",
+      "kind": "column",
+      "name": "created_at",
       "nullable": false,
       "source": {
         "line": 2,
-        "path": "db/migrations/006_create_shipment.sql",
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
         "repo": "sample-system"
       },
-      "table": "table:shipment",
-      "type": "timestamp"
+      "table": "table:doctor",
+      "type": "timestamptz"
     },
     {
-      "columns": [
-        "created_at"
-      ],
-      "id": "index:order_events_created_at_idx",
-      "kind": "index",
-      "name": "order_events_created_at_idx",
-      "source": {
-        "line": 10,
-        "path": "db/migrations/004_add_order_events.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:order_events"
-    },
-    {
-      "columns": [
-        "order_id"
-      ],
-      "id": "index:order_status_history_order_id_idx",
-      "kind": "index",
-      "name": "order_status_history_order_id_idx",
-      "source": {
-        "line": 9,
-        "path": "db/migrations/005_order_status_history.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:order_status_history"
-    },
-    {
-      "columns": [
-        "created_at"
-      ],
-      "id": "index:orders_created_at_idx",
-      "kind": "index",
-      "name": "orders_created_at_idx",
-      "source": {
-        "line": 6,
-        "path": "db/migrations/003_orders_created_at.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:orders"
-    },
-    {
-      "columns": [
-        "customer_id"
-      ],
-      "id": "index:orders_customer_id_idx",
-      "kind": "index",
-      "name": "orders_customer_id_idx",
-      "source": {
-        "line": 10,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      },
-      "table": "table:orders"
-    },
-    {
-      "id": "migration:001_create_customer_and_product",
-      "kind": "migration",
-      "name": "001_create_customer_and_product",
-      "source": {
-        "line": 1,
-        "path": "db/migrations/001_create_customer_and_product.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "id": "migration:002_create_orders",
-      "kind": "migration",
-      "name": "002_create_orders",
-      "source": {
-        "line": 1,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "id": "migration:003_orders_created_at",
-      "kind": "migration",
-      "name": "003_orders_created_at",
-      "source": {
-        "line": 1,
-        "path": "db/migrations/003_orders_created_at.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "id": "migration:004_add_order_events",
-      "kind": "migration",
-      "name": "004_add_order_events",
-      "source": {
-        "line": 1,
-        "path": "db/migrations/004_add_order_events.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "id": "migration:005_order_status_history",
-      "kind": "migration",
-      "name": "005_order_status_history",
-      "source": {
-        "line": 1,
-        "path": "db/migrations/005_order_status_history.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "id": "migration:006_create_shipment",
-      "kind": "migration",
-      "name": "006_create_shipment",
-      "source": {
-        "line": 1,
-        "path": "db/migrations/006_create_shipment.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "columns": [
-        "column:customer.id",
-        "column:customer.code",
-        "column:customer.display_name",
-        "column:customer.email"
-      ],
-      "foreign_keys": [],
-      "id": "table:customer",
-      "kind": "table",
-      "name": "customer",
-      "primary_key": [
-        "id"
-      ],
+      "default_kind": null,
+      "id": "column:doctor.created_by",
+      "kind": "column",
+      "name": "created_by",
+      "nullable": false,
       "source": {
         "line": 2,
-        "path": "db/migrations/001_create_customer_and_product.sql",
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
         "repo": "sample-system"
-      }
+      },
+      "table": "table:doctor",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.department_id",
+      "kind": "column",
+      "name": "department_id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.email",
+      "kind": "column",
+      "name": "email",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.fee_paise",
+      "kind": "column",
+      "name": "fee_paise",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.full_name",
+      "kind": "column",
+      "name": "full_name",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.phone",
+      "kind": "column",
+      "name": "phone",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "text"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:doctor.slot_minutes",
+      "kind": "column",
+      "name": "slot_minutes",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "integer"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.specialization_id",
+      "kind": "column",
+      "name": "specialization_id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "integer"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:doctor.status",
+      "kind": "column",
+      "name": "status",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "text"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:doctor.updated_at",
+      "kind": "column",
+      "name": "updated_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:doctor.updated_by",
+      "kind": "column",
+      "name": "updated_by",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.address",
+      "kind": "column",
+      "name": "address",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:patient.allergies",
+      "kind": "column",
+      "name": "allergies",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text[]"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.blood_group",
+      "kind": "column",
+      "name": "blood_group",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:patient.chronic_conditions",
+      "kind": "column",
+      "name": "chronic_conditions",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text[]"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:patient.created_at",
+      "kind": "column",
+      "name": "created_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.created_by",
+      "kind": "column",
+      "name": "created_by",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:patient.current_medications",
+      "kind": "column",
+      "name": "current_medications",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text[]"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.date_of_birth",
+      "kind": "column",
+      "name": "date_of_birth",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "date"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.email",
+      "kind": "column",
+      "name": "email",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.emergency_contact_name",
+      "kind": "column",
+      "name": "emergency_contact_name",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.emergency_contact_phone",
+      "kind": "column",
+      "name": "emergency_contact_phone",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.full_name",
+      "kind": "column",
+      "name": "full_name",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.gender",
+      "kind": "column",
+      "name": "gender",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.medical_notes",
+      "kind": "column",
+      "name": "medical_notes",
+      "nullable": true,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.phone",
+      "kind": "column",
+      "name": "phone",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:patient.status",
+      "kind": "column",
+      "name": "status",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:patient.updated_at",
+      "kind": "column",
+      "name": "updated_at",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:patient.updated_by",
+      "kind": "column",
+      "name": "updated_by",
+      "nullable": false,
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient",
+      "type": "text"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:specialization.created_at",
+      "kind": "column",
+      "name": "created_at",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:specialization.created_by",
+      "kind": "column",
+      "name": "created_by",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "text"
+    },
+    {
+      "default_kind": null,
+      "id": "column:specialization.id",
+      "kind": "column",
+      "name": "id",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "serial"
+    },
+    {
+      "default_kind": null,
+      "id": "column:specialization.name",
+      "kind": "column",
+      "name": "name",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "text"
+    },
+    {
+      "default_kind": "literal",
+      "id": "column:specialization.status",
+      "kind": "column",
+      "name": "status",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "text"
+    },
+    {
+      "default_kind": "function",
+      "id": "column:specialization.updated_at",
+      "kind": "column",
+      "name": "updated_at",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "timestamptz"
+    },
+    {
+      "default_kind": null,
+      "id": "column:specialization.updated_by",
+      "kind": "column",
+      "name": "updated_by",
+      "nullable": false,
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization",
+      "type": "text"
     },
     {
       "columns": [
-        "column:order_events.id",
-        "column:order_events.order_id",
-        "column:order_events.status",
-        "column:order_events.created_at"
+        "doctor_id",
+        "starts_at"
       ],
-      "foreign_keys": [
-        {
-          "columns": [
-            "order_id"
-          ],
-          "references": "table:orders"
-        }
-      ],
-      "id": "table:order_events",
-      "kind": "table",
-      "name": "order_events",
-      "primary_key": [
+      "id": "index:appointment_doctor_start_idx",
+      "kind": "index",
+      "name": "appointment_doctor_start_idx",
+      "source": {
+        "line": 27,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment"
+    },
+    {
+      "columns": [
+        "appointment_id",
         "id"
       ],
+      "id": "index:appointment_event_appt_idx",
+      "kind": "index",
+      "name": "appointment_event_appt_idx",
       "source": {
-        "line": 3,
-        "path": "db/migrations/004_add_order_events.sql",
+        "line": 42,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment_event"
+    },
+    {
+      "columns": [
+        "patient_id",
+        "starts_at"
+      ],
+      "id": "index:appointment_patient_start_idx",
+      "kind": "index",
+      "name": "appointment_patient_start_idx",
+      "source": {
+        "line": 28,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment"
+    },
+    {
+      "columns": [
+        "starts_at"
+      ],
+      "id": "index:appointment_start_idx",
+      "kind": "index",
+      "name": "appointment_start_idx",
+      "source": {
+        "line": 29,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:appointment"
+    },
+    {
+      "columns": [
+        "lower(name"
+      ],
+      "id": "index:department_name_key",
+      "kind": "index",
+      "name": "department_name_key",
+      "source": {
+        "line": 13,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:department"
+    },
+    {
+      "columns": [
+        "department_id"
+      ],
+      "id": "index:doctor_department_idx",
+      "kind": "index",
+      "name": "doctor_department_idx",
+      "source": {
+        "line": 18,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor"
+    },
+    {
+      "columns": [
+        "lower(full_name"
+      ],
+      "id": "index:doctor_name_idx",
+      "kind": "index",
+      "name": "doctor_name_idx",
+      "source": {
+        "line": 17,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor"
+    },
+    {
+      "columns": [
+        "specialization_id"
+      ],
+      "id": "index:doctor_specialization_idx",
+      "kind": "index",
+      "name": "doctor_specialization_idx",
+      "source": {
+        "line": 19,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:doctor"
+    },
+    {
+      "columns": [
+        "created_at desc",
+        "id desc"
+      ],
+      "id": "index:patient_created_idx",
+      "kind": "index",
+      "name": "patient_created_idx",
+      "source": {
+        "line": 25,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient"
+    },
+    {
+      "columns": [
+        "lower(full_name"
+      ],
+      "id": "index:patient_name_idx",
+      "kind": "index",
+      "name": "patient_name_idx",
+      "source": {
+        "line": 23,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient"
+    },
+    {
+      "columns": [
+        "phone"
+      ],
+      "id": "index:patient_phone_idx",
+      "kind": "index",
+      "name": "patient_phone_idx",
+      "source": {
+        "line": 24,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:patient"
+    },
+    {
+      "columns": [
+        "lower(name"
+      ],
+      "id": "index:specialization_name_key",
+      "kind": "index",
+      "name": "specialization_name_key",
+      "source": {
+        "line": 24,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      },
+      "table": "table:specialization"
+    },
+    {
+      "id": "migration:20261016T090000__create_reference_lists",
+      "kind": "migration",
+      "name": "20261016T090000__create_reference_lists",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:20261016T090100__create_doctors",
+      "kind": "migration",
+      "name": "20261016T090100__create_doctors",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:20261016T090200__create_patients",
+      "kind": "migration",
+      "name": "20261016T090200__create_patients",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "id": "migration:20261016T090300__create_appointments",
+      "kind": "migration",
+      "name": "20261016T090300__create_appointments",
+      "source": {
+        "line": 1,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       }
     },
     {
       "columns": [
-        "column:order_item.order_id",
-        "column:order_item.product_id",
-        "column:order_item.quantity",
-        "column:order_item.unit_price_cents"
+        "column:appointment.id",
+        "column:appointment.doctor_id",
+        "column:appointment.patient_id",
+        "column:appointment.starts_at",
+        "column:appointment.ends_at",
+        "column:appointment.reason",
+        "column:appointment.status",
+        "column:appointment.cancellation_reason",
+        "column:appointment.created_at",
+        "column:appointment.created_by",
+        "column:appointment.updated_at",
+        "column:appointment.updated_by"
       ],
       "foreign_keys": [
         {
           "columns": [
-            "order_id"
+            "doctor_id"
           ],
-          "references": "table:orders"
+          "references": "table:doctor"
         },
         {
           "columns": [
-            "product_id"
+            "patient_id"
           ],
-          "references": "table:product"
+          "references": "table:patient"
         }
       ],
-      "id": "table:order_item",
+      "id": "table:appointment",
       "kind": "table",
-      "name": "order_item",
-      "primary_key": [
-        "order_id",
-        "product_id"
-      ],
-      "source": {
-        "line": 12,
-        "path": "db/migrations/002_create_orders.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "columns": [
-        "column:order_status_history.order_id",
-        "column:order_status_history.from_status",
-        "column:order_status_history.to_status",
-        "column:order_status_history.changed_at"
-      ],
-      "foreign_keys": [
-        {
-          "columns": [
-            "order_id"
-          ],
-          "references": "table:orders"
-        }
-      ],
-      "id": "table:order_status_history",
-      "kind": "table",
-      "name": "order_status_history",
-      "primary_key": [],
-      "source": {
-        "line": 2,
-        "path": "db/migrations/005_order_status_history.sql",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "columns": [
-        "column:orders.id",
-        "column:orders.customer_id",
-        "column:orders.status",
-        "column:orders.total_cents",
-        "column:orders.created_at",
-        "column:orders.archived_at"
-      ],
-      "foreign_keys": [
-        {
-          "columns": [
-            "customer_id"
-          ],
-          "references": "table:customer"
-        }
-      ],
-      "id": "table:orders",
-      "kind": "table",
-      "name": "orders",
+      "name": "appointment",
       "primary_key": [
         "id"
       ],
       "source": {
-        "line": 3,
-        "path": "db/migrations/002_create_orders.sql",
+        "line": 2,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
         "repo": "sample-system"
       }
     },
     {
       "columns": [
-        "column:product.id",
-        "column:product.sku",
-        "column:product.name",
-        "column:product.price_cents"
+        "column:appointment_event.id",
+        "column:appointment_event.appointment_id",
+        "column:appointment_event.event",
+        "column:appointment_event.from_starts_at",
+        "column:appointment_event.to_starts_at",
+        "column:appointment_event.note",
+        "column:appointment_event.actor",
+        "column:appointment_event.at"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "appointment_id"
+          ],
+          "references": "table:appointment"
+        }
+      ],
+      "id": "table:appointment_event",
+      "kind": "table",
+      "name": "appointment_event",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 32,
+        "path": "db/migrations/20261016T090300__create_appointments.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:availability_block.id",
+        "column:availability_block.doctor_id",
+        "column:availability_block.weekday",
+        "column:availability_block.start_time",
+        "column:availability_block.end_time"
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "doctor_id"
+          ],
+          "references": "table:doctor"
+        }
+      ],
+      "id": "table:availability_block",
+      "kind": "table",
+      "name": "availability_block",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 22,
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:department.id",
+        "column:department.name",
+        "column:department.status",
+        "column:department.created_at",
+        "column:department.created_by",
+        "column:department.updated_at",
+        "column:department.updated_by"
       ],
       "foreign_keys": [],
-      "id": "table:product",
+      "id": "table:department",
       "kind": "table",
-      "name": "product",
+      "name": "department",
       "primary_key": [
         "id"
       ],
       "source": {
-        "line": 9,
-        "path": "db/migrations/001_create_customer_and_product.sql",
+        "line": 4,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       }
     },
     {
       "columns": [
-        "column:shipment.order_id",
-        "column:shipment.carrier_code",
-        "column:shipment.shipped_at"
+        "column:doctor.id",
+        "column:doctor.full_name",
+        "column:doctor.specialization_id",
+        "column:doctor.department_id",
+        "column:doctor.phone",
+        "column:doctor.email",
+        "column:doctor.fee_paise",
+        "column:doctor.slot_minutes",
+        "column:doctor.status",
+        "column:doctor.created_at",
+        "column:doctor.created_by",
+        "column:doctor.updated_at",
+        "column:doctor.updated_by"
       ],
       "foreign_keys": [
         {
           "columns": [
-            "order_id"
+            "specialization_id"
           ],
-          "references": "table:orders"
+          "references": "table:specialization"
+        },
+        {
+          "columns": [
+            "department_id"
+          ],
+          "references": "table:department"
         }
       ],
-      "id": "table:shipment",
+      "id": "table:doctor",
       "kind": "table",
-      "name": "shipment",
+      "name": "doctor",
       "primary_key": [
-        "order_id"
+        "id"
       ],
       "source": {
         "line": 2,
-        "path": "db/migrations/006_create_shipment.sql",
+        "path": "db/migrations/20261016T090100__create_doctors.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:patient.id",
+        "column:patient.full_name",
+        "column:patient.date_of_birth",
+        "column:patient.gender",
+        "column:patient.phone",
+        "column:patient.email",
+        "column:patient.address",
+        "column:patient.emergency_contact_name",
+        "column:patient.emergency_contact_phone",
+        "column:patient.blood_group",
+        "column:patient.allergies",
+        "column:patient.chronic_conditions",
+        "column:patient.current_medications",
+        "column:patient.medical_notes",
+        "column:patient.status",
+        "column:patient.created_at",
+        "column:patient.created_by",
+        "column:patient.updated_at",
+        "column:patient.updated_by"
+      ],
+      "foreign_keys": [],
+      "id": "table:patient",
+      "kind": "table",
+      "name": "patient",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 2,
+        "path": "db/migrations/20261016T090200__create_patients.sql",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "columns": [
+        "column:specialization.id",
+        "column:specialization.name",
+        "column:specialization.status",
+        "column:specialization.created_at",
+        "column:specialization.created_by",
+        "column:specialization.updated_at",
+        "column:specialization.updated_by"
+      ],
+      "foreign_keys": [],
+      "id": "table:specialization",
+      "kind": "table",
+      "name": "specialization",
+      "primary_key": [
+        "id"
+      ],
+      "source": {
+        "line": 15,
+        "path": "db/migrations/20261016T090000__create_reference_lists.sql",
         "repo": "sample-system"
       }
     }
@@ -712,7 +1438,7 @@
   "schema": "context-facts.v1",
   "section": "db-schema",
   "sources": {
-    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
   },
   "unresolved": []
 }

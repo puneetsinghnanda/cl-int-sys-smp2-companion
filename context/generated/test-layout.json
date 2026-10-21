@@ -7,34 +7,83 @@
   "facts": [
     {
       "framework": "unknown",
-      "id": "test:sample-system:api/test/customers-products.test.ts",
+      "id": "test:sample-system:api/test/appointments.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
       "source": {
         "line": 1,
-        "path": "api/test/customers-products.test.ts",
+        "path": "api/test/appointments.test.ts",
         "repo": "sample-system"
       },
       "titles": [
-        "GET /api/customers/:id returns a summary of non-archived orders",
-        "GET /api/customers/:id returns 404 for an unknown customer",
-        "GET /api/products lists the catalogue by SKU",
-        "archive job hides orders older than 24 months and leaves recent ones"
+        "APT-1: books one of the free slots shown for the day",
+        "APT-2: refuses times off the slot grid, outside availability, in the past or already taken",
+        "APT-3: a patient cannot be in two Scheduled appointments at once, with any doctors",
+        "APT-4: two simultaneous bookings of one slot leave exactly one appointment",
+        "APT-5: reschedules to another free slot, keeping the id and the previous time in history",
+        "APT-6: cancels with a required reason, and the slot is free again",
+        "APT-7: marks Completed or No-show only after the start time",
+        "APT-8: Completed, Cancelled and No-show appointments cannot change",
+        "APT-9: lists by doctor or patient, with date range and status, ordered by start",
+        "APT-10: shows a doctor’s day with booked and free slots",
+        "APT-11: records every change with time and actor"
       ]
     },
     {
       "framework": "unknown",
-      "id": "test:sample-system:api/test/health.test.ts",
+      "id": "test:sample-system:api/test/auth.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
       "source": {
         "line": 1,
-        "path": "api/test/health.test.ts",
+        "path": "api/test/auth.test.ts",
         "repo": "sample-system"
       },
       "titles": [
-        "reports ok when the database answers",
-        "returns a JSON 404 for unknown routes"
+        "auth-ready architecture (PRD §4.6)",
+        "AUTH-2: in the MVP every permission is granted",
+        "AUTH-1/AUTH-3: the request actor fills created_by and updated_by",
+        "serves health, settings and JSON 404s"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/dashboard.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/dashboard.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "DSH-1..6: counts patients, doctors and appointments by their definitions",
+        "DSH-4: lists the next Scheduled appointments in time order",
+        "DSH-7: the period is Today, Last 7 days or Last 30 days, default Today",
+        "DSH-8: the cancelled tile’s list matches its count",
+        "DSH-9: carries no contact details or medical history"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/doctors.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/doctors.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "DOC-1: creates a doctor with availability and a generated code",
+        "DOC-1: rejects invalid fields with one message per field",
+        "DOC-1: rejects overlapping availability blocks",
+        "DOC-2: lists 20 per page by name, with search and filters",
+        "DOC-3: shows details, availability and upcoming appointments",
+        "DOC-4: edits fields but never the code",
+        "DOC-5: a doctor with appointments cannot be deleted; one without can",
+        "DOC-7: changing availability keeps appointments and flags those outside it",
+        "DOC-6: an Inactive doctor cannot be booked but keeps existing appointments"
       ]
     },
     {
@@ -48,56 +97,57 @@
         "repo": "sample-system"
       },
       "titles": [
-        "price",
-        "adds tax and rounds to whole cents",
-        "is zero for an empty order",
-        "totals a single-line order",
-        "status rules",
-        "follows PLACED -> PACKED -> SHIPPED -> DELIVERED",
-        "treats the legacy SHIPPD spelling as SHIPPED",
-        "params",
-        "accepts YYYY-MM-DD and rejects other forms",
-        "accepts positive integer ids only",
-        "config",
-        "defaults to loopback, port 3000 and 7 days of history",
-        "needs a database location in production"
+        "hospital time zone (NFR-2)",
+        "maps local wall-clock times to UTC",
+        "knows the local day of an instant and its bounds",
+        "validates days and weekdays",
+        "slots (APT-2, DOC-7)",
+        "APT-2: cuts each block into slots that end inside it",
+        "APT-2: accepts only slot starts",
+        "DOC-7: tells whether an appointment still fits the availability",
+        "DOC-1: rejects overlapping or inverted blocks",
+        "display codes",
+        "formats and parses D-, P- and A- codes"
       ]
     },
     {
       "framework": "unknown",
-      "id": "test:sample-system:api/test/orders.test.ts",
+      "id": "test:sample-system:api/test/patients.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
       "source": {
         "line": 1,
-        "path": "api/test/orders.test.ts",
+        "path": "api/test/patients.test.ts",
         "repo": "sample-system"
       },
       "titles": [
-        "GET /api/orders",
-        "lists non-archived orders in the range, newest first",
-        "includes items and the customer name",
-        "filters by customer",
-        "hides archived orders",
-        "sorts by total when asked",
-        "rejects a malformed date",
-        "returns an empty first page by default when nothing is recent",
-        "GET /api/orders/:id",
-        "returns items, status history and shipment",
-        "returns 404 for an unknown order",
-        "rejects a non-numeric id",
-        "POST /api/orders",
-        "creates an order with prices from the catalogue",
-        "rejects an unknown product",
-        "rejects an unknown customer",
-        "rejects a missing items list",
-        "rejects a non-integer quantity",
-        "PATCH /api/orders/:id/status",
-        "moves PLACED to PACKED and records history",
-        "creates a shipment when an order ships",
-        "accepts the legacy SHIPPD status on old orders",
-        "refuses an invalid transition",
-        "refuses an unknown status"
+        "PAT-1: registers a patient with a generated code and medical history",
+        "PAT-1: rejects invalid fields with one message per field",
+        "PAT-2: lists newest first, 20 per page, and searches name, code or phone",
+        "PAT-3: shows details, history and appointments, upcoming first",
+        "PAT-4: edits fields but never the code",
+        "PAT-5: warns about a likely duplicate and lets staff continue",
+        "PAT-6: a patient with appointments cannot be deleted; one without can",
+        "PAT-7: an Inactive patient cannot be booked",
+        "PAT-8: lists and appointment views never carry medical history"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/reference.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/reference.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "REF-1: lists, adds and renames entries",
+        "REF-1: names are unique, ignoring case",
+        "REF-2: an entry used by a doctor cannot be deleted, an unused one can",
+        "REF-3: an Inactive entry cannot be chosen, but doctors who have it keep it",
+        "REF-4: a rename shows on existing doctors"
       ]
     },
     {
@@ -111,68 +161,62 @@
         "repo": "sample-system"
       },
       "titles": [
-        "seed generator (TC-SAM-002)",
+        "seed generator (NFR-7)",
         "is deterministic for the same seed and anchor",
         "changes when the seed changes",
-        "produces the TST-01 volumes with invented identities only",
-        "keeps the legacy SHIPPD status on old orders",
+        "uses invented identities only",
+        "never overlaps appointments for a doctor or a patient",
+        "has past outcomes and future bookings around the anchor",
         "rejects an invalid anchor",
-        "re-running migrations is a no-op",
-        "loads the full seed"
+        "migrations are already applied and re-running them is a no-op",
+        "loads the seed into an empty database, and only when asked to reset again"
       ]
     },
     {
       "framework": "unknown",
-      "id": "test:sample-system:web/src/__tests__/OrdersPage.test.tsx",
+      "id": "test:sample-system:web/src/__tests__/DashboardPage.test.tsx",
       "kind": "test",
       "module": "module:sample-system:web",
       "source": {
         "line": 1,
-        "path": "web/src/__tests__/OrdersPage.test.tsx",
+        "path": "web/src/__tests__/DashboardPage.test.tsx",
         "repo": "sample-system"
       },
       "titles": [
-        "OrdersPage",
-        "loads order history with the filters from the URL",
-        "shows the API error message"
+        "DashboardPage (PRD §4.4)",
+        "DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts"
       ]
     },
     {
       "framework": "unknown",
-      "id": "test:sample-system:web/src/__tests__/Pagination.test.tsx",
+      "id": "test:sample-system:web/src/__tests__/SlotPicker.test.tsx",
       "kind": "test",
       "module": "module:sample-system:web",
       "source": {
         "line": 1,
-        "path": "web/src/__tests__/Pagination.test.tsx",
+        "path": "web/src/__tests__/SlotPicker.test.tsx",
         "repo": "sample-system"
       },
       "titles": [
-        "Pagination",
-        "shows the page count and disables Previous on the first page",
-        "asks for the next page"
+        "SlotPicker (APT-1)",
+        "APT-1: only free slots can be chosen",
+        "says so when the doctor has no availability that day"
       ]
     },
     {
       "framework": "unknown",
-      "id": "test:sample-system:web/src/__tests__/lib.test.ts",
+      "id": "test:sample-system:web/src/__tests__/format.test.ts",
       "kind": "test",
       "module": "module:sample-system:web",
       "source": {
         "line": 1,
-        "path": "web/src/__tests__/lib.test.ts",
+        "path": "web/src/__tests__/format.test.ts",
         "repo": "sample-system"
       },
       "titles": [
-        "format",
-        "formats cents as dollars",
-        "formats a timestamp to the minute",
-        "labels the legacy SHIPPD status as Shipped",
-        "price (single-line orders)",
-        "adds tax to the subtotal",
-        "is zero with no lines",
-        "status",
-        "offers the next step only"
+        "formatting (INR, Asia/Kolkata)",
+        "shows paise as rupees and parses rupees back to paise",
+        "shows times in the hospital time zone"
       ]
     },
     {
@@ -191,7 +235,7 @@
   "schema": "context-facts.v1",
   "section": "test-layout",
   "sources": {
-    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
   },
   "unresolved": []
 }

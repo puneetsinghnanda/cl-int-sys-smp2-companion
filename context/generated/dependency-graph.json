@@ -110,6 +110,19 @@
       }
     },
     {
+      "dev": false,
+      "id": "dep:sample-system:db/package.json:tsx",
+      "kind": "dependency",
+      "locked": "4.23.15",
+      "name": "tsx",
+      "range": "^4.19.2",
+      "source": {
+        "line": 1,
+        "path": "db/package.json",
+        "repo": "sample-system"
+      }
+    },
+    {
       "dev": true,
       "id": "dep:sample-system:package.json:@eslint/js",
       "kind": "dependency",
@@ -168,19 +181,6 @@
       "locked": "15.15.0",
       "name": "globals",
       "range": "^15.12.0",
-      "source": {
-        "line": 1,
-        "path": "package.json",
-        "repo": "sample-system"
-      }
-    },
-    {
-      "dev": true,
-      "id": "dep:sample-system:package.json:tsx",
-      "kind": "dependency",
-      "locked": "4.23.15",
-      "name": "tsx",
-      "range": "^4.19.2",
       "source": {
         "line": 1,
         "path": "package.json",
@@ -366,7 +366,7 @@
   "schema": "context-facts.v1",
   "section": "dependency-graph",
   "sources": {
-    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
   },
   "unresolved": []
 }

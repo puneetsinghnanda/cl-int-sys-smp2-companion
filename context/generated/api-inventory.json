@@ -7,13 +7,133 @@
   "facts": [
     {
       "confidence": "resolved",
-      "id": "http:GET:/api/customers/:id",
+      "id": "http:DELETE:/api/departments/:id",
+      "kind": "http",
+      "method": "DELETE",
+      "path": "/api/departments/:id",
+      "source": {
+        "line": 12,
+        "path": "api/src/routes/departments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:DELETE:/api/doctors/:id",
+      "kind": "http",
+      "method": "DELETE",
+      "path": "/api/doctors/:id",
+      "source": {
+        "line": 44,
+        "path": "api/src/routes/doctors.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:DELETE:/api/patients/:id",
+      "kind": "http",
+      "method": "DELETE",
+      "path": "/api/patients/:id",
+      "source": {
+        "line": 42,
+        "path": "api/src/routes/patients.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:DELETE:/api/specializations/:id",
+      "kind": "http",
+      "method": "DELETE",
+      "path": "/api/specializations/:id",
+      "source": {
+        "line": 12,
+        "path": "api/src/routes/specializations.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/appointments",
       "kind": "http",
       "method": "GET",
-      "path": "/api/customers/:id",
+      "path": "/api/appointments",
+      "source": {
+        "line": 10,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/appointments/:id",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/appointments/:id",
+      "source": {
+        "line": 26,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/dashboard",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/dashboard",
+      "source": {
+        "line": 8,
+        "path": "api/src/routes/dashboard.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/departments",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/departments",
       "source": {
         "line": 9,
-        "path": "api/src/routes/customers.ts",
+        "path": "api/src/routes/departments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/doctors",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/doctors",
+      "source": {
+        "line": 12,
+        "path": "api/src/routes/doctors.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/doctors/:id",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/doctors/:id",
+      "source": {
+        "line": 28,
+        "path": "api/src/routes/doctors.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:GET:/api/doctors/:id/slots",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/doctors/:id/slots",
+      "source": {
+        "line": 62,
+        "path": "api/src/routes/doctors.ts",
         "repo": "sample-system"
       }
     },
@@ -31,61 +151,217 @@
     },
     {
       "confidence": "resolved",
-      "id": "http:GET:/api/orders",
+      "id": "http:GET:/api/patients",
       "kind": "http",
       "method": "GET",
-      "path": "/api/orders",
+      "path": "/api/patients",
       "source": {
-        "line": 13,
-        "path": "api/src/routes/orders.ts",
+        "line": 10,
+        "path": "api/src/routes/patients.ts",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "http:GET:/api/orders/:id",
+      "id": "http:GET:/api/patients/:id",
       "kind": "http",
       "method": "GET",
-      "path": "/api/orders/:id",
+      "path": "/api/patients/:id",
       "source": {
-        "line": 46,
-        "path": "api/src/routes/orders.ts",
+        "line": 26,
+        "path": "api/src/routes/patients.ts",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "http:GET:/api/products",
+      "id": "http:GET:/api/settings",
       "kind": "http",
       "method": "GET",
-      "path": "/api/products",
+      "path": "/api/settings",
       "source": {
-        "line": 8,
-        "path": "api/src/routes/products.ts",
+        "line": 20,
+        "path": "api/src/routes/health.ts",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "http:PATCH:/api/orders/:id/status",
+      "id": "http:GET:/api/specializations",
+      "kind": "http",
+      "method": "GET",
+      "path": "/api/specializations",
+      "source": {
+        "line": 9,
+        "path": "api/src/routes/specializations.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:PATCH:/api/departments/:id",
       "kind": "http",
       "method": "PATCH",
-      "path": "/api/orders/:id/status",
+      "path": "/api/departments/:id",
       "source": {
-        "line": 74,
-        "path": "api/src/routes/orders.ts",
+        "line": 11,
+        "path": "api/src/routes/departments.ts",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "http:POST:/api/orders",
+      "id": "http:PATCH:/api/doctors/:id",
+      "kind": "http",
+      "method": "PATCH",
+      "path": "/api/doctors/:id",
+      "source": {
+        "line": 36,
+        "path": "api/src/routes/doctors.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:PATCH:/api/patients/:id",
+      "kind": "http",
+      "method": "PATCH",
+      "path": "/api/patients/:id",
+      "source": {
+        "line": 34,
+        "path": "api/src/routes/patients.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:PATCH:/api/specializations/:id",
+      "kind": "http",
+      "method": "PATCH",
+      "path": "/api/specializations/:id",
+      "source": {
+        "line": 11,
+        "path": "api/src/routes/specializations.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/appointments",
       "kind": "http",
       "method": "POST",
-      "path": "/api/orders",
+      "path": "/api/appointments",
       "source": {
-        "line": 55,
-        "path": "api/src/routes/orders.ts",
+        "line": 18,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/appointments/:id/cancel",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/appointments/:id/cancel",
+      "source": {
+        "line": 42,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/appointments/:id/complete",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/appointments/:id/complete",
+      "source": {
+        "line": 50,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/appointments/:id/no-show",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/appointments/:id/no-show",
+      "source": {
+        "line": 58,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/appointments/:id/reschedule",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/appointments/:id/reschedule",
+      "source": {
+        "line": 34,
+        "path": "api/src/routes/appointments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/departments",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/departments",
+      "source": {
+        "line": 10,
+        "path": "api/src/routes/departments.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/doctors",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/doctors",
+      "source": {
+        "line": 20,
+        "path": "api/src/routes/doctors.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/patients",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/patients",
+      "source": {
+        "line": 18,
+        "path": "api/src/routes/patients.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:POST:/api/specializations",
+      "kind": "http",
+      "method": "POST",
+      "path": "/api/specializations",
+      "source": {
+        "line": 10,
+        "path": "api/src/routes/specializations.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "http:PUT:/api/doctors/:id/availability",
+      "kind": "http",
+      "method": "PUT",
+      "path": "/api/doctors/:id/availability",
+      "source": {
+        "line": 53,
+        "path": "api/src/routes/doctors.ts",
         "repo": "sample-system"
       }
     },
@@ -95,7 +371,7 @@
       "kind": "ui",
       "path": "*",
       "source": {
-        "line": 20,
+        "line": 38,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
@@ -106,62 +382,139 @@
       "kind": "ui",
       "path": "/",
       "source": {
-        "line": 14,
+        "line": 25,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "ui:/customers/:id",
+      "id": "ui:/appointments",
       "kind": "ui",
-      "path": "/customers/:id",
+      "path": "/appointments",
       "source": {
-        "line": 18,
+        "line": 34,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "ui:/orders",
+      "id": "ui:/appointments/:id",
       "kind": "ui",
-      "path": "/orders",
+      "path": "/appointments/:id",
       "source": {
-        "line": 15,
+        "line": 36,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "ui:/orders/:id",
+      "id": "ui:/appointments/new",
       "kind": "ui",
-      "path": "/orders/:id",
+      "path": "/appointments/new",
       "source": {
-        "line": 17,
+        "line": 35,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "ui:/orders/new",
+      "id": "ui:/doctors",
       "kind": "ui",
-      "path": "/orders/new",
+      "path": "/doctors",
       "source": {
-        "line": 16,
+        "line": 26,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
     },
     {
       "confidence": "resolved",
-      "id": "ui:/products",
+      "id": "ui:/doctors/:id",
       "kind": "ui",
-      "path": "/products",
+      "path": "/doctors/:id",
       "source": {
-        "line": 19,
+        "line": 28,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/doctors/:id/edit",
+      "kind": "ui",
+      "path": "/doctors/:id/edit",
+      "source": {
+        "line": 29,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/doctors/new",
+      "kind": "ui",
+      "path": "/doctors/new",
+      "source": {
+        "line": 27,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/patients",
+      "kind": "ui",
+      "path": "/patients",
+      "source": {
+        "line": 30,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/patients/:id",
+      "kind": "ui",
+      "path": "/patients/:id",
+      "source": {
+        "line": 32,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/patients/:id/edit",
+      "kind": "ui",
+      "path": "/patients/:id/edit",
+      "source": {
+        "line": 33,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/patients/new",
+      "kind": "ui",
+      "path": "/patients/new",
+      "source": {
+        "line": 31,
+        "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
+      "id": "ui:/settings",
+      "kind": "ui",
+      "path": "/settings",
+      "source": {
+        "line": 37,
         "path": "web/src/App.tsx",
         "repo": "sample-system"
       }
@@ -170,7 +523,7 @@
   "schema": "context-facts.v1",
   "section": "api-inventory",
   "sources": {
-    "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
   },
   "unresolved": []
 }
