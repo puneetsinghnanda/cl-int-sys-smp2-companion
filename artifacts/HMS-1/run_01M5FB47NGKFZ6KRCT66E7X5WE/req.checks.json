@@ -1,0 +1,92 @@
+{
+  "artifact_sha256": "e316f07c90871c67ed21ce183db4899dd36e66a7bed69b5bf5fd3bf27355c3cb",
+  "attempt": 1,
+  "finished_at": "2026-10-21T13:44:03Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "check_ids": [
+        "GEN-TOOLS-01"
+      ],
+      "codes": [
+        "E-POL-04"
+      ],
+      "detail": "tool Edit not permitted for skill requirement-review",
+      "id": "H7",
+      "pass": false,
+      "status": "fail"
+    }
+  ],
+  "inputs": [],
+  "product_changes": null,
+  "run_id": "run_01M5FB47NGKFZ6KRCT66E7X5WE",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "RR-C10",
+      "pass": true
+    },
+    {
+      "id": "RR-C11",
+      "pass": true
+    },
+    {
+      "id": "RR-C12",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-21T13:44:03Z",
+  "step": "req",
+  "tool_log_sha256": "599e008e5901f4634b2abfcd0a30f25ec75e494399eb1a62ced9977143c6ab24",
+  "tsl_version": "0.1.0",
+  "verifier": null
+}
