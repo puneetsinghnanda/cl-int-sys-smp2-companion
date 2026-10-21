@@ -1,0 +1,180 @@
+{
+  "artifact_sha256": "1ed073519e20e57dc1df2f58ae0923916091d9ef5f8df4c7ba350901e572bc05",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Staff manage doctors, patients and appointments end to end.",
+          "ref": "context/intent-baseline.md#goals"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "text: \"Staff manage doctors, patients and appointments end to end.\"",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L36"
+        }
+      ],
+      "claim_ref": "C7",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite C7 from a requirement or Known entry, or drop it.",
+      "text": "Claim C7 (staff manage doctors, patients and appointments end to end) is declared, but no requirement or Known entry cites it, so it adds nothing to the trace."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Behaviour for Inactive patients or doctors is not addressed by the ticket.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L228"
+        },
+        {
+          "quote": "Doctors and patients with appointments are made Inactive, never deleted.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Give a reason for leaving it out, or raise it as a non-blocking question.",
+      "text": "The Out-of-scope entry for Inactive patients/doctors only says the ticket does not address it. It gives no reason for leaving it out, although the baseline defines Inactive for doctors and patients with appointments."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Should 'patient list', 'appointment page', 'Cancelled', 'Completed', 'hospital time zone' and 'front-desk staff' be added to the glossary?",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L161"
+        },
+        {
+          "quote": "owner: eng-db6b",
+          "ref": "context/glossary.md#glossary"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "text": "Q-03 puts six separate glossary gaps into one question to the tech lead. The glossary is owned by eng-db6b, so the questions could be split or sent to the section owner."
+    }
+  ],
+  "package_sha256": "4e4153b81adc5972bb64174df0481f622b565dc6c9d9f96e2a1f544746536b82",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-1",
+      "text": "Should a patient whose next Scheduled appointment is with an Inactive doctor, or a patient who is Inactive, still show that appointment in the Next appointment column?"
+    }
+  ],
+  "recorded_at": "2026-10-21T14:25:41Z",
+  "recorded_by": "tsl@0.1.0",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d",
+    "skill": "review",
+    "version": "0.1.0"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All seven acceptance criteria map to REQ-1..REQ-11, and AC6 is split into REQ-8/9/10. Sorting by the new column and PAT-8 are listed under Out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Each REQ states one behaviour that a tester can check, such as the column title, the selection rule, \"None\", the link and 20 per page.",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known REQ cites a ticket line or a baseline/glossary anchor. The only assumed item, REQ-12, has a stated basis from L21-L22. Nothing is invented: the date-time format is left as an unknown.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The ticket does not conflict with the baseline. The time zone and the no-medical-history-in-lists rule both agree with the baseline, and the artifact says so.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "All three questions are correctly non-blocking, give real options and defaults, and the format question goes to the product owner. Q-03 bundles six glossary terms into one question.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording, and Scheduled, No-show and Medical history are used the same way the glossary uses them.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.83,
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
