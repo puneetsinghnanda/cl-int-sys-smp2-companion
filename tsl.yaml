@@ -27,6 +27,8 @@ context:
   critical_paths:
     - "sample-system:db/migrations/**"
     - "sample-system:api/src/auth/**"
+    - "sample-system:api/src/lib/slots.ts"
+    - "sample-system:render.yaml" 
   extractors:
     migrations: ["db/migrations/*.sql"]
 change_limits:
