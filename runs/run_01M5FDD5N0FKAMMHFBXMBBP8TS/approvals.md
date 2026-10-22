@@ -37,3 +37,11 @@ comment:
 }
 ```
 <!-- tsl:signature-end G-escalate-req-a1 -->
+
+## G-escalate-split-a2 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md (sha256 dbdbaf19a649ec1588c827e93ede9f3b99fd6dd8dd61a44153b5bd4579a7bcc7)
+Reason for gate: band Low
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M5FDD5N0FKAMMHFBXMBBP8TS
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.0.1
 inputs:
   - path: artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md
@@ -11,6 +11,9 @@ inputs:
     sha256: 9bfd556283382d3d3835bf3b12514acc4f6941dc24f21cba0c8eaa4cd658a36c
 pack_sha:
   sample-system: 415369398bdad3122ac084a00766a01a3034f900
+resolves:
+  - id: F-1
+    how: "S-4 AC1 now checks only the first page when there are more than 20 patients, so a shorter last page no longer fails a correct build."
 claims:
   - id: C1
     text: "A Scheduled appointment is one that is booked and still open."
@@ -108,7 +111,7 @@ stories:
     trace: [REQ-8, REQ-9, REQ-10]
     acceptance_criteria:
       - id: AC1
-        text: "Given more than 20 patients, when staff open the patient list, then each page shows 20 patients."
+        text: "Given more than 20 patients, when staff open the first page of the patient list, then it shows 20 patients."
       - id: AC2
         text: "Given a search that staff could run before this change, when they run it now, then the list returns the same patients as before."
       - id: AC3
@@ -135,13 +138,15 @@ stories:
 - **S-3 Open the next appointment from the patient list** (traces REQ-7)
   - AC1: Given a patient whose column shows an upcoming appointment, when staff select the value, then the page of that same appointment opens.
 - **S-4 Keep the patient list's paging, search and sort** (traces REQ-8, REQ-9, REQ-10)
-  - AC1: Given more than 20 patients, when staff open the list, then each page shows 20 patients.
+  - AC1: Given more than 20 patients, when staff open the first page of the list, then it shows 20 patients.
   - AC2: Given a search that worked before this change, when staff run it now, then the list returns the same patients as before.
   - AC3: Given the patient list, when it is shown, then patients appear in the same order as before this change.
 - **S-5 Keep medical history out of the patient list** (traces REQ-11)
   - AC1: Given a patient with medical history recorded (blood group, allergies, chronic conditions, current medications or notes), when the list is shown, then none of it appears in the list.
 
 Coverage: every known requirement (REQ-1 to REQ-11) and the assumed REQ-12 is traced by exactly one story.
+
+Resolved from review: F-1 (S-4 AC1 now checks the first page only, so a shorter last page does not fail a correct build).
 
 ## Known
 - S-1: built only from known requirements REQ-1 to REQ-5; Scheduled means booked and still open (C1).

@@ -1,21 +1,21 @@
 {
   "artifact_path": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md",
-  "artifact_sha256": "0fba8a480bb633406f792236f5535adea09e88371cb15e869b02364f6c7cb20a",
-  "attempt": 1,
+  "artifact_sha256": "dbdbaf19a649ec1588c827e93ede9f3b99fd6dd8dd61a44153b5bd4579a7bcc7",
+  "attempt": 2,
   "band": "Low",
   "caps": [],
-  "checks_sha256": "9e7e8f1496e0412dbb531e0b739119a25f74ee0e2ee092461af9fd54266f5232",
+  "checks_sha256": "253b71ea44a429022a1fb0b429bdc1722a59c80a94bacd83d006e7e7daab82f7",
   "claims": {
     "total": 4,
     "verified": 0
   },
-  "decided_at": "2026-10-22T06:38:08Z",
+  "decided_at": "2026-10-22T06:40:52Z",
   "decided_by": "tsl@0.1.0",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -23,10 +23,6 @@
     },
     {
       "id": "F-3",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
       "severity": "minor"
     }
   ],
@@ -39,7 +35,7 @@
     }
   ],
   "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
-  "outcome": "RETRY",
+  "outcome": "ESCALATE",
   "pack": {
     "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
     "signed_at": "2026-10-21T13:34:05Z",
@@ -47,13 +43,13 @@
       "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "1637cce741cf7a8ba57dcd010a926d546b8945f36948891ac2f9c22a067e4aaa",
   "product_changes": null,
-  "review_sha256": "e19f7b9d07d15ba2b866004b34db6c863d493eb4d539cab82704b6423b7b745d",
+  "review_sha256": "23cc46b4eedfa3c73d95a3f57510c56a148588d15851a0a48e82e40bed1fb209",
   "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.5,
+    "S1": 0.4286,
     "S2": 1.0,
     "S3": 4.45,
     "S4": 0,
@@ -64,7 +60,7 @@
       "sensitive": false
     }
   },
-  "signature": "7-CXcLnSNEsBE6nVlI3b4p643SsAd0DKMZ6qfFz2iwwOgOpIzar_YvBDv63riKeMH0szjlYbo1y4SYlvgRYBDQ",
+  "signature": "PxZcC9VWopCLN8UtYpJp40rDAs5UoclijZRq_L9lk_ABlH0K2TAI7V_inA1uwXKWg949J4g8zSOuQbepYMaIAA",
   "skill": "story-split@1.0.1",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
