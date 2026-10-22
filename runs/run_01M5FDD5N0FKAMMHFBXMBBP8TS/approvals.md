@@ -72,3 +72,11 @@ comment:
 }
 ```
 <!-- tsl:signature-end G-escalate-split-a2 -->
+
+## G-escalate-impact-a1 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md (sha256 c78d2ded17a727cf3726349a45d02caf9d7455d406eb85664f93c24ec8e99adb)
+Reason for gate: band Low
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

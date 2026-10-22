@@ -1,0 +1,231 @@
+{
+  "artifact_sha256": "c78d2ded17a727cf3726349a45d02caf9d7455d406eb85664f93c24ec8e99adb",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/appointments/:id\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id"
+        },
+        {
+          "quote": "\"name\": \"AppointmentDetailPage\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/patients\",",
+          "ref": "context/generated/api-inventory.json#ui:/patients"
+        },
+        {
+          "quote": "\"name\": \"PatientsPage\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment links one doctor and one patient for [starts_at, ends_at) in UTC.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"index:appointment_patient_start_idx\",",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:doctor.status\",",
+          "ref": "context/generated/db-schema.json#column:doctor.status"
+        },
+        {
+          "quote": "\"id\": \"column:patient.status\",",
+          "ref": "context/generated/db-schema.json#column:patient.status"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the patient list service and repository (PatientRepo) must return",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L126"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add sym:...patientService.ts:PatientService to the api module cites and name it in the prose.",
+      "text": "The artifact says the patient list service changes, but it cites only PatientRepo. PatientService exists in the generated facts and is neither cited nor listed."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the doctor's name is read from table:doctor and returned through the same assumed route (C6)",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L146"
+        },
+        {
+          "quote": "\"id\": \"column:doctor.full_name\"",
+          "ref": "context/generated/db-schema.json#column:doctor.full_name"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite column:doctor.full_name in the table:doctor entry and in the REQ-4 basis.",
+      "text": "The REQ-4 basis cites C6 (appointment links a doctor), but C6 does not prove where the doctor's name is stored. The fact column:doctor.full_name exists but is not cited."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/App.tsx\",",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        },
+        {
+          "quote": "An appointment page already exists: UI route /appointments/:id, rendered by AppointmentDetailPage",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L27"
+        }
+      ],
+      "claim_ref": "C2",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State the route-to-page link as inferred from naming, or cite web/src/App.tsx at the route line as the source.",
+      "text": "C2 and C3 say UI routes are 'rendered by' specific pages. The generated facts only give each route's source line in App.tsx and the page symbols separately. They contain no route-to-component edge."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "## Impacted modules",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L125"
+        },
+        {
+          "quote": "- http:GET:/api/patients, **changed** (assumed, see Assumed)",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L129"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Split the section into modules, APIs and tables, or rename it 'Impacted elements', and order the entries by risk.",
+      "text": "The 'Impacted modules' section also lists APIs and tables, and it is not ordered by risk (the riskiest item, GET /api/patients, is listed fourth)."
+    }
+  ],
+  "package_sha256": "69f85974100515eacff45ea35a64ad7695814a5e0a47ca14ce9be497e34ffcd0",
+  "questions": [],
+  "recorded_at": "2026-10-22T07:09:27Z",
+  "recorded_by": "tsl@0.1.0",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0",
+    "skill": "review",
+    "version": "0.1.0"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "api, web, db modules, both routes and the three read tables are listed. PatientService is named in prose but is not listed or cited as a changed element.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every cited id resolves in the generated facts. Some links are weak: the route-to-page rendering is inferred, and REQ-4 does not cite the doctor name column.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Other callers of GET /api/patients are raised as U-1/Q-01, background jobs are ruled out (C10), and no table changes, so no table readers are missed.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "REQ-2..6 are marked assumed with an explicit basis (single list route, client-only access, index). Known items cite facts. Unknowns raise questions.",
+      "score": 5
+    },
+    {
+      "id": "IA-R5",
+      "reason": "The artifact is readable and the summary states the risks, but the 'Impacted modules' list mixes APIs and tables and is not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
