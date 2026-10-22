@@ -1,0 +1,48 @@
+{
+  "artifact_path": "artifacts/SMOKE-1792650311/run_01M5H4J2706KJ0KN2MRPSMKTNK/req.md",
+  "artifact_sha256": "d4ea4948046d066ab11a5363b1ef0e12881524ebea7275253f46d49caaa0a7bc",
+  "attempt": 1,
+  "band": "Low",
+  "caps": [],
+  "checks_sha256": "196f650e8fdcd0154c2faad70f1af073313cbc27a85600ebd472ca9e597acf4b",
+  "claims": {
+    "total": 1,
+    "verified": 0
+  },
+  "decided_at": "2026-10-22T06:25:31Z",
+  "decided_by": "tsl@0.1.0",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "ESCALATE",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "0bbfcd070ed1c15176767f4ac80c3b32151c60a82ff66b58a082f71e27cea39b",
+  "run_id": "run_01M5H4J2706KJ0KN2MRPSMKTNK",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.0,
+    "S2": 1.0,
+    "S3": 5.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "yJo0KiQCZjR4rA1bjDai39DkUAr70MI1iejRE5ZNFSHg7ZclVsynjbfr-zkGThrAf1OUeLDyiS_qMy3LMFUpAw",
+  "skill": "requirement-review@1.0.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

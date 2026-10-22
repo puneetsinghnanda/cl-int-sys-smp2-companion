@@ -1,0 +1,58 @@
+{
+  "artifact_sha256": "d4ea4948046d066ab11a5363b1ef0e12881524ebea7275253f46d49caaa0a7bc",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [],
+  "package_sha256": "cd44cda007c38d586d5923c3b7a2f9294ace704cec7eddf512e4091e6e7223bd",
+  "questions": [],
+  "recorded_at": "2026-10-22T06:25:30Z",
+  "recorded_by": "tsl@0.1.0",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d",
+    "skill": "review",
+    "version": "0.1.0"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "smoke",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "smoke",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "smoke",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "smoke",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "smoke",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "smoke",
+      "score": 5
+    }
+  ],
+  "rubric_score": 5.0,
+  "run_id": "run_01M5H4J2706KJ0KN2MRPSMKTNK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
