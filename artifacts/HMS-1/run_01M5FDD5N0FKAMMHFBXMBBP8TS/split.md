@@ -28,6 +28,19 @@ trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, R
 known: [S-1, S-3, S-4, S-5]
 assumed: [S-2]
 unknown: [U-1, U-2, U-3, U-4]
+unknowns:
+  - id: U-1
+    text: "The date-time display format is not stated (intent U-1); it affects S-1 AC3."
+    question: Q-01
+  - id: U-2
+    text: "It is not known whether an appointment page exists to link to (intent U-2); it affects S-3."
+    question: Q-02
+  - id: U-3
+    text: "Six terms the stories use are missing from the glossary (intent U-3 to U-8)."
+    question: Q-03
+  - id: U-4
+    text: "The intent does not say how Inactive doctors or patients are handled; it affects S-1."
+    question: Q-04
 questions:
   - id: Q-01
     blocking: false
@@ -140,10 +153,10 @@ Coverage: every known requirement (REQ-1 to REQ-11) and the assumed REQ-12 is tr
 - S-2: relies on the assumed requirement REQ-12, which says "None" is plain text and not a link. Basis, from the intent: only a shown appointment has a page to link to.
 
 ## Unknown
-- U-1: the date-time display format is not stated (intent U-1). It affects S-1 AC3. Raises Q-01.
-- U-2: it is not known whether an appointment page exists to link to (intent U-2). It affects S-3. Raises Q-02.
-- U-3: six terms the stories use are missing from the glossary (intent U-3 to U-8). Raises Q-03.
-- U-4: the intent does not say how Inactive doctors or patients are handled (C4); the glossary defines Inactive as not offered for new use (C3). It affects S-1. Raises Q-04.
+- U-1 (non-blocking): the date-time display format is not stated (intent U-1). It affects S-1 AC3. Raises Q-01.
+- U-2 (non-blocking): it is not known whether an appointment page exists to link to (intent U-2). It affects S-3. Raises Q-02.
+- U-3 (non-blocking): six terms the stories use are missing from the glossary (intent U-3 to U-8). Raises Q-03.
+- U-4 (non-blocking): the intent does not say how Inactive doctors or patients are handled (C4); the glossary defines Inactive as not offered for new use (C3). It affects S-1. Raises Q-04.
 
 ## Open questions
 - Q-01 (non-blocking, product owner): what date-time format should the column use? Proposed default: the app's existing format, in Asia/Kolkata.

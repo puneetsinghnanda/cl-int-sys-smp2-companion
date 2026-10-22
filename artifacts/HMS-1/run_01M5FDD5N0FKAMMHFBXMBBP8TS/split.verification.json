@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md",
+  "artifact_sha256": "0fba8a480bb633406f792236f5535adea09e88371cb15e869b02364f6c7cb20a",
+  "attempt": 1,
+  "band": "Low",
+  "caps": [],
+  "checks_sha256": "9e7e8f1496e0412dbb531e0b739119a25f74ee0e2ee092461af9fd54266f5232",
+  "claims": {
+    "total": 4,
+    "verified": 0
+  },
+  "decided_at": "2026-10-22T06:38:08Z",
+  "decided_by": "tsl@0.1.0",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md",
+      "sha256": "1ed073519e20e57dc1df2f58ae0923916091d9ef5f8df4c7ba350901e572bc05",
+      "verification_sha256": "e86d74d3b8e032f62bba26bb61d7ccaee15b33e2ed44d6ae1a6c48632cf00abd"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "e19f7b9d07d15ba2b866004b34db6c863d493eb4d539cab82704b6423b7b745d",
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.5,
+    "S2": 1.0,
+    "S3": 4.45,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "7-CXcLnSNEsBE6nVlI3b4p643SsAd0DKMZ6qfFz2iwwOgOpIzar_YvBDv63riKeMH0szjlYbo1y4SYlvgRYBDQ",
+  "skill": "story-split@1.0.1",
+  "step": "split",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

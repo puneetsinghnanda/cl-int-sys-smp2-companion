@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "17a198b2264084122093de1c08862841240c40f2990f1863ac9eb8b89a0097ba",
+  "artifact_sha256": "0fba8a480bb633406f792236f5535adea09e88371cb15e869b02364f6c7cb20a",
   "attempt": 1,
-  "finished_at": "2026-10-22T05:39:30Z",
+  "finished_at": "2026-10-22T06:36:28Z",
   "gates": [
     {
       "codes": [],
@@ -11,16 +11,11 @@
       "status": "pass"
     },
     {
-      "check_ids": [
-        "GEN-SECT-01"
-      ],
-      "codes": [
-        "E-H2-03"
-      ],
-      "detail": "every unknown item must be marked blocking or not",
+      "codes": [],
+      "detail": "",
       "id": "H2",
-      "pass": false,
-      "status": "fail"
+      "pass": true,
+      "status": "pass"
     },
     {
       "codes": [],
@@ -37,16 +32,11 @@
       "status": "pass"
     },
     {
-      "check_ids": [
-        "story-split.trace-req"
-      ],
-      "codes": [
-        "E-H5-02"
-      ],
-      "detail": "story-split.trace-req: REQ-1 covered fewer than 1 times",
+      "codes": [],
+      "detail": "",
       "id": "H5",
-      "pass": false,
-      "status": "fail"
+      "pass": true,
+      "status": "pass"
     },
     {
       "codes": [],
@@ -87,9 +77,9 @@
       "pass": true
     }
   ],
-  "started_at": "2026-10-22T05:39:29Z",
+  "started_at": "2026-10-22T06:36:28Z",
   "step": "split",
-  "tool_log_sha256": "6171cc2966faddb5dd881e925678445423717e160afa48d7527818890c65eeec",
+  "tool_log_sha256": "114a5a5242cb26ccb476d0a15ffa215fc6f3d271e46e99a76e514cb729802a56",
   "tsl_version": "0.1.0",
   "verifier": null
 }

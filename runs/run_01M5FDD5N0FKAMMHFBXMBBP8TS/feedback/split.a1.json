@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Given more than 20 patients, when staff open the patient list, then each page shows 20 patients.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md#L111"
+        },
+        {
+          "quote": "The patient list still shows 20 patients per page.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L89"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-4 AC1 says each page shows 20 patients whenever there are more than 20. A correct build with, for example, 25 patients has a last page of 5, so this criterion would fail a correct implementation."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "feedback.v1",
+  "step": "split"
+}

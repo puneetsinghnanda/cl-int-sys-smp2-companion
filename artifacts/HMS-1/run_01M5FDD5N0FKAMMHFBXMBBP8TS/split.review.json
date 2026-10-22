@@ -1,0 +1,153 @@
+{
+  "artifact_sha256": "0fba8a480bb633406f792236f5535adea09e88371cb15e869b02364f6c7cb20a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Behaviour for Inactive patients or doctors is not addressed by the ticket.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L228"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Given more than 20 patients, when staff open the patient list, then each page shows 20 patients.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md#L111"
+        },
+        {
+          "quote": "The patient list still shows 20 patients per page.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L89"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Reword it, e.g. 'every page except the last shows 20 patients, and the last shows the rest', or check only the first page.",
+      "text": "S-4 AC1 says each page shows 20 patients whenever there are more than 20. A correct build with, for example, 25 patients has a last page of 5, so this criterion would fail a correct implementation."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "earliest appointment with status Scheduled whose start is after the current time",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L53"
+        },
+        {
+          "quote": "Given a patient with more than one Scheduled appointment starting after the current time",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md#L85"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an AC for a patient whose only Scheduled appointment started in the past: the column shows \"None\" (or the next future one).",
+      "text": "REQ-2 requires the start to be after the current time, but no AC checks that a Scheduled appointment whose start has already passed is left out. AC2 only compares upcoming appointments with each other."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Given a search that staff could run before this change",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md#L113"
+        },
+        {
+          "quote": "Given a search that worked before this change",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md#L139"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Use the same wording in both places.",
+      "text": "S-4 AC2 is worded differently in the frontmatter ('could run before') and the body ('worked before'). The two wordings could be read as different preconditions."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/split.md#L80"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "S-1 traces five requirements. It could be split (e.g. selection and exclusion apart from display fields) to keep one outcome per story, though one combined column story is defensible."
+    }
+  ],
+  "package_sha256": "c9e2c34c7fd0cd81cde0486fe6f5cadb51bdeda8c347a0fa7db50319a7b0f8fc",
+  "questions": [],
+  "recorded_at": "2026-10-22T06:37:57Z",
+  "recorded_by": "tsl@0.1.0",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.0"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All known REQ-1 to REQ-11 and assumed REQ-12 are traced by exactly one story each.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories have one outcome. S-1 bundles five REQs (column, selection, time, doctor, exclusion), but they serve one visible outcome.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "All criteria use Given/When/Then. S-4 AC1 fails on a valid last page, and no AC checks that past Scheduled appointments are excluded.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The values 20, Asia/Kolkata, None and the medical-history fields all come from the intent or the glossary it cites.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Clear and consistent overall. S-4 AC2 wording differs slightly between the frontmatter and the body.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
