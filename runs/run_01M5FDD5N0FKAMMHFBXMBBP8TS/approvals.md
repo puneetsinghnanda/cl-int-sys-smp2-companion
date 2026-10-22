@@ -77,6 +77,33 @@ comment:
 kind: escalation
 Artifact: artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md (sha256 c78d2ded17a727cf3726349a45d02caf9d7455d406eb85664f93c24ec8e99adb)
 Reason for gate: band Low
-decision:          # approve | reject | changes | abort
-comment:
+decision: approve
+comment: Impact reviewed (4.2, no major findings); self-approved while the system stabilises.
 <!-- signature block written by `tsl approve` - do not edit -->
+<!-- tsl:signature-begin G-escalate-impact-a1 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-10-22T07:13:59Z",
+  "approver": "eng-db6b",
+  "artifacts": [
+    {
+      "attempt": 1,
+      "sha256": "c78d2ded17a727cf3726349a45d02caf9d7455d406eb85664f93c24ec8e99adb",
+      "step": "impact"
+    }
+  ],
+  "comment_sha256": "b5d85819369f01754ea5dbc20489820327cc66e903278b81b9361be8f3a0eda8",
+  "decision": "approve",
+  "gate": "G-escalate-impact-a1",
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "M7_hC08K-OlOfT6Zz58HC2eO4SaY-0lqKoZB5CA1C895FF1LhftH31wySIfWiyIdaYym7oLhCmOlY3qwZwy7AA",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-impact-a1 -->
