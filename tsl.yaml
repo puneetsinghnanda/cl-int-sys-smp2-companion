@@ -13,7 +13,7 @@ product_repos:
   default_branch: main
   verifier_profile: node-22@1
 gates:
-  self_approval: false
+  self_approval: true
   lock_timeout_hours: 24
 pr:
   branch_prefix: tsl/
