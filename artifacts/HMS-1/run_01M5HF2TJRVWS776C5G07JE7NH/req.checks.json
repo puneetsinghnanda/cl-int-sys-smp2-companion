@@ -1,0 +1,92 @@
+{
+  "artifact_sha256": "6e3770ea4569612e3480df0c91c8fc33b24786e70aa63bb3ffb098c88a74c2e1",
+  "attempt": 1,
+  "finished_at": "2026-10-22T13:10:57Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "check_ids": [
+        "GEN-TOOLS-01"
+      ],
+      "codes": [
+        "E-POL-04"
+      ],
+      "detail": "tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review; tool Bash not permitted for skill requirement-review",
+      "id": "H7",
+      "pass": false,
+      "status": "fail"
+    }
+  ],
+  "inputs": [],
+  "product_changes": null,
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "RR-C10",
+      "pass": true
+    },
+    {
+      "id": "RR-C11",
+      "pass": true
+    },
+    {
+      "id": "RR-C12",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-22T13:10:57Z",
+  "step": "req",
+  "tool_log_sha256": "7a54082e570d7e551440ee202641afbd70643552537ec5637f7404d94f06b813",
+  "tsl_version": "0.1.1",
+  "verifier": null
+}
