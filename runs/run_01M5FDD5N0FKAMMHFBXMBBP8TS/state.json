@@ -10,22 +10,22 @@
   "end_reason": null,
   "gates": [
     {
-      "approver_key": null,
+      "approver_key": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
       "artifacts": [
         {
           "sha256": "1ed073519e20e57dc1df2f58ae0923916091d9ef5f8df4c7ba350901e572bc05",
           "step": "req"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-10-22T05:34:29Z",
+      "decision": "approve",
       "id": "G-escalate-req-a1",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "APPROVED",
       "step": "req"
     }
   ],
-  "heartbeat_at": "2026-10-21T14:25:53Z",
+  "heartbeat_at": "2026-10-22T05:34:32Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -66,10 +66,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 2,
+  "rev": 4,
   "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -97,7 +97,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "ACCEPTED"
     },
     {
       "attempts": [],
@@ -210,7 +210,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-1",
-  "updated_at": "2026-10-21T14:25:53Z",
+  "updated_at": "2026-10-22T05:34:32Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "0c5c6b595fa7e56b5c3c33d4cc6e8a720be055f1dceb21b0e9ac324c4746e6bf"
 }
