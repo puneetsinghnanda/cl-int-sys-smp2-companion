@@ -1,0 +1,49 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "formats the start in the hospital time zone (C4, C6)",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L222"
+        },
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        },
+        {
+          "quote": "\"name\": \"dateTime\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The design says dateTime formats the start in the hospital time zone, but no cited fact shows that. C6 only shows dateTime exists, and C4's source says only availability, slots and 'today' use HOSPITAL_TZ. REQ-3 depends on this."
+    },
+    {
+      "cites": [
+        {
+          "quote": "status: known",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L73"
+        },
+        {
+          "quote": "assumed: [REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-12]",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L137"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The front matter contradicts itself: REQ-2 to REQ-6 have status known in requirements, but the assumed list contains REQ-2..REQ-6."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "feedback.v1",
+  "step": "design"
+}

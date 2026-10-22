@@ -1,0 +1,218 @@
+{
+  "artifact_sha256": "d9bfe176d4d5fa0b5ce76d49ca669934b95aea4340bb0901cbc13c4817d7030a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "unsupported"
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "formats the start in the hospital time zone (C4, C6)",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L222"
+        },
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        },
+        {
+          "quote": "\"name\": \"dateTime\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "claim_ref": "C4",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite the formatter source showing it uses HOSPITAL_TZ/Asia/Kolkata, or state that dateTime is called with the hospital zone explicitly, or record it as an assumption with a question.",
+      "text": "The design says dateTime formats the start in the hospital time zone, but no cited fact shows that. C6 only shows dateTime exists, and C4's source says only availability, slots and 'today' use HOSPITAL_TZ. REQ-3 depends on this."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "status: known",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L73"
+        },
+        {
+          "quote": "assumed: [REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-12]",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L137"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Keep the requirement status from req.md and explain in the Assumed section that it is the design mechanism, not the requirement, that is assumed. Or align the lists.",
+      "text": "The front matter contradicts itself: REQ-2 to REQ-6 have status known in requirements, but the assumed list contains REQ-2..REQ-6."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "is a verbatim copy of the intent artifact `req.md`",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L215"
+        },
+        {
+          "quote": "basis: \"Only a shown appointment has a page to link to; \\\"None\\\" has no appointment behind it.\"",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/req.md#L114"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Say 'copied statements, re-cited to req.md lines' instead of 'verbatim', or keep the basis field.",
+      "text": "The design calls requirements a verbatim copy of req.md, but the cites are rewritten to req.md lines instead of ticket.md, and REQ-12's basis field is dropped."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "design confirms callers are unaffected",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L75"
+        },
+        {
+          "quote": "callers that ignore unknown fields are unaffected",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L154"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "List known web callers of GET /api/patients from the api-inventory/module-map, or state explicitly that this remains unverified.",
+      "text": "Impact's Q-01 default deferred confirming that other callers are unaffected to design. Design does not confirm this. It only asserts that callers which ignore unknown fields are unaffected."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the doctor name comes from the joined doctor row in the same lookup",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/design.md#L241"
+        },
+        {
+          "quote": "table:doctor, **existing**: read for the doctor's name.",
+          "ref": "artifacts/HMS-1/run_01M5FDD5N0FKAMMHFBXMBBP8TS/impact.md#L133"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Add a claim citing the doctor table fact (e.g. db-schema table:doctor) for the name column.",
+      "text": "The doctor-name join is justified only by C11 (appointment status/starts_at). No fact about the doctor table or its name column is cited, though impact cites table:doctor."
+    }
+  ],
+  "package_sha256": "8dd250aa50a44e4ab84f52c93895287c0d7ee9ce0d6d8d2d7c5c35fa48fc03a1",
+  "questions": [
+    {
+      "ask_role": "engineer",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Does web/src/lib/format.ts dateTime render instants in HOSPITAL_TZ (Asia/Kolkata), or in the browser's local zone? REQ-3 depends on the answer."
+    },
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-4",
+      "id": "Q-2",
+      "text": "Which web pages other than PatientsPage call GET /api/patients, and do any of them fail on an added next_appointment field?"
+    }
+  ],
+  "recorded_at": "2026-10-22T07:30:36Z",
+  "recorded_by": "tsl@0.1.0",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543",
+    "skill": "review",
+    "version": "0.1.0"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Uses only existing modules and symbols: patientsRouter, PatientService, PatientRepo, PatientsPage, dateTime, client.ts, existing index. It follows the route/service/repo layering. No new endpoint, table, migration or job.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-5 are each mapped to components, and every AC (earliest Scheduled, TZ, doctor name, closed excluded, None as plain text, link, paging/search/sort, no medical history) has a mechanism.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Method, path, list shape and the new field next_appointment: null | { id, starts_at, doctor_name } are precise. The starts_at wire format and the doctor-name source column are not stated.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Most choices are cited or asked. But the claim that dateTime renders in the hospital time zone rests on no cited fact, and REQ-2..REQ-6 are marked known in requirements but listed as assumed.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs cover extending the route vs a new route, a per-row lookup vs a grouped query, reusing dateTime vs a new format, and excluding medical columns.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and well structured. The known/assumed lists contradict the per-requirement status fields, which hurts consistency.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.5,
+  "run_id": "run_01M5FDD5N0FKAMMHFBXMBBP8TS",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
