@@ -198,7 +198,7 @@ glossary:
 # Requirements review: HMS-1
 
 ## Summary
-HMS-1 asks for a "Next appointment" column on the patient list. It shows the date, time and doctor of each patient's earliest upcoming Scheduled appointment and links to that appointment. The list's page size, search and sort must not change, and medical history must stay out of the list. The main risks are an unspecified date-time format, the assumption that an appointment page already exists, and the PAT-8 reference, which is not among the inputs. No question blocks design.
+HMS-1 asks for a "Next appointment" column on the patient list. It shows the date, time and doctor of each patient's earliest upcoming Scheduled appointment and links to that appointment. The list's page size, search and sort must not change, and medical history must stay out of the list. The main risks are an unspecified date-time format, the assumption that an appointment page already exists, and the PAT-8 reference, which is not among the inputs. Nothing blocks design.
 
 ## Requirements
 - REQ-1 Next appointment column — known — The patient list has a `Next appointment` column.
