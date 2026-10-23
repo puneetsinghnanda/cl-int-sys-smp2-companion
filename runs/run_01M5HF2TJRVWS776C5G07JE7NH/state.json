@@ -12,7 +12,7 @@
   },
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-22T13:12:12Z",
+  "heartbeat_at": "2026-10-23T03:32:01Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -53,7 +53,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 3,
+  "rev": 4,
   "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -191,7 +191,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-1",
-  "updated_at": "2026-10-22T13:12:12Z",
+  "updated_at": "2026-10-23T03:32:01Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
