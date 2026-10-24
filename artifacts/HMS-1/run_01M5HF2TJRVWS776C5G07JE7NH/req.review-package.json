@@ -3,7 +3,7 @@
   "artifact_sha256": "b8f74a55a75818106966c7b4ca51081d509c09577bfc68cee5cea3f9ec42d7a4",
   "attempt": 1,
   "budget_tokens": 15000,
-  "checks_sha256": "19870a504cfb16066bb45710f8aea29a461f6cbe9f30afdc9e04a6d62e66f1d2",
+  "checks_sha256": "45e9d461bcfb0a4c64c736f45f6c01b607e9520b34ebb6d461556154f1c09866",
   "context_sections": [
     {
       "id": "intent-baseline#goals",
@@ -35,9 +35,9 @@
       "path": "context/glossary.md"
     }
   ],
-  "package_sha256": "3ffbd4482922c081316b97721000c86f321206d92c5730a3bc3313dcaa41a3a3",
-  "prepared_at": "2026-10-23T05:40:30Z",
-  "prepared_by": "tsl@0.1.2",
+  "package_sha256": "1a4bf2c5a5e92d1a249c6cba5982e607d2d396d2db72fed07f3e45f7ab6e0b60",
+  "prepared_at": "2026-10-24T05:27:16Z",
+  "prepared_by": "tsl@0.1.3",
   "previous_findings": [],
   "rubric": {
     "items": [

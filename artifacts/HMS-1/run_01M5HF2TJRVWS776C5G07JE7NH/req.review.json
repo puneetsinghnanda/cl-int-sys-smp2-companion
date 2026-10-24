@@ -1,0 +1,159 @@
+{
+  "artifact_sha256": "b8f74a55a75818106966c7b4ca51081d509c09577bfc68cee5cea3f9ec42d7a4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show\nappointments never change.",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Whether an Inactive doctor's name is shown is not stated (REQ-13 assumes yes).",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L133"
+        },
+        {
+          "quote": "U-4: how to show an Inactive doctor's name (Q-04).",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L236"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Use the same wording for U-4 in the front matter and the Unknown section.",
+      "text": "U-4 is described two ways. The front matter says whether an Inactive doctor's name is shown is unknown. The body says how to show it is unknown."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "Should the column show the doctor's name when the doctor is Inactive?",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L175"
+        },
+        {
+          "quote": "options: [\"Show the name\", \"Show the name marked Inactive\"]",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L178"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an option such as 'Hide the name or show a placeholder', or reword Q-04 to ask only how the name is marked.",
+      "text": "Q-04 asks whether to show an Inactive doctor's name, but both options show the name. There is no real 'do not show' choice, so the question cannot test the REQ-13 assumption."
+    }
+  ],
+  "package_sha256": "1a4bf2c5a5e92d1a249c6cba5982e607d2d396d2db72fed07f3e45f7ab6e0b60",
+  "questions": [],
+  "recorded_at": "2026-10-24T05:28:18Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d",
+    "skill": "review",
+    "version": "0.1.1"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Each of AC1-AC7 maps to a REQ. AC2 and AC6 are split into atomic REQs. The user story and past or other-patient appointments are listed as out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Each REQ states one behaviour with a checkable condition, for example the exact 'None' text, 20 per page, Asia/Kolkata and the excluded statuses.",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known REQ cites a ticket line, and REQ-4 and REQ-12 also cite the baseline. The only assumed item, REQ-13, has a real glossary basis and an open question. No invented values are marked known.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The ticket does not clash with the baseline: the hospital time zone and the no-medical-history-in-lists rule both agree with the baseline. The PAT-8 gap is raised as Q-03 with both cites.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "All questions are non-blocking, have defaults and are routed sensibly. However, Q-04's two options both show the name, so 'hide the name' is never offered, even though U-4 asks whether the name is shown at all.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and readable. U-4 is worded differently in the front matter and in the body ('whether' vs 'how').",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.85,
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
