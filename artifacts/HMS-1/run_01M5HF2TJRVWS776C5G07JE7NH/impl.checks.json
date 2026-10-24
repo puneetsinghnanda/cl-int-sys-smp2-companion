@@ -1,0 +1,113 @@
+{
+  "artifact_sha256": "a81411f1dcc653f10783112877cc6ac62418af318935c02e9c49a5b7945f39ae",
+  "attempt": 1,
+  "finished_at": "2026-10-24T06:10:40Z",
+  "gates": [
+    {
+      "check_ids": [
+        "GEN-SCHEMA-01"
+      ],
+      "codes": [
+        "E-H1-04"
+      ],
+      "detail": "body /: 'code' is a required property",
+      "id": "H1",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "verifier not run yet",
+      "id": "H3",
+      "pass": false,
+      "status": "pending"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "check_ids": [
+        "GEN-TRACE-01"
+      ],
+      "codes": [
+        "E-H5-01"
+      ],
+      "detail": "trace is empty",
+      "id": "H5",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md",
+      "sha256": "e617b8de9ea36ed77674d61d42f57c860fd9cb915d3618cb6e24b49929506873",
+      "verification_sha256": "b4f6ec434e557d95a41bb0e3ce46bd8bf2f600bf5f0a29ee4e61cb8098263465"
+    },
+    {
+      "path": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md",
+      "sha256": "e56eb28249f0c18cd413a5fe48e8d5d272945a4d4e3976dedf148faf3690c637",
+      "verification_sha256": "a4f89458b21577e8d579b941b8b846094eb9f6dd7ca61208d46795b1fbd19376"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "415369398bdad3122ac084a00766a01a3034f900",
+      "diff_sha256": "415046abc25f1b670a788d81afe7cd2fdb167e4a14362b563eea89d3eac7b7bd",
+      "files": [
+        "api/src/repositories/patientRepo.ts",
+        "api/src/services/patientService.ts",
+        "api/src/types.ts",
+        "web/src/api/client.ts",
+        "web/src/api/types.ts",
+        "web/src/pages/PatientsPage.tsx"
+      ],
+      "lines_added": 69,
+      "lines_deleted": 10,
+      "repo": "sample-system",
+      "tree_sha": "8312ecde553f4d03979bf28550f11c5c3b4cf59f"
+    }
+  ],
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-24T06:10:39Z",
+  "step": "impl",
+  "tool_log_sha256": "05fc14e56edb6dbfc797df2ad40611a4ea317810f9c09f5a1218e213260cae31",
+  "tsl_version": "0.1.3",
+  "verifier": null
+}
