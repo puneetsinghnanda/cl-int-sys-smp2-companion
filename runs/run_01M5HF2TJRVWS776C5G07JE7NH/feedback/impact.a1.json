@@ -1,0 +1,81 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "the facts show the page component but not its route path",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L94"
+        },
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "U-2 and Q-02 say the facts do not show the route path for AppointmentDetailPage. The API inventory already has the UI route /appointments/:id, defined in App.tsx, so this is known, not unknown."
+    },
+    {
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules and",
+          "ref": "context/architecture.md#components"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "the patient list query and response (via `PatientRepo`) add the next appointment",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L140"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The API change lists only PatientRepo. In the layered API, routes parse input and services hold the rules, so patientsRouter and PatientService (both in the facts) also carry the widened list response, and neither is listed."
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app calls the API only through `client.ts`.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L60"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/api/client.ts:api\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "Claim C13 says the web app reaches the API only through client.ts, but the analysis never lists client.ts (its api and query symbols) as touched. The patient list response type it returns gains new fields."
+    },
+    {
+      "cites": [
+        {
+          "quote": "the doctor row is only read, never removed (data-model#doctors)",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L159"
+        },
+        {
+          "quote": "\"id\": \"http:DELETE:/api/doctors/:id\"",
+          "ref": "context/generated/api-inventory.json#http:DELETE:/api/doctors/:id"
+        }
+      ],
+      "id": "F-4",
+      "severity": "major",
+      "text": "The REQ-13 basis says the doctor row is 'never removed' and cites data-model#doctors, which says nothing about removal. The facts also include a DELETE /api/doctors/:id route, so the basis is unsupported and partly contradicted."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-3",
+    "F-4"
+  ],
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "feedback.v1",
+  "step": "impact"
+}

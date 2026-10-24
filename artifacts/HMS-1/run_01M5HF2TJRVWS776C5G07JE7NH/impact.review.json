@@ -1,0 +1,344 @@
+{
+  "artifact_sha256": "fc3f203edeb2a2e44177f4952802172761a42d5666dd27c67437fb1db1492006",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientsPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"AppointmentDetailPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientRepo\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"AppointmentRepo\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.status\"",
+          "ref": "context/generated/db-schema.json#column:appointment.status"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.starts_at\"",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.doctor_id\"",
+          "ref": "context/generated/db-schema.json#column:appointment.doctor_id"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"appointment_patient_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/lib/format.ts:dateTime\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the facts show the page component but not its route path",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L94"
+        },
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite ui:/appointments/:id, move REQ-8's link target to Known, and drop U-2/Q-02.",
+      "text": "U-2 and Q-02 say the facts do not show the route path for AppointmentDetailPage. The API inventory already has the UI route /appointments/:id, defined in App.tsx, so this is known, not unknown."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules and",
+          "ref": "context/architecture.md#components"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "the patient list query and response (via `PatientRepo`) add the next appointment",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L140"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Add PatientService and patientsRouter as touched or checked symbols, citing their module-map ids.",
+      "text": "The API change lists only PatientRepo. In the layered API, routes parse input and services hold the rules, so patientsRouter and PatientService (both in the facts) also carry the widened list response, and neither is listed."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The web app calls the API only through `client.ts`.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L60"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/api/client.ts:api\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"
+        }
+      ],
+      "claim_ref": "C13",
+      "id": "F-3",
+      "severity": "major",
+      "suggested_fix": "List web/src/api/client.ts api as a changed caller of GET /api/patients.",
+      "text": "Claim C13 says the web app reaches the API only through client.ts, but the analysis never lists client.ts (its api and query symbols) as touched. The patient list response type it returns gains new fields."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the doctor row is only read, never removed (data-model#doctors)",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L159"
+        },
+        {
+          "quote": "\"id\": \"http:DELETE:/api/doctors/:id\"",
+          "ref": "context/generated/api-inventory.json#http:DELETE:/api/doctors/:id"
+        }
+      ],
+      "id": "F-4",
+      "severity": "major",
+      "suggested_fix": "Base REQ-13 on glossary#inactive, as the intent does, and note that doctor deletion may affect it.",
+      "text": "The REQ-13 basis says the doctor row is 'never removed' and cites data-model#doctors, which says nothing about removal. The facts also include a DELETE /api/doctors/:id route, so the basis is unsupported and partly contradicted."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L59",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L103"
+        },
+        {
+          "quote": "The display format of the start date and time is not given.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L124"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Cite req.md#L124 (U-1) instead.",
+      "text": "Q-03 cites req.md#L59 as the source of intent U-1. Line 59 is REQ-3's statement; U-1 (the display format) is at L124."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "ask: product owner",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L150"
+        },
+        {
+          "quote": "ask: tech lead",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/impact.md#L100"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Route Q-03 to the product owner, or link it to intent Q-01.",
+      "text": "Q-03 asks the tech lead about the display format. The intent routed the same decision to the product owner, because acceptance tests need the exact string."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "\"id\": \"index:patient_name_idx\"",
+          "ref": "context/generated/db-schema.json#index:patient_name_idx"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/lib/codes.ts:parsePage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/codes.ts:parsePage"
+        }
+      ],
+      "id": "F-7",
+      "severity": "minor",
+      "suggested_fix": "Cite these facts as the basis for the REQ-10/REQ-11 assumption.",
+      "text": "U-1 (are search and sort server side?) does not use the facts available. The patient table has name, phone and created_at indexes, and parsePage lives in the API, which points to server-side search, sort and paging."
+    }
+  ],
+  "package_sha256": "79d1088c90c4e718e2fbcbcc449dc8c732213d25b47086fa9d116add453efa0a",
+  "questions": [],
+  "recorded_at": "2026-10-24T05:48:39Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0",
+    "skill": "review",
+    "version": "0.1.1"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Modules, the API route and the tables are listed. The API change is pinned only to PatientRepo, though: PatientService, patientsRouter and the web client.ts, all of which a changed list response passes through, are left out.",
+      "score": 3
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id exists in the generated facts and is cited. Two places are weak: the REQ-13 basis uses a loose 'data-model#doctors' ref that does not support the statement, and Q-03 cites the wrong req.md line.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "It considers background jobs (none), the reuse of the index and the medical-history readers. It misses the service and route layers and the client.ts caller, which the architecture says every web call goes through.",
+      "score": 3
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Moving REQ-10 and REQ-11 to assumed is honest. But U-2 is kept unknown even though the facts already give the route, and the REQ-13 basis ('never removed') is contradicted by an existing DELETE doctor route.",
+      "score": 3
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Clear summary, and the sections are well organised. Risks are named in the summary, but the impacted list is not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.35,
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
