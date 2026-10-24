@@ -1,0 +1,98 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "a7154b7faa72b3ce61c83620c128c0d19906c17797abd99039ca6f5999aec5d7",
+  "package_sha256": "90d2fdb9cb6f8a7f63702cdb927b6b5c7f2eb3bedde5ed2e669bc88df27c786e",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.1",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All nine design components (patientsRouter through AppointmentDetailPage) have at least one threat. The three endpoints are covered through their components."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats fit the change (medical history leaking into list items, SQL injection through search, an N+1 lookup, XSS through doctor_name). T-7 is a strawman because the design leaves AppointmentRepo untouched, and T-11 assumes settings get extended."},
+    {"id": "TM-R3", "score": 4, "reason": "Most new controls are concrete and testable (explicit field list plus a test, bound parameters, no wildcard select, plain-text rendering). T-1 and T-2 call identify/requirePermission controls even though the MVP grants everything."},
+    {"id": "TM-R4", "score": 4, "reason": "Assumptions T-4, T-8 and T-10 are stated, each with a basis. Deployment reachability is asked as Q-01. The assumptions are handed to the implement step rather than asked as questions."},
+    {"id": "TM-R5", "score": 4, "reason": "Readable and consistent between the front matter and the body. Threats are listed in component order, not by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-1 and T-2 present identify and requirePermission as existing controls, but the cited architecture says that in the MVP every permission is granted. These calls give no protection today.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/threat.md#L85", "quote": "Existing control: the route keeps its current requirePermission check (C2)."},
+        {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+      ],
+      "suggested_fix": "State plainly that in the MVP there is no effective access control on GET /api/patients, and that the only real mitigation is the deployment boundary asked in Q-01."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "T-11 describes extending settings to carry the time zone. The design says useSettings and GET /api/settings are existing and unchanged, and already supply the zone. The threat does not match the design.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/threat.md#L129", "quote": "Extending settings to carry the time zone exposes other configuration through GET /api/settings."},
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L191", "quote": "GET /api/settings — existing: unchanged; source of the hospital time zone for the web app."}
+      ],
+      "suggested_fix": "Either reframe T-11 around a threat to the unchanged route, or ask whether settings already carry the zone."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "other",
+      "text": "T-7 is a strawman. It assumes the ticket changes appointment code paths, which the design rules out, so the threat adds no protection.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/threat.md#L109", "quote": "The ticket changes appointment code paths and so weakens how appointments are written."},
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L183", "quote": "AppointmentRepo (module:sample-system:api) — existing: not used for this lookup."}
+      ],
+      "suggested_fix": "Replace T-7 with a threat specific to AppointmentRepo's role here, or note that it is out of scope and give the reason."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "No threat covers what the new column itself reveals. Each patient's next doctor appears on the list, and doctors have specializations, so the list can imply a patient's condition even with medical history excluded.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/threat.md#L84", "quote": "The widened list gives every caller the next appointment of every patient"},
+        {"ref": "context/data-model.md#doctors", "quote": "A doctor has one specialization, one department"}
+      ],
+      "suggested_fix": "Add an information_disclosure threat for this inference risk, and a product question on whether showing the doctor on the list is acceptable."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are listed in component order rather than by risk. The highest-risk items (T-1, T-3, T-6) are not grouped first.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/threat.md#L153", "quote": "T-1 (patientsRouter, spoofing): non-staff caller treated as staff in the MVP"}
+      ],
+      "suggested_fix": "Order the Threats section by risk, or add a risk rating to each threat."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "A patient row holds identity, contact details and the basic medical history"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/architecture.md#deployment-shape", "quote": "the API, which also serves"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"id\": \"http:GET:/api/patients\","}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"id\": \"http:GET:/api/settings\","}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"id\": \"ui:/appointments/:id\","}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"id\": \"http:GET:/api/appointments/:id\","}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"id\": \"index:appointment_patient_start_idx\","}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:isValidTimeZone", "quote": "\"name\": \"isValidTimeZone\","}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Is it acceptable for the patient list to show each patient's next doctor? The doctor's specialization can imply the patient's condition, even though medical history is excluded.", "ask_role": "product_owner", "blocking": false, "finding_ref": "F-4"}
+  ]
+}

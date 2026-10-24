@@ -1,0 +1,75 @@
+{
+  "artifact_path": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/threat.md",
+  "artifact_sha256": "a7154b7faa72b3ce61c83620c128c0d19906c17797abd99039ca6f5999aec5d7",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "2e5bec0d2ebab0bcc427c0436f9ad77647bd942e3d99976dc0338e80f7f957c8",
+  "claims": {
+    "total": 14,
+    "verified": 14
+  },
+  "decided_at": "2026-10-24T06:06:34Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md",
+      "sha256": "e617b8de9ea36ed77674d61d42f57c860fd9cb915d3618cb6e24b49929506873",
+      "verification_sha256": "b4f6ec434e557d95a41bb0e3ce46bd8bf2f600bf5f0a29ee4e61cb8098263465"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "c250944fbb77c940b9627b50d2648790c29e302f227c09aae691150153a99945",
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.3,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "0zt6xHXNDPTukBTjAGjWfYvyQTOG3SOVQSXMZJPQPmgpzgy8_JxT5ZZQFvI2B6W6d7GHeDkng0TCPz4cIISgDA",
+  "skill": "threat-model@1.0.1",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
