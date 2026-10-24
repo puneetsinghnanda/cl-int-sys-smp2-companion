@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
   "step": "design",
-  "attempt": 1,
-  "artifact_sha256": "57a6b51d43959815b3c43e961478e13142d71b546daa01ff5fa0a0694b9de002",
-  "package_sha256": "5ed8f4cd33715d10ee934be4c9a53081d3938b85b22039ed7bdf416fa7a2887c",
+  "attempt": 2,
+  "artifact_sha256": "e617b8de9ea36ed77674d61d42f57c860fd9cb915d3618cb6e24b49929506873",
+  "package_sha256": "80f4234974efcd2769c8f8061a0242c544863267c513d24eda13644b6a4b4856",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,68 +12,37 @@
     "version": "0.1.1",
     "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
   },
-  "rubric_score": 4.15,
+  "rubric_score": 4.85,
   "rubric_items": [
-    {"id": "DS-R1", "score": 5, "reason": "Uses only existing modules, the existing route and the existing index. It follows the route/service/repo layering and the client.ts-only rule, with no new tables, jobs or endpoints."},
-    {"id": "DS-R2", "score": 4, "reason": "S-1 to S-5 are all mapped to components. S-5 search and sort preservation depends on the unresolved Q-03 assumption, and only regression tests are offered for it."},
-    {"id": "DS-R3", "score": 3, "reason": "Methods and paths are precise. The widened GET /api/patients item shape is not specified: no field names, types or null/empty representation for the next appointment (id, start, doctor name)."},
-    {"id": "DS-R4", "score": 4, "reason": "Claims are cited and unknowns are asked. But Q-02/S-4 stays assumed even though an input baseline already says doctors with appointments are made Inactive, never deleted. C17 cites a file not listed in the inputs."},
-    {"id": "DS-R5", "score": 5, "reason": "Four trade-offs cover the in-query join vs per-patient call, widening vs a new endpoint, UTC comparison vs display zone, and keeping AppointmentRepo untouched."},
-    {"id": "DS-R6", "score": 4, "reason": "Clear and consistent overall. One evidence line reference points to the wrong story line."}
+    {"id": "DS-R1", "score": 5, "reason": "Uses only existing modules, the existing route and the existing index. Follows the route/service/repository layering and the client.ts-only rule. No new tables, endpoints or jobs."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 to S-5 are each mapped to components, including the 'None' plain-text case (S-3 AC2) and medical history kept out of lists. Search and sort preservation has Q-03 and regression tests."},
+    {"id": "DS-R3", "score": 5, "reason": "Prior F-1 is resolved. next_appointment {id, starts_at (UTC ISO-8601), doctor_name} | null is fully specified, always present, and the client type is stated. Methods and paths are precise."},
+    {"id": "DS-R4", "score": 4, "reason": "Claims are cited and the field names are honestly marked assumed (Q-04). Two weak spots: the zone-from-/api/settings mechanism is stated as known with no evidence, and db-schema.json is cited but not pinned in inputs."},
+    {"id": "DS-R5", "score": 5, "reason": "Five trade-offs cover each non-obvious choice: the join versus a per-patient call, widening versus a new endpoint, null versus an omitted field, UTC on the wire, and leaving AppointmentRepo unchanged."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear and consistent. The prior F-4 evidence line now correctly points to split.md#L145."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "The design widens GET /api/patients but never defines the new list item fields: names, types, UTC instant format, or how 'no next appointment' is represented (null vs absent). The client type and PatientsPage depend on this contract.",
-      "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L143", "quote": "adds the next appointment (id, start, doctor name) to each list item, or leaves it empty"},
-        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}
-      ],
-      "suggested_fix": "Specify the item addition, e.g. next_appointment: {id, starts_at (UTC ISO-8601), doctor_name} | null, following the snake_case list convention."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
       "category": "traceability",
-      "text": "Q-02 and the S-4 assumption treat doctor deletion behaviour as unknown, but an input already states that doctors with appointments are made Inactive and never deleted. S-4 could rest on this cited rule.",
+      "text": "Prior F-3 is still open. Claims C17, C21 and C22 cite context/generated/db-schema.json, but that file is still not in the declared inputs, so its hash is not pinned.",
       "cites": [
-        {"ref": "context/intent-baseline.md#data-protection", "quote": "Doctors and patients with appointments are made Inactive, never deleted."},
-        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L164", "quote": "U-2 (non-blocking): how DELETE /api/doctors/:id treats a doctor with Scheduled appointments (Q-02)."}
-      ],
-      "suggested_fix": "Cite intent-baseline#data-protection as the basis for S-4. Narrow or drop Q-02, keeping at most a check that the route enforces the rule."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "Claim C17 cites context/generated/db-schema.json, but that file is not in the design's declared inputs, so its hash is not pinned.",
-      "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L75", "quote": "cites: [\"context/generated/db-schema.json#index:appointment_patient_start_idx\"]"}
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L77", "quote": "cites: [\"context/generated/db-schema.json#index:appointment_patient_start_idx\"]"},
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L20", "quote": "path: context/generated/api-inventory.json"}
       ],
       "suggested_fix": "Add context/generated/db-schema.json with its sha256 to the inputs list."
     },
     {
-      "id": "F-4",
+      "id": "F-2",
       "severity": "minor",
-      "category": "traceability",
-      "text": "Q-02 evidence points to split.md#L152, which is S-5 AC4 (medical history), not the S-4 Inactive-doctor story at L143-L145.",
+      "category": "correctness",
+      "text": "The design says the web reads the hospital time zone from GET /api/settings through useSettings, but no input shows that this route or hook carries the zone. The architecture names only the API config HOSPITAL_TZ. This is stated as Known for S-1 with no basis.",
       "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md#L152", "quote": "AC4: Given a patient has medical history recorded, when the patient list loads"}
+        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L170", "quote": "which the web reads from settings through `useSettings` and `GET /api/settings` rather than hard-coding it"},
+        {"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}
       ],
-      "suggested_fix": "Point the evidence to split.md#L145."
-    },
-    {
-      "id": "F-5",
-      "severity": "minor",
-      "category": "completeness",
-      "text": "The web side is said to show times in Asia/Kolkata, but the hospital zone is an API config setting (HOSPITAL_TZ). The design does not say how the web gets the zone or whether it hardcodes it.",
-      "cites": [
-        {"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"},
-        {"ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L148", "quote": "reused to show the start in the hospital time zone"}
-      ],
-      "suggested_fix": "State whether dateTime already applies the hospital zone, or how the web obtains HOSPITAL_TZ."
+      "suggested_fix": "Cite evidence that /api/settings returns the time zone, or mark it assumed and add a question (with a fallback to Asia/Kolkata)."
     }
   ],
   "claims_checked": [
@@ -96,9 +65,14 @@
     {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"id\": \"index:appointment_patient_start_idx\""}]},
     {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}]},
     {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:DELETE:/api/doctors/:id", "quote": "\"id\": \"http:DELETE:/api/doctors/:id\""}]},
-    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"id\": \"http:GET:/api/appointments/:id\""}]}
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"id\": \"http:GET:/api/appointments/:id\""}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.starts_at", "quote": "\"id\": \"column:appointment.starts_at\""}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.doctor_id", "quote": "\"id\": \"column:appointment.doctor_id\""}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Doctors and patients with appointments are made Inactive, never deleted."}]},
+    {"claim_id": "C24", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"}]},
+    {"claim_id": "C25", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"id\": \"http:GET:/api/settings\""}]}
   ],
   "questions": [
-    {"id": "Q-1", "text": "Does DELETE /api/doctors/:id enforce the baseline rule that doctors with appointments are made Inactive, never deleted? If yes, Q-02 can be closed and S-4 moved to Known.", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-2"}
+    {"id": "Q-1", "text": "Does GET /api/settings (useSettings) return the hospital time zone (HOSPITAL_TZ) to the web app? If not, should the web add it there or use a fixed Asia/Kolkata?", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-2"}
   ]
 }
