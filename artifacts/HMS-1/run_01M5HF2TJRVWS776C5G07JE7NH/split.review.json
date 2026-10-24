@@ -1,0 +1,166 @@
+{
+  "artifact_sha256": "e56eb28249f0c18cd413a5fe48e8d5d272945a4d4e3976dedf148faf3690c637",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a patient's only appointments after now are Cancelled, when the patient list loads, then none of them is shown in the column.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md#L134"
+        },
+        {
+          "quote": "Appointments with status Cancelled, Completed or `No-show` are never shown in the column.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L77"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add an AC: given a Cancelled appointment that starts before a later Scheduled one, the column shows the Scheduled one.",
+      "text": "S-2 AC1 checks Cancelled exclusion only when every future appointment is Cancelled. It does not check that a Cancelled appointment earlier than a Scheduled one is skipped, which REQ-6 together with REQ-2 requires."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Given the column shows \"None\", when the patient list loads, then the value is not a link.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md#L141"
+        },
+        {
+          "quote": "The shown value links to that appointment's `page`.",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L89"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Mark S-3 AC2 as an inference in the Assumed section, or confirm it with the product owner.",
+      "text": "S-3 AC2 (the \"None\" value is not a link) is inferred. REQ-8 says only that the shown value links to the appointment's page and says nothing about the None case."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "options: [\"Show the name\", \"Show the name marked Inactive\", \"Hide the name\"]",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md#L66"
+        },
+        {
+          "quote": "options: [\"Show the name\", \"Show the name marked Inactive\"]",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L178"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Align the Q-04 options with the intent, or note why the option was added.",
+      "text": "Q-04 adds a third option, 'Hide the name', that the intent's Q-04 does not include. The intent offers only 'Show the name' and 'Show the name marked Inactive'."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "unknown: [U-1, U-2, U-3, U-4, U-5, U-6, U-7, U-8]",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md#L41"
+        },
+        {
+          "quote": "Given front-desk staff open the patient list",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md#L126"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Carry U-5..U-8 and Q-05 forward, or state that they are resolved by their plain meaning.",
+      "text": "The split carries forward only U-1..U-4. It drops the intent's U-5..U-8 glossary gaps (Cancelled, Completed, patient list, front-desk staff), even though its ACs use those terms."
+    }
+  ],
+  "package_sha256": "0579df883dc013d477358e73c0f501132681f2b76040ba249e500848e9f1ff2c",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-1",
+      "text": "When a patient has no upcoming appointment and the column shows \"None\", should the value be plain text (not a link), as S-3 AC2 assumes?"
+    }
+  ],
+  "recorded_at": "2026-10-24T05:32:39Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.1"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 12 known REQs and assumed REQ-13 are traced: S-1 covers REQ-1..5, S-2 covers REQ-6..7, S-3 covers REQ-8, S-4 covers REQ-13 and S-5 covers REQ-9..12.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are mostly single-outcome. S-5 groups four regression constraints (paging, search, sort, privacy), and S-1 groups five REQs, but both still deliver one coherent outcome each.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "Every AC is in Given/When/Then form. S-1 AC3 has no exact expected format (U-1), and S-2 AC1 tests Cancelled only when Cancelled is the patient's only future appointment, not when a Cancelled one comes before a Scheduled one.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The values (20 per page, Asia/Kolkata, \"None\", the column title) all come from the intent. S-3 AC2 (None is not a link) and the Q-04 'Hide the name' option are inferred, not stated in the intent.",
+      "score": 4
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Clear, consistent terms that match the glossary. Body and frontmatter agree, and the Known/Assumed/Unknown sections are well organized.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

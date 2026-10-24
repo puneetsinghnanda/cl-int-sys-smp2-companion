@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/split.md",
+  "artifact_sha256": "e56eb28249f0c18cd413a5fe48e8d5d272945a4d4e3976dedf148faf3690c637",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "bb7c0f10b06e35399ab508c82ee8add600428e693d8701814aac11e50141b0e0",
+  "claims": {
+    "total": 4,
+    "verified": 4
+  },
+  "decided_at": "2026-10-24T05:32:41Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/req.md",
+      "sha256": "b8f74a55a75818106966c7b4ca51081d509c09577bfc68cee5cea3f9ec42d7a4",
+      "verification_sha256": "9772b1bbe62d06618ccccd97b0e8bb4d10d2d0070f55fde3f5a72025ac93e864"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "d1c3eddf558da1f6acef94b155df9e19a7e666d903c59cacc2aba6dde34164d6",
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.4,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "JC_OuXicepVXHpXG1O0CzS8LUL-kZJmh98GhpkZBTNNZhbArh3laso8dlTnv7Ff-Ug5YzYrz7XF6UkL-w0vDAg",
+  "skill": "story-split@1.0.1",
+  "step": "split",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
