@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "adds the next appointment (id, start, doctor name) to each list item, or leaves it empty",
+          "ref": "artifacts/HMS-1/run_01M5HF2TJRVWS776C5G07JE7NH/design.md#L143"
+        },
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The design widens GET /api/patients but never defines the new list item fields: names, types, UTC instant format, or how 'no next appointment' is represented (null vs absent). The client type and PatientsPage depend on this contract."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5HF2TJRVWS776C5G07JE7NH",
+  "schema": "feedback.v1",
+  "step": "design"
+}
