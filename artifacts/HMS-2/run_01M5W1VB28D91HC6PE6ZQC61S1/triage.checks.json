@@ -1,0 +1,80 @@
+{
+  "artifact_sha256": "dfb8774b632e7d1ee95a5d69467cc8fb33ed434aa92b9cd0d8a5a1d26d4c166e",
+  "attempt": 1,
+  "finished_at": "2026-10-26T12:10:39Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "check_ids": [
+        "GEN-TOOLS-01"
+      ],
+      "codes": [
+        "E-POL-04"
+      ],
+      "detail": "tool Bash not permitted for skill defect-triage",
+      "id": "H7",
+      "pass": false,
+      "status": "fail"
+    }
+  ],
+  "inputs": [],
+  "product_changes": null,
+  "run_id": "run_01M5W1VB28D91HC6PE6ZQC61S1",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-26T12:10:39Z",
+  "step": "triage",
+  "tool_log_sha256": "38b566e86be3d12e593dadb4fc7e93ab89b8aa37c654b6f92066eeda6e93fa4a",
+  "tsl_version": "0.1.3",
+  "verifier": null
+}
