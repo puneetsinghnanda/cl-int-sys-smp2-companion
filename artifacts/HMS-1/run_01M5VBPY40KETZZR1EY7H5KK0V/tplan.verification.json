@@ -1,36 +1,24 @@
 {
   "artifact_path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md",
-  "artifact_sha256": "265b5d3c4cbee86e4b9233af6016385b4b0317b84b43aa0457512294426486a7",
-  "attempt": 1,
+  "artifact_sha256": "dec573e09a7f0bcd0b64e8c72d69fb6786da29c6f54769bc66a9d46ff0eff7b4",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "74e9599556925a3a3649317e84004d7e397305697d1c847aab8b9a584dbd5ef0",
+  "checks_sha256": "319649b5a57e0a8645c1bf317ee37a0083605a64c0936bde87fe4fd05b993276",
   "claims": {
-    "total": 5,
-    "verified": 5
+    "total": 7,
+    "verified": 7
   },
-  "decided_at": "2026-10-26T07:11:21Z",
+  "decided_at": "2026-10-26T07:14:20Z",
   "decided_by": "tsl@0.1.3",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
-      "severity": "minor"
-    },
-    {
-      "id": "F-3",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
-      "severity": "minor"
-    },
-    {
-      "id": "F-5",
       "severity": "minor"
     }
   ],
@@ -48,7 +36,7 @@
     }
   ],
   "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
     "signed_at": "2026-10-21T13:34:05Z",
@@ -56,15 +44,15 @@
       "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "ac2f153fa310c2d181cc71f2dc56db92fca11059f6897524505a902bd3ff6dbe",
   "product_changes": null,
-  "review_sha256": "02bb9d955f7bf5c54c0bde34375ec98b56764b375a19d4aa174c06e4297f3007",
+  "review_sha256": "ca3639d12cb888cdceff30893ebebd5bd45c88cce22617ea89912a2783d89cdd",
   "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.55,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -73,7 +61,7 @@
       "sensitive": false
     }
   },
-  "signature": "Q64UUZ0-wUIQnoi1VWH_7hWEMZucfuQ2pczUZ72tLeGnWGLRTSom3tMMcs773G9DJ0yRbP8O5-hGCVhyaYdWDg",
+  "signature": "nF2VaKSt4wEaXZKzC92giQ1jz1wMQzWSUVKnvh66Y_YWZrA80JfHCH5nrGF3bpvFhfjq6heN1yyYluLFqYWHDA",
   "skill": "test-plan@1.0.1",
   "step": "tplan",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

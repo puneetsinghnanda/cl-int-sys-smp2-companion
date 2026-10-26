@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "265b5d3c4cbee86e4b9233af6016385b4b0317b84b43aa0457512294426486a7",
-  "attempt": 1,
+  "artifact_sha256": "dec573e09a7f0bcd0b64e8c72d69fb6786da29c6f54769bc66a9d46ff0eff7b4",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -15,7 +15,7 @@
     {
       "cites": [
         {
-          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "quote": "Vitest with jsdom and Testing Library.",
           "ref": "context/test-strategy.md#layers"
         }
       ],
@@ -51,107 +51,75 @@
       ],
       "claim_id": "C5",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\"",
+          "ref": "context/generated/test-layout.json#L182"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "assumed to supply the hospital time zone to the page (Q-05)",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L197"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
     }
   ],
   "findings": [
     {
-      "category": "completeness",
+      "category": "traceability",
       "cites": [
+        {
+          "quote": "(the design says strictly after now)",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L19"
+        },
         {
           "quote": "`null` when the patient has no Scheduled appointment starting after now",
           "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174"
-        },
-        {
-          "quote": "GET /api/patients returns the earliest Scheduled appointment after now",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L50"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an integration test with a fixed clock where one Scheduled appointment starts at now and another in the past. Expect null, or the later one.",
-      "text": "No boundary test for the 'after now' cut-off: nothing checks a Scheduled appointment that starts exactly at the fixed clock's now, or that a past Scheduled appointment is never picked."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
-          "ref": "context/test-strategy.md#requirement-ids"
-        },
-        {
-          "quote": "HMS-1 REQ-1: PatientsPage shows a Next appointment column header",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L49"
-        }
-      ],
-      "claim_ref": "C3",
-      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Start each title with the requirement ID, e.g. 'REQ-1 (HMS-1): ...'.",
-      "text": "Test titles start with 'HMS-1 REQ-n:', but the strategy and existing tests (e.g. 'PAT-8: ...') start the name with the requirement ID itself."
+      "suggested_fix": "Say that strictly after now is the plan's reading of the design, and link it to an open question, or get it confirmed.",
+      "text": "TP-19 rests on reading 'after now' as strictly after now, and the plan says the design says so. The design and the stories only say 'after now'. Whether an appointment starting exactly at now counts as upcoming is still an interpretation, not a stated rule."
     },
     {
       "category": "traceability",
       "cites": [
         {
-          "quote": "most already exist in api/test/patients-next-appointment.test.ts and patients.test.ts (PAT-8), and TP-6 and TP-12 are new",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L94"
+          "quote": "REQ-12 (HMS-1, PAT-8): list items carry no medical history",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L71"
         },
         {
-          "quote": "REQ-9, REQ-10 paging and search unchanged",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/ut.md#L66"
+          "quote": "PRD PAT-8 is not among the inputs, so S-5 AC4 relies on the baseline rule (Q-03)",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L178"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Cite the source that lists the existing tests, or regenerate test-layout, and fix the list of new tests.",
-      "text": "The Known section says most API tests already exist in api/test/patients-next-appointment.test.ts. That file is not in the declared test-layout input, and ut.md suggests paging (TP-12) is already covered, though the plan calls it new."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "assumed to supply the hospital time zone to the page (Q-05)",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L197"
-        },
-        {
-          "quote": "PatientsPage formats the start in the settings time zone",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L52"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Mark TP-4/TP-17 as dependent on design Q-05, or also assert Asia/Kolkata output directly.",
-      "text": "TP-4 and TP-17 depend on reading the time zone from settings, but the design leaves that source as an open assumption (Q-05). The plan does not carry that dependency forward."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\"",
-          "ref": "context/generated/test-layout.json#L182"
-        },
-        {
-          "quote": "page tests at unit level with jsdom and a mocked API client (C2)",
-          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L97"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "suggested_fix": "Name web/src/__tests__/PatientsPage.test.tsx as the target file.",
-      "text": "The plan names the API test files but not the web test file or folder for the new PatientsPage unit tests, though the layout uses web/src/__tests__/."
+      "suggested_fix": "Drop PAT-8 from the title, or note that it depends on split Q-03.",
+      "text": "TP-15's title cites PAT-8. The stories say PAT-8 is not among the inputs and that S-5 AC4 relies on the baseline data-protection rule instead."
     }
   ],
-  "package_sha256": "3a71076c9283749a73d9629483a226d7e250533add11903dc597e20d6a052e2c",
+  "package_sha256": "f62955db55bd3b5846d693cb1846c3fca29caf197f8e709fa287c0bf9dfe8bf9",
   "questions": [
     {
       "ask_role": "product_owner",
       "blocking": false,
       "finding_ref": "F-1",
       "id": "Q-1",
-      "text": "Should an appointment that starts exactly at the current instant count as upcoming (shown) or not (None)?"
+      "text": "Should an appointment that starts exactly at the current instant count as upcoming (shown) or not (None)? TP-19 assumes not."
     }
   ],
-  "recorded_at": "2026-10-26T07:11:18Z",
+  "recorded_at": "2026-10-26T07:14:18Z",
   "recorded_by": "tsl@0.1.3",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -162,31 +130,31 @@
   "rubric_items": [
     {
       "id": "TP-R1",
-      "reason": "All 15 acceptance criteria (S-1 AC1-5, S-2 AC1-4, S-3 AC1, S-4 AC1, S-5 AC1-4) map to at least one TP test, and REQ-1 to REQ-13 are all traced.",
+      "reason": "All 15 ACs (S-1 AC1-5, S-2 AC1-4, S-3 AC1, S-4 AC1, S-5 AC1-4) have at least one TP test, and REQ-1 to REQ-13 are all traced. No test claims an AC that does not exist.",
       "score": 5
     },
     {
       "id": "TP-R2",
-      "reason": "API behaviour is tested at integration level with Supertest and a real DB, and page rendering at unit level with jsdom and a mocked client. No e2e or manual tests.",
+      "reason": "API behaviour is tested at integration level with Supertest and a real DB. Page rendering is tested at unit level with jsdom and a mocked API client. There are no e2e or manual tests.",
       "score": 5
     },
     {
       "id": "TP-R3",
-      "reason": "Has negative tests for the list filter (TP-16) and the time zone fallback (TP-17), plus status exclusions. Missing a boundary test for an appointment that starts exactly at now, and an explicit test that past Scheduled appointments are ignored.",
-      "score": 4
+      "reason": "TP-16 covers the invalid filter and TP-17 the zone fallback. TP-6/7/8 cover the status exclusions and TP-18 the null display. The new TP-19 covers the boundary at exactly now and past appointments, which resolves the earlier F-1.",
+      "score": 5
     },
     {
       "id": "TP-R4",
-      "reason": "Uses the strategy's tools and layers. Names are prefixed 'HMS-1 REQ-n' rather than starting with the ID, and no web test folder or file is named for the PatientsPage tests.",
-      "score": 4
+      "reason": "Uses the strategy's tools (Vitest, Supertest, PostgreSQL with a fixed clock, jsdom, Testing Library). Titles now start with the requirement ID, and the new web test goes in web/src/__tests__, matching the layout.",
+      "score": 5
     },
     {
       "id": "TP-R5",
-      "reason": "Titles are short and runnable, with level and AC mapping. Q-01/U-1 asks whether to add the very tests the plan already lists, which is a little confusing.",
-      "score": 4
+      "reason": "Each title is short and runnable and gives its level and AC. TP-19 states exactly what it expects. Known, Assumed and Unknown each say what they rest on.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.55,
+  "rubric_score": 5.0,
   "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
   "schema": "review.v1",
   "status": "ok",
