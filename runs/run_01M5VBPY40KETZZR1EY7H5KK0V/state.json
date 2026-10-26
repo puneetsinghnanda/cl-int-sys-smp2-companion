@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-26T06:07:59Z",
+  "heartbeat_at": "2026-10-26T06:12:37Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 18,
+  "rev": 22,
   "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -225,7 +225,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md",
+          "artifact": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/history/threat/a1/threat.md",
           "artifact_sha256": "695de3b3d921ba389592a925e54c6e308005f34cc54324c57891a5665b62c3e2",
           "band": "High",
           "cause": "first",
@@ -240,21 +240,43 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.verification.json",
+          "record": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/history/threat/a1/threat.verification.json",
           "skill": "threat-model@1.0.1",
           "skill_started_at": "2026-10-26T06:04:08Z",
           "started_at": "2026-10-26T06:03:56Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md",
+          "artifact_sha256": "dec6a9ba020284f33a97c2ba9569f9d3e2c3e532e211e3953ee625241e0a26b9",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-10-26T06:12:37Z",
+          "feedback": "runs/run_01M5VBPY40KETZZR1EY7H5KK0V/feedback/threat.a1.json",
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "b35d0758b7a70010b1e5bf16befa8a356a6c9c2b09beb353e093f34384cad393",
+              "step": "design"
+            }
+          ],
+          "n": 2,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.verification.json",
+          "skill": "threat-model@1.0.1",
+          "skill_started_at": "2026-10-26T06:08:29Z",
+          "started_at": "2026-10-26T06:08:12Z"
         }
       ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "threat",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -313,7 +335,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-1",
-  "updated_at": "2026-10-26T06:07:59Z",
+  "updated_at": "2026-10-26T06:12:37Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

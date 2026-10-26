@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md",
-  "artifact_sha256": "695de3b3d921ba389592a925e54c6e308005f34cc54324c57891a5665b62c3e2",
-  "attempt": 1,
+  "artifact_sha256": "dec6a9ba020284f33a97c2ba9569f9d3e2c3e532e211e3953ee625241e0a26b9",
+  "attempt": 2,
   "budget_tokens": 22500,
-  "checks_sha256": "3363602d61f146a8f4a13d094b318646bd5f24a103100e740888913656fbfb87",
+  "checks_sha256": "47c4d53ef0404bfee74f589c1b08e8b55f9df40186170046cc451fbb722c306c",
   "context_sections": [
     {
       "id": "architecture",
@@ -39,10 +39,31 @@
       "path": "context/generated/api-inventory.json"
     }
   ],
-  "package_sha256": "a2363b4c31c66012fe47b14a5a9176ae13de49058dfdd499152cd388c945fda4",
-  "prepared_at": "2026-10-26T06:06:07Z",
+  "package_sha256": "b65daa03e8ba11ddcadafc079091660dba98b01687cce71dcbf71674d9f13e66",
+  "prepared_at": "2026-10-26T06:11:13Z",
   "prepared_by": "tsl@0.1.3",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
   "rubric": {
     "items": [
       {

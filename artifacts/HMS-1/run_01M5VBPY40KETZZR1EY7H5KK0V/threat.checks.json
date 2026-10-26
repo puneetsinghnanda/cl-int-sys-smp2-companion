@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "695de3b3d921ba389592a925e54c6e308005f34cc54324c57891a5665b62c3e2",
-  "attempt": 1,
-  "finished_at": "2026-10-26T06:05:11Z",
+  "artifact_sha256": "dec6a9ba020284f33a97c2ba9569f9d3e2c3e532e211e3953ee625241e0a26b9",
+  "attempt": 2,
+  "finished_at": "2026-10-26T06:11:06Z",
   "gates": [
     {
       "codes": [],
@@ -73,9 +73,9 @@
       "pass": true
     }
   ],
-  "started_at": "2026-10-26T06:05:11Z",
+  "started_at": "2026-10-26T06:11:06Z",
   "step": "threat",
-  "tool_log_sha256": "9040a812cdd2921f616556a177af517aa80ac20d3f82201ff69724a40df50c41",
+  "tool_log_sha256": "3482b5f7dedc390b67a1d7a72994f30462e42bb9fed6dc1c9d4148168dae8d4d",
   "tsl_version": "0.1.3",
   "verifier": null
 }
