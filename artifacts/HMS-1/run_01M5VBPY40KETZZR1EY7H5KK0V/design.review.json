@@ -1,0 +1,391 @@
+{
+  "artifact_sha256": "b35d0758b7a70010b1e5bf16befa8a356a6c9c2b09beb353e093f34384cad393",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/api/client.ts:api",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/lib/format.ts:dateTime",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"appointment_patient_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:DELETE:/api/doctors/:id\"",
+          "ref": "context/generated/api-inventory.json#http:DELETE:/api/doctors/:id"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.starts_at\"",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.doctor_id\"",
+          "ref": "context/generated/db-schema.json#column:appointment.doctor_id"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Doctors and patients with appointments are made Inactive, never deleted.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"
+        }
+      ],
+      "claim_id": "C24",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/settings\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/settings"
+        }
+      ],
+      "claim_id": "C25",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C26",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "context/generated/db-schema.json#index:appointment_patient_start_idx",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L75"
+        },
+        {
+          "quote": "context/conventions.md#lists",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L36"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json with their sha256 to the inputs list.",
+      "text": "Claims C3, C4, C8 cite context/conventions.md, and C17, C21, C22 cite context/generated/db-schema.json. Neither file is in the design's declared inputs, so their hashes are not pinned."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Besides PatientsPage, which web pages call the patient list through client.ts",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L160"
+        },
+        {
+          "quote": "the list response shape grows for every caller of `GET /api/patients`",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L184"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Carry the impact's Q-05 forward, with its default: the field is additive and other callers get regression tests.",
+      "text": "The impact asked which other web pages call GET /api/patients (e.g. BookAppointmentPage). The design admits every caller gets the wider shape but drops that question and gives no default or regression note for other callers."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the PatientRepo query filters to status Scheduled after now",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L204"
+        },
+        {
+          "quote": "context/generated/db-schema.json#column:appointment.status",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L45"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add claims citing db-schema.json#column:appointment.status and data-model.md#appointments for the SCHEDULED value.",
+      "text": "S-2 is Known on the basis of a Scheduled status filter, but the design cites neither the appointment.status column nor the Scheduled status value. Its cites cover only the repo, the index and starts_at."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "should the column show the name, show it marked Inactive, or hide it?",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L67"
+        },
+        {
+          "quote": "the doctor's name is read through the appointment's `doctor_id` whether or not the doctor is Inactive",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L210"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Reference the split's Q-04 under S-4, with its default 'Show the name'.",
+      "text": "The split's product-owner question (show, mark or hide an Inactive doctor's name) is not carried forward. The design shows the plain name without referencing that open choice."
+    }
+  ],
+  "package_sha256": "c344075d48599818da0773140349467712b06479b41df3f229cc3ad00e498d7c",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-1",
+      "text": "Besides PatientsPage, do any web pages (e.g. BookAppointmentPage) call GET /api/patients and need regression tests for the added next_appointment field?"
+    }
+  ],
+  "recorded_at": "2026-10-26T06:03:43Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Uses only existing modules, symbols, the existing route and index. Follows the routes/services/repositories layering and client.ts. No new endpoint, table, migration or job.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-5 and their criteria all map to components: the Scheduled-after-now filter, earliest pick, None, link, Inactive doctor name, paging/search/sort regression and no medical history.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Method, path and next_appointment shape {id, starts_at, doctor_name}|null are precise. The doctor column behind doctor_name (doctor.full_name) and the id type are not stated.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices are cited or asked (Q-01 to Q-05). Some claims cite sections that are not in the declared inputs. The impact's question about other GET /api/patients callers is dropped.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "The trade-offs cover the in-query join vs per-patient calls, widening vs a new route, null vs an omitted field, UTC vs display zone, and keeping AppointmentRepo unchanged.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, consistent structure. Front matter and body agree on components, endpoints and questions.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
