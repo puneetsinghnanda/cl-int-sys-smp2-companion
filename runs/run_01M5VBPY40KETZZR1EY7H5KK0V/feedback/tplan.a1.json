@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "`null` when the patient has no Scheduled appointment starting after now",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174"
+        },
+        {
+          "quote": "GET /api/patients returns the earliest Scheduled appointment after now",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L50"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No boundary test for the 'after now' cut-off: nothing checks a Scheduled appointment that starts exactly at the fixed clock's now, or that a past Scheduled appointment is never picked."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "feedback.v1",
+  "step": "tplan"
+}

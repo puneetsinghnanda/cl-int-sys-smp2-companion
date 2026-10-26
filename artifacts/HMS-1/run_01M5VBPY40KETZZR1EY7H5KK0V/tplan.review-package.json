@@ -1,0 +1,72 @@
+{
+  "artifact_path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md",
+  "artifact_sha256": "265b5d3c4cbee86e4b9233af6016385b4b0317b84b43aa0457512294426486a7",
+  "attempt": 1,
+  "budget_tokens": 22500,
+  "checks_sha256": "74e9599556925a3a3649317e84004d7e397305697d1c847aab8b9a584dbd5ef0",
+  "context_sections": [
+    {
+      "id": "test-strategy",
+      "included": true,
+      "path": "context/test-strategy.md"
+    },
+    {
+      "id": "test-layout",
+      "included": true,
+      "path": "context/test-layout.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md"
+    },
+    {
+      "name": "design",
+      "path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md"
+    },
+    {
+      "name": "test_strategy",
+      "path": "context/test-strategy.md"
+    },
+    {
+      "name": "test_layout",
+      "path": "context/generated/test-layout.json"
+    }
+  ],
+  "package_sha256": "3a71076c9283749a73d9629483a226d7e250533add11903dc597e20d6a052e2c",
+  "prepared_at": "2026-10-26T07:09:41Z",
+  "prepared_by": "tsl@0.1.3",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "TP-R1",
+        "weight": 0.35
+      },
+      {
+        "id": "TP-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "TP-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "TP-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "TP-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/test-plan/rubric.md",
+    "sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f"
+  },
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "review-package.v1",
+  "skill": "test-plan@1.0.1",
+  "step": "tplan",
+  "truncated": false
+}

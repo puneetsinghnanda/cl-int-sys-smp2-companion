@@ -1,0 +1,91 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "265b5d3c4cbee86e4b9233af6016385b4b0317b84b43aa0457512294426486a7",
+  "package_sha256": "3a71076c9283749a73d9629483a226d7e250533add11903dc597e20d6a052e2c",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 5, "reason": "All 15 acceptance criteria (S-1 AC1-5, S-2 AC1-4, S-3 AC1, S-4 AC1, S-5 AC1-4) map to at least one TP test, and REQ-1 to REQ-13 are all traced."},
+    {"id": "TP-R2", "score": 5, "reason": "API behaviour is tested at integration level with Supertest and a real DB, and page rendering at unit level with jsdom and a mocked client. No e2e or manual tests."},
+    {"id": "TP-R3", "score": 4, "reason": "Has negative tests for the list filter (TP-16) and the time zone fallback (TP-17), plus status exclusions. Missing a boundary test for an appointment that starts exactly at now, and an explicit test that past Scheduled appointments are ignored."},
+    {"id": "TP-R4", "score": 4, "reason": "Uses the strategy's tools and layers. Names are prefixed 'HMS-1 REQ-n' rather than starting with the ID, and no web test folder or file is named for the PatientsPage tests."},
+    {"id": "TP-R5", "score": 4, "reason": "Titles are short and runnable, with level and AC mapping. Q-01/U-1 asks whether to add the very tests the plan already lists, which is a little confusing."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "No boundary test for the 'after now' cut-off: nothing checks a Scheduled appointment that starts exactly at the fixed clock's now, or that a past Scheduled appointment is never picked.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "quote": "`null` when the patient has no Scheduled appointment starting after now"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L50", "quote": "GET /api/patients returns the earliest Scheduled appointment after now"}
+      ],
+      "suggested_fix": "Add an integration test with a fixed clock where one Scheduled appointment starts at now and another in the past. Expect null, or the later one."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "Test titles start with 'HMS-1 REQ-n:', but the strategy and existing tests (e.g. 'PAT-8: ...') start the name with the requirement ID itself.",
+      "cites": [
+        {"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L49", "quote": "HMS-1 REQ-1: PatientsPage shows a Next appointment column header"}
+      ],
+      "claim_ref": "C3",
+      "suggested_fix": "Start each title with the requirement ID, e.g. 'REQ-1 (HMS-1): ...'."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The Known section says most API tests already exist in api/test/patients-next-appointment.test.ts. That file is not in the declared test-layout input, and ut.md suggests paging (TP-12) is already covered, though the plan calls it new.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L94", "quote": "most already exist in api/test/patients-next-appointment.test.ts and patients.test.ts (PAT-8), and TP-6 and TP-12 are new"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/ut.md#L66", "quote": "REQ-9, REQ-10 paging and search unchanged"}
+      ],
+      "suggested_fix": "Cite the source that lists the existing tests, or regenerate test-layout, and fix the list of new tests."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "TP-4 and TP-17 depend on reading the time zone from settings, but the design leaves that source as an open assumption (Q-05). The plan does not carry that dependency forward.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L197", "quote": "assumed to supply the hospital time zone to the page (Q-05)"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L52", "quote": "PatientsPage formats the start in the settings time zone"}
+      ],
+      "suggested_fix": "Mark TP-4/TP-17 as dependent on design Q-05, or also assert Asia/Kolkata output directly."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The plan names the API test files but not the web test file or folder for the new PatientsPage unit tests, though the layout uses web/src/__tests__/.",
+      "cites": [
+        {"ref": "context/generated/test-layout.json#L182", "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\""},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/tplan.md#L97", "quote": "page tests at unit level with jsdom and a mocked API client (C2)"}
+      ],
+      "suggested_fix": "Name web/src/__tests__/PatientsPage.test.tsx as the target file."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "Web tests cover the dashboard links, the slot picker and formatting only; pages are not tested end to end."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "quote": "`next_appointment`: `null` when the patient has no Scheduled appointment starting after now"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Should an appointment that starts exactly at the current instant count as upcoming (shown) or not (None)?", "ask_role": "product_owner", "blocking": false, "finding_ref": "F-1"}
+  ]
+}
