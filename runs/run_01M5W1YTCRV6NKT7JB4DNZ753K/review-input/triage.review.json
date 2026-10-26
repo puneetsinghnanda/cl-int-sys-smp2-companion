@@ -1,0 +1,67 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5W1YTCRV6NKT7JB4DNZ753K",
+  "step": "triage",
+  "attempt": 1,
+  "artifact_sha256": "2c61f0ad50afdc55e27aaecc16365d693e542e59cf47b90732397d1b98161570",
+  "package_sha256": "501c2049eecf7938490bdf1043ac56eab03e1fa03e7c10caba2528ad798f89d2",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "1ee9f75f31d3691a87f69440b3c071234dda729d5b439818ef2b13f6af69332e"
+  },
+  "rubric_score": 4.0,
+  "rubric_items": [
+    {"id": "DT-R1", "score": 5, "reason": "SY-1 and SY-2 restate the actual result, the expected result and the 'unchanged' acceptance criterion. Each one cites ticket lines (L13, L14, L20, L21, L25-L26) and a claim."},
+    {"id": "DT-R2", "score": 4, "reason": "Both candidates are module-map ids, and the triage cites the ticket and architecture for them. However, the map gives only a name and path for PatientsPage, so the link to the patient list is inferred. The API candidate also leans on a reproduction step (L18) as evidence."},
+    {"id": "DT-R3", "score": 4, "reason": "The ranking is reasoned: a display-text symptom points to the page, and the API is low. The argument against the API ('missing appointment, not a wrong value') is thin."},
+    {"id": "DT-R4", "score": 4, "reason": "Each candidate has a specific next check that would confirm or rule it out: the empty-value branch in PatientsPage, and the GET /api/patients item value. Neither check names a file location or line range."},
+    {"id": "DT-R5", "score": 3, "reason": "A-1 is honestly listed as an assumption. But C4 states the same inference as a cited fact, and the claim that the context pack predates the column has no citation. Unknowns are 'None' even though no code was inspected."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C4 and A-1 say the module map lists PatientsPage as the patient list page. The cited map entry only has the symbol's name, path and lines (11-72), with no description of its role. The claim is an inference from the name, stated as a cited fact.",
+      "cites": [
+        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"name\": \"PatientsPage\","},
+        {"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/triage.md#L77", "quote": "the module map lists `PatientsPage` as the patient list page (C4)"}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "Present C4 as an inference from the symbol name and path, or drop it as a claim and keep it only as A-1."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "A-1 says the context pack predates the column, but nothing is cited for this. The architecture section is verified at the same commit as the artifact's pack_sha, so the inputs do not show that the column is missing from the pack.",
+      "cites": [
+        {"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/triage.md#L78", "quote": "The context pack predates the column, so the module map does not show the column itself."},
+        {"ref": "context/architecture.md#L7", "quote": "verified_at: {sample-system: 415369398bdad3122ac084a00766a01a3034f900}"}
+      ],
+      "suggested_fix": "Remove the sentence or cite evidence for it. Otherwise list it as an Unknown."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The API candidate cites ticket L18, which is a reproduction step and is not evidence about the API. Its reason for low likelihood ('missing appointment, not a wrong value') does not rule out the API serializing an empty value as the string \"None\".",
+      "cites": [
+        {"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/ticket.md#L18", "quote": "2. Find a patient with no upcoming Scheduled appointment."},
+        {"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/triage.md#L65", "quote": "The API could be sending the text \"None\", but the ticket describes a missing appointment, not a"}
+      ],
+      "suggested_fix": "Cite the patientsRouter symbol from the module map and give the low ranking a basis in evidence, or say plainly that it is unverified."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/ticket.md#L20", "quote": "Actual: the \"Next appointment\" column shows \"None\"."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/ticket.md#L21", "quote": "Expected: the \"Next appointment\" column shows \"-\"."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/ticket.md#L25", "quote": "Patients with an upcoming Scheduled appointment are unchanged"}]},
+    {"claim_id": "C4", "verdict": "unsupported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"path\": \"web/src/pages/PatientsPage.tsx\","}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]}
+  ],
+  "questions": []
+}

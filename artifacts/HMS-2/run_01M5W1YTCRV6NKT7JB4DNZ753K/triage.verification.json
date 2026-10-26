@@ -1,0 +1,61 @@
+{
+  "artifact_path": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/triage.md",
+  "artifact_sha256": "2c61f0ad50afdc55e27aaecc16365d693e542e59cf47b90732397d1b98161570",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "d7b350b253c89a89056b3a79351283317fce3a569614a664e14f02144ad807cf",
+  "claims": {
+    "total": 5,
+    "verified": 4
+  },
+  "decided_at": "2026-10-26T12:13:50Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "9394ab4c999c3555f047872d4dbec8a6f0c569cd93a1dac91595aa2f8c3be509",
+  "run_id": "run_01M5W1YTCRV6NKT7JB4DNZ753K",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.875,
+    "S2": 1.0,
+    "S3": 4.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "z1hiRE7OLEW-BrdeflOYIfT3AJlS0286X58cHnuW1kFbBQGIv1Ln8jeR2VyRguGDf86ce9xF9YwXKwffvYT2Bg",
+  "skill": "defect-triage@1.0.1",
+  "step": "triage",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
