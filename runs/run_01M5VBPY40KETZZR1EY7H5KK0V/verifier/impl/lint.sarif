@@ -226,6 +226,11 @@
         },
         {
           "location": {
+            "uri": "file:///cache/w/api/test/patients-next-appointment.test.ts"
+          }
+        },
+        {
+          "location": {
             "uri": "file:///cache/w/api/test/patients.test.ts"
           }
         },
@@ -591,7 +596,7 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "file:///cache/w/web/src/hooks/useAsync.ts",
-                  "index": 74
+                  "index": 75
                 },
                 "region": {
                   "startLine": 26,

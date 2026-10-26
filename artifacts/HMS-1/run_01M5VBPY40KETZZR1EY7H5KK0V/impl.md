@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M5VBPY40KETZZR1EY7H5KK0V
 step: impl
-attempt: 2
+attempt: 3
 skill: implement@1.0.1
 inputs:
   - path: artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md
@@ -18,18 +18,19 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 415369398bdad3122ac084a00766a01a3034f900
-    head_sha: 7912bd9cc3ebc561904134188b0901137a41570e
-    diff_sha256: 5c4052451e71127be0f2fe3f5dd79b37d1dae4cb6de949f971f36b654fea6f0e
+    head_sha: e0527287bea1b804d0e7f3c01bf39bb92af0074f
+    diff_sha256: 07153469e0b392113bbf022289714f79b754bcdb5ceb53cb715d5ee26725031d
     files:
       - api/src/repositories/patientRepo.ts
       - api/src/services/patientService.ts
       - api/src/types.ts
+      - api/test/patients-next-appointment.test.ts
       - api/test/patients.test.ts
       - web/src/api/client.ts
       - web/src/api/types.ts
       - web/src/pages/PatientsPage.tsx
 resolves:
-  - {id: H3, how: "The only failing test was PAT-8, which pinned the exact list item keys. The designed next_appointment key is now in its allowed list, and the test also checks that next_appointment carries only id, starts_at and doctor_name, so the privacy guard stays exact."}
+  - {id: F-1, how: "Added api/test/patients-next-appointment.test.ts, the regression tests the design's Q-03 default asks for: null with no appointment, earliest Scheduled with start and doctor name, Cancelled skipped, Inactive doctor's name kept, past appointments ignored, paging and search unchanged."}
 claims:
   - id: C1
     text: "SQL lives in `api/src/repositories` and rules in `api/src/services`."
@@ -64,9 +65,12 @@ claims:
   - id: C11
     text: "The design's list item addition is `next_appointment`, an object or null."
     cites: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174"]
+  - id: C12
+    text: "The design asks for regression tests on `GET /api/patients`."
+    cites: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L136"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
-known: [S-2, S-3, S-5]
-assumed: [S-1, S-4]
+known: [S-2, S-3, S-4, S-5]
+assumed: [S-1]
 unknown:
   - {id: U-1, blocking: false}
   - {id: U-2, blocking: false}
@@ -74,43 +78,44 @@ questions:
   - id: Q-01
     blocking: false
     ask: tech lead
-    text: "The new list field next_appointment {id, starts_at, doctor_name} is snake_case as the design specifies, while existing patient item fields are camelCase (fullName, registeredAt). Keep the design's names or switch to camelCase?"
-    why: "The design's naming was assumed (its Q-04); the product code uses camelCase for item fields, so the API now mixes both styles."
-    evidence: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "context/conventions.md#lists"]
+    text: "The new list field next_appointment {id, starts_at, doctor_name} is snake_case as the design specifies, while the existing patient item fields such as fullName and registeredAt are camelCase. Keep the design's names or switch to camelCase?"
+    why: "The design's naming was assumed (its Q-04); the API now mixes both styles in one item."
+    evidence: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "sample-system:api/src/types.ts#L66"]
     options: ["Keep snake_case as designed", "Rename to nextAppointment {id, startsAt, doctorName}"]
     default: "Keep the design's names for this ticket."
   - id: Q-02
     blocking: false
     ask: product owner
     text: "Is the cell text \"<date time> · <doctor name>\" acceptable for the Next appointment column?"
-    why: "The design fixes the parts (start in the hospital zone and doctor name) but not how they are joined in one cell."
-    evidence: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L157"]
+    why: "The stories fix the parts (start in the hospital zone and the doctor's name) but not how they are joined in one cell."
+    evidence: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L142"]
     options: ["Keep as is", "Show the doctor on a second line"]
     default: "Keep as is."
-summary: "GET /api/patients list items gain next_appointment (id, starts_at, doctor_name) or null, computed in one lateral join per page in PatientRepo; PatientsPage shows it in a new Next appointment column with a link, or None. The PAT-8 privacy test now allows exactly the new key."
+summary: "GET /api/patients list items gain next_appointment (id, starts_at, doctor_name) or null, from one lateral join per page in PatientRepo; PatientsPage shows it in a new Next appointment column with a link, or None. PAT-8 allows exactly the new key, and new regression tests cover the list."
 ---
 # Change: HMS-1
 
 ## Summary
-The patient list now carries each patient's next appointment, as the design specifies. In the API, `PatientRepo.list` wraps the existing page query and adds one `LEFT JOIN LATERAL` per page that picks the earliest appointment with status `SCHEDULED` starting after the current instant, with its doctor's name; all values, including the current instant, are bound parameters. Search, status filter, sort order and page size are unchanged, and the patient columns selected are still the existing list columns, so no medical history is read. `PatientService.list` passes the service clock to the repository and returns `PatientListItem`s. In the web app the client's patient list type becomes `PatientListItem`, and `PatientsPage` adds a "Next appointment" column that shows the start with the existing `dateTime` formatter in the hospital zone from `useSettings` (falling back to the default zone when the setting is missing or invalid), plus the doctor's name as plain text, linked to `/appointments/:id`; with no next appointment it shows "None". `patientsRouter` and `AppointmentRepo` are untouched. Attempt 1 failed H3 because the existing PAT-8 privacy test pinned the exact list item keys; that assertion now allows exactly the designed `next_appointment` key and checks its own keys too.
+The patient list now carries each patient's next appointment, as the design specifies. In the API, `PatientRepo.list` wraps the existing page query and adds one `LEFT JOIN LATERAL` per page that picks the earliest appointment with status `SCHEDULED` starting after the current instant, with its doctor's name; all values, including the current instant, are bound parameters. Search, status filter, sort order and page size are unchanged, and the patient columns selected are still the existing list columns, so no medical history is read. The design names PatientService as the place that sets `next_appointment`; here the repository returns each list item with `next_appointment` already shaped (or `null`), because the raw join columns exist only inside the repository's SQL, and `PatientService.list` passes the clock and returns `PatientListItem`s. In the web app the client's patient list type becomes `PatientListItem`, and `PatientsPage` adds a "Next appointment" column that shows the start with the existing `dateTime` formatter in the hospital zone from `useSettings` (falling back to the default zone when the setting is missing or invalid), plus the doctor's name as plain text, linked to `/appointments/:id`; with no next appointment it shows "None". `patientsRouter` and `AppointmentRepo` are untouched. The PAT-8 privacy test allows exactly the new key, and a new test file adds the regression tests the design asks for (C12).
 
 ## Changes
 - `api/src/types.ts`: new `NextAppointment` and `PatientListItem` types (PatientService, PatientRepo).
-- `api/src/repositories/patientRepo.ts`: `list` takes `now` and adds the lateral next-appointment lookup; maps it to `next_appointment` or `null` (PatientRepo).
+- `api/src/repositories/patientRepo.ts`: `list` takes `now` and adds the lateral next-appointment lookup; shapes it as `next_appointment` or `null` (PatientRepo).
 - `api/src/services/patientService.ts`: `list` returns `Page<PatientListItem>` and passes `this.clock()` (PatientService).
 - `api/test/patients.test.ts`: the PAT-8 key list includes `next_appointment`, and its keys are checked to be only `doctor_name`, `id`, `starts_at` (PatientService, PatientRepo).
+- `api/test/patients-next-appointment.test.ts`: regression tests for GET /api/patients: null with no appointment, earliest Scheduled with start and doctor name, a Cancelled earlier one skipped, an Inactive doctor's name kept, past appointments ignored, paging and search unchanged (PatientRepo, PatientService).
 - `web/src/api/types.ts`: the same `NextAppointment` and `PatientListItem` types for the web (api client (client.ts)).
 - `web/src/api/client.ts`: `patients` returns `Page<PatientListItem>` (api client (client.ts)).
 - `web/src/pages/PatientsPage.tsx`: new column, link and "None" text, using `useSettings` and `dateTime` with a zone fallback (PatientsPage, dateTime formatter, useSettings).
 
 ## Known
-- S-2: the lateral lookup filters to status `SCHEDULED` and start after now, ordered by start, so Cancelled, Completed and No-show never appear and a Cancelled appointment before a later Scheduled one is skipped; `null` renders "None" (C4).
+- S-2: the lateral lookup filters to status `SCHEDULED` and start after now, ordered by start, so Cancelled, Completed and No-show never appear and a Cancelled appointment before a later Scheduled one is skipped; `null` renders "None"; covered by the new tests (C4, C12).
 - S-3: the value links to `/appointments/:id` (C6).
-- S-5: the page query, its search, filter, order and page size are unchanged; the list still selects only the existing list columns, so no medical history is read or logged, and PAT-8 still guards the exact keys (C1, C2, C3, C4, C10).
+- S-4: the doctor's name comes from the appointment's doctor row with no status filter; the new test sets the doctor Inactive and checks the name is kept.
+- S-5: the page query, its search, filter, order and page size are unchanged; the list still selects only the existing list columns, so no medical history is read or logged; PAT-8 guards the exact keys and the new tests check paging and search (C1, C2, C3, C4, C10).
 
 ## Assumed
-- S-1: the column, start time and doctor name are built in PatientRepo, PatientService and PatientsPage (C4, C5, C6, C7). The hospital-zone display assumes `useSettings` carries the zone (C8, C9), as the design assumes; a missing or invalid zone falls back to the default zone.
-- S-4: the doctor's name comes from the appointment's doctor row with no status filter, so an Inactive doctor's name is still shown. Basis: the design's S-4 assumption that doctors with appointments are made Inactive, never deleted.
+- S-1: the column, start time and doctor name are built in PatientRepo, PatientService and PatientsPage (C4, C5, C6, C7), and the earliest pick is tested. The hospital-zone display assumes `useSettings` carries the zone (C8, C9), as the design assumes; a missing or invalid zone falls back to the default zone.
 
 ## Unknown
 - U-1 (non-blocking): the API now mixes snake_case `next_appointment` (C11) with camelCase item fields (Q-01).

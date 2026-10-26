@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
   "step": "impl",
-  "attempt": 2,
-  "artifact_sha256": "5b299ba18d9039feae9e262563e63ec382395427b7df7bb0322876e25b56f6c0",
-  "package_sha256": "281add73350f840a06b59fb591a169137709640cb696c055d40a975706e48bc4",
+  "attempt": 3,
+  "artifact_sha256": "9d94f1a05213257a0f4efc2a50ad1445847172044216294dbcd203326c1ca9dd",
+  "package_sha256": "ac781557e0e5a4f21bf781c5c110cf3f5afba59a1c6c8dbb63b9b92846698ee6",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -14,56 +14,44 @@
   },
   "rubric_score": 4.2,
   "rubric_items": [
-    {"id": "IM-R1", "score": 4, "reason": "Every changed design component is covered: PatientRepo, PatientService, client, PatientsPage, the null case and the link. The design said PatientService maps next_appointment, but the artifact maps it in PatientRepo. The design's default regression tests are not reported."},
-    {"id": "IM-R2", "score": 4, "reason": "SQL stays in repositories and rules in services, the list shape and 20 per page are unchanged, and no medical history is read. The snake_case/camelCase mix in item fields is a deviation, but the artifact flags it (Q-01)."},
-    {"id": "IM-R3", "score": 5, "reason": "Seven files all belong to the designed components, plus one test file. 81 lines added and 11 deleted. The router and AppointmentRepo are untouched, and the GEN-SIZE-01 soft check passed."},
-    {"id": "IM-R4", "score": 4, "reason": "It handles the null next appointment ('None'), the missing or invalid zone fallback, Inactive doctors and bound parameters. The listed changes add no tests for S-2 status filtering or for S-1 earliest selection."},
-    {"id": "IM-R5", "score": 4, "reason": "The summary matches the listed files and the H3 fix. One Q-02 evidence cite points to an unrelated story line, and the camelCase claim in Q-01 is not backed by the cited evidence."}
+    {"id": "IM-R1", "score": 4, "reason": "Every changed component is implemented, and the design's Q-03 regression tests now exist. One known deviation remains: next_appointment is shaped in PatientRepo, not PatientService. The artifact now states this and says why."},
+    {"id": "IM-R2", "score": 4, "reason": "SQL is in repositories, the list shape is still 20 per page, values are bound parameters and no medical history columns are selected. The snake_case/camelCase mix in one item is a deviation, but Q-01 flags it."},
+    {"id": "IM-R3", "score": 5, "reason": "All eight files belong to the designed components or their tests. patientsRouter and AppointmentRepo are untouched. GEN-SIZE-01 and all verifier steps passed."},
+    {"id": "IM-R4", "score": 4, "reason": "It handles null ('None'), the zone fallback, Cancelled skipping, Inactive doctors and past appointments. No test covers Completed/No-show exclusion (S-2 AC3) or unchanged sort order (S-5 AC3)."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary matches the diff's file list and test contents. But it says the new tests cover Completed and No-show, and they do not. Also, resolves lists only F-1, though F-2 to F-4 were also fixed."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
+      "severity": "minor",
       "category": "completeness",
-      "text": "The design's default for Q-03 is to add regression tests on GET /api/patients. The only test change is the PAT-8 key list, so nothing tests the S-2 status filter, the S-1 earliest pick, the S-4 Inactive doctor or the unchanged search and sort.",
+      "text": "The S-2 Known entry says Completed and No-show never appear and that this is covered by the new tests. The new test file only checks Cancelled and past appointments, so nothing tests S-2 AC3 (Completed or No-show excluded).",
       "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L136", "quote": "Assume server side and add regression tests on GET /api/patients."},
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L101", "quote": "the PAT-8 key list includes `next_appointment`, and its keys are checked to be only `doctor_name`, `id`, `starts_at`"}
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L112", "quote": "so Cancelled, Completed and No-show never appear"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L148", "quote": "Given a patient has Completed or No-show appointments, when the patient list loads, then none of them is shown in the column."}
       ],
-      "suggested_fix": "Add tests in api/test/patients.test.ts: Cancelled, Completed and No-show are excluded; a Cancelled appointment before a Scheduled one is skipped; the earliest of several is picked; an Inactive doctor's name is kept; search, sort and page size are unchanged."
+      "suggested_fix": "Add a test that marks an upcoming appointment Completed or No-show and expects it to be skipped, or say in the S-2 entry that only Cancelled is tested."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "consistency",
-      "text": "The design puts the next_appointment mapping in PatientService. The artifact maps it in PatientRepo and only passes the clock in PatientService, which differs from the design's component split.",
+      "category": "completeness",
+      "text": "S-5 AC3 needs sort order to stay unchanged. The regression test checks paging and search only, so the wider lateral query has no sort regression test.",
       "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L191", "quote": "PatientService (module:sample-system:api) — changed: sets `next_appointment` on each list item, or `null`."},
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L99", "quote": "maps it to `next_appointment` or `null` (PatientRepo)"}
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L163", "quote": "Given staff sort the patient list, when results load, then they are in the same order as before this change."},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L106", "quote": "past appointments ignored, paging and search unchanged"}
       ],
-      "suggested_fix": "Either move the mapping to PatientService or state the deviation and why."
+      "suggested_fix": "Add a check that the list order with a sort parameter is the same as the existing order."
     },
     {
       "id": "F-3",
       "severity": "minor",
       "category": "traceability",
-      "text": "Q-02 (cell layout) cites split.md#L157 as evidence. That line is the S-4 Inactive doctor criterion and says nothing about how time and doctor name are joined.",
+      "text": "The resolves list records only F-1. The earlier findings F-2 (deviation now stated), F-3 (Q-02 cite now split.md#L142) and F-4 (Q-01 now cites types.ts) were also fixed but are not recorded.",
       "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L87", "quote": "evidence: [\"artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L157\"]"},
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L157", "quote": "Given a patient's next Scheduled appointment is with a doctor who is Inactive"}
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L33", "quote": "{id: F-1, how: \"Added api/test/patients-next-appointment.test.ts"}
       ],
-      "suggested_fix": "Cite split.md#L142 (S-1 AC5) and design.md#L180 instead."
-    },
-    {
-      "id": "F-4",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "Q-01 says existing item fields are camelCase (fullName, registeredAt), but its evidence (conventions#lists) only shows snake_case page_size. Nothing cited supports the camelCase claim.",
-      "cites": [
-        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L77", "quote": "while existing patient item fields are camelCase (fullName, registeredAt)"},
-        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}
-      ],
-      "suggested_fix": "Cite the product source lines (e.g. api/src/types.ts) that define fullName and registeredAt."
+      "suggested_fix": "Add resolves entries for F-2, F-3 and F-4 that describe each fix."
     }
   ],
   "claims_checked": [
@@ -77,7 +65,8 @@
     {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "sym:sample-system:web/src/lib/format.ts:dateTime"}]},
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"}]},
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter"}]},
-    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "quote": "`next_appointment`: `null` when the patient has no Scheduled appointment starting after now"}]}
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "quote": "`next_appointment`: `null` when the patient has no Scheduled appointment starting after now"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L136", "quote": "Assume server side and add regression tests on GET /api/patients."}]}
   ],
   "questions": []
 }
