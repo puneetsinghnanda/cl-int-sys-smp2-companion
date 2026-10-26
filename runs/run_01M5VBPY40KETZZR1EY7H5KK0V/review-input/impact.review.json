@@ -1,0 +1,119 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "step": "impact",
+  "attempt": 1,
+  "artifact_sha256": "d4977997c687a70aac26cc57b1fb3db86dc1ba730de4607c7efc0f3017bc50da",
+  "package_sha256": "f5977042f945f8ccf90a97eb6d257da1f42750fc303f022a627446339a246ceb",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
+  },
+  "rubric_score": 4.0,
+  "rubric_items": [
+    {"id": "IA-R1", "score": 4, "reason": "API, web and db modules, the three routes and three tables are listed and traced to all 13 REQs. It does not list how the web gets the hospital time zone (settings route or useSettings) for REQ-4."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, route, table, column, index and symbol id is in the generated facts and cited. C11 says more than architecture#time-and-slots states (the 'shown in' part)."},
+    {"id": "IA-R3", "score": 4, "reason": "Covers the router/service/repo chain, client.ts, the doctor FK, the medical-history leak risk, the index and the lack of jobs. It never checks other consumers of the widened GET /api/patients response."},
+    {"id": "IA-R4", "score": 4, "reason": "Known/assumed split is mostly justified: search and sort are correctly assumed with Q-01. REQ-4 is known on a display claim the architecture does not make, and REQ-13 skips the intent's never-deleted basis."},
+    {"id": "IA-R5", "score": 4, "reason": "Clear summary, risks named and sections consistent. Routes and tables appear under 'Impacted modules' and the list is not ordered by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "C11 says instants are 'shown in the hospital time zone', but architecture only says availability, slots and 'today' use HOSPITAL_TZ. REQ-4 is marked known on that overstated basis.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L55", "quote": "Instants are stored in `UTC` and shown in the hospital time zone."},
+        {"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}
+      ],
+      "claim_ref": "C11",
+      "suggested_fix": "Restate C11 to match the source (stored in UTC; HOSPITAL_TZ governs availability, slots, today). Base REQ-4 on the web dateTime formatter plus the settings it reads, or move it to assumed."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "To show times in HOSPITAL_TZ the web needs the zone at runtime. The facts have GET /api/settings and useSettings, but the artifact does not list either as a reader or dependency for REQ-4.",
+      "cites": [
+        {"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"id\": \"http:GET:/api/settings\""},
+        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "\"id\": \"sym:sample-system:web/src/hooks/useSettings.tsx:useSettings\""},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L186", "quote": "REQ-4: instants are stored in UTC and shown in the hospital time zone, `HOSPITAL_TZ` (C11, C12)."}
+      ],
+      "suggested_fix": "Add the settings route or useSettings as an existing dependency of the Next appointment column for REQ-4."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "GET /api/patients is marked changed (response widened), but the artifact never names or rules out other consumers of that route beyond PatientsPage. Caller coverage is not shown.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L176", "quote": "http:GET:/api/patients — changed: each list item gains next-appointment start time and doctor name."}
+      ],
+      "suggested_fix": "List the other callers of the patient list through client.ts (for example patient pickers), or state that PatientsPage is the only one."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The REQ-13 basis relies on the FK and on Q-02. It drops the intent's stated basis that doctors with appointments are never deleted, which already answers most of Q-02.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L39", "quote": "Doctors and patients with appointments are made Inactive, `never deleted`."},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L193", "quote": "so an appointment's doctor row stays while the appointment exists unless the delete route removes it (C22)"}
+      ],
+      "suggested_fix": "Cite the intent baseline rule in the REQ-13 basis and frame Q-02 as checking that the route enforces it."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "style",
+      "text": "The 'Impacted modules' section mixes routes and tables in with modules and is not ordered by risk.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L172", "quote": "## Impacted modules"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L179", "quote": "table:patient — existing: read only; medical history columns must stay out of the list."}
+      ],
+      "suggested_fix": "Split into Modules, APIs and Tables subsections and put the highest-risk items (GET /api/patients, PatientRepo) first."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"id\": \"http:GET:/api/patients\""}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"id\": \"http:GET:/api/appointments/:id\""}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage\""}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage", "quote": "\"id\": \"sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "\"id\": \"sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "\"id\": \"sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.status", "quote": "\"id\": \"column:appointment.status\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.starts_at", "quote": "\"id\": \"column:appointment.starts_at\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.doctor_id", "quote": "\"id\": \"column:appointment.doctor_id\""}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"id\": \"index:appointment_patient_start_idx\""}]},
+    {"claim_id": "C11", "verdict": "unsupported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC. Availability, slots and \"today\" use the hospital time zone"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "\"id\": \"sym:sample-system:web/src/lib/format.ts:dateTime\""}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"id\": \"ui:/appointments/:id\""}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "\"id\": \"sym:sample-system:api/src/routes/patients.ts:patientsRouter\""}]},
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\""}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "quote": "\"id\": \"sym:sample-system:web/src/api/client.ts:api\""}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:DELETE:/api/doctors/:id", "quote": "\"id\": \"http:DELETE:/api/doctors/:id\""}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:appointment", "quote": "\"references\": \"table:doctor\""}]},
+    {"claim_id": "C24", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:patient_name_idx", "quote": "\"id\": \"index:patient_name_idx\""}]},
+    {"claim_id": "C25", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/codes.ts:parsePage", "quote": "\"id\": \"sym:sample-system:api/src/lib/codes.ts:parsePage\""}]},
+    {"claim_id": "C26", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/patients", "quote": "\"id\": \"ui:/patients\""}]},
+    {"claim_id": "C27", "verdict": "supported", "cites": [{"ref": "context/data-model.md#doctors", "quote": "A doctor has one specialization, one department"}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "Does the web app already show appointment times in HOSPITAL_TZ (for example dateTime with the zone from settings), or in the browser's local zone? This decides whether REQ-4 is known or assumed.",
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in `UTC` and shown in the hospital time zone.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md#L55"
+        },
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "C11 says instants are 'shown in the hospital time zone', but architecture only says availability, slots and 'today' use HOSPITAL_TZ. REQ-4 is marked known on that overstated basis."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
