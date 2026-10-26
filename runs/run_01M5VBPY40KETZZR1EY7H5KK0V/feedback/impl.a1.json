@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "test exit 1",
+      "id": "H3"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3"
+  ],
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
