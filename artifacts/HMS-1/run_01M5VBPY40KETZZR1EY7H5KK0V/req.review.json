@@ -1,0 +1,152 @@
+{
+  "artifact_sha256": "168b14f2f9236bbbe97d4740cc4b53d5824259e81d856851c562ef78471ab680",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show\nappointments never change.",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Doctors and patients with appointments are made Inactive, never deleted.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show appointments `never change`.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L33"
+        },
+        {
+          "quote": "cites: [\"artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/ticket.md#L19\"]",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L81"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add glossary.md#no-show and intent-baseline.md#closed-appointments to the cites of REQ-6, or drop C6 and C7 if they are not needed.",
+      "text": "Claims C6 (closed appointments never change) and C7 (No-show definition) are declared, but no requirement cites their sources. REQ-6 cites only the ticket line, so these claims are not tied to any requirement."
+    }
+  ],
+  "package_sha256": "a751a12a0440107528019844d0b01e9afb83b6f250bc39f8d5ed6b16ceb5a917",
+  "questions": [],
+  "recorded_at": "2026-10-26T05:45:49Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Each of the seven acceptance criteria maps to a requirement: AC2 is split into REQ-2 to REQ-5 and AC6 into REQ-9 to REQ-11. The user-story line is listed under Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Each REQ covers one behaviour. REQ-3 and REQ-4 cannot yet be tested against an exact string because the date-time format is unknown (U-1, Q-01). The artifact says this openly.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "The known items cite ticket lines or baseline sections. Asia/Kolkata comes from the baseline constraints, not from guesswork. REQ-13 is marked assumed, has a real basis in the glossary and baseline, and has a matching question (Q-04).",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "I found no clash between the ticket and the baseline. The ticket's 'hospital time zone' and 'no medical history' match the baseline constraints and data-protection rules, and the artifact cites both sides.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "All questions are non-blocking with sensible defaults and real options. Format and policy questions go to the product owner; the appointment page and glossary questions go to the tech lead.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording. Glossary terms (Scheduled, No-show, Inactive, Medical history) are used consistently. Missing terms are listed with found: false.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
