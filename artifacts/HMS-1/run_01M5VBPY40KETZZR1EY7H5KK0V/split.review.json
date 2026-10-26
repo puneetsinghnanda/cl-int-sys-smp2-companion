@@ -1,0 +1,133 @@
+{
+  "artifact_sha256": "8193194ed9f5168ece5dab22f4c694ae9fe98e787bfd5dd0a55ae234091fed5e",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use.",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "evidence: [\"artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L127\"]",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L77"
+        },
+        {
+          "quote": "The display format of the start date and time is not given.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L127"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite req.md#L139-L148 (U-5..U-8) or req.md#L196-L199 (glossary found:false entries) for Q-05.",
+      "text": "Q-05 cites req.md#L127 as evidence. That line is the U-1 date-time format unknown, not the missing glossary terms Cancelled, Completed, patient list and front-desk staff."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "title: Keep the patient list's paging, search, sort and privacy unchanged",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L120"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Consider splitting REQ-12 (no medical history in list) into its own story.",
+      "text": "S-5 bundles four separate outcomes (page size, search, sort, no medical history) in one story. The privacy constraint has a different source and risk than the list-mechanics checks."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "then the same patients are returned as before this change.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L126"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Note that these are verified by regression comparison against the pre-change build, or name the current sort key.",
+      "text": "S-5 AC2 and AC3 check against 'before this change' but give no baseline search or sort behaviour, so they can only be verified by a before/after regression run."
+    }
+  ],
+  "package_sha256": "e9793d0002fe421ab05b468a3ad880263862bb920c7416bb7baa2a4f8bec1b4e",
+  "questions": [],
+  "recorded_at": "2026-10-26T05:48:47Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 12 known REQs and assumed REQ-13 are traced: S-1 has REQ-1 to REQ-5, S-2 has REQ-6, REQ-7 and REQ-2, S-3 has REQ-8, S-4 has REQ-13 and S-5 has REQ-9 to REQ-12.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories have one outcome. S-5 bundles four separate non-regression constraints (paging, search, sort, privacy), and privacy is a different concern from list mechanics.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "Every criterion is Given/When/Then. S-1 AC3 has no exact expected format (U-1). S-5 AC2/AC3 compare against 'before this change' with no stated baseline, so they can only be checked by regression comparison.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Every value comes from the intent: 'Next appointment', Asia/Kolkata, 20 per page, 'None'. No invented limits.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable and uses consistent glossary terms. Minor: S-3 AC1 says 'click the value' without saying which part (date/time or doctor name) is the link.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
