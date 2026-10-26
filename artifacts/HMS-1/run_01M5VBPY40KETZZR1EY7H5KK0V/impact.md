@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M5VBPY40KETZZR1EY7H5KK0V
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.1.1
 inputs:
   - path: artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md
@@ -19,6 +19,8 @@ inputs:
     sha256: 2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55
 pack_sha:
   sample-system: 415369398bdad3122ac084a00766a01a3034f900
+resolves:
+  - {id: F-1, how: "C11 now states only that instants are stored in UTC; HOSPITAL_TZ is described as the zone for availability, slots and today (C12). REQ-4 moved to assumed, based on the web dateTime formatter taking a time zone (C17) and the settings the web reads (C28, C29), with U-4/Q-04 to confirm."}
 claims:
   - id: C1
     text: "The patient list is served by the route `/api/patients`."
@@ -51,10 +53,10 @@ claims:
     text: "An index `appointment_patient_start_idx` already exists on the appointment table."
     cites: ["context/generated/db-schema.json#index:appointment_patient_start_idx"]
   - id: C11
-    text: "Instants are stored in `UTC` and shown in the hospital time zone."
+    text: "Instants are stored in `UTC`."
     cites: ["context/architecture.md#time-and-slots"]
   - id: C12
-    text: "The hospital time zone setting is `HOSPITAL_TZ`."
+    text: "Availability, slots and today use the hospital time zone `HOSPITAL_TZ`."
     cites: ["context/architecture.md#time-and-slots"]
   - id: C13
     text: "The web app calls the API only through `client.ts`."
@@ -99,15 +101,26 @@ claims:
     text: "The web patient list is routed at `/patients`."
     cites: ["context/generated/api-inventory.json#ui:/patients"]
   - id: C27
-    text: "A doctor has weekly `availability_block` rows and one department."
-    cites: ["context/data-model.md#doctors"]
+    text: "Doctors and patients with appointments are made Inactive, `never deleted`."
+    cites: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L39"]
+  - id: C28
+    text: "The web app reads settings through `useSettings`."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"]
+  - id: C29
+    text: "Settings are served by the route `/api/settings`."
+    cites: ["context/generated/api-inventory.json#http:GET:/api/settings"]
+  - id: C30
+    text: "The booking page `BookAppointmentPage` also exists in the web app."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-12]
-assumed: [REQ-10, REQ-11, REQ-13]
+known: [REQ-1, REQ-2, REQ-3, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-12]
+assumed: [REQ-4, REQ-10, REQ-11, REQ-13]
 unknown:
   - {id: U-1, blocking: false}
   - {id: U-2, blocking: false}
   - {id: U-3, blocking: false}
+  - {id: U-4, blocking: false}
+  - {id: U-5, blocking: false}
 questions:
   - id: Q-01
     blocking: false
@@ -120,11 +133,11 @@ questions:
   - id: Q-02
     blocking: false
     ask: tech lead
-    text: "Does DELETE /api/doctors/:id reject, soft-delete (set Inactive) or remove a doctor who has Scheduled appointments?"
-    why: "The appointment table references the doctor table, so the delete behaviour decides whether REQ-13 has a deleted-doctor case."
-    evidence: ["context/generated/api-inventory.json#http:DELETE:/api/doctors/:id", "context/generated/db-schema.json#table:appointment"]
-    options: ["Rejects the delete", "Sets the doctor Inactive", "Removes the doctor"]
-    default: "Assume it rejects or sets Inactive, so the doctor row stays readable."
+    text: "Does DELETE /api/doctors/:id enforce the rule that a doctor with appointments is made Inactive, never deleted?"
+    why: "REQ-13 relies on the doctor row staying readable while an appointment references it."
+    evidence: ["context/generated/api-inventory.json#http:DELETE:/api/doctors/:id", "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L39"]
+    options: ["Yes, it enforces the rule", "No, it can delete such a doctor"]
+    default: "Assume yes; no change to the delete route in this ticket."
   - id: Q-03
     blocking: false
     ask: product owner
@@ -133,13 +146,29 @@ questions:
     evidence: ["context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md#L127"]
     options: ["Reuse dateTime", "Add a new formatter"]
     default: "Reuse dateTime with the hospital time zone."
+  - id: Q-04
+    blocking: false
+    ask: tech lead
+    text: "Does the web app already format appointment times in HOSPITAL_TZ, taking the zone from settings through useSettings and GET /api/settings?"
+    why: "REQ-4 is assumed on that mechanism; the architecture states HOSPITAL_TZ only for availability, slots and today."
+    evidence: ["context/architecture.md#time-and-slots", "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "context/generated/api-inventory.json#http:GET:/api/settings"]
+    options: ["Yes, settings carry the zone", "No, the web needs the zone added"]
+    default: "Assume yes and reuse dateTime with the zone from useSettings."
+  - id: Q-05
+    blocking: false
+    ask: tech lead
+    text: "Besides PatientsPage, which web pages call the patient list through client.ts (for example a patient picker when booking)?"
+    why: "Every caller of GET /api/patients receives the widened items; the facts do not list call sites."
+    evidence: ["context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"]
+    options: ["Only PatientsPage", "Other pages too"]
+    default: "Treat the new field as additive; other callers ignore it and are regression-tested."
 modules:
   - id: module:sample-system:api
     change: changed
     cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"]
   - id: module:sample-system:web
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"]
+    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db", "context/generated/db-schema.json#index:appointment_patient_start_idx"]
@@ -150,6 +179,9 @@ apis:
   - id: http:GET:/api/appointments/:id
     change: existing
     cites: ["context/generated/api-inventory.json#http:GET:/api/appointments/:id", "context/generated/api-inventory.json#ui:/appointments/:id"]
+  - id: http:GET:/api/settings
+    change: existing
+    cites: ["context/generated/api-inventory.json#http:GET:/api/settings"]
   - id: http:DELETE:/api/doctors/:id
     change: existing
     cites: ["context/generated/api-inventory.json#http:DELETE:/api/doctors/:id"]
@@ -167,37 +199,47 @@ tables:
 # Impact analysis: HMS-1
 
 ## Summary
-HMS-1 changes the patient list in the API and the web app. In the API, `GET /api/patients` gains each patient's next Scheduled appointment (start and doctor); the widened response passes through `patientsRouter`, `PatientService` and `PatientRepo`, and the lookup is a join inside the patient list SQL in `PatientRepo`, so `AppointmentRepo` is read-only context and not changed. In the web app, the `api` client in client.ts returns the new fields and `PatientsPage` (routed at `/patients`) shows them in a new column linking to the existing appointment page at `/appointments/:id`. No table, migration or background job changes: the data already exists in `appointment`, `patient` and `doctor`, and `appointment_patient_start_idx` already covers a per-patient lookup by start time. The main risks are slowing down or reordering the patient list (search, sort and the 20-per-page paging must stay the same), leaking medical history if the list query is widened carelessly, and how `DELETE /api/doctors/:id` treats a doctor with Scheduled appointments.
+HMS-1 changes the patient list in the API and the web app. In the API, `GET /api/patients` gains each patient's next Scheduled appointment (start and doctor); the widened response passes through `patientsRouter`, `PatientService` and `PatientRepo`, and the lookup is a join inside the patient list SQL in `PatientRepo`, so `AppointmentRepo` is not changed. In the web app, the `api` client in client.ts returns the new fields and `PatientsPage` (routed at `/patients`) shows them in a new column linking to the existing appointment page at `/appointments/:id`; the time is formatted with `dateTime`, assumed to use the hospital zone from `useSettings` and `GET /api/settings`. No table, migration or background job changes, and `appointment_patient_start_idx` already covers a per-patient lookup by start time. The main risks are slowing down or reordering the patient list, leaking medical history if the list query is widened carelessly, other callers of `GET /api/patients` receiving the wider items, and how times are put into the hospital zone on the web.
 
 ## Impacted modules
-- module:sample-system:api — changed: `patientsRouter`, `PatientService` and `PatientRepo` carry the next appointment in the patient list query and response; `AppointmentRepo` is not changed.
-- module:sample-system:web — changed: the `api` client in client.ts returns the new fields, and `PatientsPage` adds the "Next appointment" column and link.
+Modules (highest risk first):
+- module:sample-system:api — changed: `PatientRepo` (list SQL with the next-appointment join), `PatientService` and `patientsRouter` carry the new data; `AppointmentRepo` is not changed.
+- module:sample-system:web — changed: the `api` client in client.ts returns the new fields, and `PatientsPage` adds the "Next appointment" column and link, reading the zone through `useSettings`.
 - module:sample-system:db — existing: no migration; `appointment_patient_start_idx` is reused.
-- http:GET:/api/patients — changed: each list item gains next-appointment start time and doctor name.
+
+APIs:
+- http:GET:/api/patients — changed: each list item gains next-appointment start time and doctor name; every caller receives the wider items (Q-05).
+- http:GET:/api/settings — existing: source of settings the web reads, assumed to carry the hospital zone (Q-04).
 - http:GET:/api/appointments/:id — existing: unchanged; it backs the appointment page at the UI route `/appointments/:id` that the column links to.
-- http:DELETE:/api/doctors/:id — existing: unchanged; its behaviour for doctors with Scheduled appointments matters for REQ-13 (Q-02).
+- http:DELETE:/api/doctors/:id — existing: unchanged; checked against the never-deleted rule for REQ-13 (Q-02).
+
+Tables:
 - table:patient — existing: read only; medical history columns must stay out of the list.
 - table:appointment — existing: read for `status`, `starts_at` and `doctor_id`; it references `table:doctor`.
 - table:doctor — existing: read for the doctor's name.
 
 ## Known
 - REQ-1, REQ-3, REQ-5: the column and its start time and doctor name are rendered in `PatientsPage` from data added to GET /api/patients and returned by the web `api` client (C1, C3, C21).
-- REQ-2, REQ-6, REQ-7: picking the earliest Scheduled appointment after now uses `appointment.status` and `appointment.starts_at`, supported by `appointment_patient_start_idx` (C7, C8, C10, C16).
-- REQ-4: instants are stored in UTC and shown in the hospital time zone, `HOSPITAL_TZ` (C11, C12).
+- REQ-2, REQ-6, REQ-7: picking the earliest Scheduled appointment after now uses `appointment.status` and `appointment.starts_at`, supported by `appointment_patient_start_idx`; instants are stored in UTC, so "after now" compares UTC instants (C7, C8, C10, C11, C16).
 - REQ-8: the appointment page `AppointmentDetailPage` is routed at `/appointments/:id` and backed by GET /api/appointments/:id, so it is the link target (C2, C4, C18).
 - REQ-9: paging is part of GET /api/patients, which is changed, so 20 per page is a regression check on that route (C1, C25).
 - REQ-12: medical history leaves the database only for the patient's own page, so the widened list query in `PatientService` and `PatientRepo` must not select it (C15, C19, C20).
 
 ## Assumed
+- REQ-4: the start time is shown in the hospital zone by formatting it with the web `dateTime` formatter and the zone the web reads from settings. Basis: `dateTime` exists (C17), the web reads settings through `useSettings` from `GET /api/settings` (C28, C29), and HOSPITAL_TZ is the hospital zone the system defines (C12). Confirm with Q-04.
 - REQ-10, REQ-11: search and sort are assumed to run in GET /api/patients, so they are regression checks on that route. Basis: routes parse input and services hold the rules (architecture#components), the patient table has `patient_name_idx` (C24), and paging is parsed in the API by `parsePage` (C25). Confirm with Q-01.
-- REQ-13: an Inactive doctor's name is still shown. Basis: the appointment table references the doctor table (C23), so an appointment's doctor row stays while the appointment exists unless the delete route removes it (C22); Q-02 checks that route.
+- REQ-13: an Inactive doctor's name is still shown. Basis: doctors with appointments are made Inactive, never deleted (C27), and the appointment table references the doctor table (C23); Q-02 checks that the delete route enforces the rule (C22).
 
 ## Unknown
 - U-1 (non-blocking): whether search and sort run on the server or in the browser (Q-01).
-- U-2 (non-blocking): how DELETE /api/doctors/:id treats a doctor with Scheduled appointments (Q-02).
+- U-2 (non-blocking): whether DELETE /api/doctors/:id enforces the never-deleted rule (Q-02).
 - U-3 (non-blocking): whether the existing `dateTime` formatter is the agreed display format (Q-03).
+- U-4 (non-blocking): whether the web already gets the hospital zone from settings (Q-04).
+- U-5 (non-blocking): which other web pages call GET /api/patients (Q-05).
 
 ## Open questions
 - Q-01 (non-blocking, tech lead): are search and sort server side in GET /api/patients? Default: assume server side and regression-test that route.
-- Q-02 (non-blocking, tech lead): does deleting a doctor with Scheduled appointments reject, set Inactive or remove it? Default: assume it rejects or sets Inactive.
+- Q-02 (non-blocking, tech lead): does the doctor delete route enforce Inactive-not-deleted? Default: assume yes.
 - Q-03 (non-blocking, product owner): reuse the web `dateTime` formatter for the column? Default: reuse it with the hospital time zone.
+- Q-04 (non-blocking, tech lead): does the web get the hospital zone from settings? Default: assume yes and use `useSettings`.
+- Q-05 (non-blocking, tech lead): which other pages call the patient list? Default: treat the field as additive and regression-test other callers.

@@ -1,0 +1,75 @@
+{
+  "artifact_path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impact.md",
+  "artifact_sha256": "d4977997c687a70aac26cc57b1fb3db86dc1ba730de4607c7efc0f3017bc50da",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "3dd5e6b156545966829498f9b25320928b65bb1faf0f0f073bb87aa336ad5f92",
+  "claims": {
+    "total": 27,
+    "verified": 26
+  },
+  "decided_at": "2026-10-26T05:53:35Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/req.md",
+      "sha256": "168b14f2f9236bbbe97d4740cc4b53d5824259e81d856851c562ef78471ab680",
+      "verification_sha256": "317457907cdeef836c7bb2d839af15f951e5a5e73af9acfaa2a2a4d1a049df82"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "63ae78d36e08ecc1bb07a4da39e079f83da0a9e7d35e55cc18589bfaaeb7b11a",
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9688,
+    "S2": 1.0,
+    "S3": 4.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "-J6xELZNrg1S3XydfawYBfNycn9EKn-0JT3zPbNNjt64IKhF8BQsuXXN9kP2hCUprCs0OKFlzWC3okYQIpxuAg",
+  "skill": "impact-analysis@1.1.1",
+  "step": "impact",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
