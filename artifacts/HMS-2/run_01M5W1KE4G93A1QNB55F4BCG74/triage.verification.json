@@ -1,0 +1,53 @@
+{
+  "artifact_path": "artifacts/HMS-2/run_01M5W1KE4G93A1QNB55F4BCG74/triage.md",
+  "artifact_sha256": "573f67d1ced18c0140868f7a32db06bc1c0aede4b0f7b6651d3787edcaccc64a",
+  "attempt": 1,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "4c5f8b9875820819ab248e75c43aa4207a4a6b33b37f1b7326d269d607d44a51",
+  "claims": {
+    "total": 5,
+    "verified": 5
+  },
+  "decided_at": "2026-10-26T12:08:55Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H5",
+    "H7"
+  ],
+  "inputs": [],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "ABORT",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "eb09fb6e5c17db6a400a7bc9342bae5267f675b4d6c1823c1125da8856c2b5eb",
+  "run_id": "run_01M5W1KE4G93A1QNB55F4BCG74",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "bpfTieB0M-RLsIXe9_DNgEO9zR2oTTDrCKBxZthD_ndn1tCg5AHw_dpMEfjs0thNCKYoFpk0f6ayWDTo8uUpCA",
+  "skill": "defect-triage@1.0.1",
+  "step": "triage",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

@@ -7,9 +7,9 @@
   "branch": {},
   "created_at": "2026-10-26T12:05:14Z",
   "cursor": null,
-  "end_reason": null,
+  "end_reason": "aborted",
   "gates": [],
-  "heartbeat_at": "2026-10-26T12:06:13Z",
+  "heartbeat_at": "2026-10-26T12:08:55Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -44,13 +44,30 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 1,
+  "rev": 4,
   "run_id": "run_01M5W1KE4G93A1QNB55F4BCG74",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "COMPLETED",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-2/run_01M5W1KE4G93A1QNB55F4BCG74/triage.md",
+          "artifact_sha256": "573f67d1ced18c0140868f7a32db06bc1c0aede4b0f7b6651d3787edcaccc64a",
+          "band": null,
+          "cause": "first",
+          "decided_at": "2026-10-26T12:08:55Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "ABORT",
+          "record": "artifacts/HMS-2/run_01M5W1KE4G93A1QNB55F4BCG74/triage.verification.json",
+          "skill": "defect-triage@1.0.1",
+          "skill_started_at": "2026-10-26T12:06:52Z",
+          "started_at": "2026-10-26T12:06:38Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -59,7 +76,7 @@
       },
       "id": "triage",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "FAILED"
     },
     {
       "attempts": [],
@@ -94,7 +111,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-2",
-  "updated_at": "2026-10-26T12:06:13Z",
+  "updated_at": "2026-10-26T12:08:55Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "856e3d6f8fd78271fd5b0e49f175a38809f516396bd4e541f9c731b48cae1ae9"
 }

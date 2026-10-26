@@ -1,0 +1,23 @@
+{
+  "artifact_sha256": "573f67d1ced18c0140868f7a32db06bc1c0aede4b0f7b6651d3787edcaccc64a",
+  "attempt": 1,
+  "claims_checked": [],
+  "findings": [],
+  "package_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "questions": [],
+  "recorded_at": "2026-10-26T12:08:53Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1ee9f75f31d3691a87f69440b3c071234dda729d5b439818ef2b13f6af69332e",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [],
+  "rubric_score": null,
+  "run_id": "run_01M5W1KE4G93A1QNB55F4BCG74",
+  "schema": "review.v1",
+  "status": "could_not_review",
+  "status_reason": "hard gates failed (H5 trace id, H7 tool use); review skipped",
+  "step": "triage"
+}
