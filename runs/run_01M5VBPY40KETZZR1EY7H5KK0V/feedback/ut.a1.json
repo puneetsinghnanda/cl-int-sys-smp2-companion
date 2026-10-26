@@ -1,0 +1,12 @@
+{
+  "comment_sha256": "c7342e3ace3635d14e24ba0217702e9c4821c99f4e7e03b3a38ddde3089f04ad",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
