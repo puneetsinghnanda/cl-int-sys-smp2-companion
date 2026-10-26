@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M5VBPY40KETZZR1EY7H5KK0V
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.0.1
 inputs:
   - path: artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md
@@ -18,15 +18,18 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 415369398bdad3122ac084a00766a01a3034f900
-    head_sha: 69f98a95926be7cfe5530d2cea11799486225c7e
-    diff_sha256: 2bdea1042d97fc708d0c534a27675e5e201e462e3310a5affbf392d6a4960412
+    head_sha: 7912bd9cc3ebc561904134188b0901137a41570e
+    diff_sha256: 5c4052451e71127be0f2fe3f5dd79b37d1dae4cb6de949f971f36b654fea6f0e
     files:
       - api/src/repositories/patientRepo.ts
       - api/src/services/patientService.ts
       - api/src/types.ts
+      - api/test/patients.test.ts
       - web/src/api/client.ts
       - web/src/api/types.ts
       - web/src/pages/PatientsPage.tsx
+resolves:
+  - {id: H3, how: "The only failing test was PAT-8, which pinned the exact list item keys. The designed next_appointment key is now in its allowed list, and the test also checks that next_appointment carries only id, starts_at and doctor_name, so the privacy guard stays exact."}
 claims:
   - id: C1
     text: "SQL lives in `api/src/repositories` and rules in `api/src/services`."
@@ -84,17 +87,18 @@ questions:
     evidence: ["artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L157"]
     options: ["Keep as is", "Show the doctor on a second line"]
     default: "Keep as is."
-summary: "GET /api/patients list items gain next_appointment (id, starts_at, doctor_name) or null, computed in one lateral join per page in PatientRepo; PatientsPage shows it in a new Next appointment column with a link, or None."
+summary: "GET /api/patients list items gain next_appointment (id, starts_at, doctor_name) or null, computed in one lateral join per page in PatientRepo; PatientsPage shows it in a new Next appointment column with a link, or None. The PAT-8 privacy test now allows exactly the new key."
 ---
 # Change: HMS-1
 
 ## Summary
-The patient list now carries each patient's next appointment, as the design specifies. In the API, `PatientRepo.list` wraps the existing page query and adds one `LEFT JOIN LATERAL` per page that picks the earliest appointment with status `SCHEDULED` starting after the current instant, with its doctor's name; all values, including the current instant, are bound parameters. Search, status filter, sort order and page size are unchanged, and the patient columns selected are still the existing list columns, so no medical history is read. `PatientService.list` passes the service clock to the repository and returns `PatientListItem`s. In the web app the client's patient list type becomes `PatientListItem`, and `PatientsPage` adds a "Next appointment" column that shows the start with the existing `dateTime` formatter in the hospital zone from `useSettings` (falling back to the default zone when the setting is missing or invalid), plus the doctor's name as plain text, linked to `/appointments/:id`; with no next appointment it shows "None". `patientsRouter` and `AppointmentRepo` are untouched.
+The patient list now carries each patient's next appointment, as the design specifies. In the API, `PatientRepo.list` wraps the existing page query and adds one `LEFT JOIN LATERAL` per page that picks the earliest appointment with status `SCHEDULED` starting after the current instant, with its doctor's name; all values, including the current instant, are bound parameters. Search, status filter, sort order and page size are unchanged, and the patient columns selected are still the existing list columns, so no medical history is read. `PatientService.list` passes the service clock to the repository and returns `PatientListItem`s. In the web app the client's patient list type becomes `PatientListItem`, and `PatientsPage` adds a "Next appointment" column that shows the start with the existing `dateTime` formatter in the hospital zone from `useSettings` (falling back to the default zone when the setting is missing or invalid), plus the doctor's name as plain text, linked to `/appointments/:id`; with no next appointment it shows "None". `patientsRouter` and `AppointmentRepo` are untouched. Attempt 1 failed H3 because the existing PAT-8 privacy test pinned the exact list item keys; that assertion now allows exactly the designed `next_appointment` key and checks its own keys too.
 
 ## Changes
 - `api/src/types.ts`: new `NextAppointment` and `PatientListItem` types (PatientService, PatientRepo).
 - `api/src/repositories/patientRepo.ts`: `list` takes `now` and adds the lateral next-appointment lookup; maps it to `next_appointment` or `null` (PatientRepo).
 - `api/src/services/patientService.ts`: `list` returns `Page<PatientListItem>` and passes `this.clock()` (PatientService).
+- `api/test/patients.test.ts`: the PAT-8 key list includes `next_appointment`, and its keys are checked to be only `doctor_name`, `id`, `starts_at` (PatientService, PatientRepo).
 - `web/src/api/types.ts`: the same `NextAppointment` and `PatientListItem` types for the web (api client (client.ts)).
 - `web/src/api/client.ts`: `patients` returns `Page<PatientListItem>` (api client (client.ts)).
 - `web/src/pages/PatientsPage.tsx`: new column, link and "None" text, using `useSettings` and `dateTime` with a zone fallback (PatientsPage, dateTime formatter, useSettings).
@@ -102,7 +106,7 @@ The patient list now carries each patient's next appointment, as the design spec
 ## Known
 - S-2: the lateral lookup filters to status `SCHEDULED` and start after now, ordered by start, so Cancelled, Completed and No-show never appear and a Cancelled appointment before a later Scheduled one is skipped; `null` renders "None" (C4).
 - S-3: the value links to `/appointments/:id` (C6).
-- S-5: the page query, its search, filter, order and page size are unchanged; the list still selects only the existing list columns, so no medical history is read or logged (C1, C2, C3, C4, C10).
+- S-5: the page query, its search, filter, order and page size are unchanged; the list still selects only the existing list columns, so no medical history is read or logged, and PAT-8 still guards the exact keys (C1, C2, C3, C4, C10).
 
 ## Assumed
 - S-1: the column, start time and doctor name are built in PatientRepo, PatientService and PatientsPage (C4, C5, C6, C7). The hospital-zone display assumes `useSettings` carries the zone (C8, C9), as the design assumes; a missing or invalid zone falls back to the default zone.

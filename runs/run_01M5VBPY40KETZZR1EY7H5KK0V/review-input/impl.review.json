@@ -1,0 +1,83 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "step": "impl",
+  "attempt": 2,
+  "artifact_sha256": "5b299ba18d9039feae9e262563e63ec382395427b7df7bb0322876e25b56f6c0",
+  "package_sha256": "281add73350f840a06b59fb591a169137709640cb696c055d40a975706e48bc4",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "Every changed design component is covered: PatientRepo, PatientService, client, PatientsPage, the null case and the link. The design said PatientService maps next_appointment, but the artifact maps it in PatientRepo. The design's default regression tests are not reported."},
+    {"id": "IM-R2", "score": 4, "reason": "SQL stays in repositories and rules in services, the list shape and 20 per page are unchanged, and no medical history is read. The snake_case/camelCase mix in item fields is a deviation, but the artifact flags it (Q-01)."},
+    {"id": "IM-R3", "score": 5, "reason": "Seven files all belong to the designed components, plus one test file. 81 lines added and 11 deleted. The router and AppointmentRepo are untouched, and the GEN-SIZE-01 soft check passed."},
+    {"id": "IM-R4", "score": 4, "reason": "It handles the null next appointment ('None'), the missing or invalid zone fallback, Inactive doctors and bound parameters. The listed changes add no tests for S-2 status filtering or for S-1 earliest selection."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary matches the listed files and the H3 fix. One Q-02 evidence cite points to an unrelated story line, and the camelCase claim in Q-01 is not backed by the cited evidence."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The design's default for Q-03 is to add regression tests on GET /api/patients. The only test change is the PAT-8 key list, so nothing tests the S-2 status filter, the S-1 earliest pick, the S-4 Inactive doctor or the unchanged search and sort.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L136", "quote": "Assume server side and add regression tests on GET /api/patients."},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L101", "quote": "the PAT-8 key list includes `next_appointment`, and its keys are checked to be only `doctor_name`, `id`, `starts_at`"}
+      ],
+      "suggested_fix": "Add tests in api/test/patients.test.ts: Cancelled, Completed and No-show are excluded; a Cancelled appointment before a Scheduled one is skipped; the earliest of several is picked; an Inactive doctor's name is kept; search, sort and page size are unchanged."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The design puts the next_appointment mapping in PatientService. The artifact maps it in PatientRepo and only passes the clock in PatientService, which differs from the design's component split.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L191", "quote": "PatientService (module:sample-system:api) — changed: sets `next_appointment` on each list item, or `null`."},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L99", "quote": "maps it to `next_appointment` or `null` (PatientRepo)"}
+      ],
+      "suggested_fix": "Either move the mapping to PatientService or state the deviation and why."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Q-02 (cell layout) cites split.md#L157 as evidence. That line is the S-4 Inactive doctor criterion and says nothing about how time and doctor name are joined.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L87", "quote": "evidence: [\"artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L157\"]"},
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md#L157", "quote": "Given a patient's next Scheduled appointment is with a doctor who is Inactive"}
+      ],
+      "suggested_fix": "Cite split.md#L142 (S-1 AC5) and design.md#L180 instead."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Q-01 says existing item fields are camelCase (fullName, registeredAt), but its evidence (conventions#lists) only shows snake_case page_size. Nothing cited supports the camelCase claim.",
+      "cites": [
+        {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L77", "quote": "while existing patient item fields are camelCase (fullName, registeredAt)"},
+        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}
+      ],
+      "suggested_fix": "Cite the product source lines (e.g. api/src/types.ts) that define fullName and registeredAt."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "quote": "sym:sample-system:web/src/api/client.ts:api"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "sym:sample-system:web/src/lib/format.ts:dateTime"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L174", "quote": "`next_appointment`: `null` when the patient has no Scheduled appointment starting after now"}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,70 @@
+{
+  "artifact_path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md",
+  "artifact_sha256": "6d450e5ea6e408ba3b7ae71161caed2e9dda900807efd7f5a657337dd405ed19",
+  "attempt": 1,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "f843403ff3bf565aecd62f0832f16a616605a2d2bc147bc6447d6a6eca8b571b",
+  "claims": {
+    "total": 11,
+    "verified": 10
+  },
+  "decided_at": "2026-10-26T06:22:43Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H3"
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md",
+      "sha256": "b35d0758b7a70010b1e5bf16befa8a356a6c9c2b09beb353e093f34384cad393",
+      "verification_sha256": "6d942f69dd7b5c579075fe708f49d7fc86894f1ea67b3d4f20d948abf137a373"
+    },
+    {
+      "path": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/split.md",
+      "sha256": "8193194ed9f5168ece5dab22f4c694ae9fe98e787bfd5dd0a55ae234091fed5e",
+      "verification_sha256": "9557d6f4e7312fb7b1da9edddd2768a4d0865dc01c6fb60aaf220f6c43817c1d"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "415369398bdad3122ac084a00766a01a3034f900",
+      "diff_sha256": "2bdea1042d97fc708d0c534a27675e5e201e462e3310a5affbf392d6a4960412",
+      "repo": "sample-system",
+      "tree_sha": "69f98a95926be7cfe5530d2cea11799486225c7e"
+    }
+  ],
+  "review_sha256": "127b6dfc83d81507aebeed79b08fdf40b11e884e5d701ec56722bfb4f8446171",
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9091,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 6,
+      "lines": 88,
+      "sensitive": false
+    }
+  },
+  "signature": "ji5UkTytdNOtp_1fkS1bYlmzTT8tSfhYH_HOcGfTy4MJ2AH-QGVnStgENokugn3YzKTc7zHj7MLVEDP55TIqAQ",
+  "skill": "implement@1.0.1",
+  "step": "impl",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

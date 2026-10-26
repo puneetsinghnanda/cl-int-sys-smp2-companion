@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Assume server side and add regression tests on GET /api/patients.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L136"
+        },
+        {
+          "quote": "the PAT-8 key list includes `next_appointment`, and its keys are checked to be only `doctor_name`, `id`, `starts_at`",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/impl.md#L101"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The design's default for Q-03 is to add regression tests on GET /api/patients. The only test change is the PAT-8 key list, so nothing tests the S-2 status filter, the S-1 earliest pick, the S-4 Inactive doctor or the unchanged search and sort."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
