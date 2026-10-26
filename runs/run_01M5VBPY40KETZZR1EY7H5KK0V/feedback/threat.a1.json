@@ -1,0 +1,45 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "T-10: the configured zone is assumed to be validated by the API before use.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L192"
+        },
+        {
+          "quote": "Does GET /api/settings (read through useSettings) carry the hospital time zone HOSPITAL_TZ to the web app?",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L148"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The T-10 assumption that the API validates the configured zone before use has no basis, citation or question. The design itself only assumes settings carry the zone at all (design Q-05)."
+    },
+    {
+      "cites": [
+        {
+          "quote": "Assume staff-only access until sign-in replaces identify and requirePermission.",
+          "ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L75"
+        },
+        {
+          "quote": "Render builds all workspaces, then runs migrate, seed-if-empty and the API, which also serves",
+          "ref": "context/architecture.md#deployment-shape"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "Q-01 defaults to staff-only network access with no evidence. The deployment-shape section describes a Render-hosted API that serves the web app, which suggests public reachability, and the artifact does not cite it."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "schema": "feedback.v1",
+  "step": "threat"
+}

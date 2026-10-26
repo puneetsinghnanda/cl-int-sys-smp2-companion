@@ -1,0 +1,78 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5VBPY40KETZZR1EY7H5KK0V",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "695de3b3d921ba389592a925e54c6e308005f34cc54324c57891a5665b62c3e2",
+  "package_sha256": "a2363b4c31c66012fe47b14a5a9176ae13de49058dfdd499152cd388c945fda4",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All nine design components have at least one threat. The PII-bearing components (patientsRouter, PatientService, PatientRepo) each have several. The unchanged endpoints are covered through T-11 and T-12."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats are specific to this change (medical history in list mapping, wildcard select, inference from the doctor). T-7 and T-10 are weaker, speculative threats."},
+    {"id": "TM-R3", "score": 4, "reason": "Most mitigations are concrete new controls that can be tested. T-5 calls a design choice an existing control without citing it, and T-10 relies on an API validation assumption that has no basis."},
+    {"id": "TM-R4", "score": 4, "reason": "Assumptions and unknowns are listed and the access-control gap is raised as Q-01. The T-10 assumption has no basis and no question. Q-01 defaults to staff-only access even though the deployment-shape section points to a Render deployment."},
+    {"id": "TM-R5", "score": 4, "reason": "Clear, and ordered by risk with the highest first. The front matter and the body repeat each other heavily."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "completeness",
+     "text": "The T-10 assumption that the API validates the configured zone before use has no basis, citation or question. The design itself only assumes settings carry the zone at all (design Q-05).",
+     "cites": [
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L192", "quote": "T-10: the configured zone is assumed to be validated by the API before use."},
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L148", "quote": "Does GET /api/settings (read through useSettings) carry the hospital time zone HOSPITAL_TZ to the web app?"}
+     ],
+     "suggested_fix": "Give a basis for the T-10 assumption or turn it into an unknown linked to design Q-05. Rely only on the new client-side fallback control."},
+    {"id": "F-2", "severity": "major", "category": "correctness",
+     "text": "Q-01 defaults to staff-only network access with no evidence. The deployment-shape section describes a Render-hosted API that serves the web app, which suggests public reachability, and the artifact does not cite it.",
+     "cites": [
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L75", "quote": "Assume staff-only access until sign-in replaces identify and requirePermission."},
+       {"ref": "context/architecture.md#deployment-shape", "quote": "Render builds all workspaces, then runs migrate, seed-if-empty and the API, which also serves"}
+     ],
+     "suggested_fix": "Cite context/architecture.md#deployment-shape in Q-01 and reconsider whether Q-01 should be blocking, since patient personal data is exposed with no access control."},
+    {"id": "F-3", "severity": "minor", "category": "traceability",
+     "text": "T-5 calls the single join backed by an existing index an existing control but cites nothing. The index is only claimed in the design (C17).",
+     "cites": [
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L109", "quote": "Existing control: the design uses one join per page backed by an existing index."}
+     ],
+     "suggested_fix": "Cite the design claim or context/generated/db-schema.json#index:appointment_patient_start_idx."},
+    {"id": "F-4", "severity": "minor", "category": "traceability",
+     "text": "T-13 cites C12 for 'the doctor's specialization is not shown'. C12 only says a doctor has a specialization, so it does not prove the specialization is hidden.",
+     "cites": [
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L149", "quote": "the doctor's specialization is not shown (C12)"},
+       {"ref": "context/data-model.md#doctors", "quote": "A doctor has one specialization, one department"}
+     ],
+     "suggested_fix": "Cite the design's response contract (id, starts_at, doctor_name) as the basis that the specialization is not shown."},
+    {"id": "F-5", "severity": "minor", "category": "traceability",
+     "text": "T-6 covers medical history reaching logs but does not cite the existing rule that logs never carry medical history, which the design cites (design C8).",
+     "cites": [
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/threat.md#L113", "quote": "pulls medical history columns into application memory or logs"},
+       {"ref": "artifacts/HMS-1/run_01M5VBPY40KETZZR1EY7H5KK0V/design.md#L47", "quote": "Logs never carry `medical history`."}
+     ],
+     "suggested_fix": "Add context/conventions.md#logging-and-data as an existing control in T-6."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "A patient row holds identity, contact details and the basic medical history"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/architecture.md#deployment-shape", "quote": "the API, which also serves"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"/api/patients\","}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"path\": \"/api/settings\","}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"path\": \"/appointments/:id\","}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"path\": \"/api/appointments/:id\","}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/data-model.md#doctors", "quote": "A doctor has one specialization, one department"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Sign-in replaces these"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Is the Render-hosted app publicly reachable today? If so, should exposing each patient's next appointment and doctor wait until sign-in exists?", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-2"}
+  ]
+}
