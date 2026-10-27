@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "REQ-3 (HMS-3) negative: an unknown period is still rejected with 400",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md#L60"
+        },
+        {
+          "quote": "dashboardRouter (api, existing): unchanged; still serves GET /api/dashboard (C12).",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L119"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "TP-12 asserts that an unknown period is rejected with 400. Neither the design nor the stories state this; the design only says dashboardRouter is unchanged. The plan cites the design (C4, C8) for it, but the design does not support it."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "feedback.v1",
+  "step": "tplan"
+}
