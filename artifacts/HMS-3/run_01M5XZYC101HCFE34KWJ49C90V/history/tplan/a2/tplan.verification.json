@@ -1,0 +1,64 @@
+{
+  "artifact_path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md",
+  "artifact_sha256": "2fb77523e16faf82bfa9a4e4abe136c1118dba7602c2f921306f102de418ff60",
+  "attempt": 2,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "34ae043f673b08d4d13d3b525ec8b398d1513d585c1e99b262f6b792921849ef",
+  "claims": {
+    "total": 11,
+    "verified": 11
+  },
+  "decided_at": "2026-10-27T07:17:30Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md",
+      "sha256": "d74118fac2cec105944dfccb25b75abb2f410f0af842b8e86256f4332d8b3714",
+      "verification_sha256": "919295b12cf3074ae56ad503725124bdf717de43c0e8de9ffc7d58e8ec43a203"
+    },
+    {
+      "path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md",
+      "sha256": "889e67e42166431aed6f8a95542c06b93ebc626f15e7f1c13cac95d491a6be1b",
+      "verification_sha256": "bb0b7bac67ff357d7e52a00dc46e2ef6f3945856a80dc349201862fa13972a4f"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+    "signed_at": "2026-10-21T13:34:05Z",
+    "source_sha": {
+      "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    }
+  },
+  "prev_attempt_sha256": "7beb5923fee9456fac56e048c3b30db2979c8ad7507510587bbcdd945863e03a",
+  "product_changes": null,
+  "review_sha256": "df09b12a6904bc093c118590466ee1df3d1cf7d0fbd39920188cf2cc174a9327",
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.7,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "p0Ku6yu0O2Q17f2dTb1WucWN0OQvTkRr8TDGbL8TS9HYfxLm1oTHiBCAHX7GRpB0_0qb8y8zP99sno7pht3zDg",
+  "skill": "test-plan@1.0.1",
+  "step": "tplan",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
