@@ -4,7 +4,7 @@ section: glossary
 owner: eng-db6b
 origin: human
 status: reviewed
-verified_at: {sample-system: 415369398bdad3122ac084a00766a01a3034f900}
+verified_at: {sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33}
 ---
 
 # Glossary {#glossary}
@@ -20,6 +20,23 @@ An appointment that is booked and still open. Only Scheduled appointments can ch
 
 ## No-show {#no-show}
 A past appointment the patient did not attend, closed instead of staying Scheduled.
+
+## Completed {#completed}
+A past appointment the patient attended, closed by staff once its start time has passed.
+
+## Cancelled {#cancelled}
+An appointment called off before it took place, with a reason; its slot becomes free again.
+
+## Dashboard {#dashboard}
+The start page: tiles that count patients, doctors and appointments, each linking to the list it
+counts, plus the next upcoming appointments.
+
+## Tile {#tile}
+One count on the dashboard, with its label; selecting it opens the list behind the count.
+
+## Front-desk staff {#front-desk-staff}
+The hospital staff who register patients and book, move and close appointments; in the MVP every
+user acts as `staff`.
 
 ## Inactive {#inactive}
 A doctor, patient, department or specialization kept for history but not offered for new use.

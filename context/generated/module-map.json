@@ -25,13 +25,13 @@
       }
     },
     {
-      "files": 45,
+      "files": 47,
       "id": "module:sample-system:api",
       "kind": "module",
       "languages": {
         "json": 3,
         "mts": 1,
-        "ts": 41
+        "ts": 43
       },
       "name": "api",
       "source": {
@@ -58,7 +58,7 @@
       }
     },
     {
-      "files": 41,
+      "files": 42,
       "id": "module:sample-system:web",
       "kind": "module",
       "languages": {
@@ -67,7 +67,7 @@
         "json": 2,
         "mts": 2,
         "ts": 6,
-        "tsx": 29
+        "tsx": 30
       },
       "name": "web",
       "source": {
@@ -627,34 +627,34 @@
       }
     },
     {
-      "end_line": 207,
+      "end_line": 233,
       "id": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
       "kind": "symbol",
       "name": "PatientRepo",
       "source": {
-        "line": 76,
+        "line": 82,
         "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 37,
+      "end_line": 43,
       "id": "sym:sample-system:api/src/repositories/patientRepo.ts:ageOn",
       "kind": "symbol",
       "name": "ageOn",
       "source": {
-        "line": 32,
+        "line": 38,
         "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
     },
     {
-      "end_line": 75,
+      "end_line": 81,
       "id": "sym:sample-system:api/src/repositories/patientRepo.ts:normalizePhone",
       "kind": "symbol",
       "name": "normalizePhone",
       "source": {
-        "line": 72,
+        "line": 78,
         "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
@@ -792,12 +792,12 @@
       }
     },
     {
-      "end_line": 75,
+      "end_line": 78,
       "id": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService",
       "kind": "symbol",
       "name": "DashboardService",
       "source": {
-        "line": 27,
+        "line": 28,
         "path": "api/src/services/dashboardService.ts",
         "repo": "sample-system"
       }
@@ -836,7 +836,7 @@
       }
     },
     {
-      "end_line": 130,
+      "end_line": 131,
       "id": "sym:sample-system:api/src/services/patientService.ts:PatientService",
       "kind": "symbol",
       "name": "PatientService",
@@ -1107,6 +1107,17 @@
       "source": {
         "line": 18,
         "path": "web/src/App.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 23,
+      "id": "sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell",
+      "kind": "symbol",
+      "name": "nextCell",
+      "source": {
+        "line": 18,
+        "path": "web/src/__tests__/PatientsPage.test.tsx",
         "repo": "sample-system"
       }
     },
@@ -1474,7 +1485,7 @@
       }
     },
     {
-      "end_line": 62,
+      "end_line": 67,
       "id": "sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage",
       "kind": "symbol",
       "name": "DashboardPage",
@@ -1485,12 +1496,12 @@
       }
     },
     {
-      "end_line": 64,
+      "end_line": 69,
       "id": "sym:sample-system:web/src/pages/DashboardPage.tsx:Tile",
       "kind": "symbol",
       "name": "Tile",
       "source": {
-        "line": 63,
+        "line": 68,
         "path": "web/src/pages/DashboardPage.tsx",
         "repo": "sample-system"
       }
@@ -1639,12 +1650,23 @@
       }
     },
     {
-      "end_line": 72,
+      "end_line": 91,
       "id": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage",
       "kind": "symbol",
       "name": "PatientsPage",
       "source": {
-        "line": 11,
+        "line": 21,
+        "path": "web/src/pages/PatientsPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 18,
+      "id": "sym:sample-system:web/src/pages/PatientsPage.tsx:startsAt",
+      "kind": "symbol",
+      "name": "startsAt",
+      "source": {
+        "line": 12,
         "path": "web/src/pages/PatientsPage.tsx",
         "repo": "sample-system"
       }
@@ -1686,7 +1708,7 @@
   "schema": "context-facts.v1",
   "section": "module-map",
   "sources": {
-    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
   },
   "unresolved": []
 }

@@ -48,6 +48,25 @@
     },
     {
       "framework": "unknown",
+      "id": "test:sample-system:api/test/dashboard-no-shows.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/dashboard-no-shows.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "HMS-3 REQ-2/REQ-4: counts a No-show that starts in the selected period",
+        "HMS-3 REQ-8: a No-show leaves the Completed, Cancelled and upcoming counts as they are",
+        "HMS-3 REQ-6/REQ-7: the tile’s No-show list for the period holds exactly the counted appointments",
+        "HMS-3 REQ-5 edge: the next day’s Today excludes Monday’s No-show; Last 7 and 30 days include it",
+        "HMS-3 REQ-3 error: an unknown period is still rejected",
+        "HMS-3 REQ-9/REQ-10: with a No-show counted, the dashboard carries no contact details or medical history"
+      ]
+    },
+    {
+      "framework": "unknown",
       "id": "test:sample-system:api/test/dashboard.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
@@ -108,6 +127,28 @@
         "DOC-1: rejects overlapping or inverted blocks",
         "display codes",
         "formats and parses D-, P- and A- codes"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/patients-next-appointment.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/patients-next-appointment.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "HMS-1 REQ-7: shows null when the patient has no upcoming Scheduled appointment",
+        "HMS-1 REQ-2: shows the earliest Scheduled appointment with its start and doctor name",
+        "HMS-1 REQ-6: skips a Cancelled appointment that starts before a later Scheduled one",
+        "HMS-1 REQ-2: ignores appointments that start before now",
+        "HMS-1 REQ-9, REQ-10: keeps paging and search unchanged",
+        "HMS-1 REQ-10: an invalid list filter is still rejected with a field error",
+        "HMS-1 REQ-6: skips a Completed appointment and shows the next Scheduled one",
+        "HMS-1 REQ-6: skips a No-show appointment and shows the next Scheduled one",
+        "HMS-1 REQ-11: keeps the list newest first"
       ]
     },
     {
@@ -184,7 +225,25 @@
       },
       "titles": [
         "DashboardPage (PRD §4.4)",
-        "DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts"
+        "DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts",
+        "HMS-3 REQ-1/REQ-6/REQ-7: the No-shows tile shows its count and links to the No-show list for the period",
+        "HMS-3 REQ-5/REQ-7: changing the period reloads the No-shows count and moves its link to that period",
+        "HMS-3 REQ-2 edge: a period with no No-shows shows 0"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/PatientsPage.test.tsx",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/PatientsPage.test.tsx",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "PatientsPage next appointment column (HMS-2)",
+        "HMS-2: an upcoming appointment still shows its doctor, linked to the appointment"
       ]
     },
     {
@@ -235,7 +294,7 @@
   "schema": "context-facts.v1",
   "section": "test-layout",
   "sources": {
-    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
   },
   "unresolved": []
 }

@@ -1,14 +1,14 @@
 {
   "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
-  "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
+  "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
   "role": "tech_lead",
   "schema": "pack-signature.v1",
-  "signature": "BJhwZKS-jTa0R6qYfvaWrjsMJO6XYqF9Lt45wGIcOVhU-8Oh_QojG9EAuQO1XC_-GGbSxXEXD6d5MfWmPZEMCQ",
-  "signed_at": "2026-10-21T13:34:05Z",
+  "signature": "1n2sy5pVK8_IZRoB4sdxf2GR9qiYra5evuV3YKFz8kV98X_08pvwiZ_-CYp8FYJG1Tla5uws0rlOx16vTZ4oCQ",
+  "signed_at": "2026-10-27T11:05:02Z",
   "signed_by": "eng-db6b",
   "sources": {
-    "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
   },
   "system": "SYS-SMP2",
-  "tsl": "0.1.0"
+  "tsl": "0.1.3"
 }

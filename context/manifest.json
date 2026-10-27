@@ -1,5 +1,5 @@
 {
-  "built_by": "tsl@0.1.0",
+  "built_by": "tsl@0.1.3",
   "extractors": [
     {
       "name": "js-routes",
@@ -42,7 +42,7 @@
       "kind": "fact",
       "path": "context/generated/api-inventory.json",
       "required": true,
-      "sha256": "8dfdbde2e1d64359cb29b8f710a2a467d5e19b383d90def7c856e7738d4ca104",
+      "sha256": "9ba29278d8d66b7341defc3c67d6e7d68508ce25ee2991ba256be2b37194ec61",
       "tokens_est": 3144
     },
     {
@@ -121,7 +121,7 @@
       "kind": "fact",
       "path": "context/generated/db-schema.json",
       "required": true,
-      "sha256": "43f6d599b6cbbd10eeb62bfbc1f7b947dea565e519d28b267856a8570f6de2dc",
+      "sha256": "f047583e5b452649edd65cf48083feaad4c664531202fba78652d06b415749f5",
       "tokens_est": 9536
     },
     {
@@ -131,7 +131,7 @@
       "kind": "fact",
       "path": "context/generated/dependency-graph.json",
       "required": true,
-      "sha256": "a06a398fd3b0172972f32e806baa3c2032444d364458f6cc7dbce5f3e229a5a8",
+      "sha256": "4bf1ab6b6751a27c704c5aec48616611f9aa5c9325d099880f5e16f5958d9da6",
       "tokens_est": 2212
     },
     {
@@ -141,6 +141,11 @@
         "slot",
         "scheduled",
         "no-show",
+        "completed",
+        "cancelled",
+        "dashboard",
+        "tile",
+        "front-desk-staff",
         "inactive",
         "medical-history",
         "actor",
@@ -152,11 +157,11 @@
       "owner": "eng-db6b",
       "path": "context/glossary.md",
       "required": true,
-      "sha256": "9bfd556283382d3d3835bf3b12514acc4f6941dc24f21cba0c8eaa4cd658a36c",
+      "sha256": "7623345ad8bad33b8a14a713b452edb2a36834e8b1c2228b76f3aa154034f16e",
       "status": "reviewed",
-      "tokens_est": 284,
+      "tokens_est": 452,
       "verified_at": {
-        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+        "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
       }
     },
     {
@@ -183,13 +188,13 @@
     },
     {
       "empty_reason": null,
-      "fact_count": 150,
+      "fact_count": 152,
       "id": "module-map",
       "kind": "fact",
       "path": "context/generated/module-map.json",
       "required": true,
-      "sha256": "31d9ca15805fc1b6488e8da89fdb0ee7714adbcdfda176d69581ab8f3d6482da",
-      "tokens_est": 10688
+      "sha256": "04f84ff09b4ad6ffaba59ec846716d25f03c8aae22292958a47ebb9247632345",
+      "tokens_est": 10836
     },
     {
       "anchors": [
@@ -215,13 +220,13 @@
     },
     {
       "empty_reason": null,
-      "fact_count": 12,
+      "fact_count": 15,
       "id": "test-layout",
       "kind": "fact",
       "path": "context/generated/test-layout.json",
       "required": true,
-      "sha256": "bd0686fe34afae476a1ec3105bcf1039ce7e5c510941d1bcdc09ab2ca8e74f3c",
-      "tokens_est": 2168
+      "sha256": "fd4b5d51b15f9aba1d03b5f6a0350e4e4849d862118fb3a3bda7abfa5127e179",
+      "tokens_est": 2862
     },
     {
       "anchors": [
@@ -238,24 +243,24 @@
       "owner": "eng-db6b",
       "path": "context/test-strategy.md",
       "required": true,
-      "sha256": "1869d3aed8521e40123c46f16539c5ea10ae5ac8c9d872ebc8a1f48b704ce150",
+      "sha256": "e7465d17d8814cd71fe160b96a859f1ba1414836ad71ef48b9aaeb166259eee8",
       "status": "reviewed",
-      "tokens_est": 329,
+      "tokens_est": 408,
       "verified_at": {
-        "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
+        "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
       }
     }
   ],
   "sources": [
     {
-      "commit": "415369398bdad3122ac084a00766a01a3034f900",
+      "commit": "bd98ff08b83f8762c5e5c073ba5fadef88169b33",
       "default_branch": "main",
       "files_excluded": 4,
-      "files_scanned": 111,
+      "files_scanned": 114,
       "repo": "sample-system",
       "scope": "."
     }
   ],
   "system": "SYS-SMP2",
-  "tokens_total_est": 30550
+  "tokens_total_est": 31639
 }
