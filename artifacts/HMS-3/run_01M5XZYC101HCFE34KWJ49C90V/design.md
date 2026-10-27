@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M5XZYC101HCFE34KWJ49C90V
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.4.1
 inputs:
   - path: artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md
@@ -21,6 +21,9 @@ inputs:
     sha256: 8dfdbde2e1d64359cb29b8f710a2a467d5e19b383d90def7c856e7738d4ca104
 pack_sha:
   sample-system: 415369398bdad3122ac084a00766a01a3034f900
+resolves:
+  - {id: F-1, how: "Added the component 'Web DashboardPage test (web, changed)': it checks the No-shows tile shows totals.noShows and links to /appointments with status NO_SHOW and the period's from and to (C15)."}
+  - {id: F-2, how: "The tile is titled exactly 'No-shows', as REQ-1 and S-1 AC1 say; the period-suffix assumption A-1 and its question are dropped, and the one-line trade-off notes the difference from the sibling labels (C7)."}
 claims:
   - id: C1
     text: "Dashboard counts are computed in `DashboardService`."
@@ -64,20 +67,17 @@ claims:
   - id: C14
     text: "The web app calls the API only through `client.ts`."
     cites: ["context/architecture.md#components"]
+  - id: C15
+    text: "The web dashboard test checks that each tile `links to the list it counts`."
+    cites: ["sample-system:web/src/__tests__/DashboardPage.test.tsx#L15"]
+  - id: C16
+    text: "By the architecture, repositories hold the `SQL`."
+    cites: ["context/architecture.md#components"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
-known: [D-1, D-2, D-3, D-4, D-5]
-assumed: [A-1]
-unknown:
-  - {id: U-1, blocking: false}
-questions:
-  - id: Q-01
-    blocking: false
-    ask: product owner
-    text: "Should the tile read \"No-shows (Today)\", adding the period like the Completed and Cancelled tiles, or exactly \"No-shows\"?"
-    why: "The ticket names the tile \"No-shows\"; the sibling tiles add the period name to their label (C7)."
-    evidence: ["sample-system:web/src/pages/DashboardPage.tsx#L46", "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md#L41"]
-    options: ["No-shows (period), like the siblings", "Exactly No-shows"]
-    default: "No-shows (period), like the Completed and Cancelled tiles."
+known: [D-1, D-2, D-3, D-4, D-5, D-6]
+assumed: []
+unknown: []
+questions: []
 components:
   - {name: DashboardService no-show count, module: "module:sample-system:api", change: changed}
   - {name: Dashboard totals type (api), module: "module:sample-system:api", change: changed}
@@ -87,6 +87,7 @@ components:
   - {name: Tile, module: "module:sample-system:web", change: existing}
   - {name: Appointment list (status and from/to filters), module: "module:sample-system:api", change: existing}
   - {name: API dashboard test, module: "module:sample-system:api", change: changed}
+  - {name: Web DashboardPage test, module: "module:sample-system:web", change: changed}
 endpoints:
   - {method: GET, path: /api/dashboard, change: changed}
   - {method: GET, path: /api/appointments, change: existing}
@@ -100,27 +101,31 @@ to the end of today (C2, C3), with the period start taken from dayBounds in the 
 The No-show count is a third sub-select in that same statement with status NO_SHOW and the same bounds,
 so it is counted exactly like its siblings (REQ-4) and follows the period (REQ-5). The response's
 totals (C5) gain `noShows`, and the web Dashboard type (C9) gains it too. DashboardPage adds a Tile (C11)
-beside Cancelled that links to /appointments with status NO_SHOW and the period's from and to, exactly
-as the Cancelled tile does (C6); the appointment list already accepts NO_SHOW (C8, C13).
-Trade-off: a sub-select in the existing query instead of a repository method keeps the counts side by
-side and costs one more index-assisted count per load; moving the counts to a repository would be a
-larger refactor than the ticket asks.
-Trade-off: the field is additive JSON, so other readers through client.ts (C14) are unaffected; but the
-API test compares totals exactly (C10), so implement updates that assertion and adds a No-show case
-(regression tests the design asks for).
+titled exactly "No-shows" (REQ-1, S-1 AC1), placed after Cancelled, that links to /appointments with
+status NO_SHOW and the period's from and to, exactly as the Cancelled tile does (C6); the appointment
+list already accepts NO_SHOW (C8, C13).
+Trade-off: the architecture puts SQL in repositories (C16), but the existing dashboard counts already
+live in DashboardService (C2, C3); the design follows that local precedent on purpose, so all counts
+stay in one statement, rather than move them to a repository in this ticket.
+Trade-off: the title is exactly "No-shows", as the requirement says, while the Completed and Cancelled
+labels add the period name (C7); the selected period stays visible in the page's period selector.
+Trade-off: the field is additive JSON, so readers through client.ts (C14) are unaffected; but the API
+test compares totals exactly (C10), so implement updates that assertion, and both dashboard tests gain
+No-show cases (regression tests the design asks for).
 
 ## Components
 - DashboardService no-show count (api, changed): third sub-select `status = 'NO_SHOW' AND starts_at >= period start AND starts_at < end of today`; totals.noShows = its count. Serves S-1.
 - Dashboard totals type (api, changed): `noShows: number` beside completed and cancelled. Serves S-1.
 - dashboardRouter (api, existing): unchanged; still serves GET /api/dashboard (C12).
 - Dashboard totals type (web, changed): `noShows: number`. Serves S-1.
-- DashboardPage No-shows tile (web, changed): `Tile` labelled "No-shows (<period label>)" with value totals.noShows and link `/appointments?status=NO_SHOW&from=<period.from>&to=<period.to>`, placed after Cancelled. Serves S-1 AC1 and S-2.
+- DashboardPage No-shows tile (web, changed): `Tile` titled "No-shows" with value totals.noShows and link `/appointments` with query status NO_SHOW, from period.from and to period.to (built with the page's existing query helper, as the Cancelled tile is), placed after Cancelled. Serves S-1 AC1 and S-2.
 - Tile (web, existing): reused as is (C11).
 - Appointment list (api, existing): already filters by status (NO_SHOW is a valid status, C8) and by from and to. Serves S-2.
 - API dashboard test (api, changed): the exact totals assertion (C10) gains noShows, plus a case with a No-show inside and one outside the period. Regression for S-1 and S-3 AC1.
+- Web DashboardPage test (web, changed): the No-shows tile shows totals.noShows and links to /appointments with status NO_SHOW and the period's from and to, beside the existing tile checks (C15). Regression for S-1 AC1 and S-2.
 - GET /api/dashboard (changed): response totals gain noShows; nothing removed.
 - GET /api/appointments (existing): link target.
-- Stories: S-1 by the service count, the types and the tile; S-2 by the tile's link and the existing list; S-3 by leaving the other sub-selects, tiles and the response's other fields untouched, and by reading only the appointment table (no patient columns, so no medical history or contact details).
+- Stories: S-1 by the service count, the types and the tile; S-2 by the tile's link and the existing list; S-3 by leaving the other sub-selects, tiles and response fields untouched, and by reading only the appointment table (no patient columns, so no medical history or contact details).
 
 ## Known
 - D-1: the count copies the Completed and Cancelled sub-selects' status-and-bounds form (C2, C3, C4).
@@ -128,12 +133,13 @@ API test compares totals exactly (C10), so implement updates that assertion and 
 - D-3: the tile copies the Cancelled tile's link with status NO_SHOW (C6), and the list accepts NO_SHOW (C8).
 - D-4: the API test's exact totals assertion must include the new field (C10).
 - D-5: no new endpoint; GET /api/dashboard changes shape additively and GET /api/appointments is reused (C12, C13).
+- D-6: the web test already checks each tile's link (C15), so it gains the No-shows tile.
 
 ## Assumed
-- A-1: the tile label is "No-shows (<period>)", following the Completed and Cancelled labels (C7). Basis: consistency with the sibling tiles; the ticket's "No-shows" is kept as the label's first word (Q-01).
+- None.
 
 ## Unknown
-- U-1 (non-blocking): whether the label should carry the period name (Q-01).
+- None.
 
 ## Open questions
-- Q-01 (non-blocking, product owner): "No-shows (Today)" like the siblings, or exactly "No-shows"? Default: like the siblings.
+- None.
