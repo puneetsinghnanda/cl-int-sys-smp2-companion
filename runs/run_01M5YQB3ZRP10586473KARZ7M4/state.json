@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-27T13:30:18Z",
+  "heartbeat_at": "2026-10-27T13:37:33Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 12,
+  "rev": 16,
   "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -136,16 +136,39 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md",
+          "artifact_sha256": "cd2e15b797b5850df6d721524faaadfd47de3448476947cb2fb860c8688d08ea",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-27T13:37:33Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "3e7adfbb0c88fcca0bb2ac95ec1a1b58c07a9930dc1a1c6e56af91e5475f7321",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.verification.json",
+          "skill": "impact-analysis@1.1.1",
+          "skill_started_at": "2026-10-27T13:30:50Z",
+          "started_at": "2026-10-27T13:30:41Z"
+        }
+      ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 0,
         "rework": 0,
         "verifier": 0
       },
       "id": "impact",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -228,7 +251,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-10-27T13:30:18Z",
+  "updated_at": "2026-10-27T13:37:33Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

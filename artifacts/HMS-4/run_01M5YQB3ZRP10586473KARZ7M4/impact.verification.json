@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md",
+  "artifact_sha256": "cd2e15b797b5850df6d721524faaadfd47de3448476947cb2fb860c8688d08ea",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "d6ed1bf6b97a8826096fa2fc5dad4a3ca97b4bd9e393df75b10013ec410c22b1",
+  "claims": {
+    "total": 16,
+    "verified": 15
+  },
+  "decided_at": "2026-10-27T13:37:33Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md",
+      "sha256": "3e7adfbb0c88fcca0bb2ac95ec1a1b58c07a9930dc1a1c6e56af91e5475f7321",
+      "verification_sha256": "55cd2a0b291e0005a1cc108169fed99aea5bf002ce6c1a403cfa8e207f2a65ec"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "fd307b8d9da0d2171b216cc3eec1adba6befaf56eb23c250580da20a4cebdeee",
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.95,
+    "S2": 1.0,
+    "S3": 4.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "5xPQ7Z88Aek8C9NWGbfXKEYiaB-3rW0ybLj1vSWQYTrQmGffQGm4NLD5JMJW45j04FB0Jcx235DLFf-WJZ4fCA",
+  "skill": "impact-analysis@1.1.1",
+  "step": "impact",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

@@ -1,0 +1,276 @@
+{
+  "artifact_sha256": "cd2e15b797b5850df6d721524faaadfd47de3448476947cb2fb860c8688d08ea",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/patients.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and\ntransactions, repositories hold the SQL",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the\npatient's own page.",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.starts_at\",",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.status\",",
+          "ref": "context/generated/db-schema.json#column:appointment.status"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"index:appointment_patient_start_idx\",",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/pages/PatientsPage.tsx:PatientsPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"nextCell\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "unsupported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/api/appointments/:id/complete\",",
+          "ref": "context/generated/api-inventory.json#http:POST:/api/appointments/:id/complete"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/lib/format.ts:dateTime",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/patients\",",
+          "ref": "context/generated/api-inventory.json#ui:/patients"
+        },
+        {
+          "quote": "{id: \"http:GET:/api/patients\", change: changed",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L100"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add ui:/patients to apis with change: existing, citing the api inventory.",
+      "text": "PatientsPage changes, but the UI route ui:/patients from the api inventory is not listed under apis, even as existing."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "\"name\": \"nextCell\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        },
+        {
+          "quote": "checks the Next appointment cell of the patient list",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L60"
+        }
+      ],
+      "claim_ref": "C13",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Reword C13 to say only that the test helper exists, or move what it checks into Assumed.",
+      "text": "C13 says nextCell checks the Next appointment cell. The module map only records a symbol named nextCell in PatientsPage.test.tsx. Its purpose is inferred from the name."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "default: \"Same approach the Next appointment column already uses\"",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L94"
+        },
+        {
+          "quote": "The web app has a date formatter `dateTime`.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L69"
+        }
+      ],
+      "claim_ref": "C16",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State whether the Next column converts in the web app (for example with dateTime or todayIn in format.ts) or in the API, and tie C16 to that statement.",
+      "text": "The Q-02 default is 'the same approach as the Next appointment column', but the artifact never says what that approach is. The dateTime formatter (C16) is claimed but not used in the body."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "http:GET:/api/patients — **changed**",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L116"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Split the section into Modules, APIs and Tables subsections.",
+      "text": "The 'Impacted modules' section mixes http and table entries in with modules, which makes the list harder to scan."
+    }
+  ],
+  "package_sha256": "81b17934a3182ff546e12610422aeac9a39e87681c6d346cacc7399687e87f55",
+  "questions": [],
+  "recorded_at": "2026-10-27T13:36:56Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "The api, web and db modules, GET /api/patients, and the appointment and patient tables are all listed. The UI route ui:/patients that serves PatientsPage is missing from the apis list.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, api, table, column and index id appears in the generated facts and is cited. The C13 description of what nextCell does comes from its name, not from the facts.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers other callers of GET /api/patients (U-1), background jobs (none exist), the complete endpoint that writes Completed, and the patient detail read path. The web caller symbols in the facts are not named.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Known, assumed and unknown statuses match req.md. REQ-4 has a stated basis. Where the time-zone conversion happens is honestly left open as U-2. Q-02's default refers to a Next-column approach the artifact never describes.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Readable, and the summary puts risks first. The 'Impacted modules' section also lists apis and tables under a modules heading.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.0,
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
