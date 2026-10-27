@@ -1,0 +1,185 @@
+{
+  "artifact_sha256": "330533c9d46d6ab4c5313dff88bd66cac6657f432ab452b79ead7b4198eec703",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DashboardService no-show count (api, changed): third sub-select",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L117"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "link `/appointments` with query status NO_SHOW, from period.from and to period.to",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L121"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/dashboard.test.ts\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{method: GET, path: /api/dashboard, change: changed}",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L92"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "REQ-3 (HMS-3) negative: an unknown period is still rejected with 400",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md#L60"
+        },
+        {
+          "quote": "dashboardRouter (api, existing): unchanged; still serves GET /api/dashboard (C12).",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L119"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite the existing router validation or test that proves the 400, or recast TP-12 as a regression test of whatever the current behaviour is, with a citation.",
+      "text": "TP-12 asserts that an unknown period is rejected with 400. Neither the design nor the stories state this; the design only says dashboardRouter is unchanged. The plan cites the design (C4, C8) for it, but the design does not support it."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given No-show appointments that start outside the selected period",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md#L48"
+        },
+        {
+          "quote": "starts_at >= period start AND starts_at < end of today",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L117"
+        },
+        {
+          "quote": "boundary: a No-show that starts before the period is not counted in Today",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md#L51"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an integration boundary test: a No-show starting at or after end of today (fixed clock) is not counted.",
+      "text": "S-1/AC3 covers No-shows outside the period, but only the before-start case is tested. Nothing tests the upper bound (a No-show starting at or after the end of today)."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "in its own file with its own database for the No-show cases",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md#L69"
+        },
+        {
+          "quote": "plus a case with a No-show inside and one outside the period",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L124"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Either put the cases in api/test/dashboard.test.ts as the design says, or name the new file and give the reason it needs a separate database.",
+      "text": "The plan puts the No-show API cases in a new, unnamed file with its own database. The design says the existing API dashboard test gains them. The file also does not appear in the test layout."
+    }
+  ],
+  "package_sha256": "0f0bd31a9da313306d291c978fc5ffb6a0aee1dd0bd0f7a2edd2389c2e60148d",
+  "questions": [],
+  "recorded_at": "2026-10-27T07:14:00Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All 10 acceptance criteria across S-1..S-3 map to at least one test and REQ-1..REQ-10 are traced. S-1/AC3 is only tested on the lower bound: no test for a No-show after the period end.",
+      "score": 4
+    },
+    {
+      "id": "TP-R2",
+      "reason": "API counts and bounds are tested at integration level and the tile, link and reload at web unit level. There are no e2e or manual tests. Each level is the cheapest one that proves the behaviour.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "Has a lower-bound boundary test (TP-3), a zero edge case (TP-13) and a negative case (TP-12). No endpoint is new. The upper bound (starts_at < end of today) is untested, and TP-12 rests on behaviour the design does not state.",
+      "score": 4
+    },
+    {
+      "id": "TP-R4",
+      "reason": "Uses the strategy's tools (Vitest, Supertest, jsdom, Testing Library) and the existing test files. However, it adds an unnamed new API test file, while the design puts the No-show cases in the existing dashboard.test.ts.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are specific and runnable and start with requirement ids. The new No-show test file is not named, so a tester cannot find where TP-2..TP-8 live.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}

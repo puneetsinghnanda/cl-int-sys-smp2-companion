@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-27T07:14:01Z",
+  "heartbeat_at": "2026-10-27T07:17:30Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -56,7 +56,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 39,
+  "rev": 43,
   "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -435,7 +435,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md",
+          "artifact": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/history/tplan/a1/tplan.md",
           "artifact_sha256": "330533c9d46d6ab4c5313dff88bd66cac6657f432ab452b79ead7b4198eec703",
           "band": "High",
           "cause": "first",
@@ -455,15 +455,42 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.verification.json",
+          "record": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/history/tplan/a1/tplan.verification.json",
           "skill": "test-plan@1.0.1",
           "skill_started_at": "2026-10-27T07:11:22Z",
           "started_at": "2026-10-27T07:11:15Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md",
+          "artifact_sha256": "2fb77523e16faf82bfa9a4e4abe136c1118dba7602c2f921306f102de418ff60",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-10-27T07:17:30Z",
+          "feedback": "runs/run_01M5XZYC101HCFE34KWJ49C90V/feedback/tplan.a1.json",
+          "inputs": [
+            {
+              "name": "stories",
+              "sha256": "d74118fac2cec105944dfccb25b75abb2f410f0af842b8e86256f4332d8b3714",
+              "step": "split"
+            },
+            {
+              "name": "design",
+              "sha256": "889e67e42166431aed6f8a95542c06b93ebc626f15e7f1c13cac95d491a6be1b",
+              "step": "design"
+            }
+          ],
+          "n": 2,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.verification.json",
+          "skill": "test-plan@1.0.1",
+          "skill_started_at": "2026-10-27T07:14:30Z",
+          "started_at": "2026-10-27T07:14:11Z"
         }
       ],
       "budget_used": {
-        "checks": 0,
-        "review": 1,
+        "checks": 1,
+        "review": 2,
         "rework": 0,
         "verifier": 0
       },
@@ -480,7 +507,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-3",
-  "updated_at": "2026-10-27T07:14:01Z",
+  "updated_at": "2026-10-27T07:17:30Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

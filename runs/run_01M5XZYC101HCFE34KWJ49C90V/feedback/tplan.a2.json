@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "a period other than Today, Last 7 days or Last 30 days yields no dashboard counts",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/tplan.md#L71"
+        },
+        {
+          "quote": "DSH-7: the period is Today, Last 7 days or Last 30 days, default Today",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts"
+        },
+        {
+          "quote": "Given the period is Today, when staff change it to Last 7 days or Last 30 days, then the No-shows count updates to that period.",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md#L49"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "TP-12 no longer expects a 400, but 'yields no dashboard counts' is still not stated by any input. C9 only lists the three periods. The existing DSH-7 test says the period defaults to Today, which hints at different behaviour. TP-12 also maps to S-1/AC4, which is about changing between valid periods."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "feedback.v1",
+  "step": "tplan"
+}
