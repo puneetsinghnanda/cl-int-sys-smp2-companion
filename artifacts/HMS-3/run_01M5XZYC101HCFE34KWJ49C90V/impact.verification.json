@@ -1,40 +1,27 @@
 {
   "artifact_path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md",
-  "artifact_sha256": "c8504d7b5f06ca0e9f119b6a58b0282f05163e9579b009d3416d66828393cbc9",
-  "attempt": 1,
-  "band": "Medium",
+  "artifact_sha256": "5d1da4d569f1ea802088c08da6c343f942b48fedbf5457c053022e868a477201",
+  "attempt": 2,
+  "band": "High",
   "caps": [],
-  "checks_sha256": "31910d8806521f2bfcbaa620fbe5eae19f2f941aa0b7fb28ec1b2390a66d1b78",
+  "checks_sha256": "91a25bf018a298a806835e4ca1c7b1c63785fca7f5506453b57ccaee2d756ef0",
   "claims": {
-    "total": 19,
-    "verified": 19
+    "total": 22,
+    "verified": 22
   },
-  "decided_at": "2026-10-27T06:24:25Z",
+  "decided_at": "2026-10-27T06:27:57Z",
   "decided_by": "tsl@0.1.3",
   "findings_dropped": [
     {
-      "id": "F-3",
-      "reason": "anchor not found"
-    },
-    {
-      "id": "F-5",
-      "reason": "anchor not found"
-    }
-  ],
-  "findings_kept": [
-    {
       "id": "F-1",
-      "severity": "major"
+      "reason": "anchor not found"
     },
     {
       "id": "F-2",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
-      "severity": "minor"
+      "reason": "anchor not found"
     }
   ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -44,7 +31,7 @@
     }
   ],
   "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "274ab465ae6629a625322bf55c1d30dd51446d73e14134a0ec210c06f0e7a356",
     "signed_at": "2026-10-21T13:34:05Z",
@@ -52,15 +39,15 @@
       "sample-system": "415369398bdad3122ac084a00766a01a3034f900"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "0933b91a6b297cc1ca29294cb4cc904b01eec92591fe1c0a13a713bc8d798ddb",
   "product_changes": null,
-  "review_sha256": "92fcdcb4ec38af1e977fd6fe706dee4c4aa39edc1f8b3c5a557eec39d5592304",
+  "review_sha256": "41369771a0f1aa15785ee323f874d1c390f5eb0a2bf7ce661662dd8c638b6400",
   "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
   "schema": "verification.v1",
   "signals": {
     "S1": 0.9167,
     "S2": 1.0,
-    "S3": 3.5,
+    "S3": 4.5,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -69,7 +56,7 @@
       "sensitive": false
     }
   },
-  "signature": "QFtsx1Ce8etyU0UkzeepvsWuxHzu_E50dFamsAsgXwZJj-k9zaUq5VBVx0ixmXVuD6i7zJb3dw3LyRkWBqSOBg",
+  "signature": "xSsP6f9YbfsV5DbwtXXM0juPIG39IAl7xAq9nGzDWr3YNOzxgNPSlrUUHqyEEASt9cUfphNrPHcyjRvxBlUdDg",
   "skill": "impact-analysis@1.1.1",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

@@ -1,0 +1,85 @@
+{
+  "artifact_sha256": "c8504d7b5f06ca0e9f119b6a58b0282f05163e9579b009d3416d66828393cbc9",
+  "attempt": 1,
+  "finished_at": "2026-10-27T06:22:13Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md",
+      "sha256": "50be375fd64aa765d6499709646b264f9c247964fabbc6dc3fdcf28aee13fa9c",
+      "verification_sha256": "9a7b79b91f165589a2b863003b1447df60fca5b25d8c7768d9077ad40a311db6"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "impact-analysis.items-cited",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-27T06:22:13Z",
+  "step": "impact",
+  "tool_log_sha256": "1451f1cd719260b64dff77e227301bf3ebbc41d3a974f642dff0b3c3c1ad898c",
+  "tsl_version": "0.1.3",
+  "verifier": null
+}
