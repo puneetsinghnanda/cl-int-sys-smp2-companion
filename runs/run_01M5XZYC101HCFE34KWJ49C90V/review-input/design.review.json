@@ -1,0 +1,86 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "ed6204b451fd5cccab35b6cc7df2addb891840524a4f8e4cf893ee100983a229",
+  "package_sha256": "5cacfca3fa0cff067eec3affc9cb928ab7ef3ac18b2d5a40e153f4ffa7894c5e",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "rubric_score": 4.1,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 4, "reason": "Uses only existing modules, routes, Tile and the list filter, with no new infrastructure. The count's SQL goes in DashboardService, but the architecture says repositories hold the SQL. A trade-off line explains this, but the design never mentions the rule."},
+    {"id": "DS-R2", "score": 4, "reason": "S-1, S-2 and S-3 are each mapped to components. The default label 'No-shows (<period>)' does not exactly match S-1 AC1's title 'No-shows'. The impact step asked for a No-show case in the web DashboardPage test, but the design leaves it out."},
+    {"id": "DS-R3", "score": 4, "reason": "Gives the method and path, the additive field totals.noShows: number, the SQL predicate and the link query string. The from/to value format is only shown as <period.from>/<period.to>."},
+    {"id": "DS-R4", "score": 4, "reason": "Choices are cited to code lines or context, and the label is recorded as assumed and asked as Q-01. The design's default still contradicts a known requirement, REQ-1."},
+    {"id": "DS-R5", "score": 5, "reason": "Explains two trade-offs: a sub-select instead of a repository method, and an additive JSON field versus the exact-match test assertion."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear and short. Some mixing: endpoints and story mapping are listed under Components."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The impact step listed web/src/__tests__/DashboardPage.test.tsx as needing the new tile and its link. The design's components list only the API dashboard test, so the web tile and link have no regression test planned.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#L153", "quote": "Its test DashboardPage.test.tsx checks the tiles and their links and needs the new tile (C20)."},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L89", "quote": "{name: API dashboard test, module: \"module:sample-system:api\", change: changed}"},
+        {"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx", "quote": "DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts"}
+      ],
+      "suggested_fix": "Add a component 'Web DashboardPage test (web, changed)' that checks the No-shows tile shows totals.noShows and links to /appointments?status=NO_SHOW with the period's from and to. It serves S-1 AC1 and S-2."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "consistency",
+      "text": "The default tile label 'No-shows (<period>)' does not exactly match S-1 AC1 and the known REQ-1, which both say the tile is titled 'No-shows'. The design's default goes against an accepted criterion instead of following it.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md#L46", "quote": "when it loads, then a tile titled \\\"No-shows\\\" is shown."},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L133", "quote": "A-1: the tile label is \"No-shows (<period>)\", following the Completed and Cancelled labels (C7)."}
+      ],
+      "suggested_fix": "Either default to the exact title 'No-shows' until the product owner answers Q-01, or record that S-1 AC1 is met only if the product owner accepts the period suffix.",
+      "claim_ref": "C7"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The design adds SQL to DashboardService. The architecture rule says repositories hold the SQL. The trade-off line defends the choice by matching the existing code, but never names the rule or the deviation.",
+      "cites": [
+        {"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L105", "quote": "Trade-off: a sub-select in the existing query instead of a repository method keeps the counts side by"}
+      ],
+      "suggested_fix": "State in the trade-off line that the existing counts already break the repositories-hold-SQL rule (C2, C3) and that the design follows local precedent on purpose."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "quote": "\"name\": \"DashboardService\","}]},
+    {"claim_id": "C2", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C3", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C4", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C5", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C6", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C7", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C8", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C9", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C10", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:Tile", "quote": "\"id\": \"sym:sample-system:web/src/pages/DashboardPage.tsx:Tile\","}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/dashboard", "quote": "\"id\": \"http:GET:/api/dashboard\","}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "\"id\": \"http:GET:/api/appointments\","}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "S-1 AC1 and REQ-1 title the tile 'No-shows'. Is 'No-shows (Today)', with the period suffix like the sibling tiles, acceptable for AC1, or must the label be exactly 'No-shows'?",
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2"
+    }
+  ]
+}

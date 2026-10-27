@@ -1,0 +1,98 @@
+{
+  "artifact_path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md",
+  "artifact_sha256": "ed6204b451fd5cccab35b6cc7df2addb891840524a4f8e4cf893ee100983a229",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "d74421bb3f5884926412b62b02cd402132b1bba83f12e814d2ab2b5ec5070a27",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    },
+    {
+      "id": "api-inventory",
+      "included": true,
+      "path": "context/api-inventory.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "impact",
+      "path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md"
+    },
+    {
+      "name": "intent",
+      "path": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md"
+    },
+    {
+      "name": "intent_baseline",
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    },
+    {
+      "name": "api_inventory",
+      "path": "context/generated/api-inventory.json"
+    }
+  ],
+  "package_sha256": "5cacfca3fa0cff067eec3affc9cb928ab7ef3ac18b2d5a40e153f4ffa7894c5e",
+  "prepared_at": "2026-10-27T06:29:53Z",
+  "prepared_by": "tsl@0.1.3",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "DS-R1",
+        "weight": 0.25
+      },
+      {
+        "id": "DS-R2",
+        "weight": 0.25
+      },
+      {
+        "id": "DS-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "DS-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "DS-R5",
+        "weight": 0.1
+      },
+      {
+        "id": "DS-R6",
+        "weight": 0.05
+      }
+    ],
+    "path": "skills/design/rubric.md",
+    "sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "review-package.v1",
+  "skill": "design@1.4.1",
+  "step": "design",
+  "truncated": false
+}

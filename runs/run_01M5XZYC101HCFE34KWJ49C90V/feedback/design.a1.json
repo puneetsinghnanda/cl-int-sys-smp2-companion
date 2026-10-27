@@ -1,0 +1,49 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Its test DashboardPage.test.tsx checks the tiles and their links and needs the new tile (C20).",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#L153"
+        },
+        {
+          "quote": "{name: API dashboard test, module: \"module:sample-system:api\", change: changed}",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L89"
+        },
+        {
+          "quote": "DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The impact step listed web/src/__tests__/DashboardPage.test.tsx as needing the new tile and its link. The design's components list only the API dashboard test, so the web tile and link have no regression test planned."
+    },
+    {
+      "cites": [
+        {
+          "quote": "when it loads, then a tile titled \\\"No-shows\\\" is shown.",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md#L46"
+        },
+        {
+          "quote": "A-1: the tile label is \"No-shows (<period>)\", following the Completed and Cancelled labels (C7).",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L133"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The default tile label 'No-shows (<period>)' does not exactly match S-1 AC1 and the known REQ-1, which both say the tile is titled 'No-shows'. The design's default goes against an accepted criterion instead of following it."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "feedback.v1",
+  "step": "design"
+}
