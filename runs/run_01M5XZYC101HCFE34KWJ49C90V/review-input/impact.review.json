@@ -1,0 +1,102 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "step": "impact",
+  "attempt": 1,
+  "artifact_sha256": "c8504d7b5f06ca0e9f119b6a58b0282f05163e9579b009d3416d66828393cbc9",
+  "package_sha256": "e4717525a29f8694c61c9610158a2fd4bcfb3e12daef186b50020621ba7f3f11",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
+  },
+  "rubric_score": 3.5,
+  "rubric_items": [
+    {"id": "IA-R1", "score": 3, "reason": "Lists the api, web and db modules, the dashboard and appointment routes and table:appointment. It leaves out the existing dashboard tests in api and web, which read the changed response."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, route, table and column id exists in the generated facts and has a citation. C19 cites test-layout.json, which is not one of the declared inputs."},
+    {"id": "IA-R3", "score": 3, "reason": "Covers web callers through client.ts and how appointments become No-show. Test readers of GET /api/dashboard are missed, and the jobs fact (C17) is claimed but never discussed in the body."},
+    {"id": "IA-R4", "score": 4, "reason": "REQ-4 and REQ-7 are honestly marked assumed, with bases and Q-01 and Q-02. The line 'every reader is in the web app' goes further than the C14 fact supports."},
+    {"id": "IA-R5", "score": 4, "reason": "Clear and short, and the summary names the main risks. The impacted list is ordered by element type, not by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The existing dashboard tests read GET /api/dashboard and DashboardPage but are not listed as impacted. C19 names dashboard.test.ts and is never used, and DashboardPage.test.tsx is left out entirely.",
+      "cites": [
+        {"ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts", "quote": "DSH-1..6: counts patients, doctors and appointments by their definitions"},
+        {"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx", "quote": "test:sample-system:web/src/__tests__/DashboardPage.test.tsx"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#impacted-modules", "quote": "module:sample-system:web (changed): DashboardPage adds a No-shows Tile and its link (C5, C6)."}
+      ],
+      "claim_ref": "C19",
+      "suggested_fix": "Add both dashboard test files as impacted readers that need new No-show cases, and use C19 in the body."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The summary says every reader of GET /api/dashboard is in the web app and rests this on C14. C14 only says the web app calls the API through client.ts. It does not say no other reader exists, and the api tests do read the route.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#summary", "quote": "Every reader of GET /api/dashboard is in the"},
+        {"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}
+      ],
+      "suggested_fix": "Reword so that callers are the web app through client.ts plus the api dashboard tests."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C19 cites context/generated/test-layout.json, but that file is not in the artifact's declared inputs, so its hash is not pinned.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#claims", "quote": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts"}
+      ],
+      "suggested_fix": "Add test-layout.json and its sha256 to the inputs."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The SQL lives in repositories, but the analysis puts the count only in DashboardService. A repository such as AppointmentRepo may hold the query that changes, and it is not considered.",
+      "cites": [
+        {"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"},
+        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}
+      ],
+      "suggested_fix": "Name the repository layer as a possible change point in the api module entry, or point to it from Q-01."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "C12 (UTC) and C17 (no background jobs) are listed as claims but the body never uses them. In particular, the analysis never says that no jobs are affected.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#claims", "quote": "No `background jobs` exist yet."}
+      ],
+      "suggested_fix": "Add a line under Impacted modules or Known saying no jobs are affected (C17), and use C12 where the period bounds are discussed."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/dashboard", "quote": "\"id\": \"http:GET:/api/dashboard\""}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/dashboard.ts:dashboardRouter", "quote": "sym:sample-system:api/src/routes/dashboard.ts:dashboardRouter"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "quote": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:PERIODS", "quote": "sym:sample-system:api/src/services/dashboardService.ts:PERIODS"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage", "quote": "sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:Tile", "quote": "sym:sample-system:web/src/pages/DashboardPage.tsx:Tile"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "\"id\": \"http:GET:/api/appointments\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments", "quote": "\"id\": \"ui:/appointments\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.status", "quote": "\"id\": \"column:appointment.status\""}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.starts_at", "quote": "\"id\": \"column:appointment.starts_at\""}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "A patient row holds identity, contact details"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:POST:/api/appointments/:id/no-show", "quote": "\"id\": \"http:POST:/api/appointments/:id/no-show\""}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts", "quote": "\"id\": \"test:sample-system:api/test/dashboard.test.ts\""}]}
+  ],
+  "questions": []
+}

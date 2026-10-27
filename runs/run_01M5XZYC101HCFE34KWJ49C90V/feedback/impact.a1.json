@@ -1,0 +1,36 @@
+{
+  "dropped": [
+    "F-3",
+    "F-5"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "DSH-1..6: counts patients, doctors and appointments by their definitions",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts"
+        },
+        {
+          "quote": "test:sample-system:web/src/__tests__/DashboardPage.test.tsx",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx"
+        },
+        {
+          "quote": "module:sample-system:web (changed): DashboardPage adds a No-shows Tile and its link (C5, C6).",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The existing dashboard tests read GET /api/dashboard and DashboardPage but are not listed as impacted. C19 names dashboard.test.ts and is never used, and DashboardPage.test.tsx is left out entirely."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
