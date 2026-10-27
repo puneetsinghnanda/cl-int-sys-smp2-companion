@@ -1,0 +1,180 @@
+{
+  "artifact_sha256": "e0ab77f8c4b53adca12b6b13b118599271a88f652b27003e17413393fe02251c",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "returns them as totals.noShows",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impl.md#L54"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "that the next day's Today excludes it while Last 7 days includes it",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impl.md#L71"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "describe.skipIf(!pgAvailable())('dashboard No-shows (HMS-3)'",
+          "ref": "C:/Puneet/Personal/sample-system/api/test/dashboard-no-shows.test.ts#L8"
+        },
+        {
+          "quote": "\"name\": \"test\",",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/ut.checks.json#L113-L115"
+        },
+        {
+          "quote": "Database tests are skipped where no test database is set",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/ut.md#L60-L61"
+        }
+      ],
+      "claim_ref": "C4",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Have the verifier emit a test report (report_sha256) that shows the dashboard-no-shows tests passed and were not skipped. Or make the suite fail when HMS_TEST_DATABASE_URL is expected but missing.",
+      "text": "The API No-show suite is wrapped in describe.skipIf(!pgAvailable()). The verifier's test step has no report, so nothing shows these tests ran instead of being skipped. 'the verifier provides one' is unproven."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "tsl records tests run and coverage in",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/ut.md#L59-L60"
+        },
+        {
+          "quote": "\"exit_code\": 78,",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/ut.checks.json#L139-L143"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say that coverage was skipped in this run, or enable the coverage step.",
+      "text": "The summary says tsl records coverage in checks.json, but the verifier's coverage step was skipped (exit 78). This run has no coverage evidence."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>",
+          "ref": "C:/Puneet/Personal/sample-system/web/src/__tests__/DashboardPage.test.tsx#L30-L35"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Move the render and stub setup into a small renderPage(data) helper.",
+      "text": "Duplicate setup code: each web test repeats the same fetch stub and the same MemoryRouter render block."
+    }
+  ],
+  "package_sha256": "0f752c3cf98b93904259ac73af2b2415166082da66cbbc3d87359bd2491cfeff",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Does the verifier's node-22@1 profile always provide a PostgreSQL 16 test database, so describe.skipIf suites in api/test really run? Its test step produced no report to confirm this."
+    }
+  ],
+  "recorded_at": "2026-10-27T07:08:25Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Every changed path is tested: the API count, the totals shape, list parity for all three periods, and in the web app the tile, its link, period changes and the zero count. REQ-1 to REQ-10 each have a named test.",
+      "score": 5
+    },
+    {
+      "id": "UT-R2",
+      "reason": "The assertions check exact observable results: toBe counts, toMatchObject on the totals, exact hrefs, the 400 status, and list total equal to the tile count.",
+      "score": 5
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers the error path (unknown period returns 400), the next-day boundary across Today, 7d and 30d, the zero-count case, and the privacy check with a No-show present.",
+      "score": 5
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Uses Vitest+Supertest against a fresh PostgreSQL with a fixed clock, and jsdom+Testing Library, as the strategy says. Names start with REQ ids. Minor: the web render setup is repeated four times.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "The artifact states no numbers. But it says the verifier records coverage and provides a test database, and checks.json shows coverage skipped and no test report, so neither statement is backed.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.75,
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
