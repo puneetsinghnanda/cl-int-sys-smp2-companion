@@ -1,0 +1,54 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "d74118fac2cec105944dfccb25b75abb2f410f0af842b8e86256f4332d8b3714",
+  "package_sha256": "cac0e07ca8b2821f280a9627235a1df4dcf31af6da81a56c8f4974089bd6cd66",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All ten known REQs from req.md (REQ-1..REQ-10) are traced: S-1 has REQ-1..5, S-2 has REQ-6..7 and S-3 has REQ-8..10. There are no assumed REQs."},
+    {"id": "SS-R2", "score": 5, "reason": "Each story has one user outcome: see the count, open the filtered list, or keep the rest of the dashboard unchanged. Each one can be delivered and tested on its own."},
+    {"id": "SS-R3", "score": 4, "reason": "Every criterion uses Given/When/Then. S-1 AC5 and S-2 AC2 can only be checked against existing tile behaviour that is not in the inputs (U-1). AC4 only tests changing from Today."},
+    {"id": "SS-R4", "score": 5, "reason": "Every value comes from the intent: the No-shows title, the Today, Last 7 days and Last 30 days periods, and the Completed and Cancelled tiles. No limits are invented."},
+    {"id": "SS-R5", "score": 5, "reason": "Terms are clear and match the intent and glossary. The body mirrors the frontmatter, with some phrases shortened."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The split carries only the counting half of req Q-01. The open point about whether the link uses the period's dates, which affects S-2 AC2 (REQ-7), was dropped, so the unknown that S-2 depends on is not recorded.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md#L117", "quote": "and link with the period's dates, so No-shows can copy them exactly?"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md#L56", "quote": "then the appointment list is filtered to that selected period."}
+      ],
+      "suggested_fix": "Extend U-1 and Q-01 to cover the link format as well as the counting, and note that S-2 AC2 is checked against the existing tiles' links."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-1 AC4 only tests changing from Today to the other periods. REQ-5 says any change of period updates the count, so changing from Last 7 days or Last 30 days is not tested.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/split.md#L49", "quote": "Given the period is Today, when staff change it to Last 7 days or Last 30 days"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md#L65", "quote": "Changing the period `updates` the No-shows count"}
+      ],
+      "suggested_fix": "Reword AC4 as: Given any selected period, when staff change it to another period, then the count updates."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md#L41", "quote": "The dashboard has a tile titled `No-shows`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md#L53", "quote": "The selected period is one of `Today`, Last 7 days or Last 30 days."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/req.md#L59", "quote": "No-shows are counted the same way as the `Completed and Cancelled` tiles count their appointments."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#no-show", "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled."}]}
+  ],
+  "questions": []
+}
