@@ -1,0 +1,98 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "40b6f8881a03a2991ff6f98ff7d4c0e260734b0286fa40e0d38d742fecd770f1",
+  "package_sha256": "862d5420ccd97b9ba1224be889d47b963309119503d3fc6d9b915dd06ec05934",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "rubric_score": 4.35,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Uses the existing api/web/db modules, the repo/service/route layering, the API client and the existing index. It adds no migration, job or service."},
+    {"id": "DS-R2", "score": 4, "reason": "All four stories are mapped. S-1 AC4 rests on an unverified source for the hospital time zone in the web, and the date-only display format (split Q-01) is not stated."},
+    {"id": "DS-R3", "score": 4, "reason": "Methods, paths and list envelope are precise. The wire format of last_visit_at (ISO string?) is not given, and the PatientService change is left conditional."},
+    {"id": "DS-R4", "score": 4, "reason": "The REQ-4 assumption and the settings-payload assumption are flagged honestly. The impact Q-02 default (copy the Next appointment approach) was not checked against startsAt."},
+    {"id": "DS-R5", "score": 5, "reason": "Explicit trade-offs: correlated max vs stored column, UTC instant vs server date, starts_at vs close time."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear, readable sections. Endpoints are mixed into the Components bullet list, which is a little untidy."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "S-1 AC4 (Asia/Kolkata date) depends on the web having HOSPITAL_TZ, but the design only assumes /api/settings carries it. Architecture places HOSPITAL_TZ in API config. The design also did not check how startsAt renders Next appointment, which is the impact Q-02 default.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L139", "quote": "what the settings payload holds is not in the facts, so implement must confirm it"},
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L94", "quote": "default: \"Same approach the Next appointment column already uses\""},
+        {"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}
+      ],
+      "suggested_fix": "Inspect PatientsPage startsAt and useSettings to confirm how Next appointment gets the hospital zone, and match it. If the zone is not reachable in the web, compute the date in the API."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The display format is not fixed. The split Q-01 default is the Next appointment column's format, but the design only says 'existing date helpers'. dateTime suggests a date-and-time output, while the column needs a date.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L51", "quote": "default: \"Same date format as the existing Next appointment column, in Asia/Kolkata\""},
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L123", "quote": "format.ts dateTime and useSettings (module:sample-system:web) — **existing**: used to render the date in the hospital time zone."}
+      ],
+      "suggested_fix": "State the date-only format to use (matching the Next appointment column per split Q-01 default) and which helper produces it."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claims cite context/conventions.md and context/generated/db-schema.json, but neither file is listed in the design's inputs.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L63", "quote": "cites: [\"context/generated/db-schema.json#index:appointment_patient_start_idx\"]"},
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L27", "quote": "cites: [\"context/conventions.md#code-layout\"]"}
+      ],
+      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json with their sha256 to the inputs list."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "PatientService is marked existing, yet the text says it may change. The wire type of last_visit_at (for example an ISO-8601 string) is also not stated.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L119", "quote": "changes only if it builds the list item by hand"}
+      ],
+      "suggested_fix": "Decide whether PatientService changes. State last_visit_at as an ISO-8601 UTC string or null."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "style",
+      "text": "Endpoint entries are listed as bullets inside the Components section instead of in their own Endpoints section.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L125", "quote": "- GET /api/patients — **changed**: each item gains `last_visit_at`"}
+      ],
+      "suggested_fix": "Move the three endpoint bullets under an '## Endpoints' heading."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "\"name\": \"PatientRepo\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "\"name\": \"PatientService\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"name\": \"PatientsPage\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:startsAt", "quote": "\"name\": \"startsAt\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "\"name\": \"dateTime\""}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "\"name\": \"useSettings\""}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"path\": \"/api/settings\""}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"name\": \"appointment_patient_start_idx\""}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/conventions.md#database-changes", "quote": "New SQL files only, never edits to merged ones."}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "what the settings payload holds is not in the facts, so implement must confirm it",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L139"
+        },
+        {
+          "quote": "default: \"Same approach the Next appointment column already uses\"",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L94"
+        },
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-1 AC4 (Asia/Kolkata date) depends on the web having HOSPITAL_TZ, but the design only assumes /api/settings carries it. Architecture places HOSPITAL_TZ in API config. The design also did not check how startsAt renders Next appointment, which is the impact Q-02 default."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "feedback.v1",
+  "step": "design"
+}
