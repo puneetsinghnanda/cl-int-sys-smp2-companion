@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/triage.md",
+  "artifact_sha256": "337cb2b71764fc020893ce57731dd664388fadf8c7f54f769d6c6c22a9adad2c",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "99f7ea97919026f351f3b212cdbdd8ff843491d57095f5bd0524efe7d8f8b386",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "data-model",
+      "included": true,
+      "path": "context/data-model.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ticket",
+      "path": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/ticket.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    },
+    {
+      "name": "data_model",
+      "path": "context/data-model.md"
+    }
+  ],
+  "package_sha256": "724042cdab0a00ec1ed9f32df30835f6d52c8e9939f776f39dee160cb94259cd",
+  "prepared_at": "2026-10-27T04:07:39Z",
+  "prepared_by": "tsl@0.1.3",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "DT-R1",
+        "weight": 0.15
+      },
+      {
+        "id": "DT-R2",
+        "weight": 0.3
+      },
+      {
+        "id": "DT-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "DT-R4",
+        "weight": 0.2
+      },
+      {
+        "id": "DT-R5",
+        "weight": 0.15
+      }
+    ],
+    "path": "skills/defect-triage/rubric.md",
+    "sha256": "1ee9f75f31d3691a87f69440b3c071234dda729d5b439818ef2b13f6af69332e"
+  },
+  "run_id": "run_01M5XRKT5GS1J5S7SNA59XFVA2",
+  "schema": "review-package.v1",
+  "skill": "defect-triage@1.0.1",
+  "step": "triage",
+  "truncated": false
+}
