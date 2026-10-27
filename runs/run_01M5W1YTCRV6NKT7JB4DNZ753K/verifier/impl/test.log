@@ -1,0 +1,69 @@
+
+> hospital-management@0.1.0 test
+> npm test --workspaces --if-present
+
+
+> @hms/db@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/db
+
+ ✓ test/seed.test.ts (8 tests) 2203ms
+   ✓ seed generator (NFR-7) > is deterministic for the same seed and anchor 614ms
+   ✓ seed generator (NFR-7) > changes when the seed changes 464ms
+   ✓ migrations and seed against PostgreSQL > loads the seed into an empty database, and only when asked to reset again 426ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  12:16:20
+   Duration  5.84s (transform 287ms, setup 0ms, collect 125ms, tests 2.20s, environment 0ms, prepare 827ms)
+
+
+> @hms/api@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/api
+
+ ✓ test/lib.test.ts (8 tests) 299ms
+ ✓ test/reference.test.ts (5 tests) 2691ms
+ ✓ test/auth.test.ts (3 tests) 2691ms
+   ✓ identity on every request > AUTH-1/AUTH-3: the request actor fills created_by and updated_by 1296ms
+ ✓ test/doctors.test.ts (9 tests) 3096ms
+   ✓ doctor management (PRD §4.1) > DOC-7: changing availability keeps appointments and flags those outside it 308ms
+ ✓ test/dashboard.test.ts (5 tests) 3176ms
+ ✓ test/patients.test.ts (9 tests) 3181ms
+   ✓ patient management (PRD §4.2) > PAT-3: shows details, history and appointments, upcoming first 303ms
+ ✓ test/appointments.test.ts (11 tests) 4622ms
+   ✓ appointment management (PRD §4.3) > APT-1: books one of the free slots shown for the day 308ms
+   ✓ appointment management (PRD §4.3) > APT-4: two simultaneous bookings of one slot leave exactly one appointment 302ms
+   ✓ appointment management (PRD §4.3) > APT-7: marks Completed or No-show only after the start time 394ms
+   ✓ appointment management (PRD §4.3) > APT-8: Completed, Cancelled and No-show appointments cannot change 412ms
+ ✓ test/patients-next-appointment.test.ts (10 tests) 5909ms
+   ✓ patient list next appointment: closed appointments and order (HMS-1) > HMS-1 REQ-6: skips a Completed appointment and shows the next Scheduled one 496ms
+   ✓ patient list next appointment: closed appointments and order (HMS-1) > HMS-1 REQ-6: skips a No-show appointment and shows the next Scheduled one 506ms
+
+ Test Files  8 passed (8)
+      Tests  60 passed (60)
+   Start at  12:16:26
+   Duration  13.21s (transform 2.21s, setup 0ms, collect 20.58s, tests 25.67s, environment 4ms, prepare 11.68s)
+
+
+> @hms/web@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/web
+
+ ✓ src/__tests__/format.test.ts (2 tests) 34ms
+ ✓ src/__tests__/SlotPicker.test.tsx (2 tests) 328ms
+   ✓ SlotPicker (APT-1) > APT-1: only free slots can be chosen 313ms
+ ✓ src/__tests__/DashboardPage.test.tsx (1 test) 329ms
+   ✓ DashboardPage (PRD §4.4) > DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts 327ms
+
+ Test Files  3 passed (3)
+      Tests  5 passed (5)
+   Start at  12:16:41
+   Duration  5.97s (transform 652ms, setup 1.75s, collect 572ms, tests 691ms, environment 8.17s, prepare 1.65s)
+

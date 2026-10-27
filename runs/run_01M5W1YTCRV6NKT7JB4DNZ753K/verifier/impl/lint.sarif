@@ -1,0 +1,622 @@
+{
+  "version": "2.1.0",
+  "$schema": "http://json.schemastore.org/sarif-2.1.0-rtm.5",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ESLint",
+          "informationUri": "https://eslint.org",
+          "rules": [
+            {
+              "id": "@typescript-eslint/no-unused-vars",
+              "helpUri": "https://typescript-eslint.io/rules/no-unused-vars",
+              "properties": {},
+              "shortDescription": {
+                "text": "Disallow unused variables"
+              }
+            },
+            {
+              "id": "react-hooks/exhaustive-deps",
+              "helpUri": "https://github.com/facebook/react/issues/14920",
+              "properties": {},
+              "shortDescription": {
+                "text": "verifies the list of dependencies for Hooks like useEffect and similar"
+              }
+            }
+          ],
+          "version": "9.39.5"
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/app.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/auth/identity.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/config.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/db.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/lib/codes.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/lib/errors.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/lib/slots.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/lib/time.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/lib/validate.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/middleware/asyncHandler.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/middleware/errorHandler.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/middleware/requestLog.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/repositories/appointmentRepo.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/repositories/doctorRepo.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/repositories/patientRepo.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/repositories/referenceRepo.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/appointments.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/context.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/dashboard.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/departments.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/doctors.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/health.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/patients.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/reference.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/routes/specializations.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/server.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/services/appointmentService.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/services/dashboardService.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/services/doctorService.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/services/index.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/services/patientService.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/services/referenceService.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/src/types.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/appointments.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/auth.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/dashboard.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/doctors.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/helpers.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/lib.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/patients-next-appointment.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/patients.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/test/reference.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/api/vitest.config.mts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/scripts/migrate-cli.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/scripts/migrate.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/scripts/pool.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/seed/generate.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/seed/load.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/seed/seed-cli.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/test/seed.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/testing/global-setup.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/testing/pg-harness.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/testing/provided.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/testing/test-db.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/db/vitest.config.mts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/eslint.config.mjs"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/App.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/__tests__/DashboardPage.test.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/__tests__/SlotPicker.test.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/__tests__/format.test.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/__tests__/setup.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/api/client.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/api/types.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/AppointmentTable.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/AvailabilityEditor.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/ErrorBanner.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/Field.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/Layout.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/ListInput.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/Loading.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/NavBar.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/Pagination.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/Picker.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/SlotPicker.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/components/StatusBadge.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/hooks/useAsync.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/hooks/useSettings.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/lib/format.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/main.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/AppointmentDetailPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/AppointmentsPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/BookAppointmentPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/DashboardPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/DoctorDetailPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/DoctorFormPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/DoctorsPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/NotFoundPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/PatientDetailPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/PatientFormPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/PatientsPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/src/pages/SettingsPage.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/vite.config.mts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///cache/w/web/vitest.config.mts"
+          }
+        }
+      ],
+      "results": [
+        {
+          "level": "error",
+          "message": {
+            "text": "'_actor' is defined but never used."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///cache/w/api/src/auth/identity.ts",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 24,
+                  "endLine": 32,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "ruleIndex": 0,
+          "suppressions": [
+            {
+              "kind": "inSource",
+              "justification": ""
+            }
+          ]
+        },
+        {
+          "level": "error",
+          "message": {
+            "text": "'_permission' is defined but never used."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///cache/w/api/src/auth/identity.ts",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 39,
+                  "endLine": 32,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "ruleIndex": 0,
+          "suppressions": [
+            {
+              "kind": "inSource",
+              "justification": ""
+            }
+          ]
+        },
+        {
+          "level": "error",
+          "message": {
+            "text": "'_next' is defined but never used."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///cache/w/api/src/middleware/errorHandler.ts",
+                  "index": 10
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 73,
+                  "endLine": 10,
+                  "endColumn": 78
+                }
+              }
+            }
+          ],
+          "ruleId": "@typescript-eslint/no-unused-vars",
+          "ruleIndex": 0,
+          "suppressions": [
+            {
+              "kind": "inSource",
+              "justification": ""
+            }
+          ]
+        },
+        {
+          "level": "warning",
+          "message": {
+            "text": "React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array. If 'load' changes too often, find the parent component that defines it and wrap that definition in useCallback."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///cache/w/web/src/hooks/useAsync.ts",
+                  "index": 75
+                },
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 6,
+                  "endLine": 26,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "ruleId": "react-hooks/exhaustive-deps",
+          "ruleIndex": 1,
+          "suppressions": [
+            {
+              "kind": "inSource",
+              "justification": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

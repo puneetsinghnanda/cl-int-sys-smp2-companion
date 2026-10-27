@@ -1,0 +1,140 @@
+{
+  "artifact_sha256": "d0278710d23cad7ca6b8fa28e69192a850aba04d60cfef6034fafee58fc66597",
+  "attempt": 1,
+  "finished_at": "2026-10-27T04:03:07Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [
+        "E-H3-06"
+      ],
+      "detail": "sast timed out; log runs/run_01M5W1YTCRV6NKT7JB4DNZ753K/verifier/impl/sast.log: html              1       1 | ┌──────────────┐ | │ Scan Summary │ | └──────────────┘ | Some files were skipped or only partially analyzed. | Scan skipped: 10 files matching .semgrepignore patterns | For a full list of skipped files, run semgrep with the --verbose flag. | Ran 261 rules on 106 files: 4 findings.",
+      "id": "H3",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "check_ids": [
+        "GEN-TRACE-01"
+      ],
+      "codes": [
+        "E-H5-01"
+      ],
+      "detail": "trace is empty",
+      "id": "H5",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/triage.md",
+      "sha256": "2c61f0ad50afdc55e27aaecc16365d693e542e59cf47b90732397d1b98161570",
+      "verification_sha256": "078b71f0bea92b1e8be8cedf8d3e76fb27d96462c9a8e486c9e1423a2e1b163d"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "05da3986a6de089c65145bff45e024df88c5d187",
+      "diff_sha256": "1544db682027ea25e655eafc38c35f6391882e0835f406ac3011c2cd9fee4378",
+      "files": [
+        "web/src/pages/PatientsPage.tsx"
+      ],
+      "lines_added": 1,
+      "lines_deleted": 1,
+      "repo": "sample-system",
+      "tree_sha": "79a98397fc36fab06392a72b94f2cc194e0a0770"
+    }
+  ],
+  "run_id": "run_01M5W1YTCRV6NKT7JB4DNZ753K",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-26T12:15:45Z",
+  "step": "impl",
+  "tool_log_sha256": "e897bfe9326a62e719717d0733f977f97bf04ecb7665f7f137eed70919673d14",
+  "tsl_version": "0.1.3",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 8671,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 272593,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 7672,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "eb6925167f4a089f5268a4a1564d8d8342c942a3ef790a31ce568ee0ceb7a9ce",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 56526827,
+        "exit_code": null,
+        "name": "sast",
+        "report_sha256": "c0454c8ed6f70fd410c345810ab19cad95603757ff387445d951645a0d432e8c",
+        "status": "fail"
+      },
+      {
+        "duration_ms": 1358,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      }
+    ]
+  }
+}

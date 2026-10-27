@@ -4,12 +4,18 @@
     "session_id": "41b3c8ee-51df-4d99-84af-5406b95781b5",
     "since": "2026-10-26T12:11:27Z"
   },
-  "branch": {},
+  "branch": {
+    "sample-system": {
+      "base_sha": "05da3986a6de089c65145bff45e024df88c5d187",
+      "head_sha": null,
+      "name": "tsl/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K"
+    }
+  },
   "created_at": "2026-10-26T12:11:27Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-26T12:13:50Z",
+  "heartbeat_at": "2026-10-27T04:03:25Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -44,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 3,
+  "rev": 8,
   "run_id": "run_01M5W1YTCRV6NKT7JB4DNZ753K",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -79,16 +85,39 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/impl.md",
+          "artifact_sha256": "d0278710d23cad7ca6b8fa28e69192a850aba04d60cfef6034fafee58fc66597",
+          "band": null,
+          "cause": "first",
+          "decided_at": "2026-10-27T04:03:25Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "triage",
+              "sha256": "2c61f0ad50afdc55e27aaecc16365d693e542e59cf47b90732397d1b98161570",
+              "step": "triage"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-2/run_01M5W1YTCRV6NKT7JB4DNZ753K/impl.verification.json",
+          "skill": "implement@1.0.1",
+          "skill_started_at": "2026-10-26T12:14:37Z",
+          "started_at": "2026-10-26T12:14:08Z"
+        }
+      ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 0,
         "rework": 0,
-        "verifier": 0
+        "verifier": 1
       },
       "id": "impl",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -111,7 +140,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-2",
-  "updated_at": "2026-10-26T12:13:50Z",
+  "updated_at": "2026-10-27T04:03:25Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "856e3d6f8fd78271fd5b0e49f175a38809f516396bd4e541f9c731b48cae1ae9"
 }

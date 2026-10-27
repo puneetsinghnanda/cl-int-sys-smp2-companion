@@ -1,0 +1,23 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "sast timed out; log runs/run_01M5W1YTCRV6NKT7JB4DNZ753K/verifier/impl/sast.log: html              1       1 | ┌──────────────┐ | │ Scan Summary │ | └──────────────┘ | Some files were skipped or only partially analyzed. | Scan skipped: 10 files matching .semgrepignore patterns | For a full list of skipped files, run semgrep with the --verbose flag. | Ran 261 rules on 106 files: 4 findings.",
+      "id": "H3"
+    },
+    {
+      "detail": "trace is empty",
+      "id": "H5"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3",
+    "H5"
+  ],
+  "run_id": "run_01M5W1YTCRV6NKT7JB4DNZ753K",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
