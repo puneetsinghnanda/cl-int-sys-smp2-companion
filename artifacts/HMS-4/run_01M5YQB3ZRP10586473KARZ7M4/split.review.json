@@ -1,0 +1,157 @@
+{
+  "artifact_sha256": "5ced1c4d84b9c46da98051a025953a0aea7312cd53a6d5686efdebadb117024e",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The patient list has a column titled `Last visit`.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L47"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The Last visit date is the appointment's date in the hospital time zone, `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L59"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed appointment is the Completed appointment with the latest `start time`.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L65"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient with no Completed appointment shows `\\\"-\\\"` in the Last visit column.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L90"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The patient list stays at `20 per page`.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L96"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Given a patient with two Completed appointments, when the patient list is shown, then Last visit shows the date of the one with the latest start time (assumed REQ-4).",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L78"
+        },
+        {
+          "quote": "The ticket does not say which timestamp orders appointments",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L66"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Set up the test so the appointment with the later start time was closed (marked Completed) before the earlier one. Then only start-time ordering passes.",
+      "text": "S-1 AC3 does not test the assumed REQ-4 ordering. With two Completed appointments, ordering by start time, closing time or creation time usually gives the same answer, so the test passes whichever key the code uses."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "falls on a different calendar date in Asia/Kolkata than in the server's time zone",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L80"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Describe the setup with a fixed instant instead, for example a Completed appointment starting at 20:00 UTC, which is the next calendar date in Asia/Kolkata, and expect the Asia/Kolkata date.",
+      "text": "S-1 AC4 depends on the server time zone, which neither the intent nor the AC fixes. If the server already runs in Asia/Kolkata, this setup cannot be built and the time-zone conversion goes untested."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Given more than 20 patients, when staff open the patient list, then each page shows 20 patients.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L100"
+        },
+        {
+          "quote": "- AC1: Each page still shows 20 patients.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L132"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Copy the front-matter criteria into the body word for word so the two do not drift apart.",
+      "text": "The body criteria for S-2 and S-3 are shortened, not in Given/When/Then form, and drop preconditions from the front matter. For example, S-3 AC1 in the body leaves out 'Given more than 20 patients'."
+    }
+  ],
+  "package_sha256": "e371a703e36fc9f994d6a2063165bc90c7ae3b1d5e409ef057100117d86f8f50",
+  "questions": [],
+  "recorded_at": "2026-10-27T13:29:48Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 13 REQs from the intent are traced. REQ-1 to REQ-4 go to S-1, REQ-5 to REQ-8 to S-2, REQ-9 to REQ-12 to S-3 and REQ-13 to S-4. The assumed REQ-4 is flagged in S-1.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Each story has one outcome. S-3 groups four separate no-regression checks (paging, search, sort, Next appointment). That is acceptable as one outcome, but it is a broad story.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The front-matter criteria all use Given/When/Then and can be checked. S-1 AC3 cannot tell start-time ordering apart from other orderings. S-1 AC4 only works if the server time zone differs from Asia/Kolkata.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Every value in the criteria comes from the intent: 'Last visit', '-', 20 per page, Asia/Kolkata, the status names and the medical-history fields.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Easy to read, and the terms match the intent. The body criteria are shortened, not in Given/When/Then form, and differ from the front-matter versions.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
