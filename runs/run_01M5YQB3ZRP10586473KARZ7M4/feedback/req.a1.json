@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "medical history appears only on the patient's own page, never in lists.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L120"
+        },
+        {
+          "quote": "No medical history appears in the list (PRD PAT-8).",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ticket.md#L22"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-13 joins two behaviours: no medical history in the patient list (the ticket's ask), and medical history shown only on the patient's own page (a baseline rule outside this ticket's scope). The compound requirement makes the test target unclear."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "feedback.v1",
+  "step": "req"
+}

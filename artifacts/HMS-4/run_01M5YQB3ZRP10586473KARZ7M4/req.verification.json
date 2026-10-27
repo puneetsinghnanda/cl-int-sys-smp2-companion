@@ -1,0 +1,65 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md",
+  "artifact_sha256": "f3ba63c06b806ab11283e8003b6f5487be52305cf8e9b461a371fcb1ca2e93fe",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "00b60263351e37a4a8afe05707dda279396d21f37ab80bac3e10010216d1a6a5",
+  "claims": {
+    "total": 7,
+    "verified": 7
+  },
+  "decided_at": "2026-10-27T13:19:46Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "7c9576528f1ce3bd12b91b9fb73f4e90a19cc58bacf258aed1320e2f3f443191",
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.75,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "OICVj_L-g-ge-fF7kEFSTSpVaN8kY4DIuQmz7HyLkxbtonc-kHm4iuD5p4tkgzRt82yio_BwwW0w7RQa5aX9CQ",
+  "skill": "requirement-review@1.0.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
