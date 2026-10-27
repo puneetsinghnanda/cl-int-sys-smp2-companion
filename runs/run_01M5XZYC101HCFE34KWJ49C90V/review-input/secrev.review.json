@@ -1,0 +1,56 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "d916856f8c6e69898446cf92b60dee8772955fe5ea9700914d7328c19bdddea0",
+  "package_sha256": "7ed4edf9954bd436fe48d84efdbc3a793889714c8d03416a9a16abb734f5e942",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "a072043cdc75429da7a74739c7595f776931c84977ad2f4ec41cd132543686c0"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The diff adds one SQL sub-select with a literal status and existing bound params, plus one React tile built through the query helper. No injection, new route or logging. The only real exposure (the open MVP identity) is reported as SF-1."},
+    {"id": "SC-R2", "score": 4, "reason": "The code anchors (dashboardService.ts#L53, #L73, DashboardPage.tsx#L58) are exact. But SF-1 cites the SQL line instead of the dashboard route's permission line, and C4's anchor is one line off."},
+    {"id": "SC-R3", "score": 5, "reason": "Minor fits the risk. The dashboard route already declares requirePermission('dashboard:read'), and the open access comes from the existing MVP identity model, not from this change."},
+    {"id": "SC-R4", "score": 4, "reason": "SF-1 gives a fix direction (enforce the permission when sign-in replaces the MVP identity) and Q-01 lists options with a default. It does not name the route or permission to check."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives. The four SAST hits are correctly set aside as being in files the change does not touch, and the only finding is real."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "SF-1 is about route authorisation, but it cites the SQL count line in dashboardService.ts. The permission is declared on the dashboard route, and the MVP grant lives in auth/identity.ts.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/secrev.md#L53", "quote": "sample-system:api/src/services/dashboardService.ts#L53"},
+        {"ref": "sample-system:api/src/routes/dashboard.ts#L10", "quote": "requirePermission('dashboard:read'),"}
+      ],
+      "suggested_fix": "Cite sample-system:api/src/routes/dashboard.ts#L10 and auth/identity.ts#L25-L45 for SF-1, and name 'dashboard:read' as the permission to enforce."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C4 cites impl.md#L52, which is the diff_sha256 line. The changed-file list is on L53.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/secrev.md#L28", "quote": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impl.md#L52"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impl.md#L53", "quote": "files: [api/src/services/dashboardService.ts, api/test/dashboard.test.ts"}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "Change the C4 citation to impl.md#L53."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impl.md#L54", "quote": "returns them as totals.noShows"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/impl.md#L53", "quote": "web/src/__tests__/DashboardPage.test.tsx, web/src/api/types.ts, web/src/pages/DashboardPage.tsx"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]}
+  ],
+  "questions": []
+}
