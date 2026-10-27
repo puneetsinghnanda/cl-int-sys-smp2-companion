@@ -13,9 +13,9 @@
   },
   "created_at": "2026-10-26T12:11:27Z",
   "cursor": null,
-  "end_reason": null,
+  "end_reason": "cancelled",
   "gates": [],
-  "heartbeat_at": "2026-10-27T04:03:25Z",
+  "heartbeat_at": "2026-10-27T04:04:08Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -50,10 +50,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 8,
+  "rev": 9,
   "run_id": "run_01M5W1YTCRV6NKT7JB4DNZ753K",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "COMPLETED",
   "steps": [
     {
       "attempts": [
@@ -140,7 +140,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-2",
-  "updated_at": "2026-10-27T04:03:25Z",
+  "updated_at": "2026-10-27T04:04:08Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "856e3d6f8fd78271fd5b0e49f175a38809f516396bd4e541f9c731b48cae1ae9"
 }
