@@ -1,0 +1,260 @@
+{
+  "artifact_sha256": "69e278b1f1bc8a60c91f87b1690647251b7bb04cea4ca608afcc150e6c3bd26a",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientRepo\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientsPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"startsAt\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:startsAt"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/lib/time.ts:localDay\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"loadConfig\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/config.ts:loadConfig"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/lib/time.ts:isDay\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:isDay"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"appointment_patient_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New SQL files only, never edits to merged ones.",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the web needs no time-zone source and the browser zone can never leak in",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L124"
+        },
+        {
+          "quote": "default: \"Reuse the Next appointment column's date formatting, date part only\"",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L105"
+        },
+        {
+          "quote": "then Last visit shows the Asia/Kolkata date.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L80"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "State that the web renders last_visit_date without turning it into a local Date, either as a string or with a UTC-fixed formatter matching the Next appointment pattern. Add an S-1 AC4 test that runs in a negative-offset browser zone.",
+      "text": "The design says the browser zone can never leak in. But Q-03 defaults to reusing the Next appointment column's (instant) formatting on a day string. Parsing a day string as a Date and formatting it in the browser zone can shift it one day back in zones west of UTC, which breaks S-1 AC4."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "cites: [\"context/conventions.md#code-layout\"]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L30"
+        },
+        {
+          "quote": "cites: [\"context/generated/db-schema.json#index:appointment_patient_start_idx\"]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L66"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json, with their sha256, to inputs.",
+      "text": "Not fixed from attempt 1 (previous F-3): claims cite context/conventions.md and context/generated/db-schema.json, but neither file is in the design's inputs list."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "hospital-local day string as localDay returns it, or null",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L93"
+        },
+        {
+          "quote": "maps that instant to a hospital-local day with `localDay` and `HOSPITAL_TZ`",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L130"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Fix the format (e.g. YYYY-MM-DD, as isDay accepts) and name how the service gets HOSPITAL_TZ (loadConfig).",
+      "text": "The wire format of last_visit_date is only 'as localDay returns it', and the design does not say how PatientService gets HOSPITAL_TZ (e.g. from loadConfig). The web type and tests need one exact string shape."
+    }
+  ],
+  "package_sha256": "6a20952018afbbf791bb6841e356ede3c10606866bbc62c6f72135ba4728e05b",
+  "questions": [],
+  "recorded_at": "2026-10-27T13:46:44Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Builds on the existing repo/service/route layers, the existing localDay helper, the HOSPITAL_TZ config, the API client and the existing index. It adds no migration, job, service or endpoint.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "All four stories and their criteria are mapped. Moving the date to the API settles the hospital-zone source for S-1 AC4. But the Q-03 default reuses the Next appointment formatting on a day string, which could bring the browser zone back in.",
+      "score": 4
+    },
+    {
+      "id": "DS-R3",
+      "reason": "The method, path, envelope and new field are named, and the field is nullable. The exact day-string format (e.g. YYYY-MM-DD) is left as 'as localDay returns it'. The design does not say how PatientService gets HOSPITAL_TZ.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Claims check out against the facts. The localDay signature is honestly marked assumed, and the unknowns are asked. conventions.md and db-schema.json are cited but still missing from inputs.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs are explicit: API vs web date (with its cost), correlated max vs stored column, and starts_at vs close time.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent. Endpoints now have their own subsection, and the frontmatter matches the body.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
