@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "f3ba63c06b806ab11283e8003b6f5487be52305cf8e9b461a371fcb1ca2e93fe",
-  "attempt": 1,
+  "artifact_sha256": "3e7adfbb0c88fcca0bb2ac95ec1a1b58c07a9930dc1a1c6e56af91e5475f7321",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -55,7 +55,7 @@
     {
       "cites": [
         {
-          "quote": "in the MVP every\nuser acts as `staff`.",
+          "quote": "in the MVP every",
           "ref": "context/glossary.md#front-desk-staff"
         }
       ],
@@ -65,7 +65,7 @@
     {
       "cites": [
         {
-          "quote": "Completed, Cancelled and No-show\nappointments never change.",
+          "quote": "Completed, Cancelled and No-show",
           "ref": "context/intent-baseline.md#closed-appointments"
         }
       ],
@@ -75,23 +75,6 @@
   ],
   "findings": [
     {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "medical history appears only on the patient's own page, never in lists.",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L120"
-        },
-        {
-          "quote": "No medical history appears in the list (PRD PAT-8).",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ticket.md#L22"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Limit REQ-13 to 'No medical history appears in the patient list.' Keep the baseline rule as supporting evidence in the cites only.",
-      "text": "REQ-13 joins two behaviours: no medical history in the patient list (the ticket's ask), and medical history shown only on the patient's own page (a baseline rule outside this ticket's scope). The compound requirement makes the test target unclear."
-    },
-    {
       "category": "style",
       "cites": [
         {
@@ -99,10 +82,10 @@
           "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L114"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
       "suggested_fix": "Reword as: The existing Next appointment column (HMS-1) is unchanged.",
-      "text": "The REQ-12 statement ends with a redundant, cut-off ticket fragment, so the sentence reads awkwardly."
+      "text": "Not fixed from attempt 1 (prior F-2): the REQ-12 statement still ends with a repeated, cut-off ticket fragment, so the sentence reads awkwardly."
     },
     {
       "category": "traceability",
@@ -116,10 +99,11 @@
           "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L36"
         }
       ],
-      "id": "F-3",
+      "claim_ref": "C6",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Either cite C6 and C7 from the requirements they support (for example REQ-4's basis), or remove them.",
-      "text": "Claims C6 (every user acts as staff) and C7 (closed appointments never change) are declared, but no requirement, assumption or question cites them."
+      "suggested_fix": "Either cite C6 and C7 from the items they support (for example REQ-4's basis), or remove them.",
+      "text": "Not fixed from attempt 1 (prior F-3): claims C6 (every user acts as staff) and C7 (closed appointments never change) are declared, but no requirement, assumption or question cites them."
     },
     {
       "category": "traceability",
@@ -133,14 +117,15 @@
           "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/req.md#L146"
         }
       ],
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
-      "text": "Q-01 cites ticket L14 as evidence, but that line says nothing about the date format of the Next appointment column, so it does not back up the proposed default."
+      "suggested_fix": "Drop L14 from the Q-01 evidence, or say it only shows that the column exists, not what format it uses.",
+      "text": "Not fixed from attempt 1 (prior F-4): Q-01 still cites ticket L14 as evidence. That line says nothing about the Next appointment column's date format, so it does not support the proposed default."
     }
   ],
-  "package_sha256": "b6a0b4036e1800d678db046aa39e24e82c24919074e73b1a4b9026e21edcf847",
+  "package_sha256": "f128e8308d9515a171444d076f00fc0c30e9bf2518f1c9b280c4910285f0d5c3",
   "questions": [],
-  "recorded_at": "2026-10-27T13:19:30Z",
+  "recorded_at": "2026-10-27T13:23:49Z",
   "recorded_by": "tsl@0.1.3",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -151,36 +136,36 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "Each of the six acceptance criteria maps to one or more REQs. AC5 is split into REQ-9 to REQ-12. The 'spot long-unseen patients' motivation is listed under Out of scope with a reason.",
+      "reason": "Each of the six acceptance criteria maps to at least one REQ. AC5 is split into REQ-9 to REQ-12. The 'spot long-unseen patients' motivation sits under Out of scope with a reason.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Almost all REQs are atomic and can be tested. REQ-13 also restates the baseline rule about the patient's own page, which adds a second behaviour outside the list.",
-      "score": 4
+      "reason": "Previous F-1 is fixed. REQ-13 now covers only the list ask, and the own-page rule is moved to Out of scope with a reason. Each REQ is one behaviour a tester can check.",
+      "score": 5
     },
     {
       "id": "RR-R3",
-      "reason": "Every known REQ cites a ticket line or a baseline section. REQ-4 is correctly marked assumed, with a real basis in the glossary definition of Completed. Nothing is invented.",
+      "reason": "Every known REQ cites a ticket line or a baseline section. REQ-4 is correctly marked assumed, and its basis is the glossary definition of Completed. Nothing is invented.",
       "score": 5
     },
     {
       "id": "RR-R4",
-      "reason": "The ticket does not clash with the baseline. AC6 and the data-protection rule agree. The hospital time zone is resolved from the baseline constraints without conflict.",
+      "reason": "The ticket does not clash with the baseline. AC6 agrees with the data-protection rule, and the hospital time zone comes from the baseline constraints.",
       "score": 5
     },
     {
       "id": "RR-R5",
-      "reason": "Three questions, none blocking, each with real options and a sensible default. Product questions go to the product owner and the glossary question goes to the tech lead.",
+      "reason": "Three questions, none blocking, each with real options and a default. Product questions go to the product owner and the glossary question goes to the tech lead.",
       "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Plain and readable. The REQ-12 statement repeats a ticket fragment awkwardly, and claims C6 and C7 are declared but no requirement uses them.",
+      "reason": "Readable overall. The REQ-12 statement still ends with an awkward, cut-off ticket fragment, and claims C6 and C7 are still declared but never used.",
       "score": 4
     }
   ],
-  "rubric_score": 4.75,
+  "rubric_score": 4.95,
   "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
   "schema": "review.v1",
   "status": "ok",

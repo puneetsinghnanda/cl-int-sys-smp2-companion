@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M5YQB3ZRP10586473KARZ7M4
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.0.0
 inputs:
   - path: artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ticket.md
@@ -117,7 +117,7 @@ requirements:
     title: No medical history in the list
     type: constraint
     status: known
-    statement: "No `medical history` appears in the patient list (PRD PAT-8); medical history appears only on the patient's own page, never in lists."
+    statement: "No `medical history` appears in the patient list (PRD PAT-8)."
     cites: ["artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ticket.md#L22", "context/intent-baseline.md#data-protection"]
 unknowns:
   - id: U-1
@@ -189,12 +189,12 @@ HMS-4 asks for a "Last visit" column on the patient list so front-desk staff can
 - REQ-10 Search unchanged — known — Current search kept.
 - REQ-11 Sort order unchanged — known — Current sort order kept.
 - REQ-12 Next appointment column unchanged — known — HMS-1 column unchanged.
-- REQ-13 No medical history — known — No medical history in the list.
+- REQ-13 No medical history — known — No medical history in the patient list.
 
 ## Known
 - REQ-1, REQ-2, REQ-5 to REQ-12: stated directly in the ticket's acceptance criteria (ticket L16–L21).
 - REQ-3: ticket L17 asks for hospital time zone; baseline constraints set it to Asia/Kolkata.
-- REQ-13: ticket L22 and baseline data protection (medical history never in lists).
+- REQ-13: ticket L22, supported by the baseline data-protection rule (medical history never in lists).
 
 ## Assumed
 - REQ-4: the most recent Completed appointment is ordered by appointment start time. Basis: the glossary defines Completed by its start time having passed; the ticket names no other timestamp.
@@ -212,3 +212,4 @@ HMS-4 asks for a "Last visit" column on the patient list so front-desk staff can
 ## Out of scope
 - Flagging or highlighting patients "not seen for a long time": the ticket states this as the motivation, gives no threshold and no acceptance criterion, so no requirement is written (see Q-02).
 - PRD PAT-8 itself is not among the inputs; REQ-13 relies on the ticket line and the baseline data-protection rule instead.
+- Where medical history is shown (the patient's own page) is a baseline rule outside this ticket; it is not restated as an HMS-4 requirement.
