@@ -1,0 +1,159 @@
+{
+  "artifact_sha256": "494b207ab62d6a2b4728b9c8b2f3c794f95f70ea156045649073f55375b2ba54",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "DashboardService no-show count (api, changed): third sub-select `status = 'NO_SHOW'",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L117"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Dashboard totals type (api, changed): `noShows: number` beside completed and cancelled.",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L118"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Dashboard totals type (web, changed): `noShows: number`.",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L120"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`Tile` titled \"No-shows\" with value totals.noShows and link `/appointments` with query status NO_SHOW, from period.from and to period.to",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L121"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the exact totals assertion (C10) gains noShows, plus a case with a No-show inside and one outside the period",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L124"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web DashboardPage test (web, changed): the No-shows tile shows totals.noShows and links to /appointments",
+          "ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L125"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        },
+        {
+          "quote": "(SELECT count(*) FROM appointment WHERE status = 'NO_SHOW' AND starts_at >= $4 AND starts_at < $2) AS no_shows",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L53"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "text": "The No-show count adds SQL to DashboardService, but conventions put SQL in api/src/repositories. The design accepted this local precedent, so this is a note only."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "// Runs last: it closes today's 09:30 appointment as No-show and moves the clock.",
+          "ref": "sample-system:api/test/dashboard.test.ts#L65"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Give the HMS-3 case its own fixture or describe block with its own database, or reset the clock and state afterwards.",
+      "text": "The new API test changes shared state (it marks the 09:30 appointment No-show and moves the clock) and depends on running last. Reordering the tests or running them in parallel would break the earlier exact assertions."
+    }
+  ],
+  "package_sha256": "6639acbfdb5692929d3e8e2dc564791ea962cbfb394d025dbf9494f9e5a80f09",
+  "questions": [],
+  "recorded_at": "2026-10-27T06:57:55Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "All the changed design parts are in the code: the NO_SHOW sub-select with $4/$2 bounds, noShows in the api and web types, the No-shows tile after Cancelled with the NO_SHOW period link, and both tests updated.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "The code follows the existing local patterns. The count SQL stays in DashboardService, not a repository as conventions say. The design accepted this trade-off on purpose.",
+      "score": 4
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Five files, all named by the design components. Every edit is additive and the other sub-selects, tiles and fields are untouched.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "No new endpoint. Period validation is reused. Edge cases are tested: no No-shows (0), inside Today, outside the next day's Today and inside Last 7 days. The tile link total matches the count.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary and the Changes list match the diff in each of the five files, including test names and fixture values.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
