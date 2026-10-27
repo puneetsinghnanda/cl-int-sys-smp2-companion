@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5XRKT5GS1J5S7SNA59XFVA2",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "b09fc04e71785583941961f7aadae5ad515ec2c7731f68cc9c0d0fdabc8742ce",
+  "package_sha256": "65c154696e69b184db89fba0c2bcf1e28558a4374cae0d18580a3f7cc8b03d80",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 5, "reason": "The change touched one line, the empty branch of the Next appointment cell. T-1 tests that branch and T-2 tests the unchanged non-empty branch, so every changed path is tested."},
+    {"id": "UT-R2", "score": 4, "reason": "The assertions check things a user can see: the exact text \"-\", that no link is shown, and the /appointments/7 link with the doctor's name. I could not read the test source, so they are judged from the artifact's description only."},
+    {"id": "UT-R3", "score": 4, "reason": "It covers the null next_appointment edge, which is the fix. No error path, such as a failed API stub, is tested. The change is UI-only and touches no endpoint, so the major trigger does not apply."},
+    {"id": "UT-R4", "score": 4, "reason": "It uses Vitest, jsdom and Testing Library in web/src/__tests__, as the strategy says. One small deviation: test names start with the ticket key HMS-2 rather than a PRD requirement ID."},
+    {"id": "UT-R5", "score": 4, "reason": "The artifact states no numbers, and the verifier test log shows the PatientsPage tests passing. But it says coverage comes from the verifier, and the verifier skipped coverage."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The summary calls this the first page-level web test, but the test layout already lists a page test, DashboardPage.test.tsx. The strategy's gap is about end-to-end page tests, not page tests in general.",
+      "cites": [
+        {"ref": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/ut.md#L44", "quote": "Adds the first page-level web test"},
+        {"ref": "context/generated/test-layout.json#L182", "quote": "web/src/__tests__/DashboardPage.test.tsx"}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "Reword it, for example: 'Adds the first PatientsPage test.'"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The summary says coverage comes from the verifier, but the verifier skipped its coverage step (exit 78), so there is no coverage evidence for this step.",
+      "cites": [
+        {"ref": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/ut.md#L47", "quote": "run and coverage come from the verifier (H3)"},
+        {"ref": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/ut.checks.json#L133", "quote": "\"exit_code\": 78,"}
+      ],
+      "suggested_fix": "Say that coverage was skipped by the verifier in this run."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "The strategy says test names start with a PRD requirement ID, as the existing tests do with PAT-n. The new test names start with the ticket key HMS-2 instead.",
+      "cites": [
+        {"ref": "context/test-strategy.md#L18", "quote": "Every PRD requirement has at least one test whose name starts with its ID"},
+        {"ref": "runs/run_01M5XRKT5GS1J5S7SNA59XFVA2/verifier/ut/test.log#L56", "quote": "HMS-2: shows \"-\" when the patient has no upcoming Scheduled appointment"}
+      ],
+      "claim_ref": "C2",
+      "suggested_fix": "Start each test name with the PRD ID for the patient list's Next appointment column (for example PAT-2), and keep HMS-2 in the describe block."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#L13", "quote": "Web tests use"}, {"ref": "context/test-strategy.md#L14", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#L18", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/impl.md#L47", "quote": "the empty branch of the Next appointment cell returns `'-'`"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#L33", "quote": "pages are not tested end to end"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Should UI defect tests start their names with the PRD requirement ID (for example PAT-2) or with the ticket key (HMS-2)? The strategy only names PRD IDs.", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-3"}
+  ]
+}

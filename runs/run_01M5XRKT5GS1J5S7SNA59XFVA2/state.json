@@ -7,7 +7,7 @@
   "branch": {
     "sample-system": {
       "base_sha": "05da3986a6de089c65145bff45e024df88c5d187",
-      "head_sha": "fcbae730d0545661b11d9df17d365da5cf4b6a4f",
+      "head_sha": "9cdc0658b797913fecc8efe24f6ee688c49a0e6e",
       "name": "tsl/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2"
     }
   },
@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-27T04:28:18Z",
+  "heartbeat_at": "2026-10-27T04:36:10Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 7,
+  "rev": 11,
   "run_id": "run_01M5XRKT5GS1J5S7SNA59XFVA2",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -120,7 +120,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/ut.md",
+          "artifact_sha256": "b09fc04e71785583941961f7aadae5ad515ec2c7731f68cc9c0d0fdabc8742ce",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-27T04:36:09Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "e67aefd7dd1565a585efb3ea2a7066985f8d05f557a46645679ad8990cc0a92a",
+              "step": "impl"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-2/run_01M5XRKT5GS1J5S7SNA59XFVA2/ut.verification.json",
+          "skill": "unit-test@1.0.1",
+          "skill_started_at": "2026-10-27T04:29:26Z",
+          "started_at": "2026-10-27T04:28:31Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -129,7 +152,7 @@
       },
       "id": "ut",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -140,7 +163,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-2",
-  "updated_at": "2026-10-27T04:28:18Z",
+  "updated_at": "2026-10-27T04:36:10Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "856e3d6f8fd78271fd5b0e49f175a38809f516396bd4e541f9c731b48cae1ae9"
 }
