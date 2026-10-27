@@ -1,0 +1,90 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5XZYC101HCFE34KWJ49C90V",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "f4781ced39551d0de32f083715f366cb2912bbd5f2ceb68f44a66bcb084c25d2",
+  "package_sha256": "84e1500068fa1a703b8847eaab6f0323f527364944e5bc594947f1fd8cd64fc3",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "Each of the 9 design components has at least one threat (T-1..T-11), including the existing router, Tile, appointment list and both tests."},
+    {"id": "TM-R2", "score": 4, "reason": "Threats fit their components (crafted period, link built from free text, test data, EoP on reachable routes). A few, such as T-6 and T-8, are thin restatements."},
+    {"id": "TM-R3", "score": 4, "reason": "Most mitigations cite code (PERIODS, bound params) or name a new implement control. T-1 overstates 'counts only', and T-9's basis cites an unrelated design claim."},
+    {"id": "TM-R4", "score": 4, "reason": "The exposure gap is stated and asked in Q-01 with options and a default. T-9 is marked assumed when the list's columns can be checked in appointmentRepo, and its stated basis is weak."},
+    {"id": "TM-R5", "score": 3, "reason": "Readable and consistent, but threats are listed by component, not by risk. The highest risks (T-5, T-9) sit in the middle. Mixing 'C14' and 'design C14' is confusing."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "T-1 says the dashboard service 'returns counts only'. It does not: it also returns `next`, up to 10 upcoming appointments with patient and doctor full names. The code comment C14 quotes is not accurate about the response.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L80", "quote": "the service returns counts only and reads no contact details or medical history (C14)"},
+        {"ref": "sample-system:api/src/services/dashboardService.ts#L57", "quote": "WHERE a.status = 'SCHEDULED' AND a.starts_at > $1 ORDER BY a.starts_at, a.id LIMIT 10"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22", "quote": "a.patient_id, p.full_name AS patient_name"}
+      ],
+      "claim_ref": "C14",
+      "suggested_fix": "Change T-1/T-4/Known to say the new noShows field is a count and that the existing response already carries patient names in `next`, which this ticket does not change. Do not claim the whole service returns counts only."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "traceability",
+      "text": "T-9's basis for 'no contact details on the list' cites design C14, which is about client.ts and says nothing about list columns. The list's columns can be checked in SUMMARY_SELECT (names only), so T-9 could be known, not assumed.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L120", "quote": "the dashboard and list rules keep contact details off lists (C5 and design C14)"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L68", "quote": "The web app calls the API only through `client.ts`."},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L166", "quote": "the list's columns are not in these inputs"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22", "quote": "SELECT a.id, a.doctor_id, d.full_name AS doctor_name, a.patient_id, p.full_name AS patient_name"}
+      ],
+      "suggested_fix": "Cite appointmentRepo.ts SUMMARY_SELECT/toSummary as the basis that list rows carry names and no contact details, and move T-9 to known (access remains under Q-01)."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are ordered by component, not by risk. The access-control threats T-5 and T-9, which are the only ones with no effective control, appear mid-list instead of first.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L100", "quote": "No effective control in the MVP: every request is staff and every permission is granted (C1)"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L80", "quote": "Existing control: the service returns counts only"}
+      ],
+      "suggested_fix": "Order threats by risk, with T-5 and T-9 first."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The artifact uses 'C14'/'C11' for its own claims and 'design C14'/'design C11' for the design's claims. These ids mean different things, which makes the citations ambiguous.",
+      "cites": [
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L105", "quote": "The web app talks to the API only through its client (design C14)"},
+        {"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/threat.md#L115", "quote": "Tile renders a label, a value and a link only (design C11)"}
+      ],
+      "suggested_fix": "Add these as the artifact's own claims with their own ids, or cite the design path#anchor directly."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Sign-in replaces these"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#deployment-shape", "quote": "then runs migrate, seed-if-empty and the API, which also serves"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "A patient row holds identity, contact details and the basic medical history"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/data-model.md#data-rules", "quote": "Seed data is invented:"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L82", "quote": "http:GET:/api/dashboard"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L58", "quote": "http:GET:/api/appointments"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L117", "quote": "third sub-select `status = 'NO_SHOW' AND starts_at >= period start AND starts_at < end of today`"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-3/run_01M5XZYC101HCFE34KWJ49C90V/design.md#L121", "quote": "link `/appointments` with query status NO_SHOW, from period.from and to period.to"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L36", "quote": "f.oneOf('period', PERIODS) ?? 'today'"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L51", "quote": "status = 'CANCELLED' AND starts_at >= $4 AND starts_at < $2"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L26", "quote": "Counts only: no contact details or medical history (DSH-9)."}]}
+  ],
+  "questions": []
+}
