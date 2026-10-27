@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "40b6f8881a03a2991ff6f98ff7d4c0e260734b0286fa40e0d38d742fecd770f1",
-  "attempt": 1,
+  "artifact_sha256": "69e278b1f1bc8a60c91f87b1690647251b7bb04cea4ca608afcc150e6c3bd26a",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -25,7 +25,7 @@
     {
       "cites": [
         {
-          "quote": "Instants are stored in UTC.",
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
           "ref": "context/architecture.md#time-and-slots"
         }
       ],
@@ -85,8 +85,8 @@
     {
       "cites": [
         {
-          "quote": "\"name\": \"dateTime\"",
-          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+          "quote": "\"id\": \"sym:sample-system:api/src/lib/time.ts:localDay\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay"
         }
       ],
       "claim_id": "C9",
@@ -95,8 +95,8 @@
     {
       "cites": [
         {
-          "quote": "\"name\": \"useSettings\"",
-          "ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"
+          "quote": "\"name\": \"loadConfig\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/config.ts:loadConfig"
         }
       ],
       "claim_id": "C10",
@@ -105,8 +105,8 @@
     {
       "cites": [
         {
-          "quote": "\"path\": \"/api/settings\"",
-          "ref": "context/generated/api-inventory.json#http:GET:/api/settings"
+          "quote": "\"id\": \"sym:sample-system:api/src/lib/time.ts:isDay\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:isDay"
         }
       ],
       "claim_id": "C11",
@@ -158,87 +158,61 @@
       "category": "correctness",
       "cites": [
         {
-          "quote": "what the settings payload holds is not in the facts, so implement must confirm it",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L139"
+          "quote": "the web needs no time-zone source and the browser zone can never leak in",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L124"
         },
         {
-          "quote": "default: \"Same approach the Next appointment column already uses\"",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impact.md#L94"
+          "quote": "default: \"Reuse the Next appointment column's date formatting, date part only\"",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L105"
         },
         {
-          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
-          "ref": "context/architecture.md#time-and-slots"
+          "quote": "then Last visit shows the Asia/Kolkata date.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L80"
         }
       ],
       "id": "F-1",
       "severity": "major",
-      "suggested_fix": "Inspect PatientsPage startsAt and useSettings to confirm how Next appointment gets the hospital zone, and match it. If the zone is not reachable in the web, compute the date in the API.",
-      "text": "S-1 AC4 (Asia/Kolkata date) depends on the web having HOSPITAL_TZ, but the design only assumes /api/settings carries it. Architecture places HOSPITAL_TZ in API config. The design also did not check how startsAt renders Next appointment, which is the impact Q-02 default."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "default: \"Same date format as the existing Next appointment column, in Asia/Kolkata\"",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L51"
-        },
-        {
-          "quote": "format.ts dateTime and useSettings (module:sample-system:web) — **existing**: used to render the date in the hospital time zone.",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L123"
-        }
-      ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "State the date-only format to use (matching the Next appointment column per split Q-01 default) and which helper produces it.",
-      "text": "The display format is not fixed. The split Q-01 default is the Next appointment column's format, but the design only says 'existing date helpers'. dateTime suggests a date-and-time output, while the column needs a date."
+      "suggested_fix": "State that the web renders last_visit_date without turning it into a local Date, either as a string or with a UTC-fixed formatter matching the Next appointment pattern. Add an S-1 AC4 test that runs in a negative-offset browser zone.",
+      "text": "The design says the browser zone can never leak in. But Q-03 defaults to reusing the Next appointment column's (instant) formatting on a day string. Parsing a day string as a Date and formatting it in the browser zone can shift it one day back in zones west of UTC, which breaks S-1 AC4."
     },
     {
       "category": "traceability",
       "cites": [
         {
-          "quote": "cites: [\"context/generated/db-schema.json#index:appointment_patient_start_idx\"]",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L63"
+          "quote": "cites: [\"context/conventions.md#code-layout\"]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L30"
         },
         {
-          "quote": "cites: [\"context/conventions.md#code-layout\"]",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L27"
+          "quote": "cites: [\"context/generated/db-schema.json#index:appointment_patient_start_idx\"]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L66"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json, with their sha256, to inputs.",
+      "text": "Not fixed from attempt 1 (previous F-3): claims cite context/conventions.md and context/generated/db-schema.json, but neither file is in the design's inputs list."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "hospital-local day string as localDay returns it, or null",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L93"
+        },
+        {
+          "quote": "maps that instant to a hospital-local day with `localDay` and `HOSPITAL_TZ`",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L130"
         }
       ],
       "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json with their sha256 to the inputs list.",
-      "text": "Claims cite context/conventions.md and context/generated/db-schema.json, but neither file is listed in the design's inputs."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "changes only if it builds the list item by hand",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L119"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Decide whether PatientService changes. State last_visit_at as an ISO-8601 UTC string or null.",
-      "text": "PatientService is marked existing, yet the text says it may change. The wire type of last_visit_at (for example an ISO-8601 string) is also not stated."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "- GET /api/patients — **changed**: each item gains `last_visit_at`",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L125"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "suggested_fix": "Move the three endpoint bullets under an '## Endpoints' heading.",
-      "text": "Endpoint entries are listed as bullets inside the Components section instead of in their own Endpoints section."
+      "suggested_fix": "Fix the format (e.g. YYYY-MM-DD, as isDay accepts) and name how the service gets HOSPITAL_TZ (loadConfig).",
+      "text": "The wire format of last_visit_date is only 'as localDay returns it', and the design does not say how PatientService gets HOSPITAL_TZ (e.g. from loadConfig). The web type and tests need one exact string shape."
     }
   ],
-  "package_sha256": "862d5420ccd97b9ba1224be889d47b963309119503d3fc6d9b915dd06ec05934",
+  "package_sha256": "6a20952018afbbf791bb6841e356ede3c10606866bbc62c6f72135ba4728e05b",
   "questions": [],
-  "recorded_at": "2026-10-27T13:41:21Z",
+  "recorded_at": "2026-10-27T13:46:44Z",
   "recorded_by": "tsl@0.1.3",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -249,36 +223,36 @@
   "rubric_items": [
     {
       "id": "DS-R1",
-      "reason": "Uses the existing api/web/db modules, the repo/service/route layering, the API client and the existing index. It adds no migration, job or service.",
+      "reason": "Builds on the existing repo/service/route layers, the existing localDay helper, the HOSPITAL_TZ config, the API client and the existing index. It adds no migration, job, service or endpoint.",
       "score": 5
     },
     {
       "id": "DS-R2",
-      "reason": "All four stories are mapped. S-1 AC4 rests on an unverified source for the hospital time zone in the web, and the date-only display format (split Q-01) is not stated.",
+      "reason": "All four stories and their criteria are mapped. Moving the date to the API settles the hospital-zone source for S-1 AC4. But the Q-03 default reuses the Next appointment formatting on a day string, which could bring the browser zone back in.",
       "score": 4
     },
     {
       "id": "DS-R3",
-      "reason": "Methods, paths and list envelope are precise. The wire format of last_visit_at (ISO string?) is not given, and the PatientService change is left conditional.",
+      "reason": "The method, path, envelope and new field are named, and the field is nullable. The exact day-string format (e.g. YYYY-MM-DD) is left as 'as localDay returns it'. The design does not say how PatientService gets HOSPITAL_TZ.",
       "score": 4
     },
     {
       "id": "DS-R4",
-      "reason": "The REQ-4 assumption and the settings-payload assumption are flagged honestly. The impact Q-02 default (copy the Next appointment approach) was not checked against startsAt.",
+      "reason": "Claims check out against the facts. The localDay signature is honestly marked assumed, and the unknowns are asked. conventions.md and db-schema.json are cited but still missing from inputs.",
       "score": 4
     },
     {
       "id": "DS-R5",
-      "reason": "Explicit trade-offs: correlated max vs stored column, UTC instant vs server date, starts_at vs close time.",
+      "reason": "Trade-offs are explicit: API vs web date (with its cost), correlated max vs stored column, and starts_at vs close time.",
       "score": 5
     },
     {
       "id": "DS-R6",
-      "reason": "Clear, readable sections. Endpoints are mixed into the Components bullet list, which is a little untidy.",
-      "score": 4
+      "reason": "Clear and consistent. Endpoints now have their own subsection, and the frontmatter matches the body.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.35,
+  "rubric_score": 4.4,
   "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
   "schema": "review.v1",
   "status": "ok",

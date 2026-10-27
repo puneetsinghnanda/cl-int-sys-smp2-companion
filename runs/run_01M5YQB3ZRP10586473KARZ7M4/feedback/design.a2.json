@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "the web needs no time-zone source and the browser zone can never leak in",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L124"
+        },
+        {
+          "quote": "default: \"Reuse the Next appointment column's date formatting, date part only\"",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L105"
+        },
+        {
+          "quote": "then Last visit shows the Asia/Kolkata date.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L80"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The design says the browser zone can never leak in. But Q-03 defaults to reusing the Next appointment column's (instant) formatting on a day string. Parsing a day string as a Date and formatting it in the browser zone can shift it one day back in zones west of UTC, which breaks S-1 AC4."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "feedback.v1",
+  "step": "design"
+}
