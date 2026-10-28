@@ -1,0 +1,116 @@
+{
+  "artifact_sha256": "ccd6cc8f2ad1131bc2dac97d2a8f9cdfc46a93cd6f6cc49efadca8e1971bd1e1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "evidence: [\"context/conventions.md#logging-and-data\"]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/secrev.md#L41"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/sast.sarif, or the SAST scan entry by report_sha256, as the evidence for Q-01.",
+      "text": "Q-01 asks whether to triage the 4 SAST results outside the diff, but its only evidence is the logging convention, which does not support the question. The question should cite the SAST report instead."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "so it will be covered once sign-in replaces the MVP identity.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/secrev.md#L50"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an explicit direction to SF-1. For example, accept it as known for the MVP and confirm that patients:read is checked once sign-in replaces identify and requirePermission.",
+      "text": "SF-1 describes the exposure but gives no fix direction or owner. Readers cannot tell whether to accept it as known or track it against the sign-in work."
+    }
+  ],
+  "package_sha256": "9ab67d7962e8a3b0aafa74284b371c3e1848dd0a3300846d9afd610493661092",
+  "questions": [],
+  "recorded_at": "2026-10-28T06:23:43Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a072043cdc75429da7a74739c7595f776931c84977ad2f4ec41cd132543686c0",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The diff adds no new route. The new subquery uses only a literal status and the outer id. Output is a React text node and nothing new is logged. The authorization inheritance under the MVP identity is reported as SF-1. I found no issue that was missed.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 cites the exact lines (patientService.ts L38, patients.ts L12). The injection, exposure and encoding notes also cite the right lines. Q-01 cites logging-and-data as evidence for SAST triage, which does not support it.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Minor is the right severity for SF-1. The route still declares patients:read, and the identity is MVP-wide and existed before this change. Leaving the SAST results outside the diff as a non-blocking unknown is proportionate.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "SF-1 says the risk is covered once sign-in lands, but it states no explicit action, such as tracking sign-in or accepting the risk. Q-01 gives clear options with a default.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false alarms. All 4 SAST results are in ci.yml, codes.ts and errorHandler.ts. None of these files is in the impl diff, so leaving them out of the findings is correct.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
