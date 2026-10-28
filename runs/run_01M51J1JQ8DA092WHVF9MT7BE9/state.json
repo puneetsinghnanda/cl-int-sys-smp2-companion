@@ -1,27 +1,31 @@
 {
   "active_session": {
     "host_hash": "h_c14537ff",
-    "session_id": "8b437a9f-5aa6-4e59-9bc3-7eee605ec916",
-    "since": "2026-10-16T05:13:05Z"
+    "session_id": "48758c53-8c77-482f-bd04-9ca8778fde10",
+    "since": "2026-10-28T09:58:18Z"
   },
   "branch": {},
   "created_at": "2026-10-16T05:13:05Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-16T05:13:05Z",
+  "heartbeat_at": "2026-10-28T09:58:18Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
-    "checked_offline": true,
-    "commits_behind": {},
-    "drift_files": {},
+    "checked_offline": false,
+    "commits_behind": {
+      "sample-system": 0
+    },
+    "drift_files": {
+      "sample-system": 0
+    },
     "fresh": true,
-    "manifest_sha256": "9d8f2c40b49d85f88d7c408d00858bf428da03757cf4d75d64610ccc1d77672b",
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "reasons": [],
-    "signed_at": "2026-10-15T09:10:09Z",
+    "signed_at": "2026-10-27T11:05:02Z",
     "source_sha": {
-      "sample-system": "7cf61b938808101b7195cc80e8da2238ac370a23"
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
   "pinned": {
@@ -46,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 0,
+  "rev": 1,
   "run_id": "run_01M51J1JQ8DA092WHVF9MT7BE9",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -174,7 +178,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "ABC-150",
-  "updated_at": "2026-10-16T05:13:05Z",
+  "updated_at": "2026-10-28T09:58:18Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "0c5c6b595fa7e56b5c3c33d4cc6e8a720be055f1dceb21b0e9ac324c4746e6bf"
 }
