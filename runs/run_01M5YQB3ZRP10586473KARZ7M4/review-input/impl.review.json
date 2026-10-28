@@ -1,0 +1,60 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "step": "impl",
+  "attempt": 2,
+  "artifact_sha256": "0f9e83d1d5682f454a07a45622414cba47d2b81c15471f261b4b09b016bbbdc1",
+  "package_sha256": "0f586449539f68834933adbd0e68dedc3fae62c589231d0cb6b1c93bb6634316",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "Every design component is implemented as written: correlated max over COMPLETED in PatientRepo, localDay with config.timeZone in PatientService, a text-only Last visit column, the web type change, and no migration."},
+    {"id": "IM-R2", "score": 5, "reason": "SQL stays in repositories and rules in services. The list shape and page size are unchanged, LIST_COLUMNS is untouched, nothing new is logged, and no SQL migration was added."},
+    {"id": "IM-R3", "score": 5, "reason": "Seven files with 59 lines added and 8 deleted, all tied to the design. The router, time.ts, config and the index are untouched. The soft size check passed."},
+    {"id": "IM-R4", "score": 3, "reason": "Null maps to '-' and status filtering is correct in code. No API test covers Completed-only selection, latest-of-two or the hospital-local day boundary, and no web test checks '-' for a null last visit."},
+    {"id": "IM-R5", "score": 5, "reason": "The Summary and Changes sections match the diff file by file, including the PAT-8 key update and the new HMS-4 S-1 AC4 web test. The retry note matches checks.json, where sast now passes."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "No API test checks the new last_visit_date values. S-2 AC1-AC5 (Cancelled, No-show and Scheduled ignored), S-1 AC3 (latest of two) and the server side of S-1 AC4 (Kolkata day differs from UTC day) have no tests. The only API change is the PAT-8 key list.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L86", "quote": "Given a patient with an earlier Completed appointment and a later Cancelled appointment"},
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md#L95", "quote": "existing PAT-8 test pins the list item keys, which the design changes; `last_visit_date` added to the expected keys"},
+        {"ref": "sample-system:api/test/patients.test.ts#L90", "quote": "'id', 'last_visit_date', 'next_appointment', 'phone', 'registeredAt', 'status']"}
+      ],
+      "suggested_fix": "Add API tests in api/test/patients.test.ts. Seed Completed, Cancelled, No-show and Scheduled appointments plus one Completed at e.g. 20:00Z (next day in Kolkata), then assert the last_visit_date values, including null."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The web tests never check that Last visit shows '-' for null (REQ-8, S-2 AC5). The fixture has a patient with a null last_visit_date, but only that patient's Next appointment cell is checked.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L11", "quote": "fullName: 'Test Patient 001', next_appointment: null, last_visit_date: null"},
+        {"ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L49", "quote": "expect((await lastVisitCell('Test Patient 002')).textContent).toBe('2026-10-27');"}
+      ],
+      "suggested_fix": "Assert that lastVisitCell('Test Patient 001').textContent is '-'."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#database-changes", "quote": "New SQL files only, never edits to merged ones."}, {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.checks.json#L73", "quote": "\"api/src/repositories/patientRepo.ts\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "\"name\": \"PatientRepo\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "\"name\": \"PatientService\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay", "quote": "\"name\": \"localDay\""}, {"ref": "sample-system:api/src/lib/time.ts#L62", "quote": "export function localDay(instant: Date, tz: string): string {"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"name\": \"PatientsPage\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L22", "quote": "return cells[cells.length - 1]!;"}]}
+  ],
+  "questions": []
+}

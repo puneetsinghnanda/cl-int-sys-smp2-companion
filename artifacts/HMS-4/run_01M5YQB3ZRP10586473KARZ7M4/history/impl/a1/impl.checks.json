@@ -1,0 +1,146 @@
+{
+  "artifact_sha256": "08a53d05452bdcc4bd6cb64cee7e2ca4c6f82ea2788fd2e06002d1e022bb262e",
+  "attempt": 1,
+  "finished_at": "2026-10-28T05:42:04Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [
+        "E-H3-06"
+      ],
+      "detail": "sast timed out; log runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/impl/sast.log: METRICS: Using configs from the Registry (like --config=p/ci) reports pseudonymous rule metrics to semgrep.dev. | To disable Registry rule metrics, use \"--metrics=off\". | Using configs only from local files (like --config=xyz.yml) does not enable metrics. | More information: https://semgrep.dev/docs/metrics",
+      "id": "H3",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md",
+      "sha256": "9c01a9c1ddd65536f8dc4ae53ecaadecbec0ffc9b6b47d6e5d21557a93acb30a",
+      "verification_sha256": "239643569aa3bc52c17e373a158f5aa85069dd7db9c2e350116360e7fa997d7d"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md",
+      "sha256": "5ced1c4d84b9c46da98051a025953a0aea7312cd53a6d5686efdebadb117024e",
+      "verification_sha256": "1e29b89a20f6f6a1f2455c6b69061889c15f0b5d4f583cfb1cb043c47d3ff4df"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "bd98ff08b83f8762c5e5c073ba5fadef88169b33",
+      "diff_sha256": "4c84321e0fc36ccb1f569423adc5e7b26220b4dcafe0efd2241bfd7d6918ba7d",
+      "files": [
+        "api/src/repositories/patientRepo.ts",
+        "api/src/services/patientService.ts",
+        "api/src/types.ts",
+        "api/test/patients.test.ts",
+        "web/src/__tests__/PatientsPage.test.tsx",
+        "web/src/api/types.ts",
+        "web/src/pages/PatientsPage.tsx"
+      ],
+      "lines_added": 59,
+      "lines_deleted": 8,
+      "repo": "sample-system",
+      "tree_sha": "1221e71c4b446915fc566bf0cdb500e9ced51388"
+    }
+  ],
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-28T05:27:06Z",
+  "step": "impl",
+  "tool_log_sha256": "075e04de8956b5c3e8945fdeba3937ed09b416784e2bb23d2b7784a340b9b23b",
+  "tsl_version": "0.1.3",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 20250,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 34577,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 6890,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "0bfa5a58ca8a560ef33d93abe63a033b1f1d1405c3c993c76a1a70d25b82899a",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 600187,
+        "exit_code": null,
+        "name": "sast",
+        "report_sha256": null,
+        "status": "fail"
+      },
+      {
+        "duration_ms": 44859,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      }
+    ]
+  }
+}

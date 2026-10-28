@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M5YQB3ZRP10586473KARZ7M4
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.0.1
 inputs:
   - path: artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md
@@ -28,6 +28,9 @@ code:
       - web/src/__tests__/PatientsPage.test.tsx
       - web/src/api/types.ts
       - web/src/pages/PatientsPage.tsx
+resolves:
+  - id: H3
+    how: "sast timed out with no finding; the cause was a host node_modules in the scanned source, now moved out of the repo. Code unchanged."
 claims:
   - id: C1
     text: "SQL lives in `api/src/repositories` and rules in api/src/services."
@@ -71,7 +74,7 @@ questions:
     evidence: ["artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L97", "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L105"]
     options: ["Keep the defaults", "Change the name, shape or layout"]
     default: "Keep the defaults"
-summary: "GET /api/patients list items gain last_visit_date: the hospital-local day (via localDay and the configured time zone) of the patient's latest COMPLETED appointment by starts_at, or null. PatientsPage shows it as text in a new Last visit column before Next appointment, with '-' when null. No migration, endpoint or log change."
+summary: "GET /api/patients list items gain last_visit_date: the hospital-local day (via localDay and the configured time zone) of the patient's latest COMPLETED appointment by starts_at, or null. PatientsPage shows it as text in a new Last visit column before Next appointment, with '-' when null. No migration, endpoint or log change. Attempt 2 changes no code; the sast timeout of attempt 1 was environmental."
 ---
 # Change: HMS-4
 
@@ -81,6 +84,7 @@ summary: "GET /api/patients list items gain last_visit_date: the hospital-local 
 - **web API client patient list type** (changed): `PatientListItem` gains `last_visit_date: string | null`; the client call is unchanged.
 - **PatientsPage Last visit column** (changed): new "Last visit" header and cell rendering `last_visit_date` as text, "-" when null; no Date parsing or formatter (C8). The column sits before Next appointment so the Next appointment cell stays last and its helper `nextCell` still finds it (C9).
 - **time.ts localDay and loadConfig HOSPITAL_TZ**, **patients router**, **appointment_patient_start_idx index**: existing, untouched. No migration (C4).
+- **Retry (H3)**: attempt 1 passed build, test, lint and secrets; sast timed out without a finding. The host node_modules folder was moved out of the product working copy so the scanners see only the source. No code changed between attempts.
 
 ## Changes
 - api/src/repositories/patientRepo.ts — PatientRepo list query: `last_visit_at` subquery, `PatientListRow` return type.

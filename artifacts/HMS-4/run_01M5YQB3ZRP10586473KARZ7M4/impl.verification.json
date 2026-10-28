@@ -1,23 +1,28 @@
 {
   "artifact_path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md",
-  "artifact_sha256": "08a53d05452bdcc4bd6cb64cee7e2ca4c6f82ea2788fd2e06002d1e022bb262e",
-  "attempt": 1,
-  "band": null,
-  "caps": [
-    "reviewer-missing"
-  ],
-  "checks_sha256": "c17d44e8aae49a8e11778dd9017ee8b6533825c22c074228ac24d01f546da8f5",
+  "artifact_sha256": "0f9e83d1d5682f454a07a45622414cba47d2b81c15471f261b4b09b016bbbdc1",
+  "attempt": 2,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "4f448c0ab1714c92c8162016c5fbe1012e0fbfe07e783373b575c58d97c03e29",
   "claims": {
     "total": 9,
     "verified": 9
   },
-  "decided_at": "2026-10-28T05:42:59Z",
+  "decided_at": "2026-10-28T06:05:35Z",
   "decided_by": "tsl@0.1.3",
-  "findings_dropped": [],
-  "findings_kept": [],
-  "gate_failures": [
-    "H3"
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-2",
+      "reason": "quote not found"
+    }
   ],
+  "findings_kept": [],
+  "gate_failures": [],
   "inputs": [
     {
       "path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md",
@@ -31,7 +36,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -39,7 +44,7 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "12f848633d90e5a8954726a68a006a22608f9024be321aa0168b3765a71d8547",
   "product_changes": [
     {
       "base_sha": "bd98ff08b83f8762c5e5c073ba5fadef88169b33",
@@ -48,13 +53,13 @@
       "tree_sha": "1221e71c4b446915fc566bf0cdb500e9ced51388"
     }
   ],
-  "review_sha256": "07819bac3706371d8ea36a85061ac48f0b8489c2f7a41136681b73670c75f882",
+  "review_sha256": "b81386e0ac019b1d474f1d5d11ea3ff816261ae0404c2531b810ee1657ca828e",
   "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
   "schema": "verification.v1",
   "signals": {
-    "S1": 1.0,
+    "S1": 0.8182,
     "S2": 1.0,
-    "S3": null,
+    "S3": 4.6,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -63,7 +68,7 @@
       "sensitive": false
     }
   },
-  "signature": "mGcMyJLlmX-dp9HGopnanEWn0ZPOAeuM_ROmqxdxUZlLxlj3dHMM1F3frHJP5JeK7_0M5Q4Nlty2-O8yhubvCQ",
+  "signature": "i4OjGEeY1ox4rjhV5PZsNUYWJWVqxFkmBRIYktf1pjAqx7loSnaNwenSkMzpnT9SHoG9Fw8bWJIxte3KLdUZBw",
   "skill": "implement@1.0.1",
   "step": "impl",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
