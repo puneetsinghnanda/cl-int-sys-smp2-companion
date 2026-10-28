@@ -1,0 +1,88 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "82b325a6d4e64430304b86d0bab852d64d7f467d40303c40e298f8dd71f566c7",
+  "package_sha256": "586e347c4e599fbe47367cdfd401a45cf724752700a355b657559c822b79b9eb",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7"
+  },
+  "rubric_score": 4.25,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 4, "reason": "The repo query, the service field, the 404 path and the page block are all tested. Not tested: S-2 AC5 (No-show only gives Completed 0) and the appointment order in S-3 AC1. Only the list length is checked."},
+    {"id": "UT-R2", "score": 4, "reason": "Most tests check exact counts and the rendered dt/dd values. Some checks are weak: the PATCH test never checks the PATCH status, and the isolation test uses not.toEqual between the two patients."},
+    {"id": "UT-R3", "score": 4, "reason": "Covers zero counts, Completed-only, unknown patient 404 and a visit_summary sent in a PATCH. Missing: the No-show-only edge. REQ-9 moves the clock by only one day; no appointments are far apart in date."},
+    {"id": "UT-R4", "score": 5, "reason": "API tests use Vitest and Supertest with their own database, a fixed clock and skipIf(!pgAvailable()). Web tests use Vitest, jsdom and Testing Library in web/src/__tests__. Test names start with HMS-5 and the REQ ids."},
+    {"id": "UT-R5", "score": 5, "reason": "The artifact gives no pass counts or coverage of its own and defers to the verifier (H3). The verifier log shows 9 and 4 tests passing, matching the stated counts. Coverage was skipped with exit code 78."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "S-2 AC5 is not tested in either layer: a patient with No-show but no Completed appointments should show Completed 0. The API fixture has no patient with only a No-show, and the web test only uses 0/0 and 3/2.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#s-2-count-only-closed-attended-and-missed-appointments", "quote": "AC5: Given a patient with No-show but no Completed appointments, when staff open the patient page, then the Completed count shows 0."},
+        {"ref": "sample-system:api/test/patients-visit-summary.test.ts#L55", "quote": "a patient with Completed but no No-show appointments shows 0 No-shows"}
+      ],
+      "suggested_fix": "Add an API test for a patient with only a closed No-show appointment, expecting { completed: 0, no_show: 1 }. Optionally add a web test that renders Completed 0 next to a non-zero No-show."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-3 AC1 requires the same appointments in the same order. The REQ-7 test only checks that the list has length 4, so a change in order would not be caught.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#s-3-keep-the-rest-of-the-patient-page-unchanged", "quote": "the appointments list shows the same appointments in the same order as before."},
+        {"ref": "sample-system:api/test/patients-visit-summary.test.ts#L76", "quote": "expect(res.body.appointments).toHaveLength(4);"}
+      ],
+      "suggested_fix": "Check the ordered list of appointment ids or start times against the expected order."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The PATCH error-path test never checks the PATCH response. If the PATCH failed with a 400 for an unrelated reason, the counts would stay the same and the test would still pass, so it does not prove that the field is ignored.",
+      "cites": [
+        {"ref": "sample-system:api/test/patients-visit-summary.test.ts#L88", "quote": "await request(app).patch('/api/patients/2').send({ visit_summary: { completed: 99, no_show: 99 } });"}
+      ],
+      "suggested_fix": "Assert the PATCH status (2xx), or send a valid field change together with visit_summary and check that the valid change was applied."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The REQ-9 test does not match S-1 AC4 (appointments on dates far apart). All closed appointments are on the same Monday, and the clock moves only to Tuesday.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#s-1-see-a-patients-attended-and-missed-appointment-counts", "quote": "Given a patient with Completed and No-show appointments on dates far apart in the past (assumed REQ-9)"},
+        {"ref": "sample-system:api/test/patients-visit-summary.test.ts#L66", "quote": "clock = new Date(at(TUESDAY, '11:00'));"}
+      ],
+      "suggested_fix": "Close appointments weeks or months apart, or move the clock far forward, and assert that both are counted."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The artifact says the 'key set' is unchanged (T-11). The test only checks the keys inside visit_summary, not the existing keys of the patient response.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/ut.md#tests", "quote": "list length, medical history and key set unchanged (REQ-7, REQ-8, T-11)"},
+        {"ref": "sample-system:api/test/patients-visit-summary.test.ts#L78", "quote": "expect(Object.keys(res.body.visit_summary).sort()).toEqual(['completed', 'no_show']);"}
+      ],
+      "suggested_fix": "Either assert the full top-level key set of the patient response, or reword the artifact to say only the visit_summary keys are checked."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impl.md#summary", "quote": "adds `visit_summary` to the existing patient response"}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,67 @@
+
+> hospital-management@0.1.0 test
+> npm test --workspaces --if-present
+
+
+> @hms/db@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/db
+
+ ✓ test/seed.test.ts (8 tests) 2651ms
+   ✓ seed generator (NFR-7) > is deterministic for the same seed and anchor 608ms
+   ✓ seed generator (NFR-7) > changes when the seed changes 557ms
+   ✓ seed generator (NFR-7) > never overlaps appointments for a doctor or a patient 331ms
+   ✓ migrations and seed against PostgreSQL > loads the seed into an empty database, and only when asked to reset again 536ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  09:30:05
+   Duration  5.37s (transform 332ms, setup 0ms, collect 155ms, tests 2.65s, environment 0ms, prepare 153ms)
+
+
+> @hms/api@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/api
+
+ ✓ test/patients.test.ts (9 tests) 2119ms
+ ✓ test/dashboard-no-shows.test.ts (6 tests) 2123ms
+ ✓ test/doctors.test.ts (9 tests) 2122ms
+ ✓ test/patients-visit-summary.test.ts (9 tests) 2122ms
+ ✓ test/dashboard.test.ts (5 tests) 2200ms
+ ✓ test/appointments.test.ts (11 tests) 2915ms
+ ✓ test/patients-next-appointment.test.ts (10 tests) 3412ms
+ ✓ test/lib.test.ts (8 tests) 91ms
+ ✓ test/auth.test.ts (3 tests) 185ms
+ ✓ test/reference.test.ts (5 tests) 234ms
+
+ Test Files  10 passed (10)
+      Tests  75 passed (75)
+   Start at  09:30:11
+   Duration  9.39s (transform 1.72s, setup 0ms, collect 15.78s, tests 17.52s, environment 5ms, prepare 7.07s)
+
+
+> @hms/web@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/web
+
+ ✓ src/__tests__/format.test.ts (2 tests) 102ms
+ ✓ src/__tests__/SlotPicker.test.tsx (2 tests) 400ms
+   ✓ SlotPicker (APT-1) > APT-1: only free slots can be chosen 321ms
+ ✓ src/__tests__/PatientsPage.test.tsx (2 tests) 801ms
+   ✓ PatientsPage next appointment column (HMS-2) > HMS-2: shows "-" when the patient has no upcoming Scheduled appointment 698ms
+ ✓ src/__tests__/PatientDetailPage.test.tsx (4 tests) 811ms
+   ✓ PatientDetailPage visit summary (HMS-5) > HMS-5 REQ-1: shows a Visit summary above the appointments list 608ms
+ ✓ src/__tests__/DashboardPage.test.tsx (4 tests) 1029ms
+   ✓ DashboardPage (PRD §4.4) > DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts 614ms
+
+ Test Files  5 passed (5)
+      Tests  14 passed (14)
+   Start at  09:30:21
+   Duration  6.46s (transform 1.00s, setup 4.43s, collect 1.55s, tests 3.14s, environment 13.82s, prepare 2.82s)
+
