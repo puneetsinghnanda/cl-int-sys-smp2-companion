@@ -1,0 +1,172 @@
+{
+  "artifact_sha256": "7ef6f42cb3a4c571d34a01f0e9e228c873a3b6e58885375735d236d3d5773182",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "GET /api/patients list items gain last_visit_date",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md#L77"
+        },
+        {
+          "quote": "with the normal path and the edge paths for each changed function",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add at least one error-path test for GET /api/patients, e.g. an invalid page parameter or a missing auth token, and check that the response is unchanged by the new subquery.",
+      "text": "GET /api/patients changed (new last_visit_date), but every listed API test is a normal or edge path. No error-path test exists, e.g. a bad page or page_size, or an unauthenticated request still being refused after the query change."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-12, REQ-13]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L42"
+        },
+        {
+          "quote": "REQ-9, REQ-10, REQ-11: filters, order, page size and total untouched.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md#L102"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Trace REQ-10 and REQ-11 to the existing patients.test.ts search and sort tests, or add HMS-4 REQ-10 and REQ-11 tests on data that has a last visit.",
+      "text": "The ut trace drops REQ-10 and REQ-11 (search and sort unchanged), which impl lists as known. The artifact does not say which test guards them after the list query changed."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "tsl records the test counts in checks.json when it runs the verifier (H3)",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
+        },
+        {
+          "quote": "\"name\": \"test\",",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.checks.json#L110"
+        },
+        {
+          "quote": "Tests  74 passed (74)",
+          "ref": "runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/test.log#L47"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Point to the verifier test log for counts, or drop the statement that checks.json holds them.",
+      "text": "The artifact says tsl records test counts in checks.json. checks.json only has a pass status for the test step (report_sha256 null); the counts appear only in verifier/ut/test.log."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "HMS-4 S-1 AC4: shows the hospital-local day as returned when the browser zone is west of UTC",
+          "ref": "runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/test.log#L64"
+        },
+        {
+          "quote": "Every test name starts with HMS-4 and its REQ id (C3)",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Rename it to 'HMS-4 REQ-3: ...' so the name leads with the requirement ID.",
+      "text": "The web test kept from impl is named 'HMS-4 S-1 AC4', not with a REQ ID. This breaks the artifact's own C3 rule that every test name starts with its ID (here REQ-3)."
+    }
+  ],
+  "package_sha256": "62a84db947fbbc490e660579be5f29697407459cc417cae111bd3951a2014f87",
+  "questions": [],
+  "recorded_at": "2026-10-28T06:13:57Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover the changed repo subquery, the service localDay mapping and the web column. REQ-10 and REQ-11 (search and sort unchanged) are not traced, although impl says it covers them.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check observable values: the day for each zone, null, '-', column order and the absence of the raw instant and medical history. The S-1 AC4 web test is carried over from impl, not new.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Many edge cases: no appointments, only Scheduled, later Cancelled or No-show, closing order vs start order, two zones. GET /api/patients changed but has no error-path test.",
+      "score": 3
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest/Supertest on a throwaway PostgreSQL for the API and Vitest/jsdom/Testing Library for web, with test names led by IDs. Test files are in api/test and web/src/__tests__ as the strategy says.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "The artifact states no invented numbers and says coverage is unavailable. It says checks.json records test counts, but checks.json has none; the counts are only in the verifier test.log.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.95,
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

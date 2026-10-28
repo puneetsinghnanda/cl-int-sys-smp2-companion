@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "GET /api/patients list items gain last_visit_date",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md#L77"
+        },
+        {
+          "quote": "with the normal path and the edge paths for each changed function",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "GET /api/patients changed (new last_visit_date), but every listed API test is a normal or edge path. No error-path test exists, e.g. a bad page or page_size, or an unauthenticated request still being refused after the query change."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
