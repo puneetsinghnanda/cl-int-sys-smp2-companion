@@ -1,0 +1,253 @@
+{
+  "artifact_sha256": "b39210ac1eaaed5cce2d07a4b2ab40e83b00146e91dfdd8d36f5de27dfb55d94",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "routes call `requirePermission`",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the\npatient's own page.",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:PATCH:/api/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#http:PATCH:/api/patients/:id"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "adds `visit_summary: { completed, no_show }`",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#overview"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A new count query in `AppointmentRepo` counts the patient's\nappointments with status `COMPLETED` and `NO_SHOW`",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#overview"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        },
+        {
+          "quote": "Existing control: `identify` and `requirePermission` on every route (C1, C2). In the MVP every request acts as `staff` (C3)",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#threats"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Mark T-1/T-5 as accepted residual risk until sign-in lands, and add a non-blocking question asking the stage approver to accept that risk explicitly.",
+      "text": "T-1 and T-5 call identify/requirePermission an existing mitigation. C3, cited by the same artifact, says every request is staff and every permission is granted, so in the MVP there is no effective access control. This is accepted residual risk, not a mitigation."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "No new route is added, so the new data inherits the patient read permission (C7).",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#threats"
+        },
+        {
+          "quote": "One patient is read through `/api/patients/:id` with GET.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#claims"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite the route source or the permission name declared on GET /api/patients/:id, or drop the citation.",
+      "text": "T-6 cites C7 for 'the new data inherits the patient read permission'. C7 only says a GET route exists and says nothing about which permission it declares."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The edit form sends the read-only `visit_summary` back in the PATCH body (C8).",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#threats"
+        },
+        {
+          "quote": "reads the same response through `fromPatient` and ignores the new field",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#components"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Phrase T-3 as a possible echo (\"could send\") rather than a fact, and keep the fromPatient and PATCH-reject control.",
+      "text": "T-3 states the edit form sends visit_summary back in the PATCH body and cites C8. C8 only establishes that PATCH exists, and the design says PatientFormPage ignores the new field."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "REQ-4, REQ-5, REQ-6: the status filter and zero defaults sit in the count query, covered by T-10 and T-11.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#known"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "State that REQ-4/5/6 touch the AppointmentRepo query, whose security threats are T-10/T-11, rather than saying the threats cover them.",
+      "text": "Known maps REQ-4/5/6 (status filter, zero defaults) to T-10 and T-11, which are SQL-injection and over-return threats. They do not cover the functional filter or zero-default behaviour."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "the counts travel as `visit_summary` on the patient response (design assumption)",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#assumed"
+        },
+        {
+          "quote": "Q-02 (non-blocking, product owner): all-time counts or a recent period? Default: all time.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#open-questions"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Reference design Q-01 and Q-02 under Assumed and note which threats need revisiting if either answer changes.",
+      "text": "Assumed REQ-2/3/9 rest on design open questions Q-01 (visit_summary shape) and Q-02 (period). The threat model neither references them nor flags that T-3/T-4/T-7/T-8 change if those answers differ."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "T-2 PatientDetailPage — tampering: values rendered as markup.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/threat.md#threats"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Order threats by risk (for example T-7, T-3, T-1/T-5 first), or add a risk rating to each threat.",
+      "text": "Threats are listed in component order, not by risk. The rubric's top clarity score asks for risk ordering."
+    }
+  ],
+  "package_sha256": "4321fddc607912fddc648e6a011de7a7f4b7c3e79dcf27638225645f28c00ce9",
+  "questions": [
+    {
+      "ask_role": "stage_approver",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Until sign-in replaces identify/requirePermission, any caller can read patient pages and the new visit counts. Do you accept this as residual risk for HMS-5?"
+    }
+  ],
+  "recorded_at": "2026-10-28T09:16:37Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All seven design components have at least one threat. Personal-data handlers (PatientDetailPage, PatientService, PatientRepo, AppointmentRepo) are all covered.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats are specific to the visit_summary change (echo in PATCH, wrong-id join, aggregate cost). T-2 (markup injection of integers) and T-9 are fairly generic.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Mitigations are either cited existing controls or clearly labelled new controls. T-1, T-5 and T-6 rely on identity checks that C3 says grant everything in the MVP, and a few cites (C7 in T-6, C8 in T-3) do not prove the stated point.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "The index gap is asked as Q-01. The MVP no-op auth residual risk is presented as mitigated, not asked. The design's open Q-01/Q-02, which assumed REQ-2/3/9 depend on, are not carried over.",
+      "score": 3
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Readable, consistent component-by-component layout with a matching prose summary. Threats are ordered by component, not by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}
