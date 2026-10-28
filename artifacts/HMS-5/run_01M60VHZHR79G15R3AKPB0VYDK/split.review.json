@@ -1,0 +1,146 @@
+{
+  "artifact_sha256": "70a37e2163c9ffeee2153255649beda54907325e5980a65864572ae50d997b4a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place, with a reason",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "the Scheduled appointments are counted in neither the Completed nor the No-show number",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#L77"
+        },
+        {
+          "quote": "then the Scheduled appointments are counted in neither number.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#L110"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Make the body AC text exactly match the front matter acceptance_criteria text.",
+      "text": "Some AC wording in the front matter differs from the markdown body. S-2 AC1/AC2 say 'neither the Completed nor the No-show number' in the front matter but 'neither number' in the body. S-3 ACs say 'as before the change' in the front matter but 'as before' in the body."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "then every section other than the new Visit summary is shown as before the change.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#L95"
+        },
+        {
+          "quote": "the ticket's reference `PAT-3` (the PRD section describing it) is not among the inputs",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md#L109"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Phrase AC3 as a before/after comparison of the rendered page apart from the Visit summary, or list the sections once Q-02 is answered.",
+      "text": "S-3 AC3 checks 'every section other than the new Visit summary' but does not list those sections. The page definition (PRD PAT-3) is not among the inputs, so the regression scope is open-ended."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Given a patient with Completed and No-show appointments on dates far apart in the past (assumed REQ-9)",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#L71"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "text": "S-1 AC4 uses the vague fixture 'dates far apart in the past'. It is checkable, but a concrete precondition, such as appointments older than any plausible window, would make the test setup clear."
+    }
+  ],
+  "package_sha256": "45b7e894db9fa256ed708a6123ccd8980e193d6f9ff7cbfffd5ffe0055070b41",
+  "questions": [],
+  "recorded_at": "2026-10-28T09:03:59Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "Stories trace every known REQ (REQ-1 to REQ-8) and the assumed REQ-9. S-1 covers REQ-1/2/3/9, S-2 covers REQ-4/5/6 and S-3 covers REQ-7/8.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Each story has one outcome: showing the counts, the exclusion and zero rules, and no regression. S-2 depends on S-1's Visit summary existing, so the stories are not fully independent.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "Every AC uses Given/When/Then and can be checked. S-3 AC3 ('every section other than...') and S-1 AC4 ('dates far apart') are loosely bounded but can still be checked.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The only literal value is 0, and it comes from REQ-6. The no-date-window rule is marked as assumed REQ-9 and backed by Q-03.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Status terms match the glossary and read clearly. The AC wording in the front matter and the body differs slightly for S-2 AC1/AC2 and S-3 AC1-AC3.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
