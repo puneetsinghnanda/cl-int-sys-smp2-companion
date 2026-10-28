@@ -1,35 +1,19 @@
 {
   "artifact_path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/ut.md",
-  "artifact_sha256": "82b325a6d4e64430304b86d0bab852d64d7f467d40303c40e298f8dd71f566c7",
-  "attempt": 1,
-  "band": "Low",
+  "artifact_sha256": "6482f9495c5658134818e8fb56890fe78470ca708b928a5cabc58ebe505a929e",
+  "attempt": 2,
+  "band": "Medium",
   "caps": [],
-  "checks_sha256": "0393b7e7e5d140f7e618b0620604d54ce0e5ed70b873e6caac83632fe05cdf6b",
+  "checks_sha256": "1ce7b4fbec63adf18f8e19143d3036219d6fd6900d4e10ec1ab8078dd8371e6f",
   "claims": {
     "total": 6,
     "verified": 6
   },
-  "decided_at": "2026-10-28T09:34:03Z",
+  "decided_at": "2026-10-28T09:49:22Z",
   "decided_by": "tsl@0.1.3",
   "findings_dropped": [
     {
       "id": "F-1",
-      "reason": "path not found"
-    },
-    {
-      "id": "F-2",
-      "reason": "path not found"
-    },
-    {
-      "id": "F-3",
-      "reason": "path not found"
-    },
-    {
-      "id": "F-4",
-      "reason": "path not found"
-    },
-    {
-      "id": "F-5",
       "reason": "path not found"
     }
   ],
@@ -48,7 +32,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "ESCALATE",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -56,31 +40,31 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "57a3c6f0d4e7639bb104cb8dc60f87d9ee83b6a1937cdcd14556f11311e188a3",
   "product_changes": [
     {
       "base_sha": "fadc14a15f0bca3eabb25f89c53c43f5a8797246",
-      "diff_sha256": "7167f160892eea5670d15a19c1ee17bf5e7a7c599e9fe55e7eae2162ab314cf9",
+      "diff_sha256": "f6430bb69c786924325c360d564d368d3167d588c81e12b721f6a5bf195f3b3c",
       "repo": "sample-system",
-      "tree_sha": "14ff7f40304cc050061bc0edf2eabfd2a555f24c"
+      "tree_sha": "b451b63ced3846ca885f72ff3dc835dc80bde818"
     }
   ],
-  "review_sha256": "8f8f7dacbff8f56d4b678b545e16e46967d70b96aafb97bc2498047eae594fb0",
+  "review_sha256": "299a6eac50285139ad91462f0e88c4ebfa50c864d2dd4e56249c7006b73492f7",
   "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.5455,
+    "S1": 0.8571,
     "S2": 1.0,
-    "S3": 4.25,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
       "files": 2,
-      "lines": 150,
+      "lines": 194,
       "sensitive": false
     }
   },
-  "signature": "e-nNetT5QnDcBZpYcMwcl031sridI4pKvfOGq_4v_OR_xEZHInejJzSBn-q1LNAuFvql9zgnptpidEKqEN2EAQ",
+  "signature": "sHQIwUsAqjLoL79khGNfmBj8DeeWFZbv5sw9JqBoC1WB36aSW1RzsIAE2edswkouml70JMRCzClmk-HzbT_IAA",
   "skill": "unit-test@1.0.1",
   "step": "ut",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
