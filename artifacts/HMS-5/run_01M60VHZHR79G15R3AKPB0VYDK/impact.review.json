@@ -1,0 +1,243 @@
+{
+  "artifact_sha256": "81af31e5c9b85dcfbe566237f3187a3e616ccaff7c1b523b1981babdc587393d",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/App.tsx\"",
+          "ref": "context/generated/api-inventory.json#ui:/patients/:id"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and\ntransactions, repositories hold the SQL",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/appointments\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.status\"",
+          "ref": "context/generated/db-schema.json#table:appointment"
+        },
+        {
+          "quote": "\"id\": \"column:appointment.patient_id\"",
+          "ref": "context/generated/db-schema.json#table:appointment"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the\npatient's own page.",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/repositories/appointmentRepo.ts\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:POST:/api/appointments/:id/complete\"",
+          "ref": "context/generated/api-inventory.json#http:POST:/api/appointments/:id/complete"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:POST:/api/appointments/:id/no-show\"",
+          "ref": "context/generated/api-inventory.json#http:POST:/api/appointments/:id/no-show"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/patients/:id/edit\"",
+          "ref": "context/generated/api-inventory.json#ui:/patients/:id/edit"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientFormPage.tsx:fromPatient\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientFormPage.tsx:fromPatient"
+        },
+        {
+          "quote": "the response gains the two counts. Existing fields stay as they are (REQ-8).",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "List the other callers of GET /api/patients/:id (for example PatientFormPage) as existing readers and state that adding fields does not affect them.",
+      "text": "GET /api/patients/:id is marked changed, but other readers of that response are not considered. The edit route /patients/:id/edit and PatientFormPage (fromPatient) likely read the same payload and would get the new fields."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/routes/patients.ts:patientsRouter\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        },
+        {
+          "quote": "They would sit in the repository layer of module:sample-system:api (C4, C10)",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impact.md#assumed"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite patientsRouter, PatientService and PatientRepo under module:sample-system:api as the read path that returns the counts.",
+      "text": "The assumed API change goes through the patients router, service and repo, but only AppointmentRepo is cited. patientsRouter, PatientService and PatientRepo exist in the facts and would need to be wired to return the counts."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "REQ-7: the appointments list on that page stays as it is. http:GET:/api/appointments is existing (C6).",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impact.md#known"
+        },
+        {
+          "quote": "The facts do not show which call `PatientDetailPage` uses to load appointments.",
+          "ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impact.md#unknown"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Base REQ-7 on the web page staying unchanged, not on GET /api/appointments. Alternatively, say that GET /api/appointments is only a possible source of the list.",
+      "text": "REQ-7 is marked known by citing GET /api/appointments (C6), but the artifact also says the facts do not show which call the page uses to load appointments. That makes the known status weaker than stated."
+    }
+  ],
+  "package_sha256": "0e256bf70e8cf361ab5249494e24e234978e492381b588f100e0d6cb67d66ed3",
+  "questions": [],
+  "recorded_at": "2026-10-28T09:09:08Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Lists web, api, db, the patient and appointment APIs and both tables. It does not name the patient route, service and repo, which would change on the assumed GET /api/patients/:id path.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id is in the generated facts and cited. All 13 claims check out against the facts.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers the complete and no-show writers and the missing background jobs. It does not consider other readers of the GET /api/patients/:id response, such as the patient edit page.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "The API change is marked assumed and tied to Q-01. REQ-7 is marked known by citing GET /api/appointments, yet the artifact also says the facts do not show which call loads the list.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Clear summary with risks up front and consistent sections. The impacted list is ordered by element type, not by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
