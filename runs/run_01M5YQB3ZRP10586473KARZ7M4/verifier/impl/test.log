@@ -1,0 +1,71 @@
+
+> hospital-management@0.1.0 test
+> npm test --workspaces --if-present
+
+
+> @hms/db@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/db
+
+ ✓ test/seed.test.ts (8 tests) 7269ms
+   ✓ seed generator (NFR-7) > is deterministic for the same seed and anchor 2912ms
+   ✓ seed generator (NFR-7) > changes when the seed changes 1328ms
+   ✓ seed generator (NFR-7) > uses invented identities only 403ms
+   ✓ seed generator (NFR-7) > never overlaps appointments for a doctor or a patient 487ms
+   ✓ seed generator (NFR-7) > has past outcomes and future bookings around the anchor 318ms
+   ✓ migrations and seed against PostgreSQL > loads the seed into an empty database, and only when asked to reset again 1384ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  05:30:40
+   Duration  11.24s (transform 213ms, setup 0ms, collect 192ms, tests 7.27s, environment 0ms, prepare 306ms)
+
+
+> @hms/api@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/api
+
+ ✓ test/dashboard.test.ts (5 tests) 5410ms
+ ✓ test/reference.test.ts (5 tests) 5410ms
+ ✓ test/doctors.test.ts (9 tests) 5409ms
+ ✓ test/patients.test.ts (9 tests) 5409ms
+   ✓ patient management (PRD §4.2) > PAT-3: shows details, history and appointments, upcoming first 408ms
+ ✓ test/appointments.test.ts (11 tests) 5411ms
+   ✓ appointment management (PRD §4.3) > APT-1: books one of the free slots shown for the day 589ms
+   ✓ appointment management (PRD §4.3) > APT-2: refuses times off the slot grid, outside availability, in the past or already taken 602ms
+   ✓ appointment management (PRD §4.3) > APT-4: two simultaneous bookings of one slot leave exactly one appointment 696ms
+ ✓ test/dashboard-no-shows.test.ts (6 tests) 5489ms
+ ✓ test/patients-next-appointment.test.ts (10 tests) 6592ms
+   ✓ patient list next appointment (HMS-1) > HMS-1 REQ-2: shows the earliest Scheduled appointment with its start and doctor name 304ms
+ ✓ test/lib.test.ts (8 tests) 86ms
+ ✓ test/auth.test.ts (3 tests) 208ms
+
+ Test Files  9 passed (9)
+      Tests  66 passed (66)
+   Start at  05:30:52
+   Duration  12.79s (transform 1.54s, setup 0ms, collect 15.14s, tests 39.42s, environment 5ms, prepare 7.32s)
+
+
+> @hms/web@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/web
+
+ ✓ src/__tests__/format.test.ts (2 tests) 107ms
+ ✓ src/__tests__/SlotPicker.test.tsx (2 tests) 494ms
+   ✓ SlotPicker (APT-1) > APT-1: only free slots can be chosen 486ms
+ ✓ src/__tests__/PatientsPage.test.tsx (3 tests) 609ms
+   ✓ PatientsPage last visit column (HMS-4) > HMS-4 S-1 AC4: shows the hospital-local day as returned when the browser zone is west of UTC 438ms
+ ✓ src/__tests__/DashboardPage.test.tsx (4 tests) 723ms
+   ✓ DashboardPage (PRD §4.4) > DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts 489ms
+
+ Test Files  4 passed (4)
+      Tests  11 passed (11)
+   Start at  05:31:05
+   Duration  6.03s (transform 1.16s, setup 2.77s, collect 1.74s, tests 1.93s, environment 9.25s, prepare 1.74s)
+
