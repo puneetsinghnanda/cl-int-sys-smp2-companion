@@ -1,0 +1,222 @@
+{
+  "artifact_sha256": "105ee4e7107e21a24c0cf13bd7897172c9da4935969052fd9c44d709fad32d50",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient row holds identity, contact details and the basic medical history",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{name: \"appointment_patient_start_idx index\", module: module:sample-system:db, change: existing}",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L113"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "PatientsPage Last visit column (text render, no Date parsing)",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L111"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "T-7 · patients router · elevation of privilege: every permission granted in the MVP (C2)",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.md#L95"
+        },
+        {
+          "quote": "Clear and ordered by risk",
+          "ref": "C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L45"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Order the Threats section by risk, with T-1 and T-7 first, or add a risk rating to each threat.",
+      "text": "Threats are listed by component, not by risk. T-7 (every permission granted, all patients' last-visit dates readable) comes after lower-risk items such as T-4 repudiation and T-6."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "A wrong or missing HOSPITAL_TZ value would shift every Last visit date by a day near midnight.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.md#L70"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Reword T-6 as an adversary changing the config or deploy environment, or mark it as a non-security correctness risk.",
+      "text": "T-6 labels a wrong or missing HOSPITAL_TZ value as tampering. Its own mitigation says no request supplies the value, so this is a configuration or correctness risk, not tampering by an adversary."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Existing rule cited by the design: logs never carry contact details or medical history (design C14)",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.md#L69"
+        },
+        {
+          "quote": "cites: [\"context/conventions.md#logging-and-data\"]",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L69"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add context/conventions.md#logging-and-data and db-schema.json#index:appointment_patient_start_idx as inputs and cite them in their own claims.",
+      "text": "T-5 and T-3 rest on design claims C14 (logging rule, conventions.md) and C13 (db-schema index). Those sources are not inputs of this threat model and are not re-cited as its own claims."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "who can reach the API in the deployed environment is not stated in the inputs",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.md#L54"
+        },
+        {
+          "quote": "Render builds all workspaces, then runs migrate, seed-if-empty and the API, which also serves",
+          "ref": "context/architecture.md#deployment-shape"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Cite architecture#deployment-shape in U-1 and Q-01, and say whether the Render service is publicly reachable.",
+      "text": "U-1 says API reachability is not stated in the inputs. Architecture#deployment-shape (an input) says the Render-hosted API also serves the web app, which suggests it is reachable over the network. The gap could be framed more sharply."
+    }
+  ],
+  "package_sha256": "a78f57738a66bd80f1ecc0e65ee9c53cfdd6bcff71f0c046cc6f9236ff0574da",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-4",
+      "id": "Q-1",
+      "text": "Is the Render-hosted API publicly reachable on the internet while every permission is granted to actor staff? If so, is it acceptable to ship last-visit dates for all patients on GET /api/patients without a new permission check?"
+    }
+  ],
+  "recorded_at": "2026-10-28T04:22:05Z",
+  "recorded_by": "tsl@0.1.3",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e",
+    "skill": "review",
+    "version": "0.1.3"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All seven design components (design.md L107-L113) appear in the threat list, each with at least one threat. That includes the PII-bearing PatientRepo list query and the patients router.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats fit their component: medical-history leak, a SQL subquery next to search input, a per-row max, raw HTML. T-6 calls a misconfiguration tampering, and T-8 spoofing is generic MVP background that this change does not alter.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Mitigations are concrete and labelled existing or new: explicit columns plus a test, bound parameters, a query-plan check, a text node. T-7 adds no control and defers to Q-01. T-5 relies on a design claim whose source is not among this artifact's inputs.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "U-1 and Q-01 state the open point about who can reach the API. The artifact does not use architecture#deployment-shape, which shows the API is hosted on Render, when it frames that gap.",
+      "score": 4
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Readable, with a consistent T-n, component, STRIDE, mitigation layout. Threats are grouped by component, not ordered by risk: the highest-exposure item, T-7, comes after lower-risk items.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}

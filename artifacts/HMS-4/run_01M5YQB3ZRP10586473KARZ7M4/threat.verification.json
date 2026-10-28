@@ -1,0 +1,72 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.md",
+  "artifact_sha256": "105ee4e7107e21a24c0cf13bd7897172c9da4935969052fd9c44d709fad32d50",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "e1d5406842f577e2242befde2760ee87cc27f3b2912664deaec298a5ec3dcd53",
+  "claims": {
+    "total": 10,
+    "verified": 10
+  },
+  "decided_at": "2026-10-28T04:22:41Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "bad citation format C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md",
+      "sha256": "9c01a9c1ddd65536f8dc4ae53ecaadecbec0ffc9b6b47d6e5d21557a93acb30a",
+      "verification_sha256": "239643569aa3bc52c17e373a158f5aa85069dd7db9c2e350116360e7fa997d7d"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "3f59ca91e382e0bb6117d66a307766b99a0e2c158db2b148be15a26c11100e37",
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9286,
+    "S2": 1.0,
+    "S3": 4.3,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "K2Rg3QYlnTP0okwglE8IwxUnyBbL5ZdAq69nEzsqnvP7aRlF34B7XNs59rXY6w4fzbT6caabRoJyL0ppd8QuCA",
+  "skill": "threat-model@1.0.1",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

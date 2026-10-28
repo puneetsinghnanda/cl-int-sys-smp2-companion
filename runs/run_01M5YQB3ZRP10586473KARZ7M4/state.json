@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-28T04:18:10Z",
+  "heartbeat_at": "2026-10-28T04:22:41Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 26,
+  "rev": 29,
   "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -280,7 +280,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.md",
+          "artifact_sha256": "105ee4e7107e21a24c0cf13bd7897172c9da4935969052fd9c44d709fad32d50",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-28T04:22:41Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "9c01a9c1ddd65536f8dc4ae53ecaadecbec0ffc9b6b47d6e5d21557a93acb30a",
+              "step": "design"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/threat.verification.json",
+          "skill": "threat-model@1.0.1",
+          "skill_started_at": "2026-10-28T04:18:25Z",
+          "started_at": "2026-10-28T04:18:21Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -289,7 +312,7 @@
       },
       "id": "threat",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -348,7 +371,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-10-28T04:18:10Z",
+  "updated_at": "2026-10-28T04:22:41Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
