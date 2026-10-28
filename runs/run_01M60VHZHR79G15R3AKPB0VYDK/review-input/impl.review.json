@@ -1,0 +1,65 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "0137364324d03689efa60e79f71467d9f328f737017200b453c89dfae4bf98ec",
+  "package_sha256": "f64c4d354b1eba362ff7be248fbf227523a7b5f71e0f43e038ec2bce300d6bee",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "All three changed components from the design are implemented as specified: the AppointmentRepo count query, PatientService.get adding visit_summary, and the PatientDetailPage block above Appointments. No route, migration or endpoint was added."},
+    {"id": "IM-R2", "score": 4, "reason": "SQL is in repositories, rules are in services, the query is parameterised and nothing new is logged. However, the snake_case visit_summary/no_show sits inside a camelCase detail response. Q-01 raises this."},
+    {"id": "IM-R3", "score": 4, "reason": "6 files, +36/-3 lines, no sensitive paths. One type-only edit to PatientRepo, which the design marks as existing/not touched. It is justified, but it goes beyond the design's stated scope."},
+    {"id": "IM-R4", "score": 5, "reason": "count(*) FILTER always returns one row, with a ?? 0 fallback and Number() coercion of the bigint strings. A missing patient still returns 404 before the count runs. React escapes the counts."},
+    {"id": "IM-R5", "score": 5, "reason": "The summary and the Changes list match the checked-out code: the query text, its placement between Medical history and Appointments, the Omit&lt;&gt; type edit, fromPatient unchanged, and no new logging."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "PatientRepo is edited (get return type now Omit&lt;..., 'visit_summary'&gt;), but the design states PatientRepo is not touched. The edit is type-only and explained, but it departs from the design's component list.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#known", "quote": "REQ-8: `PatientRepo` and the medical history rendering are not touched."},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impl.md#changes", "quote": "`get` now returns `Omit&lt;PatientDetail, 'appointments' | 'visit_summary'&gt;`, so it type-checks after the new field."}
+      ],
+      "suggested_fix": "Leave as is, or update the design trace to note PatientRepo as 'existing, type-only edit'."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "Naming: visit_summary/no_show are snake_case inside the camelCase patient detail response. The design's basis (C2) cites the list convention only, so the key style is mixed. This is correctly raised as Q-01.",
+      "cites": [
+        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impl.md#open-questions", "quote": "or rename to camelCase to match `medicalHistory`? Default: keep the design."}
+      ]
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical\nhistory"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage", "quote": "sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientFormPage.tsx:fromPatient", "quote": "sym:sample-system:web/src/pages/PatientFormPage.tsx:fromPatient"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#overview", "quote": "adds `visit_summary: { completed, no_show }`"}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "Keep visit_summary { completed, no_show } in snake_case on GET /api/patients/:id, or rename to visitSummary { completed, noShow } to match the camelCase detail fields before the contract ships?",
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-2"
+    }
+  ]
+}

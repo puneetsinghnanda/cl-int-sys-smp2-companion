@@ -1,0 +1,67 @@
+
+> hospital-management@0.1.0 test
+> npm test --workspaces --if-present
+
+
+> @hms/db@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/db
+
+ ✓ test/seed.test.ts (8 tests) 4488ms
+   ✓ seed generator (NFR-7) > is deterministic for the same seed and anchor 1652ms
+   ✓ seed generator (NFR-7) > changes when the seed changes 1098ms
+   ✓ seed generator (NFR-7) > uses invented identities only 340ms
+   ✓ seed generator (NFR-7) > never overlaps appointments for a doctor or a patient 389ms
+   ✓ migrations and seed against PostgreSQL > loads the seed into an empty database, and only when asked to reset again 628ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  09:22:21
+   Duration  7.65s (transform 156ms, setup 0ms, collect 113ms, tests 4.49s, environment 0ms, prepare 180ms)
+
+
+> @hms/api@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/api
+
+ ✓ test/dashboard-no-shows.test.ts (6 tests) 2404ms
+   ✓ dashboard No-shows (HMS-3) > HMS-3 REQ-6/REQ-7: the tile’s No-show list for the period holds exactly the counted appointments 315ms
+ ✓ test/reference.test.ts (5 tests) 2404ms
+ ✓ test/dashboard.test.ts (5 tests) 2409ms
+ ✓ test/doctors.test.ts (9 tests) 2404ms
+   ✓ doctor management (PRD §4.1) > DOC-3: shows details, availability and upcoming appointments 377ms
+ ✓ test/patients.test.ts (9 tests) 2471ms
+ ✓ test/appointments.test.ts (11 tests) 3073ms
+ ✓ test/patients-next-appointment.test.ts (10 tests) 3607ms
+ ✓ test/lib.test.ts (8 tests) 31ms
+ ✓ test/auth.test.ts (3 tests) 179ms
+
+ Test Files  9 passed (9)
+      Tests  66 passed (66)
+   Start at  09:22:29
+   Duration  8.73s (transform 1.36s, setup 0ms, collect 12.74s, tests 18.98s, environment 4ms, prepare 5.92s)
+
+
+> @hms/web@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /cache/w/web
+
+ ✓ src/__tests__/format.test.ts (2 tests) 96ms
+ ✓ src/__tests__/SlotPicker.test.tsx (2 tests) 497ms
+   ✓ SlotPicker (APT-1) > APT-1: only free slots can be chosen 484ms
+ ✓ src/__tests__/PatientsPage.test.tsx (2 tests) 770ms
+   ✓ PatientsPage next appointment column (HMS-2) > HMS-2: shows "-" when the patient has no upcoming Scheduled appointment 594ms
+ ✓ src/__tests__/DashboardPage.test.tsx (4 tests) 1024ms
+   ✓ DashboardPage (PRD §4.4) > DSH-1..6 tiles show the counts and DSH-8 each links to the list it counts 696ms
+
+ Test Files  4 passed (4)
+      Tests  10 passed (10)
+   Start at  09:22:38
+   Duration  5.95s (transform 972ms, setup 3.54s, collect 1.51s, tests 2.39s, environment 8.01s, prepare 1.85s)
+

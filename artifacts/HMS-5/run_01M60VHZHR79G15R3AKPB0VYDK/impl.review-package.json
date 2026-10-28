@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impl.md",
+  "artifact_sha256": "0137364324d03689efa60e79f71467d9f328f737017200b453c89dfae4bf98ec",
+  "attempt": 1,
+  "budget_tokens": 45000,
+  "checks_sha256": "1aae6c9af545c7c5ff8080358914160588588724a832982aa001cf78592931c7",
+  "context_sections": [
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "design",
+      "path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    }
+  ],
+  "package_sha256": "f64c4d354b1eba362ff7be248fbf227523a7b5f71e0f43e038ec2bce300d6bee",
+  "prepared_at": "2026-10-28T09:24:43Z",
+  "prepared_by": "tsl@0.1.3",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "IM-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "IM-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R4",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/implement/rubric.md",
+    "sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d"
+  },
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "schema": "review-package.v1",
+  "skill": "implement@1.0.1",
+  "step": "impl",
+  "truncated": false
+}
