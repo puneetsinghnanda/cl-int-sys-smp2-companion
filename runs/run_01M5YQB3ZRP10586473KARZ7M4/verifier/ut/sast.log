@@ -9,7 +9,7 @@ More information: https://semgrep.dev/docs/metrics
 ┌─────────────┐
 │ Scan Status │
 └─────────────┘
-  Scanning 274 files tracked by git with 1074 Code rules:
+  Scanning 282 files tracked by git with 1074 Code rules:
                                                                                                                         
   Language      Rules   Files          Origin      Rules                                                                
  ─────────────────────────────        ───────────────────                                                               

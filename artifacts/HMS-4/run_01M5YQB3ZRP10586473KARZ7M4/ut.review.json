@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "7ef6f42cb3a4c571d34a01f0e9e228c873a3b6e58885375735d236d3d5773182",
-  "attempt": 1,
+  "artifact_sha256": "9f66cbacca74de82e349cb5ee6c5acc851677fd18c7ecebb32e0a4f4c519c779",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -15,7 +15,7 @@
     {
       "cites": [
         {
-          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "quote": "Vitest with jsdom and Testing Library.",
           "ref": "context/test-strategy.md#layers"
         }
       ],
@@ -27,6 +27,10 @@
         {
           "quote": "Every PRD requirement has at least one test whose name starts with its ID",
           "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "HMS-4 REQ-3 (S-1 AC4): shows the hospital-local day as returned",
+          "ref": "runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/test.log#L64"
         }
       ],
       "claim_id": "C3",
@@ -51,85 +55,44 @@
       ],
       "claim_id": "C5",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
     }
   ],
   "findings": [
     {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "GET /api/patients list items gain last_visit_date",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md#L77"
-        },
-        {
-          "quote": "with the normal path and the edge paths for each changed function",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add at least one error-path test for GET /api/patients, e.g. an invalid page parameter or a missing auth token, and check that the response is unchanged by the new subquery.",
-      "text": "GET /api/patients changed (new last_visit_date), but every listed API test is a normal or edge path. No error-path test exists, e.g. a bad page or page_size, or an unauthenticated request still being refused after the query change."
-    },
-    {
       "category": "traceability",
       "cites": [
         {
-          "quote": "trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-12, REQ-13]",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L42"
+          "quote": "REQ-1, REQ-8, REQ-12: the web column, its \"-\" placeholder and the column order are tested.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L97"
         },
         {
-          "quote": "REQ-9, REQ-10, REQ-11: filters, order, page size and total untouched.",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/impl.md#L102"
+          "quote": "AC4: The Next appointment column shows the same values as before the change.",
+          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/split.md#L135"
+        },
+        {
+          "quote": "test/patients-next-appointment.test.ts (10 tests)",
+          "ref": "runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/test.log#L40"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Trace REQ-10 and REQ-11 to the existing patients.test.ts search and sort tests, or add HMS-4 REQ-10 and REQ-11 tests on data that has a last visit.",
-      "text": "The ut trace drops REQ-10 and REQ-11 (search and sort unchanged), which impl lists as known. The artifact does not say which test guards them after the list query changed."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "tsl records the test counts in checks.json when it runs the verifier (H3)",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
-        },
-        {
-          "quote": "\"name\": \"test\",",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.checks.json#L110"
-        },
-        {
-          "quote": "Tests  74 passed (74)",
-          "ref": "runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/test.log#L47"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Point to the verifier test log for counts, or drop the statement that checks.json holds them.",
-      "text": "The artifact says tsl records test counts in checks.json. checks.json only has a pass status for the test step (report_sha256 null); the counts appear only in verifier/ut/test.log."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "HMS-4 S-1 AC4: shows the hospital-local day as returned when the browser zone is west of UTC",
-          "ref": "runs/run_01M5YQB3ZRP10586473KARZ7M4/verifier/ut/test.log#L64"
-        },
-        {
-          "quote": "Every test name starts with HMS-4 and its REQ id (C3)",
-          "ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/ut.md#L61"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Rename it to 'HMS-4 REQ-3: ...' so the name leads with the requirement ID.",
-      "text": "The web test kept from impl is named 'HMS-4 S-1 AC4', not with a REQ ID. This breaks the artifact's own C3 rule that every test name starts with its ID (here REQ-3)."
+      "suggested_fix": "Under Known, say that REQ-12 values are guarded by the passing patients-next-appointment.test.ts (HMS-1) suite.",
+      "text": "REQ-12 is traced only to a column-order test. S-3 AC4 needs the Next appointment values to stay the same, and the artifact does not name the existing HMS-1 next-appointment tests that guard those values."
     }
   ],
-  "package_sha256": "62a84db947fbbc490e660579be5f29697407459cc417cae111bd3951a2014f87",
+  "package_sha256": "8c92269b35bc05814ca76aba58b1e68f0c82dff6845077366ad7adf0864ec91f",
   "questions": [],
-  "recorded_at": "2026-10-28T06:13:57Z",
+  "recorded_at": "2026-10-28T06:20:35Z",
   "recorded_by": "tsl@0.1.3",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -140,31 +103,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Tests cover the changed repo subquery, the service localDay mapping and the web column. REQ-10 and REQ-11 (search and sort unchanged) are not traced, although impl says it covers them.",
-      "score": 4
+      "reason": "The repo subquery, the service day mapping and the web column are all tested. REQ-10 and REQ-11 now have HMS-4 tests on data that has a last visit. The trace covers REQ-1 to REQ-13, the same as impl.",
+      "score": 5
     },
     {
       "id": "UT-R2",
-      "reason": "Assertions check observable values: the day for each zone, null, '-', column order and the absence of the raw instant and medical history. The S-1 AC4 web test is carried over from impl, not new.",
-      "score": 4
+      "reason": "Assertions check results you can observe: the day in each zone, null, '-', column order, 400 status with field keys equal to ['status'], an empty page past the end that keeps the total, and no raw instant or medical history.",
+      "score": 5
     },
     {
       "id": "UT-R3",
-      "reason": "Many edge cases: no appointments, only Scheduled, later Cancelled or No-show, closing order vs start order, two zones. GET /api/patients changed but has no error-path test.",
-      "score": 3
+      "reason": "Edge cases: no appointments, only Scheduled, a later Cancelled, No-show or Scheduled appointment, closing order versus start order, two zones. Error paths: invalid page (400) and invalid status filter (400). The F-1 gap is closed.",
+      "score": 5
     },
     {
       "id": "UT-R4",
-      "reason": "Vitest/Supertest on a throwaway PostgreSQL for the API and Vitest/jsdom/Testing Library for web, with test names led by IDs. Test files are in api/test and web/src/__tests__ as the strategy says.",
+      "reason": "API tests use Vitest and Supertest on a throwaway PostgreSQL, in api/test. Web tests use Vitest, jsdom and Testing Library, in web/src/__tests__. Every test name now leads with HMS-4 and a REQ id.",
       "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "The artifact states no invented numbers and says coverage is unavailable. It says checks.json records test counts, but checks.json has none; the counts are only in the verifier test.log.",
-      "score": 4
+      "reason": "The artifact invents no numbers. It points to the verifier test.log for counts and says coverage is not available. The log shows 13 tests in patients-last-visit.test.ts, and all suites pass.",
+      "score": 5
     }
   ],
-  "rubric_score": 3.95,
+  "rubric_score": 5,
   "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
   "schema": "review.v1",
   "status": "ok",
