@@ -31,7 +31,7 @@
       "step": "ut"
     }
   ],
-  "heartbeat_at": "2026-10-28T09:49:23Z",
+  "heartbeat_at": "2026-10-28T09:52:44Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -72,7 +72,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 32,
+  "rev": 35,
   "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -364,7 +364,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/secrev.md",
+          "artifact_sha256": "4939ba659ac4c090eb7622ac71a03d18f1e2e34cad979b01668624dfbbd6b414",
+          "band": "Medium",
+          "cause": "first",
+          "decided_at": "2026-10-28T09:52:44Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "0137364324d03689efa60e79f71467d9f328f737017200b453c89dfae4bf98ec",
+              "step": "impl"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/secrev.verification.json",
+          "skill": "secure-code-review@1.0.1",
+          "skill_started_at": "2026-10-28T09:49:54Z",
+          "started_at": "2026-10-28T09:49:47Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -373,7 +396,7 @@
       },
       "id": "secrev",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -396,7 +419,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-5",
-  "updated_at": "2026-10-28T09:49:23Z",
+  "updated_at": "2026-10-28T09:52:44Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
