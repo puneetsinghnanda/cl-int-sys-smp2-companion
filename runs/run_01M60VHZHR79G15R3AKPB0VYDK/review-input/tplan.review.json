@@ -1,0 +1,77 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "7a486d09436c3dc789af112c4c6b166b9da2b3a5ce4e2037637511de1f925678",
+  "package_sha256": "34ed87e561259d6b9aac1dd22b8bc3672e02e2ac022473236590af6b950aa57d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 4, "reason": "All 12 ACs in split.md have at least one test. One gap: S-1/AC2 says the page shows a non-zero Completed count, but no page-level test renders one. Only the API test TP-2 checks it."},
+    {"id": "TP-R2", "score": 4, "reason": "Integration tests are used for counts and unit tests for rendering, which is mostly the cheapest level. TP-15 is manual where a jsdom unit test could check the sections. TP-13 mixes API and page under the unit level."},
+    {"id": "TP-R3", "score": 5, "reason": "The changed endpoint gets negative tests (TP-16 unknown id, TP-17 read-only field in a PATCH). Zero and one-sided cases (TP-7 to TP-11), isolation (TP-18) and the clock-moved case (TP-4) are also covered."},
+    {"id": "TP-R4", "score": 4, "reason": "Uses Vitest/Supertest/PostgreSQL with a fixed clock and Vitest/jsdom/Testing Library, as the strategy requires. HMS-5 REQ naming matches existing tests. It names the API test file but not the web test file."},
+    {"id": "TP-R5", "score": 4, "reason": "The titles are clear and a tester can run them. Each test maps to an AC, and the Known/Assumed sections map tests to REQs. The web test file location is not stated."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-1/AC2 asks that the page show the Completed count. Only TP-2 checks it, and only at the API. No unit test renders a non-zero Completed count. TP-11 renders a non-zero No-show count only.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md#stories", "quote": "then the Visit summary shows the number of that patient's Completed appointments."},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/tplan.md#tests", "quote": "Page renders 0 Completed next to a non-zero No-show count"}
+      ],
+      "suggested_fix": "Add a unit test that renders the Visit summary with non-zero Completed and No-show counts. Map it to S-1/AC2 and S-1/AC3."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "other",
+      "text": "TP-15 is manual. A Vitest/jsdom unit test of PatientDetailPage could check that each existing section still renders, so the manual level could be lower.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/tplan.md#scope", "quote": "a manual pass is the only way to check every rendered section at once"},
+        {"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}
+      ],
+      "suggested_fix": "Add a unit test that checks each existing section of PatientDetailPage. Keep TP-15 only for the visual look, if it is still wanted."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "TP-13 is labelled unit, but its title asserts both that the API returns medical history and that the page renders it. The API part belongs at the integration level.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/tplan.md#tests", "quote": "Medical history is returned by the API and rendered on the page as before"}
+      ],
+      "suggested_fix": "Split TP-13 into an integration test for the API response and a unit test for the page rendering."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The plan names the API test file but not the web test file for the unit tests TP-1, TP-8, TP-11 and TP-13. Existing web tests live in web/src/__tests__.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/tplan.md#tests", "quote": "it is planned as an addition to `api/test/patients-visit-summary.test.ts`"},
+        {"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx", "quote": "web/src/__tests__/PatientsPage.test.tsx"}
+      ],
+      "suggested_fix": "Name the web test file, for example web/src/__tests__/PatientDetailPage.test.tsx."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "no page is tested end to end in a browser"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#overview", "quote": "adds `visit_summary: { completed, no_show }`"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#overview", "quote": "No new endpoint, table,"}]}
+  ],
+  "questions": []
+}
