@@ -1,0 +1,76 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "8deafa866532fab9ef893732597031376c69447af56a8d73760a0458cf6e701a",
+  "package_sha256": "fb1a8b32e0ba1fab7f19bffe8bf96e9d47198f65f4be308416add26192b538ce",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Uses only existing modules and symbols (PatientDetailPage, PatientService, AppointmentRepo, patientsRouter). It follows the routes/services/repositories layering. No new endpoint, table, migration or infrastructure."},
+    {"id": "DS-R2", "score": 5, "reason": "The coverage map ties S-1 (incl. AC4 no date filter), S-2 (status filter, zero default) and S-3 (no other edits) to named components. Every story and criterion is served."},
+    {"id": "DS-R3", "score": 4, "reason": "Method, path and field shape visit_summary {completed, no_show} are precise. The count types (integer, never null) and the service/repo method signatures are not stated."},
+    {"id": "DS-R4", "score": 4, "reason": "Assumptions are labelled and backed by Q-01/Q-02. Some claims cite context files missing from the inputs list, and the claim that PatientFormPage ignores unknown fields has no citation."},
+    {"id": "DS-R5", "score": 5, "reason": "Explains server-side vs client-side counting, a field on the existing response vs a new endpoint, snake_case naming and the logging impact, each with its cost."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear, consistent structure. Frontmatter and body agree on components, endpoints and status."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claims C1, C2, C3 and C12 cite context/conventions.md, and C13 cites context/data-model.md. Neither file is in the design's declared inputs, so their hashes are not pinned.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#L63", "quote": "cites: [\"context/data-model.md#appointments\"]"},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#L27", "quote": "cites: [\"context/conventions.md#lists\"]"}
+      ],
+      "suggested_fix": "Add context/conventions.md and context/data-model.md with their sha256 to the inputs list."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The design says PatientFormPage ignores unknown fields but gives no citation. If fromPatient spreads the whole response into the PATCH body, visit_summary could be sent back to the API.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#L116", "quote": "including `PatientFormPage` (C10, C11),"},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#L123", "quote": "reads the same response through `fromPatient` and ignores the new field"}
+      ],
+      "suggested_fix": "Cite the fromPatient source lines showing it picks explicit fields, or state that the PATCH validator rejects or strips visit_summary."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The snake_case choice for visit_summary relies on C2, which covers only the list envelope keys (page_size). Nothing cited shows the single-patient response uses snake_case.",
+      "cites": [
+        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md#L118", "quote": "`visit_summary` uses snake_case keys to match the existing response style (C2)."}
+      ],
+      "claim_ref": "C2",
+      "suggested_fix": "Cite the patient response type in web/src/api/client.ts or patientRepo row mapping to show the key style."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id", "quote": "\"id\": \"http:GET:/api/patients/:id\","}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "\"name\": \"patientsRouter\","}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "\"name\": \"PatientService\","}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "\"name\": \"AppointmentRepo\","}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage", "quote": "\"name\": \"PatientDetailPage\","}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientFormPage.tsx:fromPatient", "quote": "\"name\": \"fromPatient\","}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/patients/:id/edit", "quote": "\"path\": \"/patients/:id/edit\","}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,"}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/design.md",
+  "artifact_sha256": "8deafa866532fab9ef893732597031376c69447af56a8d73760a0458cf6e701a",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "fac74705cc4d66b826c5a74eb585c62f358b01c4b4dd58d3eb40ec90c64fe55f",
+  "claims": {
+    "total": 13,
+    "verified": 11
+  },
+  "decided_at": "2026-10-28T09:13:04Z",
+  "decided_by": "tsl@0.1.3",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/impact.md",
+      "sha256": "81af31e5c9b85dcfbe566237f3187a3e616ccaff7c1b523b1981babdc587393d",
+      "verification_sha256": "626f37b318f28a705d32cc073e9abbf920a19a6f83987db25d5d5463b83b3a99"
+    },
+    {
+      "path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/split.md",
+      "sha256": "70a37e2163c9ffeee2153255649beda54907325e5980a65864572ae50d997b4a",
+      "verification_sha256": "b40ba0694a3e29190320645e512d5fcff7e2298adab5b95448d32add9dae93b5"
+    },
+    {
+      "path": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md",
+      "sha256": "7163b98904b9c026b5fe2fca4f8b92bd8e20975a6e468d30003d1f0f96c67a46",
+      "verification_sha256": "23da904e580acf66c104d49261fcb0527c939c81873eb6d1b40bc3b3c23093ef"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "bc290bc0e67ec5413115babcc9c8c76ea96982082d2851f52ea50273939e7fd3",
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.875,
+    "S2": 1.0,
+    "S3": 4.65,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "Ob_rfX-tfooTvKr01UjEPgAIjRw4JIL7UtSE7kNQNzO5AfajYS2rCoUh1xI0RhoL7Mvp2_tiW3GrWdRSBxqzAQ",
+  "skill": "design@1.4.1",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
