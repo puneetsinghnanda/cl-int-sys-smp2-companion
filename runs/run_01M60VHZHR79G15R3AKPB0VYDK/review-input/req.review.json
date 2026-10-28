@@ -1,0 +1,71 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "7163b98904b9c026b5fe2fca4f8b92bd8e20975a6e468d30003d1f0f96c67a46",
+  "package_sha256": "66a23abad59a1b345b6fa0a2ff3778f6005f89368670db22adf0088e43fa0381",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All five acceptance criteria map to REQ-1..REQ-8. AC2 is split into REQ-2 and REQ-3, and AC3 into REQ-4 and REQ-5. Out of scope gives reasons for the follow-up action and for other placements."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs cover one behaviour a tester can check. REQ-8 bundles medical history with the rest of the page, which overlaps REQ-7. REQ-6 leaves the case where only one count is zero implicit."},
+    {"id": "RR-R3", "score": 5, "reason": "Known items cite ticket lines. The only assumption (REQ-9, all-time window) is marked assumed, has a real basis in ticket L12 and goes to Q-03."},
+    {"id": "RR-R4", "score": 5, "reason": "The ticket does not conflict with the baseline. The counts show no medical history and do not change closed appointments, so the artifact correctly raises no conflict."},
+    {"id": "RR-R5", "score": 5, "reason": "All three questions are non-blocking and have real options and defaults. Glossary and time-window questions go to the product owner and the page-identity question goes to the tech lead, which is sensible routing."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable, and glossary status terms are used consistently. The 'appointments list' is used as a term but missing from the glossary table, while 'patient page' is flagged."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "REQ-8 bundles 'medical history' with 'the rest of the patient page'. The rest of the page already includes the appointments list, so REQ-8 overlaps REQ-7 and is not cleanly atomic.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md#L95", "quote": "The `medical history` and the rest of the patient page are unchanged."},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md#L89", "quote": "The `appointments list` on the patient page is unchanged."}
+      ],
+      "suggested_fix": "Split REQ-8 into 'medical history unchanged' and 'all other page sections unchanged (other than the appointments list and the new Visit summary)'."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "REQ-6 only covers a patient with neither Completed nor No-show appointments. It does not say that a single zero count (e.g. Completed&gt;0, No-show=0) still shows as 0.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md#L83", "quote": "A patient with no Completed or No-show appointments shows `0` for each count."},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/ticket.md#L20", "quote": "A patient with no Completed or No-show appointments shows 0 for each."}
+      ],
+      "suggested_fix": "Reword REQ-6 so that each count shows 0 when the patient has no appointments of that status."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The glossary table flags 'patient page' as not found but leaves out 'appointments list', which is also absent from the glossary yet used as a term in REQ-1 and REQ-7.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md#L138", "quote": "{term: patient page, found: false}"},
+        {"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/req.md#L89", "quote": "The `appointments list` on the patient page is unchanged."}
+      ],
+      "suggested_fix": "Add {term: appointments list, found: false} to the glossary table."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M60VHZHR79G15R3AKPB0VYDK/ticket.md#L14", "quote": "The patient page already lists the patient's appointments, upcoming first, then past"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed and No-show are allowed only after the start time."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed, Cancelled and No-show"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "in the MVP every"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#scheduled", "quote": "An appointment that is booked and still open."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/glossary.md#no-show", "quote": "A past appointment the patient did not attend"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "A past appointment the patient attended"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place"}]}
+  ],
+  "questions": []
+}
