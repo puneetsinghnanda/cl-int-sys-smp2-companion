@@ -1,0 +1,13 @@
+{
+  "comment": "Add a test for a No-show-only patient expecting { completed: 0, no_show: 1 } (S-2 AC5). Also assert appointment order (F-2), assert the PATCH status (F-3), close appointments far apart in date for REQ-9 (F-4), and fix the key-set wording (F-5).",
+  "comment_sha256": "621f711e1c4d695631692a11ee4b1b0565273e40a5254d945ace3fe610f22b88",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M60VHZHR79G15R3AKPB0VYDK",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
