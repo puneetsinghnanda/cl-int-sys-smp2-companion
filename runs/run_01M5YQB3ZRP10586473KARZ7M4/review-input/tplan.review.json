@@ -1,0 +1,68 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M5YQB3ZRP10586473KARZ7M4",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "a54657904cf755393c3ab18642e7dd52bab911f2554ec000bb3775bad9489089",
+  "package_sha256": "8cfb8f40c9d3d24d0097f36c631971f28c994b9c6132ef574164d0b15c4f3bd7",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.3",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f"
+  },
+  "rubric_score": 4.7,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 5, "reason": "All 14 acceptance criteria across S-1..S-4 have at least one test (S-1 AC1-4, S-2 AC1-5, S-3 AC1-4, S-4 AC1). Every TP covers a criterion that exists, and all REQ-1..REQ-13 are mapped."},
+    {"id": "TP-R2", "score": 5, "reason": "The derivation logic runs at API integration level and the rendering at jsdom component level. Nothing is e2e or manual, and each test sits at the cheapest layer the strategy offers."},
+    {"id": "TP-R3", "score": 4, "reason": "GET /api/patients has negative tests for page and filter (TP-18, TP-19) and a past-end boundary (TP-20). Zone and null edges are covered (TP-4, TP-9..11). Search only exercises name."},
+    {"id": "TP-R4", "score": 5, "reason": "Uses Vitest/Supertest/PostgreSQL with a fixed clock and Vitest/jsdom/Testing Library, in the existing api/test and web/src/__tests__ files. The HMS-n REQ-n naming matches the existing suites."},
+    {"id": "TP-R5", "score": 4, "reason": "Titles are concrete and runnable, and TP-3 and TP-4 explain how they discriminate. Per-test REQ ids and the way to force a west-of-UTC browser zone in jsdom are left implicit."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The plan says test names start with HMS-4 and the REQ id, but the tests list has no REQ per test. The TP-to-REQ mapping exists only in the Known prose, so the required name prefix cannot be read off each test entry.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/tplan.md#L88", "quote": "Test names start with HMS-4 and the REQ id (C3)."},
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/tplan.md#L56", "quote": "title: \"Patient list shows a column titled Last visit\", covers: [S-1/AC1], level: unit"}
+      ],
+      "suggested_fix": "Add a reqs list to each tests entry (e.g. TP-3: [REQ-4]), or give each title its HMS-4 REQ-n prefix."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "TP-13 checks search by name only. The existing list search also matches code and phone, and S-3/AC2 asks that any search term return the same patients.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/tplan.md#L68", "quote": "Search by name returns the same patients, now with last_visit_date"},
+        {"ref": "context/generated/test-layout.json#test:sample-system:api/test/patients.test.ts", "quote": "PAT-2: lists newest first, 20 per page, and searches name, code or phone"}
+      ],
+      "suggested_fix": "Extend TP-13 to search by name, by patient code and by phone, and assert last_visit_date on each result."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "other",
+      "text": "TP-5 needs the browser zone set west of UTC under jsdom, and the design requires this test. The plan does not say how the zone is forced (for example TZ in the Vitest config or env), so a tester may run it in the default zone.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/tplan.md#L97", "quote": "the page shows the returned day unchanged with the browser zone west of UTC"},
+        {"ref": "artifacts/HMS-4/run_01M5YQB3ZRP10586473KARZ7M4/design.md#L134", "quote": "Its tests must include S-1 AC4 run with the browser in a zone west of UTC."}
+      ],
+      "suggested_fix": "State the mechanism for TP-5 (e.g. TZ=America/New_York for that test file) and the day string it must show unchanged."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "no page is tested end to end in a browser"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/patients-next-appointment.test.ts", "quote": "HMS-1 REQ-2: shows the earliest Scheduled appointment with its start and doctor name"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/patients.test.ts", "quote": "PAT-8: lists and appointment views never carry medical history"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx", "quote": "PatientsPage next appointment column (HMS-2)"}]}
+  ],
+  "questions": []
+}
