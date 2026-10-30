@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: ut@1.0.1
+step: secrev@1.0.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -180,6 +180,18 @@ decision:
   A. yes
   B. no, use another search term
 **Proposed default:** yes
+answer:
+answered_by:
+decision:
+
+## Q-16 · non-blocking · ask: tech lead · round 7
+**Question:** Is it accepted for the MVP that every caller of GET /api/patients now also sees each patient's last visit date?
+**Why it matters:** In the MVP every request is staff with every permission, so the new field has no access control beyond the existing list.
+**Evidence:** context/architecture.md#identity
+**Options:**
+  A. accept for MVP
+  B. gate behind sign-in before release
+**Proposed default:** accept for MVP; same exposure as the existing Next appointment field
 answer:
 answered_by:
 decision:

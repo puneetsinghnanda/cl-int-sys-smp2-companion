@@ -1,0 +1,55 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "6173178880931ced73a22a45738fa0bddf049ad1bf9b4519eabfef47b4f08268",
+  "package_sha256": "e7fd535989ad90531a53bf15394cffd3500798504fc6356461d1ed479acdbc84",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "a072043cdc75429da7a74739c7595f776931c84977ad2f4ec41cd132543686c0"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "I checked the diff surface myself. The subquery takes no request input, the render is React text with no dangerouslySetInnerHTML, and no route, logging or dependency was added. The one real exposure issue is reported as SF-1."},
+    {"id": "SC-R2", "score": 4, "reason": "The line refs are correct: patientRepo.ts L128-129 and L149, types L85, PatientsPage L80. SF-1 cites the subquery at L129 rather than the response mapping at L149, which is acceptable but could be more exact."},
+    {"id": "SC-R3", "score": 5, "reason": "Minor fits SF-1. The exposure is inherited from the documented grant-all MVP identity model, the same as the existing next_appointment field, and it is routed to the tech lead through Q-01."},
+    {"id": "SC-R4", "score": 4, "reason": "The fix direction is clear: accept for the MVP, or gate behind sign-in once identify/requirePermission are replaced. It stays a decision rather than a concrete code change, which is right for an architectural state."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives. The single finding is real and labelled as an accepted MVP state, not a diff defect."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The review attaches the SAST and secrets scans by hash but says it did not read them. So the 'Overall risk: low' and 'no secret in the diff' conclusions rest only on manual reading and do not reconcile with the scan verdicts.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/secrev.md#L65", "quote": "I did not read their contents in this step, and tsl records their verdicts."}
+      ],
+      "suggested_fix": "State the scan verdicts, or say plainly that the risk rating does not depend on them until tsl confirms they pass."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "SF-1 cites the subquery line L129. The value actually reaches the API response at L149, where last_visit_at is mapped into each list item.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/secrev.md#L58", "quote": "sample-system:api/src/repositories/patientRepo.ts#L129"},
+        {"ref": "sample-system:api/src/repositories/patientRepo.ts#L149", "quote": "last_visit_at: r.last_visit_at === null ? null : r.last_visit_at.toISOString(),"}
+      ],
+      "suggested_fix": "Add patientRepo.ts#L149 to SF-1's cites as the exposure point."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "Invalid input is 400 with one"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]}
+  ],
+  "questions": []
+}
