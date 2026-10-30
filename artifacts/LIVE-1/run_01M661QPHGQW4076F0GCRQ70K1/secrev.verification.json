@@ -1,0 +1,64 @@
+{
+  "artifact_path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/secrev.md",
+  "artifact_sha256": "a71320260cf0d7d9d6aa2715d5d53fce5bed8b58c7a64f4c9d597e0c28df4c6b",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "ee9a2318fad99d69dc24db04b2daa0430e9b55c3e629c7f7f832a0f9593e9330",
+  "claims": {
+    "total": 2,
+    "verified": 2
+  },
+  "decided_at": "2026-10-30T10:09:34Z",
+  "decided_by": "tsl@0.1.4",
+  "findings_dropped": [
+    {
+      "id": "F-2",
+      "reason": "anchor not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md",
+      "sha256": "6f1164dd7a85ae0205169ebe51576b51fa9fe8d71f38696ad6669cf39a480b59",
+      "verification_sha256": "c6f491b195e237663679ea63fde47be66de3c78e58e63ac11126f049e7c40d55"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "e14a971143c55147e4a885cc8a6e1635d8bdc1ec282914a8b4f3dc45bd749fdf",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.75,
+    "S2": 1.0,
+    "S3": 4.45,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "oUg4ygiMeHY7hH4VqIeeZ0ihB3oPEiXJjhtLuqu08odMzpo-bBeyJvU__ymonhereNyrbIfILgX-qIMbD9BADQ",
+  "skill": "secure-code-review@1.0.1",
+  "step": "secrev",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
