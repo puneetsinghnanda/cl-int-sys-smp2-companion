@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: impact@1.1.1
+step: design@1.4.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -210,6 +210,66 @@ decision:
   A. Only when the doctors list asks for it
   B. On every call
 **Proposed default:** Only when the doctors list asks for it
+answer:
+answered_by:
+decision:
+
+## Q-19 · non-blocking · ask: tech lead · round 4
+**Question:** Do GET /api/appointments and AppointmentsPage already accept a doctor filter and a single-day filter (read from the URL)? If not, may this change add them?
+**Why it matters:** S-2 links the count to the appointment list filtered to that doctor and today.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/appointments, context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage
+**Options:**
+  A. Filters exist; link to them
+  B. Add the missing filter(s) in this change
+**Proposed default:** Add the missing filter(s) in this change
+answer:
+answered_by:
+decision:
+
+## Q-20 · non-blocking · ask: tech lead · round 4
+**Question:** Does DashboardService's 'Appointments today' count exclude only CANCELLED? If so, may its status condition be shared with the new per-doctor count?
+**Why it matters:** S-1 AC3 (exclude only Cancelled) must hold even if the tile counts differently; S-1 AC4 needs the column and tile to agree.
+**Evidence:** context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService, artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L62
+**Options:**
+  A. Share one status condition only if the tile excludes only CANCELLED; otherwise follow the ticket and raise a separate fix
+  B. Keep separate conditions
+**Proposed default:** Share one status condition only if the tile excludes only CANCELLED; otherwise follow the ticket and raise a separate fix
+answer:
+answered_by:
+decision:
+
+## Q-21 · non-blocking · ask: tech lead · round 4
+**Question:** Where does the web app get the hospital time zone for the link's day (for example from GET /api/settings)?
+**Why it matters:** S-2 AC2 filters the linked list to today in Asia/Kolkata; the browser's own zone may differ.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/settings, context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn
+**Options:**
+  A. Read it from GET /api/settings
+  B. Have the API return the day with the list
+**Proposed default:** Read it from GET /api/settings
+answer:
+answered_by:
+decision:
+
+## Q-22 · non-blocking · ask: tech lead · round 4
+**Question:** The doctor response types are not in the generated facts. Confirm the Today count goes on a list-only row type, leaving the shared doctor type and GET /api/doctors/:id unchanged.
+**Why it matters:** Adding the count to the shared doctor type would also change the detail route and the booking picker.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/doctors/:id, artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#L93
+**Options:**
+  A. List-only row type
+  B. Add to the shared doctor type
+**Proposed default:** List-only row type
+answer:
+answered_by:
+decision:
+
+## Q-23 · non-blocking · ask: tech lead · round 4
+**Question:** The new names (with_today, today_count, DoctorListRow) and the link keys (doctor_id, date) are proposals, not taken from the facts. Keep them, or match names the existing list filters already use?
+**Why it matters:** The facts do not show the existing query keys of GET /api/doctors or GET /api/appointments.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/doctors, context/generated/api-inventory.json#http:GET:/api/appointments
+**Options:**
+  A. Keep the proposed names unless an existing key already means the same
+  B. Rename all to a team convention
+**Proposed default:** Keep the proposed names unless an existing key already means the same
 answer:
 answered_by:
 decision:
