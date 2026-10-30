@@ -42,6 +42,33 @@ comment: NA
 kind: escalation
 Artifact: artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md (sha256 ebc9d626de66609f02cc0566ee8d465a5b06090c1ac1850c93c7f8dda0bb599d)
 Reason for gate: retry budget exhausted (checks)
-decision:          # approve | reject | changes | abort
-comment:
+decision: approve
+comment: NA
 <!-- signature block written by `tsl approve` - do not edit -->
+<!-- tsl:signature-begin G-escalate-split-a1 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-10-30T12:58:58Z",
+  "approver": "eng-dbe4",
+  "artifacts": [
+    {
+      "attempt": 1,
+      "sha256": "ebc9d626de66609f02cc0566ee8d465a5b06090c1ac1850c93c7f8dda0bb599d",
+      "step": "split"
+    }
+  ],
+  "comment_sha256": "20ef0f0c8d0eea98772412cea9b3b92612e3e53cb5e59152b5703165f56e8a53",
+  "decision": "approve",
+  "gate": "G-escalate-split-a1",
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "NXdjRfcDRtQ1FTPXRrKez7u1n_r55oU_y-h4MgXddf4Ph5DmbmYljocmbdl6bPd0gCbH9eseLa7G4CJRWqjtDQ",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-split-a1 -->
