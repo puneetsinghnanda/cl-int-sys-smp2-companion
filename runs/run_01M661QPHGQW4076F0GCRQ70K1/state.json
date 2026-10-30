@@ -23,9 +23,24 @@
       "kind": "escalate",
       "status": "CHANGES",
       "step": "impact"
+    },
+    {
+      "approver_key": null,
+      "artifacts": [
+        {
+          "sha256": "4e7105171367dd73f90a4f5be328dd466fcac9f9f81405c52afaf721bf767627",
+          "step": "threat"
+        }
+      ],
+      "decided_at": null,
+      "decision": null,
+      "id": "G-escalate-threat-a2",
+      "kind": "escalate",
+      "status": "WAITING_APPROVAL",
+      "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-10-30T09:43:30Z",
+  "heartbeat_at": "2026-10-30T09:45:30Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -66,10 +81,10 @@
     "open_non_blocking": 4,
     "round": 2
   },
-  "rev": 27,
+  "rev": 30,
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "PAUSED_APPROVAL",
   "steps": [
     {
       "attempts": [
@@ -265,7 +280,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md",
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/history/threat/a1/threat.md",
           "artifact_sha256": "f1a610ff878dd8167492f8bd17cd2a49b32c5cdca6c761a0c41a384cf243c947",
           "band": "Low",
           "cause": "first",
@@ -280,10 +295,32 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.verification.json",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/history/threat/a1/threat.verification.json",
           "skill": "threat-model@1.0.1",
           "skill_started_at": "2026-10-30T09:41:32Z",
           "started_at": "2026-10-30T09:41:25Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md",
+          "artifact_sha256": "4e7105171367dd73f90a4f5be328dd466fcac9f9f81405c52afaf721bf767627",
+          "band": "Low",
+          "cause": "retry_review",
+          "decided_at": "2026-10-30T09:45:30Z",
+          "feedback": "runs/run_01M661QPHGQW4076F0GCRQ70K1/feedback/threat.a1.json",
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "352b347ebaf9c4496e3c68531a5185b15d70f3e30799ca9cca5f6d5ce2f71d58",
+              "step": "design"
+            }
+          ],
+          "n": 2,
+          "outcome": "ESCALATE",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.verification.json",
+          "skill": "threat-model@1.0.1",
+          "skill_started_at": "2026-10-30T09:43:50Z",
+          "started_at": "2026-10-30T09:43:42Z"
         }
       ],
       "budget_used": {
@@ -294,7 +331,7 @@
       },
       "id": "threat",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "WAITING_APPROVAL"
     },
     {
       "attempts": [],
@@ -353,7 +390,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "LIVE-1",
-  "updated_at": "2026-10-30T09:43:30Z",
+  "updated_at": "2026-10-30T09:45:30Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

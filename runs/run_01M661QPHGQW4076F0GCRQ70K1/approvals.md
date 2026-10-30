@@ -37,3 +37,11 @@ comment: Keep REQ-5 assumed with the Q-01 default from req.md, and add conventio
 }
 ```
 <!-- tsl:signature-end G-escalate-impact-a2 -->
+
+## G-escalate-threat-a2 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md (sha256 4e7105171367dd73f90a4f5be328dd466fcac9f9f81405c52afaf721bf767627)
+Reason for gate: band Low
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->
