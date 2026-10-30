@@ -1,0 +1,31 @@
+{
+  "dropped": [
+    "F-2"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Exactly one match reads \"1 patient\", the intent's Q-02 default.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#overview"
+        },
+        {
+          "quote": "TP-4 (unit): a total of 0 shows \"0 patients\". Covers S-2/AC1.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/tplan.md#tests"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The design specifies a singular form for exactly one match ('1 patient'), but no test covers that boundary. Only totals of 12, 0 and more than one page are tested."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "feedback.v1",
+  "step": "tplan"
+}
