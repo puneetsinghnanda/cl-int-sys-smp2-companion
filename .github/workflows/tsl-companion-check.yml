@@ -1,5 +1,9 @@
 name: tsl-companion-check
-on: [push, pull_request]
+# Pushes to main (run commits) and pull requests; a feature branch is checked by its pull request.
+on:
+  push:
+    branches: [main]
+  pull_request:
 permissions:
   contents: read
 jobs:
@@ -9,5 +13,23 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - run: uv tool install truminds-tsl
-      - run: tsl companion check --json
+      - uses: astral-sh/setup-uv@v6
+      - name: Install tsl from the skill library (it is not on PyPI; the check needs no org file)
+        run: |
+          git clone --depth 1 "$TSL_LIBRARY" "$RUNNER_TEMP/lib"
+          uv tool install --python 3.12 "$RUNNER_TEMP/lib/tsl"
+        env:
+          TSL_LIBRARY: https://github.com/puneetsinghnanda/AI-Skill-Library.git
+      - name: tsl companion check (only the commits this push or pull request adds)
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base="$BEFORE"
+          if [ "$EVENT" = pull_request ]; then base="$PR_BASE"; fi
+          args=(--event "$EVENT" --json)
+          if [ -n "$base" ] && [ "$base" != 0000000000000000000000000000000000000000 ]; then
+            args+=(--base "$base")
+          fi
+          tsl companion check "${args[@]}"
