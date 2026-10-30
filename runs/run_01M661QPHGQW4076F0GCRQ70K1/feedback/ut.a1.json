@@ -1,0 +1,37 @@
+{
+  "dropped": [
+    "F-2",
+    "F-3",
+    "F-4"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "when the search text changes, then the count changes to the number of patients that match the new search text.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#L41"
+        },
+        {
+          "quote": "trace: [REQ-1, REQ-3, REQ-4, REQ-5]",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ut.md#L31"
+        },
+        {
+          "quote": "known: [REQ-1, REQ-2, REQ-3, REQ-4]",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L32"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-1 AC2 / REQ-2 (count follows a search change) has no test. impl.md lists REQ-2 as known, but ut.md leaves REQ-2 out of its trace and only defers it as non-blocking U-1/Q-01."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

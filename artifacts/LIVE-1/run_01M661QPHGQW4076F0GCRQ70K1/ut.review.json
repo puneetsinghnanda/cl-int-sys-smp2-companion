@@ -1,0 +1,147 @@
+{
+  "artifact_sha256": "617afdd5854faa65bd29c5689fee5f6f43c58c084b08f169785604e7de3f5c79",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"test:sample-system:web/src/__tests__/PatientsPage.test.tsx\"",
+          "ref": "context/generated/test-layout.json#L236"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "PatientsPage (design component, changed) now shows a count line above the patient table",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L41"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "when the search text changes, then the count changes to the number of patients that match the new search text.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#L41"
+        },
+        {
+          "quote": "trace: [REQ-1, REQ-3, REQ-4, REQ-5]",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ut.md#L31"
+        },
+        {
+          "quote": "known: [REQ-1, REQ-2, REQ-3, REQ-4]",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L32"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add a test that renders PatientsPage, has fetch return a different total on the second call, changes the search input, and asserts that the count line updates.",
+      "text": "S-1 AC2 / REQ-2 (count follows a search change) has no test. impl.md lists REQ-2 as known, but ut.md leaves REQ-2 out of its trace and only defers it as non-blocking U-1/Q-01."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID (DOC-1, APT-4, ...).",
+          "ref": "context/test-strategy.md#L18"
+        },
+        {
+          "quote": "it('REQ-1, REQ-5: shows every match from total, not only the rows on this page'",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L62"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Prefix the new tests with the PRD requirement ID assigned to LIVE-1 (new HMS-n style ID) as the strategy requires.",
+      "text": "New test names start with run-local REQ-n IDs. The strategy requires names to start with the PRD requirement ID, and the existing tests in the same file use HMS-2."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "expect(await screen.findByText('12 patients')).toBeTruthy();",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L64"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "text": "The REQ-5 test only asserts that '12 patients' appears. It does not assert that the page-row count ('2 patients') is absent, so it would not catch a count line that shows both."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify(page), { status: 200 })));",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L54"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "No test covers the count line when the list request fails or is still loading. Only successful 200 responses are stubbed."
+    }
+  ],
+  "package_sha256": "6cd65e6349bf13dfebfdb1db29d68f985de0673f984128b9d895101538bec31d",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Does REQ-2 (count follows a search change) need its own page-level test, or is relying on the existing search refresh acceptable for sign-off?"
+    },
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-2",
+      "text": "Which PRD requirement ID should LIVE-1 tests use as their name prefix (e.g. a new HMS-n), given the strategy requires PRD IDs?"
+    }
+  ],
+  "recorded_at": "2026-10-30T09:55:31Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "The count line is tested for 12, 1 and 0 matches. REQ-2 (S-1 AC2, the count changes when the search text changes) has no test, although impl lists REQ-2 as known.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "The tests assert the visible text ('12 patients', '1 patient', '0 patients', 'No patients match.'). The REQ-5 test does not check that the page-row count ('2 patients') is absent.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "The zero-match and singular edges are covered. No test covers a failed or loading list response, or a search change.",
+      "score": 3
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest and Testing Library in the existing web test file, as the strategy says. Test names start with run-local REQ-n IDs, but the strategy and existing tests use PRD IDs such as HMS-2.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "The artifact states no numbers itself and leaves test and coverage results to the verifier. checks.json shows test passed and coverage skipped, which matches the strategy gap.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 3.9,
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

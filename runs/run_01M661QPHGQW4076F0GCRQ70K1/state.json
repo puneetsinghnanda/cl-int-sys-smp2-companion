@@ -46,7 +46,7 @@
       "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-10-30T09:51:09Z",
+  "heartbeat_at": "2026-10-30T09:55:33Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -87,7 +87,7 @@
     "open_non_blocking": 4,
     "round": 2
   },
-  "rev": 36,
+  "rev": 40,
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -380,16 +380,44 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ut.md",
+          "artifact_sha256": "617afdd5854faa65bd29c5689fee5f6f43c58c084b08f169785604e7de3f5c79",
+          "band": "Low",
+          "cause": "first",
+          "decided_at": "2026-10-30T09:55:33Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "6f1164dd7a85ae0205169ebe51576b51fa9fe8d71f38696ad6669cf39a480b59",
+              "step": "impl"
+            },
+            {
+              "name": "stories",
+              "sha256": "b4e6622becffa36ae90e954275eb94df9ea45e61936a5f3218496527b6f429e9",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ut.verification.json",
+          "skill": "unit-test@1.0.1",
+          "skill_started_at": "2026-10-30T09:51:58Z",
+          "started_at": "2026-10-30T09:51:19Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "ut",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -424,7 +452,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "LIVE-1",
-  "updated_at": "2026-10-30T09:51:09Z",
+  "updated_at": "2026-10-30T09:55:33Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
