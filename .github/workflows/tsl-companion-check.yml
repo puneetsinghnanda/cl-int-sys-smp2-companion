@@ -10,11 +10,10 @@ jobs:
         with:
           fetch-depth: 0
       - uses: astral-sh/setup-uv@v6
-      - name: Install tsl from the skill library (it is not on PyPI)
+      - name: Install tsl from the skill library (it is not on PyPI; the check needs no org file)
         run: |
           git clone --depth 1 "$TSL_LIBRARY" "$RUNNER_TEMP/lib"
-          TSL_ORG_FILE="$RUNNER_TEMP/lib/deploy/render/tsl-org.github.toml" \
-            uv tool install --python 3.12 "$RUNNER_TEMP/lib/tsl"
+          uv tool install --python 3.12 "$RUNNER_TEMP/lib/tsl"
         env:
           TSL_LIBRARY: https://github.com/puneetsinghnanda/AI-Skill-Library.git
       - name: tsl companion check (only the commits this push or pull request adds)
