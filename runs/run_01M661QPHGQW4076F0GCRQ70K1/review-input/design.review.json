@@ -1,0 +1,97 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "352b347ebaf9c4496e3c68531a5185b15d70f3e30799ca9cca5f6d5ce2f71d58",
+  "package_sha256": "51a8f095a5f94e632a0681674d792b99197f7f1cd8f0efcc73e8aea3079e9a27",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Only PatientsPage in the existing web module changes. It reuses the existing GET /api/patients list response. No new parts, and the module ids match the module map."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 AC1-AC3 are served by the list total, which follows the search and counts every match. S-2 AC1-AC2 are served by '0 patients' plus the kept empty message."},
+    {"id": "DS-R3", "score": 4, "reason": "Method and path are exact and marked existing. The response fields the page relies on ({ items, page, page_size, total }) are not spelled out in the design body."},
+    {"id": "DS-R4", "score": 4, "reason": "S-1 is correctly marked assumed with its REQ-5 basis. The 'already returns total' and status-filter statements rest on convention or nothing, and the '1 patient' Q-02 default is not listed under Assumed."},
+    {"id": "DS-R5", "score": 4, "reason": "The main trade-off (reuse the list total rather than a separate count call) is explained. The placement 'above the patient table' is chosen without a reason."},
+    {"id": "DS-R6", "score": 5, "reason": "Short, consistent sections. Front matter matches the body."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Impact asked design to confirm the patients route returns total. Design says it 'already returns total' but cites only the general list convention, not route or service lines. The code does confirm it (patientService returns total), so it is a traceability gap, not a defect.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#L78", "quote": "the design step should confirm the patients route returns the total"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L67", "quote": "already returns total; unchanged."}
+      ],
+      "claim_ref": "C2",
+      "suggested_fix": "Add a claim citing sample-system:api/src/services/patientService.ts#L30-L35 (returns { items, page, page_size, total }) so the confirmation impact asked for is explicit."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The overview says the count follows 'the status filter'. No input or cited context mentions a status filter. It exists in PatientsPage code, but the design does not cite it.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L59", "quote": "so it follows the search text and the status filter with no extra request"}
+      ],
+      "suggested_fix": "Cite web/src/pages/PatientsPage.tsx#L24 for the status filter, or drop the mention."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The singular wording '1 patient' applies the intent's open Q-02 default. The Assumed section lists only S-1, so this default-based choice is not shown as assumed.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L61", "quote": "Exactly one match reads \"1 patient\",\nthe intent's Q-02 default."},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L74", "quote": "S-1: counts every match (REQ-5, intent Q-01 default)"}
+      ],
+      "suggested_fix": "Add the '1 patient' wording to Assumed with basis intent Q-02 (default '1 patient')."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Claim C4 (web talks to the API only through client.ts) is never used in the body. The design does not say the count comes through the existing api.patients call in client.ts.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L35", "quote": "The web app talks to the API only through `web/src/api/client.ts`."},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L66", "quote": "adds the count line from the list response's total."}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "State that PatientsPage reads total from the existing api.patients(filters) result in client.ts (C4), with no new client call."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "other",
+      "text": "The count's placement ('above the patient table') is a layout choice the intent leaves to design, but no reason is given for it.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L57", "quote": "PatientsPage shows a count line above the patient table"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L138", "quote": "the ticket does not ask for a layout, so the design step decides"}
+      ],
+      "suggested_fix": "Add one line on why the count goes above the table (e.g. visible before scrolling, next to the search form)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [
+      {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage\""}
+    ]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [
+      {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}
+    ]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [
+      {"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"id\": \"http:GET:/api/patients\""}
+    ]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [
+      {"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}
+    ]}
+  ],
+  "questions": []
+}

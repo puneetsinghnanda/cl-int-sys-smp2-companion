@@ -1,0 +1,85 @@
+{
+  "artifact_path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md",
+  "artifact_sha256": "352b347ebaf9c4496e3c68531a5185b15d70f3e30799ca9cca5f6d5ce2f71d58",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "766cbe544ffe607d5ee23a0a8e47271ec52e159c8b2a7551ea024e27c249e6a1",
+  "claims": {
+    "total": 4,
+    "verified": 3
+  },
+  "decided_at": "2026-10-30T09:41:16Z",
+  "decided_by": "tsl@0.1.4",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md",
+      "sha256": "d9ee34843ec1cc08df1e0e55f8130b04894f77e3787c566ca3a46986d7b23dec",
+      "verification_sha256": "c21be2b9d78625a0031cf18b6c03f74549ad1ab4bfe3771c1772561744f93026"
+    },
+    {
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md",
+      "sha256": "b4e6622becffa36ae90e954275eb94df9ea45e61936a5f3218496527b6f429e9",
+      "verification_sha256": "736e0dc711f36ace3499c38f1607564cb13fe6925bf400ad4e60f968414b370c"
+    },
+    {
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md",
+      "sha256": "9514b56924da6973313b7c5448cdd9f9f0335306e31e8a0294dab29fad5a138b",
+      "verification_sha256": "fbdd4de3b6bd7eeab0004abb0ea0a008930e5caa030582ba9c67b6a8243a2909"
+    }
+  ],
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "6e7973a4bd3930f941985951672662fcf054c24d96bfda0c721719bbe3ecbea5",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8889,
+    "S2": 1.0,
+    "S3": 4.55,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "re5IMPBzFP8Q02R448ppngwxVUhIyf8gwkMqEVqLxgigV98_hvqOphi2LJxMuLr2d6aPCApxeCGwjSSKIZTVBA",
+  "skill": "design@1.4.1",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
