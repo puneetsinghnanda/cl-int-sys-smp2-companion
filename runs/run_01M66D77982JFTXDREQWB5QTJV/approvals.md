@@ -37,3 +37,11 @@ comment: NA
 }
 ```
 <!-- tsl:signature-end G-escalate-req-a2 -->
+
+## G-escalate-split-a1 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md (sha256 ebc9d626de66609f02cc0566ee8d465a5b06090c1ac1850c93c7f8dda0bb599d)
+Reason for gate: retry budget exhausted (checks)
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

@@ -1,0 +1,90 @@
+{
+  "artifact_sha256": "ebc9d626de66609f02cc0566ee8d465a5b06090c1ac1850c93c7f8dda0bb599d",
+  "attempt": 1,
+  "finished_at": "2026-10-30T12:56:00Z",
+  "gates": [
+    {
+      "check_ids": [
+        "GEN-CITE-01"
+      ],
+      "codes": [
+        "E-H1-05"
+      ],
+      "detail": "citation artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#REQ-14 at /questions/1/evidence/0 does not match the format; citation artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#REQ-10 at /questions/2/evidence/0 does not match the format",
+      "id": "H1",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md",
+      "sha256": "a33bb8ac0e7a965160b9d6ba639feb8f4086518ad90e0374e053ffbfacdfaf35",
+      "verification_sha256": "e7dcca3f0f9d7f2d8d95ac2a9f218442e4c208a7b681840cabc91cbd2cade4be"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "story-split.claims-cited",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-30T12:55:59Z",
+  "step": "split",
+  "tool_log_sha256": "45b53552b0f0f7fcd1a4688ef36b4495429d66619b8a565956a2de98cf7d608c",
+  "tsl_version": "0.1.4",
+  "verifier": null
+}
