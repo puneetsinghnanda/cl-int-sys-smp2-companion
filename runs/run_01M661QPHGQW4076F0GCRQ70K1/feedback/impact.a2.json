@@ -1,0 +1,13 @@
+{
+  "comment": "Keep REQ-5 assumed with the Q-01 default from req.md, and add conventions.md and test-layout.json to inputs.",
+  "comment_sha256": "38cac9da8356ef116b3e08a2c76190624f7ec9615aebaf02e27f107f17a910b4",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
