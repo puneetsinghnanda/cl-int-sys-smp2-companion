@@ -1,23 +1,37 @@
 {
+  "accepted_default": true,
   "artifact_path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md",
-  "artifact_sha256": "ebc9d626de66609f02cc0566ee8d465a5b06090c1ac1850c93c7f8dda0bb599d",
-  "attempt": 1,
-  "band": null,
-  "caps": [
-    "reviewer-missing"
-  ],
-  "checks_sha256": "86bd3c0e9d9a303c536762049a50e3d276203c98f5a4467abebefdbfe9b1ae21",
+  "artifact_sha256": "f49a45c822dcc797bdba004c411c08fa32db8a41468d2957a34eb264d72f9764",
+  "attempt": 2,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "80fce5e8d5f7b3b10435574de70f5ea7c913b7afb74fc122dc45861b966416b9",
   "claims": {
     "total": 4,
     "verified": 4
   },
-  "decided_at": "2026-10-30T12:56:36Z",
+  "decided_at": "2026-10-30T13:04:02Z",
   "decided_by": "tsl@0.1.4",
   "findings_dropped": [],
-  "findings_kept": [],
-  "gate_failures": [
-    "H1"
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
   ],
+  "gate_failures": [],
   "inputs": [
     {
       "path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md",
@@ -26,7 +40,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "ESCALATE",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -34,15 +48,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "53353a46d096c7e8257e3463dec3627c5e57016ec6ebff7ca39f42816fc8018d",
   "product_changes": null,
-  "review_sha256": "cfbb78542aabc5f5f3f4a43e616f00ce5480d1a26278713f26e7b35ce492bdcb",
+  "review_sha256": "a2b965e7e46a863812672baf3ed12c7aaf4dd75d6c74d6a30f0aae2777ebc5cf",
   "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": null,
+    "S3": 4.3,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -51,7 +65,7 @@
       "sensitive": false
     }
   },
-  "signature": "DBCPULh66dQk3kgYax9NPZXq_CuE_xANzvNXQ0Hsxr0k2Y8U3b8AgN47L0-JFINHHc6Lrj8ibATaHFn0AtnyAg",
+  "signature": "imlrPOC6oFSrx6mCWoL82uqCZWjqXTV2aEdCM8n4JUTNlr_szzvCCh5FyEAJU_6tTlCBMSTt34SbLjINx4H2AA",
   "skill": "story-split@1.0.1",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

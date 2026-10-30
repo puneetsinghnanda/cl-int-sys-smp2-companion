@@ -1,11 +1,117 @@
 {
-  "artifact_sha256": "ebc9d626de66609f02cc0566ee8d465a5b06090c1ac1850c93c7f8dda0bb599d",
-  "attempt": 1,
-  "claims_checked": [],
-  "findings": [],
-  "package_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "artifact_sha256": "f49a45c822dcc797bdba004c411c08fa32db8a41468d2957a34eb264d72f9764",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "in the MVP every\nuser acts as `staff`",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "starts at a time whose calendar date differs between UTC and Asia/Kolkata",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L78"
+        },
+        {
+          "quote": "The `Last visit` date is expressed in the hospital time zone, `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L59"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Describe the case in terms the intent uses, for example a start time near midnight Asia/Kolkata. Or cite where UTC storage is documented.",
+      "text": "S-1 AC3 uses UTC to set up the time-zone case. UTC does not appear in the intent, so this is a weakly sourced value. The intent only says the date is in Asia/Kolkata."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "AC3: A Scheduled appointment is never shown; the Completed one is shown instead.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L127"
+        },
+        {
+          "quote": "Given a patient with a `Scheduled` appointment and an earlier Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L90"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Make the body criteria repeat the frontmatter Given/When/Then text.",
+      "text": "The body criteria for S-2, S-3 and S-4 are short statements, not Given/When/Then, and do not match the frontmatter. Example: S-2 AC3 in the body drops its Given condition."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "then the same patients are returned as before the change",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L100"
+        },
+        {
+          "quote": "then patients appear in the same sort order as before the change",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L102"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Specify a fixed dataset and search term, and compare against the result captured on the pre-change build.",
+      "text": "S-3 AC2 and AC3 compare against 'before the change' without saying how that baseline is captured. That makes them regression checks with no reference result defined."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Given more patients than fit on one page, when staff open the patient list",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L98"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Given more than 20 patients exist, when staff open the patient list, then the first page shows 20.",
+      "text": "The Given in S-3 AC1 is circular: 'more patients than fit on one page' assumes the page size the criterion is meant to check. Use the explicit value from REQ-8."
+    }
+  ],
+  "package_sha256": "e3bf1c4f095051f5a098b959151efea47d3d12ea2712740c7644f4c8ef060efa",
   "questions": [],
-  "recorded_at": "2026-10-30T12:56:35Z",
+  "recorded_at": "2026-10-30T13:04:00Z",
   "recorded_by": "tsl@0.1.4",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -13,11 +119,36 @@
     "skill": "review",
     "version": "0.1.4"
   },
-  "rubric_items": [],
-  "rubric_score": null,
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "Every story traces at least one REQ. Together they trace REQ-1 to REQ-15, which covers all 12 known and all 3 assumed REQs in the intent.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "S-2, S-3 and S-4 each deliver one outcome. S-1 puts the column, the ranking, the time zone and the format in one story. That is acceptable but on the large side.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The frontmatter criteria all use Given/When/Then. The body versions of S-2 to S-4 are short statements without Given/When/Then. S-3 AC2 and AC3 depend on an unstated 'before the change' baseline.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Most values come from the intent: 20 per page, '-', Asia/Kolkata, the start time. S-1 AC3 adds UTC, which the intent never mentions.",
+      "score": 4
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable, and the glossary statuses are used consistently. The body criteria are worded differently from the frontmatter criteria, and S-3 AC1 says 'more patients than fit on one page' instead of 20.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.3,
   "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
   "schema": "review.v1",
-  "status": "could_not_review",
-  "status_reason": "not reviewed: gate H1 failed",
+  "status": "ok",
   "step": "split"
 }

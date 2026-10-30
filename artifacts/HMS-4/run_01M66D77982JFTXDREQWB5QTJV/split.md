@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.0.1
 inputs:
   - path: artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md
@@ -46,7 +46,7 @@ questions:
     ask: product owner
     text: What date format should the Last visit column use?
     why: S-1 AC4 assumes the Next appointment column's format (REQ-14).
-    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#REQ-14"]
+    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L122"]
     options: [same format as the Next appointment column, a new format]
     default: same format as the Next appointment column
   - id: Q-03
@@ -54,7 +54,7 @@ questions:
     ask: product owner
     text: Should the Last visit column be sortable or searchable?
     why: No story covers sorting or searching by Last visit; S-3 keeps the current search and sort order.
-    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#REQ-10"]
+    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L97"]
     options: [display only, sortable, sortable and filterable]
     default: display only
   - id: Q-04
