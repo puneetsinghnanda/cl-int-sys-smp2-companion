@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.0.0
 inputs:
   - path: artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ticket.md
@@ -35,9 +35,9 @@ claims:
   - id: C7
     text: "Medical history covers blood group, `allergies`, chronic conditions, current medications and notes."
     cites: ["context/glossary.md#medical-history"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12]
-assumed: [REQ-13, REQ-14]
+assumed: [REQ-13, REQ-14, REQ-15]
 unknown: [U-1, U-2, U-3, U-4]
 requirements:
   - id: REQ-1
@@ -113,10 +113,10 @@ requirements:
     statement: "No `medical history` appears in the patient list."
     cites: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ticket.md#L22", "context/intent-baseline.md#data-protection"]
   - id: REQ-13
-    title: Visit date taken from appointment start time
+    title: Most recent ranked by appointment start time
     type: functional
     status: assumed
-    statement: "The most recent Completed appointment and its displayed date are determined by the appointment `start time`."
+    statement: "The most recent Completed appointment is the one with the latest appointment `start time`."
     basis: "A Completed appointment is closed once its start time has passed, so the start time is when the visit took place; the ticket does not say which timestamp to use."
     cites: ["context/glossary.md#completed"]
   - id: REQ-14
@@ -126,6 +126,13 @@ requirements:
     statement: "The Last visit date uses the same date format as the existing `next appointment` column."
     basis: "The ticket gives no format; the list already shows next appointment, so matching it keeps the list consistent."
     cites: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ticket.md#L14"]
+  - id: REQ-15
+    title: Displayed date is the appointment start date
+    type: functional
+    status: assumed
+    statement: "The Last visit date shown is the calendar date of that appointment's `start time`, in Asia/Kolkata."
+    basis: "A Completed appointment is closed once its start time has passed, so its start time marks the visit; REQ-3 fixes the time zone."
+    cites: ["context/glossary.md#completed"]
 unknowns:
   - id: U-1
     text: "The term `Last visit` is not in the glossary."
@@ -201,15 +208,17 @@ HMS-4 adds a "Last visit" column to the patient list. The column shows the date 
 - REQ-10 Sort order (known): Current sort order is kept.
 - REQ-11 Next appointment (known): The Next appointment column is unchanged.
 - REQ-12 No medical history (known): No medical history appears in the list.
-- REQ-13 Visit date source (assumed): The appointment start time defines both "most recent" and the date shown.
+- REQ-13 Most recent ranking (assumed): The most recent Completed appointment is the one with the latest start time.
 - REQ-14 Date format (assumed): Same format as the Next appointment column.
+- REQ-15 Displayed date (assumed): The date shown is that appointment's start date in Asia/Kolkata.
 
 ## Known
 - REQ-1 to REQ-12: each one is stated in the ticket's acceptance criteria (lines 16 to 22). REQ-3 and REQ-12 are also backed by the baseline's constraints and data-protection rules.
 
 ## Assumed
-- REQ-13: The visit date is the appointment start time. Basis: a Completed appointment is closed once its start time has passed (glossary, Completed).
+- REQ-13: "Most recent" is ranked by appointment start time. Basis: a Completed appointment is closed once its start time has passed (glossary, Completed).
 - REQ-14: The date format matches the existing Next appointment column. Basis: the list already shows next appointment (ticket line 14), and the ticket gives no format.
+- REQ-15: The displayed date is the start date of that appointment. Basis: the same glossary entry, with the time zone from REQ-3.
 
 ## Unknown
 - U-1: "Last visit" is not in the glossary (Q-04).

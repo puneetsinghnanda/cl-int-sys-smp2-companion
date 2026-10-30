@@ -1,0 +1,172 @@
+{
+  "artifact_sha256": "c45892301d412044e14712a388346664aa7b4965e921f05201d931fffe3929d4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The patient list already shows each patient's next appointment (HMS-1).",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show appointments never change.",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "in the MVP every user acts as `staff`.",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "The most recent Completed appointment and its displayed date are determined by the appointment `start time`.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L119"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Split it into two REQs: one says start time ranks 'most recent', the other says the displayed date is that appointment's start date in Asia/Kolkata.",
+      "text": "REQ-13 is a compound requirement. It sets both the ranking rule for 'most recent' and the source of the displayed date in one statement."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The patient list already shows each patient's next appointment (HMS-1).",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ticket.md#L14"
+        },
+        {
+          "quote": "The Last visit date uses the same date format as the existing `next appointment` column.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L126"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite the HMS-1 artifact or the code that defines the Next appointment format, or rely on Q-02 alone.",
+      "text": "REQ-14's basis cites ticket L14. That line only says the next appointment is shown and gives no format, so the cite does not prove there is an existing format to match."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Sorting or filtering by Last visit: not asked for.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L227"
+        },
+        {
+          "quote": "options: [display only, sortable, sortable and filterable]",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L165"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State that Out of scope holds unless Q-03 is answered otherwise, or drop the sortable options because the ticket keeps the current sort order.",
+      "text": "Sorting and filtering by Last visit is declared out of scope, but Q-03/U-4 leave the same question open with 'sortable' as an option."
+    }
+  ],
+  "package_sha256": "9e1737b5c490f5be1adc046b9401595177749f4696183cd82b018027db61e973",
+  "questions": [],
+  "recorded_at": "2026-10-30T12:45:53Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Every acceptance criterion (L16-L22) maps to a requirement: REQ-1 to REQ-12. The criteria are split correctly, for example L18 into REQ-4/5/6 and L20-21 into REQ-8/9/10/11. Sorting by Last visit is out of scope, with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Nearly all REQs are atomic and checkable. REQ-13 combines two decisions in one statement: how 'most recent' is ranked and which date is displayed.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Known items are cited to the ticket or baseline, and the Asia/Kolkata value comes from the baseline constraints. REQ-13 has a real glossary basis. REQ-14's cite (L14) shows only that the column exists, not what date format it uses.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No clash between the ticket and the baseline: the medical history rule and the time zone agree with data-protection and constraints. Nothing was resolved silently.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Four non-blocking questions, each with real options and defaults. Product decisions go to the product owner and the glossary question goes to the tech lead.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and readable, and glossary status terms are used consistently. Sorting is both listed as Out of scope and kept open as Q-03, which is a small inconsistency.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.5,
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

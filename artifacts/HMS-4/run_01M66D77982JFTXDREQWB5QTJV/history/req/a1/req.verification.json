@@ -1,0 +1,61 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md",
+  "artifact_sha256": "c45892301d412044e14712a388346664aa7b4965e921f05201d931fffe3929d4",
+  "attempt": 1,
+  "band": "Low",
+  "caps": [],
+  "checks_sha256": "3af0f59a3667e5b8cf80b9c412b060f076ba14d18d15b50b3cad4279c4684558",
+  "claims": {
+    "total": 7,
+    "verified": 7
+  },
+  "decided_at": "2026-10-30T12:45:55Z",
+  "decided_by": "tsl@0.1.4",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "30ae5b00afa7d2a7c1ea17567a08b513a102c88a834c31352fb0437fc3e41e26",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 0.8,
+    "S3": 4.5,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "paKZTs9FYDcdFsq23Oskk_XojwAas5I__9j8H7YxlltXcRpCWpZWpszwERLGWUV297wKKHCB3cBNqyaX7ZU1CA",
+  "skill": "requirement-review@1.0.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
