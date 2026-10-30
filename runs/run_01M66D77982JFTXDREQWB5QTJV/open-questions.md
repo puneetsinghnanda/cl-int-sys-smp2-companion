@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: design@1.4.1
+step: threat@1.0.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -120,6 +120,18 @@ decision:
   A. only the patient list
   B. other callers exist and ignore the new field
 **Proposed default:** other callers exist and ignore the new field
+answer:
+answered_by:
+decision:
+
+## Q-11 · non-blocking · ask: tech lead · round 4
+**Question:** In the MVP every request is staff with every permission granted; is it accepted that the new visit history on the list has the same exposure?
+**Why it matters:** The Last visit column adds visit history to a list that has no real sign-in yet; spoofing and privilege threats rely on the future sign-in.
+**Evidence:** context/architecture.md#identity
+**Options:**
+  A. accept for MVP
+  B. block until sign-in exists
+**Proposed default:** accept for MVP; the list already shows Next appointment with the same exposure
 answer:
 answered_by:
 decision:

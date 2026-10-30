@@ -1,0 +1,73 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "966c30ec4daa1d869fe92700990389b373895c5f1f70d988a6f18d1a02f5f2d5",
+  "package_sha256": "728c306df8fb0f50acb635978b11d59bff1d28a7a588cc9442d79a313a015f3a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All six design components, including the changed GET /api/patients endpoint (through patientsRouter), have at least one threat."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats are specific (SQL in the subquery, SELECT widening, per-row subquery cost). T-10 elevation of privilege and T-6 repudiation are fairly generic for a read-only change."},
+    {"id": "TM-R3", "score": 4, "reason": "Mitigations are either cited existing controls or labelled new controls. T-9 uses the server log rule, which covers request bodies, as a control for client-side logging of response bodies."},
+    {"id": "TM-R4", "score": 5, "reason": "Known and assumed are split clearly. Every assumed item is marked as a new control, and the MVP exposure gap is raised as U-1/Q-01 with options and a default."},
+    {"id": "TM-R5", "score": 3, "reason": "Readable and consistent between the frontmatter and the body, but threats are ordered by component, not by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "T-9 uses the logging rule as an existing control for client-side logging. The cited rule comes from the API errorHandler and covers request bodies, while the threat is about logging list response bodies in the web client.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/threat.md#T-9", "quote": "logs carry method, route and error message only, never request bodies; no new logging is added"},
+        {"ref": "context/conventions.md#logging-and-data", "quote": "Sources: sample-system:api/src/middleware/errorHandler.ts#L19-L20"}
+      ],
+      "claim_ref": "C7",
+      "suggested_fix": "Mark T-9's mitigation as a new control for implement (no logging of list responses in web/src/api/client.ts or PatientsPage), or cite a web-side logging rule if one exists."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are listed by component, not by risk. The spoofing/MVP exposure (T-5) and the medical-history disclosure (T-2) appear after lower-risk items.",
+      "cites": [
+        {"ref": "C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#TM-R5", "quote": "Clear and ordered by risk"},
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/threat.md#threats", "quote": "T-1, PatientRepo list query, tampering: request input could alter the new subquery's SQL."}
+      ],
+      "suggested_fix": "Order the Threats section by risk, with T-5 and T-2 first."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-5 lists identify and requirePermission as existing controls, but the cited identity section says every MVP permission is granted. They give no protection today; the mitigation is really risk acceptance.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/threat.md#T-5", "quote": "Existing control: requests pass through identify and the route calls requirePermission, which sign-in will replace"},
+        {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+      ],
+      "suggested_fix": "Say that T-5 has no effective control in the MVP and depends only on accepting the risk in Q-01."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"name\": \"appointment_patient_start_idx\""}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]}
+  ],
+  "questions": []
+}
