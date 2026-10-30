@@ -1,0 +1,25 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then both use the same counting rule.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L95"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-1 AC4 says both computations 'use the same counting rule'. That describes the implementation and cannot be checked from outside. Testers need an outcome they can compare, such as matching numbers."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "feedback.v1",
+  "step": "split"
+}
