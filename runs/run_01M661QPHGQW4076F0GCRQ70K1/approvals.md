@@ -72,3 +72,11 @@ comment: Live harness check; only minor findings remain and the unverified claim
 }
 ```
 <!-- tsl:signature-end G-escalate-threat-a2 -->
+
+## G-escalate-ut-a2 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ut.md (sha256 2d85a0521199265b2dbd9a1ca03165114ed27e5d9d8fd08ab9e374dd8e2bdd88)
+Reason for gate: band Low
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

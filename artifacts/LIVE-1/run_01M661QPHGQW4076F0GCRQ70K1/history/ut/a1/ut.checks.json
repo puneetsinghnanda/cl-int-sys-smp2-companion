@@ -1,0 +1,145 @@
+{
+  "artifact_sha256": "617afdd5854faa65bd29c5689fee5f6f43c58c084b08f169785604e7de3f5c79",
+  "attempt": 1,
+  "finished_at": "2026-10-30T09:54:09Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md",
+      "sha256": "6f1164dd7a85ae0205169ebe51576b51fa9fe8d71f38696ad6669cf39a480b59",
+      "verification_sha256": "c6f491b195e237663679ea63fde47be66de3c78e58e63ac11126f049e7c40d55"
+    },
+    {
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md",
+      "sha256": "b4e6622becffa36ae90e954275eb94df9ea45e61936a5f3218496527b6f429e9",
+      "verification_sha256": "736e0dc711f36ace3499c38f1607564cb13fe6925bf400ad4e60f968414b370c"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "71c7fc8052eecc7f932e6e9999f512a4e4c3a154",
+      "diff_sha256": "269f0a813d7a3826983323de1540d2cd1d5e82cc8a883be0da4a0a222852faf3",
+      "files": [
+        "web/src/__tests__/PatientsPage.test.tsx"
+      ],
+      "lines_added": 27,
+      "lines_deleted": 0,
+      "repo": "sample-system",
+      "tree_sha": "4645dbbaad429ea1578454a65a143b5214418484"
+    }
+  ],
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-30T09:52:35Z",
+  "step": "ut",
+  "tool_log_sha256": "792ffa3f1eae8f391ff735d312ab6904ce4239a4ad8a9a512b8c06e251e1d170",
+  "tsl_version": "0.1.4",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 6452,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 16905,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 2969,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "0bfa5a58ca8a560ef33d93abe63a033b1f1d1405c3c993c76a1a70d25b82899a",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 55171,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "d054b0a1335696143195433110e5def1619fb0a7b777327208246b6cc6271dde",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1453,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1266,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}

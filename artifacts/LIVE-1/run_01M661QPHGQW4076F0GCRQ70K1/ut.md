@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M661QPHGQW4076F0GCRQ70K1
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.0.1
 inputs:
   - path: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 71c7fc8052eecc7f932e6e9999f512a4e4c3a154
-    head_sha: 4645dbbaad429ea1578454a65a143b5214418484
-    diff_sha256: 269f0a813d7a3826983323de1540d2cd1d5e82cc8a883be0da4a0a222852faf3
+    head_sha: 0671fdc6a62def86eed0c78c977232030184a2fe
+    diff_sha256: e7cadbe9112c352632e43146bae17a1f0398651a34644d2497a631526a647bd1
     files: [web/src/__tests__/PatientsPage.test.tsx]
 claims:
   - id: C1
@@ -28,41 +28,40 @@ claims:
   - id: C2
     text: "The change adds the count line to `PatientsPage`."
     cites: ["artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#summary"]
-trace: [REQ-1, REQ-3, REQ-4, REQ-5]
-known: [REQ-1, REQ-3, REQ-4]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]
+known: [REQ-1, REQ-2, REQ-3, REQ-4]
 assumed: [REQ-5]
-unknown:
-  - id: U-1
-    blocking: false
-questions:
-  - id: Q-01
-    blocking: false
-    ask: tech lead
-    text: "Should a page-level test also cover the count changing when the search text changes (REQ-2), or is that left to the existing search behaviour?"
-    why: "The count comes from the same response as the rows, so REQ-2 follows from the existing search refresh; no test drives a search change here."
-    evidence: ["artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#summary"]
-    options: ["Add a search-change test", "Rely on the existing search refresh"]
-    default: "Rely on the existing search refresh."
+unknown: []
+questions: []
+resolves:
+  - id: F-1
+    how: "Added the REQ-2 test: the first list response has total 12, a search change makes the next response total 3, and the test checks the count line moves from '12 patients' to '3 patients'."
 ---
 # Unit tests: LIVE-1
 
 ## Summary
-Three tests extend PatientsPage.test.tsx (C1) for the count line added by the change (C2): a total larger
-than the rows shown ("12 patients"), one match ("1 patient"), and no match ("0 patients" with the empty
-message kept). Tests run and coverage are recorded by tsl in checks.json when it runs the verifier (H3).
+Five tests extend PatientsPage.test.tsx (C1) for the count line added by the change (C2):
+- A total larger than the rows shown ("12 patients", and the page-row count "2 patients" is absent).
+- One match ("1 patient").
+- No match ("0 patients", with the empty message kept).
+- The count following a change of the search text.
+- A failed list request, which shows the error and no count line.
+
+tsl records the test run and coverage in checks.json when it runs the verifier (H3).
 
 ## Tests
-- web/src/__tests__/PatientsPage.test.tsx: "PatientsPage match count (LIVE-1)" covers REQ-1, REQ-3, REQ-4 and REQ-5.
+- web/src/__tests__/PatientsPage.test.tsx: "PatientsPage match count (LIVE-1)" covers REQ-1, REQ-2, REQ-3, REQ-4 and REQ-5, plus the error path.
 
 ## Known
-- REQ-1: "12 patients" and "1 patient" tests.
+- REQ-1: the "12 patients" and "1 patient" tests, and the failed-request test (no count line).
+- REQ-2: the search-change test, where the count moves from 12 to 3.
 - REQ-3, REQ-4: the no-match test checks "0 patients" and "No patients match.".
 
 ## Assumed
-- REQ-5: the "12 patients" test shows the count is the total, not the two rows on the page.
+- REQ-5: the "12 patients" test shows that the count is the total, not the two rows on the page.
 
 ## Unknown
-- U-1 (non-blocking): REQ-2 (count follows a search change) has no page-level test (Q-01).
+- None.
 
 ## Open questions
-- Q-01 (non-blocking, tech lead): add a search-change test? Default: rely on the existing search refresh.
+- None.
