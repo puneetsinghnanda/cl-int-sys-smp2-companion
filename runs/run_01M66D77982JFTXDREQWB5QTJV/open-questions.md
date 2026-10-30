@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: secrev@1.0.1
+step: tplan@1.0.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -192,6 +192,30 @@ decision:
   A. accept for MVP
   B. gate behind sign-in before release
 **Proposed default:** accept for MVP; same exposure as the existing Next appointment field
+answer:
+answered_by:
+decision:
+
+## Q-17 · non-blocking · ask: tech lead · round 8
+**Question:** Does the verifier provide PostgreSQL so the integration tests run, or are they proven only locally and in CI?
+**Why it matters:** Every integration test here skips without a database, so a passing verifier may prove only the web unit tests.
+**Evidence:** context/test-strategy.md#database-for-tests
+**Options:**
+  A. verifier provides PostgreSQL
+  B. run npm test with PostgreSQL in CI before merge
+**Proposed default:** run npm test with PostgreSQL in CI before merge
+answer:
+answered_by:
+decision:
+
+## Q-18 · non-blocking · ask: tech lead · round 8
+**Question:** Can TP-10 register more than 20 invented patients through POST /api/patients inside the test, since the shared fixture has fewer?
+**Why it matters:** Proving 20 per page with the new field needs a second page; no existing test pages past one page.
+**Evidence:** context/generated/test-layout.json#test:sample-system:api/test/patients.test.ts
+**Options:**
+  A. register invented patients in the test
+  B. extend the shared fixture
+**Proposed default:** register invented patients in the test
 answer:
 answered_by:
 decision:

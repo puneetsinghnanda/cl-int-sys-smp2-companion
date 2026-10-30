@@ -1,0 +1,185 @@
+{
+  "artifact_sha256": "1c5b6e924566ce0882f4a5f634a1dba05ebfa9e3fcba00ad1c8216c253044a2b",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID (DOC-1, APT-4, ...).",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "HMS-1 REQ-2: shows the earliest Scheduled appointment with its start and doctor name",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/patients-next-appointment.test.ts"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "PAT-8: lists and appointment views never carry medical history",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/patients.test.ts"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "PatientsPage next appointment column (HMS-2)",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "no page is tested end to end in a browser",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "| TP-5 | integration | S-2/AC1 | later Cancelled appointment ignored | exists |",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/tplan.md#L155"
+        },
+        {
+          "quote": "HMS-4 REQ-4, REQ-5, REQ-6: later Cancelled, No-show and Scheduled appointments leave the Completed one",
+          "ref": "sample-system:api/test/patients-last-visit.test.ts#L77"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Map TP-5, TP-6 and TP-7 to the real combined test title, or mark them as to be split into one test per status.",
+      "text": "TP-5, TP-6 and TP-7 are listed as three separate existing tests with their own titles. Only one combined test exists, covering REQ-4, REQ-5 and REQ-6 together, so the planned titles cannot be found in the suite."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "exists; should also assert the 28 Oct date directly",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/tplan.md#L153"
+        },
+        {
+          "quote": "HMS-4 REQ-3, REQ-14: formats the visit in the hospital zone like Next appointment",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L88"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Give TP-3 the status 'to update' and name the single shared test for both TP-3 and TP-4.",
+      "text": "TP-3 and TP-4 are one existing test (REQ-3, REQ-14), not two. Its date check compares against the same dateTime helper with 'Asia/Kolkata' rather than a literal date. The plan notes the missing direct date assertion but does not mark TP-3 as needing work."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "TP-14 is the existing PAT-8 key test, updated for the new field.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/tplan.md#L146"
+        },
+        {
+          "quote": "HMS-4 REQ-12: list items carry exactly the expected keys and no medical history",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/tplan.md#L120"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Use one status for TP-14 throughout. Either rename the planned title to match PAT-8 or add an HMS-4 REQ-12 test.",
+      "text": "TP-14 is described two ways: 'updated for the new field' in the scope text and plain 'exists' in the table. Its title starts 'HMS-4 REQ-12', but the real test is named PAT-8. The strategy wants each test name to start with its requirement ID."
+    }
+  ],
+  "package_sha256": "639ab0940bd53d053e71b4e3043e0f84d09111fcd347c475a0b4b412b9a0dfbd",
+  "questions": [],
+  "recorded_at": "2026-10-30T14:10:59Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All 13 acceptance criteria (S-1/AC1-4, S-2/AC1-4, S-3/AC1-4, S-4/AC1) are mapped to at least one test, and every one exists in split.md. TP-10 and TP-12 are clearly marked as still to write.",
+      "score": 5
+    },
+    {
+      "id": "TP-R2",
+      "reason": "Rendering and formatting are tested with jsdom unit tests. Query rules (status, latest, paging, search, order, keys) are tested with Supertest integration tests. There is no e2e or manual testing, so each test is at the cheapest level that proves it.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "There are negative tests for the changed endpoint (TP-15 invalid filter, TP-16 only-Cancelled with no cross-patient leak) and boundaries (TP-3 UTC/Kolkata date edge, TP-10 more than 20 rows, null fallback). No test covers two Completed visits with the same start.",
+      "score": 4
+    },
+    {
+      "id": "TP-R4",
+      "reason": "The plan matches the strategy's tools (Vitest/Supertest/PostgreSQL, jsdom/Testing Library) and folders, and flags the DB-skip risk in Q-01. TP-14 maps to a test named PAT-8 rather than one starting with its requirement ID.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "The titles are clear and a tester can run them. However, several planned TP titles do not match the real test names: TP-3/TP-4 and TP-5/6/7 are each one combined test, so a tester cannot find them by title.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}
