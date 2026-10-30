@@ -1,0 +1,53 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "`GET /api/doctors` gains an opt-in query parameter.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L159"
+        },
+        {
+          "quote": "`api.doctors` passes the opt-in parameter and returns the list-only row type.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L184"
+        },
+        {
+          "quote": "links to `/appointments` filtered to that doctor and to today's date",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L167"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The interface is not precise. The opt-in query parameter on GET /api/doctors, the per-row count field, the list-only row type and the query parameters of the /appointments link are never named or typed."
+    },
+    {
+      "cites": [
+        {
+          "quote": "Share one status condition between both",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L118"
+        },
+        {
+          "quote": "Tile differs; follow the ticket and raise a separate fix",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L77"
+        },
+        {
+          "quote": "The count includes appointments in any status except `Cancelled`.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L62"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The Q-02 default makes the column share DashboardService's status condition. The stories' Q-05 default says that if the tile differs, follow the ticket (exclude only Cancelled) and raise a separate fix. With the design's default, a differing tile would break REQ-3/S-1 AC3."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "feedback.v1",
+  "step": "design"
+}

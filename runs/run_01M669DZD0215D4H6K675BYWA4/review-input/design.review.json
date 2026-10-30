@@ -1,0 +1,107 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "01b72f7e84cb390db0abe1871f7c67a24697b6706891e74788b19ba290905060",
+  "package_sha256": "1f96e22c16cbec84f4ad58f2cf83c1fdb15cde085cdf0186caca32a3a9ec3f53",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "rubric_score": 4.15,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Uses only existing modules and layers: router, service, repos, dayBounds, client.ts, todayIn, Pagination. No new route, store or migration. Follows the routes/services/repositories layout."},
+    {"id": "DS-R2", "score": 4, "reason": "The story map covers S-1, S-2 and S-3. S-1 AC3/AC4 rely on the Q-02 default, which conflicts with the stories' Q-05 default if the tile's rule differs from the ticket."},
+    {"id": "DS-R3", "score": 3, "reason": "Methods and paths are exact, but the opt-in query parameter, the count field, the list-only row type and the /appointments link query parameters are never named or typed."},
+    {"id": "DS-R4", "score": 4, "reason": "Claims cite generated facts and unknowns are asked (Q-01 to Q-04). The BookAppointmentPage call is inherited from impact without call-level evidence. DashboardService is marked existing although a refactor is planned."},
+    {"id": "DS-R5", "score": 5, "reason": "Four explicit trade-offs: separate count query vs join, opt-in vs always on, list-only type vs shared type, and sharing the dashboard condition. Each gives a reason and a cost."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear flow and a consistent component list. Small inconsistency: DashboardService is 'existing' but also the subject of a 'small refactor'."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The interface is not precise. The opt-in query parameter on GET /api/doctors, the per-row count field, the list-only row type and the query parameters of the /appointments link are never named or typed.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L159", "quote": "`GET /api/doctors` gains an opt-in query parameter."},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L184", "quote": "`api.doctors` passes the opt-in parameter and returns the list-only row type."},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L167", "quote": "links to `/appointments` filtered to that doctor and to today's date"}
+      ],
+      "suggested_fix": "Name the parameter and its type (for example a boolean flag), the response field (an integer, 0 when there are no appointments), the row type name, and the link URL with its doctor and date query keys."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "consistency",
+      "text": "The Q-02 default makes the column share DashboardService's status condition. The stories' Q-05 default says that if the tile differs, follow the ticket (exclude only Cancelled) and raise a separate fix. With the design's default, a differing tile would break REQ-3/S-1 AC3.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L118", "quote": "Share one status condition between both"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L77", "quote": "Tile differs; follow the ticket and raise a separate fix"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L62", "quote": "The count includes appointments in any status except `Cancelled`."}
+      ],
+      "suggested_fix": "Make the Q-02 default conditional: share the condition only if it excludes only CANCELLED. Otherwise follow REQ-3 and raise a separate fix, in line with the stories' Q-05."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "DashboardService is marked existing, but the trade-offs plan a refactor to share its status condition. Under the Q-02 default it would be changed.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L183", "quote": "DashboardService (api), **existing**: the reference for the counting rule; its status condition may be shared (Q-02)."},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L175", "quote": "at the cost of a small refactor (Q-02)"}
+      ],
+      "suggested_fix": "Mark DashboardService as changed under the Q-02 default, or note that it becomes changed if Q-02 confirms sharing."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C20 says BookAppointmentPage calls GET /api/doctors. The module map only records that the symbol exists; it has no call edges. The second cite is impact's own claim, which also rests only on that symbol.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L83", "quote": "also calls the doctors list route for its doctor picker"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#L93", "quote": "also calls GET /api/doctors for its doctor picker"}
+      ],
+      "claim_ref": "C20",
+      "suggested_fix": "Cite the source line in BookAppointmentPage.tsx or client.ts that calls the doctors list, or mark the claim as assumed."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors", "quote": "\"id\": \"http:GET:/api/doctors\""}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id", "quote": "\"id\": \"http:GET:/api/doctors/:id\""}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "\"id\": \"http:GET:/api/appointments\""}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/dashboard", "quote": "\"id\": \"http:GET:/api/dashboard\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"id\": \"http:GET:/api/settings\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`; shared helpers in `api/src/lib`"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "every request is the actor `staff` and every permission is granted"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/doctors.ts:doctorsRouter", "quote": "\"name\": \"doctorsRouter\""}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "quote": "\"name\": \"DoctorService\""}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorRepo", "quote": "\"name\": \"DoctorRepo\""}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "\"name\": \"AppointmentRepo\""}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "quote": "\"name\": \"dayBounds\""}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "quote": "\"name\": \"DashboardService\""}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage", "quote": "\"name\": \"DoctorsPage\""}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "quote": "\"name\": \"AppointmentsPage\""}]},
+    {"claim_id": "C20", "verdict": "unsupported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "quote": "\"name\": \"BookAppointmentPage\""}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "quote": "\"id\": \"sym:sample-system:web/src/api/client.ts:api\""}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "\"name\": \"todayIn\""}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/components/Pagination.tsx:Pagination", "quote": "\"name\": \"Pagination\""}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "If DashboardService's 'Appointments today' rule excludes more than CANCELLED, which rule should the Today column use: the shared dashboard condition (design Q-02 default) or the ticket's rule with a separate tile fix (stories Q-05 default)?",
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-2"
+    }
+  ]
+}
