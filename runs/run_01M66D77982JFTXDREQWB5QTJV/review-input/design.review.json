@@ -1,0 +1,106 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "bfe093b4cc4871127b3a04b59243376dc28503942835aee101ea44ba1460668b",
+  "package_sha256": "e838f50acd6073db06429a6d8c1792276b0667e8b34d13bb2927c37dadddf7f6",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
+  },
+  "rubric_score": 4.25,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Uses only existing modules and layers: PatientRepo, PatientService, patientsRouter, PatientsPage, client.ts and the existing index. No new infrastructure and no migration."},
+    {"id": "DS-R2", "score": 4, "reason": "The story map covers S-1 to S-4. One gap: reusing startsAt shows a date-time, while REQ-2 asks for a date, so the S-1 date criteria may be only partly served."},
+    {"id": "DS-R3", "score": 4, "reason": "Method, path and envelope are precise. The field name is still open (Q-01), and the field is described as both null and optional, so its shape is not fully pinned down."},
+    {"id": "DS-R4", "score": 4, "reason": "Known, assumed and unknown items are clearly split and the claims are cited. Weak spots: the index coverage is uncited here, and C12 goes beyond what its cited fact says."},
+    {"id": "DS-R5", "score": 4, "reason": "Four trade-offs are explained: subquery vs join, web formatting, no migration and the explicit status filter. One trade-off cites Q-06, which does not exist in the impact step."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear and short. Small inconsistencies: null vs optional for the field, and the wrong Q reference."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "traceability",
+      "text": "The trade-off cites 'Q-06 from the impact step', but impact.md has only Q-01 and Q-02. The web-vs-API conversion question is impact Q-01.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L115", "quote": "which serves REQ-14 and Q-06 from the impact step"},
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md#L147", "quote": "Q-01 (non-blocking, tech lead): Convert in the API or in the web page?"}
+      ],
+      "suggested_fix": "Change Q-06 to impact Q-01, and record that its default (the API returns the instant and the web formats it) was adopted."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "startsAt calls dateTime(), so the Last visit cell would show a date and a time. REQ-2 asks for the date of the visit. The design does not say whether the time should be shown.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L111", "quote": "formatted with the existing `startsAt` helper so it matches the Next appointment column"},
+        {"ref": "sample-system:web/src/pages/PatientsPage.tsx#L14", "quote": "return dateTime(iso, timeZone || 'Asia/Kolkata');"},
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L200", "quote": "The column shows the date of the patient's most recent Completed appointment."}
+      ],
+      "suggested_fix": "State whether Last visit shows the date only or the full startsAt date-time. If date only, name the date-only formatter that uses the same hospital zone."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The overview says the field is null when there is no Completed appointment, but the client type section calls it optional. Null and optional are different TypeScript shapes.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L111", "quote": "or null if there are none"},
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L124", "quote": "Only the patient list item type gains the optional field."}
+      ],
+      "suggested_fix": "Define the field as always present with type string | null (ISO UTC instant)."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Index coverage is stated without a claim or citation in the design. db-schema.json is not among the design inputs; only the impact step cited it.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L116", "quote": "The existing index covers (patient_id, starts_at)."},
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md#L57", "quote": "Index `appointment_patient_start_idx` covers `patient_id` and starts_at on table:appointment."}
+      ],
+      "suggested_fix": "Add a claim citing context/generated/db-schema.json#index:appointment_patient_start_idx, or cite impact C12."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C12 says the db module holds the migrations and schema. The cited module fact only lists file counts and languages, so it does not support that wording.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L59", "quote": "The db module holds the migrations and schema for `db`."},
+        {"ref": "context/generated/module-map.json#module:sample-system:db", "quote": "\"id\": \"module:sample-system:db\""}
+      ],
+      "claim_ref": "C12",
+      "suggested_fix": "Soften C12 to 'db is a module', or cite architecture.md#double-booking, whose sources name db/migrations."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "routes parse input and declare a permission, services hold the rules and"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "\"name\": \"PatientRepo\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"name\": \"PatientsPage\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:startsAt", "quote": "\"name\": \"startsAt\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "\"name\": \"patientsRouter\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists"}]},
+    {"claim_id": "C12", "verdict": "unsupported", "cites": [{"ref": "context/generated/module-map.json#module:sample-system:db", "quote": "\"id\": \"module:sample-system:db\""}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "Should the Last visit cell show only the calendar date (Asia/Kolkata), or the same date-time that startsAt shows for Next appointment?",
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "which serves REQ-14 and Q-06 from the impact step",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L115"
+        },
+        {
+          "quote": "Q-01 (non-blocking, tech lead): Convert in the API or in the web page?",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md#L147"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The trade-off cites 'Q-06 from the impact step', but impact.md has only Q-01 and Q-02. The web-vs-API conversion question is impact Q-01."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "feedback.v1",
+  "step": "design"
+}

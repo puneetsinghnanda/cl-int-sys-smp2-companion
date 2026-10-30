@@ -40,7 +40,7 @@
       "step": "split"
     }
   ],
-  "heartbeat_at": "2026-10-30T13:17:39Z",
+  "heartbeat_at": "2026-10-30T13:24:44Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -81,7 +81,7 @@
     "open_non_blocking": 7,
     "round": 2
   },
-  "rev": 23,
+  "rev": 26,
   "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -226,16 +226,49 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md",
+          "artifact_sha256": "bfe093b4cc4871127b3a04b59243376dc28503942835aee101ea44ba1460668b",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-30T13:24:44Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "impact",
+              "sha256": "349e24faf9740b35e49bea15217759dbe806d6c78acadbf0bee04e178d3e931d",
+              "step": "impact"
+            },
+            {
+              "name": "stories",
+              "sha256": "f49a45c822dcc797bdba004c411c08fa32db8a41468d2957a34eb264d72f9764",
+              "step": "split"
+            },
+            {
+              "name": "intent",
+              "sha256": "a33bb8ac0e7a965160b9d6ba639feb8f4086518ad90e0374e053ffbfacdfaf35",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.verification.json",
+          "skill": "design@1.4.1",
+          "skill_started_at": "2026-10-30T13:19:49Z",
+          "started_at": "2026-10-30T13:19:38Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "design",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -306,7 +339,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-10-30T13:17:39Z",
+  "updated_at": "2026-10-30T13:24:44Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
