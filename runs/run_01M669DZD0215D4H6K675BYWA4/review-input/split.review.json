@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M669DZD0215D4H6K675BYWA4",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "a2903539a0e31669f0c19da82d579bdee4a2fac526d2fcc8216cf4e716e60200",
-  "package_sha256": "4cba7fe9571d8f7577ed2cd70b6007c40662929010a058d2b0545ac836b684cc",
+  "attempt": 2,
+  "artifact_sha256": "0347e867d613f325eceea3249daca63249ed02bafd70ff50bf50e83989fa7c76",
+  "package_sha256": "256cace1c3de1ee4b41f8d377737b9efaceee0dbfea3f6fca055c42379bec1f7",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,62 +12,126 @@
     "version": "0.1.4",
     "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2"
   },
-  "rubric_score": 4.45,
+  "rubric_score": 4.55,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "REQ-1 to REQ-11, including assumed REQ-11, are each traced by exactly one story: S-1 (REQ-1 to 5), S-2 (REQ-6, 7) and S-3 (REQ-8 to 11)."},
-    {"id": "SS-R2", "score": 4, "reason": "Each story has one outcome. S-2 may grow if U-3 resolves to adding new doctor/day filters to the appointment list, and that is not shown as separate scope."},
-    {"id": "SS-R3", "score": 4, "reason": "All criteria use Given/When/Then. S-1 AC4 asserts an internal 'same counting rule', which cannot be observed. S-3 AC3/AC4 do not name the filters or search they check."},
-    {"id": "SS-R4", "score": 5, "reason": "Every value (Today, Asia/Kolkata, 0, 20 per page, sort by name, the column list, Cancelled) comes from req.md."},
-    {"id": "SS-R5", "score": 4, "reason": "Readable and consistent overall. The body ACs are shorter than the front-matter ACs and lose detail, e.g. Asia/Kolkata drops out of S-1 AC3."}
+    {
+      "id": "SS-R1",
+      "score": 5,
+      "reason": "Each of REQ-1 to REQ-11 is traced by exactly one story, including assumed REQ-11: S-1 covers REQ-1 to 5, S-2 covers REQ-6 and 7, S-3 covers REQ-8 to 11."
+    },
+    {
+      "id": "SS-R2",
+      "score": 4,
+      "reason": "Each story has one outcome. S-2 may grow if Q-03 resolves to its default (add the missing doctor/day filters in this change), and that extra scope is not split out."
+    },
+    {
+      "id": "SS-R3",
+      "score": 4,
+      "reason": "All criteria use Given/When/Then. S-1 AC4 is now an observable number comparison (prior F-1 fixed). S-3 AC3/AC4 still do not name the filters and search they check, so the regression check stays open-ended."
+    },
+    {
+      "id": "SS-R4",
+      "score": 5,
+      "reason": "Every value comes from req.md: Today, Asia/Kolkata, Cancelled, 0, 20 per page, sorted by name, the column list and the Appointments today tile."
+    },
+    {
+      "id": "SS-R5",
+      "score": 5,
+      "reason": "Terms are clear and consistent. The body ACs now match the front-matter ACs word for word (prior F-4 fixed), and U-6 now agrees with S-2 (prior F-3 fixed)."
+    }
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "S-1 AC4 says both computations 'use the same counting rule'. That describes the implementation and cannot be checked from outside. Testers need an outcome they can compare, such as matching numbers.",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Prior F-2 is still open. S-3 AC3 and AC4 refer to 'the list's current filters' and 'current search' without naming them, so the regression check is open-ended.",
       "cites": [
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L95", "quote": "then both use the same counting rule."}
+        {
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L118",
+          "quote": "Given staff apply the list's current filters, when the list reloads, then the same doctors are shown as before this change."
+        },
+        {
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L120",
+          "quote": "Given staff use the list's current search, when the list reloads"
+        }
       ],
-      "suggested_fix": "Rewrite as: given the same appointments for today, the sum of Today counts across all doctors equals the dashboard 'Appointments today' tile value."
+      "suggested_fix": "Name the existing doctors-list filters and search fields, or reference their spec (PRD DOC-2, per Q-02)."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "correctness",
-      "text": "S-3 AC3/AC4 refer to 'the list's current filters' and 'current search' without naming them. That makes the regression check open-ended.",
+      "category": "consistency",
+      "text": "S-1 AC4 requires the Today count to equal the tile value. Under the Q-05 default (tile differs; follow the ticket), the two would disagree and AC4 would fail. The split does not say which criterion gives way.",
       "cites": [
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L115", "quote": "Given staff apply the list's current filters, when the list reloads, then the same doctors are shown as before this change."}
+        {
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L98",
+          "quote": "then that doctor's Today count equals the dashboard's \\\"Appointments today\\\" tile value."
+        },
+        {
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L77",
+          "quote": "default: \"Tile differs; follow the ticket and raise a separate fix\""
+        }
       ],
-      "suggested_fix": "Name the existing filters and search fields of the doctors list, or link to their spec (PRD DOC-2)."
+      "suggested_fix": "State that AC4 holds only once Q-05 confirms the tile matches, or mark AC4 as dependent on the separate tile fix under the default."
     },
     {
       "id": "F-3",
       "severity": "minor",
-      "category": "consistency",
-      "text": "U-6 says S-2 has no criterion for a 0 count. But S-2 AC1 covers any Today count, which includes 0, so it already implies 0 links.",
+      "category": "traceability",
+      "text": "Prior F-3 (the U-6 wording) and F-4 (the body/front-matter AC mismatch) are fixed in this attempt, but 'resolves' and 'Resolved feedback' list only F-1.",
       "cites": [
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L156", "quote": "S-2 has no criterion for 0 until answered."},
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L103", "quote": "Given the doctors list shows a Today count for a doctor, when staff select the count"}
+        {
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L15",
+          "quote": "- id: F-1"
+        },
+        {
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L162",
+          "quote": "S-2 applies to every count under the Q-06 default."
+        }
       ],
-      "suggested_fix": "Either limit S-2 ACs to non-zero counts until Q-06 is answered, or state that the Q-06 default (every count links) applies."
-    },
-    {
-      "id": "F-4",
-      "severity": "minor",
-      "category": "consistency",
-      "text": "The body ACs differ from the front-matter ACs. Body S-1 AC3 drops 'Asia/Kolkata', and body S-3 AC3 changes the When clause to 'when applied'.",
-      "cites": [
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L128", "quote": "Given today's appointments in several statuses including Cancelled, when the list loads"},
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L93", "quote": "Given a doctor has appointments starting today in Asia/Kolkata in several statuses including Cancelled"}
-      ],
-      "suggested_fix": "Render the body ACs verbatim from the front matter."
+      "suggested_fix": "Add resolves entries for F-3 and F-4, and an entry for F-2 saying whether it was left open on purpose."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/glossary.md#tile", "quote": "selecting it opens the list behind the count"}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "book, move and close appointments; in the MVP every"}]}
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#cancelled",
+          "quote": "An appointment called off before it took place, with a reason"
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#tile",
+          "quote": "selecting it opens the list behind the count"
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#front-desk-staff",
+          "quote": "book, move and close appointments; in the MVP every"
+        }
+      ]
+    }
   ],
-  "questions": []
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "If the dashboard tile turns out not to count every status except Cancelled, should S-1 AC4 (Today count equals the tile value) be dropped or deferred until the tile fix lands?",
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2"
+    }
+  ]
 }

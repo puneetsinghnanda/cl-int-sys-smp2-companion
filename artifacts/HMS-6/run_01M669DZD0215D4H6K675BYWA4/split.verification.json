@@ -1,21 +1,22 @@
 {
+  "accepted_default": true,
   "artifact_path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md",
-  "artifact_sha256": "a2903539a0e31669f0c19da82d579bdee4a2fac526d2fcc8216cf4e716e60200",
-  "attempt": 1,
+  "artifact_sha256": "0347e867d613f325eceea3249daca63249ed02bafd70ff50bf50e83989fa7c76",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "745a54151c87e6044688e1ce7a26560b6a5c0afc9217ef495843036275a333d1",
+  "checks_sha256": "965a424fed2b5f75ec6a97d041aaf32672b89bda77070262a8147760822e1b04",
   "claims": {
     "total": 3,
     "verified": 3
   },
-  "decided_at": "2026-10-30T12:03:34Z",
+  "decided_at": "2026-10-30T12:08:34Z",
   "decided_by": "tsl@0.1.4",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -23,10 +24,6 @@
     },
     {
       "id": "F-3",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
       "severity": "minor"
     }
   ],
@@ -39,7 +36,7 @@
     }
   ],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -47,15 +44,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "a57329a74fbdc162fc0cbf83bc4c122e5b7c724c5b91117c3437f370ce84c87a",
   "product_changes": null,
-  "review_sha256": "cae1637be9b1f9e5cdd89b476d1f7aa95d2a7d191c3c7fc9dc62cd7cd8b1cf84",
+  "review_sha256": "b2ce6cfe2cb5259ed8b61d9d4bc52f4d919606e77d908c1620bfe3cb6a4c6400",
   "run_id": "run_01M669DZD0215D4H6K675BYWA4",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.45,
+    "S3": 4.55,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -64,7 +61,7 @@
       "sensitive": false
     }
   },
-  "signature": "XeFhRSTtOFczLzqGn7816MGpruxgeFIKKwfYcp0m91KtlIbJFHgUdrG0UFqXN8aJcUqf_lKBOn1951SBhG7lCg",
+  "signature": "Sl6lBgp55yd2tq8BGNRVS5UMfzViCSHRj3OYo7tumt_wTgp7-jRdzZ2H_ClzB1ETIXuo6U-NWAH5aixpoJuMCw",
   "skill": "story-split@1.0.1",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
