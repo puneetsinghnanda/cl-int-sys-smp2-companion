@@ -1,0 +1,111 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "e3cbebda1585e6a1865d2eaf53d75766a5369ca2388c43b40eabb789d664c159",
+  "package_sha256": "bdd449c0cf6b229a6b886f6f12406ef2fd4c628a12c60edc56744b5ab9dcf6aa",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d"
+  },
+  "rubric_score": 4.4,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All five acceptance criteria are covered by REQ-1 to REQ-10. The walk-in motivation, sorting by count and changes to the tile are listed as out of scope, each with a reason."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs cover one behaviour and can be tested. REQ-10 joins filters and search in one REQ. REQ-4 adds a sum-equality check that holds only under unstated conditions."},
+    {"id": "RR-R3", "score": 4, "reason": "Statuses are cited, and REQ-11 is assumed with a real basis. REQ-4 is marked known, but its sum-equals-tile condition is an inference the ticket does not state."},
+    {"id": "RR-R4", "score": 5, "reason": "No ticket-baseline clash found. The ticket and baseline agree on the time zone. A possible tile-rule mismatch is raised as Q-05, citing the ticket."},
+    {"id": "RR-R5", "score": 4, "reason": "Nothing blocks needlessly and roles fit. Q-02 asks something the ticket already answers (PRD DOC-2). Q-05's default can contradict REQ-3. Some defaults do not match their listed options."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable, and glossary terms are used consistently. Minor redundancy between the unknowns and the questions."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "REQ-4 is marked known but adds a condition the ticket does not state: the sum of all doctors' Today counts equals the tile. This holds only if every doctor is summed, including Inactive and filtered-out ones, across all pages.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L68", "quote": "so the sum of all doctors' Today counts equals that tile's value for the same moment"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md#L21", "quote": "counted the same way as the dashboard's \"Appointments today\" tile"}
+      ],
+      "suggested_fix": "Limit REQ-4 to 'uses the same counting rule as the tile'. Or move the sum-equality check to assumed, with scope stated as all doctors including Inactive, ignoring filters and paging."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "consistency",
+      "text": "Q-05's default reuses the tile's rule even if the tile differs. That would contradict known REQ-3 (exclude only Cancelled), which the ticket states explicitly.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L172", "quote": "Reuse the tile's counting rule; impact analysis confirms it excludes only Cancelled"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L62", "quote": "The count includes appointments in any status except `Cancelled`."},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md#L21", "quote": "any status except"}
+      ],
+      "suggested_fix": "Set the default to one of the listed options, e.g. 'Tile differs; follow the ticket and raise a separate fix', so REQ-3 always holds."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "other",
+      "text": "Q-02 asks whether the doctors list is the PRD DOC-2 page, but the ticket already names DOC-2. This is a needless question.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L144", "quote": "Is the 'doctors list' the existing doctors list page described by PRD DOC-2?"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md#L16", "quote": "fee and status (PRD DOC-2)"}
+      ],
+      "suggested_fix": "Drop Q-02, or turn U-2 into a glossary note that cites ticket L16."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The defaults of Q-03 and Q-05 are not among their listed options, so it is unclear which option a default answer selects.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L156", "quote": "Use existing filters; add any missing doctor/day filter in this change"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L155", "quote": "Filters exist; link to them"}
+      ],
+      "suggested_fix": "Make each default exactly one of its options."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-10 joins two behaviours, filters unchanged and search unchanged, in one REQ.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L104", "quote": "keeps its current `filters and search` with unchanged behaviour"}
+      ],
+      "suggested_fix": "Split into one REQ for filters and one for search."
+    },
+    {
+      "id": "F-6",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claim C8 (Inactive, never deleted) supports no requirement and cites a baseline section the package does not list.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md#L39", "quote": "Doctors with appointments are made `Inactive`, never deleted."}
+      ],
+      "claim_ref": "C8",
+      "suggested_fix": "Remove C8, or tie it to a requirement, e.g. whether Inactive doctors show a Today count."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#goals", "quote": "The dashboard shows the day in one screen."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#dashboard", "quote": "tiles that count patients, doctors and appointments, each linking to the list it"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#tile", "quote": "selecting it opens the list behind the count"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason; its slot becomes free again."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "in the MVP every"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md#L16", "quote": "The doctors list shows code, name, specialization, department, fee and status"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Doctors and patients with appointments are made Inactive, never deleted."}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "Should Inactive doctors with appointments today appear with a Today count? And should REQ-4's sum-equals-tile check span all doctors regardless of list filters and paging?",
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-1"
+    }
+  ]
+}

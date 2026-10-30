@@ -1,11 +1,15 @@
 {
-  "active_session": null,
+  "active_session": {
+    "host_hash": "h_0000",
+    "session_id": "b0eafb32-5c6d-4921-80b3-a321e894f159",
+    "since": "2026-10-30T11:40:56Z"
+  },
   "branch": {},
   "created_at": "2026-10-30T11:34:28Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-30T11:34:28Z",
+  "heartbeat_at": "2026-10-30T11:49:56Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -46,22 +50,39 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 0,
+  "rev": 4,
   "run_id": "run_01M669DZD0215D4H6K675BYWA4",
   "schema": "run-state.v1",
   "status": "RUNNING",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md",
+          "artifact_sha256": "e3cbebda1585e6a1865d2eaf53d75766a5369ca2388c43b40eabb789d664c159",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-30T11:49:56Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.verification.json",
+          "skill": "requirement-review@1.0.0",
+          "skill_started_at": "2026-10-30T11:40:56Z",
+          "started_at": "2026-10-30T11:35:58Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "req",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -168,7 +189,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-6",
-  "updated_at": "2026-10-30T11:34:28Z",
+  "updated_at": "2026-10-30T11:49:56Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
