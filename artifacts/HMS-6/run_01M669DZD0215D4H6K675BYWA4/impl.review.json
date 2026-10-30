@@ -1,0 +1,262 @@
+{
+  "artifact_sha256": "3ef6f5eb86e6950f21bdde784f9d6b7f9bc618f94ce7e9364aaa33a0358e5834",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`; shared helpers in `api/src/lib`.",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Invalid input is 400 with one",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/doctorService.ts:DoctorService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/api/client.ts:api",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/lib/format.ts:todayIn",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/lib/time.ts:dayBounds",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/lib/time.ts:localDay",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`GET /api/doctors` gains an optional boolean query parameter, `with_today`.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L181"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "It calls one new `AppointmentRepo` method, `countTodayByDoctor(doctorIds, from, to)`.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L186"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "doctorsRouter, GET /api/doctors (api), **changed**: parses `with_today` (boolean, default false)",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L200"
+        },
+        {
+          "quote": "doctorsRouter already passes `req.query` to `DoctorService.list`, where every other list filter is parsed, so no route change was needed.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md#L95"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Have the design record doctorsRouter as existing, or get the tech lead to confirm the deviation.",
+      "text": "The design says doctorsRouter is changed to parse with_today. The implementation parses it in DoctorService.list and leaves the router as it was. This is functionally equivalent and explained, but it departs from the design's component list."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "api client (web), **changed**: `api.doctors` accepts `with_today` and returns `Page&lt;DoctorListRow&gt;` when it is set.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L207"
+        },
+        {
+          "quote": "assumed `api.doctorsWithToday` as a separate client call is acceptable in place of overloading `api.doctors`",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md#L120"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "text": "The design has api.doctors accept with_today. The implementation adds a separate api.doctorsWithToday instead. This is recorded only as assumption S-1, not as a resolved design question."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "(SELECT count(*) FROM appointment WHERE starts_at &gt;= $1 AND starts_at &lt; $2 AND status &lt;&gt; 'CANCELLED') AS today",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L49"
+        },
+        {
+          "quote": "WHERE doctor_id = ANY($1::int[]) AND starts_at &gt;= $2 AND starts_at &lt; $3 AND status &lt;&gt; 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L129"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a regression test that checks the column total against the dashboard tile, or move the status condition into one shared constant.",
+      "text": "The today-count predicate is copied into countTodayByDoctor instead of being shared with DashboardService. The two match now (REQ-4 holds), but nothing stops them drifting apart later."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "async list(query: Record&lt;string, unknown&gt;, page: number): Promise&lt;Page&lt;DoctorSummary | DoctorListRow&gt;&gt;",
+          "ref": "sample-system:api/src/services/doctorService.ts#L33"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "DoctorService.list now returns Page&lt;DoctorSummary | DoctorListRow&gt;, which widens the type for every caller. Overloads or a separate method would keep the types precise."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Tests: none added. The design names no regression test, and no existing test pins the doctors list",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md#L107"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "text": "No tests were added for countTodayByDoctor, the with_today parsing (including the 400 on bad values) or the zero default. The artifact leaves all of this to the later unit-test step."
+    }
+  ],
+  "package_sha256": "315dd4b66fe44075a4f10588019ec6c48149cd9a7e85d97437517b9b3cd79950",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Do you accept the implementation's departures from the design: with_today parsed in DoctorService rather than doctorsRouter, a separate api.doctorsWithToday rather than extending api.doctors, and doctorId/from/to link keys rather than doctor_id/date?"
+    }
+  ],
+  "recorded_at": "2026-10-30T13:31:05Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "All design behaviour is delivered: with_today, today_count, DoctorListRow, countTodayByDoctor and the Today column with its link. Three small departures from the design are each explained: with_today is parsed in the service, the client gets a separate method, and the link keys differ.",
+      "score": 4
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL is in AppointmentRepo and the rules are in DoctorService. Bad input fails through Fields.oneOf, then done() throws ValidationError, giving a 400. The list keeps { items, page, page_size, total }. Values are bound parameters and nothing new is logged.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Six files change, all named in the design (47 lines added, 9 deleted). The router, DashboardService, AppointmentsPage and the DB are untouched. All hard gates and GEN-SIZE-01 pass.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "An empty id list returns early. An invalid with_today value gets a 400 that names the field. Doctors without appointments get 0. The appointments filter's to parameter covers the whole day (dayBounds end), so the from=today&amp;to=today link is correct.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary and Changes sections match the code in all six files. The notes on files left unedited (router passes req.query, the dashboard uses the same predicate, the appointments page reads doctorId/from/to) all check out against the source.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}

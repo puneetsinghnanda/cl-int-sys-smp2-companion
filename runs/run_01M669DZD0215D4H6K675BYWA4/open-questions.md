@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: threat@1.0.1
+step: impl@1.0.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -294,6 +294,25 @@ decision:
   A. No limit; accept the bounded per-page cost
   B. Add a limit in a separate ticket
 **Proposed default:** No limit; accept the bounded per-page cost
+answer:
+answered_by:
+decision:
+
+## Q-26 · non-blocking · ask: tech lead · round 6
+**Question:** Do you accept the implementation's departures from the design: with_today parsed in DoctorService rather than doctorsRouter, a separate api.doctorsWithToday rather than extending api.doctors, and doctorId/from/to link keys rather than doctor_id/date?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-27 · non-blocking · ask: tech lead · round 6
+**Question:** The design's names with_today and today_count are snake_case, while other doctor fields and filters are camelCase (fullName, departmentId). Keep them as designed or rename to withToday/todayCount?
+**Why it matters:** Naming is the only visible style difference in the API response; renaming later would break the web client.
+**Evidence:** artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L181, context/conventions.md#lists
+**Options:**
+  A. Keep with_today and today_count as designed
+  B. Rename to withToday and todayCount
+**Proposed default:** Keep with_today and today_count as designed
 answer:
 answered_by:
 decision:
