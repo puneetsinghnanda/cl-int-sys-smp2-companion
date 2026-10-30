@@ -25,7 +25,7 @@
       "step": "impact"
     }
   ],
-  "heartbeat_at": "2026-10-30T09:35:34Z",
+  "heartbeat_at": "2026-10-30T09:38:25Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -66,7 +66,7 @@
     "open_non_blocking": 4,
     "round": 2
   },
-  "rev": 17,
+  "rev": 21,
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -163,7 +163,7 @@
         },
         {
           "answers_sha256": null,
-          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md",
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/history/impact/a2/impact.md",
           "artifact_sha256": "c28c13630721bfbaf1a592cc9ffd4608c87896debae18b7959051bcce5634b81",
           "band": "Low",
           "cause": "retry_review",
@@ -178,21 +178,43 @@
           ],
           "n": 2,
           "outcome": "ESCALATE",
-          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.verification.json",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/history/impact/a2/impact.verification.json",
           "skill": "impact-analysis@1.1.1",
           "skill_started_at": "2026-10-30T09:32:09Z",
           "started_at": "2026-10-30T09:32:01Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md",
+          "artifact_sha256": "d9ee34843ec1cc08df1e0e55f8130b04894f77e3787c566ca3a46986d7b23dec",
+          "band": "Medium",
+          "cause": "gate_changes",
+          "decided_at": "2026-10-30T09:38:25Z",
+          "feedback": "runs/run_01M661QPHGQW4076F0GCRQ70K1/feedback/impact.a2.json",
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "9514b56924da6973313b7c5448cdd9f9f0335306e31e8a0294dab29fad5a138b",
+              "step": "req"
+            }
+          ],
+          "n": 3,
+          "outcome": "PASS",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.verification.json",
+          "skill": "impact-analysis@1.1.1",
+          "skill_started_at": "2026-10-30T09:35:56Z",
+          "started_at": "2026-10-30T09:35:47Z"
         }
       ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 0,
         "rework": 1,
         "verifier": 0
       },
       "id": "impact",
       "kind": "skill",
-      "status": "READY"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -275,7 +297,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "LIVE-1",
-  "updated_at": "2026-10-30T09:35:34Z",
+  "updated_at": "2026-10-30T09:38:25Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M661QPHGQW4076F0GCRQ70K1
 step: impact
-attempt: 2
+attempt: 3
 skill: impact-analysis@1.1.1
 inputs:
   - path: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md
@@ -21,7 +21,7 @@ pack_sha:
   sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33
 resolves:
   - id: F-1
-    how: "The list convention says list routes answer with a `total`, so GET /api/patients stays existing with an unchanged shape and the open question about the total is dropped (C5)."
+    how: "REQ-5 is back under assumed with the intent's basis and its Q-01 default (count every match); the list `total` supports that default without an API change (C5)."
 claims:
   - id: C1
     text: "The patient list is served by `GET /api/patients`, declared in api/src/routes/patients.ts."
@@ -36,7 +36,7 @@ claims:
     text: "No background `jobs` exist yet, so no job reads the patient list."
     cites: ["context/architecture.md#open-points"]
   - id: C5
-    text: "List routes answer with `total` next to the items of one page, so the count of every match is already available."
+    text: "List routes answer with `total` next to the items of one page."
     cites: ["context/conventions.md#lists"]
   - id: C6
     text: "The patient list is the `PatientsPage` component of the web module."
@@ -45,8 +45,8 @@ claims:
     text: "The existing web test `PatientsPage.test.tsx` covers the patient list and is affected."
     cites: ["context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]
-assumed: []
+known: [REQ-1, REQ-2, REQ-3, REQ-4]
+assumed: [REQ-5]
 unknown: []
 questions: []
 modules:
@@ -72,26 +72,26 @@ tables:
 
 ## Summary
 LIVE-1 adds a count of matching patients to the patient list (PatientsPage) in the web app. The list
-reads GET /api/patients, which by the list convention already answers with a total next to one page of
-items, so the route, the API module and the patient table keep their shape. Only the web module changes,
-and its existing PatientsPage test is affected. No background jobs read patients.
+reads GET /api/patients, which by the list convention answers with a total next to one page of items,
+so the route, the API module and the patient table keep their shape. Only the web module changes, and
+its existing PatientsPage test is affected. REQ-5 (count every match) stays assumed until the product
+owner answers the intent's Q-01; the design step should confirm the patients route returns the total.
 
 ## Impacted modules
 - module:sample-system:web (changed): PatientsPage shows the total as the count and updates it with the search.
-- module:sample-system:api (existing): serves GET /api/patients, which already returns a total.
+- module:sample-system:api (existing): serves GET /api/patients, which by convention returns a total.
 - module:sample-system:db (existing): holds the patient table; no change.
 - http:GET:/api/patients (existing): read by the patient list; shape unchanged.
 - table:patient (existing): read only.
 
 ## Known
 - REQ-1, REQ-2, REQ-3, REQ-4: shown by PatientsPage, which reads GET /api/patients (C1, C2, C6).
-- REQ-5: the route's total counts every match, not one page (C5).
 
 ## Assumed
-- None.
+- REQ-5: the count covers every match, the default of the intent's Q-01; the route's total supports it (C5).
 
 ## Unknown
-- None.
+- None beyond the intent's open Q-01, which REQ-5 carries.
 
 ## Open questions
-- None.
+- None new; the intent's Q-01 (product owner) still applies.

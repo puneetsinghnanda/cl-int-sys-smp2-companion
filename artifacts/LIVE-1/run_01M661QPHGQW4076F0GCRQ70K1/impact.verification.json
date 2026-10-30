@@ -1,32 +1,23 @@
 {
   "artifact_path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md",
-  "artifact_sha256": "c28c13630721bfbaf1a592cc9ffd4608c87896debae18b7959051bcce5634b81",
-  "attempt": 2,
-  "band": "Low",
+  "artifact_sha256": "d9ee34843ec1cc08df1e0e55f8130b04894f77e3787c566ca3a46986d7b23dec",
+  "attempt": 3,
+  "band": "Medium",
   "caps": [],
-  "checks_sha256": "a16c343274056474530ab07c1c585ef749b8f93b332bcfa88b3e74e82c3afa5c",
+  "checks_sha256": "eec24c2c64e75e7cae689558cef8b3ed743f1325415ebe6c71d5385adf86c350",
   "claims": {
     "total": 7,
     "verified": 6
   },
-  "decided_at": "2026-10-30T09:34:16Z",
+  "decided_at": "2026-10-30T09:38:25Z",
   "decided_by": "tsl@0.1.4",
   "findings_dropped": [
     {
       "id": "F-1",
-      "reason": "quote not found"
-    },
-    {
-      "id": "F-2",
       "reason": "anchor not found"
     }
   ],
-  "findings_kept": [
-    {
-      "id": "F-3",
-      "severity": "minor"
-    }
-  ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -36,7 +27,7 @@
     }
   ],
   "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
-  "outcome": "ESCALATE",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -44,15 +35,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": "9e41f15e6deb08d1ff29739d266563cda3d611d3587e71290703a9eda4f25f05",
+  "prev_attempt_sha256": "3e29fa1db8b682f5e209f2853b1c3a92a856c4eb65270e699df5bd11d6956fb1",
   "product_changes": null,
-  "review_sha256": "577a70b6b144727cde65e9aebc10d1df44ac70a53ec13e01f4501db6e30b6a14",
+  "review_sha256": "e7d7fcfde0862011cc18120e4416d6343e00824ba2f8a36a68747bc0ef0be867",
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.7,
+    "S1": 0.75,
     "S2": 1.0,
-    "S3": 4.45,
+    "S3": 4.75,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -61,7 +52,7 @@
       "sensitive": false
     }
   },
-  "signature": "Vt8DwAoHj9_zKhqIQTZBHO0RwmiCTgarKQfVcw5J4VhkcVIQuCwo6bQSLldmtSPeV-KWziye3unDyPnmRBsQAg",
+  "signature": "RstDbUmhF_kV_dw0tO4ef5cg3VMsS7xl5-r7BT12ObtNLLhR7J_1Pgt8JzFECjwhj9F-ftdQSAWUb5DikGEvBQ",
   "skill": "impact-analysis@1.1.1",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

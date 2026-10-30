@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md",
-  "artifact_sha256": "c28c13630721bfbaf1a592cc9ffd4608c87896debae18b7959051bcce5634b81",
-  "attempt": 2,
+  "artifact_sha256": "d9ee34843ec1cc08df1e0e55f8130b04894f77e3787c566ca3a46986d7b23dec",
+  "attempt": 3,
   "budget_tokens": 30000,
-  "checks_sha256": "a16c343274056474530ab07c1c585ef749b8f93b332bcfa88b3e74e82c3afa5c",
+  "checks_sha256": "eec24c2c64e75e7cae689558cef8b3ed743f1325415ebe6c71d5385adf86c350",
   "context_sections": [
     {
       "id": "architecture",
@@ -57,8 +57,8 @@
       "path": "context/data-model.md"
     }
   ],
-  "package_sha256": "e82eddd4ffe5070a9bd40abc98eb961f31771e29f999a65a95a62004dba4f389",
-  "prepared_at": "2026-10-30T09:32:57Z",
+  "package_sha256": "cc3bcbf1356718e8dca743d07b6b1e1cbcf8a524daa9d93aaa6c597d0b8ba4d6",
+  "prepared_at": "2026-10-30T09:37:25Z",
   "prepared_by": "tsl@0.1.4",
   "previous_findings": [
     {
