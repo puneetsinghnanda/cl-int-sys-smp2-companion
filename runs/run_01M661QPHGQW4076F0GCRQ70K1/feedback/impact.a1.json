@@ -1,0 +1,31 @@
+{
+  "dropped": [
+    "F-3"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        },
+        {
+          "quote": "U-1 (non-blocking): whether GET /api/patients reports the total number of matches (Q-01).",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#unknown"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "U-1/Q-01 asks whether GET /api/patients returns a total, but the reviewed conventions already say lists answer with total. The API status and REQ-5 basis can be settled from the facts instead of being deferred."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
