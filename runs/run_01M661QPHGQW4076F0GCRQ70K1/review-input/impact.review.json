@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "step": "impact",
-  "attempt": 1,
-  "artifact_sha256": "75fda669467a2c6b65abdf776ee8c5836369a93ec73505f63b3dd77d09056f47",
-  "package_sha256": "7457b76512dd54c117060742ccd1cc82d18da061bacfaf760ec1d6caf654fc14",
+  "attempt": 2,
+  "artifact_sha256": "c28c13630721bfbaf1a592cc9ffd4608c87896debae18b7959051bcce5634b81",
+  "package_sha256": "e82eddd4ffe5070a9bd40abc98eb961f31771e29f999a65a95a62004dba4f389",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,54 +12,60 @@
     "version": "0.1.4",
     "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
   },
-  "rubric_score": 4.1,
+  "rubric_score": 4.45,
   "rubric_items": [
-    {"id": "IA-R1", "score": 4, "reason": "Lists web, api, db, GET /api/patients and table:patient. It does not name the touched web symbols (PatientsPage, Pagination) or the existing PatientsPage web test."},
-    {"id": "IA-R2", "score": 5, "reason": "All module, API and table ids appear in the generated facts and each one is cited to its fact anchor."},
-    {"id": "IA-R3", "score": 4, "reason": "Jobs are covered through architecture#open-points, and the route and table are traced as readers. Existing web tests are not covered."},
-    {"id": "IA-R4", "score": 3, "reason": "Statuses are justified, but U-1/Q-01 stays open even though context/conventions.md#lists already says list routes return a total."},
-    {"id": "IA-R5", "score": 4, "reason": "Short, readable and leads with the main risk (REQ-5). U-1 and Q-01 reuse ids that mean something else in req.md."}
+    {"id": "IA-R1", "score": 5, "reason": "Lists the web, api and db modules, GET /api/patients and table:patient. It now names the PatientsPage symbol and the affected PatientsPage.test.tsx test (fixes prior F-2)."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, API, table, symbol and test id exists in the generated facts and is cited. However, context/conventions.md and context/generated/test-layout.json are cited but missing from the inputs list."},
+    {"id": "IA-R3", "score": 5, "reason": "Covers jobs (architecture#open-points), the route and table readers, and the existing web test. The route shape does not change, so other callers are not affected."},
+    {"id": "IA-R4", "score": 3, "reason": "The API and table statuses are now justified by the list convention. But REQ-5 moved from assumed (req.md) to known, even though the product owner question Q-01 behind it is still open."},
+    {"id": "IA-R5", "score": 5, "reason": "Short and clear. The Summary states the single changed module first. The reused U-1/Q-01 ids are gone (fixes prior F-3)."}
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "major",
-      "category": "completeness",
-      "text": "U-1/Q-01 asks whether GET /api/patients returns a total, but the reviewed conventions already say lists answer with total. The API status and REQ-5 basis can be settled from the facts instead of being deferred.",
+      "category": "correctness",
+      "text": "REQ-5 is listed as known with assumed: []. In req.md, REQ-5 is assumed and depends on the open product owner question Q-01 (all matches vs current page). The convention shows a total can be supplied, but it does not settle the product intent.",
       "cites": [
-        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."},
-        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#unknown", "quote": "U-1 (non-blocking): whether GET /api/patients reports the total number of matches (Q-01)."}
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#known", "quote": "REQ-5: the route's total counts every match, not one page (C5)."},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#requirements", "quote": "status: assumed"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#questions", "quote": "Should the number count every matching patient, or only the patients on the current page?"}
       ],
-      "suggested_fix": "Add context/conventions.md#lists to inputs. Cite it for module:api and the route as existing with an unchanged shape. Drop U-1/Q-01 or keep Q-01 only as a check that the patients route follows the convention."
+      "claim_ref": "C5",
+      "suggested_fix": "Keep REQ-5 under assumed and carry over req.md's basis and Q-01 default. Note that the existing total supports the default with no API change."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "completeness",
-      "text": "The web change does not name the affected symbols, or the existing PatientsPage web test that will need updating for the count.",
+      "category": "traceability",
+      "text": "context/conventions.md#lists and context/generated/test-layout.json are cited as evidence but are missing from the frontmatter inputs, so their sha256 is not pinned. The prior F-1 fix asked for conventions.md to be added to inputs.",
       "cites": [
-        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage\""},
-        {"ref": "context/test-strategy.md#L33", "quote": "the patient list's Next appointment column"}
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#claims", "quote": "cites: [\"context/conventions.md#lists\"]"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#inputs", "quote": "- path: context/data-model.md"}
       ],
-      "suggested_fix": "List sym ids for PatientsPage (and Pagination if it is touched) under module:web, and note that PatientsPage.test.tsx is affected."
+      "suggested_fix": "Add context/conventions.md and context/generated/test-layout.json with their sha256 to inputs."
     },
     {
       "id": "F-3",
       "severity": "minor",
-      "category": "consistency",
-      "text": "U-1 and Q-01 reuse ids from req.md with a different meaning. In req.md they are a product owner question about paging scope; here they are a tech lead question about the API response.",
+      "category": "correctness",
+      "text": "The 'unchanged shape' for GET /api/patients rests only on a general list convention sourced from config.ts. Nothing route-level shows that the patients route applies it to the filtered search.",
       "cites": [
-        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#unknowns", "quote": "If the patient list is paged, the ticket does not say whether the number is all matches or only the rows on the current page."},
-        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md#questions", "quote": "Does GET /api/patients already return the total number of patients that match the search"}
+        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."},
+        {"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}
       ],
-      "suggested_fix": "Use ids that are distinct within the run, or refer explicitly to req U-1/Q-01 and add a new impact-level id."
+      "claim_ref": "C5",
+      "suggested_fix": "Cite the route or service lines that return total for the search filter, or state this as a verify-in-design check."
     }
   ],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:patient", "quote": "\"id\": \"table:patient\""}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet. Reminders or clean-ups would be the first."}]}
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet. Reminders or clean-ups would be the first."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"path\": \"web/src/pages/PatientsPage.tsx\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx", "quote": "\"id\": \"test:sample-system:web/src/__tests__/PatientsPage.test.tsx\""}]}
   ],
   "questions": []
 }

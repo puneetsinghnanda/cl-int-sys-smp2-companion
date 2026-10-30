@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impact.md",
-  "artifact_sha256": "75fda669467a2c6b65abdf776ee8c5836369a93ec73505f63b3dd77d09056f47",
-  "attempt": 1,
+  "artifact_sha256": "c28c13630721bfbaf1a592cc9ffd4608c87896debae18b7959051bcce5634b81",
+  "attempt": 2,
   "budget_tokens": 30000,
-  "checks_sha256": "4c61fc615de5ac269a79a4ac45288dd088047af5f334dfb553265b51ead92b20",
+  "checks_sha256": "a16c343274056474530ab07c1c585ef749b8f93b332bcfa88b3e74e82c3afa5c",
   "context_sections": [
     {
       "id": "architecture",
@@ -57,10 +57,23 @@
       "path": "context/data-model.md"
     }
   ],
-  "package_sha256": "7457b76512dd54c117060742ccd1cc82d18da061bacfaf760ec1d6caf654fc14",
-  "prepared_at": "2026-10-30T09:30:24Z",
+  "package_sha256": "e82eddd4ffe5070a9bd40abc98eb961f31771e29f999a65a95a62004dba4f389",
+  "prepared_at": "2026-10-30T09:32:57Z",
   "prepared_by": "tsl@0.1.4",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
   "rubric": {
     "items": [
       {

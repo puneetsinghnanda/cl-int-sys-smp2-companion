@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M661QPHGQW4076F0GCRQ70K1
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.1.1
 inputs:
   - path: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md
@@ -19,6 +19,9 @@ inputs:
     sha256: 2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55
 pack_sha:
   sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33
+resolves:
+  - id: F-1
+    how: "The list convention says list routes answer with a `total`, so GET /api/patients stays existing with an unchanged shape and the open question about the total is dropped (C5)."
 claims:
   - id: C1
     text: "The patient list is served by `GET /api/patients`, declared in api/src/routes/patients.ts."
@@ -32,35 +35,34 @@ claims:
   - id: C4
     text: "No background `jobs` exist yet, so no job reads the patient list."
     cites: ["context/architecture.md#open-points"]
+  - id: C5
+    text: "List routes answer with `total` next to the items of one page, so the count of every match is already available."
+    cites: ["context/conventions.md#lists"]
+  - id: C6
+    text: "The patient list is the `PatientsPage` component of the web module."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"]
+  - id: C7
+    text: "The existing web test `PatientsPage.test.tsx` covers the patient list and is affected."
+    cites: ["context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]
-known: [REQ-1, REQ-2, REQ-3, REQ-4]
-assumed: [REQ-5]
-unknown:
-  - id: U-1
-    blocking: false
-questions:
-  - id: Q-01
-    blocking: false
-    ask: tech lead
-    text: "Does GET /api/patients already return the total number of patients that match the search, or only the rows of one page?"
-    why: "If it returns a total, only the web module changes; otherwise the API changes too (REQ-5)."
-    evidence: ["context/generated/api-inventory.json#http:GET:/api/patients"]
-    options: ["It returns a total; only the web module changes", "It returns rows only; the API also changes"]
-    default: "The design step checks the route and the list conventions and marks the API changed only if no total is returned."
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]
+assumed: []
+unknown: []
+questions: []
 modules:
   - id: module:sample-system:web
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:web", "context/architecture.md#components"]
+    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "context/architecture.md#components"]
   - id: module:sample-system:api
     change: existing
-    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/api-inventory.json#http:GET:/api/patients"]
+    cites: ["context/generated/module-map.json#module:sample-system:api", "context/conventions.md#lists"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db"]
 apis:
   - id: http:GET:/api/patients
     change: existing
-    cites: ["context/generated/api-inventory.json#http:GET:/api/patients"]
+    cites: ["context/generated/api-inventory.json#http:GET:/api/patients", "context/conventions.md#lists"]
 tables:
   - id: table:patient
     change: existing
@@ -69,26 +71,27 @@ tables:
 # Impact analysis: LIVE-1
 
 ## Summary
-LIVE-1 adds a count of matching patients to the patient list in the web app. The list reads patients
-through GET /api/patients, which reads the patient table; neither the route nor the table needs a new
-shape if the route already reports how many patients match. The main risk is REQ-5: if the route returns
-only one page of rows, the API must also report the total (U-1, Q-01). No background jobs read patients.
+LIVE-1 adds a count of matching patients to the patient list (PatientsPage) in the web app. The list
+reads GET /api/patients, which by the list convention already answers with a total next to one page of
+items, so the route, the API module and the patient table keep their shape. Only the web module changes,
+and its existing PatientsPage test is affected. No background jobs read patients.
 
 ## Impacted modules
-- module:sample-system:web (changed): the patient list shows the count and updates it with the search.
-- module:sample-system:api (existing): serves GET /api/patients; changes only if Q-01 finds no total.
+- module:sample-system:web (changed): PatientsPage shows the total as the count and updates it with the search.
+- module:sample-system:api (existing): serves GET /api/patients, which already returns a total.
 - module:sample-system:db (existing): holds the patient table; no change.
-- http:GET:/api/patients (existing): read by the patient list; shape unchanged unless Q-01 says otherwise.
+- http:GET:/api/patients (existing): read by the patient list; shape unchanged.
 - table:patient (existing): read only.
 
 ## Known
-- REQ-1, REQ-2, REQ-3, REQ-4: shown in the web patient list, which reads GET /api/patients (C1, C2).
+- REQ-1, REQ-2, REQ-3, REQ-4: shown by PatientsPage, which reads GET /api/patients (C1, C2, C6).
+- REQ-5: the route's total counts every match, not one page (C5).
 
 ## Assumed
-- REQ-5: the count covers every match; this holds without an API change only if the route reports a total.
+- None.
 
 ## Unknown
-- U-1 (non-blocking): whether GET /api/patients reports the total number of matches (Q-01).
+- None.
 
 ## Open questions
-- Q-01 (non-blocking, tech lead): does GET /api/patients return the total? Default: the design step checks and decides.
+- None.
