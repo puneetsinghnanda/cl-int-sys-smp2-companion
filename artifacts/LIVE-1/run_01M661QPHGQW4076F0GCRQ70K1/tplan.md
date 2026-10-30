@@ -2,7 +2,7 @@
 schema: test-plan.v1
 run_id: run_01M661QPHGQW4076F0GCRQ70K1
 step: tplan
-attempt: 1
+attempt: 2
 skill: test-plan@1.0.1
 inputs:
   - path: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md
@@ -22,11 +22,17 @@ claims:
   - id: C2
     text: "The patient list already has the web test `PatientsPage.test.tsx`, which these tests extend."
     cites: ["context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"]
+  - id: C3
+    text: "The design says exactly one match reads `1 patient`."
+    cites: ["artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#overview"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5]
-known: [TP-1, TP-2, TP-4, TP-5, TP-6]
+known: [TP-1, TP-2, TP-4, TP-5, TP-6, TP-7, TP-8]
 assumed: [TP-3]
 unknown: []
 questions: []
+resolves:
+  - id: F-1
+    how: "Added TP-7: a list response with total 1 shows '1 patient' (singular), as the design says (C3)."
 tests:
   - id: TP-1
     title: "A list response whose total is 12 shows '12 patients'"
@@ -52,6 +58,14 @@ tests:
     title: "Negative: a failed list request shows the error and no count line"
     covers: [S-1/AC1]
     level: unit
+  - id: TP-7
+    title: "Boundary: a total of 1 shows '1 patient' (singular)"
+    covers: [S-1/AC1]
+    level: unit
+  - id: TP-8
+    title: "Changing the status filter refetches and the count follows the new total"
+    covers: [S-1/AC2]
+    level: unit
 ---
 # Test plan: LIVE-1
 
@@ -67,10 +81,12 @@ Out of scope: changes to the list API and to pagination.
 - TP-3 (unit): a total larger than the rows on the page is shown, not the row count. Covers S-1/AC3.
 - TP-4 (unit): a total of 0 shows "0 patients". Covers S-2/AC1.
 - TP-5 (unit): with no match, the empty message is still shown. Covers S-2/AC2.
-- TP-6 (unit, negative): a failed request shows the error and no count line. Covers S-1/AC1.
+- TP-6 (unit, negative, supplementary): a failed request shows the error and no count line. Listed under S-1/AC1.
+- TP-7 (unit, boundary): a total of 1 shows "1 patient", the singular form the design names (C3). Covers S-1/AC1.
+- TP-8 (unit): a status filter change refetches, and the count follows the new total. Covers S-1/AC2.
 
 ## Known
-- TP-1, TP-2, TP-6: prove S-1/AC1 and S-1/AC2, from the known REQ-1 and REQ-2.
+- TP-1, TP-2, TP-6, TP-7, TP-8: prove S-1/AC1 and S-1/AC2, from the known REQ-1 and REQ-2.
 - TP-4, TP-5: prove S-2/AC1 and S-2/AC2, from the known REQ-3 and REQ-4.
 
 ## Assumed

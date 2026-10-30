@@ -1,0 +1,142 @@
+{
+  "artifact_sha256": "c84cdf660e8ed79d66c6d66f302378f90d23572291c90d18859f10963549eff8",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/PatientsPage.test.tsx\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Exactly one match reads \"1 patient\", the intent's Q-02 default.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#overview"
+        },
+        {
+          "quote": "TP-4 (unit): a total of 0 shows \"0 patients\". Covers S-2/AC1.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/tplan.md#tests"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add a unit test: a list response with total 1 shows '1 patient' (singular), traced to the design's Q-02 default.",
+      "text": "The design specifies a singular form for exactly one match ('1 patient'), but no test covers that boundary. Only totals of 12, 0 and more than one page are tested."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID (DOC-1, APT-4, ...).",
+          "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "HMS-2: an upcoming appointment still shows its doctor, linked to the appointment",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"
+        },
+        {
+          "quote": "A list response whose total is 12 shows '12 patients'",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/tplan.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Prefix each test title with its ticket/REQ ID, e.g. 'LIVE-1 REQ-1: a total of 12 shows 12 patients'.",
+      "text": "The strategy requires test names to start with their requirement ID, and the existing web tests follow this. The planned test titles carry no requirement ID prefix."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "so it follows the search text and the status filter with no extra request",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#overview"
+        },
+        {
+          "quote": "TP-2 (unit): a search change refetches, and the count follows the new total.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/tplan.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Extend TP-2, or add a test, so a status filter change also refetches and the count follows the new total.",
+      "text": "The design says the count also follows the status filter, but TP-2 only exercises a change to the search text. No test shows the count updating when the filter changes."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "TP-6 (unit, negative): a failed request shows the error and no count line. Covers S-1/AC1.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/tplan.md#tests"
+        },
+        {
+          "quote": "AC1: Given a search that 12 patients match, when the list is shown, then it shows \"12 patients\".",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#stories"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Mark TP-6 as a supplementary negative test rather than coverage of S-1/AC1, or trace it to a design behaviour.",
+      "text": "TP-6 (a failed request shows the error and no count) is mapped to S-1/AC1, but AC1 only covers a successful search with 12 matches. The error behaviour is not part of any acceptance criterion."
+    }
+  ],
+  "package_sha256": "9b62830223abbe3de5d1ae8c5c316182d362459edc10b47112046870143872a4",
+  "questions": [],
+  "recorded_at": "2026-10-30T10:12:19Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All five acceptance criteria (S-1/AC1-AC3, S-2/AC1-AC2) are covered by at least one test, and every covers entry points to a criterion that exists in split.md.",
+      "score": 5
+    },
+    {
+      "id": "TP-R2",
+      "reason": "The change is web-only (the API is unchanged), so web unit tests in the existing PatientsPage test file are the cheapest level that proves it.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "There is a negative test (TP-6), a zero boundary (TP-4) and a total-beyond-page boundary (TP-3). The singular '1 patient' boundary from the design is not tested. No new endpoint or field.",
+      "score": 4
+    },
+    {
+      "id": "TP-R4",
+      "reason": "Tools and folder match the strategy (Vitest, jsdom, Testing Library, web/src/__tests__). Test titles are not prefixed with requirement IDs, which the strategy and the existing tests use.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are short and concrete with clear expected outputs. TP-6 is mapped to S-1/AC1 even though it tests an error path that AC1 does not describe.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}
