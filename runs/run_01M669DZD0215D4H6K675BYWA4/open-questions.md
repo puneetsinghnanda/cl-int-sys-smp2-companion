@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: ut@1.0.1
+step: secrev@1.0.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -332,6 +332,25 @@ decision:
   A. Database available; API tests run
   B. No database; add one to the verifier
 **Proposed default:** Database available; API tests run
+answer:
+answered_by:
+decision:
+
+## Q-30 · non-blocking · ask: tech lead · round 8
+**Question:** GET /api/doctors/:id already returns appointmentCount under doctors:read alone. If with_today=true is to require appointments:read (Q-01 default), should the doctor detail's appointmentCount be gated the same way?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-31 · non-blocking · ask: tech lead · round 8
+**Question:** GET /api/doctors is guarded by doctors:read, but with_today=true now returns per-doctor appointment counts. Should with_today=true also require appointments:read once sign-in replaces the MVP actor?
+**Why it matters:** Today every permission is granted, so nothing leaks now; after sign-in, a role with doctors:read but not appointments:read would see appointment volume per doctor.
+**Evidence:** context/architecture.md#identity
+**Options:**
+  A. Also require appointments:read for with_today=true
+  B. Counts are not sensitive; doctors:read is enough
+**Proposed default:** Also require appointments:read for with_today=true
 answer:
 answered_by:
 decision:

@@ -1,0 +1,65 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "8dfa37f81aad6a7fae5acac2693d71cd0eeaa1ef9c843cbaa3d5e4df011d8ec1",
+  "package_sha256": "509ff5627ce4c232743c37f31d44f8297828f8a863a78eeb2c879f0f88657daa",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "a072043cdc75429da7a74739c7595f776931c84977ad2f4ec41cd132543686c0"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "Checked the six changed files at head and found no missed weakness. The query is parameterised, with_today is validated, the link is encoded and rendered as text, and the one real authorisation gap (SF-1) is reported."},
+    {"id": "SC-R2", "score": 4, "reason": "The 'checked with no finding' cites hit the exact lines (appointmentRepo L126-131, doctorService L35, DoctorsPage L86). SF-1 cites the service call at L57, not the route line that declares doctors:read."},
+    {"id": "SC-R3", "score": 5, "reason": "SF-1 is minor. That fits, because the MVP grants every permission (architecture#identity), so nothing is exposed today. The question about future roles is correctly non-blocking."},
+    {"id": "SC-R4", "score": 5, "reason": "SF-1 gives a concrete fix: check appointments:read before computing today_count. Q-01 gives options and a default."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives. SF-1 is real: GET / declares only doctors:read and returns appointment counts."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "SF-1 is about which permission the route declares, but it cites only the service line that runs the count. The guard itself is declared at api/src/routes/doctors.ts L14, and that line is not cited.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/secrev.md#L58", "quote": "sample-system:api/src/services/doctorService.ts#L57"},
+        {"ref": "sample-system:api/src/routes/doctors.ts#L14", "quote": "requirePermission('doctors:read'),"}
+      ],
+      "suggested_fix": "Add sample-system:api/src/routes/doctors.ts#L14 to SF-1's cites, next to the service line."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "SF-1 and Q-01 leave out two precedents that matter for the decision. GET /:id already returns appointmentCount under doctors:read, while /:id/slots requires appointments:read. Both bear on the default answer to Q-01.",
+      "cites": [
+        {"ref": "sample-system:api/src/services/doctorService.ts#L70", "quote": "appointmentCount: await repo.appointmentCount(id)"},
+        {"ref": "sample-system:api/src/routes/doctors.ts#L64", "quote": "requirePermission('appointments:read'),"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/secrev.md#L47", "quote": "Counts are not sensitive; doctors:read is enough"}
+      ],
+      "suggested_fix": "Mention in SF-1's evidence that the existing doctor detail already exposes appointmentCount under doctors:read, so the tech lead can apply one rule to both routes."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L126", "quote": "if (doctorIds.length === 0) return new Map();"}, {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L129", "quote": "WHERE doctor_id = ANY($1::int[]) AND starts_at &gt;= $2 AND starts_at &lt; $3"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L35", "quote": "f.oneOf('with_today', ['true', 'false'] as const) === 'true'"}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "GET /api/doctors/:id already returns appointmentCount under doctors:read alone. If with_today=true is to require appointments:read (Q-01 default), should the doctor detail's appointmentCount be gated the same way?",
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-2"
+    }
+  ]
+}

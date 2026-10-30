@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-30T15:03:34Z",
+  "heartbeat_at": "2026-10-30T15:09:05Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -53,10 +53,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 29,
-    "round": 7
+    "open_non_blocking": 31,
+    "round": 8
   },
-  "rev": 38,
+  "rev": 41,
   "run_id": "run_01M669DZD0215D4H6K675BYWA4",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -420,7 +420,31 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/secrev.md",
+          "artifact_sha256": "8dfa37f81aad6a7fae5acac2693d71cd0eeaa1ef9c843cbaa3d5e4df011d8ec1",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-30T15:09:05Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "3ef6f5eb86e6950f21bdde784f9d6b7f9bc618f94ce7e9364aaa33a0358e5834",
+              "step": "impl"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/secrev.verification.json",
+          "skill": "secure-code-review@1.0.1",
+          "skill_started_at": "2026-10-30T15:04:17Z",
+          "started_at": "2026-10-30T15:03:59Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -429,7 +453,7 @@
       },
       "id": "secrev",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -452,7 +476,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-6",
-  "updated_at": "2026-10-30T15:03:34Z",
+  "updated_at": "2026-10-30T15:09:05Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }
