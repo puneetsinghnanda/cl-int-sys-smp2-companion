@@ -1,0 +1,52 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "6f1164dd7a85ae0205169ebe51576b51fa9fe8d71f38696ad6669cf39a480b59",
+  "package_sha256": "a46bbe128c32200491f69dec8ab9df4deb367cfa2f874550f59b826d4581e9b5",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d"
+  },
+  "rubric_score": 4.5,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "PatientsPage now shows a count line built from list.data.total, with '1 patient' for one match and '<n> patients' otherwise. The empty message stays and the API is unchanged, as the design says."},
+    {"id": "IM-R2", "score": 4, "reason": "It uses the existing list total ({items, page, page_size, total}) and the existing muted style. No test was added for the new count line, although PatientsPage.test.tsx exists."},
+    {"id": "IM-R3", "score": 5, "reason": "One file changed, 4 lines added and 0 deleted. Every edit is needed for the count line. All gates and verifier steps pass."},
+    {"id": "IM-R4", "score": 4, "reason": "The count renders only inside list.data, so errors and the first load stay with ErrorBanner and Loading. Zero and one are handled. The edge cases are not covered by tests."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary matches the diff. It leaves out that the count also follows the status filter, which the design overview states."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The change adds no test for the count line. Only PatientsPage.tsx changed (+4/-0), and the existing PatientsPage tests cover only the HMS-2 next-appointment column. The S-1 and S-2 acceptance criteria (12, 0 and 1 patients) are not checked.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L23", "quote": "files: [web/src/pages/PatientsPage.tsx]"},
+        {"ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L25", "quote": "describe('PatientsPage next appointment column (HMS-2)', () => {"}
+      ],
+      "suggested_fix": "Add tests in PatientsPage.test.tsx that check '2 patients', '1 patient' and '0 patients' shown with 'No patients match.'."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The summary says the count follows the search text. It does not say the count also follows the status filter, which the design overview states.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L59", "quote": "same response as the rows, so it follows the search text and the status filter with no extra request"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L43", "quote": "rows, so it follows the search text, counts every match rather than one page (REQ-5)"}
+      ],
+      "suggested_fix": "Say in the summary that the count also follows the status filter."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage\""}]}
+  ],
+  "questions": []
+}

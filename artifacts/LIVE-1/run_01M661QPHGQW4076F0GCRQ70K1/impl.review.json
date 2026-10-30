@@ -1,0 +1,104 @@
+{
+  "artifact_sha256": "6f1164dd7a85ae0205169ebe51576b51fa9fe8d71f38696ad6669cf39a480b59",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "files: [web/src/pages/PatientsPage.tsx]",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L23"
+        },
+        {
+          "quote": "describe('PatientsPage next appointment column (HMS-2)', () => {",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L25"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add tests in PatientsPage.test.tsx that check '2 patients', '1 patient' and '0 patients' shown with 'No patients match.'.",
+      "text": "The change adds no test for the count line. Only PatientsPage.tsx changed (+4/-0), and the existing PatientsPage tests cover only the HMS-2 next-appointment column. The S-1 and S-2 acceptance criteria (12, 0 and 1 patients) are not checked."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "same response as the rows, so it follows the search text and the status filter with no extra request",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#L59"
+        },
+        {
+          "quote": "rows, so it follows the search text, counts every match rather than one page (REQ-5)",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/impl.md#L43"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say in the summary that the count also follows the status filter.",
+      "text": "The summary says the count follows the search text. It does not say the count also follows the status filter, which the design overview states."
+    }
+  ],
+  "package_sha256": "a46bbe128c32200491f69dec8ab9df4deb367cfa2f874550f59b826d4581e9b5",
+  "questions": [],
+  "recorded_at": "2026-10-30T09:51:06Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "PatientsPage now shows a count line built from list.data.total, with '1 patient' for one match and '<n> patients' otherwise. The empty message stays and the API is unchanged, as the design says.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "It uses the existing list total ({items, page, page_size, total}) and the existing muted style. No test was added for the new count line, although PatientsPage.test.tsx exists.",
+      "score": 4
+    },
+    {
+      "id": "IM-R3",
+      "reason": "One file changed, 4 lines added and 0 deleted. Every edit is needed for the count line. All gates and verifier steps pass.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "The count renders only inside list.data, so errors and the first load stay with ErrorBanner and Loading. Zero and one are handled. The edge cases are not covered by tests.",
+      "score": 4
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary matches the diff. It leaves out that the count also follows the status filter, which the design overview states.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.5,
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
