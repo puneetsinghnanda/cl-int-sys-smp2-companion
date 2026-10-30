@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "2a960d54bd26ab3b272ee31589007b551a5902ac45b1e5fc84743b595c0245ca",
+  "package_sha256": "0983062215c498c35b9e566fa47bc707f7bda3e51b12b2a99624af0f918b8acb",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e"
+  },
+  "rubric_score": 4.4,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All 15 design components have at least one threat. The appointment table that links patients (T-18) and the AppointmentsPage URL input (T-16) are covered. No background jobs exist, so none are modelled, which is correct."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats fit the change: the with_today parse, bound SQL parameters, the bounded id list, day-window shifts, and appointment volume once roles exist. T-12 (type drift) is a correctness issue labelled as information disclosure."},
+    {"id": "TM-R3", "score": 4, "reason": "Mitigations are mostly concrete and marked as existing or new (strict boolean with 400, bound params, early return, URL-encoded numeric id). T-15 only says paging is unchanged, and some cites point to the wrong design lines."},
+    {"id": "TM-R4", "score": 5, "reason": "Both real unknowns (the permission for counts after sign-in, and whether a rate limit exists) are asked as Q-01 and Q-02 with options and defaults. Assumed controls name their basis."},
+    {"id": "TM-R5", "score": 4, "reason": "Readable and consistent between the front matter and the body. Threats are ordered by component, not by risk."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "minor", "category": "traceability", "text": "C12 cites design.md#L203, but L203 describes the DoctorListRow type. countTodayByDoctor appears at L202, so the claim is not supported at its cited anchor.", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L203", "quote": "DoctorListRow type (api), **new**: the doctor summary plus `today_count: number`"}, {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L202", "quote": "AppointmentRepo (api), **changed**: new `countTodayByDoctor(doctorIds, from, to)`"}], "claim_ref": "C12", "suggested_fix": "Change the C12 cite to design.md#L202."},
+    {"id": "F-2", "severity": "minor", "category": "traceability", "text": "C11 cites design L201, which describes DoctorService. The with_today parse is at L200. T-7 uses C11 to support 'summary plus today_count only', which is stated at L203, not L201.", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/threat.md#L116", "quote": "The type is the existing doctor summary plus today_count only (C11)"}, {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L200", "quote": "parses `with_today` (boolean, default false) next to the existing filters"}], "claim_ref": "C11", "suggested_fix": "Cite design.md#L200 and #L203 for C11, or add a separate claim for the row type shape."},
+    {"id": "F-3", "severity": "minor", "category": "completeness", "text": "The design relies on GET /api/settings as the source of the hospital time zone for the link, but the threat model does not model it. T-14 refers only to design Q-03.", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L219", "quote": "GET /api/settings, **existing**: assumed source of the hospital time zone for the web link (Q-03)."}, {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/threat.md#L151", "quote": "Call todayIn with the hospital time zone, not the browser's zone (design Q-03)."}], "suggested_fix": "Add a line to T-14 or a new threat covering the settings read: the web falls back to a fixed default zone if the call fails."},
+    {"id": "F-4", "severity": "minor", "category": "correctness", "text": "T-12 is labelled information_disclosure, but it describes type drift that causes undefined values to render. That is a correctness risk, not a disclosure threat.", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/threat.md#L140", "quote": "The web type could expect fields the API does not send, so the page renders stale or undefined values."}], "suggested_fix": "Reclassify T-12 as tampering or integrity, or drop it as out of scope for STRIDE."},
+    {"id": "F-5", "severity": "minor", "category": "style", "text": "Threats are listed in component order. The highest-risk items (T-20 privilege over appointment volume, T-1 no sign-in) appear last or first by chance, not by risk.", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/threat.md#L223", "quote": "T-20 doctorsRouter, elevation of privilege: counts readable without appointment permission once roles exist"}], "suggested_fix": "Order the Threats section by risk, or add a risk rating per threat."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the\npatient's own page."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "An appointment links one doctor and one patient for [starts_at, ends_at) in UTC."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors", "quote": "\"id\": \"http:GET:/api/doctors\","}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "\"id\": \"http:GET:/api/appointments\","}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L201", "quote": "when `with_today` is true, adds `today_count` to each row of the page"}]},
+    {"claim_id": "C12", "verdict": "unsupported", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md#L203", "quote": "DoctorListRow type (api), **new**: the doctor summary plus `today_count: number`"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]}
+  ],
+  "questions": []
+}

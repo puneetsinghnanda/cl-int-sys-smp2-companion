@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: design@1.4.1
+step: threat@1.0.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -270,6 +270,30 @@ decision:
   A. Keep the proposed names unless an existing key already means the same
   B. Rename all to a team convention
 **Proposed default:** Keep the proposed names unless an existing key already means the same
+answer:
+answered_by:
+decision:
+
+## Q-24 · non-blocking · ask: tech lead · round 5
+**Question:** When sign-in replaces identify and requirePermission, should the Today count need the same permission as the doctors list, or an appointment-read permission?
+**Why it matters:** The count summarises appointment data on a doctor route; with real roles it could expose appointment volume to users who cannot see appointments.
+**Evidence:** context/architecture.md#identity
+**Options:**
+  A. Same permission as the doctors list
+  B. Require appointment-read permission for with_today
+**Proposed default:** Same permission as the doctors list
+answer:
+answered_by:
+decision:
+
+## Q-25 · non-blocking · ask: tech lead · round 5
+**Question:** Does the API have any request-rate limit today? The inputs do not mention one.
+**Why it matters:** with_today adds a database query per request; without a limit, repeated calls cost more than before.
+**Evidence:** context/architecture.md#deployment-shape
+**Options:**
+  A. No limit; accept the bounded per-page cost
+  B. Add a limit in a separate ticket
+**Proposed default:** No limit; accept the bounded per-page cost
 answer:
 answered_by:
 decision:
