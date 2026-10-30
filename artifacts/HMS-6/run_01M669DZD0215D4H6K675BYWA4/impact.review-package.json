@@ -1,0 +1,95 @@
+{
+  "artifact_path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md",
+  "artifact_sha256": "7914d92e21b9e56edf7ff50a50f4c26de7050677ea1ae1b9a0f498369b60faf3",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "9ceeee8932965049327cd7aa7ab94f7d9064079d86573742f3f1992c7a7daa6a",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "data-model",
+      "included": true,
+      "path": "context/data-model.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    },
+    {
+      "id": "api-inventory",
+      "included": true,
+      "path": "context/api-inventory.md"
+    },
+    {
+      "id": "db-schema",
+      "included": true,
+      "path": "context/db-schema.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "intent",
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    },
+    {
+      "name": "api_inventory",
+      "path": "context/generated/api-inventory.json"
+    },
+    {
+      "name": "db_schema",
+      "path": "context/generated/db-schema.json"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    },
+    {
+      "name": "data_model",
+      "path": "context/data-model.md"
+    }
+  ],
+  "package_sha256": "c354d7ab3b6c8ba543726c78eb1e26469eca146af4479c97b4419515989a49b3",
+  "prepared_at": "2026-10-30T12:22:01Z",
+  "prepared_by": "tsl@0.1.4",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "IA-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "IA-R2",
+        "weight": 0.25
+      },
+      {
+        "id": "IA-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "IA-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "IA-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/impact-analysis/rubric.md",
+    "sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
+  },
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "review-package.v1",
+  "skill": "impact-analysis@1.1.1",
+  "step": "impact",
+  "truncated": false
+}

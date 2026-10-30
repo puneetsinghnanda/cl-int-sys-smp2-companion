@@ -1,0 +1,31 @@
+{
+  "dropped": [
+    "F-2"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "(await api.doctors({ q, status: 'ACTIVE' }))",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L77"
+        },
+        {
+          "quote": "Indirect effects: UI route `/doctors` shows the changed data; UI route `/appointments` is the link target.",
+          "ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "GET /api/doctors is marked changed, but its second web caller, the doctor picker in BookAppointmentPage, is not listed. With the change, every picker search would also compute per-doctor Today counts."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
