@@ -8,3 +8,5 @@ build/
 .env.*
 *.pem
 *.key
+# verifier output stays local: scanner reports can quote what they found (hashes are recorded)
+runs/*/verifier/
