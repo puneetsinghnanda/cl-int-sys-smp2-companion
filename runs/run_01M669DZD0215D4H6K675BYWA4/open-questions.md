@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: secrev@1.0.1
+step: tplan@1.0.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -351,6 +351,25 @@ decision:
   A. Also require appointments:read for with_today=true
   B. Counts are not sensitive; doctors:read is enough
 **Proposed default:** Also require appointments:read for with_today=true
+answer:
+answered_by:
+decision:
+
+## Q-32 · non-blocking · ask: tech lead · round 9
+**Question:** If the dashboard 'Appointments today' tile does not exclude only Cancelled (the Q-05 default), should TP-5 be a known failure tracked by a separate fix, or be removed from this plan's pass criteria?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-33 · non-blocking · ask: tech lead · round 9
+**Question:** Does the verifier provide PostgreSQL 16 (or HMS_TEST_DATABASE_URL) so the integration tests in this plan run instead of being skipped?
+**Why it matters:** Every integration test here needs a database; without one only the web unit tests prove the change.
+**Evidence:** context/test-strategy.md#database-for-tests
+**Options:**
+  A. Database available; integration tests run
+  B. No database; add one to the verifier
+**Proposed default:** Database available; integration tests run
 answer:
 answered_by:
 decision:

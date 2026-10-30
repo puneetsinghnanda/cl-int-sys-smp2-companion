@@ -1,0 +1,89 @@
+{
+  "accepted_default": true,
+  "artifact_path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/tplan.md",
+  "artifact_sha256": "f7ab99c0b89a852510aa01052ccbf7b2afc033e299ac6a23b9889a8f35ff9147",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "4df147114666aaaa7a230418227c84a9748e89ee326fbb60a2955ab2113fe7ba",
+  "claims": {
+    "total": 7,
+    "verified": 7
+  },
+  "decided_at": "2026-10-30T15:13:48Z",
+  "decided_by": "tsl@0.1.4",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    },
+    {
+      "id": "F-6",
+      "severity": "minor"
+    },
+    {
+      "id": "F-7",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md",
+      "sha256": "0347e867d613f325eceea3249daca63249ed02bafd70ff50bf50e83989fa7c76",
+      "verification_sha256": "3f8f031f31e3edb46a5ca9655b18775f25d62be0988bdb604fc9cd7c4e9a0e9f"
+    },
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md",
+      "sha256": "9b1662a069745e77e899b72506170a589549e1d2603b91da482f174e575ab746",
+      "verification_sha256": "59efff753ca6da30d5ec48b707fa8419cad4f5bdcae5e644dbde48dab9e89ada"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "16b59152dc9f8db326c1d06de18ecb95655b62e324f8e90cdd22169b14d50df7",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.2,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "JxB0hiBnKwNe03YgiTI8A_QEZXdK9Ve2d94omKKhuBtxJ7EwkDdG5RQiqHiLHCqQPbbkwwC1rK6Chydn3uTUDw",
+  "skill": "test-plan@1.0.1",
+  "step": "tplan",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

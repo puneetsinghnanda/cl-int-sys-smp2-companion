@@ -1,0 +1,86 @@
+{
+  "artifact_sha256": "f7ab99c0b89a852510aa01052ccbf7b2afc033e299ac6a23b9889a8f35ff9147",
+  "attempt": 1,
+  "finished_at": "2026-10-30T15:11:25Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md",
+      "sha256": "0347e867d613f325eceea3249daca63249ed02bafd70ff50bf50e83989fa7c76",
+      "verification_sha256": "3f8f031f31e3edb46a5ca9655b18775f25d62be0988bdb604fc9cd7c4e9a0e9f"
+    },
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/design.md",
+      "sha256": "9b1662a069745e77e899b72506170a589549e1d2603b91da482f174e575ab746",
+      "verification_sha256": "59efff753ca6da30d5ec48b707fa8419cad4f5bdcae5e644dbde48dab9e89ada"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-30T15:11:25Z",
+  "step": "tplan",
+  "tool_log_sha256": "1534b74120b4abb513ea674441738b96f84f84d7888eb8afc6a4c7bd4cb6002c",
+  "tsl_version": "0.1.4",
+  "verifier": null
+}
