@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: impl@1.0.1
+step: ut@1.0.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -313,6 +313,25 @@ decision:
   A. Keep with_today and today_count as designed
   B. Rename to withToday and todayCount
 **Proposed default:** Keep with_today and today_count as designed
+answer:
+answered_by:
+decision:
+
+## Q-28 · non-blocking · ask: tech lead · round 7
+**Question:** The verifier test step passed but produced no report (report_sha256 is null). Did the doctors-today API suite actually run, or did describe.skipIf skip it because no PostgreSQL was available?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-29 · non-blocking · ask: tech lead · round 7
+**Question:** Does the verifier container provide PostgreSQL 16 (or HMS_TEST_DATABASE_URL) so the new API tests run rather than skip?
+**Why it matters:** The API tests in doctors-today.test.ts use describe.skipIf(!pgAvailable()); if no database is available they are skipped and only the web tests prove the change.
+**Evidence:** context/test-strategy.md#database-for-tests
+**Options:**
+  A. Database available; API tests run
+  B. No database; add one to the verifier
+**Proposed default:** Database available; API tests run
 answer:
 answered_by:
 decision:

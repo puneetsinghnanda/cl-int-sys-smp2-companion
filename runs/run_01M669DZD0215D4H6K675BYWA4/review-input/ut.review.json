@@ -1,0 +1,86 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "a063e3ba7c07f91bb0b4977054b9989d88a95404ad4829050930993e7e8a7d10",
+  "package_sha256": "f030ce35aa438e0ec86f400e658fd25e5abc472e3788bf527f100195d3774a0d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 5, "reason": "The tests cover every changed path: countTodayByDoctor (today window, the day boundary, the Cancelled exclusion), the with_today parse (true, false, absent, invalid), the empty id list, the Today column, the link target and the 0 link."},
+    {"id": "UT-R2", "score": 5, "reason": "The assertions check things a user can see: exact per-doctor count maps, HTTP status codes, field-error keys, header order, link text and href, and whether today_count is present or absent."},
+    {"id": "UT-R3", "score": 4, "reason": "Covered: the 400 for an invalid with_today, the empty search page, the Tuesday clock boundary, a 0 count, and no today_count without the flag. The web REQ-7 test uses the real clock, so it is not pinned at the day boundary."},
+    {"id": "UT-R4", "score": 4, "reason": "Vitest with Supertest and a throwaway PostgreSQL with a fixed clock for the API, and jsdom with Testing Library for the web, in the existing folders. Minor gaps: two test names carry no REQ id, and the REQ-4 test sums across doctors."},
+    {"id": "UT-R5", "score": 5, "reason": "The artifact gives no run or pass counts and no coverage number, and defers to checks.json. checks.json shows the coverage step as status skip, which matches C5."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C6 cites impl.md#L86, but that line is only the document heading. The countTodayByDoctor and with_today facts are on impl.md L89-L90.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md#L86", "quote": "# Change: HMS-6"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md#L89", "quote": "new `countTodayByDoctor(doctorIds, from, to)`"}
+      ],
+      "claim_ref": "C6",
+      "suggested_fix": "Change the C6 cite to impl.md#L89 and impl.md#L90."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "ut.md says every test name starts with HMS-6 and the REQ ids it proves, but two API tests carry no REQ id. The '(edge)' and '(error)' labels in ut.md are not in the real test names.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ut.md#L67", "quote": "Every test name starts with `HMS-6` and the REQ ids it proves."},
+        {"ref": "sample-system:api/test/doctors-today.test.ts#L95", "quote": "it('HMS-6: an invalid with_today is rejected with a field error'"},
+        {"ref": "sample-system:api/test/doctors-today.test.ts#L86", "quote": "it('HMS-6: without with_today the list and the detail are unchanged'"}
+      ],
+      "suggested_fix": "Either add the right REQ ids, or the edge/error labels, to those two test names, or change the ut.md sentence to say they are general HMS-6 tests."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The REQ-4 test sums the counts across both doctors and compares the sum with the tile. S-1 AC4 was rewritten to use a setup where every appointment belongs to one doctor, so that the check does not sum across doctors.",
+      "cites": [
+        {"ref": "sample-system:api/test/doctors-today.test.ts#L66", "quote": "expect(counts.reduce((a, b) =&gt; a + b, 0)).toBe(tile);"},
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md#L98", "quote": "Given every appointment starting today in Asia/Kolkata belongs to one doctor"}
+      ],
+      "suggested_fix": "Add or rewrite a REQ-4 case where all of today's appointments belong to one doctor, and assert that doctor's today_count equals totals.appointmentsToday."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The web link test works out today from the real clock, separately from the page. If the test runs across Kolkata midnight, the two dates can differ and the test can fail intermittently.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L60", "quote": "const today = todayIn('Asia/Kolkata');"}
+      ],
+      "suggested_fix": "Pin the clock with vi.useFakeTimers/vi.setSystemTime and assert a literal date."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script)"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md#L90", "quote": "`list` parses `with_today` with the existing `Fields.oneOf`"}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "The verifier test step passed but produced no report (report_sha256 is null). Did the doctors-today API suite actually run, or did describe.skipIf skip it because no PostgreSQL was available?",
+      "ask_role": "tech_lead",
+      "blocking": false
+    }
+  ]
+}

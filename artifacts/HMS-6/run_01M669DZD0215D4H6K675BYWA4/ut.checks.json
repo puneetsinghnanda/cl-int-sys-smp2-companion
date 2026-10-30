@@ -1,0 +1,146 @@
+{
+  "artifact_sha256": "a063e3ba7c07f91bb0b4977054b9989d88a95404ad4829050930993e7e8a7d10",
+  "attempt": 1,
+  "finished_at": "2026-10-30T15:00:55Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impl.md",
+      "sha256": "3ef6f5eb86e6950f21bdde784f9d6b7f9bc618f94ce7e9364aaa33a0358e5834",
+      "verification_sha256": "749571fe6a7d0caef77db549f117181368b80c36efcb8f9b4af4993b22fac911"
+    },
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/split.md",
+      "sha256": "0347e867d613f325eceea3249daca63249ed02bafd70ff50bf50e83989fa7c76",
+      "verification_sha256": "3f8f031f31e3edb46a5ca9655b18775f25d62be0988bdb604fc9cd7c4e9a0e9f"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "b45bc4ee1d211ebc3c586fc44a5abb5a70c1feb7",
+      "diff_sha256": "edcb4ff0bfbb636483caaf7f582c4fb00a3e50a6632e0b1b540429a0e0b539e5",
+      "files": [
+        "api/test/doctors-today.test.ts",
+        "web/src/__tests__/DoctorsPage.test.tsx"
+      ],
+      "lines_added": 171,
+      "lines_deleted": 0,
+      "repo": "sample-system",
+      "tree_sha": "e57453fbb3d84d4196af79630c6923ef05cdfdbe"
+    }
+  ],
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-10-30T14:59:30Z",
+  "step": "ut",
+  "tool_log_sha256": "1eae12a14049526eb7eebf56e2a52051d229c57454164e36b3589c608b51d7ba",
+  "tsl_version": "0.1.4",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 7812,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 21890,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 7015,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "b89310f1cfe5d888102794c0bf4f2b83fe4c94664f7f5452f015393f6f61563f",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 31750,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "3be2a00e29f71c1980b6477d02e3c26f63ac22d6fa91116f1fdfb91c9b625b74",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 781,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 671,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}
