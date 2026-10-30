@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: impl@1.0.1
+step: ut@1.0.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -156,6 +156,30 @@ decision:
   A. same date and time as Next appointment
   B. date only
 **Proposed default:** same date and time as Next appointment
+answer:
+answered_by:
+decision:
+
+## Q-14 · non-blocking · ask: tech lead · round 6
+**Question:** Does the verifier container provide PostgreSQL 16 or HMS_TEST_DATABASE_URL, so the API tests run instead of being skipped?
+**Why it matters:** All API tests, including the HMS-4 ones, skip without a database; a passing H3 would then not prove the last-visit query.
+**Evidence:** context/test-strategy.md#database-for-tests
+**Options:**
+  A. verifier provides PostgreSQL
+  B. API tests run only locally and in CI
+**Proposed default:** API tests run only locally and in CI; run npm test with PostgreSQL before merging
+answer:
+answered_by:
+decision:
+
+## Q-15 · non-blocking · ask: tech lead · round 6
+**Question:** Does the search "patient one" match only fixture patient 1?
+**Why it matters:** The REQ-8/REQ-9 test assumes it does, mirroring the existing HMS-1 search for "patient two".
+**Evidence:** context/generated/test-layout.json#test:sample-system:api/test/patients-next-appointment.test.ts
+**Options:**
+  A. yes
+  B. no, use another search term
+**Proposed default:** yes
 answer:
 answered_by:
 decision:

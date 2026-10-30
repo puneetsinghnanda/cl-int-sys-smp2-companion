@@ -1,0 +1,184 @@
+{
+  "artifact_sha256": "b0d248a951e9d7f405ec643d9e249c8c9c62dc2561441dcfe1c01bfff525dfe6",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID (DOC-1, APT-4, ...).",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/patients-next-appointment.test.ts\",",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/patients-next-appointment.test.ts"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"PatientsPage next appointment column (HMS-2)\",",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/PatientsPage.test.tsx"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "REQ-8, REQ-9, REQ-11, REQ-13, REQ-14]",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ut.md#L48"
+        },
+        {
+          "quote": "patients appear in the same sort order as before the change",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L102"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add an 'HMS-4 REQ-10' API test that the list stays newest first. Trace REQ-12 to the PAT-8 test and REQ-15 to the start-instant test, or explain under Known why they are left out.",
+      "text": "REQ-10 (sort order unchanged, S-3 AC3) has no HMS-4 test and is missing from the trace. The strategy wants a test named with each requirement's ID. REQ-12 and REQ-15 are also left out of the trace without a note."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "API tests check the list envelope (20 per page), search and the filter error are unchanged",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/ut.md#L110"
+        },
+        {
+          "quote": "expect(res.body).toMatchObject({ page: 1, page_size: 20, total: 1 });",
+          "ref": "sample-system:api/test/patients-last-visit.test.ts#L50"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Change the Known wording to 'page_size is 20', or add a test with more than 20 patients that checks page 2 still carries last_visit_at.",
+      "text": "Known says the API tests check '20 per page', but the paging test only checks page_size: 20 on a one-row search result. Paging with more than 20 patients is never run."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "expect(await lastOf(app, 1)).toBe(at(TUESDAY, '09:00'));",
+          "ref": "sample-system:api/test/patients-last-visit.test.ts#L45"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Seed the Completed visit each test needs inside that test or in beforeAll, so no test relies on another test's side effects.",
+      "text": "The first API describe block shares one database across its tests. The REQ-4 and REQ-8/REQ-9 tests depend on the visit the REQ-2 test creates earlier, so they fail if run alone or in a different order."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "toBe(dateTime(VISITED, 'Asia/Kolkata'))",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L90"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Also assert that the cell shows the Kolkata date (28 Oct) and not the UTC date (27 Oct).",
+      "text": "The hospital-zone test builds its expected text with the same dateTime helper the page uses. A bug in dateTime would pass unnoticed, and the test never checks the 28 Oct date that the comment says matters."
+    }
+  ],
+  "package_sha256": "6a99eeac669ceaab6a3fc008773773e11589a6ab30ff7cef95dc69ab38c5ce51",
+  "questions": [],
+  "recorded_at": "2026-10-30T14:01:02Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover the changed repo query and the Last visit column: latest Completed, the status filter, null and '-', and the zone. REQ-10 (sort order) has no HMS-4 test and is left out of the trace.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check what callers can see: last_visit_at values, status codes, headers and cell text. The paging check is weak because total is 1, and the zone check builds its expected text with the same dateTime helper.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers the invalid filter returning 400 with a field error, a patient with only a Cancelled appointment, no visit, cross-patient leakage and the UTC/Kolkata date boundary. It never runs paging with more than 20 patients.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "API tests use Vitest and Supertest with a throwaway PostgreSQL and a fixed clock. Web tests use jsdom and Testing Library. The files sit in the existing layout and test names start with the requirement IDs.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "States no test counts or coverage, defers to the verifier and records that coverage is skipped. It openly flags that the API tests may be skipped without PostgreSQL (Q-01).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
