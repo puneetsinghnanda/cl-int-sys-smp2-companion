@@ -1,31 +1,24 @@
 {
+  "accepted_default": true,
   "artifact_path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impl.md",
-  "artifact_sha256": "7cf56af613a8eb88112037b9ca3e5f7642afb21be88c99ef2fa216e9257db08e",
-  "attempt": 1,
-  "band": "High",
+  "artifact_sha256": "26fe0697b5932aacb3488d8d1530b60856684ba8bcb1ffd38247920447b82599",
+  "attempt": 2,
+  "band": "Medium",
   "caps": [],
-  "checks_sha256": "c07b942c5b85ff3e5af93cac4e2e2e2081c561bf76dc6bc508b235a1890d7604",
+  "checks_sha256": "3979cd89766b5e4e5bf90b1442a12638d8d7a36804da26af271dcc687ff156fb",
   "claims": {
     "total": 7,
     "verified": 7
   },
-  "decided_at": "2026-10-30T13:44:41Z",
+  "decided_at": "2026-10-30T13:52:37Z",
   "decided_by": "tsl@0.1.4",
-  "findings_dropped": [],
-  "findings_kept": [
+  "findings_dropped": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
-      "severity": "minor"
-    },
-    {
-      "id": "F-3",
-      "severity": "minor"
+      "reason": "path not found"
     }
   ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -40,7 +33,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -48,31 +41,31 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "5e21eb3bb271aef1fdaeddc7785f9cdb61b007b4121f990560fc57bf0a08929b",
   "product_changes": [
     {
       "base_sha": "6358971fc7b27e2198f87a516dad8c5a58cc38a6",
-      "diff_sha256": "6288636e03c2eab0534a762fca32bf503cc19ff7063e8c6f398544f532d5598f",
+      "diff_sha256": "969b20c19d983cbd042c7fb15b9c8b97c0c68a1ff21cc677bc099e54b3cae432",
       "repo": "sample-system",
-      "tree_sha": "baf4bed63d2a30920fa8b4e97721e3f533f4ce0e"
+      "tree_sha": "2525f301e9fd9b600e0941def3c5036f42107b97"
     }
   ],
-  "review_sha256": "fea751887c1762842fa28557507d54bf8f21cb5ac266e155aa2dee31b3f66f77",
+  "review_sha256": "e503da93540ce77e45eaa5a800eebeac274b52d7d2b646da77134b1dd7ac1f62",
   "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
   "schema": "verification.v1",
   "signals": {
-    "S1": 1.0,
+    "S1": 0.875,
     "S2": 1.0,
-    "S3": 4.2,
+    "S3": 4.8,
     "S4": 0,
     "S5": "fresh",
     "S6": {
-      "files": 6,
-      "lines": 22,
+      "files": 7,
+      "lines": 131,
       "sensitive": false
     }
   },
-  "signature": "A7DH3-I5nqak02BzHB97LDSToKLbzY59oq-QGORXVQQLuVemHExyU6sWPbxh5cf5_0lNpysoNMu3uw5rRpGmCQ",
+  "signature": "iGe4scrTl1RFNKGkALmVUggJTICQ0GzTVg6bgJfEN5rNRwk-sZZciMBQg2ht-D2AEqAI7xtmOzGJfAxP1ZN8Cw",
   "skill": "implement@1.0.1",
   "step": "impl",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

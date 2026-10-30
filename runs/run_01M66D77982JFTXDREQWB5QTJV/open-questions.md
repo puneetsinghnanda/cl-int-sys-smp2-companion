@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: threat@1.0.1
+step: impl@1.0.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -132,6 +132,30 @@ decision:
   A. accept for MVP
   B. block until sign-in exists
 **Proposed default:** accept for MVP; the list already shows Next appointment with the same exposure
+answer:
+answered_by:
+decision:
+
+## Q-12 · non-blocking · ask: product owner · round 5
+**Question:** Where should the Last visit column sit in the patient list?
+**Why it matters:** The ticket names the column but not its position; it was placed before Next appointment so the Next appointment column stays the last cell, as existing tests and users expect.
+**Evidence:** artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L74
+**Options:**
+  A. before Next appointment
+  B. after Next appointment
+**Proposed default:** before Next appointment
+answer:
+answered_by:
+decision:
+
+## Q-13 · non-blocking · ask: product owner · round 5
+**Question:** Should the Last visit cell show only the date, or the same date and time as Next appointment?
+**Why it matters:** The startsAt helper shows date and time; REQ-2 says date while REQ-14 says the same format as Next appointment. The code follows REQ-14.
+**Evidence:** artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L80
+**Options:**
+  A. same date and time as Next appointment
+  B. date only
+**Proposed default:** same date and time as Next appointment
 answer:
 answered_by:
 decision:

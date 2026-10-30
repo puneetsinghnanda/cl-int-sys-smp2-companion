@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.0.1
 inputs:
   - path: artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md
@@ -18,15 +18,19 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 6358971fc7b27e2198f87a516dad8c5a58cc38a6
-    head_sha: baf4bed63d2a30920fa8b4e97721e3f533f4ce0e
-    diff_sha256: 6288636e03c2eab0534a762fca32bf503cc19ff7063e8c6f398544f532d5598f
+    head_sha: 2525f301e9fd9b600e0941def3c5036f42107b97
+    diff_sha256: 969b20c19d983cbd042c7fb15b9c8b97c0c68a1ff21cc677bc099e54b3cae432
     files:
       - api/src/repositories/patientRepo.ts
       - api/src/types.ts
+      - api/test/patients-last-visit.test.ts
       - api/test/patients.test.ts
       - web/src/__tests__/PatientsPage.test.tsx
       - web/src/api/types.ts
       - web/src/pages/PatientsPage.tsx
+resolves:
+  - id: F-1
+    how: "Added HMS-4 regression tests for the status filter, latest visit, '-' fallback and hospital-zone date; see Changes."
 claims:
   - id: C1
     text: "SQL is kept in `api/src/repositories`."
@@ -61,7 +65,7 @@ questions:
     ask: product owner
     text: Where should the Last visit column sit in the patient list?
     why: The ticket names the column but not its position; it was placed before Next appointment so the Next appointment column stays the last cell, as existing tests and users expect.
-    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L77"]
+    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L74"]
     options: [before Next appointment, after Next appointment]
     default: before Next appointment
   - id: Q-02
@@ -69,34 +73,42 @@ questions:
     ask: product owner
     text: Should the Last visit cell show only the date, or the same date and time as Next appointment?
     why: The startsAt helper shows date and time; REQ-2 says date while REQ-14 says the same format as Next appointment. The code follows REQ-14.
-    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L81"]
+    evidence: ["artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L80"]
     options: [same date and time as Next appointment, date only]
     default: same date and time as Next appointment
-summary: "The patient list query now returns last_visit_at (the start of each patient's latest COMPLETED appointment, or null) and PatientsPage shows it in a new Last visit column, formatted in the hospital zone with the existing startsAt helper and '-' when null. Paging, search, sort, the Next appointment column and the no-medical-history rule are unchanged."
+summary: "The patient list query now returns last_visit_at (the start of each patient's latest COMPLETED appointment, or null) and PatientsPage shows it in a new Last visit column, formatted in the hospital zone with the existing startsAt helper and '-' when null. Regression tests cover the status filter, the latest-visit rule, the '-' fallback and the hospital-zone date. Paging, search, sort, the Next appointment column and the no-medical-history rule are unchanged."
 ---
 # Change: HMS-4
 
 ## Summary
 - **PatientRepo list query** (api, changed). A scalar subquery in the existing per-page SELECT returns `last_visit_at`: `max(starts_at)` over the patient's appointments with `status = 'COMPLETED'`. Cancelled, No-show and Scheduled appointments never count. It takes no request input, and the page query's WHERE, ORDER BY, LIMIT/OFFSET and count are untouched. `LIST_COLUMNS` is unchanged, so no medical history is selected. The field name is the design's default for its Q-01.
-- **PatientListItem type** (api and web, changed). Adds `last_visit_at: string | null`, always present, as an ISO UTC instant.
+- **PatientListItem type** (api and web, changed). Adds `last_visit_at: string | null`, an ISO UTC instant. The field is always present and null when there is no visit, where the design said "optional". This deviation lets every item carry the same keys, which the existing PAT-8 key check pins.
 - **PatientsPage Last visit column** (web, changed). A new "Last visit" column shows `startsAt(last_visit_at, timeZone)`, the same hospital-zone formatter as Next appointment, rendered as text, or "-" when null. The Next appointment column is unchanged.
 - **PatientService, patientsRouter, API client, appointment table**: no edits; they stay as they are.
 - **No logging is added** in the API, the client or the page (threat T-9).
+- **Retry (F-1)**: added regression tests for the new behaviour, listed under Changes.
 
 ## Changes
 - `api/src/repositories/patientRepo.ts`: PatientRepo list query. Adds the last-visit subquery and maps it to an ISO string or null (REQ-2, REQ-4, REQ-5, REQ-6, REQ-13).
 - `api/src/types.ts`: the API's PatientListItem gains `last_visit_at` (REQ-2).
 - `web/src/api/types.ts`: the web's PatientListItem gains `last_visit_at` (REQ-2).
 - `web/src/pages/PatientsPage.tsx`: the PatientsPage Last visit column (REQ-1, REQ-3, REQ-7, REQ-14, REQ-15).
+- `api/test/patients-last-visit.test.ts` (new): regression tests for PatientRepo list query.
+  - "HMS-4 REQ-7": null when the patient has no Completed appointment.
+  - "HMS-4 REQ-2, REQ-13": the latest of two Completed appointments.
+  - "HMS-4 REQ-4, REQ-5, REQ-6": later Cancelled, No-show and Scheduled appointments leave the Completed one.
+- `web/src/__tests__/PatientsPage.test.tsx`: the shared fixture gains `last_visit_at: null` to match the changed type (REQ-2). New regression tests for the PatientsPage Last visit column:
+  - "HMS-4 REQ-1": the header sits before Next appointment.
+  - "HMS-4 REQ-7": the "-" fallback.
+  - "HMS-4 REQ-3, REQ-14": a UTC instant that is already the next day in Asia/Kolkata is formatted in the hospital zone.
 - `api/test/patients.test.ts`: the PAT-8 test pins the exact list item keys, and the design changes that shape, so `last_visit_at` is added to the expected keys. The no-medical-history check (REQ-12) still runs.
-- `web/src/__tests__/PatientsPage.test.tsx`: the shared fixture gains `last_visit_at: null` so it matches the changed type (REQ-2). No assertion changed.
 
 ## Known
 - REQ-1 to REQ-3: the column, its value from the latest Completed appointment, and the hospital zone via `startsAt`.
-- REQ-4 to REQ-6: the filter `status = 'COMPLETED'` excludes Cancelled, No-show and Scheduled.
-- REQ-7: a null value renders "-".
+- REQ-4 to REQ-6: the filter `status = 'COMPLETED'` excludes Cancelled, No-show and Scheduled. A regression test now covers it.
+- REQ-7: a null value renders "-". Covered by API and web tests.
 - REQ-8 to REQ-10: the paged query, its search WHERE and its ORDER BY are unchanged, so it still returns 20 per page.
-- REQ-11: the Next appointment column markup is unchanged.
+- REQ-11: the Next appointment column markup is unchanged, and the existing HMS-2 tests still read it as the last cell.
 - REQ-12: `LIST_COLUMNS` still has no medical history columns, and the PAT-8 test still checks the exact keys.
 
 ## Assumed
