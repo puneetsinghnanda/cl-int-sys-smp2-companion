@@ -1,0 +1,13 @@
+{
+  "comment": "Replace req.md#REQ-14 with req.md#L122 and req.md#REQ-10 with req.md#L97 in questions evidence.",
+  "comment_sha256": "7f8b2e3de06d2dfee6fea7b41fce41cc93c9951432a5138849114b96e64631a3",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "feedback.v1",
+  "step": "split"
+}
