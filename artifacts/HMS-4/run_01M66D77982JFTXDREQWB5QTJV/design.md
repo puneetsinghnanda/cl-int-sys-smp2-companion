@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.4.1
 inputs:
   - path: artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md
@@ -21,6 +21,9 @@ inputs:
     sha256: 9ba29278d8d66b7341defc3c67d6e7d68508ce25ee2991ba256be2b37194ec61
 pack_sha:
   sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33
+resolves:
+  - id: F-1
+    how: "The web-formatting trade-off now cites impact Q-01 (convert in the API or the web page), not the non-existent Q-06, and records that its default (the API returns the instant and the web formats it) was adopted."
 claims:
   - id: C1
     text: "The API is layered: routes, services, and `repositories` that hold the SQL."
@@ -112,7 +115,7 @@ The last visit is computed in SQL, inside the existing patient list query in `Pa
 
 Trade-offs:
 - **Correlated subquery, not a join with GROUP BY.** The subquery leaves the existing paging, search, sort and total count untouched (S-3), at the cost of one index lookup per row. The page is 20 rows, and the lookup uses the existing `appointment_patient_start_idx`.
-- **Format in the web, not the API.** Reusing `startsAt` keeps one formatting path, which serves REQ-14 and Q-06 from the impact step. The cost is that the API returns an instant rather than a ready-made date.
+- **Format in the web, not the API.** This adopts the default of impact Q-01 (convert in the API or in the web page): the API returns the instant and the web formats it. Reusing `startsAt` keeps one formatting path for REQ-14, at the cost of the API returning an instant rather than a ready-made date.
 - **No migration.** The existing index covers (patient_id, starts_at). A partial index on COMPLETED appointments would be faster at scale, but the inputs give no volume that would justify it.
 - **The status filter is an explicit `= 'COMPLETED'`.** This keeps Cancelled, No-show and Scheduled out (S-2) without depending on any change to the status set.
 

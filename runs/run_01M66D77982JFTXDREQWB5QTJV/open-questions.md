@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: impact@1.1.1
+step: design@1.4.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -89,6 +89,37 @@ decision:
   A. only the patient list
   B. other callers exist and must ignore the new field
 **Proposed default:** other callers ignore the new field; it is additive
+answer:
+answered_by:
+decision:
+
+## Q-08 · non-blocking · ask: product owner · round 3
+**Question:** Should the Last visit cell show only the calendar date in the hospital zone (REQ-2), or the same date and time that startsAt shows for Next appointment (REQ-14)?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-09 · non-blocking · ask: tech lead · round 3
+**Question:** What should the new list field be called?
+**Why it matters:** The name is not in any input; the web page and tests depend on it.
+**Evidence:** context/conventions.md#lists, context/generated/api-inventory.json#http:GET:/api/patients
+**Options:**
+  A. last_visit_at
+  B. lastVisitAt
+**Proposed default:** last_visit_at, matching the snake_case of appointment starts_at
+answer:
+answered_by:
+decision:
+
+## Q-10 · non-blocking · ask: tech lead · round 3
+**Question:** Does any web page other than the patient list read GET /api/patients?
+**Why it matters:** Those callers receive the new field; it is additive, so they should be unaffected.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/patients, context/architecture.md#components
+**Options:**
+  A. only the patient list
+  B. other callers exist and ignore the new field
+**Proposed default:** other callers exist and ignore the new field
 answer:
 answered_by:
 decision:

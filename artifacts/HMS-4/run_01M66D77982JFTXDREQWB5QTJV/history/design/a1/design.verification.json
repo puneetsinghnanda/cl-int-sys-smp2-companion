@@ -1,0 +1,85 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md",
+  "artifact_sha256": "bfe093b4cc4871127b3a04b59243376dc28503942835aee101ea44ba1460668b",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "0927b6ecef9229459447fe62f6ac9a8526fcc04edf2182eab4799cb0f0ff5a09",
+  "claims": {
+    "total": 12,
+    "verified": 11
+  },
+  "decided_at": "2026-10-30T13:24:44Z",
+  "decided_by": "tsl@0.1.4",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md",
+      "sha256": "349e24faf9740b35e49bea15217759dbe806d6c78acadbf0bee04e178d3e931d",
+      "verification_sha256": "f626d780ba9f4f899e361ddf928336ed333d082f6bab2e0e1004b8c7f30e6b8e"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md",
+      "sha256": "f49a45c822dcc797bdba004c411c08fa32db8a41468d2957a34eb264d72f9764",
+      "verification_sha256": "15a4c4488af2c96acaa71caa74e5a15367a23898670fbed8ab36f6e9e99a94c7"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md",
+      "sha256": "a33bb8ac0e7a965160b9d6ba639feb8f4086518ad90e0374e053ffbfacdfaf35",
+      "verification_sha256": "e7dcca3f0f9d7f2d8d95ac2a9f218442e4c208a7b681840cabc91cbd2cade4be"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "5f1fa3d1e969a77d88e110f5af6bf56af1501004e24f0b274b9c5ef4a7e3f6a7",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9412,
+    "S2": 1.0,
+    "S3": 4.25,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "OXTG_C6GnF8cNyZh1zoYlbHkpZuLSHLmcNwioyANIgwjYB07rNHpJJWoa12pF_OCo_P3_fSkvLdDbqgo6LDdDA",
+  "skill": "design@1.4.1",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
