@@ -25,7 +25,7 @@
       "step": "impact"
     }
   ],
-  "heartbeat_at": "2026-10-30T09:41:16Z",
+  "heartbeat_at": "2026-10-30T09:43:30Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -66,7 +66,7 @@
     "open_non_blocking": 4,
     "round": 2
   },
-  "rev": 24,
+  "rev": 27,
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -262,16 +262,39 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md",
+          "artifact_sha256": "f1a610ff878dd8167492f8bd17cd2a49b32c5cdca6c761a0c41a384cf243c947",
+          "band": "Low",
+          "cause": "first",
+          "decided_at": "2026-10-30T09:43:30Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "352b347ebaf9c4496e3c68531a5185b15d70f3e30799ca9cca5f6d5ce2f71d58",
+              "step": "design"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.verification.json",
+          "skill": "threat-model@1.0.1",
+          "skill_started_at": "2026-10-30T09:41:32Z",
+          "started_at": "2026-10-30T09:41:25Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "threat",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -330,7 +353,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "LIVE-1",
-  "updated_at": "2026-10-30T09:41:16Z",
+  "updated_at": "2026-10-30T09:43:30Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

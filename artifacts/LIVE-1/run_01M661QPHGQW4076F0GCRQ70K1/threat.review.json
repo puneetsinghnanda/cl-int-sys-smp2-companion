@@ -1,0 +1,159 @@
+{
+  "artifact_sha256": "f1a610ff878dd8167492f8bd17cd2a49b32c5cdca6c761a0c41a384cf243c947",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the\npatient's own page.",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "so it follows the search text and the status filter with no extra request",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md#overview"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Existing control: the list is behind identify and requirePermission (C1)",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md#threats"
+        },
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_ref": "C1",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "State that MVP access control is a placeholder. Rest T-1 on 'the count reveals nothing beyond rows the same viewer can already page through', and record the reliance on future sign-in as assumed.",
+      "text": "T-1 is mitigated by 'identify and requirePermission', but architecture says every permission is granted in the MVP. The permission check gives no real protection today, so the mitigation overstates the control."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "T-1, T-2, T-3: each mitigation is an existing control or an unchanged behaviour cited above.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md#known"
+        },
+        {
+          "quote": "Sign-in replaces these\ntwo functions only.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Move T-1 to assumed, with the assumption that real access control arrives before production use.",
+      "text": "Assumed, unknown and open questions are all 'None', and all three threats are listed as known. Yet T-1 depends on sign-in replacing the MVP identity functions, which has not happened. That dependency should be recorded as an assumption."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "in the MVP every request is the actor staff.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md#claims"
+        }
+      ],
+      "claim_ref": "C1",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Quote the full sentence, including 'every permission is granted'.",
+      "text": "Claim C1 paraphrases the identity section but drops the clause 'every permission is granted', which is the part that matters for the T-1 mitigation."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "T-3 GET /api/patients list handler, denial of service: extra counting load",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md#threats"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "Threats are listed by id, not ordered by risk as the rubric expects for clarity."
+    }
+  ],
+  "package_sha256": "37d4c07c18ec84c0c547b7c18c5c732f515a0c739f3a45a6279737c8ac845d05",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "In the MVP every request is staff and every permission is granted. Is it acceptable that the patient count and list are effectively open to any caller until sign-in arrives, or must this change wait for real access control?"
+    }
+  ],
+  "recorded_at": "2026-10-30T09:43:28Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "Both design components, PatientsPage and the GET /api/patients list handler, have threats. The endpoint entry in the design is the same handler.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "T-1 (confirming a person is a patient) and T-3 (per-keystroke load) fit this change. T-2 is about a response extension that the design rules out, so it adds little.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "All mitigations cite controls. But T-1 relies on requirePermission, which grants every permission in the MVP, so in practice it controls nothing today.",
+      "score": 3
+    },
+    {
+      "id": "TM-R4",
+      "reason": "Assumed, unknown and questions are all empty, yet T-1 depends on access control that does not exist in the MVP. That gap is presented as known instead of being raised.",
+      "score": 3
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Short and readable, with matching frontmatter and body. Threats are listed by id, not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.95,
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}

@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md",
+  "artifact_sha256": "f1a610ff878dd8167492f8bd17cd2a49b32c5cdca6c761a0c41a384cf243c947",
+  "attempt": 1,
+  "budget_tokens": 22500,
+  "checks_sha256": "a58b7e651acb2522feb3b1d844e958d0f35a14f05b9db322cfa1a0bba032adcb",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "data-model",
+      "included": true,
+      "path": "context/data-model.md"
+    },
+    {
+      "id": "api-inventory",
+      "included": true,
+      "path": "context/api-inventory.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "design",
+      "path": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/design.md"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    },
+    {
+      "name": "data_model",
+      "path": "context/data-model.md"
+    },
+    {
+      "name": "api_inventory",
+      "path": "context/generated/api-inventory.json"
+    }
+  ],
+  "package_sha256": "37d4c07c18ec84c0c547b7c18c5c732f515a0c739f3a45a6279737c8ac845d05",
+  "prepared_at": "2026-10-30T09:42:19Z",
+  "prepared_by": "tsl@0.1.4",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "TM-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "TM-R2",
+        "weight": 0.25
+      },
+      {
+        "id": "TM-R3",
+        "weight": 0.25
+      },
+      {
+        "id": "TM-R4",
+        "weight": 0.1
+      },
+      {
+        "id": "TM-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/threat-model/rubric.md",
+    "sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e"
+  },
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "review-package.v1",
+  "skill": "threat-model@1.0.1",
+  "step": "threat",
+  "truncated": false
+}

@@ -1,0 +1,32 @@
+{
+  "dropped": [
+    "F-1",
+    "F-3"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "T-1, T-2, T-3: each mitigation is an existing control or an unchanged behaviour cited above.",
+          "ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/threat.md#known"
+        },
+        {
+          "quote": "Sign-in replaces these\ntwo functions only.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "Assumed, unknown and open questions are all 'None', and all three threats are listed as known. Yet T-1 depends on sign-in replacing the MVP identity functions, which has not happened. That dependency should be recorded as an assumption."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-2"
+  ],
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "feedback.v1",
+  "step": "threat"
+}
