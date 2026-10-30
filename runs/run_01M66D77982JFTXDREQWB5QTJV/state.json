@@ -40,7 +40,7 @@
       "step": "split"
     }
   ],
-  "heartbeat_at": "2026-10-30T13:04:02Z",
+  "heartbeat_at": "2026-10-30T13:11:40Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -78,10 +78,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 4,
-    "round": 1
+    "open_non_blocking": 7,
+    "round": 2
   },
-  "rev": 18,
+  "rev": 21,
   "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -190,7 +190,31 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md",
+          "artifact_sha256": "349e24faf9740b35e49bea15217759dbe806d6c78acadbf0bee04e178d3e931d",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-10-30T13:11:40Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "a33bb8ac0e7a965160b9d6ba639feb8f4086518ad90e0374e053ffbfacdfaf35",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.verification.json",
+          "skill": "impact-analysis@1.1.1",
+          "skill_started_at": "2026-10-30T13:05:08Z",
+          "started_at": "2026-10-30T13:04:40Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -199,7 +223,7 @@
       },
       "id": "impact",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -282,7 +306,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-10-30T13:04:02Z",
+  "updated_at": "2026-10-30T13:11:40Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

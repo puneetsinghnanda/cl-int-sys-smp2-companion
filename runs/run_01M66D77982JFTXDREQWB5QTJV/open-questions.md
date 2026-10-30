@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M66D77982JFTXDREQWB5QTJV
 ticket: HMS-4
 workflow: brownfield-change@1.3.0
-step: split@1.0.1
+step: impact@1.1.1
 created_at: '2026-10-30T13:04:02Z'
 status: open
 ---
@@ -58,6 +58,37 @@ decision:
   A. add all three
   B. leave as is
 **Proposed default:** add all three; Last visit as defined in REQ-2
+answer:
+answered_by:
+decision:
+
+## Q-05 · non-blocking · ask: product owner · round 2
+**Question:** Is Last visit based on the appointment start time (current default) or on the time staff marked it Completed? The second option would bring appointment_event into the read path.
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-06 · non-blocking · ask: tech lead · round 2
+**Question:** Should the conversion of the Last visit instant to the hospital date happen in the API or in the web page?
+**Why it matters:** Instants are stored in UTC and the hospital zone is configured in the API; converting in one place avoids dates that differ from the Next appointment column.
+**Evidence:** context/architecture.md#time-and-slots
+**Options:**
+  A. API returns the instant and the web formats it like Next appointment
+  B. API returns a hospital-zone date
+**Proposed default:** API returns the instant and the web formats it like Next appointment
+answer:
+answered_by:
+decision:
+
+## Q-07 · non-blocking · ask: tech lead · round 2
+**Question:** Does any web page other than the patient list call GET /api/patients (for example a patient picker when booking)?
+**Why it matters:** The list response gains a field; other callers would receive it too. The facts list the route but not its callers.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/patients, context/architecture.md#components
+**Options:**
+  A. only the patient list
+  B. other callers exist and must ignore the new field
+**Proposed default:** other callers ignore the new field; it is additive
 answer:
 answered_by:
 decision:

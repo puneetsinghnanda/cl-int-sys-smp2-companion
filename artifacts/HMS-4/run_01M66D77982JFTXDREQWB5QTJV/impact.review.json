@@ -1,0 +1,238 @@
+{
+  "artifact_sha256": "349e24faf9740b35e49bea15217759dbe806d6c78acadbf0bee04e178d3e931d",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/patients.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/App.tsx",
+          "ref": "context/generated/api-inventory.json#ui:/patients"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/pages/PatientsPage.tsx",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/patients.ts:patientsRouter",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Each resource has its own router mounted under `/api`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"type\": \"text\"",
+          "ref": "context/generated/db-schema.json#column:appointment.status"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"type\": \"timestamptz\"",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointment_patient_start_idx",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Which timestamp defines the Last visit date, the appointment start time or the time staff marked it Completed?",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#questions"
+        },
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a conditional note: if completion time is chosen, read the completion time from appointment_event and check index support for that read.",
+      "text": "The impact assumes starts_at (REQ-13) without flagging that req-step Q-01 (start time vs time marked Completed) is still open. If the PO picks completion time, appointment_event becomes a reader and the index argument no longer holds."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "http:GET:/api/patients, **changed**: the response gains a last visit field.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Split the section into Modules, APIs, Tables and Jobs subsections.",
+      "text": "The 'Impacted modules' section mixes the API, the tables and jobs in with the modules. Separate headings would make the impact easier to scan."
+    }
+  ],
+  "package_sha256": "aa9e801bf49995c2642ac92439d0b8a9c679e832f553e327f00ecb4cdc3ab08c",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Is Last visit based on the appointment start time (current default) or on the time staff marked it Completed? The second option would bring appointment_event into the read path."
+    }
+  ],
+  "recorded_at": "2026-10-30T13:11:39Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Covers the api, web and db modules, GET /api/patients, and the appointment and patient tables. It never mentions appointment_event, which becomes relevant if the req-step timestamp question (Q-01) is answered 'time marked Completed'.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, symbol, API, table, column and index id it uses exists in the generated facts and is cited. All 15 claims check out.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers other callers of the API (Q-02), background jobs (none), the shared list query (paging, search, sort, Next appointment) and the medical-history leak risk. The appointment_event reader that depends on the req-step answer is not covered.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Known and assumed match req.md. Assumed items REQ-13, 14 and 15 keep their bases. The two unknowns are tied to non-blocking tech-lead questions with defaults.",
+      "score": 5
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Readable, and the summary lists the risks. The 'Impacted modules' section also lists the API, the tables and jobs under a modules heading.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
