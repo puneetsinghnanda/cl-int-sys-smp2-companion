@@ -77,6 +77,33 @@ comment: Live harness check; only minor findings remain and the unverified claim
 kind: escalation
 Artifact: artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ut.md (sha256 2d85a0521199265b2dbd9a1ca03165114ed27e5d9d8fd08ab9e374dd8e2bdd88)
 Reason for gate: band Low
-decision:          # approve | reject | changes | abort
-comment:
+decision: approve         # approve | reject | changes | abort
+comment: Low band came from the review's product cites being checked against the pack commit (fixed in tsl fa0ae16). All gates pass; findings are minor.
 <!-- signature block written by `tsl approve` - do not edit -->
+<!-- tsl:signature-begin G-escalate-ut-a2 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-10-30T10:06:49Z",
+  "approver": "eng-db6b",
+  "artifacts": [
+    {
+      "attempt": 2,
+      "sha256": "2d85a0521199265b2dbd9a1ca03165114ed27e5d9d8fd08ab9e374dd8e2bdd88",
+      "step": "ut"
+    }
+  ],
+  "comment_sha256": "8ef942f1987f46094f1c696d4c9d04427ae0a9440a15980bff97d4228456f4dd",
+  "decision": "approve",
+  "gate": "G-escalate-ut-a2",
+  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "da0BVp7O9iewUGY-nTAXS1JwbBuUHG0G6IH-t-5GfOBN9ff5vtyrA-rXRwHwH8B_PHim-7912uFS_e_PBEcvCQ",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-ut-a2 -->
