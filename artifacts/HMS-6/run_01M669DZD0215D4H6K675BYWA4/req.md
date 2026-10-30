@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.0.0
 inputs:
   - path: artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md
@@ -65,7 +65,7 @@ requirements:
     title: Same counting rule as the dashboard tile
     type: constraint
     status: known
-    statement: "The count uses the same rule as the dashboard's `Appointments today` tile, so the sum of all doctors' Today counts equals that tile's value for the same moment."
+    statement: "The count uses the same counting rule as the dashboard's `Appointments today` tile."
     cites: ["artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md#L21"]
   - id: REQ-5
     title: Zero for doctors without appointments today
@@ -169,7 +169,7 @@ questions:
     why: "REQ-3 and REQ-4 must agree; a mismatch would make the column and tile disagree."
     evidence: ["artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/ticket.md#L21", "context/glossary.md#tile"]
     options: ["Tile already matches; reuse its rule", "Tile differs; follow the ticket and raise a separate fix"]
-    default: "Reuse the tile's counting rule; impact analysis confirms it excludes only Cancelled"
+    default: "Tile differs; follow the ticket and raise a separate fix"
   - id: Q-06
     blocking: false
     ask: product owner
@@ -192,13 +192,13 @@ glossary:
 # Requirements review: HMS-6
 
 ## Summary
-HMS-6 asks for a "Today" column on the doctors list showing how many of each doctor's appointments start today in the hospital time zone, excluding Cancelled ones, so front-desk staff can send walk-ins to the least busy doctor. The count must match the dashboard's "Appointments today" tile rule and link to the appointment list filtered to that doctor and today. Paging (20 per page), sort by name, filters and search must not change. Main risks: the cited inputs do not confirm the tile's counting rule (U-5) or that the appointment list can filter by doctor and day (U-3). No question blocks design.
+HMS-6 asks for a "Today" column on the doctors list showing how many of each doctor's appointments start today in the hospital time zone, excluding Cancelled ones, so front-desk staff can send walk-ins to the least busy doctor. The count must use the same counting rule as the dashboard's "Appointments today" tile and link to the appointment list filtered to that doctor and today. Paging (20 per page), sort by name, filters and search must not change. Main risks: the cited inputs do not confirm the tile's counting rule (U-5) or that the appointment list can filter by doctor and day (U-3). No question blocks design.
 
 ## Requirements
 - REQ-1 Today column on the doctors list (known): the list has a "Today" column.
 - REQ-2 Count appointments that start today in hospital time (known): per doctor, count appointments starting on today's date in Asia/Kolkata.
 - REQ-3 Cancelled appointments are excluded (known): any status except Cancelled counts.
-- REQ-4 Same counting rule as the dashboard tile (known): counts agree with the "Appointments today" tile.
+- REQ-4 Same counting rule as the dashboard tile (known): uses the "Appointments today" tile's counting rule.
 - REQ-5 Zero for doctors without appointments today (known): shows 0.
 - REQ-6 Count links to the appointment list for that doctor (known).
 - REQ-7 Linked appointment list is filtered to today (known).
@@ -228,7 +228,7 @@ HMS-6 asks for a "Today" column on the doctors list showing how many of each doc
 - Q-02 (non-blocking, tech lead): is this the existing DOC-2 doctors list? Default: yes.
 - Q-03 (non-blocking, tech lead): can the appointment list filter by doctor and day? Default: use or add those filters.
 - Q-04 (non-blocking, tech lead): "today" is the Asia/Kolkata calendar day? Default: yes.
-- Q-05 (non-blocking, tech lead): does the tile exclude only Cancelled? Default: reuse the tile's rule.
+- Q-05 (non-blocking, tech lead): does the tile exclude only Cancelled? Default: follow the ticket (exclude only Cancelled); if the tile differs, raise a separate fix.
 - Q-06 (non-blocking, product owner): does 0 link? Default: yes, every count links.
 
 ## Out of scope
