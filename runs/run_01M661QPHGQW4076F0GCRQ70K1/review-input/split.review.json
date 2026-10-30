@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "b4e6622becffa36ae90e954275eb94df9ea45e61936a5f3218496527b6f429e9",
+  "package_sha256": "39ab807e427c23851d91496c7e497c53dbf52687fcf1f3c9ed7689bc66e5d636",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2"
+  },
+  "rubric_score": 4.45,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All known REQs (REQ-1 to REQ-4) and the assumed REQ-5 are traced: S-1 covers REQ-1, REQ-2 and REQ-5, and S-2 covers REQ-3 and REQ-4."},
+    {"id": "SS-R2", "score": 4, "reason": "S-2 has one outcome. S-1 combines showing the count, updating it, and the paging scope under one outcome. That is acceptable but slightly broad."},
+    {"id": "SS-R3", "score": 4, "reason": "Every criterion uses Given/When/Then. S-1 AC3 can only be checked if the list is paged, which is still unknown (U-1)."},
+    {"id": "SS-R4", "score": 5, "reason": "The values '12 patients' and '0 patients' come straight from the intent's REQ-1 and REQ-3. No invented limits."},
+    {"id": "SS-R5", "score": 4, "reason": "Readable and consistent. The body's acceptance criteria are shortened versions of the front-matter text, and the front-matter U-1 has no text."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claim C1 says Front-desk staff are the users of the patient list. The cited glossary entry only says they register patients and book appointments. It never mentions the patient list.",
+      "cites": [
+        {"ref": "context/glossary.md#front-desk-staff", "quote": "The hospital staff who register patients and book, move and close appointments"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#L16", "quote": "The users of the patient list are `Front-desk staff`."}
+      ],
+      "claim_ref": "C1",
+      "suggested_fix": "Reword C1 so it matches what the glossary says, or cite the ticket or intent line that names the users of the patient list."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The intent's U-2/Q-02 (wording for exactly one match, default '1 patient') is not carried into the split. No story or criterion covers the one-match case, and it is not listed as unknown.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L67", "quote": "The ticket gives the plural form only; the wording for exactly one match is not stated."},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#L72", "quote": "U-1 (non-blocking): whether the count is of every match or of one page if the list is paged (Q-01)."}
+      ],
+      "suggested_fix": "Carry U-2/Q-02 forward as a non-blocking unknown and question, or add an assumed criterion for one match that is marked as relying on Q-02's default."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "In the front matter, unknown U-1 has only an id and a blocking flag, with no text. The body's acceptance criteria are also looser rewordings of the front-matter ones, e.g. S-1 AC2 'the count follows the new search'.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#L22", "quote": "- id: U-1"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md#L58", "quote": "then the count follows the new search."}
+      ],
+      "suggested_fix": "Add text (and question: Q-01) to the front-matter U-1, and make the body's acceptance criteria match the front-matter wording."
+    }
+  ],
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "unsupported",
+      "cites": [
+        {"ref": "context/glossary.md#front-desk-staff", "quote": "The hospital staff who register patients and book, move and close appointments"}
+      ]
+    }
+  ],
+  "questions": []
+}

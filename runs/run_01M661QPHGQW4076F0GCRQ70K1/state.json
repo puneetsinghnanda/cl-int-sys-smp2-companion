@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-10-30T09:24:05Z",
+  "heartbeat_at": "2026-10-30T09:28:48Z",
   "owner": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
   "owner_pseudonym": "eng-db6b",
   "pack": {
@@ -47,10 +47,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 3,
-    "round": 1
+    "open_non_blocking": 4,
+    "round": 2
   },
-  "rev": 4,
+  "rev": 9,
   "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -86,16 +86,40 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.md",
+          "artifact_sha256": "b4e6622becffa36ae90e954275eb94df9ea45e61936a5f3218496527b6f429e9",
+          "band": "Medium",
+          "cause": "first",
+          "decided_at": "2026-10-30T09:28:48Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "9514b56924da6973313b7c5448cdd9f9f0335306e31e8a0294dab29fad5a138b",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/split.verification.json",
+          "skill": "story-split@1.0.1",
+          "skill_started_at": "2026-10-30T09:25:22Z",
+          "started_at": "2026-10-30T09:25:15Z"
+        }
+      ],
       "budget_used": {
-        "checks": 0,
+        "checks": 2,
         "review": 0,
         "rework": 0,
         "verifier": 0
       },
       "id": "split",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -190,7 +214,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "LIVE-1",
-  "updated_at": "2026-10-30T09:24:05Z",
+  "updated_at": "2026-10-30T09:28:48Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "6fa17f27a875f1241e2c6567f43c0382f594c4d948d18760c0f7fb78636f25bf"
 }

@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M661QPHGQW4076F0GCRQ70K1
 ticket: LIVE-1
 workflow: brownfield-change@1.3.0
-step: req@1.0.0
+step: split@1.0.1
 created_at: '2026-10-30T09:24:05Z'
 status: open
 ---
@@ -45,6 +45,18 @@ decision:
   A. Add it
   B. Leave it out
 **Proposed default:** Leave it out; the ticket's own wording is clear enough for this change.
+answer:
+answered_by:
+decision:
+
+## Q-04 · non-blocking · ask: product owner · round 2
+**Question:** Should the number count every matching patient, or only the patients on the current page?
+**Why it matters:** S-1 AC3 relies on the assumed REQ-5; the intent raised this as its Q-01.
+**Evidence:** artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L59
+**Options:**
+  A. Every matching patient
+  B. Only the patients on the current page
+**Proposed default:** Every matching patient, as the intent's REQ-5 assumes.
 answer:
 answered_by:
 decision:
