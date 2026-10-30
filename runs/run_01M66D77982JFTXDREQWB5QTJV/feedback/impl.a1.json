@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "so it matches the changed type (REQ-2). No assertion changed.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impl.md#L92"
+        },
+        {
+          "quote": "Given a patient whose most recent appointment is `Cancelled` and who has an earlier Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L86"
+        },
+        {
+          "quote": "then the Last visit column shows `-`.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L92"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No test was added for the new behaviour. The only test edits update the pinned keys and the fixture. Nothing checks the S-2 status filter (Cancelled, No-show, Scheduled), the '-' shown when null, or the S-1 latest-Completed rule and Asia/Kolkata date."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "feedback.v1",
+  "step": "impl"
+}

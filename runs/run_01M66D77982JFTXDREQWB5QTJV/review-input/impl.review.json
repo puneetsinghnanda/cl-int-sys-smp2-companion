@@ -1,0 +1,51 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "7cf56af613a8eb88112037b9ca3e5f7642afb21be88c99ef2fa216e9257db08e",
+  "package_sha256": "b03c9cfa03a02b0a64808b0196dd07ed0889bd698aaabaa96a2909f5e70cde93",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "Both changed components are implemented as designed: a correlated COMPLETED subquery in PatientRepo and a Last visit column that uses startsAt with a '-' fallback. One small gap: the type makes the field always present and nullable, while the design calls it optional."},
+    {"id": "IM-R2", "score": 5, "reason": "The SQL stays in api/src/repositories, the list envelope and the 20-per-page paging are untouched, instants stay UTC and are formatted in the hospital zone, and no logging is added."},
+    {"id": "IM-R3", "score": 5, "reason": "Six files, +18/-4. The test edits only update the pinned key list and the fixture so they match the new type. No unrelated edits."},
+    {"id": "IM-R4", "score": 3, "reason": "The code handles null with '-', and startsAt already falls back when the zone is invalid. No test covers the new edge cases: Cancelled, No-show and Scheduled being excluded, the null '-' case, the latest-of-two rule, or the UTC/Kolkata date boundary."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary and the per-file changes match the diff. The evidence cites in the open questions point to split.md lines that do not support them."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "completeness", "text": "No test was added for the new behaviour. The only test edits update the pinned keys and the fixture. Nothing checks the S-2 status filter (Cancelled, No-show, Scheduled), the '-' shown when null, or the S-1 latest-Completed rule and Asia/Kolkata date.", "cites": [
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impl.md#L92", "quote": "so it matches the changed type (REQ-2). No assertion changed."},
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L86", "quote": "Given a patient whose most recent appointment is `Cancelled` and who has an earlier Completed appointment"},
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L92", "quote": "then the Last visit column shows `-`."}
+    ], "suggested_fix": "Add API tests in api/test/patients.test.ts that seed Completed, Cancelled, No-show and Scheduled appointments and assert last_visit_at. Add web tests for the '-' fallback and for formatting in the hospital zone."},
+    {"id": "F-2", "severity": "minor", "category": "consistency", "text": "The design says the list item type gains an optional field. The implementation makes last_visit_at always present as string | null. That is defensible, but it differs from the design and the artifact does not record it as a deviation.", "cites": [
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/design.md#L127", "quote": "Only the patient list item type gains the optional field."},
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impl.md#L81", "quote": "Adds `last_visit_at: string | null`, always present, as an ISO UTC instant."}
+    ], "suggested_fix": "Record in the summary that the field is always present and nullable, which differs from the design's 'optional'."},
+    {"id": "F-3", "severity": "minor", "category": "traceability", "text": "The evidence for the open questions points to the wrong lines. Q-02 cites split.md#L81, which is the S-2 id line; the format AC is at L80. Q-01 cites L77, which is AC2 (two Completed appointments) and says nothing about where the column goes.", "cites": [
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/impl.md#L72", "quote": "evidence: [\"artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L81\"]"},
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L80", "quote": "the Last visit date uses the same date format as the Next appointment column"},
+      {"ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/split.md#L77", "quote": "Given a patient with two Completed appointments"}
+    ], "suggested_fix": "Point Q-02 evidence to split.md#L80 and Q-01 evidence to split.md#L74 (AC1, the column)."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "\"name\": \"PatientRepo\","}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "\"name\": \"PatientsPage\","}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:startsAt", "quote": "\"name\": \"startsAt\","}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Should HMS-4 merge with only shape-level test updates, or must behaviour tests for the COMPLETED filter, the '-' fallback and the Kolkata date boundary land first?", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-1"}
+  ]
+}
