@@ -1,0 +1,64 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M661QPHGQW4076F0GCRQ70K1",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "9514b56924da6973313b7c5448cdd9f9f0335306e31e8a0294dab29fad5a138b",
+  "package_sha256": "bcf1bb6cdfd6b658ebaf66b10a8514f9ecbe2181028b3c54e10815ad0a3da568",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "a2fb742016eea8527567d7b2f06123d7ee925f6eb7f56997fc8d91b8e2ef3d5d"
+  },
+  "rubric_score": 4.4,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All three acceptance criteria and the story map to REQ-1..REQ-5. Layout is listed under Out of scope with a reason."},
+    {"id": "RR-R2", "score": 4, "reason": "The AC on line 22 is correctly split into REQ-3 and REQ-4, and each REQ can be tested. REQ-1 and REQ-5 overlap: both define the count as patients matching the current search."},
+    {"id": "RR-R3", "score": 4, "reason": "Known items cite ticket lines. REQ-5 has a real basis in the story/AC wording, but its paging premise is never verified against the system."},
+    {"id": "RR-R4", "score": 5, "reason": "Nothing in the ticket clashes with the cited baseline goals or constraints. The story-vs-AC tension is raised as Q-01 with both ticket lines cited."},
+    {"id": "RR-R5", "score": 4, "reason": "Questions are non-blocking with sensible defaults and plausible routing. Q-02 offers '1 patients' as an option, which is not a real alternative."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable. 'patient list' is used consistently but left undefined by the default for Q-03."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "REQ-1 is marked known and already defines the count as patients matching the current search. REQ-5 marks the same scope as assumed, so one behaviour appears twice with two different statuses.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L35", "quote": "The patient list shows the number of patients that match the current search"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L59", "quote": "The number counts every patient that `match` the current search, even if the list shows them over more than one page."}
+      ],
+      "suggested_fix": "Limit REQ-5 to the paging case only (count spans all pages), or fold it into REQ-1 and keep Q-01 as the open point."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "U-1 and REQ-5 rest on the list possibly being paged. The ticket only says the list supports search and sort, and the artifact does not check whether paging exists.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L64", "quote": "If the patient list is paged, the ticket does not say whether the number is all matches"},
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ticket.md#L16", "quote": "The patient list already supports search and sort (PRD PAT-2)."}
+      ],
+      "suggested_fix": "State whether the patient list is paged today (check PRD PAT-2 or the code); if it is not, mark U-1 as conditional or drop it."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "Q-02 offers '1 patients' as an option. That is a grammatical error, not a real product choice, so the question has effectively one option.",
+      "cites": [
+        {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/req.md#L87", "quote": "options: [\"1 patient\", \"1 patients\"]"}
+      ],
+      "suggested_fix": "Offer real alternatives, e.g. '1 patient' vs '1 match' or a fixed label, or drop Q-02 and record '1 patient' as an assumption."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ticket.md#L16", "quote": "The patient list already supports search and sort"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "The hospital staff who register patients and book, move and close appointments"}, {"ref": "artifacts/LIVE-1/run_01M661QPHGQW4076F0GCRQ70K1/ticket.md#L13", "quote": "As front-desk staff, I want to see how many patients the patient list is showing"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#goals", "quote": "Staff manage doctors, patients and appointments end to end."}]}
+  ],
+  "questions": []
+}
