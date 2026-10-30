@@ -1,0 +1,25 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The most recent Completed appointment and its displayed date are determined by the appointment `start time`.",
+          "ref": "artifacts/HMS-4/run_01M66D77982JFTXDREQWB5QTJV/req.md#L119"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-13 is a compound requirement. It sets both the ranking rule for 'most recent' and the source of the displayed date in one statement."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M66D77982JFTXDREQWB5QTJV",
+  "schema": "feedback.v1",
+  "step": "req"
+}
