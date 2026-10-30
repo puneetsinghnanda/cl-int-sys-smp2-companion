@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 ticket: HMS-6
 workflow: brownfield-change@1.3.0
-step: split@1.0.1
+step: impact@1.1.1
 created_at: '2026-10-30T11:57:08Z'
 status: open
 ---
@@ -167,6 +167,49 @@ decision:
   A. Every count links, including 0
   B. 0 is plain text
 **Proposed default:** Every count links, including 0
+answer:
+answered_by:
+decision:
+
+## Q-15 · non-blocking · ask: tech lead · round 3
+**Question:** Should the Today count go on the shared DoctorSummary type, which would also change GET /api/doctors/:id via DoctorDetail? Or should it go on a list-only row type returned only when the doctors list asks for it?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-16 · non-blocking · ask: tech lead · round 3
+**Question:** Do GET /api/appointments and AppointmentsPage already accept a doctor filter and a single-day filter? If not, may this change add them?
+**Why it matters:** REQ-6 and REQ-7 need a link target filtered to one doctor and today; if the filters are missing, GET /api/appointments and AppointmentsPage become changed instead of existing.
+**Evidence:** context/generated/api-inventory.json#http:GET:/api/appointments, context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage
+**Options:**
+  A. Filters exist; link to them
+  B. Add the missing filter(s) in this change
+**Proposed default:** Add the missing filter(s) in this change
+answer:
+answered_by:
+decision:
+
+## Q-17 · non-blocking · ask: tech lead · round 3
+**Question:** Where does DashboardService compute the 'Appointments today' count, and does it exclude only CANCELLED? May the doctors count reuse that same predicate?
+**Why it matters:** REQ-4 needs the doctors count and the tile to agree; the facts show DashboardService exists but not its counting rule.
+**Evidence:** context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService, context/generated/api-inventory.json#http:GET:/api/dashboard
+**Options:**
+  A. Reuse the dashboard's predicate, shared between both
+  B. Write a separate query for the doctors count
+**Proposed default:** Reuse the dashboard's predicate, shared between both
+answer:
+answered_by:
+decision:
+
+## Q-18 · non-blocking · ask: tech lead · round 3
+**Question:** GET /api/doctors is also called by the BookAppointmentPage doctor picker. Should the Today count be computed on every call, or only when the doctors list asks for it?
+**Why it matters:** Computing it on every call adds a count query to each picker search and changes the picker's response for no benefit.
+**Evidence:** context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage, context/generated/api-inventory.json#http:GET:/api/doctors
+**Options:**
+  A. Only when the doctors list asks for it
+  B. On every call
+**Proposed default:** Only when the doctors list asks for it
 answer:
 answered_by:
 decision:

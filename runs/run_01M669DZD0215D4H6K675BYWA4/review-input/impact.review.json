@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M669DZD0215D4H6K675BYWA4",
   "step": "impact",
-  "attempt": 1,
-  "artifact_sha256": "7914d92e21b9e56edf7ff50a50f4c26de7050677ea1ae1b9a0f498369b60faf3",
-  "package_sha256": "c354d7ab3b6c8ba543726c78eb1e26469eca146af4479c97b4419515989a49b3",
+  "attempt": 2,
+  "artifact_sha256": "affb90a6bdd83c43e210eb3195ae462b1dc743d84272556f92675ff4c041c53f",
+  "package_sha256": "4f01518477c46e5278c63bf448974ca5e8c4a68738f01a2ec0d533a453b5bebf",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,70 +12,48 @@
     "version": "0.1.4",
     "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
   },
-  "rubric_score": 3.65,
+  "rubric_score": 4.15,
   "rubric_items": [
-    {"id": "IA-R1", "score": 3, "reason": "The main modules, APIs and tables are listed. It misses a second web caller of GET /api/doctors (BookAppointmentPage) and the shared DoctorSummary type, which also shapes GET /api/doctors/:id."},
-    {"id": "IA-R2", "score": 4, "reason": "Every id exists in the generated facts and is cited. A few cites are weak: C19 cites a column anchor that does not show the FK, and the time helpers in lib/time.ts are not cited."},
-    {"id": "IA-R3", "score": 3, "reason": "It covers UI routes, background jobs and the link target. It misses other callers of the changed API (the booking doctor picker) and other readers of DoctorSummary."},
-    {"id": "IA-R4", "score": 5, "reason": "REQ-4, REQ-6 and REQ-7 are marked assumed with clear bases tied to U-1 and U-2. Known items rest on cited facts."},
-    {"id": "IA-R5", "score": 4, "reason": "Readable and well sectioned, and the risks are named in the summary. The impacted list is ordered by element type, not by risk."}
+    {"id": "IA-R1", "score": 4, "reason": "The previous F-1 is fixed: BookAppointmentPage is now listed. The shared DoctorSummary type (api and web types.ts) and GET /api/doctors/:id, which goes through DoctorDetail and DoctorRepo.get, are still not listed (previous F-2)."},
+    {"id": "IA-R2", "score": 4, "reason": "Every id is in the generated facts. C19 and the time helpers are now cited (previous F-3 and F-4 fixed). C23 cites only a symbol anchor that does not show the GET /api/doctors call. AppointmentRepo is still not cited by any module entry."},
+    {"id": "IA-R3", "score": 4, "reason": "It covers both callers of GET /api/doctors, the link target and background jobs. It still misses the other readers of DoctorSummary (DoctorDetail / GET /api/doctors/:id) if the count is added to that type."},
+    {"id": "IA-R4", "score": 5, "reason": "REQ-4, REQ-6 and REQ-7 are marked assumed with clear bases tied to U-1 and U-2. U-3 records the picker cost question honestly. Known items rest on cited facts."},
+    {"id": "IA-R5", "score": 4, "reason": "Clear and well sectioned. The summary names U-1 to U-3. The impacted list is still ordered by element type, not by risk."}
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "major",
       "category": "completeness",
-      "text": "GET /api/doctors is marked changed, but its second web caller, the doctor picker in BookAppointmentPage, is not listed. With the change, every picker search would also compute per-doctor Today counts.",
-      "cites": [
-        {"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L77", "quote": "(await api.doctors({ q, status: 'ACTIVE' }))"},
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#impacted-modules", "quote": "Indirect effects: UI route `/doctors` shows the changed data; UI route `/appointments` is the link target."}
-      ],
-      "suggested_fix": "List BookAppointmentPage as a caller of GET /api/doctors. Say whether the count is always computed or only on request (for example with a query flag), and what that costs the picker."
-    },
-    {
-      "id": "F-2",
-      "severity": "major",
-      "category": "completeness",
-      "text": "The response grows through DoctorSummary, which DoctorDetail extends and DoctorRepo.get returns. Adding the count there touches GET /api/doctors/:id and the api/web types files, and none of these are listed.",
+      "text": "The previous F-2 is still open. The response grows, but the artifact never names DoctorSummary. DoctorDetail extends DoctorSummary and DoctorRepo.get returns it, so adding the count there also touches GET /api/doctors/:id and both types.ts files. None of these are listed.",
       "cites": [
         {"ref": "sample-system:api/src/types.ts#L55", "quote": "export interface DoctorDetail extends DoctorSummary {"},
         {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L99", "quote": "async get(id: number, forUpdate = false): Promise&lt;DoctorSummary | null&gt; {"},
-        {"ref": "sample-system:web/src/api/client.ts#L59", "quote": "send&lt;Page&lt;DoctorSummary&gt;&gt;(`/api/doctors${query(params)}`)"}
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#impacted-modules", "quote": "response gains a Today count per doctor (only on request, per the Q-03 default)"}
       ],
-      "suggested_fix": "List the api/src/types.ts and web/src/api/types.ts DoctorSummary types and client.ts. Say whether the count goes into DoctorSummary (which affects detail and get) or into a list-only row type."
+      "suggested_fix": "Name the DoctorSummary types in api/src/types.ts and web/src/api/types.ts. Say whether the count goes on DoctorSummary (which affects GET /api/doctors/:id) or on a list-only row type."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The previous F-5 is still open. C13 names AppointmentRepo, but the api module entry cites only doctorsRouter, DoctorService, DoctorRepo and dayBounds. It is still unclear which repository runs the count query on table:appointment.",
+      "cites": [
+        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#impacted-modules", "quote": "the doctors list route, service and repository return a Today count per doctor"}
+      ],
+      "claim_ref": "C13",
+      "suggested_fix": "State whether DoctorRepo or AppointmentRepo owns the count query, and cite it in the api module entry."
     },
     {
       "id": "F-3",
       "severity": "minor",
       "category": "traceability",
-      "text": "The 'today in HOSPITAL_TZ' logic is not tied to the existing time helpers that appear in the facts (dayBounds, localDay, todayIn). The day-boundary code to reuse is left unnamed.",
+      "text": "C23 cites only the BookAppointmentPage symbol anchor, which does not show that it calls GET /api/doctors. The call is at line 77 of the page source.",
       "cites": [
-        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "quote": "sym:sample-system:api/src/lib/time.ts:dayBounds"},
-        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "sym:sample-system:web/src/lib/format.ts:todayIn"}
+        {"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L77", "quote": "(await api.doctors({ q, status: 'ACTIVE' }))"}
       ],
-      "suggested_fix": "Cite lib/time.ts (dayBounds/localDay) for the API count and format.ts todayIn for the link's date parameter."
-    },
-    {
-      "id": "F-4",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "C19 says doctor_id references the doctor table, but its cited column anchor does not show the FK. The reference appears in the foreign_keys of table:appointment.",
-      "cites": [
-        {"ref": "context/generated/db-schema.json#table:appointment", "quote": "\"references\": \"table:doctor\""}
-      ],
-      "claim_ref": "C19",
-      "suggested_fix": "Add context/generated/db-schema.json#table:appointment to C19's cites."
-    },
-    {
-      "id": "F-5",
-      "severity": "minor",
-      "category": "consistency",
-      "text": "C13 names AppointmentRepo, but no module entry cites it. The artifact does not say whether the count query sits in DoctorRepo or AppointmentRepo, so it is unclear which repository reads table:appointment.",
-      "cites": [
-        {"ref": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md#impacted-modules", "quote": "the doctors list route, service and repository return a Today count per doctor."}
-      ],
-      "claim_ref": "C13",
-      "suggested_fix": "State which repository owns the count query and cite it in the api module entry."
+      "claim_ref": "C23",
+      "suggested_fix": "Add sample-system:web/src/pages/BookAppointmentPage.tsx#L77 to C23's cites."
     }
   ],
   "claims_checked": [
@@ -94,21 +72,25 @@
     {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}]},
     {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
     {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
-    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW"}]},
     {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.status", "quote": "\"id\": \"column:appointment.status\""}]},
     {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "for [starts_at, ends_at) in UTC"}]},
     {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:appointment", "quote": "\"references\": \"table:doctor\""}]},
     {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_doctor_start_idx", "quote": "\"id\": \"index:appointment_doctor_start_idx\""}]},
     {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:doctor_name_idx", "quote": "\"id\": \"index:doctor_name_idx\""}]},
-    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]}
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L77", "quote": "(await api.doctors({ q, status: 'ACTIVE' }))"}]},
+    {"claim_id": "C24", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "quote": "\"id\": \"sym:sample-system:web/src/api/client.ts:api\""}]},
+    {"claim_id": "C25", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "quote": "sym:sample-system:api/src/lib/time.ts:dayBounds"}]},
+    {"claim_id": "C26", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "sym:sample-system:web/src/lib/format.ts:todayIn"}]}
   ],
   "questions": [
     {
       "id": "Q-1",
-      "text": "Should the Today count be added to the shared DoctorSummary, which would also change GET /api/doctors/:id and the booking picker, or be returned only for the doctors list page (for example behind a query flag)?",
+      "text": "Should the Today count go on the shared DoctorSummary type, which would also change GET /api/doctors/:id via DoctorDetail? Or should it go on a list-only row type returned only when the doctors list asks for it?",
       "ask_role": "tech_lead",
       "blocking": false,
-      "finding_ref": "F-2"
+      "finding_ref": "F-1"
     }
   ]
 }

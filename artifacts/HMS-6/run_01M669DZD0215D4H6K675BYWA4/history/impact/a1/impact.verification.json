@@ -1,0 +1,76 @@
+{
+  "artifact_path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/impact.md",
+  "artifact_sha256": "7914d92e21b9e56edf7ff50a50f4c26de7050677ea1ae1b9a0f498369b60faf3",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "9ceeee8932965049327cd7aa7ab94f7d9064079d86573742f3f1992c7a7daa6a",
+  "claims": {
+    "total": 22,
+    "verified": 22
+  },
+  "decided_at": "2026-10-30T12:27:29Z",
+  "decided_by": "tsl@0.1.4",
+  "findings_dropped": [
+    {
+      "id": "F-2",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md",
+      "sha256": "e04911f106dc8dc1dd0ed9c0dfdc17bb61a93e72095ba3a354e1a994ab185ffb",
+      "verification_sha256": "aa5f48ab5ae868752e16f78d581dff5a212873aefec41fd3ea822ddae1568084"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "b0e934a0ae05eab4b5844c3e30f0c8fe253f461f617a1deb863e2438110057dd",
+  "run_id": "run_01M669DZD0215D4H6K675BYWA4",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.963,
+    "S2": 1.0,
+    "S3": 3.65,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "bkc5X_D-PPiX19dgHFm90MZYUOHsiwzG56zLFnrtVkM1HieSyYy_brOJ9aPRh5U23gzsBCXA8mD2Hvi6EuENDw",
+  "skill": "impact-analysis@1.1.1",
+  "step": "impact",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

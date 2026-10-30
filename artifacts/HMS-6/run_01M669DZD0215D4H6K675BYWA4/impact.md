@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M669DZD0215D4H6K675BYWA4
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.1.1
 inputs:
   - path: artifacts/HMS-6/run_01M669DZD0215D4H6K675BYWA4/req.md
@@ -19,6 +19,9 @@ inputs:
     sha256: 2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55
 pack_sha:
   sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33
+resolves:
+  - id: F-1
+    how: "Listed BookAppointmentPage as a second caller of GET /api/doctors (C23); added U-3/Q-03: count only on request."
 claims:
   - id: C1
     text: "The doctors list is served by the route `/api/doctors` (GET)."
@@ -76,7 +79,7 @@ claims:
     cites: ["context/generated/db-schema.json#column:appointment.starts_at", "context/data-model.md#appointments"]
   - id: C19
     text: "The appointment table has a `doctor_id` column referencing the doctor table."
-    cites: ["context/generated/db-schema.json#column:appointment.doctor_id"]
+    cites: ["context/generated/db-schema.json#column:appointment.doctor_id", "context/generated/db-schema.json#table:appointment"]
   - id: C20
     text: "The index `appointment_doctor_start_idx` covers doctor_id and starts_at of appointment."
     cites: ["context/generated/db-schema.json#index:appointment_doctor_start_idx"]
@@ -86,12 +89,25 @@ claims:
   - id: C22
     text: "No `background jobs` exist yet."
     cites: ["context/architecture.md#open-points"]
+  - id: C23
+    text: "The booking screen `BookAppointmentPage` also calls GET /api/doctors for its doctor picker."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"]
+  - id: C24
+    text: "The web API client exposes `api` with the calls used by the pages."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"]
+  - id: C25
+    text: "The API has a day-boundary helper `dayBounds` in lib/time.ts."
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds"]
+  - id: C26
+    text: "The web app has a helper `todayIn` for today's date in a given time zone."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
 known: [REQ-1, REQ-2, REQ-3, REQ-5, REQ-8, REQ-9, REQ-10, REQ-11]
 assumed: [REQ-4, REQ-6, REQ-7]
 unknown:
   - {id: U-1, blocking: false}
   - {id: U-2, blocking: false}
+  - {id: U-3, blocking: false}
 questions:
   - id: Q-01
     blocking: false
@@ -109,13 +125,21 @@ questions:
     evidence: ["context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "context/generated/api-inventory.json#http:GET:/api/dashboard"]
     options: ["Reuse the dashboard's predicate, shared between both", "Write a separate query for the doctors count"]
     default: "Reuse the dashboard's predicate, shared between both"
+  - id: Q-03
+    blocking: false
+    ask: tech lead
+    text: "GET /api/doctors is also called by the BookAppointmentPage doctor picker. Should the Today count be computed on every call, or only when the doctors list asks for it?"
+    why: "Computing it on every call adds a count query to each picker search and changes the picker's response for no benefit."
+    evidence: ["context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "context/generated/api-inventory.json#http:GET:/api/doctors"]
+    options: ["Only when the doctors list asks for it", "On every call"]
+    default: "Only when the doctors list asks for it"
 modules:
   - id: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/routes/doctors.ts:doctorsRouter", "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "context/generated/module-map.json#sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorRepo"]
+    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/routes/doctors.ts:doctorsRouter", "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "context/generated/module-map.json#sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorRepo", "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds"]
   - id: module:sample-system:web
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage"]
+    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage", "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db", "context/generated/db-schema.json#index:appointment_doctor_start_idx"]
@@ -140,22 +164,22 @@ tables:
 # Impact analysis: HMS-6
 
 ## Summary
-The change adds a per-doctor count of today's appointments, excluding CANCELLED, to the doctors list. On the API side, `GET /api/doctors` (doctorsRouter, DoctorService, DoctorRepo) changes so each doctor row carries the count. On the web side, `DoctorsPage` at `/doctors` shows the Today column and links to `/appointments`. No table or migration changes: the `appointment` table already has `doctor_id`, `starts_at` (UTC) and `status`, and the index `appointment_doctor_start_idx` covers the lookup; "today" must use `HOSPITAL_TZ`. Main risks: the facts do not show whether the appointment list can filter by doctor and day (U-1), or how DashboardService counts "Appointments today" (U-2).
+The change adds a per-doctor count of today's appointments, excluding CANCELLED, to the doctors list. On the API side, `GET /api/doctors` (doctorsRouter, DoctorService, DoctorRepo) changes so each doctor row can carry the count, with "today" taken from `HOSPITAL_TZ` via the existing `dayBounds` helper. On the web side, `DoctorsPage` at `/doctors` shows the Today column and links to `/appointments`. The same route also feeds the `BookAppointmentPage` doctor picker, which must not pay for or change because of the count (U-3). No table or migration changes: `appointment` already has `doctor_id`, `starts_at` (UTC) and `status`, and the index `appointment_doctor_start_idx` covers the lookup. Other risks: the facts do not show whether the appointment list can filter by doctor and day (U-1), or how DashboardService counts "Appointments today" (U-2).
 
 ## Impacted modules
-- module:sample-system:api, **changed**: the doctors list route, service and repository return a Today count per doctor.
-- module:sample-system:web, **changed**: DoctorsPage adds the Today column and the link; calls go through client.ts.
+- module:sample-system:api, **changed**: the doctors list route, service and repository return a Today count per doctor; day bounds come from lib/time.ts `dayBounds`.
+- module:sample-system:web, **changed**: DoctorsPage adds the Today column and the link (today's date via `todayIn`); calls go through client.ts `api`. BookAppointmentPage is an existing caller of the same route and should stay unchanged.
 - module:sample-system:db, **existing**: no migration; the existing index on appointment (doctor_id, starts_at) serves the count.
-- http:GET:/api/doctors, **changed**: response gains a Today count per doctor; paging, sort by name, filters and search unchanged.
+- http:GET:/api/doctors, **changed**: response gains a Today count per doctor (only on request, per the Q-03 default); paging, sort by name, filters and search unchanged.
 - http:GET:/api/appointments, **existing**: link target; becomes changed if Q-01 says the doctor/day filters must be added.
 - http:GET:/api/dashboard, **existing**: its "Appointments today" rule is the reference for REQ-4; not changed.
 - table:appointment, **existing**: read for the count (doctor_id, starts_at, status).
 - table:doctor, **existing**: read as today; sort by name uses doctor_name_idx.
-- Indirect effects: UI route `/doctors` shows the changed data; UI route `/appointments` is the link target. No background jobs exist, so none are affected.
+- Indirect effects: callers of GET /api/doctors are DoctorsPage (UI route `/doctors`, shows the new data) and the BookAppointmentPage doctor picker (UI route `/appointments/new`, must not change). UI route `/appointments` is the link target. No background jobs exist, so none are affected.
 
 ## Known
 - REQ-1, REQ-5: the Today column and its 0 value sit in DoctorsPage at `/doctors`.
-- REQ-2: count by appointment.doctor_id and starts_at, with "today" in HOSPITAL_TZ (architecture time-and-slots).
+- REQ-2: count by appointment.doctor_id and starts_at, with "today" in HOSPITAL_TZ (architecture time-and-slots) using `dayBounds`.
 - REQ-3: appointment.status holds CANCELLED, so the exclusion can be expressed on existing data.
 - REQ-8, REQ-9, REQ-10: the existing GET /api/doctors paging, sort by name (doctor_name_idx), filters and search are kept; only the response grows.
 - REQ-11: the existing doctor columns stay; table:doctor is unchanged.
@@ -167,7 +191,9 @@ The change adds a per-doctor count of today's appointments, excluding CANCELLED,
 ## Unknown
 - U-1 (non-blocking): whether GET /api/appointments and AppointmentsPage support doctor and single-day filters → Q-01.
 - U-2 (non-blocking): how DashboardService counts "Appointments today", and whether it excludes only CANCELLED → Q-02.
+- U-3 (non-blocking): whether GET /api/doctors computes the Today count on every call, including the BookAppointmentPage picker, or only on request → Q-03.
 
 ## Open questions
 - Q-01 (non-blocking, tech lead): do the appointment list API and page accept doctor and day filters? Default: add the missing filter(s) in this change.
 - Q-02 (non-blocking, tech lead): where and how does DashboardService count "Appointments today", and may the doctors count reuse it? Default: reuse the dashboard's predicate, shared between both.
+- Q-03 (non-blocking, tech lead): compute the Today count on every GET /api/doctors call or only when the doctors list asks? Default: only when the doctors list asks for it.
