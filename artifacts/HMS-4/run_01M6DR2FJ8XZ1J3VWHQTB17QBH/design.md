@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M6DR2FJ8XZ1J3VWHQTB17QBH
 step: design
-attempt: 2
+attempt: 3
 skill: design@1.4.1
 inputs:
   - path: artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md
@@ -70,6 +70,9 @@ claims:
   - id: C16
     text: "API list fields use snake_case names such as `page_size`."
     cites: ["context/conventions.md#lists"]
+  - id: C17
+    text: "A shared API types file `api/src/types.ts` exists; the module map lists its constant `BLOOD_GROUPS`."
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 known: [S-3, S-4]
 assumed: [S-1, S-2]
@@ -77,7 +80,7 @@ unknown: []
 questions: []
 resolves:
   - id: F-1
-    how: "Named the field last_visit (string or null, YYYY-MM-DD in HOSPITAL_TZ) in both list row types and the JSON contract; name and format listed under Assumed."
+    how: "Added an Assumed entry for the two list row types, naming the files, the type and the basis; api/src/types.ts is cited from the module map (C17)."
 components:
   - name: patientsRouter (GET /api/patients handler)
     module: module:sample-system:api
@@ -144,8 +147,8 @@ Trade-offs:
 - patientsRouter (GET /api/patients handler) — **existing**. Same query parameters, permission and paging.
 - PatientService (list) — **changed**. Passes `HOSPITAL_TZ` to the repository and returns `last_visit` unchanged.
 - PatientRepo (list query) — **changed**. Adds the latest-COMPLETED subquery (REQ-2, REQ-4, REQ-11), returning a `YYYY-MM-DD` string in the hospital zone or null (REQ-3, REQ-5). It keeps the existing WHERE, ORDER BY and LIMIT/OFFSET (REQ-6, REQ-7, REQ-8) and the existing column list without medical history (REQ-10).
-- Patient list row type (api, api/src/types.ts) — **changed**. Adds `last_visit: string | null`.
-- Patient list row type (web, web/src/api/types.ts) — **changed**. Adds the same `last_visit: string | null`, in step with the api type.
+- Patient list row type (api, api/src/types.ts) — **changed**. Adds `last_visit: string | null`. The file location is cited (C17); the exact type name is assumed (see Assumed).
+- Patient list row type (web, web/src/api/types.ts) — **changed**. Adds the same `last_visit: string | null`, in step with the api type. The file location and type name are assumed (see Assumed).
 - api client (web/src/api/client.ts) — **existing**.
 - PatientsPage — **changed**. Adds the "Last visit" column and renders `last_visit` as given, or "-" for null (REQ-1, REQ-5). There is no highlight or filter (REQ-13) and no new sort control (REQ-12). The Next appointment cell code is untouched (REQ-9).
 - PatientsPage tests — **changed**. Add tests for the new column. The existing `nextCell` assertions are kept.
@@ -170,6 +173,10 @@ Story to component mapping:
 - S-1: relies on the field name `last_visit` and the `YYYY-MM-DD` format. No input fixes either.
   - The name follows the snake_case style of the list envelope (`page_size`, conventions#lists).
   - The format is a calendar date because REQ-3 asks for "the calendar date in the hospital time zone" (req.md REQ-3). ISO `YYYY-MM-DD` is the plain unambiguous form.
+- S-1: also relies on where the list row shape is declared, which the module map does not list.
+  - API side: `api/src/types.ts` exists in the module map as the shared API types file (C17). The patient list row type is assumed to be declared there.
+  - Web side: a matching type is assumed in `web/src/api/types.ts`, beside the only API client `web/src/api/client.ts` (C2).
+  - The type name (for example a `PatientListItem` interface) is not in the facts. Implement must confirm both declarations in source and update the ones that actually type the list rows. If the web types live elsewhere, update that file instead.
 - S-2: relies on the same field being null when there is no COMPLETED appointment, which the page renders as "-" (REQ-5).
 
 ## Unknown
@@ -179,4 +186,4 @@ None.
 None.
 
 ## Resolves
-- F-1: `last_visit: string | null`, `YYYY-MM-DD` in `HOSPITAL_TZ`, specified for both type files and the JSON contract. The name and format are listed as assumptions with their basis.
+- F-1: The two list row type files are now an explicit assumption under Assumed, naming the files, the type and the basis. `api/src/types.ts` is cited from the module map (C17).

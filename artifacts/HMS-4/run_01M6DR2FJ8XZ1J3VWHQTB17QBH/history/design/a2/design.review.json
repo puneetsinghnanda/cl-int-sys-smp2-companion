@@ -1,0 +1,240 @@
+{
+  "artifact_sha256": "c47dc4b09305b3cee1dd46a3765dbc228632c1ae382a1b914a24f6f4c6a15376",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New SQL files only, never edits to merged ones.",
+          "ref": "context/conventions.md#database-changes"
+        },
+        {
+          "quote": "module:sample-system:db — **existing**. No migration.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "http:GET:/api/patients — **changed**. Each list row gains a last-visit field.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "It is a second caller of `GET /api/patients` for its patient picker.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The `appointment_patient_start_idx` index already supports the per-patient lookup by start time.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The `PatientsPage.test.tsx` tests (`nextCell`) must keep passing.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Patient list row type (api, api/src/types.ts) — **changed**. Adds `last_visit: string | null`.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        },
+        {
+          "quote": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS"
+        },
+        {
+          "quote": "F-1: `last_visit: string | null`, `YYYY-MM-DD` in `HOSPITAL_TZ`",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#resolves"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite the source symbols that define the list row types. If none are in the module map, add an Assumed entry that names the assumed type and file locations, and record F-2 under resolves.",
+      "text": "Prior F-2 is not resolved. The list row types in api/src/types.ts and web/src/api/types.ts are still marked changed with no citation. The module map has only BLOOD_GROUPS, GENDERS and SLOT_MINUTES in api/src/types.ts and no web/src/api/types.ts. Assumed and Resolves skip this."
+    }
+  ],
+  "package_sha256": "f95d6aac3661badd4c1d72abb94a24bf046f95116c4bdec4d5d9634169bcb318",
+  "questions": [],
+  "recorded_at": "2026-11-02T09:52:21Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Uses only the existing layers: router, service, repo, client.ts, PatientsPage and the existing index. No new endpoint, no migration, no infrastructure. Follows the UTC/HOSPITAL_TZ rule and the list envelope rule.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-4 each map to components. Every AC is covered: latest COMPLETED, the Asia/Kolkata date with an API-level AC3 test, '-' for null, paging/search/sort/Next unchanged, no sort option, no highlight, and no medical columns.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "The method and path are exact. The new field is exact: last_visit: string | null, YYYY-MM-DD in HOSPITAL_TZ. The JSON and TS shapes are given for both type files, and HOSPITAL_TZ is passed as a bound parameter.",
+      "score": 5
+    },
+    {
+      "id": "DS-R4",
+      "reason": "The name and format of last_visit are now listed under Assumed with their basis. The list row types in api/src/types.ts and web/src/api/types.ts are still uncited and are not in the module map. Assumed does not mention them.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Five trade-offs, each with a reason and a cost: date string vs instant, DB vs browser, derived vs stored, reusing the endpoint (including the picker latency cost), and selecting only the date.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent. Endpoints now have their own section, matching the frontmatter. The 'harmless' wording is gone.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.85,
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

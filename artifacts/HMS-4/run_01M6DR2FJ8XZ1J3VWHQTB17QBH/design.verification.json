@@ -1,23 +1,18 @@
 {
   "artifact_path": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md",
-  "artifact_sha256": "c47dc4b09305b3cee1dd46a3765dbc228632c1ae382a1b914a24f6f4c6a15376",
-  "attempt": 2,
+  "artifact_sha256": "64ff400eb38b6193c9589148e368ad4face2dace7c50bac0764474c5723194f2",
+  "attempt": 3,
   "band": "Medium",
   "caps": [],
-  "checks_sha256": "835ef280d5dfeb5e38210ceea52b563e4810104419d0b5cd41483a915e84e0b2",
+  "checks_sha256": "85a4ab9a70d7f35ed234ba783fe258fcac3292eeb64294d4ce928639d028538a",
   "claims": {
-    "total": 16,
-    "verified": 14
+    "total": 17,
+    "verified": 15
   },
-  "decided_at": "2026-11-02T09:52:24Z",
+  "decided_at": "2026-11-02T09:56:53Z",
   "decided_by": "tsl@0.1.5",
   "findings_dropped": [],
-  "findings_kept": [
-    {
-      "id": "F-1",
-      "severity": "major"
-    }
-  ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -37,7 +32,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -45,15 +40,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": "072a724059dbdf4870c42d7ee1b733976f4f16cb00e7d47fb787810b582db3bd",
+  "prev_attempt_sha256": "432ccc727891e451f30938bdbc57737411e5a7d2cce9a96d6740653a10bd3696",
   "product_changes": null,
-  "review_sha256": "0bb88f22d33522ecf3c5cf60790896d7f350010584459d1efe9ebfdc4f1bbfdc",
+  "review_sha256": "9c85432792bf65d1e3363b980c0577032b404a7726cbbfb6fc8417328f3daabb",
   "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
   "schema": "verification.v1",
   "signals": {
     "S1": 0.8824,
     "S2": 1.0,
-    "S3": 4.85,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -62,7 +57,7 @@
       "sensitive": false
     }
   },
-  "signature": "2Q6-16ITTRXyzeqe-VJQL63oNwIZuI4uGgvbhBePcWcGzAGQc_5IAUs9ncPi8pNz79JNSUw_hlplBgvHI-e7CQ",
+  "signature": "ctuTf9LpdqXhaitOCV_GNvDGP9PNXlDvp-ObLXauBIm9-zBsY8RmLDvBOk06TCmIugJGH1tGNFww00UDDXX1Ag",
   "skill": "design@1.4.1",
   "step": "design",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

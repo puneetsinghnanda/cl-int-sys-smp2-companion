@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
   "step": "design",
-  "attempt": 2,
-  "artifact_sha256": "c47dc4b09305b3cee1dd46a3765dbc228632c1ae382a1b914a24f6f4c6a15376",
-  "package_sha256": "f95d6aac3661badd4c1d72abb94a24bf046f95116c4bdec4d5d9634169bcb318",
+  "attempt": 3,
+  "artifact_sha256": "64ff400eb38b6193c9589148e368ad4face2dace7c50bac0764474c5723194f2",
+  "package_sha256": "ad364721704804cea7426ad91ac1ff48afbfdf3dc5cd56f9ca99978ed5731100",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,29 +12,16 @@
     "version": "0.1.5",
     "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
   },
-  "rubric_score": 4.85,
+  "rubric_score": 5,
   "rubric_items": [
-    {"id": "DS-R1", "score": 5, "reason": "Uses only the existing layers: router, service, repo, client.ts, PatientsPage and the existing index. No new endpoint, no migration, no infrastructure. Follows the UTC/HOSPITAL_TZ rule and the list envelope rule."},
-    {"id": "DS-R2", "score": 5, "reason": "S-1 to S-4 each map to components. Every AC is covered: latest COMPLETED, the Asia/Kolkata date with an API-level AC3 test, '-' for null, paging/search/sort/Next unchanged, no sort option, no highlight, and no medical columns."},
-    {"id": "DS-R3", "score": 5, "reason": "The method and path are exact. The new field is exact: last_visit: string | null, YYYY-MM-DD in HOSPITAL_TZ. The JSON and TS shapes are given for both type files, and HOSPITAL_TZ is passed as a bound parameter."},
-    {"id": "DS-R4", "score": 4, "reason": "The name and format of last_visit are now listed under Assumed with their basis. The list row types in api/src/types.ts and web/src/api/types.ts are still uncited and are not in the module map. Assumed does not mention them."},
-    {"id": "DS-R5", "score": 5, "reason": "Five trade-offs, each with a reason and a cost: date string vs instant, DB vs browser, derived vs stored, reusing the endpoint (including the picker latency cost), and selecting only the date."},
-    {"id": "DS-R6", "score": 5, "reason": "Clear and consistent. Endpoints now have their own section, matching the frontmatter. The 'harmless' wording is gone."}
+    {"id": "DS-R1", "score": 5, "reason": "The design uses only existing layers: router, service, repo, client.ts, PatientsPage and the existing index. It adds no endpoint, migration or infrastructure. It follows the UTC/HOSPITAL_TZ rule and the list envelope rule."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 to S-4 each map to components, and every AC is covered. That includes latest COMPLETED, the Asia/Kolkata date with an AC3 API test, '-' for null, unchanged paging/search/sort/Next, no sort option, no highlight and no medical columns."},
+    {"id": "DS-R3", "score": 5, "reason": "Method and path are exact. last_visit is exact: string | null, YYYY-MM-DD in HOSPITAL_TZ. JSON and TS shapes are given for both row types, and HOSPITAL_TZ is passed as a bound parameter."},
+    {"id": "DS-R4", "score": 5, "reason": "Prior F-1 is resolved. The row-type locations are now explicit Assumed entries with their basis. api/src/types.ts is cited through C17, and Implement must confirm the type name and the web file. The other choices are cited."},
+    {"id": "DS-R5", "score": 5, "reason": "Five trade-offs, each with a reason and a cost, including the picker latency cost of reusing the endpoint."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear and consistent. The frontmatter components and endpoints match the body sections."}
   ],
-  "findings": [
-    {
-      "id": "F-1",
-      "severity": "major",
-      "category": "traceability",
-      "text": "Prior F-2 is not resolved. The list row types in api/src/types.ts and web/src/api/types.ts are still marked changed with no citation. The module map has only BLOOD_GROUPS, GENDERS and SLOT_MINUTES in api/src/types.ts and no web/src/api/types.ts. Assumed and Resolves skip this.",
-      "cites": [
-        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components", "quote": "Patient list row type (api, api/src/types.ts) — **changed**. Adds `last_visit: string | null`."},
-        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS", "quote": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS"},
-        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#resolves", "quote": "F-1: `last_visit: string | null`, `YYYY-MM-DD` in `HOSPITAL_TZ`"}
-      ],
-      "suggested_fix": "Cite the source symbols that define the list row types. If none are in the module map, add an Assumed entry that names the assumed type and file locations, and record F-2 under resolves."
-    }
-  ],
+  "findings": [],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "routes parse input and declare a permission, services hold the rules and"}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
@@ -42,16 +29,17 @@
     {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
     {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
     {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/conventions.md#database-changes", "quote": "New SQL files only, never edits to merged ones."}, {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules", "quote": "module:sample-system:db — **existing**. No migration."}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules", "quote": "http:GET:/api/patients — **changed**. Each list row gains a last-visit field."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"id\": \"http:GET:/api/patients\","}]},
     {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"}]},
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService"}]},
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter"}]},
     {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"}]},
     {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules", "quote": "It is a second caller of `GET /api/patients` for its patient picker."}]},
     {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules", "quote": "The `appointment_patient_start_idx` index already supports the per-patient lookup by start time."}]},
-    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules", "quote": "The `PatientsPage.test.tsx` tests (`nextCell`) must keep passing."}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell", "quote": "sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"}]},
     {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists"}]},
-    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]}
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS", "quote": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS"}]}
   ],
   "questions": []
 }
