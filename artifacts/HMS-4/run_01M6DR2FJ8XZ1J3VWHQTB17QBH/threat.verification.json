@@ -1,0 +1,80 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md",
+  "artifact_sha256": "3f43055d1ca47ba49595419cb7bf72a648d94f199505a4b6847f70973161eba8",
+  "attempt": 1,
+  "band": "Low",
+  "caps": [],
+  "checks_sha256": "ab7f47d08875ddfb8d601dc18d7b4b79a6e25b7f15750d4fc6520ba70e55d3e4",
+  "claims": {
+    "total": 13,
+    "verified": 12
+  },
+  "decided_at": "2026-11-02T10:02:06Z",
+  "decided_by": "tsl@0.1.5",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "anchor not found"
+    },
+    {
+      "id": "F-2",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-3",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-5",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-6",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md",
+      "sha256": "64ff400eb38b6193c9589148e368ad4face2dace7c50bac0764474c5723194f2",
+      "verification_sha256": "2b3ae609105ecf97b6127eb445a20d1baefc5d34e54d46ffa285fd9164635fc0"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "ESCALATE",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "5e7279fe32e601f3305d32ae68159226275d2cbbed127625052000e3e763ae31",
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.7368,
+    "S2": 1.0,
+    "S3": 4.2,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "lizhleY3LyQUptqXtRXj85gL7D9AOuYJARHJT7KF6U9F9DqMMKWhDYzivJIzROUoyIZ3QAFjxa4Gq_YJKLJNBw",
+  "skill": "threat-model@1.0.1",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

@@ -1,0 +1,273 @@
+{
+  "artifact_sha256": "3f43055d1ca47ba49595419cb7bf72a648d94f199505a4b6847f70973161eba8",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Seed data is invented:",
+          "ref": "context/data-model.md#data-rules"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The service passes the zone name from config as a bound query parameter, never as interpolated SQL.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#overview"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "**Only the date is selected, never the appointment row or patient medical columns.**",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#overview"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The existing `appointment_patient_start_idx` index on (patient_id, starts_at) supports it",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#overview"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "cites: [\"context/conventions.md#lists\"]",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#claims"
+        },
+        {
+          "quote": "- path: context/generated/api-inventory.json",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#inputs"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add context/conventions.md with its sha256 to inputs.",
+      "text": "Claims C6 and C7 cite context/conventions.md, but that file is not in the artifact's inputs list, so it has no recorded sha256."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "implement applies the subquery only to the paged rows and verifies latency in tests or review.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#threats"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Name a concrete check, for example a query-plan assertion that the index is used, or a latency budget for a 20-row page.",
+      "text": "The T-6 latency mitigation is vague. It sets no threshold and no clear owner ('tests or review'), so implement cannot tell when the control is satisfied."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Existing search input stays parameterised; no request value is interpolated into SQL.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#threats"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Cite the source for the existing parameterised search, or mark it Assumed and have implement verify it.",
+      "text": "T-4 says existing search input stays parameterised, but neither the design nor any cited context section states this, so it is uncited."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The basis is that the web module is written in `tsx` components (module map languages).",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#assumed"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Add module-map.json to inputs, or cite the design, which does list it.",
+      "text": "The T-10 assumption rests on 'module map languages', but context/generated/module-map.json is not among the threat model's inputs."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "so this is an accepted, pre-existing risk that sign-in will close by replacing those two functions",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#threats"
+        },
+        {
+          "quote": "## Open questions\nNone.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#open-questions"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Add an open question asking the stage approver to confirm acceptance of T-1 and T-12.",
+      "text": "T-1 and T-12 accept risk, including wider unauthenticated exposure of visit dates in the MVP, but the artifact asks no human to approve that, and questions is empty."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "- T-1 patientsRouter — spoofing: every caller is treated as staff in the MVP.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/threat.md#threats"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "text": "Threats are listed in component order rather than ordered by risk, so the higher-impact items (T-5, T-7, T-4) are not called out first."
+    }
+  ],
+  "package_sha256": "3475f77d0f020318e1f0910afdfbae9ddce1e3eae9681c9af99484aec812045a",
+  "questions": [
+    {
+      "ask_role": "stage_approver",
+      "blocking": false,
+      "finding_ref": "F-5",
+      "id": "Q-1",
+      "text": "Do you accept T-1 (any caller is treated as staff, and the list now exposes visit dates) and T-12 (the picker receives last_visit it does not use) as residual risks for HMS-4 until sign-in ships?"
+    }
+  ],
+  "recorded_at": "2026-11-02T10:02:04Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7de636c53712e2f3787a4c6e48d94d8443e4ed4358fec2a685d9c006db35c65e",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All ten design components, from patientsRouter to the appointment table and index, have at least one threat. The components that handle personal data (PatientRepo, the row types, PatientsPage tests) are covered.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats are specific to HMS-4: the time zone coming from the request, the per-row subquery cost, medical columns leaking through a wider type, and the picker receiving the new field. T-1 and T-9 are mostly existing, generic posture.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Each mitigation cites an existing control or names a new control for implement. T-6 latency checking ('in tests or review') is vague, and T-4's claim that existing search input is parameterised has no citation.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "T-10 is honestly marked Assumed and its basis is stated. Risk acceptance for T-1 and T-12 is decided inside the artifact, with no question to a human approver.",
+      "score": 4
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Readable and consistent between the frontmatter and the body. Threats are ordered by component, not by risk.",
+      "score": 3
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}
