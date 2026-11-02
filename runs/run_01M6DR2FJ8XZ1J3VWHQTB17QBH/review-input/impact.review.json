@@ -1,0 +1,94 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "step": "impact",
+  "attempt": 1,
+  "artifact_sha256": "1c754d3f85830148dd0f64ad6c7e306be74a2b650d23973f7de8ec148ce2e909",
+  "package_sha256": "ba73bb6da00af363639a81c5776e1edbc595632ee90d17fce97b74a215afc522",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
+  },
+  "rubric_score": 3.9,
+  "rubric_items": [
+    {"id": "IA-R1", "score": 4, "reason": "The api, web and db modules, both patient APIs and both tables are listed with statuses. It misses BookAppointmentPage, a second caller of GET /api/patients, and does not name the shared PatientListItem types."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, API, table, index and symbol id is in the generated facts and cited. The 'only caller' statement has no fact behind it, because the generated facts hold no call graph."},
+    {"id": "IA-R3", "score": 3, "reason": "Jobs are covered (none exist). Table readers and the medical-history path are covered. One caller of the changed list endpoint is missed: the BookAppointmentPage patient picker."},
+    {"id": "IA-R4", "score": 4, "reason": "The changed and existing statuses are justified with cites. The 'only caller' guess is stated as fact. Saying the index 'covers' the lookup is a little strong, since status is not one of its columns."},
+    {"id": "IA-R5", "score": 5, "reason": "Clear summary with the risks listed, a per-element status for each item, and a REQ-to-element mapping. Easy to read."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The artifact says the only caller of GET /api/patients is the client used by PatientsPage. BookAppointmentPage also calls api.patients for its patient picker, so the changed list payload reaches a second page that the analysis never names.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules", "quote": "Its only caller is the web client (`web/src/api/client.ts`) used by `PatientsPage`."},
+        {"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L91", "quote": "(await api.patients({ q, status: 'ACTIVE' })).items.map"}
+      ],
+      "suggested_fix": "List BookAppointmentPage as a caller of http:GET:/api/patients (cite its module-map symbol). State that it must keep working when the row gains last_visit_at, and that the extra per-row lookup also slows picker searches."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The 'only caller' statement has no cite. The generated facts list routes and symbols but no call edges, so the statement cannot be traced to a fact.",
+      "cites": [
+        {"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""},
+        {"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}
+      ],
+      "suggested_fix": "Turn the caller statement into an assumption with a basis, or cite each caller's symbol."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The changed list row shape lives in the PatientListItem type, which exists twice: api/src/types.ts and web/src/api/types.ts. Neither type file is named as a touched element.",
+      "cites": [
+        {"ref": "sample-system:web/src/api/types.ts#L80", "quote": "export interface PatientListItem extends PatientSummary {"},
+        {"ref": "sample-system:api/src/types.ts#L82", "quote": "export interface PatientListItem extends PatientSummary {"}
+      ],
+      "suggested_fix": "Name both PatientListItem type files as changed and note that they must stay in step."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The artifact says the (patient_id, starts_at) index 'covers' the lookup. The lookup also filters on status COMPLETED, which is not an index column, so 'supports' is more accurate than 'covers'.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#summary", "quote": "the existing `appointment_patient_start_idx` index on (patient_id, starts_at) covers the lookup"},
+        {"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"id\": \"index:appointment_patient_start_idx\""}
+      ]
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"id\": \"http:GET:/api/patients\""}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/patients", "quote": "\"path\": \"web/src/App.tsx\""}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"name\": \"appointment_patient_start_idx\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the\npatient's own page."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter", "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell", "quote": "sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:appointment", "quote": "\"references\": \"table:patient\""}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "The local sample-system checkout already has HMS-4 code: last_visit_at in PatientListItem and HMS-4 tests in PatientsPage.test.tsx. Is that checkout at pack sha bd98ff08, or is it work from an earlier attempt that should change the impact baseline?",
+      "ask_role": "engineer",
+      "blocking": false
+    }
+  ]
+}

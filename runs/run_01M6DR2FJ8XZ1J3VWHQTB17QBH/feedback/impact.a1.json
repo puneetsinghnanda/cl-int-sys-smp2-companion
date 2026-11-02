@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Its only caller is the web client (`web/src/api/client.ts`) used by `PatientsPage`.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        },
+        {
+          "quote": "(await api.patients({ q, status: 'ACTIVE' })).items.map",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L91"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The artifact says the only caller of GET /api/patients is the client used by PatientsPage. BookAppointmentPage also calls api.patients for its patient picker, so the changed list payload reaches a second page that the analysis never names."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
