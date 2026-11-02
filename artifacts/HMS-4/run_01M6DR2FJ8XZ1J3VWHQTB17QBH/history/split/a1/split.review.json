@@ -1,0 +1,141 @@
+{
+  "artifact_sha256": "41a830d8e2641cd2d3d76c35f7c3d845a497c39a953716e46b3b0909153038e5",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "in the MVP every\nuser acts as `staff`",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "starts late in the evening in Asia/Kolkata",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/split.md#L42"
+        },
+        {
+          "quote": "The Last visit date is the calendar date in the hospital time zone `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L56"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Rephrase AC3 to use a Completed appointment whose start time is between 00:00 and 05:30 Asia/Kolkata, when the UTC date is the previous day. Then check that the IST date is shown.",
+      "text": "S-1 AC3 tests with a late-evening IST start time. Asia/Kolkata is UTC+05:30, so a late-evening IST time falls on the same UTC date. The IST and UTC dates only differ for start times between 00:00 and 05:30 IST, so this criterion cannot catch the time-zone bug."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Given a patient whose only appointments are Cancelled, No-show or Scheduled",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/split.md#L46"
+        },
+        {
+          "quote": "Given a patient with no Completed appointment, when the patient list is shown",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/split.md#L52"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Merge S-1 AC5 into S-2 AC1 as a patient with only Cancelled, No-show or Scheduled appointments who shows '-'. Or reference one criterion from the other.",
+      "text": "S-1 AC5 (only non-Completed appointments, so no dates are shown) overlaps S-2 AC1 (no Completed appointment, so '-' is shown). The same scenario is tested in two stories, which makes them less independent."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a patient with a Scheduled future appointment, when the patient list is shown",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/split.md#L68"
+        },
+        {
+          "quote": "The existing `Next` appointment column is unchanged.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L92"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a criterion that a patient with no Scheduled future appointment shows the same Next appointment value as before.",
+      "text": "S-3 AC4 checks that Next appointment is unchanged only for patients with a Scheduled future appointment. Patients with no upcoming appointment are not covered, but REQ-9 requires the whole column to be unchanged."
+    }
+  ],
+  "package_sha256": "ecf1630f134fffd3a74ef1334abe5a1327159de88820a7b135fcc04258d14d11",
+  "questions": [],
+  "recorded_at": "2026-11-02T09:18:35Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 13 known REQs (REQ-1..REQ-13) are traced by at least one story. The intent has no assumed or unknown REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are mostly single-outcome. S-3 bundles five regression constraints into one story, and S-1 AC5 overlaps S-2 AC1.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "All criteria are Given/When/Then. But S-1 AC3's 'late in the evening' scenario cannot tell an IST date from a UTC date, so the time-zone check is not effective.",
+      "score": 3
+    },
+    {
+      "id": "SS-R4",
+      "reason": "20 per page, Asia/Kolkata and '-' all come from the intent. The 'late in the evening' test time is not sourced and is wrong for the purpose.",
+      "score": 4
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable and uses glossary statuses consistently. There is minor duplication between S-1 AC5 and S-2 AC1.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.05,
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

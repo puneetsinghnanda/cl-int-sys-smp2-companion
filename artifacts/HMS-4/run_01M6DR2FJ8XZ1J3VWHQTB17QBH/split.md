@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M6DR2FJ8XZ1J3VWHQTB17QBH
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.0.1
 inputs:
   - path: artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md
@@ -29,6 +29,9 @@ known: [S-1, S-2, S-3, S-4]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - id: F-1
+    how: "S-1 AC3 now uses a Completed appointment in the early morning hospital time, where the Asia/Kolkata calendar date is one day later than the UTC date, so showing the UTC date fails the check."
 stories:
   - id: S-1
     title: Front-desk staff see each patient's last visit date
@@ -39,7 +42,7 @@ stories:
       - id: AC2
         text: "Given a patient with one or more Completed appointments, when the patient list is shown, then the Last visit column shows the date of the Completed appointment with the latest start time."
       - id: AC3
-        text: "Given a patient whose latest Completed appointment starts late in the evening in Asia/Kolkata, when the patient list is shown, then the Last visit date is the calendar date in the Asia/Kolkata time zone, not the UTC date."
+        text: "Given a patient whose latest Completed appointment starts in the early morning hospital time, so that its calendar date in Asia/Kolkata is one day later than its UTC date, when the patient list is shown, then the Last visit column shows the Asia/Kolkata calendar date, not the earlier UTC date."
       - id: AC4
         text: "Given a patient with a Completed appointment and a later Cancelled, No-show or Scheduled appointment, when the patient list is shown, then the Last visit column shows the Completed appointment's date and never the date of the Cancelled, No-show or Scheduled appointment."
       - id: AC5
@@ -82,7 +85,7 @@ stories:
 **S-1 — Front-desk staff see each patient's last visit date** (REQ-1, REQ-2, REQ-3, REQ-4, REQ-11)
 - AC1: Given front-desk staff open the patient list, when the list is shown, then it has a column titled "Last visit".
 - AC2: Given a patient with one or more Completed appointments, when the list is shown, then Last visit shows the date of the Completed appointment with the latest start time.
-- AC3: Given a latest Completed appointment late in the evening in Asia/Kolkata, when the list is shown, then the date is the Asia/Kolkata calendar date, not the UTC date.
+- AC3: Given a latest Completed appointment in the early morning hospital time (Asia/Kolkata date one day later than the UTC date), when the list is shown, then the Asia/Kolkata calendar date is shown, not the earlier UTC date.
 - AC4: Given a Completed appointment and a later Cancelled, No-show or Scheduled one, when the list is shown, then only the Completed appointment's date is shown.
 - AC5: Given only Cancelled, No-show or Scheduled appointments, when the list is shown, then none of their dates appear in Last visit.
 
@@ -115,3 +118,6 @@ None — the intent has no unknowns and every requirement is covered.
 
 ## Open questions
 None.
+
+## Resolves
+- F-1: S-1 AC3 now tests an early-morning hospital-time appointment whose Asia/Kolkata date is one day later than its UTC date, so a UTC-date bug is caught.
