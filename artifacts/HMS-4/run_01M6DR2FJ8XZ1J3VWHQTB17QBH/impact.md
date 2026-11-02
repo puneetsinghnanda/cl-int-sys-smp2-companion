@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M6DR2FJ8XZ1J3VWHQTB17QBH
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.1.1
 inputs:
   - path: artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md
@@ -68,18 +68,27 @@ claims:
   - id: C16
     text: "The `appointment` table references `table:patient`."
     cites: ["context/generated/db-schema.json#table:appointment"]
+  - id: C17
+    text: "The booking page `BookAppointmentPage` is a second web caller of the patient list API (its patient picker)."
+    cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"]
+  - id: C18
+    text: "The booking UI route is `/appointments/new`, declared in `web/src/App.tsx`."
+    cites: ["context/generated/api-inventory.json#ui:/appointments/new"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - id: F-1
+    how: "Named BookAppointmentPage (ui:/appointments/new) as a second caller of http:GET:/api/patients. It is marked existing: it must keep working when list rows gain the last-visit field, and the per-row lookup also runs on its picker searches. Removed the 'only caller' statement."
 modules:
   - id: module:sample-system:api
     change: changed
     cites: ["context/generated/module-map.json#module:sample-system:api", "context/architecture.md#components"]
   - id: module:sample-system:web
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/api-inventory.json#ui:/patients"]
+    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/api-inventory.json#ui:/patients", "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db", "context/generated/db-schema.json#index:appointment_patient_start_idx"]
@@ -101,16 +110,18 @@ tables:
 # Impact analysis: HMS-4
 
 ## Summary
-HMS-4 adds a read-only "Last visit" value to the patient list. The list API `GET /api/patients` changes shape: each row gains the date of the patient's latest COMPLETED appointment. That means changes in the api module (route `patientsRouter`, `PatientService`, `PatientRepo` SQL) and the web module (`PatientsPage` and its tests). No table changes. `appointment` and `patient` are only read, and the existing `appointment_patient_start_idx` index on (patient_id, starts_at) covers the lookup. Main risks:
-- converting UTC `starts_at` to the Asia/Kolkata date (`HOSPITAL_TZ`);
-- regressing the paging, search, sort or the Next appointment column (HMS-1);
-- leaking medical history into the list payload, because `PatientRepo` reads the patient row that holds it.
+HMS-4 adds a read-only "Last visit" value to the patient list. The list API `GET /api/patients` changes shape: each row gains the date of the patient's latest COMPLETED appointment. That changes the api module (route `patientsRouter`, `PatientService`, `PatientRepo` SQL) and the web module (`PatientsPage` and its tests). The same API also feeds the patient picker on `BookAppointmentPage`, which must keep working and will also pay for the extra lookup. No table changes. `appointment` and `patient` are only read, and the existing `appointment_patient_start_idx` index on (patient_id, starts_at) supports the per-patient lookup. Status is not an index column, so the query still has to filter COMPLETED rows. Main risks:
+- converting UTC `starts_at` to the Asia/Kolkata date;
+- regressing the paging, search or sort, the Next appointment column (HMS-1) or the booking picker;
+- leaking medical history into the list payload.
 
 ## Impacted modules
 - module:sample-system:api — **changed**. The list route, service and repository add the last-visit value (REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-11). They must keep paging, search and sort (REQ-6, REQ-7, REQ-8) and keep medical history out of the list (REQ-10).
-- module:sample-system:web — **changed**. `PatientsPage` at UI route `/patients` adds the Last visit column with "-" when the value is empty (REQ-1, REQ-5, REQ-13). The Next appointment column stays unchanged (REQ-9), and the page adds no sort option (REQ-12). The `PatientsPage.test.tsx` tests (`nextCell`) must keep passing.
-- module:sample-system:db — **existing**. No migration. The `appointment_patient_start_idx` index already exists for the per-patient lookup.
-- http:GET:/api/patients — **changed**. Each list row gains a last-visit field. Its only caller is the web client (`web/src/api/client.ts`) used by `PatientsPage`.
+- module:sample-system:web — **changed**.
+  - `PatientsPage` at UI route `/patients` adds the Last visit column with "-" when the value is empty (REQ-1, REQ-5, REQ-13). The Next appointment column stays unchanged (REQ-9), and the page adds no sort option (REQ-12). The `PatientsPage.test.tsx` tests (`nextCell`) must keep passing.
+  - `BookAppointmentPage` (UI route `/appointments/new`) is **existing**. It is a second caller of `GET /api/patients` for its patient picker. It is not meant to change, but it receives the wider row and runs the per-row last-visit lookup on each picker search, so it needs a regression check.
+- module:sample-system:db — **existing**. No migration. The `appointment_patient_start_idx` index already supports the per-patient lookup by start time.
+- http:GET:/api/patients — **changed**. Each list row gains a last-visit field. Known web callers go through `web/src/api/client.ts`: `PatientsPage` (changed) and `BookAppointmentPage` (existing).
 - http:GET:/api/patients/:id — **existing**. Unchanged; it stays the only place medical history leaves the database (REQ-10).
 - table:appointment — **existing**. Read only, filtered to status COMPLETED, latest `starts_at` per patient (REQ-2, REQ-4, REQ-11).
 - table:patient — **existing**. Read only, as today.
@@ -120,7 +131,7 @@ HMS-4 adds a read-only "Last visit" value to the patient list. The list API `GET
 - REQ-1, REQ-5, REQ-9, REQ-12, REQ-13: web change on `PatientsPage` (`ui:/patients`).
 - REQ-2, REQ-4, REQ-11: api reads `table:appointment` by status and `starts_at`. The statuses come from data-model#appointments.
 - REQ-3: instants are stored in UTC and shown in the `HOSPITAL_TZ` date (architecture#time-and-slots).
-- REQ-6, REQ-7, REQ-8: the existing paging, search and sort of `GET /api/patients` must be kept.
+- REQ-6, REQ-7, REQ-8: the existing paging, search and sort of `GET /api/patients` must be kept. This includes the `BookAppointmentPage` picker, which uses the same search.
 - REQ-10: medical history leaves the database only for the patient's own page (data-model#patients). The list payload must not gain it.
 
 ## Assumed
@@ -131,3 +142,6 @@ None.
 
 ## Open questions
 None.
+
+## Resolves
+- F-1: `BookAppointmentPage` is now named as a second caller of `GET /api/patients`. It is marked existing, with a regression and performance note.
