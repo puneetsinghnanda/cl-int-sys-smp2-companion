@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "a4368b1b80bb6173569256c5cf6e26985261df9a7da1faff3a4f3be7a67ec369",
+  "package_sha256": "d394e8d85ae17edfca8b1e7acefb6547b07c188456cef01b9d923f5741616b84",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "055c6d2fd0ad0cd30866e9c759041a90a522bce104f052eebeace0fbb79aea7c"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All six acceptance criteria map to REQ-1..REQ-10. The user story motive (spotting long-unseen patients) is covered by REQ-13 and Out of scope, with reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "REQs are atomic, and AC5 is correctly split into REQ-6..REQ-9. REQ-7 and REQ-8 rely on the unstated 'current' search and sort behaviour, so a tester needs that baseline to check them."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known status cites the ticket, the baseline or an IDE answer. The only assumption (REQ-11) was confirmed in A-04. Nothing is invented."},
+    {"id": "RR-R4", "score": 5, "reason": "Ticket and baseline do not clash: the hospital time zone (Asia/Kolkata) and the no-medical-history-in-lists rule both agree with the ticket. Gaps were raised as Q-01..Q-03."},
+    {"id": "RR-R5", "score": 5, "reason": "Three precise questions plus one assumption check, each with real options and a proposed default. All were answered in the IDE."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable. Small wording drift between REQ-4's title and its statement, and odd backtick use in REQ-9."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "REQ-4's title says other statuses are 'never shown', but its statement says they are 'never used for' the column. The ticket says 'never shown'. The statement is stricter, but the title and statement should match.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L61", "quote": "title: Other statuses never shown"},
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L62", "quote": "appointments are never used for the Last visit column"},
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ticket.md#L18", "quote": "Cancelled, No-show and Scheduled appointments are never shown in that column."}
+      ],
+      "suggested_fix": "Use the same verb in the title and the statement, for example 'never used for or shown in the Last visit column'."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-9 puts only `Next` in backticks, which suggests a term that does not exist. 'Next appointment' is also not in the glossary (found: false).",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L92", "quote": "The existing `Next` appointment column is unchanged."},
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L150", "quote": "{term: Next appointment, found: false}"}
+      ],
+      "suggested_fix": "Write 'The existing Next appointment column is unchanged.' with consistent term marking."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "REQ-12 (Last visit not sortable) cites ticket L20 as a source, but L20 only says to keep the current sort order. The decision itself comes from A-01.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ticket.md#L20", "quote": "The list stays 20 per page and keeps its current search and sort order"},
+        {"ref": "runs/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ide-answers.md#a-01", "quote": "answer: No sorting (proposed default)"}
+      ],
+      "suggested_fix": "Make A-01 the primary cite for REQ-12, and describe ticket L20 as context only."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ticket.md#L14", "quote": "The patient list already shows each patient's next appointment (HMS-1)."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "A past appointment the patient attended, closed by staff once its start time has passed."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "in the MVP every\nuser acts as `staff`"}]}
+  ],
+  "questions": []
+}
