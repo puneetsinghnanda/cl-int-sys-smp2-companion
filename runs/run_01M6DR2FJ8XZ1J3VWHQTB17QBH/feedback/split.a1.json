@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "starts late in the evening in Asia/Kolkata",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/split.md#L42"
+        },
+        {
+          "quote": "The Last visit date is the calendar date in the hospital time zone `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/req.md#L56"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-1 AC3 tests with a late-evening IST start time. Asia/Kolkata is UTC+05:30, so a late-evening IST time falls on the same UTC date. The IST and UTC dates only differ for start times between 00:00 and 05:30 IST, so this criterion cannot catch the time-zone bug."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "feedback.v1",
+  "step": "split"
+}
