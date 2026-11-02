@@ -1,0 +1,31 @@
+{
+  "dropped": [
+    "F-3"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "without the time part), formatted in the hospital time zone",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/design.md#overview"
+        },
+        {
+          "quote": "Sources: sample-system:api/src/config.ts#L33-L34",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The design has web format last_visit_at 'in the hospital time zone', but HOSPITAL_TZ is only documented as API config. No cited fact shows how the web gets the zone, or that dateTime/Next appointment already uses it. This leaves REQ-3/REQ-4 (S-1 AC3/AC4) resting on an unstated assumption."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6DN23JRRYT113FF078VYBSF",
+  "schema": "feedback.v1",
+  "step": "design"
+}

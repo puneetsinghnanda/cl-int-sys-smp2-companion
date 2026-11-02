@@ -1,0 +1,264 @@
+{
+  "artifact_sha256": "46a86b535158d199161aaf2441e874b5ae3985efd3cf78f2d2fcf2ec94bd9d17",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and\ntransactions, repositories hold the SQL",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/repositories/patientRepo.ts\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/pages/PatientsPage.tsx\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/lib/format.ts:dateTime",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/lib/format.ts:todayIn",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_patient_start_idx` already indexes (patient_id, starts_at)",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New SQL files only, never edits to merged ones.",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "without the time part), formatted in the hospital time zone",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/design.md#overview"
+        },
+        {
+          "quote": "Sources: sample-system:api/src/config.ts#L33-L34",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite the web source of the zone (for example the todayIn signature or a web config fact) and the dateTime behaviour. If none exists, add an Assumed/Unknown item and a question for the tech lead.",
+      "text": "The design has web format last_visit_at 'in the hospital time zone', but HOSPITAL_TZ is only documented as API config. No cited fact shows how the web gets the zone, or that dateTime/Next appointment already uses it. This leaves REQ-3/REQ-4 (S-1 AC3/AC4) resting on an unstated assumption."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "computed with a correlated subquery (or LATERAL) on `appointment`",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/design.md#overview"
+        },
+        {
+          "quote": "`appointment_patient_start_idx` already indexes (patient_id, starts_at)",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Pick one query form and note in the trade-offs that status is filtered after the index range scan.",
+      "text": "appointment_patient_start_idx covers (patient_id, starts_at), not status. So the COMPLETED lookup walks each patient's appointments by starts_at DESC until it finds one, not one index probe per row. Also, 'subquery (or LATERAL)' leaves the query shape undecided."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "No new `New SQL files` are needed",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/design.md#claims"
+        },
+        {
+          "quote": "web/src/lib/format.ts has a `todayIn` helper.",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/design.md#claims"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Reword C15 to 'No migration is needed'. Either use todayIn to support the time-zone path (see F-1) or drop C12.",
+      "text": "Claim C15 wording is garbled ('No new `New SQL files`'). Claim C12 (todayIn) is declared but never used in the design body."
+    }
+  ],
+  "package_sha256": "c7522fcabfc52931f94e862362a5846fd63629224a74665bff73050a1e2eb4f8",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "How does the web app know the hospital time zone (Asia/Kolkata) when it formats dates? Does dateTime, as used by the Next appointment column, already format in that zone?"
+    }
+  ],
+  "recorded_at": "2026-11-02T08:45:01Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Uses the existing route/service/repository layers, client.ts and format.ts. Adds no migration, endpoint, job or infrastructure. Every component sits on an existing module (api, web, db).",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Maps S-1 to S-4 to components. Every AC is covered: COMPLETED filter, null renders '-', paging/sort/search/Next appointment left alone, no new patient columns selected.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "The endpoint, field name, type (string|null) and envelope are precise. Gaps: the formatter is named only loosely ('date'), 'subquery (or LATERAL)' is left open, and the web's source for the hospital time zone is not given.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Claims are cited, and U-1/Q-01 are carried forward honestly. No fact backs the assumption that the web knows HOSPITAL_TZ or that Next appointment is formatted with dateTime in the hospital time zone.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Explains the three non-obvious choices: client-side TZ formatting, a correlated subquery instead of a materialised column, and filtering in SQL instead of the UI.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent between front matter and body. One awkward claim wording (C15), and claim C12 (todayIn) is never used in the body.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.6,
+  "run_id": "run_01M6DN23JRRYT113FF078VYBSF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
