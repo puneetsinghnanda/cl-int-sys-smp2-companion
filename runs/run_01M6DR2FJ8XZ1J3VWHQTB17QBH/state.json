@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-02T09:45:32Z",
+  "heartbeat_at": "2026-11-02T09:52:24Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 18,
+  "rev": 22,
   "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -202,7 +202,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md",
+          "artifact": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/history/design/a1/design.md",
           "artifact_sha256": "7793a0e9b054f61de68b57b28518685b2719276c6a8f866a012015766fdbda5d",
           "band": "Medium",
           "cause": "first",
@@ -227,15 +227,47 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.verification.json",
+          "record": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/history/design/a1/design.verification.json",
           "skill": "design@1.4.1",
           "skill_started_at": "2026-11-02T09:39:34Z",
           "started_at": "2026-11-02T09:39:19Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md",
+          "artifact_sha256": "c47dc4b09305b3cee1dd46a3765dbc228632c1ae382a1b914a24f6f4c6a15376",
+          "band": "Medium",
+          "cause": "retry_review",
+          "decided_at": "2026-11-02T09:52:24Z",
+          "feedback": "runs/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/feedback/design.a1.json",
+          "inputs": [
+            {
+              "name": "impact",
+              "sha256": "65330c107ab16a78c3328e9bd1e9cc16383e794931f97aa3a237d3f2db6cc14b",
+              "step": "impact"
+            },
+            {
+              "name": "stories",
+              "sha256": "7dc8c8c164a449e8a67b8936cf815643b0837f3c8952f370b44182d6dcab3450",
+              "step": "split"
+            },
+            {
+              "name": "intent",
+              "sha256": "a4368b1b80bb6173569256c5cf6e26985261df9a7da1faff3a4f3be7a67ec369",
+              "step": "req"
+            }
+          ],
+          "n": 2,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.verification.json",
+          "skill": "design@1.4.1",
+          "skill_started_at": "2026-11-02T09:46:24Z",
+          "started_at": "2026-11-02T09:46:07Z"
         }
       ],
       "budget_used": {
-        "checks": 0,
-        "review": 1,
+        "checks": 1,
+        "review": 2,
         "rework": 0,
         "verifier": 0
       },
@@ -312,7 +344,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-11-02T09:45:32Z",
+  "updated_at": "2026-11-02T09:52:24Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "5ebb9e61535bf2b17ee83e2b4eba0600c075e9b67a5a43df59f2ac08842a3255"
 }

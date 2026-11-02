@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Patient list row type (api, api/src/types.ts) — **changed**. Adds `last_visit: string | null`.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        },
+        {
+          "quote": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS"
+        },
+        {
+          "quote": "F-1: `last_visit: string | null`, `YYYY-MM-DD` in `HOSPITAL_TZ`",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#resolves"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Prior F-2 is not resolved. The list row types in api/src/types.ts and web/src/api/types.ts are still marked changed with no citation. The module map has only BLOOD_GROUPS, GENDERS and SLOT_MINUTES in api/src/types.ts and no web/src/api/types.ts. Assumed and Resolves skip this."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "feedback.v1",
+  "step": "design"
+}

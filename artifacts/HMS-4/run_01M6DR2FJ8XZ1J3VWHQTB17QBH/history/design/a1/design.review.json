@@ -1,0 +1,276 @@
+{
+  "artifact_sha256": "7793a0e9b054f61de68b57b28518685b2719276c6a8f866a012015766fdbda5d",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New SQL files only, never edits to merged ones.",
+          "ref": "context/conventions.md#database-changes"
+        },
+        {
+          "quote": "module:sample-system:db — **existing**. No migration.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/routes/patients.ts:patientsRouter",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "It is a second caller of `GET /api/patients` for its patient picker.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The `appointment_patient_start_idx` index already supports the per-patient lookup by start time.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Adds a nullable last-visit date field.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        },
+        {
+          "quote": "The same field; it must stay in step with the api type.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Give the exact JSON field name, its TS type in both types.ts files, and the date string format, for example \"last_visit\": \"2026-10-14\" | null.",
+      "text": "The new response field is never named, typed or formatted (for example last_visit: string | null, YYYY-MM-DD). The api and web types must match, and S-1 AC3 needs an exact date format to test at API level."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "PatientListItem type (web/src/api/types.ts) — **changed**.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        },
+        {
+          "quote": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS"
+        },
+        {
+          "quote": "## Assumed\nNone.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#assumed"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Cite the source symbols that define the list row types, or move them to Assumed and name the actual type the list rows use.",
+      "text": "The PatientListItem types in api/src/types.ts and web/src/api/types.ts are marked changed but have no citation. The module map lists only BLOOD_GROUPS, GENDERS and SLOT_MINUTES in api/src/types.ts and no web/src/api/types.ts. Assumed is empty."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "The page ignores the field, so this is harmless.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#overview"
+        },
+        {
+          "quote": "runs the per-row last-visit lookup on each picker search, so it needs a regression check",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "text": "The design calls the BookAppointmentPage impact harmless. But the impact step flagged that the per-row lookup runs on every picker search, and the design itself lists that as a cost. 'Harmless' undersells the performance note."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "GET /api/patients — **changed**. The response row gains the last-visit field.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Move the endpoint lines into a separate Endpoints section in the body.",
+      "text": "The body's Components list includes the endpoints GET /api/patients and GET /api/patients/:id. The frontmatter keeps them under a separate endpoints key, so the two structures do not match."
+    }
+  ],
+  "package_sha256": "cd1fc9d974da3d786c67c03feb4bafe30723f40c734decdb5959bd251b56efff",
+  "questions": [],
+  "recorded_at": "2026-11-02T09:45:28Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Everything is built on existing layers (router, service, repo, client.ts, PatientsPage). It adds no new endpoint, migration or infrastructure, and it follows the UTC/HOSPITAL_TZ and list-envelope rules.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-4 are each mapped to components. Every acceptance criterion (latest COMPLETED, Asia/Kolkata date, '-' for null, unchanged paging/search/sort/Next, no sort option, no medical columns) is covered.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "The endpoint method and path are exact. But the new response field has no name, no type literal and no date format, and the HOSPITAL_TZ query parameter shape is not given.",
+      "score": 3
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Most choices cite context. The PatientListItem types in api/src/types.ts and web/src/api/types.ts are not in the module map and have no citation, yet they are listed as changed and Assumed says None.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "The non-obvious choices (DB vs browser date, derived vs stored column, reusing the endpoint, selecting only the date) each have a reason and a cost.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and well organised. Minor inconsistency: the endpoints are listed as items under Components in the body but not in the frontmatter components list.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

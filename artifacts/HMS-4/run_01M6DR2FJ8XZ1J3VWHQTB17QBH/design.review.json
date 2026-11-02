@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "7793a0e9b054f61de68b57b28518685b2719276c6a8f866a012015766fdbda5d",
-  "attempt": 1,
+  "artifact_sha256": "c47dc4b09305b3cee1dd46a3765dbc228632c1ae382a1b914a24f6f4c6a15376",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -69,8 +69,8 @@
     {
       "cites": [
         {
-          "quote": "\"id\": \"http:GET:/api/patients\",",
-          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+          "quote": "http:GET:/api/patients — **changed**. Each list row gains a last-visit field.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
         }
       ],
       "claim_id": "C7",
@@ -139,8 +139,8 @@
     {
       "cites": [
         {
-          "quote": "sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell",
-          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+          "quote": "The `PatientsPage.test.tsx` tests (`nextCell`) must keep passing.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
         }
       ],
       "claim_id": "C14",
@@ -155,31 +155,24 @@
       ],
       "claim_id": "C15",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
     }
   ],
   "findings": [
     {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "Adds a nullable last-visit date field.",
-          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
-        },
-        {
-          "quote": "The same field; it must stay in step with the api type.",
-          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Give the exact JSON field name, its TS type in both types.ts files, and the date string format, for example \"last_visit\": \"2026-10-14\" | null.",
-      "text": "The new response field is never named, typed or formatted (for example last_visit: string | null, YYYY-MM-DD). The api and web types must match, and S-1 AC3 needs an exact date format to test at API level."
-    },
-    {
       "category": "traceability",
       "cites": [
         {
-          "quote": "PatientListItem type (web/src/api/types.ts) — **changed**.",
+          "quote": "Patient list row type (api, api/src/types.ts) — **changed**. Adds `last_visit: string | null`.",
           "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
         },
         {
@@ -187,48 +180,19 @@
           "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:BLOOD_GROUPS"
         },
         {
-          "quote": "## Assumed\nNone.",
-          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#assumed"
+          "quote": "F-1: `last_visit: string | null`, `YYYY-MM-DD` in `HOSPITAL_TZ`",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#resolves"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "major",
-      "suggested_fix": "Cite the source symbols that define the list row types, or move them to Assumed and name the actual type the list rows use.",
-      "text": "The PatientListItem types in api/src/types.ts and web/src/api/types.ts are marked changed but have no citation. The module map lists only BLOOD_GROUPS, GENDERS and SLOT_MINUTES in api/src/types.ts and no web/src/api/types.ts. Assumed is empty."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "The page ignores the field, so this is harmless.",
-          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#overview"
-        },
-        {
-          "quote": "runs the per-row last-visit lookup on each picker search, so it needs a regression check",
-          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/impact.md#impacted-modules"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "text": "The design calls the BookAppointmentPage impact harmless. But the impact step flagged that the per-row lookup runs on every picker search, and the design itself lists that as a cost. 'Harmless' undersells the performance note."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "GET /api/patients — **changed**. The response row gains the last-visit field.",
-          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Move the endpoint lines into a separate Endpoints section in the body.",
-      "text": "The body's Components list includes the endpoints GET /api/patients and GET /api/patients/:id. The frontmatter keeps them under a separate endpoints key, so the two structures do not match."
+      "suggested_fix": "Cite the source symbols that define the list row types. If none are in the module map, add an Assumed entry that names the assumed type and file locations, and record F-2 under resolves.",
+      "text": "Prior F-2 is not resolved. The list row types in api/src/types.ts and web/src/api/types.ts are still marked changed with no citation. The module map has only BLOOD_GROUPS, GENDERS and SLOT_MINUTES in api/src/types.ts and no web/src/api/types.ts. Assumed and Resolves skip this."
     }
   ],
-  "package_sha256": "cd1fc9d974da3d786c67c03feb4bafe30723f40c734decdb5959bd251b56efff",
+  "package_sha256": "f95d6aac3661badd4c1d72abb94a24bf046f95116c4bdec4d5d9634169bcb318",
   "questions": [],
-  "recorded_at": "2026-11-02T09:45:28Z",
+  "recorded_at": "2026-11-02T09:52:21Z",
   "recorded_by": "tsl@0.1.5",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -239,36 +203,36 @@
   "rubric_items": [
     {
       "id": "DS-R1",
-      "reason": "Everything is built on existing layers (router, service, repo, client.ts, PatientsPage). It adds no new endpoint, migration or infrastructure, and it follows the UTC/HOSPITAL_TZ and list-envelope rules.",
+      "reason": "Uses only the existing layers: router, service, repo, client.ts, PatientsPage and the existing index. No new endpoint, no migration, no infrastructure. Follows the UTC/HOSPITAL_TZ rule and the list envelope rule.",
       "score": 5
     },
     {
       "id": "DS-R2",
-      "reason": "S-1 to S-4 are each mapped to components. Every acceptance criterion (latest COMPLETED, Asia/Kolkata date, '-' for null, unchanged paging/search/sort/Next, no sort option, no medical columns) is covered.",
+      "reason": "S-1 to S-4 each map to components. Every AC is covered: latest COMPLETED, the Asia/Kolkata date with an API-level AC3 test, '-' for null, paging/search/sort/Next unchanged, no sort option, no highlight, and no medical columns.",
       "score": 5
     },
     {
       "id": "DS-R3",
-      "reason": "The endpoint method and path are exact. But the new response field has no name, no type literal and no date format, and the HOSPITAL_TZ query parameter shape is not given.",
-      "score": 3
+      "reason": "The method and path are exact. The new field is exact: last_visit: string | null, YYYY-MM-DD in HOSPITAL_TZ. The JSON and TS shapes are given for both type files, and HOSPITAL_TZ is passed as a bound parameter.",
+      "score": 5
     },
     {
       "id": "DS-R4",
-      "reason": "Most choices cite context. The PatientListItem types in api/src/types.ts and web/src/api/types.ts are not in the module map and have no citation, yet they are listed as changed and Assumed says None.",
+      "reason": "The name and format of last_visit are now listed under Assumed with their basis. The list row types in api/src/types.ts and web/src/api/types.ts are still uncited and are not in the module map. Assumed does not mention them.",
       "score": 4
     },
     {
       "id": "DS-R5",
-      "reason": "The non-obvious choices (DB vs browser date, derived vs stored column, reusing the endpoint, selecting only the date) each have a reason and a cost.",
+      "reason": "Five trade-offs, each with a reason and a cost: date string vs instant, DB vs browser, derived vs stored, reusing the endpoint (including the picker latency cost), and selecting only the date.",
       "score": 5
     },
     {
       "id": "DS-R6",
-      "reason": "Clear and well organised. Minor inconsistency: the endpoints are listed as items under Components in the body but not in the frontmatter components list.",
-      "score": 4
+      "reason": "Clear and consistent. Endpoints now have their own section, matching the frontmatter. The 'harmless' wording is gone.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.4,
+  "rubric_score": 4.85,
   "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
   "schema": "review.v1",
   "status": "ok",
