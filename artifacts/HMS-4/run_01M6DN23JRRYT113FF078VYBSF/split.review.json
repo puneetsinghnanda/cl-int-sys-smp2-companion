@@ -1,0 +1,130 @@
+{
+  "artifact_sha256": "6ec1497770a29d59d4151e2a34a8eba1d74dcf11bba10281ef696c974a0366ab",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "REQ-3 Date in hospital time zone — known — The date is the calendar date in Asia/Kolkata.",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/req.md#requirements"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "REQ-7 Page size unchanged — known — The list stays at 20 per page.",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/req.md#requirements"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "- AC1: Paging still shows 20 per page.",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/split.md#L95"
+        },
+        {
+          "quote": "Given more patients exist than fit on one page, when staff page through the patient list, then each page shows 20 per page as before.",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/split.md#L63"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Render the body S-3 criteria in the same Given/When/Then wording as the frontmatter.",
+      "text": "In the markdown body, S-3 AC1-AC5 are shortened to plain statements. They drop the Given/When/Then form used in the frontmatter, so the two copies of the same criteria differ."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "trace: [REQ-7, REQ-8, REQ-9, REQ-10]",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/split.md#L60"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Either keep S-3 as an explicit regression story and say why it is grouped, or split it by constraint.",
+      "text": "S-3 bundles four separate no-regression outcomes (paging, sort, search, Next appointment column) into one story, so it is not one outcome per story."
+    }
+  ],
+  "package_sha256": "0eb0c41238d2707738679d7e1b0250640ec179d62e3c1b382ec4f5afcb866827",
+  "questions": [],
+  "recorded_at": "2026-11-02T08:28:36Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 11 known REQs (REQ-1 to REQ-11) are traced by at least one story. The intent has no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "S-1, S-2 and S-4 each deliver one outcome. S-3 bundles four separate no-regression constraints (paging, sort, search, Next appointment) into one story.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "Every frontmatter criterion is Given/When/Then and checkable. The body versions of S-3 AC1-AC5 are shortened to plain statements without Given/When/Then.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Every value in the criteria comes from the intent: 20 per page, Asia/Kolkata, \"-\", the Last visit title, the Next appointment format, and the status names.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms are clear and match the glossary. But the body and the frontmatter word S-3's criteria differently, so the two copies of the same criteria are not consistent.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M6DN23JRRYT113FF078VYBSF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
