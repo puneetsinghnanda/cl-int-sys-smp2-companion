@@ -1,0 +1,31 @@
+{
+  "dropped": [
+    "F-2"
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Adds a nullable last-visit date field.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        },
+        {
+          "quote": "The same field; it must stay in step with the api type.",
+          "ref": "artifacts/HMS-4/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/design.md#components"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The new response field is never named, typed or formatted (for example last_visit: string | null, YYYY-MM-DD). The api and web types must match, and S-1 AC3 needs an exact date format to test at API level."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6DR2FJ8XZ1J3VWHQTB17QBH",
+  "schema": "feedback.v1",
+  "step": "design"
+}
