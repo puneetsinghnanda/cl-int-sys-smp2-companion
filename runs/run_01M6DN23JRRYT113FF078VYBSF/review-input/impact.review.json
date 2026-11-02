@@ -1,0 +1,73 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6DN23JRRYT113FF078VYBSF",
+  "step": "impact",
+  "attempt": 1,
+  "artifact_sha256": "4658693bba02dbeb032244235d4d0867041d9cbb3468e01fa74be19d9f35d204",
+  "package_sha256": "45acf2f5c8df2085799093016366b62781b022158bfbcc7ae3d10e282e5cbd9a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
+  },
+  "rubric_score": 4.15,
+  "rubric_items": [
+    {"id": "IA-R1", "score": 4, "reason": "All touched modules, the API and both tables are listed with the right status. The web PatientsPage test and the date-only formatting helper in web/src/lib/format.ts are not named as affected."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, API and table id exists in the generated facts and is cited. The patient route, service and repository and the PatientsPage are named in prose, but their existing symbol facts are not cited."},
+    {"id": "IA-R3", "score": 4, "reason": "It covers jobs (none), the DB reader path, the index, the medical-history leak risk and regressions in paging, search, sort and Next appointment. It misses the existing PatientsPage test that reads the list cells."},
+    {"id": "IA-R4", "score": 5, "reason": "Each status has a reason. The one real gap, the link from the page to the route, is raised as U-1/Q-01 with a default instead of being stated as fact."},
+    {"id": "IA-R5", "score": 4, "reason": "Clear, short and readable. Risks are listed in the summary but not ordered by severity."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "There is an existing web test for the patient list that reads the Next appointment cell. Adding the Last visit column affects it, and it is a natural place to cover REQ-6 and REQ-10. The impact does not list it.",
+      "cites": [
+        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell", "quote": "web/src/__tests__/PatientsPage.test.tsx"},
+        {"ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/impact.md#L102", "quote": "The patient list page adds the \"Last visit\" column"}
+      ],
+      "suggested_fix": "Under the web module, name web/src/__tests__/PatientsPage.test.tsx as affected (column layout and cell lookups), so design and test planning pick it up."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The changed api and web elements are described in prose but not cited by the symbol facts that exist for them: PatientRepo, PatientService, patientsRouter and PatientsPage. This leaves the module-level changes only weakly grounded.",
+      "cites": [
+        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "api/src/repositories/patientRepo.ts"},
+        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "web/src/pages/PatientsPage.tsx"},
+        {"ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/impact.md#L101", "quote": "The patient list route, service and repository add the latest Completed appointment start"}
+      ],
+      "suggested_fix": "Add the sym: fact ids for patientsRouter, PatientService, PatientRepo and PatientsPage to the cites of the api and web module entries."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "REQ-4 needs a date without the time. web/src/lib/format.ts only has dateTime and time formatters, so the web change probably touches format.ts too. The impact does not mention it.",
+      "cites": [
+        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "sym:sample-system:web/src/lib/format.ts:dateTime"},
+        {"ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/req.md#L62", "quote": "The Last visit date uses the same date format as the existing `Next appointment` column, without the time."}
+      ],
+      "suggested_fix": "Name web/src/lib/format.ts as possibly changed (a date-only formatter in HOSPITAL_TZ), or say that an existing helper is reused."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "Each resource has its own router mounted under `/api`."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.starts_at", "quote": "\"id\": \"column:appointment.starts_at\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.status", "quote": "\"id\": \"column:appointment.status\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"id\": \"index:appointment_patient_start_idx\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#module:sample-system:web", "quote": "\"id\": \"module:sample-system:web\""}]}
+  ],
+  "questions": []
+}

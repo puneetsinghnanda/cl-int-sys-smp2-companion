@@ -1,0 +1,215 @@
+{
+  "artifact_sha256": "4658693bba02dbeb032244235d4d0867041d9cbb3468e01fa74be19d9f35d204",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Each resource has its own router mounted under `/api`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.starts_at\"",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.status\"",
+          "ref": "context/generated/db-schema.json#column:appointment.status"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"index:appointment_patient_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"module:sample-system:web\"",
+          "ref": "context/generated/module-map.json#module:sample-system:web"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "web/src/__tests__/PatientsPage.test.tsx",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        },
+        {
+          "quote": "The patient list page adds the \"Last visit\" column",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/impact.md#L102"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Under the web module, name web/src/__tests__/PatientsPage.test.tsx as affected (column layout and cell lookups), so design and test planning pick it up.",
+      "text": "There is an existing web test for the patient list that reads the Next appointment cell. Adding the Last visit column affects it, and it is a natural place to cover REQ-6 and REQ-10. The impact does not list it."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "api/src/repositories/patientRepo.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        },
+        {
+          "quote": "web/src/pages/PatientsPage.tsx",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        },
+        {
+          "quote": "The patient list route, service and repository add the latest Completed appointment start",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/impact.md#L101"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add the sym: fact ids for patientsRouter, PatientService, PatientRepo and PatientsPage to the cites of the api and web module entries.",
+      "text": "The changed api and web elements are described in prose but not cited by the symbol facts that exist for them: PatientRepo, PatientService, patientsRouter and PatientsPage. This leaves the module-level changes only weakly grounded."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/lib/format.ts:dateTime",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        },
+        {
+          "quote": "The Last visit date uses the same date format as the existing `Next appointment` column, without the time.",
+          "ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/req.md#L62"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Name web/src/lib/format.ts as possibly changed (a date-only formatter in HOSPITAL_TZ), or say that an existing helper is reused.",
+      "text": "REQ-4 needs a date without the time. web/src/lib/format.ts only has dateTime and time formatters, so the web change probably touches format.ts too. The impact does not mention it."
+    }
+  ],
+  "package_sha256": "45acf2f5c8df2085799093016366b62781b022158bfbcc7ae3d10e282e5cbd9a",
+  "questions": [],
+  "recorded_at": "2026-11-02T08:37:07Z",
+  "recorded_by": "tsl@0.1.4",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0",
+    "skill": "review",
+    "version": "0.1.4"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "All touched modules, the API and both tables are listed with the right status. The web PatientsPage test and the date-only formatting helper in web/src/lib/format.ts are not named as affected.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id exists in the generated facts and is cited. The patient route, service and repository and the PatientsPage are named in prose, but their existing symbol facts are not cited.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "It covers jobs (none), the DB reader path, the index, the medical-history leak risk and regressions in paging, search, sort and Next appointment. It misses the existing PatientsPage test that reads the list cells.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Each status has a reason. The one real gap, the link from the page to the route, is raised as U-1/Q-01 with a default instead of being stated as fact.",
+      "score": 5
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Clear, short and readable. Risks are listed in the summary but not ordered by severity.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.15,
+  "run_id": "run_01M6DN23JRRYT113FF078VYBSF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
