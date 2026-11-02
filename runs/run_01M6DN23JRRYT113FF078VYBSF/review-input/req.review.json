@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6DN23JRRYT113FF078VYBSF",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "df068dbe9b4a2785e85a805729d855f730bfda32f9cae55f731603a04e2a8bca",
+  "package_sha256": "3379bb384ad64603bb314b67553df11923aeea5188ce13281913b952d9e7b584",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.4",
+    "rubric_sha256": "055c6d2fd0ad0cd30866e9c759041a90a522bce104f052eebeace0fbb79aea7c"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All six acceptance criteria map to REQ-1..REQ-11, with L20 split into page size, sort, search and Next appointment. The 'long time' goal is listed under Out of scope with a reason."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and checkable. REQ-8 combines two checks: the existing sort order is kept, and no Last visit sort option is added."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known status is backed by a ticket line, a baseline or glossary anchor, or an IDE answer (A-01..A-04). No invented values were found."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash between the ticket and the baseline. Time zone (Asia/Kolkata) and the medical-history rule both agree with the ticket."},
+    {"id": "RR-R5", "score": 5, "reason": "The questions were few, offered real options, and all were answered in the IDE. None are left open or blocking needlessly."},
+    {"id": "RR-R6", "score": 5, "reason": "Plain language. Glossary statuses (Completed, Cancelled, No-show, Scheduled) are used consistently. The missing glossary terms are flagged."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-8 joins two separately testable behaviours: the current sort order is kept, and Last visit is not added as a sort option (from A-03). They are closely linked, but a tester checks them separately.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/req.md#L86", "quote": "The patient list keeps its current `sort order`; Last visit is display-only and is not added as a sort option."},
+        {"ref": "runs/run_01M6DN23JRRYT113FF078VYBSF/ide-answers.md#a-03", "quote": "I assumed the new Last visit column is display-only and is not added as a new sort option"}
+      ],
+      "suggested_fix": "Split into REQ-8 (current sort order kept, citing ticket L20) and a new REQ (Last visit is not a sort option, citing A-03)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-4/run_01M6DN23JRRYT113FF078VYBSF/ticket.md#L14", "quote": "The patient list already shows each patient's next appointment (HMS-1)."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "A past appointment the patient attended, closed by staff once its start time has passed."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "The hospital staff who register patients and book, move and close appointments"}]}
+  ],
+  "questions": []
+}
