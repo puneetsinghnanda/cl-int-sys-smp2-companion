@@ -1,0 +1,13 @@
+{
+  "comment": "Content is fine; shorten resolves[0].how to under 300 characters.",
+  "comment_sha256": "1f3721a1ce5108b33808db5a1a67c2b561eb1a5f5ef72419ee50cc940e2f75c2",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
