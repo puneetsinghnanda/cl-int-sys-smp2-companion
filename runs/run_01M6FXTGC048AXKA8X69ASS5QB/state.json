@@ -55,7 +55,7 @@
       "step": "design"
     }
   ],
-  "heartbeat_at": "2026-11-03T07:56:02Z",
+  "heartbeat_at": "2026-11-03T08:04:37Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -93,10 +93,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 3,
-    "round": 1
+    "open_non_blocking": 5,
+    "round": 2
   },
-  "rev": 32,
+  "rev": 35,
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -355,7 +355,31 @@
       "status": "ACCEPTED"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/threat.md",
+          "artifact_sha256": "df2431154a9fac4428ed627b2ddcdb5a320a4f0b433646c23a2bfcc2d1a262cf",
+          "band": "Medium",
+          "cause": "first",
+          "decided_at": "2026-11-03T08:04:37Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056",
+              "step": "design"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/threat.verification.json",
+          "skill": "threat-model@1.0.1",
+          "skill_started_at": "2026-11-03T07:56:49Z",
+          "started_at": "2026-11-03T07:56:29Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -364,7 +388,7 @@
       },
       "id": "threat",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -423,7 +447,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-7",
-  "updated_at": "2026-11-03T07:56:02Z",
+  "updated_at": "2026-11-03T08:04:37Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "5ebb9e61535bf2b17ee83e2b4eba0600c075e9b67a5a43df59f2ac08842a3255"
 }

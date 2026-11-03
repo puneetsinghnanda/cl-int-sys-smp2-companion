@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M6FXTGC048AXKA8X69ASS5QB
 ticket: HMS-7
 workflow: brownfield-change@1.3.0
-step: impact@1.1.1
+step: threat@1.0.1
 created_at: '2026-11-03T07:06:05Z'
 status: open
 ---
@@ -45,6 +45,25 @@ decision: A
   A. Add to GET /api/doctors/:id; edit form and PATCH ignore it
   B. Separate read for the doctor page; doctor detail response unchanged
 **Proposed default:** Add to GET /api/doctors/:id as a read-only field; fromDoctor does not map it and PATCH does not accept it; design confirms against current source.
+answer:
+answered_by:
+decision:
+
+## Q-04 · non-blocking · ask: tech lead · round 2
+**Question:** Is the MVP spoofing risk on the new noShowsLast30Days field (no sign-in, every request is staff) formally accepted for HMS-7, and by whom?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-05 · non-blocking · ask: tech lead · round 2
+**Question:** Does DoctorFormPage.fromDoctor map only named editable fields, and does PATCH /api/doctors/:id reject or ignore unknown body fields?
+**Why it matters:** T-10 depends on it: the new read-only fields must not be sent back in an update. The design leaves this to implement (its Q-03).
+**Evidence:** artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#open-questions, context/generated/api-inventory.json#http:PATCH:/api/doctors/:id
+**Options:**
+  A. Both keep unknown fields out; no new control
+  B. Either passes them through; strip the fields explicitly and test it
+**Proposed default:** Implement checks both and, if needed, strips noShowsLast30Days and noShowsWindow explicitly, with a test.
 answer:
 answered_by:
 decision:
