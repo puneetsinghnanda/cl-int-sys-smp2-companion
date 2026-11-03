@@ -2,7 +2,7 @@
   "active_session": {
     "host_hash": "h_8a7e4e5f",
     "session_id": "23f292b6-1188-40be-afcd-edb1ce812320",
-    "since": "2026-11-03T07:40:34Z"
+    "since": "2026-11-03T07:56:02Z"
   },
   "branch": {},
   "created_at": "2026-11-03T05:24:00Z",
@@ -40,22 +40,22 @@
       "step": "design"
     },
     {
-      "approver_key": null,
+      "approver_key": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
       "artifacts": [
         {
           "sha256": "215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056",
           "step": "design"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-11-03T07:56:01Z",
+      "decision": "approve",
       "id": "G-escalate-design-a3",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "APPROVED",
       "step": "design"
     }
   ],
-  "heartbeat_at": "2026-11-03T07:46:59Z",
+  "heartbeat_at": "2026-11-03T07:56:02Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -96,10 +96,10 @@
     "open_non_blocking": 3,
     "round": 1
   },
-  "rev": 30,
+  "rev": 32,
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -352,7 +352,7 @@
       },
       "id": "design",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "ACCEPTED"
     },
     {
       "attempts": [],
@@ -423,7 +423,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-7",
-  "updated_at": "2026-11-03T07:46:59Z",
+  "updated_at": "2026-11-03T07:56:02Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "5ebb9e61535bf2b17ee83e2b4eba0600c075e9b67a5a43df59f2ac08842a3255"
 }
