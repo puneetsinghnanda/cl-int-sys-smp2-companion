@@ -1,0 +1,133 @@
+{
+  "artifact_sha256": "4efeb373d4d22b7d74c2c0ec55e82009f5ddb45abe3a9bc94a490c762f071910",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "One count on the dashboard, with its label; selecting it opens the list behind the count.",
+          "ref": "context/glossary.md#tile"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "are computed in the hospital time zone, `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L57"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The count reuses exactly the window and counting rule of the existing `dashboard` No-shows tile for Last 30 days",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L65"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Given No-shows outside the window (before it, or after the end of today in Asia/Kolkata)",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#L65"
+        },
+        {
+          "quote": "`No-show` is allowed only after the start time, and No-show appointments never change.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L30"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Match the body to the YAML: a No-show before the window, and any appointment starting after the end of today.",
+      "text": "S-1 AC2 in the body sets up No-shows that start after the end of today. The intent says No-show is allowed only after the start time, so this setup cannot happen. The YAML version correctly says 'an appointment' instead."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "AC2: Given that list, then the number of appointments listed equals the count.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#L75"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add 'when staff look at it' so the body matches the YAML criterion.",
+      "text": "S-2 AC2 in the body has no When clause, so it does not follow Given/When/Then. The YAML version has one ('when staff look at it')."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "Given the doctor page shows a No-shows (last 30 days) count, when staff select the count",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#L52"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Say that S-2 depends on S-1 and must ship after it.",
+      "text": "S-2 cannot be delivered or tested without S-1, because its Given needs the count that S-1 adds. The artifact does not state this dependency or the order of the stories."
+    }
+  ],
+  "package_sha256": "4ff73157aaae379b7848c8032b05ecd7f9cc5bef83052e6dd224c163ec489c43",
+  "questions": [],
+  "recorded_at": "2026-11-03T05:35:25Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "fa0941e14add8df1c8561e2ed533a91b8f0c382ea08ce0369f42197bd7bf13f2",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All eight known REQs in the intent are traced. S-1 traces REQ-1 to REQ-5 and REQ-8. S-2 traces REQ-6 and REQ-7. Nothing is assumed or unknown.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "There are two stories, and each has one user-facing outcome: see the count, and open the list behind it. S-2 depends on S-1, because the count must exist before anyone can select it.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The criteria are Given/When/Then and can be checked against the dashboard tile rule. In the body, S-2 AC2 has no When clause, and S-1 AC2 sets up a No-show after today, which the baseline does not allow.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Every value comes from the intent: the label, the 30-day window, Asia/Kolkata, the dashboard tile rule, 0 and the list filters. No new limits are added.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "The stories read clearly and use glossary terms. The prose body abbreviates some criteria, so it drifts from the YAML wording in places.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
