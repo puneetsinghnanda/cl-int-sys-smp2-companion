@@ -1,0 +1,13 @@
+{
+  "comment": "Q-01/Q-02 answered from code (see open-questions.md). Fix the interface to match the code: (1) shared helper = DashboardService's '30d' rule: from = addDays(localDay(now,tz),-29), counted starts_at >= dayBounds(from).start and < dayBounds(today).end, status NO_SHOW. (2) Link reuses the dashboard No-shows tile shape: /appointments?doctorId=<id>&status=NO_SHOW&from=<YYYY-MM-DD>&to=<YYYY-MM-DD>; from/to are hospital-local days, not UTC instants. (3) Use camelCase response fields (e.g. noShowsLast30Days, noShowsWindow {from,to} as local days), matching feePaise/slotMinutes and the dashboard's noShows/period. Drop Q-01, Q-02, Q-04 and \"half-open\"; keep Q-03.",
+  "comment_sha256": "f7df7e8b18f9dbb1bf7743719ea936bcc43e1c55dc13666ef67eb65d95c30e70",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "feedback.v1",
+  "step": "design"
+}

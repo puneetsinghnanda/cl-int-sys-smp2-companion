@@ -21,9 +21,9 @@ Answer each question below the line `answer:`. Keep the ids. Then run:
   A. Filters exist; link only
   B. Some filters missing; extend the route and page
 **Proposed default:** Design reads api/src/routes/appointments.ts and AppointmentsPage and extends only the missing filters.
-answer:
-answered_by:
-decision:
+answer: Filters exist; link only. GET /api/appointments accepts doctorId, patientId, status, from, to, page (appointmentService.ts:33-37). from/to are hospital-local days (YYYY-MM-DD), turned into [dayBounds(from).start, dayBounds(to).end) (appointmentService.ts:46-47, appointmentRepo.ts:71-72). AppointmentsPage reads the same names from the URL (AppointmentsPage.tsx:14). Unknown query keys are ignored, not rejected (validate.ts:113), so a wrong name such as doctor_id would silently drop the filter.
+answered_by: eng-3c51
+decision: A
 
 ## Q-02 · non-blocking · ask: tech lead
 **Question:** Does the dashboard's PERIODS include a Last 30 days period with a No-shows count, and can its window rule be reused per doctor?
@@ -33,9 +33,9 @@ decision:
   A. Yes; extract and share the window rule
   B. No such period; ask the product owner
 **Proposed default:** Design reads dashboardService.ts and shares its window computation with the doctor count.
-answer:
-answered_by:
-decision:
+answer: Yes. PERIODS = ['today','7d','30d'] (dashboardService.ts:8). '30d' counts NO_SHOW with starts_at >= start of (today - 29 days) and < end of today, in config.timeZone (dashboardService.ts:41-44, :53). It is not per doctor, but adding "AND doctor_id = $n" to the same window gives the per-doctor count. The tile links to /appointments?status=NO_SHOW&from=period.from&to=period.to (DashboardPage.tsx:58), which selects exactly the same set.
+answered_by: eng-3c51
+decision: A
 
 ## Q-03 · non-blocking · ask: tech lead
 **Question:** Should the 30-day No-show count be added to the GET /api/doctors/:id response (also read by the /doctors/:id/edit form) or served by a separate read used only by the doctor page?
