@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md",
+  "artifact_sha256": "e7ca6095c72a1d88046a0be9ff9abc729e67d5d26b2ae06c87231084819e05ce",
+  "attempt": 1,
+  "budget_tokens": 15000,
+  "checks_sha256": "12b8128c671264005fa82ad99532209ce3ac661346a512b0ae8ca99d09a9bd21",
+  "context_sections": [
+    {
+      "id": "intent-baseline#goals",
+      "included": true,
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "id": "intent-baseline#constraints",
+      "included": true,
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "id": "glossary",
+      "included": true,
+      "path": "context/glossary.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ticket",
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md"
+    },
+    {
+      "name": "intent_baseline",
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "name": "glossary",
+      "path": "context/glossary.md"
+    }
+  ],
+  "package_sha256": "2abb6a64071ca0243968c02a2ca8a349c0f29638d956ff085b32efa5864bf811",
+  "prepared_at": "2026-11-03T13:20:57Z",
+  "prepared_by": "tsl@0.1.5",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "RR-R1",
+        "weight": 0.25
+      },
+      {
+        "id": "RR-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "RR-R3",
+        "weight": 0.25
+      },
+      {
+        "id": "RR-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "RR-R5",
+        "weight": 0.1
+      },
+      {
+        "id": "RR-R6",
+        "weight": 0.05
+      }
+    ],
+    "path": "skills/requirement-review/rubric.md",
+    "sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review-package.v1",
+  "skill": "requirement-review@1.2.0",
+  "step": "req",
+  "truncated": false
+}

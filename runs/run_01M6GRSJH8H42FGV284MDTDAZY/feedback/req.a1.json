@@ -1,0 +1,45 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "answers: []",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L156"
+        },
+        {
+          "quote": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-03",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L51"
+        },
+        {
+          "quote": "Earlier HMS-4 answers reused (all by gaurav-saini-truminds)",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L213"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Ten REQ cites point to ide-answers from three other runs (one cancelled), yet the artifact's answers list is empty. The decisions behind REQ-1/2/3/4/6/11/14 are not recorded as answers of this run, so tsl may reject these cites."
+    },
+    {
+      "cites": [
+        {
+          "quote": "keeps its current sort order, and Last visit is not offered as a sort option",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L126"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "REQ-11 is compound. It covers two behaviours: the existing sort order is kept, and Last visit is not offered as a sort option."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "feedback.v1",
+  "step": "req"
+}
