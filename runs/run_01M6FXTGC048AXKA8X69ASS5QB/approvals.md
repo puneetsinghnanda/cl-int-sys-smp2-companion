@@ -72,3 +72,11 @@ comment: Q-01/Q-02 answered from code (see open-questions.md). Fix the interface
 }
 ```
 <!-- tsl:signature-end G-escalate-design-a2 -->
+
+## G-escalate-design-a3 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md (sha256 215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056)
+Reason for gate: band Low
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

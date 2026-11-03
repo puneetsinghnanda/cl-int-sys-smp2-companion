@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M6FXTGC048AXKA8X69ASS5QB
 step: design
-attempt: 2
+attempt: 3
 skill: design@1.4.1
 inputs:
   - path: artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md
@@ -21,11 +21,6 @@ inputs:
     sha256: 9ba29278d8d66b7341defc3c67d6e7d68508ce25ee2991ba256be2b37194ec61
 pack_sha:
   sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33
-resolves:
-  - id: F-1
-    how: "Proposed exact response fields, types and link query parameters; names stay provisional under Q-04 and, for the list, Q-01."
-  - id: F-2
-    how: "Dropped the uncited fromDoctor/PATCH claims; the edit-form and PATCH behaviour is now unknown U-3 with a check required in Q-03."
 claims:
   - id: C1
     text: "The API is layered: routes parse input, services hold the rules, repositories hold the SQL; the web app uses `web/src/api/client.ts`."
@@ -61,8 +56,8 @@ claims:
     text: "The appointment list page is `AppointmentsPage` at `/appointments`."
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "context/generated/api-inventory.json#ui:/appointments"]
   - id: C12
-    text: "API time helpers include `dayBounds` and `zonedToUtc` in `api/src/lib/time.ts`."
-    cites: ["context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:zonedToUtc"]
+    text: "API time helpers include `addDays`, `localDay` and `dayBounds` in `api/src/lib/time.ts`."
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:addDays", "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay", "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds"]
   - id: C13
     text: "Index `appointment_doctor_start_idx` covers doctor_id and starts_at, so no migration is needed."
     cites: ["artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#summary"]
@@ -70,36 +65,23 @@ claims:
     text: "The count reuses the window and rule of the `dashboard` No-shows tile for Last 30 days."
     cites: ["artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#requirements"]
   - id: C15
-    text: "API JSON keys are snake_case, for example `page_size`; lists answer items, page, page_size and total, 20 per page."
-    cites: ["context/conventions.md#lists"]
+    text: "GET /api/appointments accepts `doctorId`, patientId, status, from, to and page; from/to are hospital-local days."
+    cites: ["runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-01"]
   - id: C16
-    text: "Appointment status values include `NO_SHOW`."
-    cites: ["artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#known"]
+    text: "Unknown query keys are ignored, so a wrong name such as `doctor_id` would silently drop the filter."
+    cites: ["runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-01"]
+  - id: C17
+    text: "PERIODS includes `30d`, which counts NO_SHOW from the start of today minus 29 days to the end of today in config.timeZone."
+    cites: ["runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-02"]
+  - id: C18
+    text: "The dashboard No-shows tile links to `/appointments?status=NO_SHOW&from=period.from&to=period.to`, selecting the same set it counts."
+    cites: ["runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-02"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8]
 known: [S-1, S-2, REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8]
 assumed: []
 unknown:
-  - {id: U-1, blocking: false}
-  - {id: U-2, blocking: false}
   - {id: U-3, blocking: false}
-  - {id: U-4, blocking: false}
 questions:
-  - id: Q-01
-    blocking: false
-    ask: tech lead
-    text: "Does GET /api/appointments and the /appointments page already accept doctor, status and start-date window filters, and under which parameter names?"
-    why: "S-2 links the count to the list filtered the same way; the generated facts list the route but not its query parameters."
-    evidence: ["context/generated/api-inventory.json#http:GET:/api/appointments", "context/generated/api-inventory.json#ui:/appointments"]
-    options: ["Filters exist; the link uses their existing names", "Some filters missing; add them with the names proposed in Q-04"]
-    default: "Implement reads appointments.ts and AppointmentsPage first, uses existing parameter names where present, and adds only missing ones with the Q-04 names."
-  - id: Q-02
-    blocking: false
-    ask: tech lead
-    text: "Does DashboardService PERIODS hold a Last 30 days period whose window computation can be extracted to a shared helper without changing dashboard output?"
-    why: "REQ-4 requires the doctor count to use exactly the dashboard tile's window and rule."
-    evidence: ["context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:PERIODS"]
-    options: ["Yes; extract to api/src/lib and use from both", "No Last 30 days period; stop and ask the product owner before implementing"]
-    default: "Extract the existing window computation unchanged into api/src/lib; DashboardService calls the helper; dashboard tests guard regressions."
   - id: Q-03
     blocking: false
     ask: tech lead
@@ -108,14 +90,6 @@ questions:
     evidence: ["context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor", "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id"]
     options: ["fromDoctor maps named fields and PATCH validates a fixed field set; no change", "Either forwards unknown fields; make fromDoctor explicit and/or have PATCH drop the new fields"]
     default: "Implement reads fromDoctor and the PATCH validation before changing anything; if either passes unknown fields through, it strips the new fields explicitly and adds a test."
-  - id: Q-04
-    blocking: false
-    ask: tech lead
-    text: "Confirm the proposed names: response fields no_shows_last_30_days (integer) and no_shows_window {from, to} (ISO 8601 UTC strings, half-open), and link query parameters doctor_id, status=NO_SHOW, from, to, page=1."
-    why: "The interface needs exact names; the context pack gives the snake_case convention but no names for these new values."
-    evidence: ["context/conventions.md#lists", "context/generated/api-inventory.json#http:GET:/api/doctors/:id"]
-    options: ["Use the proposed names", "Use other names given by the tech lead"]
-    default: "Use the proposed names, except list parameters that already exist under another name (Q-01)."
 components:
   - {name: Shared No-show window rule (Last 30 days), module: module:sample-system:api, change: new}
   - {name: DashboardService, module: module:sample-system:api, change: changed}
@@ -137,45 +111,47 @@ endpoints:
 # Design: HMS-7
 
 ## Overview
-The doctor detail read gains a read-only No-show count for the dashboard's Last 30 days window, plus
-the window it used. To meet REQ-4, the window computation DashboardService uses today is moved,
-unchanged, into a new shared helper in `api/src/lib`; both DashboardService and DoctorService call it,
-and REQ-2/REQ-3 are checked against whatever that rule returns rather than restated here.
-AppointmentRepo gets one count query (doctor_id, status NO_SHOW, starts_at inside the window), served
-by the existing `appointment_doctor_start_idx`, so there is no migration. DoctorDetailPage shows the
-count in the details section labelled "No-shows (last 30 days)" and always renders it as a link,
-including 0, to `/appointments` filtered to that doctor, NO_SHOW and the returned window, opening on
-page 1. No new infrastructure, store or endpoint.
+The doctor detail read gains a read-only No-show count for the dashboard's Last 30 days (`30d`)
+window, plus that window as two hospital-local days. The `30d` window computation in
+DashboardService moves, unchanged, into a new shared helper in `api/src/lib`: with tz the configured
+hospital time zone and today = localDay(now, tz), from = addDays(today, -29); appointments count when
+starts_at >= dayBounds(from, tz).start and starts_at < dayBounds(today, tz).end. DashboardService and
+DoctorService both call it, so REQ-2, REQ-3 and REQ-4 rest on one rule. AppointmentRepo adds the same
+NO_SHOW count filtered by doctor_id, served by the existing `appointment_doctor_start_idx`, so there is
+no migration. DoctorDetailPage shows the count in the details section labelled
+"No-shows (last 30 days)" and always renders it as a link, including 0, in the same shape as the
+dashboard No-shows tile. No new infrastructure, store or endpoint; GET /api/appointments and
+AppointmentsPage already accept every filter needed (open-questions Q-01).
 
-Interface (names provisional until Q-04; list parameter names until Q-01):
-- GET /api/doctors/:id adds `no_shows_last_30_days`: integer ≥ 0, and `no_shows_window`: { `from`, `to` }, ISO 8601 UTC strings, the window exactly as the shared rule returns it.
-- Link: `/appointments?doctor_id=<id>&status=NO_SHOW&from=<no_shows_window.from>&to=<no_shows_window.to>&page=1`.
-- S-2 AC2 is checked against the list response's `total`, not the page length, because lists are paged at 20.
+Interface:
+- GET /api/doctors/:id adds `noShowsLast30Days`: integer ≥ 0, and `noShowsWindow`: { `from`, `to` }, hospital-local days (YYYY-MM-DD) from the shared rule, the same form as the dashboard's `period.from`/`period.to`. camelCase follows the existing response fields (feePaise, slotMinutes, noShows).
+- Link: `/appointments?doctorId=<id>&status=NO_SHOW&from=<noShowsWindow.from>&to=<noShowsWindow.to>`. The list turns from/to into [dayBounds(from).start, dayBounds(to).end), the same bounds the count uses, so the list `total` equals the count (S-2 AC2). Lists are paged at 20; the link opens on page 1 and AC2 compares `total`, not the page length.
+- `doctorId` must be spelled exactly: the list ignores unknown query keys, so a misspelt name would silently drop the doctor filter. The web test for the link asserts the exact URL.
 
 Trade-offs:
-- Count on GET /api/doctors/:id instead of a new endpoint: one request and no new route, at the cost of fields the edit form and PATCH must not pick up (verified under Q-03).
-- Extracting the dashboard window rule instead of re-implementing it: one source of truth for REQ-4, at the cost of touching DashboardService, guarded by its tests.
-- Window bounds returned by the API, not computed in the browser: the link filters exactly what was counted, avoiding drift around midnight in HOSPITAL_TZ.
+- Count on GET /api/doctors/:id instead of a new endpoint: one request and no new route, at the cost of fields the edit form and PATCH must not pick up (checked under Q-03).
+- Extracting the dashboard `30d` rule instead of re-implementing it: one source of truth for REQ-4, at the cost of touching DashboardService, guarded by its tests.
+- Window returned by the API as local days, not computed in the browser: the link matches the count exactly and avoids drift around midnight in the hospital time zone.
 - Count computed per doctor page read, not cached: one indexed count query per view; no cache to invalidate when appointments close.
 
 ## Components
 Components:
-- Shared No-show window rule (Last 30 days) — new, module:sample-system:api, in `api/src/lib`: returns the Last 30 days window exactly as DashboardService computes it today (start and end in UTC), using the existing time helpers.
-- DashboardService — changed: calls the shared rule; dashboard output unchanged.
-- AppointmentRepo — changed: adds a count of one doctor's NO_SHOW appointments whose starts_at falls in a given window.
-- DoctorService — changed: the doctor detail result gains `no_shows_last_30_days` and `no_shows_window`.
+- Shared No-show window rule (Last 30 days) — new, module:sample-system:api, in `api/src/lib`: returns { from, to } as local days and their UTC bounds for the `30d` rule, using addDays, localDay and dayBounds.
+- DashboardService — changed: its `30d` window comes from the shared rule; dashboard output unchanged.
+- AppointmentRepo — changed: adds a count of one doctor's NO_SHOW appointments with starts_at inside the given bounds.
+- DoctorService — changed: the doctor detail result gains `noShowsLast30Days` and `noShowsWindow`.
 - doctorsRouter — existing: GET /api/doctors/:id handler returns the service result; unknown id stays 404.
 - time helpers (api/src/lib/time.ts) — existing: used by the shared rule.
-- DoctorDetailPage — changed: shows the labelled count in the details section as a link (0 included); rest of the page unchanged.
+- DoctorDetailPage — changed: shows the labelled count in the details section as a link (0 included) built from `noShowsWindow`; rest of the page unchanged.
 - DoctorFormPage — existing: behaviour with the new fields is checked under Q-03 before implementing.
-- AppointmentsPage — existing: link target; changes only if Q-01 finds a filter missing.
+- AppointmentsPage — existing: already reads doctorId, status, from, to and page from the URL; no change.
 - API client (web/src/api/client.ts) — existing: carries the extra fields.
 - appointment table and appointment_doctor_start_idx — existing: no migration.
 
 Endpoints:
-- GET /api/doctors/:id — changed: adds `no_shows_last_30_days` and `no_shows_window`.
+- GET /api/doctors/:id — changed: adds `noShowsLast30Days` and `noShowsWindow`.
 - PATCH /api/doctors/:id — existing: must not accept the new fields (checked under Q-03).
-- GET /api/appointments — existing: link target; `total` must equal the count (see Q-01).
+- GET /api/appointments — existing: link target with doctorId, status, from, to; no change.
 - GET /api/dashboard — existing: response unchanged; regression-tested after the extraction.
 
 Story coverage:
@@ -185,20 +161,15 @@ Story coverage:
 ## Known
 - S-1, S-2: both stories are served by the components above.
 - REQ-1, REQ-5, REQ-8: DoctorDetailPage shows the labelled field in the details section, 0 when none, rest unchanged.
-- REQ-2, REQ-3, REQ-4: one shared window rule, extracted unchanged from the dashboard, used for the doctor count; AppointmentRepo counts NO_SHOW by starts_at.
-- REQ-6, REQ-7: the count is always a link with the same doctor, status and window, including 0; the list total equals the count.
+- REQ-2, REQ-3, REQ-4: the dashboard `30d` rule, extracted unchanged and filtered by doctor_id, in the hospital time zone.
+- REQ-6, REQ-7: the count is always a link to the list with doctorId, NO_SHOW and the same local-day window, including 0; the list total equals the count.
 
 ## Assumed
 None.
 
 ## Unknown
-- U-1 (non-blocking): which filters and parameter names GET /api/appointments and AppointmentsPage accept — Q-01.
-- U-2 (non-blocking): whether PERIODS holds a Last 30 days window that can be extracted unchanged — Q-02.
 - U-3 (non-blocking): whether fromDoctor, PATCH validation or another caller could carry the new fields into an update — Q-03.
-- U-4 (non-blocking): final names of the new response fields and link parameters — Q-04.
 
 ## Open questions
-- Q-01 (non-blocking, tech lead): which filters does the appointment list accept, under which names? Default: reuse existing names, add only what is missing.
-- Q-02 (non-blocking, tech lead): can the dashboard's Last 30 days window be extracted to `api/src/lib` unchanged? Default: extract unchanged; if no such period exists, stop and ask the product owner.
 - Q-03 (non-blocking, tech lead): do fromDoctor and PATCH keep unknown fields out? Default: implement reads both first and strips the new fields explicitly if needed, with a test.
-- Q-04 (non-blocking, tech lead): confirm `no_shows_last_30_days`, `no_shows_window {from, to}` and link parameters doctor_id, status, from, to, page. Default: use them.
+- Answered by the tech lead (eng-3c51) in open-questions.md: Q-01 (filters exist; link only) and Q-02 (`30d` exists; extract and share). Q-04 is dropped: the names follow the code, as the approver asked at gate G-escalate-design-a2.

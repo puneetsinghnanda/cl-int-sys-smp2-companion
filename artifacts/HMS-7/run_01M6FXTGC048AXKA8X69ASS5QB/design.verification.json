@@ -1,29 +1,24 @@
 {
   "artifact_path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md",
-  "artifact_sha256": "4e47f93fe154e95a25a777f5f6f3389287f759816ccc24ecbd97a6b4efe4f023",
-  "attempt": 2,
+  "artifact_sha256": "215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056",
+  "attempt": 3,
   "band": "Low",
   "caps": [],
-  "checks_sha256": "3b5abdb2c948c8a845e06933b583d7ae7c92dd1e22fa810d12a0c602a1f9785e",
+  "checks_sha256": "16805a598bf62c70bd8a201627cc31f75001f19db41d0ca77511516b334da39b",
   "claims": {
-    "total": 16,
-    "verified": 10
+    "total": 18,
+    "verified": 9
   },
-  "decided_at": "2026-11-03T07:17:35Z",
+  "decided_at": "2026-11-03T07:46:59Z",
   "decided_by": "tsl@0.1.5",
-  "findings_dropped": [
-    {
-      "id": "F-1",
-      "reason": "quote not found"
-    }
-  ],
+  "findings_dropped": [],
   "findings_kept": [
     {
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor"
     },
     {
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor"
     }
   ],
@@ -54,15 +49,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": "bce4a1ff220d919f531478e9fdb7b6966d2bdf7db7b8c75dd19696e0a8690778",
+  "prev_attempt_sha256": "7d8813408244ad9b2a350402e8ffd2045e7357a803ca3369dc1faa4f9fb7fd00",
   "product_changes": null,
-  "review_sha256": "b0bde7784d8a77b23f1a08b68cc5806cccb2a9cb31d2f4e49785d571a46fb0c1",
+  "review_sha256": "a5830bcb37996274c58160d615025cc44a0b54203a9fd77b97114cbed2349079",
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.6316,
+    "S1": 0.55,
     "S2": 1.0,
-    "S3": 4.65,
+    "S3": 4.85,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -71,7 +66,7 @@
       "sensitive": false
     }
   },
-  "signature": "1ZyZ1SJMQe7PHQp9p9fCfc6Sj_o01raH06L0RVZ9oL8PDFdZoloFazMwcA2xuE8M8-04KLWk2tUcL3Tw7WOEBg",
+  "signature": "A7iZEb8Xd7jwBAUpBnO_BMslwmA9clOBmBbA8KOI6XEMPI1--eE8W_4UKjUldpkz3N3OCe0m0vttZ-ZjFrp9AA",
   "skill": "design@1.4.1",
   "step": "design",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

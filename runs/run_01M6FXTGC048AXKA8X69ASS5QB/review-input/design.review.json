@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "step": "design",
-  "attempt": 2,
-  "artifact_sha256": "4e47f93fe154e95a25a777f5f6f3389287f759816ccc24ecbd97a6b4efe4f023",
-  "package_sha256": "f159c613fe2e1d56bfad98e41a5617001cf4d3216cca5d5a37833821b69dc973",
+  "attempt": 3,
+  "artifact_sha256": "215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056",
+  "package_sha256": "419d8f17c6b8cb2c2320413ef1976840c2fa84c2d531c2272fdd383e709bfa4a",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,50 +12,38 @@
     "version": "0.1.5",
     "rubric_sha256": "0dc7deb84433a3ff9a1ccb140b05fa0bd8e1fa49fc04bc69050dad8fde8d2543"
   },
-  "rubric_score": 4.65,
+  "rubric_score": 4.85,
   "rubric_items": [
-    {"id": "DS-R1", "score": 5, "reason": "Uses only the existing route/service/repo layers, a shared helper in api/src/lib, the existing time helpers, the existing index and the API client. It adds no new infrastructure, store or endpoint."},
-    {"id": "DS-R2", "score": 5, "reason": "S-1 and S-2 are mapped to components, and all of REQ-1..8 are under Known. S-2 AC2 is now checked against the list total, and the link opens on page 1. The 0 count is still a link."},
-    {"id": "DS-R3", "score": 4, "reason": "Field names, types and link parameters are now given. The design does not say how the list must read the from/to bounds (half-open UTC instants or local dates), and the total-equals-count check depends on that."},
-    {"id": "DS-R4", "score": 4, "reason": "The uncited fromDoctor/PATCH facts moved to U-3/Q-03, and the unknowns are tracked. The snake_case convention is stated more broadly than the cited source supports, and Q-04 still calls the window half-open."},
-    {"id": "DS-R5", "score": 5, "reason": "Four trade-offs, each with a reason: the count rides on the existing GET, the dashboard rule is extracted rather than rewritten, the server returns the window bounds, and there is no cache."},
-    {"id": "DS-R6", "score": 5, "reason": "Clear structure, with separate Components, Endpoints and Story coverage sections. Names are consistent between the front matter and the body."}
+    {"id": "DS-R1", "score": 5, "reason": "The design uses the existing route, service and repo layers. It adds a shared helper in api/src/lib built on the existing time helpers and uses the existing index. It adds no new endpoint, store or infrastructure. All named symbols are in the module map."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 and S-2 are mapped to components. REQ-1..8 are all known. AC2 equality now holds because the list's dayBounds(from).start..dayBounds(to).end matches the count's bounds. A count of 0 is still a link."},
+    {"id": "DS-R3", "score": 5, "reason": "It gives the method and path, the field names and types (noShowsLast30Days integer &gt;= 0, noShowsWindow {from,to} as YYYY-MM-DD), the exact link query string, the window formula and the paging behaviour."},
+    {"id": "DS-R4", "score": 4, "reason": "Facts are cited to open-questions Q-01/Q-02, and U-3/Q-03 is tracked. But the camelCase naming rule and the example fields rest on the gate comment, which is not cited. Q-03 also reuses an id whose original question is still unanswered."},
+    {"id": "DS-R5", "score": 5, "reason": "Four trade-offs are given, each with a reason: putting the count on the existing GET, extracting the rule instead of rewriting it, returning the window from the server, and no cache."},
+    {"id": "DS-R6", "score": 5, "reason": "The structure is clear and the names match between the front matter and the body. The answered and dropped questions are explained."}
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "minor",
-      "category": "correctness",
-      "text": "The link passes the API's UTC window as from/to, and the default reuses the list's existing parameters. Q-01 asks only for parameter names. It does not ask whether those filters take half-open UTC instants or local dates. If they differ, the list total may not equal the count (S-2 AC2).",
+      "category": "traceability",
+      "text": "The design says camelCase follows the existing response fields (feePaise, slotMinutes, noShows). No claim or citation backs this. The only source is the tech lead's comment at gate G-escalate-design-a2, and the design does not cite it.",
       "cites": [
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview", "quote": "&amp;from=&lt;no_shows_window.from&gt;&amp;to=&lt;no_shows_window.to&gt;&amp;page=1"},
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#L94", "quote": "uses existing parameter names where present"},
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#L54", "quote": "then the number of appointments listed equals the count shown on the doctor page."}
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#L127", "quote": "camelCase follows the existing response fields (feePaise, slotMinutes, noShows)"},
+        {"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/approvals.md#L46", "quote": "Use camelCase response fields (e.g. noShowsLast30Days, noShowsWindow {from,to} as local days), matching feePaise/slotMinutes"}
       ],
-      "suggested_fix": "Extend Q-01 (or U-1) to cover the boundary semantics of the existing list filters: instant or local date, and inclusive or exclusive end. State that the link must select the same set the count uses."
+      "suggested_fix": "Add a claim for the naming rule that cites approvals.md#g-escalate-design-a2."
     },
     {
       "id": "F-2",
       "severity": "minor",
       "category": "consistency",
-      "text": "Q-04 still calls no_shows_window half-open. The body says the window is exactly what the shared rule returns, and that rule is unknown until Q-02. This repeats part of the earlier fixed-definition issue.",
+      "text": "The design's Q-03 uses the same id as open-questions Q-03 but asks a different question (fromDoctor/PATCH filtering). The original Q-03 asked whether the count goes on GET /api/doctors/:id or a separate read, and it is still unanswered. The design takes option A without recording that.",
       "cites": [
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#L114", "quote": "no_shows_window {from, to} (ISO 8601 UTC strings, half-open)"},
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview", "quote": "the window exactly as the shared rule returns it"}
+        {"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#L41", "quote": "Should the 30-day No-show count be added to the GET /api/doctors/:id response"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#L88", "quote": "Does DoctorFormPage.fromDoctor map only named editable fields"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#L132", "quote": "Count on GET /api/doctors/:id instead of a new endpoint"}
       ],
-      "suggested_fix": "Drop 'half-open' from Q-04, or make it conditional on what Q-02 finds in DashboardService."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "C15 and Q-04 say the context pack sets a snake_case convention for API JSON keys. The cited section only shows the list envelope, which contains page_size. It states no general naming rule.",
-      "cites": [
-        {"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."},
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#L115", "quote": "the context pack gives the snake_case convention but no names for these new values"}
-      ],
-      "claim_ref": "C15",
-      "suggested_fix": "Describe snake_case as inferred from page_size and leave Q-04 to confirm it, or cite a source that states the rule."
+      "suggested_fix": "State that option A of the original Q-03 is taken as the default, and give the narrowed follow-up question its own id or note that it changes Q-03."
     }
   ],
   "claims_checked": [
@@ -70,19 +58,13 @@
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}]},
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor", "quote": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor"}]},
     {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "quote": "sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage"}]},
-    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "quote": "sym:sample-system:api/src/lib/time.ts:dayBounds"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:addDays", "quote": "sym:sample-system:api/src/lib/time.ts:addDays"}]},
     {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#summary", "quote": "the existing `appointment_doctor_start_idx` supports the query, so no migration is expected"}]},
     {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#requirements", "quote": "REQ-4 Same window and rule as the dashboard No-shows tile — known — reuse the tile's Last 30 days window and rule."}]},
-    {"claim_id": "C15", "verdict": "unsupported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
-    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#known", "quote": "appointment table holds status NO_SHOW and starts_at in UTC"}]}
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-01", "quote": "GET /api/appointments accepts doctorId, patientId, status, from, to, page"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-01", "quote": "Unknown query keys are ignored, not rejected (validate.ts:113)"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-02", "quote": "'30d' counts NO_SHOW with starts_at &gt;= start of (today - 29 days) and &lt; end of today, in config.timeZone"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/open-questions.md#q-02", "quote": "The tile links to /appointments?status=NO_SHOW&amp;from=period.from&amp;to=period.to (DashboardPage.tsx:58), which selects exactly the same set."}]}
   ],
-  "questions": [
-    {
-      "id": "Q-1",
-      "text": "Do the existing /api/appointments date filters take UTC instants with an exclusive end, or local dates? If local dates, should the link pass dates and accept the risk of a boundary mismatch, or should the list gain instant filters?",
-      "ask_role": "tech_lead",
-      "blocking": false,
-      "finding_ref": "F-1"
-    }
-  ]
+  "questions": []
 }
