@@ -77,6 +77,34 @@ comment: Q-01/Q-02 answered from code (see open-questions.md). Fix the interface
 kind: escalation
 Artifact: artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md (sha256 215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056)
 Reason for gate: band Low
-decision:          # approve | reject | changes | abort
-comment:
+decision: approve
+comment: Design matches the code (review 4.85/5, all 18 claims supported). Low confidence comes from citations tsl cannot
+auto-check, not from content.
 <!-- signature block written by `tsl approve` - do not edit -->
+<!-- tsl:signature-begin G-escalate-design-a3 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-11-03T07:55:21Z",
+  "approver": "eng-3c51",
+  "artifacts": [
+    {
+      "attempt": 3,
+      "sha256": "215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056",
+      "step": "design"
+    }
+  ],
+  "comment_sha256": "a5b7ae7ddf660530a0e217dd06f8780d03214825b0a4b4a18ee0337c748e9d9b",
+  "decision": "approve",
+  "gate": "G-escalate-design-a3",
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "2wAhro3uMIs3JiNuh1iZu78uFiVP-XTmSHHei0iaUzoGdBrOebEK0xjmR5-5YC1MwEJNmwOosFiVWuMJpbRODA",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-design-a3 -->
