@@ -1,0 +1,67 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "8cacd7572d8146137cd6151565f9b5e880d72194da94af616afa60fd16406ef8",
+  "package_sha256": "48f2555efceef5d00fa3e6d6ee3c38f47ae58dcd9781e33fe9a4d30c2516bc80",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "055c6d2fd0ad0cd30866e9c759041a90a522bce104f052eebeace0fbb79aea7c"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All five acceptance criteria map to REQ-1..REQ-8. The user-story motivation and any change to the dashboard tile are listed under Out of scope, each with a reason."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs are single and testable. REQ-2 sets its own window while REQ-4 says to reuse the tile's window, so the window rule is split across two REQs that could disagree."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known status cites a ticket line, a baseline section or an IDE answer (A-01..A-04). No values are invented, and nothing is marked assumed without a basis."},
+    {"id": "RR-R4", "score": 5, "reason": "The undocumented dashboard 'Last 30 days' window and the missing glossary entry for 'Doctor page' were both raised as questions and answered by the user (A-01, A-04)."},
+    {"id": "RR-R5", "score": 5, "reason": "The questions offer real options with proposed defaults, ask only where the ticket was unclear, and all were answered in the IDE."},
+    {"id": "RR-R6", "score": 4, "reason": "The wording is plain and glossary terms are used consistently. One small style issue: 'unchanged' is in backticks in REQ-8 as if it were a term."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "REQ-2 states its own window ('last 30 days up to the end of today'), but REQ-4 says to reuse the dashboard tile's window, which A-01 chose because that window is not documented. If the tile's window differs, REQ-2 and REQ-4 conflict.",
+      "cites": [
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L50", "quote": "whose start time falls in the last 30 days up to the end of today"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L65", "quote": "The count reuses exactly the window and counting rule of the existing `dashboard` No-shows tile for Last 30 days"},
+        {"ref": "runs/run_01M6FXTGC048AXKA8X69ASS5QB/ide-answers.md#a-01", "quote": "neither the intent baseline nor the glossary describes a 'Last 30 days' period on the dashboard"}
+      ],
+      "suggested_fix": "Make REQ-4 the only source of the window rule, and have REQ-2 refer to it (for example 'in the window defined by REQ-4') instead of restating the window."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "REQ-7 (a count of 0 is still a link) cites ticket L24 ('shows 0') but not L25, the line that requires the count to be a link.",
+      "cites": [
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L89", "quote": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/ticket.md#L24"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/ticket.md#L25", "quote": "The count links to the appointment list filtered to that doctor, No-show and those 30 days."}
+      ],
+      "suggested_fix": "Add ticket.md#L25 to the cites for REQ-7."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-8 puts 'unchanged' in backticks, which makes it look like a glossary term or code identifier. It is neither.",
+      "cites": [
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md#L95", "quote": "Apart from the new field, the doctor page is `unchanged`"}
+      ],
+      "suggested_fix": "Remove the backticks around 'unchanged'."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/ticket.md#L16", "quote": "The doctor page shows the doctor's details, weekly availability, upcoming appointments and day"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#no-show", "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#tile", "quote": "One count on the dashboard, with its label; selecting it opens the list behind the count."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed and No-show are allowed only after the start time."}]}
+  ],
+  "questions": []
+}
