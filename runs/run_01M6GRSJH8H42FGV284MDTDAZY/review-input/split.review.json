@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "6e7f224ea58ac5f69bddf03bba27be69e4b71c1489926f78b6950c7710939fdf",
-  "package_sha256": "4fb16b22affb0f485933971fc2f45a141d0c50ed2d684e2de9fcef92c5ffc291",
+  "attempt": 2,
+  "artifact_sha256": "1097c5a30f050a771deca3a06a8eb429ba26a1b31dd0aada1164d17b95a31518",
+  "package_sha256": "95e8607c765abee71882b73dfc3e7ebc617745c3b3d6275f77756839d50d60ef",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,62 +12,115 @@
     "version": "0.1.5",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.45,
+  "rubric_score": 4.55,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All 15 known REQs (REQ-1 to REQ-15) are traced: S-1 covers 1-6 and 14, S-2 covers 7-8, S-3 covers 9-11 and 15, S-4 covers 12, S-5 covers 13. The intent has no assumed REQs."},
-    {"id": "SS-R2", "score": 4, "reason": "Each story is mostly one outcome. S-1 also carries REQ-14 (no highlight or filter). S-3 bundles three regressions: paging, search and sort."},
-    {"id": "SS-R3", "score": 4, "reason": "The ACs are Given/When/Then and mostly discriminating: a time-zone case where the local and UTC dates differ, latest start vs latest closed, each excluded status, and paging with duplicate risk. The search AC would not catch duplicate rows."},
-    {"id": "SS-R4", "score": 5, "reason": "Asia/Kolkata and 20 per page come from the intent. UTC+05:30 is derived inline from Asia/Kolkata. 21 patients follows from 20 per page plus one row on page two. The dates and times are test data, not limits."},
-    {"id": "SS-R5", "score": 4, "reason": "Terms are clear and consistent with the glossary. The body summary of S-3 AC1 differs slightly from the front-matter criterion."}
+    {
+      "id": "SS-R1",
+      "score": 5,
+      "reason": "All 15 known REQs are traced. S-1 covers REQ-1 to 6 and 14, S-2 covers 7 and 8, S-3 covers 9 to 11 and 15, S-4 covers 12 and S-5 covers 13. The intent has no assumed REQs."
+    },
+    {
+      "id": "SS-R2",
+      "score": 4,
+      "reason": "Most stories have one outcome. S-3 bundles three regression checks (paging, search and sort), and S-1 also carries REQ-14 (no highlight or filter)."
+    },
+    {
+      "id": "SS-R3",
+      "score": 4,
+      "reason": "The ACs are Given/When/Then and discriminating. They cover a time zone whose local and UTC dates differ, latest start vs latest closed, each excluded status, and duplicate rows in paging and search. S-5 AC1 only checks what is shown; S-3 AC3 does not say which sort order."
+    },
+    {
+      "id": "SS-R4",
+      "score": 5,
+      "reason": "Asia/Kolkata and 20 per page come from the intent. UTC+05:30 and the UTC instants are derived inline. 21 patients follows from 20 per page. The dates and times are test data, not limits."
+    },
+    {
+      "id": "SS-R5",
+      "score": 5,
+      "reason": "The terms are clear and match the glossary. The body summaries now match the front-matter criteria, including S-3 AC1."
+    }
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "S-3 AC2 only says search returns the same patients. A naive appointment join could repeat a matching patient's row and still return the same set of patients, so the AC would pass. The intent flags this risk.",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Still open from attempt 1 (was F-3). S-5 AC1 only checks what is visible in the list. It would not catch medical history that is sent in the list's data but not displayed.",
       "cites": [
-        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L68", "quote": "then it returns the same patients as before this change, each row with a Last visit value"},
-        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L196", "quote": "A paged query that joins appointments naively could repeat patient rows"}
+        {
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L89",
+          "quote": "then none of the medical history values appear in the list, including in the Last visit column"
+        },
+        {
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L136",
+          "quote": "No medical history appears in the patient list."
+        }
       ],
-      "suggested_fix": "Make the Given include a matching patient with two Completed appointments plus a Cancelled and a No-show. Make the Then say each matching patient appears in exactly one row."
+      "suggested_fix": "If REQ-13 covers list responses, add that the data behind the list also contains no medical history fields."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "consistency",
-      "text": "The body summary of S-3 AC1 says 'several' appointments. The front-matter criterion says exactly two Completed plus one Cancelled and one No-show.",
+      "category": "correctness",
+      "text": "S-3 AC3 does not name the current sort order or give concrete patients. A tester has to work out which order to expect, which makes the AC weaker as a check.",
       "cites": [
-        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L110", "quote": "where the 1st and the 20th each have several Completed, Cancelled and No-show appointments"},
-        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L66", "quote": "the 1st and the 20th patient each have two Completed appointments plus a Cancelled and a No-show appointment"}
+        {
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L73",
+          "quote": "Given patients whose last visits are in a different order from the list's current sort order"
+        }
       ],
-      "suggested_fix": "Change the body summary to match the front-matter counts."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
-      "category": "completeness",
-      "text": "S-5 AC1 only checks what is visible in the list. It would not catch medical history sent in the list's data but not displayed. REQ-13 only says it must not appear in the patient list.",
-      "cites": [
-        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L86", "quote": "then none of the medical history values appear in the list, including in the Last visit column"},
-        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L136", "quote": "No medical history appears in the patient list."}
-      ],
-      "suggested_fix": "If the data-protection rule covers list responses, add that the data behind the list also contains no medical history fields."
+      "suggested_fix": "Give two or three patients whose current sort order is the reverse of their Last visit order, and state the expected row order."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "closed by staff once its start time has passed"}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/glossary.md#scheduled", "quote": "An appointment that is booked and still open."}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]}
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#completed",
+          "quote": "closed by staff once its start time has passed"
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#scheduled",
+          "quote": "An appointment that is booked and still open."
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#medical-history",
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#cancelled",
+          "quote": "An appointment called off before it took place, with a reason"
+        }
+      ]
+    }
   ],
   "questions": [
     {
       "id": "Q-1",
-      "text": "Does 'No medical history appears in the patient list' (REQ-13) also cover the data the list receives from the server, or only what is shown on screen?",
+      "text": "Does REQ-13 ('No medical history appears in the patient list') also cover the data the list receives from the server, or only what is shown on screen?",
       "ask_role": "tech_lead",
       "blocking": false,
-      "finding_ref": "F-3"
+      "finding_ref": "F-1"
     }
   ]
 }

@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M6GRSJH8H42FGV284MDTDAZY
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.2.0
 inputs:
 - path: artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md
@@ -29,6 +29,9 @@ known: [S-1, S-2, S-3, S-4, S-5]
 assumed: []
 unknown: []
 questions: []
+resolves:
+- id: F-1
+  how: "S-3 AC2 gives a matching patient two Completed appointments plus a Cancelled and a No-show, and requires each matching patient in exactly one row."
 stories:
 - id: S-1
   title: Front-desk staff see each patient's last visit on the patient list
@@ -65,7 +68,7 @@ stories:
   - id: AC1
     text: "Given the system holds 21 patients and, in the list's current sort order, the 1st and the 20th patient each have two Completed appointments plus a Cancelled and a No-show appointment, when staff open the first and then the second page of the patient list, then the list shows 20 per page, every patient appears in exactly one row, page one holds the 1st to the 20th patient, and the 21st patient is the only row on page two."
   - id: AC2
-    text: "Given patients whose names match a search term and patients whose names do not, when staff search the patient list with that term, then it returns the same patients as before this change, each row with a Last visit value."
+    text: "Given patients whose names match a search term and patients whose names do not, where one matching patient has two Completed appointments plus a Cancelled and a No-show appointment, when staff search the patient list with that term, then it returns the same patients as before this change, each matching patient appears in exactly one row, and each row has a Last visit value."
   - id: AC3
     text: "Given patients whose last visits are in a different order from the list's current sort order, when staff open the patient list, then the rows appear in the current sort order, not ordered by Last visit."
   - id: AC4
@@ -107,8 +110,8 @@ Traces REQ-7, REQ-8.
 
 ### S-3 Paging, search and sort of the patient list keep working as before
 Traces REQ-9, REQ-10, REQ-11, REQ-15.
-- AC1: Given 21 patients, where the 1st and the 20th each have several Completed, Cancelled and No-show appointments, then each patient appears exactly once, the list shows 20 per page, and the 21st patient is the only row on page two.
-- AC2: Given a search term, then the search returns the same patients as before.
+- AC1: Given 21 patients, where the 1st and the 20th each have two Completed appointments plus a Cancelled and a No-show appointment, then each patient appears exactly once, the list shows 20 per page, and the 21st patient is the only row on page two.
+- AC2: Given a search term and a matching patient with two Completed appointments plus a Cancelled and a No-show, then the search returns the same patients as before and each matching patient appears in exactly one row.
 - AC3: Given last visits in a different order from the current sort, then rows keep the current sort order.
 - AC4: The sort options are unchanged, none sorts by Last visit, and selecting the Last visit header does not reorder rows.
 
@@ -120,6 +123,9 @@ Traces REQ-12.
 ### S-5 No medical history appears in the patient list
 Traces REQ-13.
 - AC1: Given recorded blood group, allergies, chronic conditions, current medications and notes, then none of them appear in the list.
+
+## Resolves
+- F-1: S-3 AC2 gives a matching patient two Completed appointments plus a Cancelled and a No-show, and requires each matching patient in exactly one row.
 
 ## Known
 - S-1: built from known REQ-1 to REQ-6 and REQ-14 (column, latest-start Completed appointment, its start, Asia/Kolkata, same format as Next appointment with time, no highlight or filter).
