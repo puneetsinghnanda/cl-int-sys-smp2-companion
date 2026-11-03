@@ -4,7 +4,7 @@ section: test-strategy
 owner: eng-db6b
 origin: human
 status: reviewed
-verified_at: {sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33}
+verified_at: {sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc}
 ---
 
 # Test strategy {#test-strategy}
@@ -30,7 +30,8 @@ pull request.
 Sources: sample-system:package.json#L17-L19
 
 ## Gaps {#gaps}
-- Web tests cover the dashboard tiles and links, the patient list's Next appointment column, the slot
-  picker and formatting; other pages have no web tests, and no page is tested end to end in a browser.
+- Web tests cover the dashboard tiles and links, the patient list's Next appointment column and match
+  count, the doctor list's Today column, the doctor page's No-shows count, the slot picker and
+  formatting; other pages have no web tests, and no page is tested end to end in a browser.
 - The verifier skips coverage (the project has no coverage script), so no run reports coverage.
-Sources: sample-system:web/src/__tests__/DashboardPage.test.tsx#L1, sample-system:web/src/__tests__/PatientsPage.test.tsx#L1
+Sources: sample-system:web/src/__tests__/DashboardPage.test.tsx#L1, sample-system:web/src/__tests__/PatientsPage.test.tsx#L1, sample-system:web/src/__tests__/DoctorsPage.test.tsx#L1, sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L1

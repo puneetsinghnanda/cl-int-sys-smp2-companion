@@ -444,6 +444,17 @@
     },
     {
       "confidence": "resolved",
+      "id": "ui:/doctors/:id#2",
+      "kind": "ui",
+      "path": "/doctors/:id",
+      "source": {
+        "line": 26,
+        "path": "web/src/__tests__/DoctorDetailPage.test.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "confidence": "resolved",
       "id": "ui:/doctors/:id/edit",
       "kind": "ui",
       "path": "/doctors/:id/edit",
@@ -523,7 +534,7 @@
   "schema": "context-facts.v1",
   "section": "api-inventory",
   "sources": {
-    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
   },
   "unresolved": []
 }

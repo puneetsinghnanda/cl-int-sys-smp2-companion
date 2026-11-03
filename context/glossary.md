@@ -4,7 +4,7 @@ section: glossary
 owner: eng-db6b
 origin: human
 status: reviewed
-verified_at: {sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33}
+verified_at: {sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc}
 ---
 
 # Glossary {#glossary}
@@ -30,6 +30,10 @@ An appointment called off before it took place, with a reason; its slot becomes 
 ## Dashboard {#dashboard}
 The start page: tiles that count patients, doctors and appointments, each linking to the list it
 counts, plus the next upcoming appointments.
+
+## Period {#period}
+A run of whole hospital-local days ending today: Today, Last 7 days or Last 30 days. The dashboard
+tiles and the doctor page's No-shows count use the same rule.
 
 ## Tile {#tile}
 One count on the dashboard, with its label; selecting it opens the list behind the count.

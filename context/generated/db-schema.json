@@ -1438,7 +1438,7 @@
   "schema": "context-facts.v1",
   "section": "db-schema",
   "sources": {
-    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
   },
   "unresolved": []
 }
