@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "step": "impact",
-  "attempt": 1,
-  "artifact_sha256": "6064201c1130596ab93cb022f865a157dee1301f9dcc322adf467cf4f6092cd1",
-  "package_sha256": "a168ec5d7a3854a5408eef3212ea619b67d68c7cf9e8cde7f39f22a1aeddc0a9",
+  "attempt": 3,
+  "artifact_sha256": "d7a4bf86331ed0aaaab21344aecf10a31ef2298ee8f21767fdbe7f83e94f0cc7",
+  "package_sha256": "697a37bd80f0d7bdcae05ea10bc9c654c0bd25fa6e369495d77b6d083ca71b6c",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,78 +12,59 @@
     "version": "0.1.5",
     "rubric_sha256": "c9e4abcf5fa97d1271506e2add23c8096b6f26aaf336a63791f018e3a19fcbb0"
   },
-  "rubric_score": 4.05,
+  "rubric_score": 4.35,
   "rubric_items": [
-    {"id": "IA-R1", "score": 4, "reason": "Lists the api, web and db modules, the three routes and both tables. It misses the window/time-zone helpers and other readers of the changed doctor detail response."},
-    {"id": "IA-R2", "score": 5, "reason": "Every module, route, table, index and symbol id appears in the generated facts and is cited. All 15 claims check out against the facts and context sections."},
-    {"id": "IA-R3", "score": 3, "reason": "Covers jobs (none) and the dashboard and appointment list as related readers. It does not consider other readers of GET /api/doctors/:id, such as the /doctors/:id/edit form (DoctorFormPage.fromDoctor)."},
-    {"id": "IA-R4", "score": 4, "reason": "Statuses are justified and the gaps (filters, PERIODS values) are raised as unknowns U-1 and U-2 with questions. The doctor detail route is marked changed while leaving room for a separate read."},
-    {"id": "IA-R5", "score": 4, "reason": "Readable and short. The 'Impacted modules' section mixes modules, APIs and tables, and items are not ordered by risk."}
+    {"id": "IA-R1", "score": 4, "reason": "Lists the api, web and db modules, the four APIs and the appointment and doctor tables. The dashboard tile, edit form and PATCH round-trip are covered. The exact route parameters and the shared window are left to Q-01 and Q-02."},
+    {"id": "IA-R2", "score": 5, "reason": "Every module, API, table and symbol id was found in the generated module-map, api-inventory or db-schema. Each one is cited with an anchor that resolves."},
+    {"id": "IA-R3", "score": 4, "reason": "Covers the edit form, PATCH, the dashboard regression and jobs (none exist). Says nothing about other web readers of GET /api/doctors/:id, such as BookAppointmentPage. That page exists in the facts, but the facts do not show what it calls."},
+    {"id": "IA-R4", "score": 4, "reason": "Unknowns are marked as such and linked to Q-01 to Q-03 with defaults. One Known line says the window uses HOSPITAL_TZ through the time.ts helpers, but no cited fact links those helpers to HOSPITAL_TZ."},
+    {"id": "IA-R5", "score": 5, "reason": "The summary is clear, items are sorted by risk, and each unknown is paired with its question."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "GET /api/doctors/:id is marked changed, but the analysis does not list its other readers. The facts show a /doctors/:id/edit route and DoctorFormPage.fromDoctor, which probably maps the doctor response. Adding a field could affect that form or the PATCH round-trip.",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The Known section says 'today' uses HOSPITAL_TZ through the existing time helpers. The architecture section supports HOSPITAL_TZ only through config.ts and slots.ts. No cited fact says that dayBounds, localDay or zonedToUtc read HOSPITAL_TZ.",
       "cites": [
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L135", "quote": "http:GET:/api/doctors/:id — changed: carries the count"},
-        {"ref": "context/generated/api-inventory.json#ui:/doctors/:id/edit", "quote": "\"path\": \"/doctors/:id/edit\""},
-        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor", "quote": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor"}
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L181", "quote": "\"today\" uses HOSPITAL_TZ via existing time helpers"},
+        {"ref": "context/architecture.md#time-and-slots", "quote": "Sources: sample-system:api/src/config.ts#L33-L34, sample-system:api/src/lib/slots.ts#L10-L26"}
       ],
-      "suggested_fix": "List DoctorFormPage (/doctors/:id/edit) and any other readers of the doctor detail response as existing readers, and say whether the new field has to stay out of the edit/PATCH path."
+      "suggested_fix": "Say that HOSPITAL_TZ governs 'today' (per the architecture section), and mark the helpers' use of HOSPITAL_TZ as something design must confirm against time.ts."
     },
     {
       "id": "F-2",
       "severity": "minor",
       "category": "completeness",
-      "text": "REQ-2 and REQ-3 need a 30-day window up to end of today in HOSPITAL_TZ. The facts show shared time helpers in api/src/lib/time.ts (dayBounds, localDay, zonedToUtc) and in web/src/lib/format.ts (todayIn), but the analysis does not name them as reused or touched.",
+      "text": "The only other reader of GET /api/doctors/:id the artifact names is the edit form. Other web pages exist (for example BookAppointmentPage), and the artifact does not say whether any of them read the doctor detail response that would carry the new field.",
       "cites": [
-        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "quote": "sym:sample-system:api/src/lib/time.ts:dayBounds"},
-        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "sym:sample-system:web/src/lib/format.ts:todayIn"},
-        {"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L170", "quote": "Other readers: the doctor edit form."},
+        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "quote": "sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"}
       ],
-      "suggested_fix": "Name the time helpers (api lib/time.ts, web lib/format.ts todayIn) as existing dependencies of the window computation and of the link's date filter."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
-      "category": "consistency",
-      "text": "The default for Q-02 is to share the dashboard's window computation, which means refactoring DashboardService. Yet /api/dashboard is listed only as 'existing' and DashboardService is not called out as a code change that needs a regression check.",
-      "cites": [
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L156", "quote": "Default: design reads dashboardService.ts and shares the window computation."},
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L137", "quote": "http:GET:/api/dashboard — existing: source of the Last 30 days rule; its response must not change."}
-      ],
-      "suggested_fix": "State that DashboardService may be refactored to extract the shared window rule, and that the dashboard No-shows tile needs a regression check."
-    },
-    {
-      "id": "F-4",
-      "severity": "minor",
-      "category": "style",
-      "text": "The 'Impacted modules' section mixes modules, APIs and tables in one list and does not order items by risk.",
-      "cites": [
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L131", "quote": "## Impacted modules"},
-        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L138", "quote": "table:appointment — existing: read by doctor_id, status NO_SHOW and starts_at window."}
-      ],
-      "suggested_fix": "Split the list into Modules, APIs and Tables, and order each by risk (the REQ-4 drift and the Q-01 filters first)."
+      "suggested_fix": "Phrase it as 'known readers include the edit form', and have design list every caller of the doctor detail read through web/src/api/client.ts."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id", "quote": "\"path\": \"api/src/routes/doctors.ts\""}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "\"id\": \"http:GET:/api/appointments\""}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/dashboard", "quote": "\"id\": \"http:GET:/api/dashboard\""}]},
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id", "quote": "api/src/routes/doctors.ts"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "http:GET:/api/appointments"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/dashboard", "quote": "http:GET:/api/dashboard"}]},
     {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:PERIODS", "quote": "sym:sample-system:api/src/services/dashboardService.ts:PERIODS"}]},
-    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/doctors/:id", "quote": "\"id\": \"ui:/doctors/:id\""}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage", "quote": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage"}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments", "quote": "\"id\": \"ui:/appointments\""}, {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "quote": "sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage"}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW"}]},
-    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
-    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_doctor_start_idx", "quote": "\"id\": \"index:appointment_doctor_start_idx\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/doctors/:id", "quote": "\"path\": \"/doctors/:id\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage", "quote": "web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments", "quote": "\"path\": \"/appointments\""}, {"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "quote": "web/src/pages/AppointmentsPage.tsx:AppointmentsPage"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "for [starts_at, ends_at) in UTC. Status is SCHEDULED,"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_doctor_start_idx", "quote": "\"table\": \"table:appointment\""}]},
     {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
-    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}, {"ref": "context/architecture.md#components", "quote": "repositories hold the SQL"}]},
-    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "quote": "sym:sample-system:api/src/services/doctorService.ts:DoctorService"}, {"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions"}]},
-    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "quote": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService"}]},
-    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]}
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "appointmentRepo.ts:AppointmentRepo"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "quote": "doctorService.ts:DoctorService"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "quote": "dashboardService.ts:DashboardService"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/doctors/:id/edit", "quote": "\"path\": \"/doctors/:id/edit\""}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor", "quote": "web/src/pages/DoctorFormPage.tsx:fromDoctor"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id", "quote": "http:PATCH:/api/doctors/:id"}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds", "quote": "api/src/lib/time.ts:dayBounds"}, {"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay", "quote": "api/src/lib/time.ts:localDay"}, {"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:zonedToUtc", "quote": "api/src/lib/time.ts:zonedToUtc"}]},
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "web/src/lib/format.ts:todayIn"}]}
   ],
   "questions": []
 }

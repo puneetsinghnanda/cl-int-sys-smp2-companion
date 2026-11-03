@@ -1,0 +1,90 @@
+{
+  "artifact_sha256": "b05955d7672699dc41d3aaf0289755f88dff65e0aad8b09535a88bca58b74e4d",
+  "attempt": 2,
+  "finished_at": "2026-11-03T05:46:53Z",
+  "gates": [
+    {
+      "check_ids": [
+        "GEN-SCHEMA-01"
+      ],
+      "codes": [
+        "E-H1-04"
+      ],
+      "detail": "envelope /resolves/0/how: 'Listed the other readers of GET /api/doctors/:id: the edit route /doctors/:id/edit (DoctorFormPage, fromDoctor) and the PATCH /api/doctors/:id round-trip, both existing. Stated that the count is read-only, must not be mapped into the edit form or accepted by PATCH, and raised Q-03 on where the coun; body /resolves/0/how: 'Listed the other readers of GET /api/doctors/:id: the edit route /doctors/:id/edit (DoctorFormPage, fromDoctor) and the PATCH /api/doctors/:id round-trip, both existing. Stated that the count is read-only, must not be mapped into the edit form or accepted by PATCH, and raised Q-03 on where the coun",
+      "id": "H1",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md",
+      "sha256": "8cacd7572d8146137cd6151565f9b5e880d72194da94af616afa60fd16406ef8",
+      "verification_sha256": "bb86dffe3a502d4ee136ff3eb0251067b1594071631cfa9ea6d00bb5b9ca4733"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "impact-analysis.items-cited",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-03T05:46:50Z",
+  "step": "impact",
+  "tool_log_sha256": "ad7682d98ed4788b20b5af9b550273cab25e4b50ee6fae144cf30b99d69488d7",
+  "tsl_version": "0.1.5",
+  "verifier": null
+}

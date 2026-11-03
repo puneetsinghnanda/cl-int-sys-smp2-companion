@@ -1,11 +1,259 @@
 {
-  "artifact_sha256": "b05955d7672699dc41d3aaf0289755f88dff65e0aad8b09535a88bca58b74e4d",
-  "attempt": 2,
-  "claims_checked": [],
-  "findings": [],
-  "package_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "artifact_sha256": "d7a4bf86331ed0aaaab21344aecf10a31ef2298ee8f21767fdbe7f83e94f0cc7",
+  "attempt": 3,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/doctors.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "http:GET:/api/appointments",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "http:GET:/api/dashboard",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/dashboard"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/dashboardService.ts:PERIODS",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:PERIODS"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/doctors/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/doctors/:id"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/appointments\"",
+          "ref": "context/generated/api-inventory.json#ui:/appointments"
+        },
+        {
+          "quote": "web/src/pages/AppointmentsPage.tsx:AppointmentsPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "for [starts_at, ends_at) in UTC. Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"table\": \"table:appointment\"",
+          "ref": "context/generated/db-schema.json#index:appointment_doctor_start_idx"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointmentRepo.ts:AppointmentRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctorService.ts:DoctorService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dashboardService.ts:DashboardService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/doctors/:id/edit\"",
+          "ref": "context/generated/api-inventory.json#ui:/doctors/:id/edit"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/pages/DoctorFormPage.tsx:fromDoctor",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "http:PATCH:/api/doctors/:id",
+          "ref": "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/lib/time.ts:dayBounds",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:dayBounds"
+        },
+        {
+          "quote": "api/src/lib/time.ts:localDay",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay"
+        },
+        {
+          "quote": "api/src/lib/time.ts:zonedToUtc",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:zonedToUtc"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/lib/format.ts:todayIn",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "\"today\" uses HOSPITAL_TZ via existing time helpers",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L181"
+        },
+        {
+          "quote": "Sources: sample-system:api/src/config.ts#L33-L34, sample-system:api/src/lib/slots.ts#L10-L26",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Say that HOSPITAL_TZ governs 'today' (per the architecture section), and mark the helpers' use of HOSPITAL_TZ as something design must confirm against time.ts.",
+      "text": "The Known section says 'today' uses HOSPITAL_TZ through the existing time helpers. The architecture section supports HOSPITAL_TZ only through config.ts and slots.ts. No cited fact says that dayBounds, localDay or zonedToUtc read HOSPITAL_TZ."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Other readers: the doctor edit form.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L170"
+        },
+        {
+          "quote": "sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Phrase it as 'known readers include the edit form', and have design list every caller of the doctor detail read through web/src/api/client.ts.",
+      "text": "The only other reader of GET /api/doctors/:id the artifact names is the edit form. Other web pages exist (for example BookAppointmentPage), and the artifact does not say whether any of them read the doctor detail response that would carry the new field."
+    }
+  ],
+  "package_sha256": "697a37bd80f0d7bdcae05ea10bc9c654c0bd25fa6e369495d77b6d083ca71b6c",
   "questions": [],
-  "recorded_at": "2026-11-03T05:47:38Z",
+  "recorded_at": "2026-11-03T07:06:01Z",
   "recorded_by": "tsl@0.1.5",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -13,11 +261,36 @@
     "skill": "review",
     "version": "0.1.5"
   },
-  "rubric_items": [],
-  "rubric_score": null,
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Lists the api, web and db modules, the four APIs and the appointment and doctor tables. The dashboard tile, edit form and PATCH round-trip are covered. The exact route parameters and the shared window are left to Q-01 and Q-02.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API, table and symbol id was found in the generated module-map, api-inventory or db-schema. Each one is cited with an anchor that resolves.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers the edit form, PATCH, the dashboard regression and jobs (none exist). Says nothing about other web readers of GET /api/doctors/:id, such as BookAppointmentPage. That page exists in the facts, but the facts do not show what it calls.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Unknowns are marked as such and linked to Q-01 to Q-03 with defaults. One Known line says the window uses HOSPITAL_TZ through the time.ts helpers, but no cited fact links those helpers to HOSPITAL_TZ.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "The summary is clear, items are sorted by risk, and each unknown is paired with its question.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.35,
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "review.v1",
-  "status": "could_not_review",
-  "status_reason": "not reviewed: gate H1 failed",
+  "status": "ok",
   "step": "impact"
 }

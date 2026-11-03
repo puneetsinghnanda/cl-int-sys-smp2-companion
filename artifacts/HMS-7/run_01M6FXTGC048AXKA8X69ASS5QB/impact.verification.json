@@ -1,23 +1,29 @@
 {
+  "accepted_default": true,
   "artifact_path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md",
-  "artifact_sha256": "b05955d7672699dc41d3aaf0289755f88dff65e0aad8b09535a88bca58b74e4d",
-  "attempt": 2,
-  "band": null,
-  "caps": [
-    "reviewer-missing"
-  ],
-  "checks_sha256": "1ec5a75eeee797d01469b19692e418024948dc1acee4127a3568bc882045f165",
+  "artifact_sha256": "d7a4bf86331ed0aaaab21344aecf10a31ef2298ee8f21767fdbe7f83e94f0cc7",
+  "attempt": 3,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "9ea7c5ed31cf7090b26856a0ffb21fb29f10f8832cbfa39e435f22db95ced240",
   "claims": {
     "total": 20,
     "verified": 17
   },
-  "decided_at": "2026-11-03T05:47:43Z",
+  "decided_at": "2026-11-03T07:06:05Z",
   "decided_by": "tsl@0.1.5",
   "findings_dropped": [],
-  "findings_kept": [],
-  "gate_failures": [
-    "H1"
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    }
   ],
+  "gate_failures": [],
   "inputs": [
     {
       "path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md",
@@ -26,7 +32,7 @@
     }
   ],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "ESCALATE",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -34,15 +40,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": "5edfd2dc61803e1ab086339f20b129c6af25b08c7ff8cab5c020d3990d260b70",
+  "prev_attempt_sha256": "e8cf56ba4cfdac22d0f0e637681d1222d7cc5953190c72b834bdd3ac83485c57",
   "product_changes": null,
-  "review_sha256": "3d6be1cf8b9edbb3019bcac047c7d627ca663e1d4d01d57c1e664bb29a449ae8",
+  "review_sha256": "87c9d004564d96eaa8c3dded45ac9824b83e115e451d70553f6033aca208495a",
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.85,
+    "S1": 0.8636,
     "S2": 1.0,
-    "S3": null,
+    "S3": 4.35,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -51,7 +57,7 @@
       "sensitive": false
     }
   },
-  "signature": "lZHzT44GEoC6LpTsbkxeLWpxgsmWuKaamWUOBmGUwDM0r3LxXNo1fTx560LWug58ZjzHzDX0DDOjhWqACYmMAQ",
+  "signature": "j7PcIyAhd5HBSHQ5_pqDs4O9-GMdgplX_nPVicYDpcmloY2Wdj54qG-2RDzs3mnmbx07GMfBXMe8sb3bgwfwAA",
   "skill": "impact-analysis@1.1.1",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

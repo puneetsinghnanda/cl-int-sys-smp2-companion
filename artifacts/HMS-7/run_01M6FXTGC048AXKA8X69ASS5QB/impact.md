@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M6FXTGC048AXKA8X69ASS5QB
 step: impact
-attempt: 2
+attempt: 3
 skill: impact-analysis@1.1.1
 inputs:
   - path: artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md
@@ -21,7 +21,7 @@ pack_sha:
   sample-system: bd98ff08b83f8762c5e5c073ba5fadef88169b33
 resolves:
   - id: F-1
-    how: "Listed the other readers of GET /api/doctors/:id: the edit route /doctors/:id/edit (DoctorFormPage, fromDoctor) and the PATCH /api/doctors/:id round-trip, both existing. Stated that the count is read-only, must not be mapped into the edit form or accepted by PATCH, and raised Q-03 on where the count is served."
+    how: "Listed the edit form (/doctors/:id/edit, fromDoctor) and PATCH /api/doctors/:id as existing readers; the count stays read-only and out of both; Q-03 asks where it is served."
 claims:
   - id: C1
     text: "The doctor detail API route is `/api/doctors/:id` (GET), served by `api/src/routes/doctors.ts`."
