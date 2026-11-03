@@ -1,0 +1,206 @@
+{
+  "artifact_sha256": "ff3fd200a6a6a54ba00b61a92dd2b2f97d88b5b6eac4557d243b8263e53e2d6a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "returns `lastVisitAt` in each item, as an ISO 8601 UTC string or null (C7)",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impl.md#L78"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "both rows look alike apart from the Last visit value, with no highlight",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L49"
+        },
+        {
+          "quote": "REQ-14, REQ-15: the Last visit header has no button, no link and no aria-sort",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ut.md#L76"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a web test with one old and one recent lastVisitAt. Assert both rows and cells have the same class/attributes and no extra filter control.",
+      "text": "No test covers REQ-14/S-1 AC5 (rows with old and recent visits look alike, with no highlight). The only REQ-14 test checks the header for sort controls."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "select the Last visit column header, then the options are the same as before this change",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L75"
+        },
+        {
+          "quote": "expect(within(header).queryByRole('button')).toBeNull();",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L126"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Click the Last visit header and assert that the row names and the fetch call count or URL are unchanged.",
+      "text": "S-3 AC4 asks that selecting the Last visit header leaves the row order unchanged. The test only checks that the header has no button, link or aria-sort. It never clicks the header or compares the row order."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a patient with a recorded blood group, allergies, chronic conditions, current medications and notes",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L89"
+        },
+        {
+          "quote": "allergies: ['Penicillin'], medicalNotes: 'Invented note',",
+          "ref": "sample-system:api/test/helpers.ts#L46"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Give the REQ-13 patient a blood group, chronic conditions and medications, and assert that none of those values appear in the list JSON.",
+      "text": "S-5 AC1 lists blood group, chronic conditions and current medications, but the REQ-13 fixture records only allergies and notes. The regex therefore cannot catch leaks of the other fields."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "and their names start with the REQ id (C3)",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ut.md#L56"
+        },
+        {
+          "quote": "HMS-4 REQ-2, REQ-3, REQ-4: is the start of the Completed appointment",
+          "ref": "sample-system:api/test/patients-last-visit.test.ts#L31"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Reword the summary to say the names start with 'HMS-4 REQ-n', or rename the tests to match the convention.",
+      "text": "The artifact says the test names start with the REQ id (C3), but they start with 'HMS-4 ' and then the REQ id."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "REQ-1, REQ-6, REQ-8: web tests on the header, the shared format",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ut.md#L85"
+        }
+      ],
+      "claim_ref": "C6",
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Cite C2 (web test layer), or drop the C6 cite from that Known line.",
+      "text": "C6 is about the API returning lastVisitAt per item. Known cites it as evidence for the web header, format and '-' tests, which it does not support."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "expect(shown).toMatch(/10/);",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L85"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Remove it, or replace it with an exact expected string such as '10 Mar 2026, 01:00'.",
+      "text": "The REQ-5/REQ-6 same-format test keeps a weak assertion: any string that contains '10' passes."
+    }
+  ],
+  "package_sha256": "b36c532a8e3d43113eda88a700044b1a008b8417d653568ebb332902aa2d320c",
+  "questions": [],
+  "recorded_at": "2026-11-03T15:36:06Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover the repo join, the API field, paging, search, order and the web column (01:00, 23:45, invalid-zone fallback). Untested: S-1 AC5 (no highlight), S-3 AC4 (clicking the header) and S-4 AC2.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Most assertions check observable results: exact ISO starts, row ids per page, Set size 21, exact date/time strings. The REQ-6 test still has a weak toMatch(/10/), and the REQ-13 regex checks only the fixture's allergy and note.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covered: the error path (invalid status gives 400 with a field error), null/no-visit rows, Cancelled/No-show/Scheduled exclusion, the time-zone boundary and the invalid-zone fallback. Missing: the header-click edge and a highlight check.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest+Supertest with pg harness skipIf and fixed clock for API; Vitest+jsdom+Testing Library for web; files in the existing test locations. Only a small naming deviation.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No counts or coverage are claimed. The artifact defers them to the verifier, and checks.json shows test passing and coverage skipped (exit 78).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
