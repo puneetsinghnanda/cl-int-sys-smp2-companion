@@ -1,0 +1,86 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md",
+  "artifact_sha256": "e8a2271da160aba1f1228f2450b6edeaa81c1d50cfb4c4c4cec6accfdf7d0f17",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "e9cdf36322d59b7474354eb17aa1050a9c7587ea3ef4a4df6ba92c83899806db",
+  "claims": {
+    "total": 12,
+    "unverified": [
+      {
+        "id": "C12",
+        "reason": "reviewer: unsupported"
+      }
+    ],
+    "verified": 11
+  },
+  "decided_at": "2026-11-03T15:02:14Z",
+  "decided_by": "tsl@0.1.5",
+  "findings_dropped": [
+    {
+      "id": "F-5",
+      "reason": "bad citation format C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-6",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md",
+      "sha256": "f9caf706ba92848aaa8be4ce155d2505c138a5e39292e0c5527eedec728526bd",
+      "verification_sha256": "993d0c1fea0d91933ce43eb57b33f0af79ed7d85ede8087960977301a26b8709"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "0036b9ab028c7349733e08f7722cbc05aadccd6ed074b44d3f42b0738278a76d",
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8889,
+    "S2": 1.0,
+    "S3": 4.3,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "27KpLfTdhwKh4xsubFS8udlS9dYUZJ-W5T7JbTyBS0XkgLAP-sj0m7K-07Gz2hVvMsX2k_JxGpoBfXGvTmzOCA",
+  "skill": "threat-model@1.1.0",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

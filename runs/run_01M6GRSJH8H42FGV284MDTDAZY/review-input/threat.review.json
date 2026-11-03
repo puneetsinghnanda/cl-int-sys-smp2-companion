@@ -1,0 +1,107 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "e8a2271da160aba1f1228f2450b6edeaa81c1d50cfb4c4c4cec6accfdf7d0f17",
+  "package_sha256": "5680a151bd730deaa8e640519753b5c08d36c0344a150d9e8f1599ac9db24e6a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All seven design components (CO-1 to CO-7) appear by name and each has at least one threat. The PII-bearing repo, service and route each have an information-disclosure threat."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats fit their component: SQL in the subquery, a wider SELECT leaking medical history, reuse of the detail type. T-9 and T-10 are display-correctness defects given STRIDE labels."},
+    {"id": "TM-R3", "score": 4, "reason": "Mitigations are either cited existing controls (paging, index, medical-history rule) or labelled new controls for implement. T-5 calls identify/requirePermission an existing control, but in the MVP they grant everything."},
+    {"id": "TM-R4", "score": 4, "reason": "The MVP sign-in gap is stated as U-1 and asked as Q-01 to the tech lead with options and a default. Accepting PII exposure is marked non-blocking with the default 'accept'."},
+    {"id": "TM-R5", "score": 4, "reason": "Body and frontmatter match and read clearly. Threats are ordered by component, not by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "traceability",
+      "text": "C12 cites a design-step IDE answer (A-11), but threat.md has no answers: list, so the cross-step answer cite will fail H4. The answer also only says 'lastVisitAt, ISO UTC'. It does not support the 'or null' part of the claim.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L54", "quote": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11"},
+        {"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11", "quote": "- answer: lastVisitAt, ISO UTC (proposed default)"}
+      ],
+      "claim_ref": "C12",
+      "suggested_fix": "Drop C12 or re-base it on a generated fact or context section. Keep T-10's string-or-null control as a new control for implement, without the cross-step answer cite."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C6, C7 and C8 cite context/conventions.md and C10 cites context/generated/db-schema.json. Neither file is in the artifact's inputs list.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L36", "quote": "cites: [\"context/conventions.md#lists\"]"},
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L48", "quote": "context/generated/db-schema.json#index:appointment_patient_start_idx"}
+      ],
+      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json, with their sha256, to inputs."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-5 lists identify/requirePermission as an 'Existing control' and puts T-5 under Known. In the MVP every permission is granted, so these functions do not stop spoofing. The real position is risk accepted pending Q-01.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L94", "quote": "Existing control: requests pass through identify and the route calls requirePermission"},
+        {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+      ],
+      "suggested_fix": "Reword T-5's mitigation as 'none in MVP; risk accepted pending Q-01 and sign-in'. Do not present identify/requirePermission as a protecting control."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "T-9 (wrong time zone) is labelled information_disclosure and T-10 (null type) is labelled tampering. Both are display-correctness defects with no attacker, so the STRIDE labels are forced.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L113", "quote": "Formatting in a zone other than the hospital zone would show a wrong day or time"},
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L118", "quote": "A type that states lastVisitAt as always present would let a null reach dateTime"}
+      ],
+      "suggested_fix": "Recast T-9 and T-10 as integrity/tampering of displayed data with a clear actor, or drop them as non-security defects already covered by stories."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are listed by component, not by risk. The accepted MVP spoofing exposure (T-5) and the medical-history leak (T-2) do not lead the list.",
+      "cites": [
+        {"ref": "C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L46", "quote": "Clear and ordered by risk"},
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L143", "quote": "- T-1, PatientRepo list query, tampering"}
+      ],
+      "suggested_fix": "Order the Threats section by risk, highest first."
+    },
+    {
+      "id": "F-6",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The Known entries T-8 and T-9 have no claim behind them. The UTC-storage fact and the 'time-zone stories' are stated without any cite, although context/architecture.md#time-and-slots supports the UTC fact.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L161", "quote": "- T-9: the helper is reused unchanged and instants are UTC."},
+        {"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}
+      ],
+      "suggested_fix": "Add a claim with `UTC` citing context/architecture.md#time-and-slots and reference it from T-9's Known line."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"name\": \"appointment_patient_start_idx\""}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C12", "verdict": "unsupported", "cites": [{"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11", "quote": "- answer: lastVisitAt, ISO UTC (proposed default)"}]}
+  ],
+  "questions": []
+}
