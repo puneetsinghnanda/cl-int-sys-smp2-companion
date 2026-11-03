@@ -112,3 +112,23 @@ entries as the user's own answers.
 - question: C3: I assumed the Next appointment column is formatted with the web helper `dateTime` in web/src/lib/format.ts, so Last visit reuses the same helper. Is that right?
 - options: Yes, confirm | Formatted inline
 - answer: Yes, confirm
+
+## A-12
+- step: impact
+- attempt: 2
+- asked_at: 2026-11-03T10:40:54Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_01PRTpB65s54EmiKkrDr7Vaz
+- question: Q-05: The reviewer found a conflict. C2 (the API works out a local date) and C3 (reuse `dateTime`, which takes an instant and also prints hour:minute) can't both hold. How should Last visit go from the API to the page?
+- options: Instant + date-only helper (proposed default) | API local day + date helper | Instant + dateTime as-is
+- answer: Instant + date-only helper (proposed default)
+
+## A-13
+- step: impact
+- attempt: 2
+- asked_at: 2026-11-03T10:40:54Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_01PRTpB65s54EmiKkrDr7Vaz
+- question: C14: I assumed `PatientService` (api/src/services/patientService.ts) only passes the new lastVisit field through from PatientRepo to the route, with no new rule. Is that right?
+- options: Yes, confirm | Service computes it
+- answer: Yes, confirm
