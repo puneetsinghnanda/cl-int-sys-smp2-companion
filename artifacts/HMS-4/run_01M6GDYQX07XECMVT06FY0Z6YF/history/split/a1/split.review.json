@@ -1,0 +1,124 @@
+{
+  "artifact_sha256": "b16a081e915b0f0df9eb96bfae8b254d35f5363c57313ae57e011fb0d3bd4213",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place, with a reason",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Given the system holds 21 patients, when staff open the first page of the patient list, then it shows 20 per page",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/split.md#L64"
+        },
+        {
+          "quote": "slowing down or breaking the existing paging and sort query",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md#L148"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Change the Given so that at least one patient has two or more Completed appointments. Then require each patient to appear exactly once and the 21st patient to appear on page two.",
+      "text": "S-3 AC1 never gives one patient several appointments. The likeliest wrong implementation joins appointments into the paged query, which repeats a patient's row and shifts paging, and AC1 would still pass."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a patient with a recorded blood group, allergies and current medications and a Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/split.md#L84"
+        },
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add chronic conditions and notes to the Given in S-5 AC1.",
+      "text": "S-5 AC1 sets up only blood group, allergies and current medications. Medical history also covers chronic conditions and notes, and the AC does not check that those stay out of the list."
+    }
+  ],
+  "package_sha256": "e5b9d871a54c39b819df8c1d2e678bb8bf61811eeec898cf3d6b8f48813f4fda",
+  "questions": [],
+  "recorded_at": "2026-11-03T10:15:17Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "e5f4c983043fc5d376d5db466d0dfbb0864b624f90205634d47f2a10b7bd1517",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "Stories trace all twelve known REQs (REQ-1 to REQ-12). Nothing is assumed or unknown.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are small and each has one clear outcome. S-1 combines the column, the time-zone rule and the format, but they all describe one displayed value.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "All ACs use Given/When/Then. The time-zone AC2 crosses midnight between local time and UTC. The paging AC does not catch a join that repeats a patient's row once per appointment, and S-5 leaves out two medical-history fields.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Every value comes from the intent or is worked out inline: 20 per page leads to 21 patients, and the UTC+05:30 offset is shown with the converted times.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms are clear and match the glossary: Completed, Scheduled, No-show, Cancelled, Last visit, Next appointment.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

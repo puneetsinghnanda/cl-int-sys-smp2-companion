@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M6GDYQX07XECMVT06FY0Z6YF
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.1.0
 inputs:
   - path: artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md
@@ -29,6 +29,9 @@ known: [S-1, S-2, S-3, S-4, S-5]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - id: F-1
+    how: "S-3 AC1 gives two patients several appointments each and requires exactly one row per patient, with the 21st patient alone on page two."
 stories:
   - id: S-1
     title: Front-desk staff see each patient's last visit date on the patient list
@@ -61,7 +64,7 @@ stories:
     trace: [REQ-7, REQ-8, REQ-9, REQ-10]
     acceptance_criteria:
       - id: AC1
-        text: "Given the system holds 21 patients, when staff open the first page of the patient list, then it shows 20 per page and the 21st patient appears on the second page, each row with a Last visit value."
+        text: "Given the system holds 21 patients and, in the list's current sort order, the 1st and the 20th patient each have two Completed appointments plus a Cancelled and a No-show appointment, when staff open the first and then the second page of the patient list, then the list shows 20 per page, every patient appears in exactly one row, page one holds the 1st to the 20th patient, and the 21st patient is the only row on page two."
       - id: AC2
         text: "Given patients whose names match a search term and patients whose names do not, when staff search the patient list with that term, then it returns the same patients as before this change, each row with a Last visit value."
       - id: AC3
@@ -81,7 +84,7 @@ stories:
     trace: [REQ-12]
     acceptance_criteria:
       - id: AC1
-        text: "Given a patient with a recorded blood group, allergies and current medications and a Completed appointment, when staff open the patient list, then none of the medical history values appear in the list, including in the Last visit column."
+        text: "Given a patient with a recorded blood group, allergies, chronic conditions, current medications and notes and a Completed appointment, when staff open the patient list, then none of the medical history values appear in the list, including in the Last visit column."
 ---
 # Stories: HMS-4
 
@@ -104,7 +107,7 @@ Traces REQ-5, REQ-6.
 
 ### S-3 Paging, search and sort of the patient list keep working as before
 Traces REQ-7, REQ-8, REQ-9, REQ-10.
-- AC1: Given 21 patients, then the first page shows 20 per page and the 21st patient is on page two.
+- AC1: Given 21 patients, where the 1st and the 20th each have several Completed, Cancelled and No-show appointments, then each patient appears exactly once, the list shows 20 per page, and the 21st patient is the only row on page two.
 - AC2: Given a search term, then the search returns the same patients as before.
 - AC3: Given last visit dates in a different order from the current sort, then rows keep the current sort order.
 - AC4: The sort options are unchanged and none sorts by Last visit.
@@ -116,7 +119,10 @@ Traces REQ-11.
 
 ### S-5 No medical history appears in the patient list
 Traces REQ-12.
-- AC1: Given recorded blood group, allergies and medications, then none of them appear in the list.
+- AC1: Given recorded blood group, allergies, chronic conditions, current medications and notes, then none of them appear in the list.
+
+## Resolves
+- F-1: S-3 AC1 gives two patients several appointments each and requires exactly one row per patient, with the 21st patient alone on page two.
 
 ## Known
 - S-1: built from known REQ-1 to REQ-4 (column, start date of the latest Completed appointment, Asia/Kolkata, same format as Next appointment).
