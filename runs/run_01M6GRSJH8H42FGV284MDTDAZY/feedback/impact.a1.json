@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        },
+        {
+          "quote": "api/src/services/patientService.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "The patients route reaches the database through `PatientRepo`",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L57"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The architecture puts a service layer between routes and repositories, and PatientService is in the facts. The artifact skips it: C12 says the route reaches the database through PatientRepo, and PatientService is never assessed for passing the new field through or mapping it."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "feedback.v1",
+  "step": "impact"
+}

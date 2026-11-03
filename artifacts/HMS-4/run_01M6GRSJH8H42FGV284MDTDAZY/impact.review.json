@@ -1,0 +1,274 @@
+{
+  "artifact_sha256": "613442981870bf4f47ae373d2f482d853e060ce9fe4328d4ea6d10db3843dbfc",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/App.tsx\"",
+          "ref": "context/generated/api-inventory.json#ui:/patients"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        },
+        {
+          "quote": "answer: Add to GET /api/patients (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-05"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, confirm",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-08"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"dateTime\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        },
+        {
+          "quote": "answer: Same as Next appt, with time",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"appointment_patient_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/repositories/patientRepo.ts\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Proceed, re-check in implement (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-06"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Build fresh from main (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-07"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:appointment.starts_at\"",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        },
+        {
+          "quote": "api/src/services/patientService.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "The patients route reaches the database through `PatientRepo`",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L57"
+        }
+      ],
+      "claim_ref": "C12",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add PatientService to the api impact with a status (changed or pass-through) and cite its fact id. Reword C12 to describe the route -&gt; service -&gt; repo path.",
+      "text": "The architecture puts a service layer between routes and repositories, and PatientService is in the facts. The artifact skips it: C12 says the route reaches the database through PatientRepo, and PatientService is never assessed for passing the new field through or mapping it."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "web/src/__tests__/PatientsPage.test.tsx",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "List PatientsPage.test.tsx under the web module as a regression reader for REQ-12.",
+      "text": "The existing web test PatientsPage.test.tsx (nextCell) reads the PatientsPage table, and REQ-12 says Next appointment must stay unchanged. Adding a column can shift cell positions, but the artifact does not list this test as an affected reader."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        },
+        {
+          "quote": "The web reaches the API through web/src/api/client.ts (C10).",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L141"
+        }
+      ],
+      "claim_ref": "C10",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State whether the client.ts `api` symbol (or its response type) is changed or unchanged for the new field, and cite its fact id.",
+      "text": "All web traffic goes through web/src/api/client.ts, so the new list field passes through it. The artifact mentions client.ts only as the transport (C10) and does not say whether the client's patient-list typing changes."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "http:GET:/api/patients: **changed**. Additive field per item",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L128"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Split the section into Modules, APIs and Tables, or retitle it 'Impacted elements', and order the entries by risk.",
+      "text": "The 'Impacted modules' section also lists the APIs and tables, and its entries are not ordered by risk. The paging, medical-history and index risks appear only in the summary."
+    }
+  ],
+  "package_sha256": "38444a301114f8a4990f65fabff286687850a7b77e48968b56466face17d033a",
+  "questions": [],
+  "recorded_at": "2026-11-03T14:03:17Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "The API, web and db modules, GET /api/patients and both tables are listed. The PatientService layer between the route and PatientRepo is missing, and so is the existing PatientsPage test.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API, table, index and symbol id appears in the generated facts and is cited. The context-section claims match their sections.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Web callers (A-08), background jobs (C11), the writer of the COMPLETED status and the medical-history readers are covered. The service-layer reader of the repo result and the existing Next appointment test are not.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "The missing call edges were raised as a question (A-08) and every answer is cited. C12's path from route to repo is stated as fact even though the architecture shows a service layer and the facts have no edges.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Readable, and the risks are in the summary. The 'Impacted modules' list mixes in APIs and tables and is not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
