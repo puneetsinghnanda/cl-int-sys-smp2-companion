@@ -1,0 +1,144 @@
+{
+  "artifact_sha256": "fdc6e81174e14868e6dfadb9786d244f5e1404d31bbba36f6e81d09050e42502",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE a.patient_id = pg.id AND a.status = 'COMPLETED'",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L139"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;td&gt;{p.lastVisitAt ? startsAt(p.lastVisitAt, timeZone) : '-'}&lt;/td&gt;",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L87"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "accepted for MVP in threat Q-01",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/secrev.md#L55"
+        },
+        {
+          "quote": "Risk accepted pending Q-01 and the future sign-in",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L85"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword to say the exposure is accepted for the MVP pending threat Q-01 (default: accept), not that it was already accepted.",
+      "text": "SF-1 and the Summary say the threat model already accepted the MVP exposure. In threat.md, Q-01 is still an open, non-blocking question with default 'accept', and ide-answers.md has no answer to it, so the risk is accepted only pending Q-01."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "requirePermission('patients:read')",
+          "ref": "sample-system:api/src/routes/patients.ts#L12"
+        },
+        {
+          "quote": "Sign-in replaces these\ntwo functions only.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State the fix as: when sign-in replaces identify and requirePermission, make sure 'patients:read' is granted only to roles allowed to see visit history. Cite the route line as well.",
+      "text": "The SF-1 fix says to gate the list route with a real permission, but GET /api/patients already declares requirePermission('patients:read'). The gap is that identify and requirePermission grant everything in the MVP, and sign-in replaces them."
+    }
+  ],
+  "package_sha256": "332008cf8c6886d6aa40ce910bb664812fe570e0dc253fce104e7edada55654d",
+  "questions": [],
+  "recorded_at": "2026-11-03T15:43:31Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The diff adds one lateral join on the literal 'COMPLETED' with no request input (patientRepo.ts L139) and one JSX text cell (PatientsPage.tsx L87). There is no new route or input. The one real exposure (MVP auth) is reported.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 cites the exact lastVisitAt mapping line (L153), and C5 and C6 land on the exact lines. The authorisation gap itself lives in the route and identity code, which SF-1 does not cite.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Minor fits SF-1: the threat step already models this MVP exposure, the route keeps requirePermission, and no medical history is exposed. Treating the pre-existing SAST hits outside the diff as a question is reasonable.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "There is a fix direction, but it says to gate the list route with a real permission. The route already declares requirePermission('patients:read'); per architecture#identity, the real fix is that sign-in replaces identify and requirePermission.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives. All four SAST hits (ci.yml L27 and L28, codes.ts L13, errorHandler.ts L20) are in files outside impl.md's file list, so it is right not to raise them as findings. The secrets scan really has no results.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
