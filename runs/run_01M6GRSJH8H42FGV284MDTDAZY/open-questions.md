@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M6GRSJH8H42FGV284MDTDAZY
 ticket: HMS-4
 workflow: brownfield-change@1.4.0
-step: impact@1.3.0
+step: design@1.7.0
 created_at: '2026-11-03T13:46:15Z'
 status: open
 ---
@@ -40,6 +40,13 @@ decision:
   A. In web/src/api/client.ts
   B. In PatientsPage.tsx
 **Proposed default:** In web/src/api/client.ts; implement confirms against current main
+answer:
+answered_by:
+decision:
+
+## Q-02 · non-blocking · ask: tech lead · round 3
+**Question:** Impact's Q-04 and Q-05 were addressed to the tech lead, and design now carries them as assumptions (PatientService passes the field through; the list item type is in client.ts). Do you accept implement confirming both against current main?
+**Proposed default:** none
 answer:
 answered_by:
 decision:

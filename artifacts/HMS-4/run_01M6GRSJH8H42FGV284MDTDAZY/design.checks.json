@@ -1,0 +1,95 @@
+{
+  "artifact_sha256": "f9caf706ba92848aaa8be4ce155d2505c138a5e39292e0c5527eedec728526bd",
+  "attempt": 1,
+  "finished_at": "2026-11-03T14:51:21Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md",
+      "sha256": "7ff5132a54c71433b4ab24b8444992f62cc2aacf0ca55668cb58a8b85768dbea",
+      "verification_sha256": "f88fa67adc37d5521d374784e790390b24756b89a4a69fdbd7c17ce1c16c2601"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md",
+      "sha256": "1097c5a30f050a771deca3a06a8eb429ba26a1b31dd0aada1164d17b95a31518",
+      "verification_sha256": "a4987912a1f08c9b12febc8a5fddb5d7be85e8f3982bc7a7b156e71315268b3c"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md",
+      "sha256": "46b4592f9dc5abdb3a91db9291a7078ecdbd2594a7c01a3cb7a5228916e0da85",
+      "verification_sha256": "81105ef48af84d61b99cff21794cf10a5698d07f493a1654537db79784fa5313"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "design.claims-cited",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-03T14:51:20Z",
+  "step": "design",
+  "tool_log_sha256": "e323acc4126d7787cdef2efddf1331c11b21fc87a9a5e9c0fe46fc9cdce68219",
+  "tsl_version": "0.1.5",
+  "verifier": null
+}

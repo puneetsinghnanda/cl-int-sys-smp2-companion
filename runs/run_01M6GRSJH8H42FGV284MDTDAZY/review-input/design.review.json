@@ -1,0 +1,68 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "f9caf706ba92848aaa8be4ce155d2505c138a5e39292e0c5527eedec728526bd",
+  "package_sha256": "1a906a2d76952104f740a5489bd14654faecbc8ab3b5b0483fb15e9e4a9a8a83",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Built only on modules and symbols that already exist (PatientRepo, PatientService, patientsRouter, PatientsPage, dateTime, the existing index). It follows the route/service/repository layering and needs no migration or new infrastructure."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 to S-5 are each mapped to components, and so is every criterion: latest start, COMPLETED only, '-' for null, one row per patient for paging and search, no sort, Next appointment untouched, no medical history."},
+    {"id": "DS-R3", "score": 4, "reason": "EP-1 items[].lastVisitAt gives name, type, nullability, format and an example that matches S-1 AC2. But CO-4 writes the time zone argument as a placeholder instead of naming it."},
+    {"id": "DS-R4", "score": 4, "reason": "CO-2 and CO-6 are marked Assumed with 'implement must confirm'. But the null meaning in C13 and EP-1 is credited only to A-11, and that answer does not mention null."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-offs explain why a per-patient subquery beats JOIN plus GROUP BY (no repeated rows when paging), why the API returns the instant and not a formatted string, and why the field is not a sort key."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear, consistent CO/EP ids and a story coverage map. One placeholder in CO-4 reduces precision."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "CO-4 writes the dateTime time zone argument as a placeholder, not as the actual setting (HOSPITAL_TZ, default Asia/Kolkata). S-1 AC2 and AC3 depend on that zone.",
+      "cites": [
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md#components", "quote": "dateTime(lastVisitAt, &lt;the time zone Next appointment uses&gt;)"},
+        {"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}
+      ],
+      "suggested_fix": "Name the zone source (HOSPITAL_TZ / Asia/Kolkata), or say it is the same argument the Next appointment cell passes, and leave out the angle-bracket placeholder."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C13 and EP-1 say lastVisitAt is null when there is no COMPLETED appointment and credit that to A-11 alone. A-11 only fixes the name and ISO UTC format. The null case comes from REQ-8 / S-2 AC4-AC5.",
+      "cites": [
+        {"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11", "quote": "answer: lastVisitAt, ISO UTC (proposed default)"},
+        {"ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md#components", "quote": "null when none; example `2026-03-09T19:30:00.000Z`"}
+      ],
+      "claim_ref": "C13",
+      "suggested_fix": "Trace the null case to REQ-8 / S-2 AC4 and AC5 next to A-11."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService"}, {"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-09", "quote": "- answer: Not sure"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients", "quote": "\"path\": \"api/src/routes/patients.ts\""}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-02", "quote": "answer: Same as Next appt, with time"}, {"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "sym:sample-system:web/src/lib/format.ts:dateTime"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage", "quote": "sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api", "quote": "sym:sample-system:web/src/api/client.ts:api"}, {"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-10", "quote": "- answer: Not sure"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "\"name\": \"appointment_patient_start_idx\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.starts_at", "quote": "\"id\": \"column:appointment.starts_at\""}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "repositories hold the SQL"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11", "quote": "answer: lastVisitAt, ISO UTC (proposed default)"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "quote": "sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"}, {"ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-08", "quote": "- answer: Yes, confirm"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Impact's Q-04 and Q-05 were addressed to the tech lead, and design now carries them as assumptions (PatientService passes the field through; the list item type is in client.ts). Do you accept implement confirming both against current main?", "ask_role": "tech_lead", "blocking": false}
+  ]
+}

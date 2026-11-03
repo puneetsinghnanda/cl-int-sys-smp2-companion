@@ -102,3 +102,13 @@ entries as the user's own answers.
 - question: C17: The facts don't show where the web's patient list item type is declared. I assumed it sits next to `api` in web/src/api/client.ts (the `api.patients` call) and gains the new field there, and implement checks this against current main. Is that right?
 - options: Yes, confirm | Type is in PatientsPage
 - answer: Not sure
+
+## A-11
+- step: design
+- attempt: 1
+- asked_at: 2026-11-03T14:50:05Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_01PyQM8BwXF81wtZWFquyjvZ
+- question: Q-01: Stories S-1 and S-2 test the Last visit value exactly (for example 01:00 Asia/Kolkata on 10 March = 19:30 UTC on 9 March). What should each item in `GET /api/patients` carry? Item fields in the web code are camelCase (e.g. `fullName`, `startsAt`).
+- options: lastVisitAt, ISO UTC (proposed default) | lastVisit object
+- answer: lastVisitAt, ISO UTC (proposed default)
