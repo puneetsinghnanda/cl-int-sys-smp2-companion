@@ -37,3 +37,11 @@ comment: Content is fine; shorten resolves[0].how to under 300 characters.
 }
 ```
 <!-- tsl:signature-end G-escalate-impact-a2 -->
+
+## G-escalate-design-a2 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md (sha256 4e47f93fe154e95a25a777f5f6f3389287f759816ccc24ecbd97a6b4efe4f023)
+Reason for gate: band Low
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->
