@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then it returns the same patients as before this change, each row with a Last visit value",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#L68"
+        },
+        {
+          "quote": "A paged query that joins appointments naively could repeat patient rows",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L196"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-3 AC2 only says search returns the same patients. A naive appointment join could repeat a matching patient's row and still return the same set of patients, so the AC would pass. The intent flags this risk."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "feedback.v1",
+  "step": "split"
+}
