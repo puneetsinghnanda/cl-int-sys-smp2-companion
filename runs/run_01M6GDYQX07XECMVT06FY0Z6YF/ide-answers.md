@@ -132,3 +132,43 @@ entries as the user's own answers.
 - question: C14: I assumed `PatientService` (api/src/services/patientService.ts) only passes the new lastVisit field through from PatientRepo to the route, with no new rule. Is that right?
 - options: Yes, confirm | Service computes it
 - answer: Yes, confirm
+
+## A-14
+- step: design
+- attempt: 1
+- asked_at: 2026-11-03T10:54:20Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_015dKvHWKXAGqBBaVCmLaevw
+- question: Q-01: The stories check the Last visit date, so the field needs an exact name and format. What should each item in `GET /api/patients` carry? List responses use snake_case such as `page_size`.
+- options: last_visit_at, ISO UTC (proposed default) | lastVisitAt, ISO UTC
+- answer: lastVisitAt, ISO UTC
+
+## A-15
+- step: design
+- attempt: 1
+- asked_at: 2026-11-03T10:54:20Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_015dKvHWKXAGqBBaVCmLaevw
+- question: Q-02: What should the new date-only helper next to `dateTime` in web/src/lib/format.ts be called?
+- options: date(iso, timeZone) (proposed default) | dateOnly(iso, timeZone)
+- answer: dateOnly(iso, timeZone)
+
+## A-16
+- step: design
+- attempt: 1
+- asked_at: 2026-11-03T10:54:20Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_015dKvHWKXAGqBBaVCmLaevw
+- question: C1: I assumed PatientsPage gets the hospital time zone from `useSettings` (web/src/hooks/useSettings.tsx, backed by GET /api/settings), the same way it formats Next appointment. Is that right?
+- options: Yes, confirm | Another source
+- answer: Yes, confirm
+
+## A-17
+- step: design
+- attempt: 1
+- asked_at: 2026-11-03T10:54:20Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_015dKvHWKXAGqBBaVCmLaevw
+- question: C2: The facts don't show where the web's patient list item type is declared. I assumed implement finds and extends it, in PatientsPage.tsx or next to `api` in web/src/api/client.ts. Is that right?
+- options: Yes, confirm | In web/src/api/client.ts
+- answer: Yes, confirm

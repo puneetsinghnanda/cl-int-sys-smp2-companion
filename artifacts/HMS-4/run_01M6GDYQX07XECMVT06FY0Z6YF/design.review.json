@@ -1,0 +1,23 @@
+{
+  "artifact_sha256": "b7adc0f4e88e16adce0f560ed394cabeac6618a66f3e6e32924a81884035e3ee",
+  "attempt": 1,
+  "claims_checked": [],
+  "findings": [],
+  "package_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "questions": [],
+  "recorded_at": "2026-11-03T10:57:02Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "d78f6996d1ce077df32868b3f0c875a9655ef67f6e3c8d663003c54c715db789",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [],
+  "rubric_score": null,
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "review.v1",
+  "status": "could_not_review",
+  "status_reason": "not reviewed: gate H4 failed",
+  "step": "design"
+}

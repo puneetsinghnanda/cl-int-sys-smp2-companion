@@ -1,0 +1,68 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/design.md",
+  "artifact_sha256": "b7adc0f4e88e16adce0f560ed394cabeac6618a66f3e6e32924a81884035e3ee",
+  "attempt": 1,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "bc605031abaa6283b596f0002f89af2be2cb10ca9a55cf9fd1c2f513f87c57b0",
+  "claims": {
+    "total": 11,
+    "verified": 6
+  },
+  "decided_at": "2026-11-03T10:57:03Z",
+  "decided_by": "tsl@0.1.5",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H4"
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md",
+      "sha256": "aafe8381b8503a4a8086fdb2c26f4a90b07b0025cc8c7870cbd47450fc742758",
+      "verification_sha256": "074bf25dc3e3a9ee0fb9c741846792bd5ef2901ee6cf34e48906b767497f6457"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/split.md",
+      "sha256": "2b91c8419ea676ad0f4a6be8fc05976e887781020f53ff2feff1ce304d1b785a",
+      "verification_sha256": "1e5df197bf9576b3e65e0fcdebe90905c755baf21b736091a2981ba1551ffb57"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md",
+      "sha256": "7092a382066b6eb79dfc22e522257e2a7c5679697745e27c13b84a0c491fcffd",
+      "verification_sha256": "3b422eda252b5e6f5c386e542aef4df3702a580a51382d94a30c4705a93a35fb"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "ESCALATE",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "1a069d5520c1e0beaa5f95d2cc03240fa652eb3d71e20d7800c0c86e6e663a70",
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.5455,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "WLLjKWh5iY7vk_JGidA9krJkn6yeLiJkgME7Y9kBvckMJF2rCLceWmvlnLcNoKtCb7jsTmIeNAgxMuKs7crJCg",
+  "skill": "design@1.6.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
