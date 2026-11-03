@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "http:GET:/api/doctors/:id — changed: carries the count",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md#L135"
+        },
+        {
+          "quote": "\"path\": \"/doctors/:id/edit\"",
+          "ref": "context/generated/api-inventory.json#ui:/doctors/:id/edit"
+        },
+        {
+          "quote": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "GET /api/doctors/:id is marked changed, but the analysis does not list its other readers. The facts show a /doctors/:id/edit route and DoctorFormPage.fromDoctor, which probably maps the doctor response. Adding a field could affect that form or the PATCH round-trip."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "feedback.v1",
+  "step": "impact"
+}

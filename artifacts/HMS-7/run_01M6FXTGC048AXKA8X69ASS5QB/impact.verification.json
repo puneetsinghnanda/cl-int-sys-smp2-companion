@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md",
+  "artifact_sha256": "6064201c1130596ab93cb022f865a157dee1301f9dcc322adf467cf4f6092cd1",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "58dc5911949025830f76b8b8927d33ea551beddfaf684520ed2b7c7577543961",
+  "claims": {
+    "total": 15,
+    "verified": 14
+  },
+  "decided_at": "2026-11-03T05:44:19Z",
+  "decided_by": "tsl@0.1.5",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md",
+      "sha256": "8cacd7572d8146137cd6151565f9b5e880d72194da94af616afa60fd16406ef8",
+      "verification_sha256": "bb86dffe3a502d4ee136ff3eb0251067b1594071631cfa9ea6d00bb5b9ca4733"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "63d26d9e3bc88c8cd302bea81f0d331c4adb5c372caf8287ace3527283e9783e",
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9474,
+    "S2": 1.0,
+    "S3": 4.05,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "5iVoSJcO_I-fK7Fga9GNnUvoZRrQNHUfaUt4EVPJoeFDaQ4wbly8iO8WUQhNoFelXbpr-uem1MqX5teugPlYCw",
+  "skill": "impact-analysis@1.1.1",
+  "step": "impact",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
