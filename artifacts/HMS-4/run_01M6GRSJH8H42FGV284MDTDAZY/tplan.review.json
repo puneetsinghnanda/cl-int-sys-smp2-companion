@@ -1,0 +1,162 @@
+{
+  "artifact_sha256": "68827f44f5cbcc7eb2161db53d0915bc7f7cb58af5648929d5fb5f034dd9aa32",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Vitest with jsdom and Testing Library",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "no page is tested end to end in a browser",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "or null when the patient has no Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md#claim:C13"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "AC4: Given only Cancelled, No-show or Scheduled appointments, then Last visit shows \"-\".",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#stories"
+        },
+        {
+          "quote": "TP-7 (integration): S-2/AC4. A patient with only non-Completed appointments gets null.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/tplan.md#tests"
+        },
+        {
+          "quote": "TP-17 (unit, negative and boundary): S-2/AC5, S-1/AC2. A null value renders \"-\".",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/tplan.md#tests"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add S-2/AC4 to TP-17's covers, or state in TP-7 that TP-17 provides the '-' check, as TP-8 does.",
+      "text": "S-2/AC4 requires the page to show '-', but TP-7 only checks for null in the API. TP-17 tests the '-' rendering but lists only S-2/AC5, so AC4's UI outcome is not traced."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "AC4: The sort options are unchanged, none sorts by Last visit, and selecting the Last visit header does not reorder rows.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#stories"
+        },
+        {
+          "quote": "TP-12 (unit): S-3/AC4. The header has no button, link or aria-sort.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/tplan.md#tests"
+        },
+        {
+          "quote": "is not added to the sort keys, so the current sort order and options are unchanged",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md#overview"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an integration negative test: a list request that sorts by lastVisitAt is rejected or ignored as before, and the accepted sort options are unchanged.",
+      "text": "S-3/AC4 requires the sort options to stay the same and none to sort by Last visit. TP-12 only checks the column header. No test checks that the API sort keys still exclude lastVisitAt."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "TP-1 (integration): S-1/AC1.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/tplan.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Give each TP the REQ ID(s) its test name will start with (for example 'HMS-4 REQ-2, REQ-3: ...').",
+      "text": "The strategy requires each test name to start with its requirement ID. The plan maps TPs only to story ACs and never says the test names will carry HMS-4 REQ-n prefixes."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "An invalid hospital zone setting falls back to Asia/Kolkata, as Next appointment does.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/tplan.md#tests"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Split TP-17 into a null-rendering test and a zone-fallback test.",
+      "text": "TP-17 bundles two unrelated checks: '-' for a null value, and the fallback for an invalid hospital zone. If one fails, the report does not show which behaviour broke."
+    }
+  ],
+  "package_sha256": "9da4f0f5ac2a1ea4555ba59d34fbc995dbc115ea32ef305b1d005eab093d7cb2",
+  "questions": [],
+  "recorded_at": "2026-11-03T15:49:04Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All 17 ACs (S-1..S-5) map to at least one TP. Two are only partly asserted: S-2/AC4 never checks the '-' on the page, and the S-3/AC4 sort-options check is header-only.",
+      "score": 4
+    },
+    {
+      "id": "TP-R2",
+      "reason": "API selection rules are tested at integration against a real DB. Rendering, time zone and format are tested as jsdom unit tests. No e2e and no manual tests. Each test sits at the cheapest level that proves it.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "Covers null and no-Completed cases, the UTC/IST date boundary (AC2/AC3), the 21st-row paging boundary, an invalid filter and the zone fallback. Missing: a negative test that the API sort cannot use lastVisitAt.",
+      "score": 4
+    },
+    {
+      "id": "TP-R4",
+      "reason": "Tools and folders match the strategy (Vitest+Supertest+PG16 with a fixed clock; Vitest+jsdom+Testing Library; api/test, web/src/__tests__). The plan does not say that test names must start with REQ IDs.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are concrete and a tester can run them. TP-17 bundles two unrelated checks, and TP-8's title promises a page check that the test does not make.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}
