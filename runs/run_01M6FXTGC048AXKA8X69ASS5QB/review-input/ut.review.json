@@ -1,0 +1,70 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "step": "ut",
+  "attempt": 2,
+  "artifact_sha256": "7d88c995bda3e7e0340aaf1111a23c29ba6d994a62f5773d9f7512f3cf15b857",
+  "package_sha256": "913412289b9de4ec5fa6d8cbff657cc6e7a3d8da2a829ddb660e0682060ec2a2",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "da6f24bf73ca36bc2ce44873e4eff8032382480b8a67a06b2287c456f3ab0ae7"
+  },
+  "rubric_score": 4.25,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 4, "reason": "Tests cover lastDays, countByDoctor through GET /api/doctors/:id, DoctorDetailPage and noShowsQuery. Split AC2 says Cancelled appointments inside the window must not be counted, and no test checks that."},
+    {"id": "UT-R2", "score": 4, "reason": "Most assertions check exact values: counts, windows, hrefs and list totals. Two are weak. The Scheduled exclusion uses a future appointment, and the personal-data check only serializes a number and two dates."},
+    {"id": "UT-R3", "score": 4, "reason": "Edge cases are covered: day 30 vs day 31, the hospital day vs the UTC day, a 1-day window and a count of 0. The error path is the unknown-id 404 and the read-only PATCH field. The Cancelled and in-window Scheduled exclusions are missing."},
+    {"id": "UT-R4", "score": 5, "reason": "API tests use Vitest and Supertest on a throwaway database with a fixed clock and skipIf when PostgreSQL is missing. Web tests use jsdom and Testing Library. Names start with HMS-7 REQ ids, as the HMS-3 tests do."},
+    {"id": "UT-R5", "score": 5, "reason": "The artifact reports no test counts or coverage, and leaves results to the verifier. checks.json shows coverage was skipped (exit 78), which matches the artifact's statement."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "Split S-1 AC2 says Cancelled appointments inside the window must not be counted. No test books or cancels an appointment for this case, and the artifact lists only Completed and Scheduled as excluded.",
+      "cites": [
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#stories", "quote": "Scheduled, Completed and Cancelled appointments inside the window"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/ut.md#known", "quote": "REQ-2: count of NO_SHOW only; Completed and Scheduled excluded (API); window (pure)."}
+      ],
+      "suggested_fix": "In the doctors-no-shows fixture, book a doctor-1 appointment inside the window and cancel it. Then assert that noShowsLast30Days is still 1."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The test for 'Scheduled not counted' uses a Tuesday appointment, but the clock is Monday. That appointment is after the end of today, so it falls outside the window anyway. The test does not show that the status filter excludes an in-window Scheduled appointment.",
+      "cites": [
+        {"ref": "sample-system:api/test/doctors-no-shows.test.ts#L18", "quote": "Tuesday 10:00 Scheduled. Doctor 2: nothing."},
+        {"ref": "sample-system:api/test/doctors-no-shows.test.ts#L22", "quote": "clock = new Date(at(MONDAY, '09:20'));"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/ut.md#summary", "quote": "Completed and Scheduled not counted"}
+      ],
+      "suggested_fix": "Add a Scheduled appointment for doctor 1 that starts earlier on Monday or on an earlier day in the window. Then assert it is excluded."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The 'no patient contact details or medical history' test serializes only the integer count and two date strings. It cannot fail, so it does not guard threat T-5. A check on the whole doctor detail response, or a check of its keys, would.",
+      "cites": [
+        {"ref": "sample-system:api/test/doctors-no-shows.test.ts#L87", "quote": "const text = JSON.stringify({ n: d.noShowsLast30Days, w: d.noShowsWindow });"},
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary", "quote": "No patient fields are added (threat T-5)."}
+      ],
+      "suggested_fix": "Assert that the whole GET /api/doctors/:id body has no patient fields, or compare its keys to an allow-list."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary", "quote": "exports `lastDays(now, tz, days)`"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary", "quote": "`countByDoctor(doctorId, status, from, to)`"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary", "quote": "built with URLSearchParams by the exported `noShowsQuery`"}]}
+  ],
+  "questions": []
+}

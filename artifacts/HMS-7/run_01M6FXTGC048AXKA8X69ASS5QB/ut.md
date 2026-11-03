@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M6FXTGC048AXKA8X69ASS5QB
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.0.1
 inputs:
   - path: artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 676aad38a615151dc650b7c745d666fa6c6bce38
-    head_sha: 486e927063123988ce9119a52eba4244e2bb4400
-    diff_sha256: e9a847af3eaa9f313cc9c402a64974a4088ca3cd00f9d7e1820738310407e9df
+    head_sha: b9aec8427cf14195264c79d41a35f289ce047cc3
+    diff_sha256: bfdf9cd27e9d613efe06af2e0248902f326560e0dedd3917dfd0db85652c3624
     files:
       - api/test/doctors-no-shows.test.ts
       - api/test/periods.test.ts
@@ -58,6 +58,11 @@ questions: []
 # Unit tests: HMS-7
 
 ## Summary
+Retry for the H3 failure in attempt 1: four DoctorDetailPage tests failed because the test's fetch
+stub answered the day-schedule request (`/api/doctors/:id/slots`) with the doctor object, so the page
+crashed reading `slots`. The test was wrong, not the code: the stub now matches `/slots`. No production
+code changed, and no other test changed.
+
 Tests cover every changed function and the one changed endpoint, with a normal and an edge or error
 path each, named with HMS-7 requirement ids as the test strategy asks:
 - `lastDays` (pure, no database, always runs): the 30-day window matches the dashboard's 30d period, "today" is the hospital day, and 1 day equals the Today period.
@@ -69,7 +74,7 @@ Results: tsl records the test run in checks.json when it runs the verifier (H3);
 ## Tests
 - api/test/periods.test.ts — Shared No-show window rule `lastDays`: REQ-2/REQ-4 window, REQ-3 hospital day, REQ-2 1-day edge.
 - api/test/doctors-no-shows.test.ts — DoctorService, AppointmentRepo.countByDoctor and GET /api/doctors/:id: REQ-1, REQ-2, REQ-3 edge, REQ-4, REQ-5, REQ-6/REQ-7 list total, REQ-8 404, PATCH and no personal data.
-- web/src/__tests__/DoctorDetailPage.test.tsx — DoctorDetailPage and `noShowsQuery`: REQ-1 label, REQ-6 exact link, REQ-5/REQ-7 zero link, REQ-8 other sections.
+- web/src/__tests__/DoctorDetailPage.test.tsx — DoctorDetailPage and `noShowsQuery`: REQ-1 label, REQ-6 exact link, REQ-5/REQ-7 zero link, REQ-8 other sections. Fetch stub fixed to answer `/slots` with a day schedule.
 
 ## Known
 - S-1: covered by the API count tests and the page label test.
