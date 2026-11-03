@@ -1,0 +1,166 @@
+{
+  "artifact_sha256": "7092a382066b6eb79dfc22e522257e2a7c5679697745e27c13b84a0c491fcffd",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The patient list already shows each patient's next appointment (HMS-1).",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show\nappointments never change.",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "appointments are never used for or shown in the Last visit column",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md#L68"
+        },
+        {
+          "quote": "Cancelled, No-show and Scheduled appointments are never shown in that column.",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/ticket.md#L18"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword REQ-5 to match the ticket ('never shown'), or state that only Completed appointments are considered and rely on REQ-2.",
+      "text": "REQ-5 widens the ticket wording from 'never shown' to 'never used for or shown', which puts two checks in one REQ. The 'used for' part is already implied by REQ-2."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/ticket.md#L14",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md#L63"
+        },
+        {
+          "quote": "The patient list already shows each patient's next appointment (HMS-1).",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/ticket.md#L14"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say that L14 only identifies the reference column, or cite A-04 alone for the format decision.",
+      "text": "REQ-4 cites ticket L14 as a basis for the date format, but L14 only says the list shows next appointment. The real basis is A-04."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "were settled by A-03 and A-01",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md#L180"
+        },
+        {
+          "quote": "Which one should it be?",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Say that REQ-2 now defines Last visit, and propose glossary entries for Patient list and Last visit.",
+      "text": "The Unknown section says A-01 settled the missing glossary term 'Last visit'. A-01 only chose which date to show, and the glossary block still lists Last visit as not found."
+    }
+  ],
+  "package_sha256": "063bd1adc8ae401bd24d6f3b9bbd7020bb89efe4e15719839584a9f42945b851",
+  "questions": [],
+  "recorded_at": "2026-11-03T10:11:37Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "055c6d2fd0ad0cd30866e9c759041a90a522bce104f052eebeace0fbb79aea7c",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria map to REQ-1..REQ-12. The user-story goal is listed under Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and checkable, and AC5 is correctly split into REQ-7..REQ-11. REQ-5 combines 'used for' and 'shown' in one statement.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known item cites the ticket, the baseline or an IDE answer (A-01..A-04). Nothing is assumed or invented.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No ticket-baseline conflict found. The time zone (Asia/Kolkata) and the medical-history ban match the baseline, and the artifact cites both.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Four precise questions, each with real options and a proposed default, all answered in the IDE and each deciding exactly one REQ.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording. Glossary terms Completed, Cancelled, No-show and Scheduled are used consistently, and the missing terms are flagged.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
