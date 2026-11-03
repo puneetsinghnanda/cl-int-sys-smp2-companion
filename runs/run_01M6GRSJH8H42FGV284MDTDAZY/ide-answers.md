@@ -82,3 +82,23 @@ entries as the user's own answers.
 - question: C5: The facts have no call edges for `GET /api/patients`. I assumed its web callers are PatientsPage (the /patients list) and the patient picker in BookAppointmentPage (`api.patients({ q, status: 'ACTIVE' })`), seen in the local checkout. The new field is additive, so the picker is unchanged. Is that right?
 - options: Yes, confirm | There are other callers
 - answer: Yes, confirm
+
+## A-09
+- step: impact
+- attempt: 2
+- asked_at: 2026-11-03T14:44:08Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_01WtMeZUBHG4SsufQMFZr2dM
+- question: C16: The architecture layers the API as route -> service -> repository. I assumed `PatientService` (api/src/services/patientService.ts) only passes the new last-visit field from PatientRepo's list query through to the patients route, adding no new rule or mapping. Is that right?
+- options: Yes, confirm | Service maps list items
+- answer: Not sure
+
+## A-10
+- step: impact
+- attempt: 2
+- asked_at: 2026-11-03T14:44:08Z
+- answered_by: gaurav-saini-truminds <109267364+gaurav-saini-truminds@users.noreply.github.com>
+- tool_use_id: toolu_01WtMeZUBHG4SsufQMFZr2dM
+- question: C17: The facts don't show where the web's patient list item type is declared. I assumed it sits next to `api` in web/src/api/client.ts (the `api.patients` call) and gains the new field there, and implement checks this against current main. Is that right?
+- options: Yes, confirm | Type is in PatientsPage
+- answer: Not sure

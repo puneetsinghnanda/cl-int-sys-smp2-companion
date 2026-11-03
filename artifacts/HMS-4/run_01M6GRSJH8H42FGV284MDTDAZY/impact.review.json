@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "613442981870bf4f47ae373d2f482d853e060ce9fe4328d4ea6d10db3843dbfc",
-  "attempt": 1,
+  "artifact_sha256": "7ff5132a54c71433b4ab24b8444992f62cc2aacf0ca55668cb58a8b85768dbea",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -123,6 +123,10 @@
     {
       "cites": [
         {
+          "quote": "repositories hold the SQL",
+          "ref": "context/architecture.md#components"
+        },
+        {
           "quote": "\"path\": \"api/src/repositories/patientRepo.ts\"",
           "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
         }
@@ -159,79 +163,83 @@
       ],
       "claim_id": "C15",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/services/patientService.ts\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/api/client.ts\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/PatientsPage.test.tsx\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
     }
   ],
   "findings": [
     {
-      "category": "completeness",
+      "category": "correctness",
       "cites": [
         {
-          "quote": "services hold the rules and",
-          "ref": "context/architecture.md#components"
+          "quote": "the web formats with `dateTime` in the hospital zone from HOSPITAL_TZ",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L184"
         },
         {
-          "quote": "api/src/services/patientService.ts",
-          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
-        },
-        {
-          "quote": "The patients route reaches the database through `PatientRepo`",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L57"
+          "quote": "Sources: sample-system:api/src/config.ts#L33-L34",
+          "ref": "context/architecture.md#time-and-slots"
         }
       ],
-      "claim_ref": "C12",
+      "claim_ref": "C4",
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add PatientService to the api impact with a status (changed or pass-through) and cite its fact id. Reword C12 to describe the route -&gt; service -&gt; repo path.",
-      "text": "The architecture puts a service layer between routes and repositories, and PatientService is in the facts. The artifact skips it: C12 says the route reaches the database through PatientRepo, and PatientService is never assessed for passing the new field through or mapping it."
+      "severity": "minor",
+      "suggested_fix": "Say that REQ-5 holds because Last visit reuses dateTime exactly like Next appointment (C6). Drop the link between the web and HOSPITAL_TZ, or cite a fact for it.",
+      "text": "The REQ-5 bullet says the web formats Last visit in the hospital zone from HOSPITAL_TZ. The cited section gives HOSPITAL_TZ only as API config, and no fact shows that web dateTime reads it. The fact actually supported is that Last visit reuses dateTime like Next appointment (C6)."
     },
     {
-      "category": "completeness",
+      "category": "consistency",
       "cites": [
         {
-          "quote": "web/src/__tests__/PatientsPage.test.tsx",
-          "ref": "context/generated/module-map.json#sym:sample-system:web/src/__tests__/PatientsPage.test.tsx:nextCell"
+          "quote": "is changed at least to carry the new field",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L69"
+        },
+        {
+          "quote": "answer: Not sure",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-09"
         }
       ],
+      "claim_ref": "C16",
       "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "List PatientsPage.test.tsx under the web module as a regression reader for REQ-12.",
-      "text": "The existing web test PatientsPage.test.tsx (nextCell) reads the PatientsPage table, and REQ-12 says Next appointment must stay unchanged. Adding a column can shift cell positions, but the artifact does not list this test as an affected reader."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
-          "ref": "context/architecture.md#components"
-        },
-        {
-          "quote": "The web reaches the API through web/src/api/client.ts (C10).",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L141"
-        }
-      ],
-      "claim_ref": "C10",
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "State whether the client.ts `api` symbol (or its response type) is changed or unchanged for the new field, and cite its fact id.",
-      "text": "All web traffic goes through web/src/api/client.ts, so the new list field passes through it. The artifact mentions client.ts only as the transport (C10) and does not say whether the client's patient-list typing changes."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "http:GET:/api/patients: **changed**. Additive field per item",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impact.md#L128"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Split the section into Modules, APIs and Tables, or retitle it 'Impacted elements', and order the entries by risk.",
-      "text": "The 'Impacted modules' section also lists the APIs and tables, and its entries are not ordered by risk. The paging, medical-history and index risks appear only in the summary."
+      "suggested_fix": "Mark PatientService's change status as pending Q-04 (changed if it maps list items, possibly untouched if pass-through) instead of asserting it is changed.",
+      "text": "C16 states that PatientService 'is changed at least to carry the new field', but Q-04 (pass-through or mapping) is open and the user answered 'Not sure'. A pure pass-through may need no edit, so 'changed' is a guess."
     }
   ],
-  "package_sha256": "38444a301114f8a4990f65fabff286687850a7b77e48968b56466face17d033a",
+  "package_sha256": "fe4573aa42207b4d163008c6687763e9e43df7266ccbd042613bf5dea9a90d74",
   "questions": [],
-  "recorded_at": "2026-11-03T14:03:17Z",
+  "recorded_at": "2026-11-03T14:48:29Z",
   "recorded_by": "tsl@0.1.5",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -242,31 +250,31 @@
   "rubric_items": [
     {
       "id": "IA-R1",
-      "reason": "The API, web and db modules, GET /api/patients and both tables are listed. The PatientService layer between the route and PatientRepo is missing, and so is the existing PatientsPage test.",
-      "score": 4
+      "reason": "The api, web and db modules, GET /api/patients, the complete endpoint and both tables are listed. PatientService (C16), the client.ts list type (C17) and the nextCell test (C18) are now covered, so prior F-1, F-2 and F-3 are resolved.",
+      "score": 5
     },
     {
       "id": "IA-R2",
-      "reason": "Every module, API, table, index and symbol id appears in the generated facts and is cited. The context-section claims match their sections.",
+      "reason": "Every module, API, table, index, column and symbol id is in the generated facts and is cited. The context-section claims match their sections.",
       "score": 5
     },
     {
       "id": "IA-R3",
-      "reason": "Web callers (A-08), background jobs (C11), the writer of the COMPLETED status and the medical-history readers are covered. The service-layer reader of the repo result and the existing Next appointment test are not.",
-      "score": 4
+      "reason": "Web callers (A-08), background jobs (C11), the writer of the COMPLETED status, the medical-history readers, the service layer and the existing PatientsPage test are all covered.",
+      "score": 5
     },
     {
       "id": "IA-R4",
-      "reason": "The missing call edges were raised as a question (A-08) and every answer is cited. C12's path from route to repo is stated as fact even though the architecture shows a service layer and the facts have no edges.",
+      "reason": "Unknown file placements are open questions Q-04 and Q-05, and every answer is cited. Two points are still stated as fact without a basis: PatientService is marked changed while Q-04 is open, and the web is said to use HOSPITAL_TZ.",
       "score": 4
     },
     {
       "id": "IA-R5",
-      "reason": "Readable, and the risks are in the summary. The 'Impacted modules' list mixes in APIs and tables and is not ordered by risk.",
+      "reason": "Clear, and impacts are now split into Modules, APIs and Tables. The section is still titled 'Impacted modules', and the risks appear only in the summary rather than ordering the entries.",
       "score": 4
     }
   ],
-  "rubric_score": 4.25,
+  "rubric_score": 4.75,
   "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
   "schema": "review.v1",
   "status": "ok",
