@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M6GRSJH8H42FGV284MDTDAZY
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.2.0
 inputs:
 - path: artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md
@@ -35,8 +35,8 @@ claims:
 - id: C7
   text: "Medical history covers blood group, `allergies`, chronic conditions, current medications and notes."
   cites: ["context/glossary.md#medical-history"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 assumed: []
 unknown: []
 requirements:
@@ -44,19 +44,17 @@ requirements:
   title: Last visit column
   type: functional
   status: known
-  statement: "The existing paged patient list, the one that already shows Next appointment, has a column \"Last visit\"."
+  statement: "The existing patient list, the one that already shows Next appointment, has a column \"Last visit\"."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L16
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L14
-  - runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-03
 - id: REQ-2
   title: Last visit comes from the most recent Completed appointment
   type: functional
   status: known
-  statement: "Last visit shows the date of the patient's most recent Completed appointment."
+  statement: "Last visit shows the patient's most recent Completed appointment."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L17
-  - runs/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ide-answers.md#a-03
 - id: REQ-3
   title: Most recent means latest start time
   type: functional
@@ -64,33 +62,31 @@ requirements:
   statement: "The most recent Completed appointment is the Completed appointment with the latest start time."
   cites:
   - context/glossary.md#completed
-  - runs/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ide-answers.md#a-04
-  - runs/run_01M6DN23JRRYT113FF078VYBSF/ide-answers.md#a-02
+  - runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-01
 - id: REQ-4
-  title: The date shown is the appointment's start date
+  title: The value shown is the appointment's start
   type: functional
   status: known
-  statement: "The date shown in Last visit is the start date of that Completed appointment."
+  statement: "The value shown in Last visit is the start of that Completed appointment."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L17
-  - runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-01
+  - runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-01
 - id: REQ-5
-  title: Date in the hospital time zone
+  title: Shown in the hospital time zone
   type: constraint
   status: known
-  statement: "The Last visit date is the calendar date in the hospital time zone, Asia/Kolkata."
+  statement: "Last visit is shown in the hospital time zone, Asia/Kolkata."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L17
   - context/intent-baseline.md#constraints
 - id: REQ-6
-  title: Date format matches Next appointment, date only
+  title: Same format as Next appointment, with time
   type: functional
   status: known
-  statement: "Last visit shows only a date, with no time of day, written in the same date style as the Next appointment column."
+  statement: "Last visit is written in exactly the same format as the Next appointment column, the date with its hour:minute."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L17
-  - runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-04
-  - runs/run_01M6DN23JRRYT113FF078VYBSF/ide-answers.md#a-01
+  - runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-02
 - id: REQ-7
   title: Other statuses never shown
   type: functional
@@ -120,14 +116,12 @@ requirements:
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L20
 - id: REQ-11
-  title: Sort order unchanged, Last visit not sortable
+  title: Sort order unchanged
   type: constraint
   status: known
-  statement: "The patient list keeps its current sort order, and Last visit is not offered as a sort option."
+  statement: "The patient list keeps its current sort order."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L20
-  - runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-02
-  - runs/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ide-answers.md#a-01
 - id: REQ-12
   title: Next appointment column unchanged
   type: constraint
@@ -147,13 +141,44 @@ requirements:
   title: No highlight or filter for long-unseen patients
   type: constraint
   status: known
-  statement: "The list only shows the Last visit date; it adds no highlight, threshold or filter for patients not seen for a long time."
+  statement: "The list only shows the Last visit value; it adds no highlight, threshold or filter for patients not seen for a long time."
   cites:
   - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L12-L13
-  - runs/run_01M6DR2FJ8XZ1J3VWHQTB17QBH/ide-answers.md#a-02
+  - runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-04
+- id: REQ-15
+  title: Last visit is not a sort option
+  type: constraint
+  status: known
+  statement: "Last visit is not offered as a sort option."
+  cites:
+  - artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L20
+  - runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-03
 unknowns: []
 questions: []
-answers: []
+answers:
+- id: A-01
+  kind: question
+  about: Q-01
+  answer: "Latest start, start date (proposed default)"
+  requirements: [REQ-3, REQ-4]
+- id: A-02
+  kind: question
+  about: Q-02
+  answer: "Same as Next appt, with time"
+  requirements: [REQ-6]
+  mismatch:
+    text: "Ticket L17 asks for the date of the last Completed appointment; the user decided Last visit shows the date with hour:minute, exactly like Next appointment."
+    cites: ["artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L17"]
+- id: A-03
+  kind: question
+  about: Q-03
+  answer: "Not sortable (proposed default)"
+  requirements: [REQ-15]
+- id: A-04
+  kind: question
+  about: Q-04
+  answer: "Only show the date (proposed default)"
+  requirements: [REQ-14]
 glossary:
 - {term: Front-desk staff, found: true}
 - {term: Completed, found: true}
@@ -168,61 +193,56 @@ glossary:
 # Requirements review: HMS-4
 
 ## Summary
-HMS-4 asks for a "Last visit" column on the existing patient list, so front-desk staff can spot patients who have not been seen for a long time. The value is the start date, in the hospital time zone, of the patient's most recent Completed appointment, or "-" when there is none. Paging, search, sort order and the Next appointment column must not change, and no medical history may appear. The main risks are formatting (Next appointment shows a date and a time, while Last visit is a date only) and a paged query that repeats patient rows if appointments are joined naively. Every open decision was already answered in earlier HMS-4 runs, so this review reuses those answers and asks nothing new.
+HMS-4 asks for a "Last visit" column on the existing patient list, so front-desk staff can spot patients who have not been seen for a long time. The value is the start of the patient's Completed appointment with the latest start time, in the hospital time zone, written exactly like Next appointment (date and hour:minute), or "-" when there is none. Paging, search, sort order and the Next appointment column must not change, and no medical history may appear. The user's format choice differs from the ticket's wording ("the date"), which is recorded on A-02. A paged query that joins appointments naively could repeat patient rows, which design must avoid.
 
 ## Requirements
-- REQ-1 Last visit column (known): The existing paged patient list, the one that already shows Next appointment, has a column "Last visit".
-- REQ-2 Last visit comes from the most recent Completed appointment (known): Last visit shows the date of the patient's most recent Completed appointment.
+- REQ-1 Last visit column (known): The existing patient list, the one that already shows Next appointment, has a column "Last visit".
+- REQ-2 Last visit comes from the most recent Completed appointment (known): Last visit shows the patient's most recent Completed appointment.
 - REQ-3 Most recent means latest start time (known): The most recent Completed appointment is the Completed appointment with the latest start time.
-- REQ-4 The date shown is the appointment's start date (known): The date shown in Last visit is the start date of that Completed appointment.
-- REQ-5 Date in the hospital time zone (known): The Last visit date is the calendar date in the hospital time zone, Asia/Kolkata.
-- REQ-6 Date format matches Next appointment, date only (known): Last visit shows only a date, with no time of day, written in the same date style as the Next appointment column.
+- REQ-4 The value shown is the appointment's start (known): The value shown in Last visit is the start of that Completed appointment.
+- REQ-5 Shown in the hospital time zone (known): Last visit is shown in the hospital time zone, Asia/Kolkata.
+- REQ-6 Same format as Next appointment, with time (known): Last visit is written in exactly the same format as the Next appointment column, the date with its hour:minute.
 - REQ-7 Other statuses never shown (known): Cancelled, No-show and Scheduled appointments are never shown in the Last visit column.
 - REQ-8 No Completed appointment shows a dash (known): A patient with no Completed appointment shows "-" in the Last visit column.
 - REQ-9 Page size unchanged (known): The patient list stays at 20 per page.
 - REQ-10 Search unchanged (known): The patient list keeps its current search behaviour.
-- REQ-11 Sort order unchanged, Last visit not sortable (known): The patient list keeps its current sort order, and Last visit is not offered as a sort option.
+- REQ-11 Sort order unchanged (known): The patient list keeps its current sort order.
 - REQ-12 Next appointment column unchanged (known): The Next appointment column is unchanged.
 - REQ-13 No medical history in the list (known): No medical history appears in the patient list.
-- REQ-14 No highlight or filter for long-unseen patients (known): The list only shows the Last visit date; it adds no highlight, threshold or filter for patients not seen for a long time.
+- REQ-14 No highlight or filter for long-unseen patients (known): The list only shows the Last visit value; it adds no highlight, threshold or filter for patients not seen for a long time.
+- REQ-15 Last visit is not a sort option (known): Last visit is not offered as a sort option.
 
 ## Known
-- REQ-1: ticket L16 and L14; "patient list" is the existing paged list (earlier answer, run_01M6GDYQX07XECMVT06FY0Z6YF A-03).
-- REQ-2: ticket L17; the user agreed to use the ticket's definition (run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-03).
-- REQ-3: glossary "Completed" closes on start time; confirmed twice (run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-04, run_01M6DN23JRRYT113FF078VYBSF A-02).
-- REQ-4: ticket L17; start date chosen (run_01M6GDYQX07XECMVT06FY0Z6YF A-01).
+- REQ-1: ticket L16, and L14 names the list that already shows Next appointment.
+- REQ-2: ticket L17.
+- REQ-3: glossary "Completed" closes on start time; decided by A-01.
+- REQ-4: ticket L17; decided by A-01.
 - REQ-5: ticket L17 and baseline constraints (`Asia/Kolkata`).
-- REQ-6: ticket L17 asks for "the date"; same style as Next appointment (run_01M6GDYQX07XECMVT06FY0Z6YF A-04, run_01M6DN23JRRYT113FF078VYBSF A-01).
+- REQ-6: decided by A-02 (differs from ticket L17, see mismatch).
 - REQ-7: ticket L18.
 - REQ-8: ticket L19.
-- REQ-9, REQ-10: ticket L20.
-- REQ-11: ticket L20; not sortable (run_01M6GDYQX07XECMVT06FY0Z6YF A-02, run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-01).
+- REQ-9, REQ-10, REQ-11: ticket L20.
 - REQ-12: ticket L20-L21.
 - REQ-13: ticket L22 and baseline data protection.
-- REQ-14: ticket L12-L13 gives no threshold; only the date is shown (run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-02).
+- REQ-14: ticket L12-L13 gives no threshold; decided by A-04.
+- REQ-15: decided by A-03.
 
 ## Assumed
-None. Every earlier assumption was confirmed by the user in an earlier HMS-4 run.
+None. Every assumption was put to the user in this run.
 
 ## Unknown
-None. "Patient list", "Last visit" and "Next appointment" are not in the glossary, but the user already settled their meaning (run_01M6GDYQX07XECMVT06FY0Z6YF A-03, run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-03).
+None. "Patient list", "Last visit" and "Next appointment" are not in the glossary; ticket L14 and L17 define them for this change.
 
 ## Open questions
 None open.
 
-Answered in the IDE: no new questions this run. Earlier HMS-4 answers reused (all by gaurav-saini-truminds):
-- run_01M6GDYQX07XECMVT06FY0Z6YF A-01: which date for Last visit → "Start date (proposed default)"; decides REQ-4.
-- run_01M6GDYQX07XECMVT06FY0Z6YF A-02: sortable by Last visit → "Not sortable (proposed default)"; decides REQ-11.
-- run_01M6GDYQX07XECMVT06FY0Z6YF A-03: which list → "Yes, that list (proposed default)"; decides REQ-1.
-- run_01M6GDYQX07XECMVT06FY0Z6YF A-04: date format → "Same as Next appointment (proposed default)"; decides REQ-6. Mismatch: Next appointment shows a time as well; the ticket (L17) asks for a date, so Last visit uses the same date style without a time.
-- run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-01: sort by Last visit → "No sorting (proposed default)"; decides REQ-11.
-- run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-02: highlight long-unseen patients → "No, only show the date (proposed default)"; decides REQ-14.
-- run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-03: meaning of Last visit → "Yes, use ticket L17 (proposed default)"; decides REQ-2.
-- run_01M6DR2FJ8XZ1J3VWHQTB17QBH A-04: most recent = latest start time → "Yes, confirm"; decides REQ-3.
-- run_01M6DN23JRRYT113FF078VYBSF A-01: date format → "Match Next appointment (proposed default)"; decides REQ-6.
-- run_01M6DN23JRRYT113FF078VYBSF A-02: most recent = latest start time → "Yes, confirm"; decides REQ-3.
+Answered in the IDE (this run, attempt 2, by gaurav-saini-truminds):
+- A-01: Q-01 which appointment and which value → "Latest start, start date (proposed default)"; decides REQ-3, REQ-4.
+- A-02: Q-02 how the Last visit date looks → "Same as Next appt, with time"; decides REQ-6. Mismatch: ticket L17 says "the date"; the user decided date with hour:minute, like Next appointment. Earlier HMS-4 runs had dropped the time.
+- A-03: Q-03 sortable by Last visit → "Not sortable (proposed default)"; decides REQ-15.
+- A-04: Q-04 highlight long-unseen patients → "Only show the date (proposed default)"; decides REQ-14.
 
 ## Out of scope
-- Highlighting, thresholds or filters for long-unseen patients: the user chose to show only the date (REQ-14).
-- Sorting by Last visit (REQ-11).
+- Highlighting, thresholds or filters for long-unseen patients (REQ-14).
+- Sorting by Last visit (REQ-15).
 - Where the value is computed and how it reaches the page: impact analysis and design decide this.

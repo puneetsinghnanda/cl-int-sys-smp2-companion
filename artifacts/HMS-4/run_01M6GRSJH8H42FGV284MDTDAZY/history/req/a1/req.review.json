@@ -1,0 +1,188 @@
+{
+  "artifact_sha256": "e7ca6095c72a1d88046a0be9ff9abc729e67d5d26b2ae06c87231084819e05ce",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The patient list already shows each patient's next appointment",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "closed by staff once its start time has passed",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The list stays 20 per page",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "answers: []",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L156"
+        },
+        {
+          "quote": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-03",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L51"
+        },
+        {
+          "quote": "Earlier HMS-4 answers reused (all by gaurav-saini-truminds)",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L213"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Re-confirm the reused decisions in this run so they are listed in answers: with decides, or cite only ticket and context facts where they are enough.",
+      "text": "Ten REQ cites point to ide-answers from three other runs (one cancelled), yet the artifact's answers list is empty. The decisions behind REQ-1/2/3/4/6/11/14 are not recorded as answers of this run, so tsl may reject these cites."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "keeps its current sort order, and Last visit is not offered as a sort option",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L126"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Split REQ-11 into one REQ for the unchanged sort order (ticket L20) and one REQ for Last visit not being sortable (the answer).",
+      "text": "REQ-11 is compound. It covers two behaviours: the existing sort order is kept, and Last visit is not offered as a sort option."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "options: Same as Next appointment (proposed default) | Date only, ISO",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-04"
+        },
+        {
+          "quote": "Match Next appointment (proposed default) | Date and time",
+          "ref": "runs/run_01M6DN23JRRYT113FF078VYBSF/ide-answers.md#a-01"
+        },
+        {
+          "quote": "Mismatch: Next appointment shows a time as well",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/req.md#L217"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Record the mismatch on the answer entry and state the exact date format (for example, the date part of the Next appointment format) so a tester can check it.",
+      "text": "For REQ-6 the user chose 'Same as Next appointment' over 'Date only, ISO', but the artifact drops the time. The mismatch is noted only in the body, not in a structured answer mismatch, and 'date style' is not defined clearly enough to test."
+    }
+  ],
+  "package_sha256": "2abb6a64071ca0243968c02a2ca8a349c0f29638d956ff085b32efa5864bf811",
+  "questions": [
+    {
+      "ask_role": "stage_approver",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Can req decisions answered in earlier HMS-4 runs (including the cancelled run_01M6GDYQX07XECMVT06FY0Z6YF) be reused in this run without re-asking, or must they be re-confirmed so they appear in this artifact's answers?"
+    }
+  ],
+  "recorded_at": "2026-11-03T13:23:54Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria and the user story are covered. The story's long-unseen goal and sorting are listed under Out of scope, each with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and testable. REQ-11 combines two behaviours. REQ-6 depends on an undefined 'date style' of Next appointment, which shows a date and a time.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Nothing is invented and every cited answer exists with matching text. But every 'known' status rests on answers from other runs while this artifact's answers list is empty, so the basis is real but not traceable inside this run.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No clash between ticket and baseline. REQ-13 matches baseline data-protection, and REQ-5 matches the baseline Asia/Kolkata constraint.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "No new questions, which is reasonable if reusing earlier answers is allowed. If it is not, the asks for REQ-1/2/3/4/6/11/14 are missing.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording. Glossary status terms are used consistently, and the terms missing from the glossary are named and explained.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
