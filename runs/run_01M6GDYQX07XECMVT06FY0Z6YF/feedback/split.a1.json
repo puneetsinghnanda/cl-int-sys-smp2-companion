@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Given the system holds 21 patients, when staff open the first page of the patient list, then it shows 20 per page",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/split.md#L64"
+        },
+        {
+          "quote": "slowing down or breaking the existing paging and sort query",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md#L148"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-3 AC1 never gives one patient several appointments. The likeliest wrong implementation joins appointments into the paged query, which repeats a patient's row and shifts paging, and AC1 would still pass."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "feedback.v1",
+  "step": "split"
+}
