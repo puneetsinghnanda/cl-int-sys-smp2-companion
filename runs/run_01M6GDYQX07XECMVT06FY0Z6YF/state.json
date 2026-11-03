@@ -2,7 +2,7 @@
   "active_session": {
     "host_hash": "h_c14537ff",
     "session_id": "f3cca327-ba48-4432-ba6a-5d0dd5c0a483",
-    "since": "2026-11-03T10:05:56Z"
+    "since": "2026-11-03T10:51:08Z"
   },
   "branch": {},
   "created_at": "2026-11-03T10:05:56Z",
@@ -10,31 +10,31 @@
   "end_reason": null,
   "gates": [
     {
-      "approver_key": null,
+      "approver_key": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
       "artifacts": [
         {
           "sha256": "aafe8381b8503a4a8086fdb2c26f4a90b07b0025cc8c7870cbd47450fc742758",
           "step": "impact"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-11-03T10:51:06Z",
+      "decision": "approve",
       "id": "G-escalate-impact-a2",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "APPROVED",
       "step": "impact"
     }
   ],
-  "heartbeat_at": "2026-11-03T10:45:37Z",
+  "heartbeat_at": "2026-11-03T10:51:08Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
     "checked_offline": false,
     "commits_behind": {
-      "sample-system": 2
+      "sample-system": 3
     },
     "drift_files": {
-      "sample-system": 10
+      "sample-system": 16
     },
     "fresh": true,
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
@@ -66,10 +66,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 16,
+  "rev": 18,
   "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -212,7 +212,7 @@
       },
       "id": "impact",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "ACCEPTED"
     },
     {
       "attempts": [],
@@ -295,7 +295,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-11-03T10:45:37Z",
+  "updated_at": "2026-11-03T10:51:08Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "cb75952bd851eed631521c43320a75882dadc0663b985bd65ea13e0a52f7b650"
 }
