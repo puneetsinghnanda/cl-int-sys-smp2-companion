@@ -1,0 +1,197 @@
+{
+  "artifact_sha256": "62586154589c341a2efe7ee5696ec741d288b17b601ec7084da8a07b98468299",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "shared helpers in `api/src/lib`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "GET /api/doctors/:id adds `noShowsLast30Days`: integer ≥ 0",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`noShowsWindow`: { `from`, `to` }, hospital-local days (YYYY-MM-DD)",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`doctorId` must be spelled exactly",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The `30d` window computation in\nDashboardService moves, unchanged, into a new shared helper",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"DashboardService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/doctorService.ts:DoctorService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"fromDoctor\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorFormPage.tsx:fromDoctor"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the details section shows \"No-shows (last 30 days)\" with the number of those appointments",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#stories"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The web test for the link asserts the exact URL.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        },
+        {
+          "quote": "no tests were added here. The count, the link URL and the window edges are left to the unit-test step.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Make sure the unit-test step asserts noShowsQuery output exactly (doctorId=..&amp;status=NO_SHOW&amp;from=..&amp;to=..), including the 0-count link.",
+      "text": "The design says a web test asserts the exact link URL, because a misspelt doctorId would silently drop the filter. The change adds no tests and leaves the link URL to a later unit-test step. It says so openly."
+    }
+  ],
+  "package_sha256": "0ff9143109a238f8a11875cb57e1665901fc062d2e986d9b04e81751336ecd22",
+  "questions": [],
+  "recorded_at": "2026-11-03T09:06:02Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "135e1d2164a296b217c7d6a10bffe1522ea08c41548043104be0e91f36ecd31d",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "Every design component is in the source: the shared lastDays rule, DashboardService reuse, countByDoctor, the DoctorService fields and the page link. One gap: the web test that checks the exact link URL, which the design names, is deferred.",
+      "score": 4
+    },
+    {
+      "id": "IM-R2",
+      "reason": "Each file sits in the layer the code-layout convention gives it: helper in api/src/lib, SQL in repositories, rules in services. SQL uses bind parameters only, and unknown ids still return 404 through notFound.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Only 7 files changed, all named by the design or needed for the types. The diff is 58 lines added and 5 deleted, and gates H1-H7 plus GEN-SIZE-01 pass.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "The 404 check runs before the count. The count falls back to 0 when no row comes back, and the link renders for 0 too. The query string is built with URLSearchParams.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary and file list match the source I checked: periods.ts, dashboardService.ts, doctorService.ts, countByDoctor, both DoctorDetail types, DoctorDetailPage and fromDoctor. Both dashboard tests it names exist.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
