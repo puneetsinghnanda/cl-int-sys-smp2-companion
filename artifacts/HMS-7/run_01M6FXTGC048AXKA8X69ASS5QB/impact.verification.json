@@ -1,36 +1,23 @@
 {
   "artifact_path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impact.md",
-  "artifact_sha256": "6064201c1130596ab93cb022f865a157dee1301f9dcc322adf467cf4f6092cd1",
-  "attempt": 1,
-  "band": "High",
-  "caps": [],
-  "checks_sha256": "58dc5911949025830f76b8b8927d33ea551beddfaf684520ed2b7c7577543961",
+  "artifact_sha256": "b05955d7672699dc41d3aaf0289755f88dff65e0aad8b09535a88bca58b74e4d",
+  "attempt": 2,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "1ec5a75eeee797d01469b19692e418024948dc1acee4127a3568bc882045f165",
   "claims": {
-    "total": 15,
-    "verified": 14
+    "total": 20,
+    "verified": 17
   },
-  "decided_at": "2026-11-03T05:44:19Z",
+  "decided_at": "2026-11-03T05:47:43Z",
   "decided_by": "tsl@0.1.5",
   "findings_dropped": [],
-  "findings_kept": [
-    {
-      "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
-      "severity": "minor"
-    },
-    {
-      "id": "F-3",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
-      "severity": "minor"
-    }
+  "findings_kept": [],
+  "gate_failures": [
+    "H1"
   ],
-  "gate_failures": [],
   "inputs": [
     {
       "path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/req.md",
@@ -39,7 +26,7 @@
     }
   ],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "RETRY",
+  "outcome": "ESCALATE",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -47,15 +34,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "5edfd2dc61803e1ab086339f20b129c6af25b08c7ff8cab5c020d3990d260b70",
   "product_changes": null,
-  "review_sha256": "63d26d9e3bc88c8cd302bea81f0d331c4adb5c372caf8287ace3527283e9783e",
+  "review_sha256": "3d6be1cf8b9edbb3019bcac047c7d627ca663e1d4d01d57c1e664bb29a449ae8",
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.9474,
+    "S1": 0.85,
     "S2": 1.0,
-    "S3": 4.05,
+    "S3": null,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -64,7 +51,7 @@
       "sensitive": false
     }
   },
-  "signature": "5iVoSJcO_I-fK7Fga9GNnUvoZRrQNHUfaUt4EVPJoeFDaQ4wbly8iO8WUQhNoFelXbpr-uem1MqX5teugPlYCw",
+  "signature": "lZHzT44GEoC6LpTsbkxeLWpxgsmWuKaamWUOBmGUwDM0r3LxXNo1fTx560LWug58ZjzHzDX0DDOjhWqACYmMAQ",
   "skill": "impact-analysis@1.1.1",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

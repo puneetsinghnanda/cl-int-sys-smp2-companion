@@ -1,14 +1,19 @@
 {
-  "artifact_sha256": "6064201c1130596ab93cb022f865a157dee1301f9dcc322adf467cf4f6092cd1",
-  "attempt": 1,
-  "finished_at": "2026-11-03T05:39:57Z",
+  "artifact_sha256": "b05955d7672699dc41d3aaf0289755f88dff65e0aad8b09535a88bca58b74e4d",
+  "attempt": 2,
+  "finished_at": "2026-11-03T05:46:53Z",
   "gates": [
     {
-      "codes": [],
-      "detail": "",
+      "check_ids": [
+        "GEN-SCHEMA-01"
+      ],
+      "codes": [
+        "E-H1-04"
+      ],
+      "detail": "envelope /resolves/0/how: 'Listed the other readers of GET /api/doctors/:id: the edit route /doctors/:id/edit (DoctorFormPage, fromDoctor) and the PATCH /api/doctors/:id round-trip, both existing. Stated that the count is read-only, must not be mapped into the edit form or accepted by PATCH, and raised Q-03 on where the coun; body /resolves/0/how: 'Listed the other readers of GET /api/doctors/:id: the edit route /doctors/:id/edit (DoctorFormPage, fromDoctor) and the PATCH /api/doctors/:id round-trip, both existing. Stated that the count is read-only, must not be mapped into the edit form or accepted by PATCH, and raised Q-03 on where the coun",
       "id": "H1",
-      "pass": true,
-      "status": "pass"
+      "pass": false,
+      "status": "fail"
     },
     {
       "codes": [],
@@ -77,9 +82,9 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-03T05:39:56Z",
+  "started_at": "2026-11-03T05:46:50Z",
   "step": "impact",
-  "tool_log_sha256": "7d2dc13d3ab70490d12c86bc0c073c9d0d84c78d69204bcf2c3a7eca3bc918fe",
+  "tool_log_sha256": "ad7682d98ed4788b20b5af9b550273cab25e4b50ee6fae144cf30b99d69488d7",
   "tsl_version": "0.1.5",
   "verifier": null
 }
