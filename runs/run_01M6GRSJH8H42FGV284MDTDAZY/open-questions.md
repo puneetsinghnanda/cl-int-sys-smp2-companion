@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M6GRSJH8H42FGV284MDTDAZY
 ticket: HMS-4
 workflow: brownfield-change@1.4.0
-step: design@1.7.0
+step: threat@1.1.0
 created_at: '2026-11-03T13:46:15Z'
 status: open
 ---
@@ -47,6 +47,18 @@ decision:
 ## Q-02 · non-blocking · ask: tech lead · round 3
 **Question:** Impact's Q-04 and Q-05 were addressed to the tech lead, and design now carries them as assumptions (PatientService passes the field through; the list item type is in client.ts). Do you accept implement confirming both against current main?
 **Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-03 · non-blocking · ask: tech lead · round 4
+**Question:** In the MVP every request is staff with every permission granted; is it accepted that the new visit history on the list has the same exposure?
+**Why it matters:** The Last visit column adds visit history to a list that has no real sign-in yet; the spoofing threat T-5 has no protecting control until sign-in exists.
+**Evidence:** context/architecture.md#identity
+**Options:**
+  A. accept for MVP
+  B. block until sign-in exists
+**Proposed default:** accept for MVP; the list already shows Next appointment with the same exposure
 answer:
 answered_by:
 decision:

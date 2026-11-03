@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "e8a2271da160aba1f1228f2450b6edeaa81c1d50cfb4c4c4cec6accfdf7d0f17",
-  "attempt": 1,
+  "artifact_sha256": "c324bf19f069055f2e0600eda8d3e358242fcb0d8f88d6ac98822b435cff4d0f",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -115,12 +115,22 @@
     {
       "cites": [
         {
-          "quote": "- answer: lastVisitAt, ISO UTC (proposed default)",
-          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11"
+          "quote": "or null when the patient has no Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md#claim:C13"
         }
       ],
       "claim_id": "C12",
-      "verdict": "unsupported"
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
     }
   ],
   "findings": [
@@ -128,109 +138,66 @@
       "category": "traceability",
       "cites": [
         {
-          "quote": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L54"
+          "quote": "the design only reads the appointment table (C5, C10)",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L168"
         },
         {
-          "quote": "- answer: lastVisitAt, ISO UTC (proposed default)",
-          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-11"
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
         }
       ],
-      "claim_ref": "C12",
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Drop C12 or re-base it on a generated fact or context section. Keep T-10's string-or-null control as a new control for implement, without the cross-step answer cite.",
-      "text": "C12 cites a design-step IDE answer (A-11), but threat.md has no answers: list, so the cross-step answer cite will fail H4. The answer also only says 'lastVisitAt, ISO UTC'. It does not support the 'or null' part of the claim."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "cites: [\"context/conventions.md#lists\"]",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L36"
-        },
-        {
-          "quote": "context/generated/db-schema.json#index:appointment_patient_start_idx",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L48"
-        }
-      ],
-      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Add context/conventions.md and context/generated/db-schema.json, with their sha256, to inputs.",
-      "text": "C6, C7 and C8 cite context/conventions.md and C10 cites context/generated/db-schema.json. Neither file is in the artifact's inputs list."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "Existing control: requests pass through identify and the route calls requirePermission",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L94"
-        },
-        {
-          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
-          "ref": "context/architecture.md#identity"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Reword T-5's mitigation as 'none in MVP; risk accepted pending Q-01 and sign-in'. Do not present identify/requirePermission as a protecting control.",
-      "text": "T-5 lists identify/requirePermission as an 'Existing control' and puts T-5 under Known. In the MVP every permission is granted, so these functions do not stop spoofing. The real position is risk accepted pending Q-01."
+      "suggested_fix": "Base T-12's Known entry on design CO-7 ('Read only; no migration'), or move it to Assumed. Do not cite C5/C10 for read-only.",
+      "text": "T-12's Known line cites C5 and C10 as the basis for 'the design only reads the appointment table'. C5 says appointment_event records changes, and C10 says the index exists. Neither states that the change is read-only."
     },
     {
       "category": "consistency",
       "cites": [
         {
-          "quote": "Formatting in a zone other than the hospital zone would show a wrong day or time",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L113"
+          "quote": "Reads of visit history are not attributed to a user.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L124"
         },
         {
-          "quote": "A type that states lastVisitAt as always present would let a null reach dateTime",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L118"
+          "quote": "appointment_event already records every change with actor (C5), and no new write is added.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L125"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State T-6 as accepted: no read audit exists in the MVP, and none is added. Drop C5 as a supporting control.",
+      "text": "The T-6 threat is about reads not being attributed. Its rationale points to appointment_event, which records only changes, so it does not address reads. In effect the mitigation is risk acceptance and should say so plainly."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "An unexpected null or malformed lastVisitAt from the API, if the type claims it is always present",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L134"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Name an actor who could tamper with the value, or drop T-10 as a non-security defect already covered by S-2 and CO-6.",
+      "text": "T-10 (an unexpected null or malformed lastVisitAt from the API) still has no adversary. It is a type/display defect labelled tampering. The re-check of the previous F-4 is only partly resolved: T-9 now names an actor."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never `request bodies`.",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L37"
         }
       ],
       "id": "F-4",
       "severity": "minor",
-      "suggested_fix": "Recast T-9 and T-10 as integrity/tampering of displayed data with a clear actor, or drop them as non-security defects already covered by stories.",
-      "text": "T-9 (wrong time zone) is labelled information_disclosure and T-10 (null type) is labelled tampering. Both are display-correctness defects with no attacker, so the STRIDE labels are forced."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "Clear and ordered by risk",
-          "ref": "C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L46"
-        },
-        {
-          "quote": "- T-1, PatientRepo list query, tampering",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L143"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "suggested_fix": "Order the Threats section by risk, highest first.",
-      "text": "Threats are listed by component, not by risk. The accepted MVP spoofing exposure (T-5) and the medical-history leak (T-2) do not lead the list."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "- T-9: the helper is reused unchanged and instants are UTC.",
-          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md#L161"
-        },
-        {
-          "quote": "Instants are stored in UTC.",
-          "ref": "context/architecture.md#time-and-slots"
-        }
-      ],
-      "id": "F-6",
-      "severity": "minor",
-      "suggested_fix": "Add a claim with `UTC` citing context/architecture.md#time-and-slots and reference it from T-9's Known line.",
-      "text": "The Known entries T-8 and T-9 have no claim behind them. The UTC-storage fact and the 'time-zone stories' are stated without any cite, although context/architecture.md#time-and-slots supports the UTC fact."
+      "suggested_fix": "Reference C7 from an information-disclosure threat on API logs, or remove C7.",
+      "text": "Claim C7 (logs never carry request bodies) is declared, but no threat or mitigation uses it. Either the log-disclosure angle for the new field is missing, or the claim is unused."
     }
   ],
-  "package_sha256": "5680a151bd730deaa8e640519753b5c08d36c0344a150d9e8f1599ac9db24e6a",
+  "package_sha256": "7070da4f5a402ada042d9f01981cd04c430d082ed57f6c26479d8ffda7100f0e",
   "questions": [],
-  "recorded_at": "2026-11-03T15:01:58Z",
+  "recorded_at": "2026-11-03T15:07:32Z",
   "recorded_by": "tsl@0.1.5",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -241,31 +208,31 @@
   "rubric_items": [
     {
       "id": "TM-R1",
-      "reason": "All seven design components (CO-1 to CO-7) appear by name and each has at least one threat. The PII-bearing repo, service and route each have an information-disclosure threat.",
+      "reason": "All seven design components (CO-1 to CO-7) are named and each has at least one threat. The PII-bearing repo, service, route and list type each have an information-disclosure threat.",
       "score": 5
     },
     {
       "id": "TM-R2",
-      "reason": "Most threats fit their component: SQL in the subquery, a wider SELECT leaking medical history, reuse of the detail type. T-9 and T-10 are display-correctness defects given STRIDE labels.",
+      "reason": "The threats fit their components: a wider SELECT, reuse of the detail type, subquery SQL input, MVP spoofing. T-9 now names an actor. T-10 is still a display-correctness defect with a STRIDE label.",
       "score": 4
     },
     {
       "id": "TM-R3",
-      "reason": "Mitigations are either cited existing controls (paging, index, medical-history rule) or labelled new controls for implement. T-5 calls identify/requirePermission an existing control, but in the MVP they grant everything.",
+      "reason": "Mitigations are cited existing controls or labelled new controls for implement. T-5 now honestly says none and accepts the risk. T-6 and T-12 lean on appointment_event, which only covers writes and so does not address those threats.",
       "score": 4
     },
     {
       "id": "TM-R4",
-      "reason": "The MVP sign-in gap is stated as U-1 and asked as Q-01 to the tech lead with options and a default. Accepting PII exposure is marked non-blocking with the default 'accept'.",
-      "score": 4
+      "reason": "The MVP sign-in gap is U-1 and is asked as Q-01 with options and a default. The out-of-inputs context files are disclosed in Unknown.",
+      "score": 5
     },
     {
       "id": "TM-R5",
-      "reason": "Body and frontmatter match and read clearly. Threats are ordered by component, not by risk.",
-      "score": 4
+      "reason": "Threats are now ordered by risk, highest first. The body matches the frontmatter, and the Known/Assumed split is clear.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.3,
+  "rubric_score": 4.5,
   "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
   "schema": "review.v1",
   "status": "ok",

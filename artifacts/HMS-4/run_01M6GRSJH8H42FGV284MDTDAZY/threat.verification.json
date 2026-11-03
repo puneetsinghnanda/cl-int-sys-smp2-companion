@@ -1,32 +1,22 @@
 {
+  "accepted_default": true,
   "artifact_path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/threat.md",
-  "artifact_sha256": "e8a2271da160aba1f1228f2450b6edeaa81c1d50cfb4c4c4cec6accfdf7d0f17",
-  "attempt": 1,
-  "band": "Medium",
+  "artifact_sha256": "c324bf19f069055f2e0600eda8d3e358242fcb0d8f88d6ac98822b435cff4d0f",
+  "attempt": 2,
+  "band": "High",
   "caps": [],
-  "checks_sha256": "e9cdf36322d59b7474354eb17aa1050a9c7587ea3ef4a4df6ba92c83899806db",
+  "checks_sha256": "fe0309a02f8a7b91953d00e2aaaf38b343d6634c926b831a27036c592c513b26",
   "claims": {
-    "total": 12,
-    "unverified": [
-      {
-        "id": "C12",
-        "reason": "reviewer: unsupported"
-      }
-    ],
-    "verified": 11
+    "total": 13,
+    "verified": 13
   },
-  "decided_at": "2026-11-03T15:02:14Z",
+  "decided_at": "2026-11-03T15:07:34Z",
   "decided_by": "tsl@0.1.5",
-  "findings_dropped": [
-    {
-      "id": "F-5",
-      "reason": "bad citation format C:/Users/Gaurav.Saini/Documents/GitHub/AI-Skill-Library/plugins/truminds/skills/"
-    }
-  ],
+  "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -39,10 +29,6 @@
     {
       "id": "F-4",
       "severity": "minor"
-    },
-    {
-      "id": "F-6",
-      "severity": "minor"
     }
   ],
   "gate_failures": [],
@@ -54,7 +40,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
     "signed_at": "2026-10-27T11:05:02Z",
@@ -62,15 +48,15 @@
       "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "5842eb21a031b969ff4b6da6ae9dcbc99cd9004adb8efc1a2ce53864f86fc502",
   "product_changes": null,
-  "review_sha256": "0036b9ab028c7349733e08f7722cbc05aadccd6ed074b44d3f42b0738278a76d",
+  "review_sha256": "53141fdbcfc3ca358c7684bc9237ba0526494160b20b824c7ff9bbb9cccf6b4c",
   "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.8889,
+    "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.3,
+    "S3": 4.5,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -79,7 +65,7 @@
       "sensitive": false
     }
   },
-  "signature": "27KpLfTdhwKh4xsubFS8udlS9dYUZJ-W5T7JbTyBS0XkgLAP-sj0m7K-07Gz2hVvMsX2k_JxGpoBfXGvTmzOCA",
+  "signature": "2jsQl3p4Q5G-Su63EsbuPN2YHafwHQZzBcpF9_boLsssfXpgbL64myky0qwbU7KrBnHM0XspX2ohOOGC7ZMvDQ",
   "skill": "threat-model@1.1.0",
   "step": "threat",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
