@@ -1,0 +1,266 @@
+{
+  "artifact_sha256": "1f2a3bf6f1d732a0a83c758103cab73e7addfee461a7afbc5f9415859ab4f6ac",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "is rendered by `PatientsPage` (web/src/pages/PatientsPage.tsx)",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-09"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "so Last visit reuses the same helper",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-11"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"index:appointment_patient_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "repositories hold the SQL",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: PatientsPage + pickers (proposed default)",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-07"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Proceed, re-check in implement (proposed default)",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-08"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "The API works out the local date of the last visit with the hospital time zone",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L27"
+        },
+        {
+          "quote": "formatted with the web helper `dateTime` in web/src/lib/format.ts, and Last visit reuses it",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L30"
+        },
+        {
+          "quote": "hour: '2-digit', minute: '2-digit', hour12: false",
+          "ref": "sample-system:web/src/lib/format.ts#L23"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "State the API contract precisely. Either return the starts_at instant and format it on the web with dateTime/HOSPITAL_TZ, or return a local day and add a date-only formatter. Record the choice as a mismatch on A-10/A-11.",
+      "text": "C2 says the API computes a local date, but C3 reuses dateTime(iso, timeZone). That helper parses an instant and also prints hour:minute. A date string passed to it would print a time or the wrong day, so REQ-2 (show a date) and REQ-4 (same format) cannot both hold as written."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Read by patient_id, status and starts_at, using index appointment_patient_start_idx",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L139"
+        },
+        {
+          "quote": "which covers patient and start time",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-06"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say that the index serves patient_id and starts_at and that status is filtered on top. Note this for the implement step's performance check.",
+      "text": "The tables section says the appointment table is read by patient_id, status and starts_at 'using' appointment_patient_start_idx. The index covers only patient_id and starts_at, so the status filter is not covered by it."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The patient list query in PatientRepo and the list response of `GET /api/patients` gain the last-visit value",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L134"
+        },
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Name PatientService under module:sample-system:api and say whether it changes or only passes the field through.",
+      "text": "The API change names only PatientRepo and the route. The facts also contain PatientService, and the architecture puts rules in services, so the service layer the new field passes through is not mentioned."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "other callers (patient pickers such as BookAppointmentPage) stay unchanged",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L57"
+        },
+        {
+          "quote": "The generated facts have no call edges",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-07"
+        }
+      ],
+      "claim_ref": "C12",
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Word it as 'patient pickers (per A-07)', or mark BookAppointmentPage as assumed.",
+      "text": "C12 names BookAppointmentPage as a caller of GET /api/patients. A-07 only says 'pickers', and the facts have no call edges, so that specific caller is an inference."
+    }
+  ],
+  "package_sha256": "443b9fdfef405ef9b5a888206da8063ee58e6fcd8a9889d2f0732a72c0c2a624",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Should GET /api/patients return the last visit as a starts_at instant, formatted on the web with dateTime in HOSPITAL_TZ (this shows a time), or as a local day shown with a new date-only formatter? A-10 and A-11 together leave this open."
+    }
+  ],
+  "recorded_at": "2026-11-03T10:39:31Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "da075715df28234b6d04f9e565a5beeb5980faad43deeccc81b16d6cb9e13cd8",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "The api, web and db modules, GET /api/patients, the complete route and both tables are listed. PatientService, the service layer between the route and PatientRepo, is not discussed.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every id is in the generated facts and cited. One statement says the index covers status, but the facts give only patient_id and starts_at. BookAppointmentPage is named as a caller even though no fact edge supports it.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers callers (A-07 pickers), jobs (C10), the COMPLETED writer (POST complete) and the patient table readers. The service-layer pass-through is not covered.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Every status rests on a fact or a cited IDE answer (A-05 to A-11). But C2 (API computes a local date) and C3 (reuse dateTime, which formats an instant with a time) are both confirmed without noting that they conflict.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Clear. The summary is ordered by risk (paging-breaking join, UTC vs Asia/Kolkata day, medical history leak, pack drift), and the sections follow the template.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.1,
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}

@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The API works out the local date of the last visit with the hospital time zone",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L27"
+        },
+        {
+          "quote": "formatted with the web helper `dateTime` in web/src/lib/format.ts, and Last visit reuses it",
+          "ref": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md#L30"
+        },
+        {
+          "quote": "hour: '2-digit', minute: '2-digit', hour12: false",
+          "ref": "sample-system:web/src/lib/format.ts#L23"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "C2 says the API computes a local date, but C3 reuses dateTime(iso, timeZone). That helper parses an instant and also prints hour:minute. A date string passed to it would print a time or the wrong day, so REQ-2 (show a date) and REQ-4 (same format) cannot both hold as written."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "feedback.v1",
+  "step": "impact"
+}

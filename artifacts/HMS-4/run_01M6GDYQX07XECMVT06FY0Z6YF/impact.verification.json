@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/impact.md",
+  "artifact_sha256": "1f2a3bf6f1d732a0a83c758103cab73e7addfee461a7afbc5f9415859ab4f6ac",
+  "attempt": 1,
+  "band": "Low",
+  "caps": [],
+  "checks_sha256": "90068f18ef7d04afc07c2fd9a9e8e5a83d55afaa192ae9b5ac750923ccd1dbb1",
+  "claims": {
+    "total": 13,
+    "verified": 8
+  },
+  "decided_at": "2026-11-03T10:39:33Z",
+  "decided_by": "tsl@0.1.5",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M6GDYQX07XECMVT06FY0Z6YF/req.md",
+      "sha256": "7092a382066b6eb79dfc22e522257e2a7c5679697745e27c13b84a0c491fcffd",
+      "verification_sha256": "3b422eda252b5e6f5c386e542aef4df3702a580a51382d94a30c4705a93a35fb"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "11d609db50dfaac0c78b1fe3f91d806915bec307dbab7285393c20e64ef02ae0",
+  "run_id": "run_01M6GDYQX07XECMVT06FY0Z6YF",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.7059,
+    "S2": 1.0,
+    "S3": 4.1,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "iwT4TYkmujoFuStMl01mxoQ48H1VyDwOXM6y8xsLuhhimLSvZIjUTPHoPOlwP45j5YLD6DlS_7KOWb7ajEZFDw",
+  "skill": "impact-analysis@1.2.0",
+  "step": "impact",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
