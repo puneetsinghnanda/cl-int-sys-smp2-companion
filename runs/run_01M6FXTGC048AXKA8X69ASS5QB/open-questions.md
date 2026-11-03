@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M6FXTGC048AXKA8X69ASS5QB
 ticket: HMS-7
 workflow: brownfield-change@1.3.0
-step: threat@1.0.1
+step: tplan@1.0.1
 created_at: '2026-11-03T07:06:05Z'
 status: open
 ---
@@ -64,6 +64,18 @@ decision:
   A. Both keep unknown fields out; no new control
   B. Either passes them through; strip the fields explicitly and test it
 **Proposed default:** Implement checks both and, if needed, strips noShowsLast30Days and noShowsWindow explicitly, with a test.
+answer:
+answered_by:
+decision:
+
+## Q-06 · non-blocking · ask: tech lead · round 3
+**Question:** TP-2's Cancelled-in-window and Scheduled-in-window cases are planned but not yet in the HMS-7 test code. Add them on this branch before merge, or as a follow-up?
+**Why it matters:** S-1 AC2 lists Cancelled and Scheduled appointments inside the window; the unit-test review noted only Completed and an out-of-window Scheduled appointment are exercised.
+**Evidence:** artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#stories
+**Options:**
+  A. Add on this branch before merge
+  B. Follow-up ticket
+**Proposed default:** Add on this branch before merge: two bookings in the existing doctors-no-shows fixture, one cancelled and one left Scheduled earlier on the same day.
 answer:
 answered_by:
 decision:

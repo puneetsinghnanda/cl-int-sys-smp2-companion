@@ -1,0 +1,209 @@
+{
+  "artifact_sha256": "902eb73004d4e3d703f5752e6be25fea8026bdfccebfd694f1647c8d5dcfeef3",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "no page is tested end to end in a browser",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "GET /api/doctors/:id adds `noShowsLast30Days`: integer ≥ 0",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`doctorId` must be spelled exactly: the list ignores unknown query keys",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the link opens on page 1 and AC2 compares `total`, not the page length",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#overview"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Cancelled-in-window and Scheduled-in-window are still to add (U-1, Q-01)",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md#tests"
+        },
+        {
+          "quote": "every acceptance criterion is covered by at least one test",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md#known"
+        },
+        {
+          "quote": "Scheduled, Completed or Cancelled appointments inside it, when staff open the page, then none of them is counted",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md#stories"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "In Known, mark S-1/AC2 as partly automated until the two TP-2 cases are added, or add them to the doctors-no-shows fixture as Q-01's default proposes.",
+      "text": "Known says every AC is covered, but S-1/AC2's Cancelled-in-window and Scheduled-in-window exclusions (TP-2) are not yet in the test code. The plan says so and tracks it as U-1/Q-01, but the coverage claim overstates what is automated today."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "HMS-3 REQ-2/REQ-4: counts a No-show that starts in the selected period",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts"
+        },
+        {
+          "quote": "TP-1 (integration) — S-1/AC1: count of the doctor's No-shows in the window.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Give each TP the HMS-7 REQ-n prefix its test name should start with (for example TP-1 -&gt; 'HMS-7 REQ-1/REQ-4:').",
+      "text": "The strategy requires test names to start with the requirement ID, and existing HMS tests use 'HMS-n REQ-x:' prefixes. The plan restates the rule (C4) but maps tests only to S/AC and never gives the REQ-ID prefix each TP test should carry."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "In api/test/periods.test.ts, plus the day-30/day-31 case in the API test.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Keep TP-7 as the unit test of the shared rule, and move the API day-30/day-31 case under TP-2 or a separate integration TP.",
+      "text": "TP-7 is labelled unit, but its day-30/day-31 boundary case runs in the API integration test. The test therefore spans two levels under a single label."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "DOC-3: shows details, availability and upcoming appointments",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors.test.ts"
+        },
+        {
+          "quote": "GET /api/doctors/:id — changed: adds `noShowsLast30Days` and `noShowsWindow`.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/design.md#components"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Add the existing DOC-3 (and DOC-4 for PATCH) tests to TP-13, or add a regression TP for S-1/AC5.",
+      "text": "GET /api/doctors/:id changes, but the existing DOC-3 detail test in api/test/doctors.test.ts is not listed as a regression guard for S-1/AC5. Only the dashboard tests are named as regression guards (TP-13)."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "TP-6 (unit) — S-1/AC5: other sections still render.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md#tests"
+        },
+        {
+          "quote": "TP-11 (integration, negative for the new field) — S-1/AC1: PATCH cannot set the read-only count.",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md#tests"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Name the target test file for every TP.",
+      "text": "Several tests do not say which file they go in (TP-5, TP-6, TP-8 to TP-12), while TP-1, TP-3, TP-4 and TP-7 do. A tester has to guess where these tests live."
+    }
+  ],
+  "package_sha256": "0bb14b942f8c7e8970890cbd83c199a8c1bf32bee2e852814572a1ada6b0c306",
+  "questions": [],
+  "recorded_at": "2026-11-03T09:50:29Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a7e4cd01bffc681bc7443aed42ef23662c90ade0f10041218e411bf63472d10f",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "The coverage map assigns at least one test to all 8 ACs in S-1 and S-2. S-1/AC2 is only partly automated: the Cancelled-in-window and Scheduled-in-window cases are still missing (U-1).",
+      "score": 4
+    },
+    {
+      "id": "TP-R2",
+      "reason": "API behaviour is tested at integration level, the page with jsdom unit tests and window logic with unit tests. There is one manual browser check because no e2e suite exists. TP-7 is labelled unit but also relies on an API integration case.",
+      "score": 4
+    },
+    {
+      "id": "TP-R3",
+      "reason": "Negative tests cover the new field (TP-11, PATCH cannot set it) and the changed endpoint (TP-12, unknown id still 404). Boundary tests cover day 30 vs day 31 (TP-7), after-today exclusion (TP-2) and the zero count (TP-5, TP-10).",
+      "score": 5
+    },
+    {
+      "id": "TP-R4",
+      "reason": "Tools and folders match the strategy: Supertest on throwaway PostgreSQL with a fixed clock, jsdom with Testing Library, api/test and web/src/__tests__. The plan does not state the requirement-ID test names the strategy requires.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are concrete and a tester can run them, and the coverage map is explicit. Several tests (TP-5, TP-6, TP-8 to TP-12) do not name the file they go in.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}

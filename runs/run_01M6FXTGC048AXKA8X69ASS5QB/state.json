@@ -61,7 +61,7 @@
       "step": "design"
     }
   ],
-  "heartbeat_at": "2026-11-03T09:40:55Z",
+  "heartbeat_at": "2026-11-03T09:50:34Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -99,10 +99,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 5,
-    "round": 2
+    "open_non_blocking": 6,
+    "round": 3
   },
-  "rev": 50,
+  "rev": 53,
   "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -539,7 +539,36 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.md",
+          "artifact_sha256": "902eb73004d4e3d703f5752e6be25fea8026bdfccebfd694f1647c8d5dcfeef3",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-03T09:50:33Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "stories",
+              "sha256": "4efeb373d4d22b7d74c2c0ec55e82009f5ddb45abe3a9bc94a490c762f071910",
+              "step": "split"
+            },
+            {
+              "name": "design",
+              "sha256": "215531f1ce96acf3cbf36175d23fe9f75a7d793b88397e524abe7591fb3b1056",
+              "step": "design"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/tplan.verification.json",
+          "skill": "test-plan@1.0.1",
+          "skill_started_at": "2026-11-03T09:43:37Z",
+          "started_at": "2026-11-03T09:42:21Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -548,7 +577,7 @@
       },
       "id": "tplan",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -559,7 +588,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-7",
-  "updated_at": "2026-11-03T09:40:55Z",
+  "updated_at": "2026-11-03T09:50:34Z",
   "workflow": "brownfield-change@1.3.0",
   "workflow_sha256": "5ebb9e61535bf2b17ee83e2b4eba0600c075e9b67a5a43df59f2ac08842a3255"
 }
