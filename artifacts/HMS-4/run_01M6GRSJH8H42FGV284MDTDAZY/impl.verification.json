@@ -1,0 +1,81 @@
+{
+  "accepted_default": true,
+  "artifact_path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impl.md",
+  "artifact_sha256": "76ccc918ec49f6c63a2895b0ee2a9e14e10e11da16a4b7788892428ba3d7b0d4",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "34138bc7931ae117c7356a5120ca0ed9e6d4d4610268993664ad1f412dfb0afe",
+  "claims": {
+    "total": 8,
+    "verified": 8
+  },
+  "decided_at": "2026-11-03T15:26:18Z",
+  "decided_by": "tsl@0.1.5",
+  "findings_dropped": [
+    {
+      "id": "F-2",
+      "reason": "anchor not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md",
+      "sha256": "f9caf706ba92848aaa8be4ce155d2505c138a5e39292e0c5527eedec728526bd",
+      "verification_sha256": "993d0c1fea0d91933ce43eb57b33f0af79ed7d85ede8087960977301a26b8709"
+    },
+    {
+      "path": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md",
+      "sha256": "1097c5a30f050a771deca3a06a8eb429ba26a1b31dd0aada1164d17b95a31518",
+      "verification_sha256": "a4987912a1f08c9b12febc8a5fddb5d7be85e8f3982bc7a7b156e71315268b3c"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc",
+      "diff_sha256": "bac1bbb41ebf62465b8bd782879d03bcbfa575a00adde477549e15542d8c89b7",
+      "repo": "sample-system",
+      "tree_sha": "93dafae15ebba86de316657c932afb5ce0039a1c"
+    }
+  ],
+  "review_sha256": "84cd053a033e3f802d8e3c5f8ad5fbbce2e09ef607f46a4146a05861e786fe1c",
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9091,
+    "S2": 1.0,
+    "S3": 4.7,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 7,
+      "lines": 127,
+      "sensitive": false
+    }
+  },
+  "signature": "vGJIc4iacCQxGsujxduSCofuWklW8v8G4A-oOqgt4zeiHx0hx3rHMN20FnSTGfykCXkFwnSOAUJQY74MdfeeDA",
+  "skill": "implement@1.1.0",
+  "step": "impl",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

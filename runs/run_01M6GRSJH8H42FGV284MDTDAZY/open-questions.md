@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M6GRSJH8H42FGV284MDTDAZY
 ticket: HMS-4
 workflow: brownfield-change@1.4.0
-step: threat@1.1.0
+step: impl@1.1.0
 created_at: '2026-11-03T13:46:15Z'
 status: open
 ---
@@ -59,6 +59,18 @@ decision:
   A. accept for MVP
   B. block until sign-in exists
 **Proposed default:** accept for MVP; the list already shows Next appointment with the same exposure
+answer:
+answered_by:
+decision:
+
+## Q-06 · non-blocking · ask: tech lead · round 5
+**Question:** Draft PR 7 from the earlier HMS-4 run makes the same change; should it be closed once this run's PR is open?
+**Why it matters:** The user chose to build fresh from main (A-07), so two open PRs for HMS-4 would compete.
+**Evidence:** runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-07
+**Options:**
+  A. close PR 7
+  B. keep both open
+**Proposed default:** close PR 7 after this run's PR opens
 answer:
 answered_by:
 decision:

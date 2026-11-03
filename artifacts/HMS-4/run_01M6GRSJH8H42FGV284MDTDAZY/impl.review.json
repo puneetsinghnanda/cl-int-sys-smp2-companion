@@ -1,0 +1,185 @@
+{
+  "artifact_sha256": "76ccc918ec49f6c63a2895b0ee2a9e14e10e11da16a4b7788892428ba3d7b0d4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientRepo\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientService\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        },
+        {
+          "quote": "return { items, page, page_size: size, total };",
+          "ref": "sample-system:api/src/services/patientService.ts#L35"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientsPage\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:PatientsPage"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"startsAt\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientsPage.tsx:startsAt"
+        },
+        {
+          "quote": "&lt;td&gt;{p.lastVisitAt ? startsAt(p.lastVisitAt, timeZone) : '-'}&lt;/td&gt;",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L87"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "an ISO 8601 UTC instant string, or null when the patient has no Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/design.md#claim:C13"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "expect(shown).toMatch(/10/);",
+          "ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L83-L84"
+        },
+        {
+          "quote": "01:00 Kolkata on 10 March for 19:30 UTC on 9 March",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/impl.md#changes"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Assert the exact formatted string expected for 2026-03-09T19:30:00.000Z in Asia/Kolkata (date 10 March, 01:00), and add the S-1 AC3 23:45 case.",
+      "text": "The REQ-5/REQ-6 web test only checks the text against /10/ plus equality with Next appointment. It does not pin '10 March 01:00', so it would not catch a time-zone regression that changed both columns the same way."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "expect(all).toMatchObject({ page: 1, page_size: 20, total: 2 });",
+          "ref": "sample-system:api/test/patients-last-visit.test.ts#L54"
+        },
+        {
+          "quote": "the 21st patient is the only row on page two",
+          "ref": "artifacts/HMS-4/run_01M6GRSJH8H42FGV284MDTDAZY/split.md#s-3"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add a test with 21 patients, where some have several Completed appointments, and check that page two holds only the 21st.",
+      "text": "The REQ-9 to REQ-11 API test uses a 2-patient fixture, so '20 per page' is only checked as page_size. S-3 AC1 (21 patients, the 21st alone on page two) is not exercised, but the artifact says the tests cover it."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "answer: Proceed, re-check in implement (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-06"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a Known line saying the cited pack facts (PatientRepo, PatientService, PatientsPage, startsAt) were checked against base c2709e1.",
+      "text": "Impact answer A-06 said to proceed on the stale context pack and re-check it in implement. impl.md confirms CO-2 and CO-6 against the code but does not record that re-check or its result."
+    }
+  ],
+  "package_sha256": "cf7d4d1c198c7ee85f23e2bdd71dd0ac9845f34b1fe14d0134baef969854f522",
+  "questions": [],
+  "recorded_at": "2026-11-03T15:26:15Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-7 and EP-1 are all handled. There is a COMPLETED lateral join with LIMIT 1, lastVisitAt is mapped to ISO or null, the column uses the same startsAt/dateTime call, and the design's CO-2 and CO-6 assumptions were checked against the code.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL stays in api/src/repositories, the service passes data through, all parameters are bound, the list shape and 20 per page are kept, and no logging or migration was added.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Seven files changed (+122/-5), all of them types, repo, page or tests. The router and service were left untouched, and the GEN-SIZE-01 size check passed.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "A null lastVisitAt shows '-' and a bad time zone falls back through startsAt. No new endpoint. Some edge tests are weak: the zone check is loose and the paging test uses only 2 patients.",
+      "score": 4
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary matches the diff file by file. It overstates what the REQ-9 and REQ-6 tests prove and does not record the stale-pack re-check that A-06 asked implement to do.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
