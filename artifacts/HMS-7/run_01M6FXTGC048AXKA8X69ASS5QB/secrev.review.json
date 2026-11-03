@@ -1,0 +1,144 @@
+{
+  "artifact_sha256": "754f9f56f4d1021adfba43d5188040f541c27bb7eb82e1667067bef1449ad2cc",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "routes call `requirePermission`",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AppointmentRepo (changed): `countByDoctor(doctorId, status, from, to)`",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "built with URLSearchParams by the exported `noShowsQuery`",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the unknown-id 404 still happens before the count (`sample-system:api/src/services/doctorService.ts#L71`)",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/secrev.md#summary"
+        },
+        {
+          "quote": "if (!doctor) throw notFound(`Doctor ${formatCode('D', id)} not found`);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L65"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/src/services/doctorService.ts#L65 for the 404.",
+      "text": "The 'unknown-id 404 still happens before the count' check cites doctorService.ts#L71. That line is the HMS-7 comment. The notFound throw is at L65."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "count exposed under the existing doctor read permission; revisit when sign-in is added",
+          "ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/secrev.md#findings"
+        },
+        {
+          "quote": "requirePermission('doctors:read'),",
+          "ref": "sample-system:api/src/routes/doctors.ts#L30"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add sample-system:api/src/routes/doctors.ts#L30 (the doctors:read guard on GET /api/doctors/:id) to SF-1's cites.",
+      "text": "SF-1 is about the permission that serves the count. It cites the service return line, not the place where the read permission is declared on the GET route."
+    }
+  ],
+  "package_sha256": "23156d5f7ed2de4aa7f4a5662fa87d1043c7e0b54270da7fd9e9d5c0452fd0ed",
+  "questions": [],
+  "recorded_at": "2026-11-03T09:40:52Z",
+  "recorded_by": "tsl@0.1.5",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "a072043cdc75429da7a74739c7595f776931c84977ad2f4ec41cd132543686c0",
+    "skill": "review",
+    "version": "0.1.5"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "No missed weakness found. No new route. countByDoctor uses bind parameters, the link uses URLSearchParams, the count renders as React text, no patient fields are added, and a PATCH test shows the read-only field cannot be set.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-2 and most checked-fine cites point to the exact line. The 404 cite points to a comment line (L71) instead of the throw at L65, and SF-1 cites the return line instead of the route permission line.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Both findings are rightly minor. In the MVP every permission is granted, so SF-1 is a design note. SF-2 is a bounded, indexed per-doctor count. No blocker or major triggers apply.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "The fix directions are clear but deferred: decide on a permission when sign-in lands, and keep the count per doctor. Neither names a concrete check or owner.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "Both findings hold up against the source, and none is a false positive.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "754f9f56f4d1021adfba43d5188040f541c27bb7eb82e1667067bef1449ad2cc",
+  "package_sha256": "23156d5f7ed2de4aa7f4a5662fa87d1043c7e0b54270da7fd9e9d5c0452fd0ed",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.5",
+    "rubric_sha256": "a072043cdc75429da7a74739c7595f776931c84977ad2f4ec41cd132543686c0"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "No missed weakness found. No new route. countByDoctor uses bind parameters, the link uses URLSearchParams, the count renders as React text, no patient fields are added, and a PATCH test shows the read-only field cannot be set."},
+    {"id": "SC-R2", "score": 4, "reason": "SF-2 and most checked-fine cites point to the exact line. The 404 cite points to a comment line (L71) instead of the throw at L65, and SF-1 cites the return line instead of the route permission line."},
+    {"id": "SC-R3", "score": 5, "reason": "Both findings are rightly minor. In the MVP every permission is granted, so SF-1 is a design note. SF-2 is a bounded, indexed per-doctor count. No blocker or major triggers apply."},
+    {"id": "SC-R4", "score": 4, "reason": "The fix directions are clear but deferred: decide on a permission when sign-in lands, and keep the count per doctor. Neither names a concrete check or owner."},
+    {"id": "SC-R5", "score": 5, "reason": "Both findings hold up against the source, and none is a false positive."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The 'unknown-id 404 still happens before the count' check cites doctorService.ts#L71. That line is the HMS-7 comment. The notFound throw is at L65.",
+      "cites": [
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/secrev.md#summary", "quote": "the unknown-id 404 still happens before the count (`sample-system:api/src/services/doctorService.ts#L71`)"},
+        {"ref": "sample-system:api/src/services/doctorService.ts#L65", "quote": "if (!doctor) throw notFound(`Doctor ${formatCode('D', id)} not found`);"}
+      ],
+      "suggested_fix": "Cite sample-system:api/src/services/doctorService.ts#L65 for the 404."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "SF-1 is about the permission that serves the count. It cites the service return line, not the place where the read permission is declared on the GET route.",
+      "cites": [
+        {"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/secrev.md#findings", "quote": "count exposed under the existing doctor read permission; revisit when sign-in is added"},
+        {"ref": "sample-system:api/src/routes/doctors.ts#L30", "quote": "requirePermission('doctors:read'),"}
+      ],
+      "suggested_fix": "Add sample-system:api/src/routes/doctors.ts#L30 (the doctors:read guard on GET /api/doctors/:id) to SF-1's cites."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "SQL in `api/src/repositories`"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary", "quote": "AppointmentRepo (changed): `countByDoctor(doctorId, status, from, to)`"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md#summary", "quote": "built with URLSearchParams by the exported `noShowsQuery`"}]}
+  ],
+  "questions": []
+}
