@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "test exit 1; log runs/run_01M6FXTGC048AXKA8X69ASS5QB/verifier/ut/a1/test.log: - If the error occurred after the test had been completed, this was the last documented test before it was thrown. | npm error Lifecycle script `test` failed with error: | npm error code 1 | npm error path /cache/w/web | npm error workspace @hms/web@0.1.0 | npm error location /cache/w/web | npm error command failed | npm error command sh -c vitest run",
+      "id": "H3"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3"
+  ],
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

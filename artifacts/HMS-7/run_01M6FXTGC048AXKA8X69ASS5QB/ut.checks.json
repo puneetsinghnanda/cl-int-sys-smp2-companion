@@ -1,0 +1,149 @@
+{
+  "artifact_sha256": "3043111584ee192a5e0eeaf839d04b9574375384fd7be732be631a78d8439f5d",
+  "attempt": 1,
+  "finished_at": "2026-11-03T09:14:34Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [
+        "E-H3-02"
+      ],
+      "detail": "test exit 1; log runs/run_01M6FXTGC048AXKA8X69ASS5QB/verifier/ut/a1/test.log: - If the error occurred after the test had been completed, this was the last documented test before it was thrown. | npm error Lifecycle script `test` failed with error: | npm error code 1 | npm error path /cache/w/web | npm error workspace @hms/web@0.1.0 | npm error location /cache/w/web | npm error command failed | npm error command sh -c vitest run",
+      "id": "H3",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/impl.md",
+      "sha256": "62586154589c341a2efe7ee5696ec741d288b17b601ec7084da8a07b98468299",
+      "verification_sha256": "2e3bd7ec6956755b471910b1c75a725e0ee4af712b388b7074cb66bddc47a018"
+    },
+    {
+      "path": "artifacts/HMS-7/run_01M6FXTGC048AXKA8X69ASS5QB/split.md",
+      "sha256": "4efeb373d4d22b7d74c2c0ec55e82009f5ddb45abe3a9bc94a490c762f071910",
+      "verification_sha256": "f39bda30ada54f25ca40a1233966aff11fcad851d2c57cc64440a50db0203bc5"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "676aad38a615151dc650b7c745d666fa6c6bce38",
+      "diff_sha256": "e9a847af3eaa9f313cc9c402a64974a4088ca3cd00f9d7e1820738310407e9df",
+      "files": [
+        "api/test/doctors-no-shows.test.ts",
+        "api/test/periods.test.ts",
+        "web/src/__tests__/DoctorDetailPage.test.tsx"
+      ],
+      "lines_added": 188,
+      "lines_deleted": 0,
+      "repo": "sample-system",
+      "tree_sha": "486e927063123988ce9119a52eba4244e2bb4400"
+    }
+  ],
+  "run_id": "run_01M6FXTGC048AXKA8X69ASS5QB",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-03T09:11:47Z",
+  "step": "ut",
+  "tool_log_sha256": "a6e4a59bb86ed729308cf601911c643a5e8b407e85cdffb0163140d6320cae47",
+  "tsl_version": "0.1.5",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 15077,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 37952,
+        "exit_code": 1,
+        "name": "test",
+        "report_sha256": null,
+        "status": "fail"
+      },
+      {
+        "duration_ms": 4828,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "5153c38ff01bafd921df83f2c54f1ec3c8678386404f6e0ccab2ce01ef170399",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 58530,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "133fba9d2dd343ce59334f4ad1dd27e5a7a11f1b8ff5e59e1c123e4507a9ef12",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 2438,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1530,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}
