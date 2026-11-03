@@ -1,0 +1,178 @@
+{
+  "active_session": {
+    "host_hash": "h_c14537ff",
+    "session_id": "00a12ffe-9788-4235-8f9b-840b0ec3521e",
+    "since": "2026-11-03T13:15:21Z"
+  },
+  "branch": {},
+  "created_at": "2026-11-03T13:15:21Z",
+  "cursor": null,
+  "end_reason": null,
+  "gates": [],
+  "heartbeat_at": "2026-11-03T13:15:21Z",
+  "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "owner_pseudonym": "eng-dbe4",
+  "pack": {
+    "checked_offline": false,
+    "commits_behind": {
+      "sample-system": 3
+    },
+    "drift_files": {
+      "sample-system": 16
+    },
+    "fresh": true,
+    "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+    "reasons": [],
+    "signed_at": "2026-10-27T11:05:02Z",
+    "source_sha": {
+      "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    }
+  },
+  "pinned": {
+    "plugin": "0.1.5",
+    "skills": {
+      "design": "1.7.0",
+      "impact-analysis": "1.3.0",
+      "implement": "1.1.0",
+      "requirement-review": "1.2.0",
+      "secure-code-review": "1.1.0",
+      "story-split": "1.2.0",
+      "test-plan": "1.1.0",
+      "threat-model": "1.1.0",
+      "unit-test": "1.1.0"
+    },
+    "tsl": "0.1.5"
+  },
+  "prs": [],
+  "questions": {
+    "answered_sha256": {},
+    "open_blocking": 0,
+    "open_non_blocking": 0,
+    "round": 0
+  },
+  "rev": 0,
+  "run_id": "run_01M6GRSJH8H42FGV284MDTDAZY",
+  "schema": "run-state.v1",
+  "status": "RUNNING",
+  "steps": [
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "req",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "split",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "impact",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "design",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "threat",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "impl",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "ut",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "secrev",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "tplan",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "id": "pr",
+      "kind": "pr",
+      "status": "PENDING"
+    }
+  ],
+  "system": "SYS-SMP2",
+  "ticket": "HMS-4",
+  "updated_at": "2026-11-03T13:15:21Z",
+  "workflow": "brownfield-change@1.4.0",
+  "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
+}
