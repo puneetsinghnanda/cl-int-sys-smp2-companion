@@ -85,6 +85,50 @@
     },
     {
       "framework": "unknown",
+      "id": "test:sample-system:api/test/doctors-no-shows.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/doctors-no-shows.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "HMS-7 REQ-1/REQ-2: the doctor detail counts the doctor’s No-shows in the last 30 days",
+        "HMS-7 REQ-2: Completed and Scheduled appointments are not counted",
+        "HMS-7 REQ-5: a doctor with no No-shows shows 0",
+        "HMS-7 REQ-4: the count equals the dashboard 30d No-shows when only this doctor has any",
+        "HMS-7 REQ-6/REQ-7: the linked list holds exactly the counted appointments, for a count and for 0",
+        "HMS-7 REQ-3 edge: counted on day 30, gone on day 31",
+        "HMS-7 REQ-8 error: an unknown doctor is still 404",
+        "HMS-7 REQ-8: the read-only count in a PATCH body is ignored",
+        "HMS-7 REQ-8: the doctor detail carries no patient contact details or medical history"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/doctors-today.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/doctors-today.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "HMS-6 REQ-5: a doctor with no appointments today shows 0",
+        "HMS-6 REQ-2: the day follows the clock, so Tuesday counts only Tuesday",
+        "HMS-6 REQ-3: a Cancelled appointment is not counted",
+        "HMS-6 REQ-3: Completed and No-show appointments still count",
+        "HMS-6 REQ-8, REQ-9: keeps 20 per page and the order by name",
+        "HMS-6 REQ-10: filters and search still apply, and the count follows the filtered rows",
+        "HMS-6 REQ-10: a search with no match returns an empty page",
+        "HMS-6: without with_today the list and the detail are unchanged",
+        "HMS-6: an invalid with_today is rejected with a field error"
+      ]
+    },
+    {
+      "framework": "unknown",
       "id": "test:sample-system:api/test/doctors.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
@@ -175,6 +219,22 @@
     },
     {
       "framework": "unknown",
+      "id": "test:sample-system:api/test/periods.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/periods.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "lastDays (HMS-7)",
+        "HMS-7 REQ-2/REQ-4: 30 days ends today and starts 29 days earlier, as the dashboard 30d period",
+        "HMS-7 REQ-2 edge: 1 day is exactly today, as the dashboard Today period"
+      ]
+    },
+    {
+      "framework": "unknown",
       "id": "test:sample-system:api/test/reference.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
@@ -233,6 +293,39 @@
     },
     {
       "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/DoctorDetailPage.test.tsx",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "DoctorDetailPage No-shows (HMS-7)",
+        "HMS-7 REQ-5/REQ-7: a doctor with none shows 0, still linked",
+        "HMS-7 REQ-8: the other sections are still shown",
+        "HMS-7 REQ-6 edge: noShowsQuery uses the exact parameter names the list reads"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:web/src/__tests__/DoctorsPage.test.tsx",
+      "kind": "test",
+      "module": "module:sample-system:web",
+      "source": {
+        "line": 1,
+        "path": "web/src/__tests__/DoctorsPage.test.tsx",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "DoctorsPage Today column (HMS-6)",
+        "HMS-6 REQ-1, REQ-11: adds a Today column after the existing columns",
+        "HMS-6 REQ-5: a doctor with no appointments today shows 0, still linked"
+      ]
+    },
+    {
+      "framework": "unknown",
       "id": "test:sample-system:web/src/__tests__/PatientsPage.test.tsx",
       "kind": "test",
       "module": "module:sample-system:web",
@@ -243,7 +336,11 @@
       },
       "titles": [
         "PatientsPage next appointment column (HMS-2)",
-        "HMS-2: an upcoming appointment still shows its doctor, linked to the appointment"
+        "HMS-2: an upcoming appointment still shows its doctor, linked to the appointment",
+        "PatientsPage match count (LIVE-1)",
+        "REQ-1, REQ-5: shows every match from total, not only the rows on this page",
+        "REQ-2: the count follows a change of the search text",
+        "REQ-1: a failed list request shows the error and no count line"
       ]
     },
     {
@@ -294,7 +391,7 @@
   "schema": "context-facts.v1",
   "section": "test-layout",
   "sources": {
-    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
   },
   "unresolved": []
 }

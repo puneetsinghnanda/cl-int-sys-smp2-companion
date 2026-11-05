@@ -1,14 +1,14 @@
 {
-  "key_id": "key_01M4XJT7GR7CVFKJS8XBMP6DH8",
-  "manifest_sha256": "c16eab23d1f3d7ee7f2905b21e569bd5fc48a08b30c86f676694053c2223b425",
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
   "role": "tech_lead",
   "schema": "pack-signature.v1",
-  "signature": "1n2sy5pVK8_IZRoB4sdxf2GR9qiYra5evuV3YKFz8kV98X_08pvwiZ_-CYp8FYJG1Tla5uws0rlOx16vTZ4oCQ",
-  "signed_at": "2026-10-27T11:05:02Z",
-  "signed_by": "eng-db6b",
+  "signature": "nIvT-NdHkU8pYUJnVtRC6vSY6m-Be4rU4yJ7nqVTYxp9LqIGpP8w4_zHW_pM6Jf4atBDHFC8yFbDEin9HiYiCg",
+  "signed_at": "2026-11-03T10:45:54Z",
+  "signed_by": "eng-3c51",
   "sources": {
-    "sample-system": "bd98ff08b83f8762c5e5c073ba5fadef88169b33"
+    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
   },
   "system": "SYS-SMP2",
-  "tsl": "0.1.3"
+  "tsl": "0.1.5"
 }
