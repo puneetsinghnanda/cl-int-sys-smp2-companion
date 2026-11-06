@@ -1,0 +1,211 @@
+{
+  "artifact_sha256": "1168fee55fbbd9e4ff37542b7b75f4df9891b9661d71ba362a31a9dbe87fe7e1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect(res.body).toMatchObject({ status: 'CANCELLED', cancellationReason: 'Patient requested' });",
+          "ref": "sample-system:api/test/appointments.test.ts#L64"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "vi.stubGlobal('fetch', fetchMock);",
+          "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L27"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "const results = await Promise.all([book(app, 1, 1, TUESDAY, '10:00'), book(app, 1, 2, TUESDAY, '10:00')]);",
+          "ref": "sample-system:api/test/appointments.test.ts#L46"
+        },
+        {
+          "quote": "expect(res.body.total).toBe(all.total - cancelled.total);",
+          "ref": "sample-system:api/test/appointments.test.ts#L104"
+        },
+        {
+          "quote": "then the Scheduled, Completed and No-show appointments are listed and the Cancelled one is not",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L134"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Book deterministic Scheduled, Completed, No-show and latest-starting Cancelled appointments for one doctor and day. Assert that exactly the three non-cancelled ids are returned (this also covers S-4 AC2).",
+      "text": "The NOT_CANCELLED API test uses patient 1. The fixture books no appointments, and in this suite patient 1 has only Cancelled appt 1 plus maybe the racy APT-4 Tuesday slot. No Completed or No-show row is checked (S-4 AC1), and the test passes when zero rows come back."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-14]",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/ut.md#L45"
+        },
+        {
+          "quote": "plus the same exclusion rule as the count (C4)",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impl.md#L99"
+        },
+        {
+          "quote": "then that appointment is listed and the listed number still equals the Today count",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L142"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Add an API test. Book appointments for a doctor today, including one at 00:30 Asia/Kolkata and one Cancelled. Assert that GET /api/appointments with doctorId, status=NOT_CANCELLED and from=to=today has a total equal to the doctors list's today_count.",
+      "text": "REQ-10 has no test, and ut.md leaves it out of trace. The change relies on the list using the Today count's rule, yet no test checks that the NOT_CANCELLED list for today equals today_count, including the 00:30 local-time edge."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const body = input.startsWith('/api/doctors/1')",
+          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L16"
+        },
+        {
+          "quote": "then the chooser shows that Inactive doctor's name",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L119"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Route /api/doctors/:id to the matching doctor in the mock, and add a test for '/appointments?doctorId=2' that expects LABEL_2.",
+      "text": "S-1 AC4 (an Inactive doctor opened from a link shows its name) is not tested. The fetch mock answers only /api/doctors/1 with a doctor, so /api/doctors/2 would get the list body."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "expect(screen.queryByText(/doctorId/)).toBeNull();",
+          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L40"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Assert that the chooser area shows no bare id, for example that no element's exact text is '1'.",
+      "text": "The REQ-1 'not the id' assertion looks for the text 'doctorId', not the id value, so it would not catch the raw id 1 being shown."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "renderAt('/appointments?status=SCHEDULED&amp;from=2026-10-01&amp;to=2026-10-31')",
+          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L71"
+        },
+        {
+          "quote": "when staff select Clear All, then no doctor, patient, status or date filter is left set",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L129"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "text": "The Clear All test covers only S-3 AC2 (status and dates). AC1 (doctor, patient, status and dates all set) is not tested, yet ut.md says the test clears every filter."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "for (const kept of ['patientId=5', 'status=SCHEDULED', 'from=2026-10-01', 'to=2026-10-31'])",
+          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L62"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Move the kept parameters into a constant or a helper.",
+      "text": "The kept-filter assertion loop appears twice in the REQ-4/REQ-5/REQ-14 test (duplicate setup code)."
+    }
+  ],
+  "package_sha256": "7ea55262f034efdbd892eb16669aff4d75c8bbd6a102c5f4b7c2cd806a9f93d0",
+  "questions": [],
+  "recorded_at": "2026-11-06T09:16:45Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Service, repo and AppointmentsPage get tests, but nothing tests REQ-10 (Today link list equals the count, including the Asia/Kolkata midnight edge). Nothing tests the Inactive doctor opened from a link, or Completed and No-show being included.",
+      "score": 3
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Most assertions check URLs, labels and status codes. The NOT_CANCELLED API test can pass with zero rows, and the REQ-1 'id not shown' check looks for the text 'doctorId', not the id.",
+      "score": 3
+    },
+    {
+      "id": "UT-R3",
+      "reason": "There is an API 400 test for an unknown status. Missing: the S-4 AC2 edge (Cancelled is the latest-starting appointment), the S-5 AC2 timezone edge and the S-1 AC4 Inactive-from-link case.",
+      "score": 3
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest+Supertest and Vitest+Testing Library in the existing locations, with HMS-8 REQ-n names, as the strategy says. Minor: the kept-filter loop is duplicated.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No test or coverage numbers are stated. The artifact defers to the verifier, and checks.json shows coverage skipped (exit 78).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 3.35,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

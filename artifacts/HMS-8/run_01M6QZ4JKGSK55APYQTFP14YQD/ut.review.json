@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "1168fee55fbbd9e4ff37542b7b75f4df9891b9661d71ba362a31a9dbe87fe7e1",
-  "attempt": 1,
+  "artifact_sha256": "7aeab2da0d09f3a5b4bbcf87721ea67195f9a4b576b3d91d7220203e0894b466",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -45,8 +45,8 @@
     {
       "cites": [
         {
-          "quote": "expect(res.body).toMatchObject({ status: 'CANCELLED', cancellationReason: 'Patient requested' });",
-          "ref": "sample-system:api/test/appointments.test.ts#L64"
+          "quote": "export const NOW = new Date('2026-10-19T02:30:00Z');",
+          "ref": "sample-system:api/test/helpers.ts#L10"
         }
       ],
       "claim_id": "C5",
@@ -61,114 +61,57 @@
       ],
       "claim_id": "C6",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Kolkata is UTC+05:30 all year, so local HH:MM on a day maps to a fixed UTC instant.",
+          "ref": "sample-system:api/test/helpers.ts#L13"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
     }
   ],
   "findings": [
     {
-      "category": "correctness",
+      "category": "completeness",
       "cites": [
         {
-          "quote": "const results = await Promise.all([book(app, 1, 1, TUESDAY, '10:00'), book(app, 1, 2, TUESDAY, '10:00')]);",
-          "ref": "sample-system:api/test/appointments.test.ts#L46"
+          "quote": "Given a doctor's only appointment today is Cancelled, when staff select that doctor's Today link, then the list shows no appointments, matching a Today count of zero.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L143"
         },
         {
-          "quote": "expect(res.body.total).toBe(all.total - cancelled.total);",
-          "ref": "sample-system:api/test/appointments.test.ts#L104"
-        },
-        {
-          "quote": "then the Scheduled, Completed and No-show appointments are listed and the Cancelled one is not",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L134"
+          "quote": "today's NOT_CANCELLED list equals the doctors list's Today count, including 00:30 local",
+          "ref": "sample-system:api/test/appointments.test.ts#L158"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Book deterministic Scheduled, Completed, No-show and latest-starting Cancelled appointments for one doctor and day. Assert that exactly the three non-cancelled ids are returned (this also covers S-4 AC2).",
-      "text": "The NOT_CANCELLED API test uses patient 1. The fixture books no appointments, and in this suite patient 1 has only Cancelled appt 1 plus maybe the racy APT-4 Tuesday slot. No Completed or No-show row is checked (S-4 AC1), and the test passes when zero rows come back."
+      "severity": "minor",
+      "suggested_fix": "In the NOT_CANCELLED suite, insert one Cancelled row today for doctor 2. Assert that today_count is 0 and the NOT_CANCELLED list for today has total 0.",
+      "text": "S-5 AC3 is untested. No test sets up a doctor whose only appointment today is Cancelled and checks that the NOT_CANCELLED list is empty while today_count is 0."
     },
     {
       "category": "completeness",
       "cites": [
         {
-          "quote": "trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-14]",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/ut.md#L45"
+          "quote": "Given the list is filtered to doctor A only, when staff clear the doctor filter from the chooser, then the list shows appointments of every doctor.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L125"
         },
         {
-          "quote": "plus the same exclusion rule as the count (C4)",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impl.md#L99"
-        },
-        {
-          "quote": "then that appointment is listed and the listed number still equals the Today count",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L142"
+          "quote": "const fetchMock = renderAt(`/appointments?doctorId=1&amp;${KEPT.join('&amp;')}`);",
+          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L70"
         }
       ],
       "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Add an API test. Book appointments for a doctor today, including one at 00:30 Asia/Kolkata and one Cancelled. Assert that GET /api/appointments with doctorId, status=NOT_CANCELLED and from=to=today has a total equal to the doctors list's today_count.",
-      "text": "REQ-10 has no test, and ut.md leaves it out of trace. The change relies on the list using the Today count's rule, yet no test checks that the NOT_CANCELLED list for today equals today_count, including the 00:30 local-time edge."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "const body = input.startsWith('/api/doctors/1')",
-          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L16"
-        },
-        {
-          "quote": "then the chooser shows that Inactive doctor's name",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L119"
-        }
-      ],
-      "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "Route /api/doctors/:id to the matching doctor in the mock, and add a test for '/appointments?doctorId=2' that expects LABEL_2.",
-      "text": "S-1 AC4 (an Inactive doctor opened from a link shows its name) is not tested. The fetch mock answers only /api/doctors/1 with a doctor, so /api/doctors/2 would get the list body."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "expect(screen.queryByText(/doctorId/)).toBeNull();",
-          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L40"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Assert that the chooser area shows no bare id, for example that no element's exact text is '1'.",
-      "text": "The REQ-1 'not the id' assertion looks for the text 'doctorId', not the id value, so it would not catch the raw id 1 being shown."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "renderAt('/appointments?status=SCHEDULED&amp;from=2026-10-01&amp;to=2026-10-31')",
-          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L71"
-        },
-        {
-          "quote": "when staff select Clear All, then no doctor, patient, status or date filter is left set",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L129"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "text": "The Clear All test covers only S-3 AC2 (status and dates). AC1 (doctor, patient, status and dates all set) is not tested, yet ut.md says the test clears every filter."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "for (const kept of ['patientId=5', 'status=SCHEDULED', 'from=2026-10-01', 'to=2026-10-31'])",
-          "ref": "sample-system:web/src/__tests__/AppointmentsPage.test.tsx#L62"
-        }
-      ],
-      "id": "F-6",
-      "severity": "minor",
-      "suggested_fix": "Move the kept parameters into a constant or a helper.",
-      "text": "The kept-filter assertion loop appears twice in the REQ-4/REQ-5/REQ-14 test (duplicate setup code)."
+      "suggested_fix": "Add a test that renders '/appointments?doctorId=1', clicks Change and expects the last list call to be '/api/appointments'.",
+      "text": "S-2 AC3 is untested. The only Change test starts with the patient, status and dates set (KEPT). No test clears a doctor-only filter and checks that the list request then has no filters."
     }
   ],
-  "package_sha256": "7ea55262f034efdbd892eb16669aff4d75c8bbd6a102c5f4b7c2cd806a9f93d0",
+  "package_sha256": "e8c2a2b0fbb1bd8cb5074530f992364e3156c24cea6d9c29af3555e50bb94859",
   "questions": [],
-  "recorded_at": "2026-11-06T09:16:45Z",
+  "recorded_at": "2026-11-06T09:26:03Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -179,31 +122,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Service, repo and AppointmentsPage get tests, but nothing tests REQ-10 (Today link list equals the count, including the Asia/Kolkata midnight edge). Nothing tests the Inactive doctor opened from a link, or Completed and No-show being included.",
-      "score": 3
-    },
-    {
-      "id": "UT-R2",
-      "reason": "Most assertions check URLs, labels and status codes. The NOT_CANCELLED API test can pass with zero rows, and the REQ-1 'id not shown' check looks for the text 'doctorId', not the id.",
-      "score": 3
-    },
-    {
-      "id": "UT-R3",
-      "reason": "There is an API 400 test for an unknown status. Missing: the S-4 AC2 edge (Cancelled is the latest-starting appointment), the S-5 AC2 timezone edge and the S-1 AC4 Inactive-from-link case.",
-      "score": 3
-    },
-    {
-      "id": "UT-R4",
-      "reason": "Vitest+Supertest and Vitest+Testing Library in the existing locations, with HMS-8 REQ-n names, as the strategy says. Minor: the kept-filter loop is duplicated.",
+      "reason": "CO-1, CO-5 and CO-6 now have tests, and REQ-10 is traced and tested. Two story paths are still untested: S-5 AC3 (the only appointment today is Cancelled, so the list is empty and the count is 0) and S-2 AC3 (clearing a doctor-only filter).",
       "score": 4
     },
     {
+      "id": "UT-R2",
+      "reason": "Tests assert exact ids in start order, totals, today_count equality, exact request URLs and the select value. The no-bare-id check now matches the exact id text.",
+      "score": 5
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covered: the 400 for an unknown status, Cancelled starting last, the 00:30 Kolkata edge, the evening-before row and an Inactive doctor opened from a link. Missing: the zero-count edge (S-5 AC3).",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest with Supertest on a fresh PostgreSQL behind skipIf(pgAvailable), and Vitest with Testing Library and MemoryRouter. Names start with HMS-8 REQ-n. The duplicated loop is now in expectKept.",
+      "score": 5
+    },
+    {
       "id": "UT-R5",
-      "reason": "No test or coverage numbers are stated. The artifact defers to the verifier, and checks.json shows coverage skipped (exit 78).",
+      "reason": "No test or coverage numbers are stated. The artifact defers to the verifier, and checks.json shows tests passing and coverage skipped (exit 78).",
       "score": 5
     }
   ],
-  "rubric_score": 3.35,
+  "rubric_score": 4.5,
   "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
   "schema": "review.v1",
   "status": "ok",
