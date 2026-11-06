@@ -1,0 +1,25 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "whether or not a doctor filter is set, and the chooser lets staff clear the doctor filter.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#L47"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-2 is a compound requirement. It combines 'chooser always shown' (A-02) with 'chooser can clear the doctor filter' (ticket AC2), which are two separate behaviours with different sources."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "feedback.v1",
+  "step": "req"
+}
