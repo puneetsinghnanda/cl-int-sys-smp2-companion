@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "0ab678aa2e57c36fdfe7a7150d61dc8a24c33a343b917bf75012e6d30690d931",
-  "attempt": 1,
+  "artifact_sha256": "1affd116521dda7653d29e21cc46a16bb001666371bfd9f13bc60abf453e1d1b",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -201,26 +201,39 @@
       ],
       "claim_id": "C20",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "completeness",
       "cites": [
         {
           "quote": "expect(link.getAttribute('href')).toBe(`/appointments?doctorId=1&amp;from=${today}&amp;to=${today}`);",
           "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L62"
-        },
-        {
-          "quote": "DoctorsPage's Today link adds `status=NOT_CANCELLED` (C5).",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L135"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Under module:sample-system:web, list web/src/__tests__/DoctorsPage.test.tsx (HMS-6 Today link test) as changed for REQ-9.",
-      "text": "The existing DoctorsPage test asserts the Today link href with no status. REQ-9 adds status=NOT_CANCELLED, so this test will break, and the artifact does not list it as an affected reader."
+      "claim_id": "C21",
+      "verdict": "supported"
     },
+    {
+      "cites": [
+        {
+          "quote": "status?: AppointmentStatus;",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L43"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect(link.getAttribute('href')).toBe('/appointments?doctorId=1&amp;status=NO_SHOW&amp;from=2026-09-20&amp;to=2026-10-19');",
+          "ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L49"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
       "category": "completeness",
       "cites": [
@@ -229,36 +242,27 @@
           "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L103"
         },
         {
-          "quote": "REQ-11: the No-shows and dashboard links are read and must not change (C14, C15).",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L151"
-        }
-      ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "Add the DoctorDetailPage upcoming link and the other DashboardPage tiles to the unchanged readers for REQ-11.",
-      "text": "REQ-11 covers only the No-shows link and the dashboard tile. DoctorDetailPage's 'All upcoming appointments' link and the other dashboard status tiles also open the appointment list and must stay unchanged."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "status?: AppointmentStatus;",
-          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L43"
+          "quote": "&lt;Tile label=\"Upcoming appointments\" value={data.totals.upcoming}",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L44"
         },
         {
-          "quote": "The repository adds an exclude-Cancelled condition, and the order stays by start time (C3, C16).",
-          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L137"
+          "quote": "expect(cancelled.getAttribute('href')).toBe('/appointments?status=CANCELLED&amp;from=2026-10-19&amp;to=2026-10-19');",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L24"
+        },
+        {
+          "quote": "REQ-11: the No-shows and dashboard links are read and must not change (C14, C15, C23).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L164"
         }
       ],
-      "id": "F-3",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Note that AppointmentFilter.status widens to accept the NOT_CANCELLED filter value.",
-      "text": "The repository filter type restricts status to AppointmentStatus. Adding NOT_CANCELLED changes the AppointmentFilter interface too, not only the WHERE condition, and the artifact does not say so."
+      "suggested_fix": "Under REQ-11, list the DoctorDetailPage upcoming link (L103), the other DashboardPage tiles (L44-L58) and the DashboardPage.test href assertions as unchanged readers.",
+      "text": "Carried over from attempt 1's F-2, still open. REQ-11 lists only the No-shows link and the 'Appointments today' tile as unchanged. DoctorDetailPage's 'All upcoming appointments' link and the other DashboardPage status tiles also open the list, and they are not listed."
     }
   ],
-  "package_sha256": "7b751adaf5cefcebb97a0d4f7809ce912e543dc45312bd40d73b6326d0b51597",
+  "package_sha256": "c50ffee77e51c487874df3cd492e52a7d5d9511fff14454188c6ec04d2b83cbb",
   "questions": [],
-  "recorded_at": "2026-11-06T08:45:32Z",
+  "recorded_at": "2026-11-06T08:48:58Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -269,31 +273,31 @@
   "rubric_items": [
     {
       "id": "IA-R1",
-      "reason": "All touched modules (web, api, db), APIs and tables are listed with a change status. One indirect effect is missing: the existing web test that asserts the old Today link href.",
-      "score": 4
+      "reason": "The web, api and db modules, the three APIs and both tables are listed with a status. Attempt 1's missed reader is now listed: the DoctorsPage Today-link test (C21). The AppointmentFilter type widening is now listed too (C22).",
+      "score": 5
     },
     {
       "id": "IA-R2",
-      "reason": "Every module, API and table id is in the generated facts. All 20 claims check out against product code or context sections at the cited lines.",
+      "reason": "Every module, API and table id comes from the generated facts and is cited. All 23 claims match the product code or context at the cited lines, including the new claims C21-C23.",
       "score": 5
     },
     {
       "id": "IA-R3",
-      "reason": "It covers the No-shows link, the dashboard tile, the booking picker and jobs. It misses DoctorsPage.test's href assertion and the DoctorDetailPage 'All upcoming appointments' link under REQ-11.",
-      "score": 3
+      "reason": "It covers callers, the booking picker, jobs (C18) and the HMS-6/HMS-7 test guards. REQ-11 still leaves out two unchanged readers: the DoctorDetailPage 'All upcoming appointments' link and the other dashboard tile links, along with their tests.",
+      "score": 4
     },
     {
       "id": "IA-R4",
-      "reason": "Every status rests on a cited fact or IDE answer (A-01, A-03, A-04). The exclusive claims (only via client.ts, no jobs) are backed by reviewed context sections.",
+      "reason": "Every status rests on a cited fact or IDE answer (A-01, A-03, A-04). The exclusive claims ('only through client.ts', 'no background jobs') are backed by the cited context sections.",
       "score": 5
     },
     {
       "id": "IA-R5",
-      "reason": "Clear summary ordered by risk: REQ-10 exclusion parity, doctors paging and unchanged links. Known items map neatly to REQ groups.",
+      "reason": "The summary is clear and ordered by risk: REQ-10 exclusion parity, the test that breaks, doctor paging, then unchanged links. Each REQ group maps to its claims.",
       "score": 5
     }
   ],
-  "rubric_score": 4.3,
+  "rubric_score": 4.8,
   "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
   "schema": "review.v1",
   "status": "ok",

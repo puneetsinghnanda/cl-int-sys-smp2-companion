@@ -1,0 +1,301 @@
+{
+  "artifact_sha256": "0ab678aa2e57c36fdfe7a7150d61dc8a24c33a343b917bf75012e6d30690d931",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (f.status !== undefined) add('a.status = ?', f.status);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L70"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AND status &lt;&gt; 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L129"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "query({ doctorId: d.id, from: today, to: today })",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L86"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Clear doctor / patient filter",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L40"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{Object.entries(STATUS_LABEL).map(([v, l]) =&gt; &lt;option key={v} value={v}&gt;{l}&lt;/option&gt;)}",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctor: { id: number; code: string; fullName: string };",
+          "ref": "sample-system:api/src/types.ts#L53"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const size = this.config.pageSize;",
+          "ref": "sample-system:api/src/services/doctorService.ts#L45"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "pageSize: 20,",
+          "ref": "sample-system:api/src/config.ts#L41"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', RECORD_STATUSES);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L42"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(await api.doctors({ q, status: 'ACTIVE' }))",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L77"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctorId &amp;&amp; !labels.doctor ? api.doctor(doctorId) : undefined,",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L32"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;Link to={`/appointments?${noShowsQuery(d.id, d.noShowsWindow)}`}&gt;",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L72"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;Tile label=\"Appointments today\" value={data.totals.appointmentsToday}",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L43"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY a.starts_at, a.id LIMIT",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L79"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"module:sample-system:web\",",
+          "ref": "context/generated/module-map.json#module:sample-system:web"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"module:sample-system:api\",",
+          "ref": "context/generated/module-map.json#module:sample-system:api"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "expect(link.getAttribute('href')).toBe(`/appointments?doctorId=1&amp;from=${today}&amp;to=${today}`);",
+          "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L62"
+        },
+        {
+          "quote": "DoctorsPage's Today link adds `status=NOT_CANCELLED` (C5).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L135"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Under module:sample-system:web, list web/src/__tests__/DoctorsPage.test.tsx (HMS-6 Today link test) as changed for REQ-9.",
+      "text": "The existing DoctorsPage test asserts the Today link href with no status. REQ-9 adds status=NOT_CANCELLED, so this test will break, and the artifact does not list it as an affected reader."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "status=SCHEDULED&amp;from=${todayIn(timeZone)}`}&gt;All upcoming appointments",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L103"
+        },
+        {
+          "quote": "REQ-11: the No-shows and dashboard links are read and must not change (C14, C15).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L151"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add the DoctorDetailPage upcoming link and the other DashboardPage tiles to the unchanged readers for REQ-11.",
+      "text": "REQ-11 covers only the No-shows link and the dashboard tile. DoctorDetailPage's 'All upcoming appointments' link and the other dashboard status tiles also open the appointment list and must stay unchanged."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "status?: AppointmentStatus;",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L43"
+        },
+        {
+          "quote": "The repository adds an exclude-Cancelled condition, and the order stays by start time (C3, C16).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L137"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Note that AppointmentFilter.status widens to accept the NOT_CANCELLED filter value.",
+      "text": "The repository filter type restricts status to AppointmentStatus. Adding NOT_CANCELLED changes the AppointmentFilter interface too, not only the WHERE condition, and the artifact does not say so."
+    }
+  ],
+  "package_sha256": "7b751adaf5cefcebb97a0d4f7809ce912e543dc45312bd40d73b6326d0b51597",
+  "questions": [],
+  "recorded_at": "2026-11-06T08:45:32Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "All touched modules (web, api, db), APIs and tables are listed with a change status. One indirect effect is missing: the existing web test that asserts the old Today link href.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id is in the generated facts. All 20 claims check out against product code or context sections at the cited lines.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "It covers the No-shows link, the dashboard tile, the booking picker and jobs. It misses DoctorsPage.test's href assertion and the DoctorDetailPage 'All upcoming appointments' link under REQ-11.",
+      "score": 3
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Every status rests on a cited fact or IDE answer (A-01, A-03, A-04). The exclusive claims (only via client.ts, no jobs) are backed by reviewed context sections.",
+      "score": 5
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Clear summary ordered by risk: REQ-10 exclusion parity, doctors paging and unchanged links. Known items map neatly to REQ groups.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}

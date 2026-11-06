@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M6QZ4JKGSK55APYQTFP14YQD
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.3.0
 inputs:
   - path: artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md
@@ -80,6 +80,15 @@ claims:
   - id: C20
     text: "The API package is the module `api`."
     cites: ["context/generated/module-map.json#module:sample-system:api"]
+  - id: C21
+    text: "The existing DoctorsPage test asserts the Today link href `/appointments?doctorId=1&from=${today}&to=${today}` with no status. REQ-9 breaks it, so the test must change to expect status=NOT_CANCELLED."
+    cites: ["sample-system:web/src/__tests__/DoctorsPage.test.tsx#L62"]
+  - id: C22
+    text: "The repository filter declares `status?: AppointmentStatus`, so the filter type must widen to carry the NOT_CANCELLED filter value."
+    cites: ["sample-system:api/src/repositories/appointmentRepo.ts#L43"]
+  - id: C23
+    text: "The DoctorDetailPage test asserts the No-shows href `/appointments?doctorId=1&status=NO_SHOW&from=2026-09-20&to=2026-10-19`. It is an existing guard for REQ-11 and must keep passing unchanged."
+    cites: ["sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L49"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 assumed: []
@@ -88,10 +97,10 @@ questions: []
 modules:
   - id: module:sample-system:web
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:web", "sample-system:web/src/pages/AppointmentsPage.tsx#L40", "sample-system:web/src/pages/DoctorsPage.tsx#L86"]
+    cites: ["context/generated/module-map.json#module:sample-system:web", "sample-system:web/src/pages/AppointmentsPage.tsx#L40", "sample-system:web/src/pages/DoctorsPage.tsx#L86", "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L62"]
   - id: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:api", "sample-system:api/src/services/appointmentService.ts#L35", "sample-system:api/src/repositories/appointmentRepo.ts#L70"]
+    cites: ["context/generated/module-map.json#module:sample-system:api", "sample-system:api/src/services/appointmentService.ts#L35", "sample-system:api/src/repositories/appointmentRepo.ts#L70", "sample-system:api/src/repositories/appointmentRepo.ts#L43"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db", "context/data-model.md#appointments"]
@@ -119,22 +128,26 @@ answers: []
 ## Summary
 HMS-8 changes the web app's appointment list and the doctors list's Today link
 (module:sample-system:web). It also changes the API's appointment list filter
-(module:sample-system:api), so GET /api/appointments accepts `status=NOT_CANCELLED` (C2, C3).
+(module:sample-system:api), so GET /api/appointments accepts `status=NOT_CANCELLED` (C2, C3, C22).
 Nothing changes in the database: NOT_CANCELLED is a filter value, not a stored status (C17), and no
 job reads the filter (C18).
 
 The main risks:
 - The new filter must exclude Cancelled exactly as the Today count does (C4), or REQ-10 breaks.
+- The existing DoctorsPage test asserts the old Today href and must change with REQ-9 (C21).
 - GET /api/doctors is paged at 20 (C9, C10), so the "all doctors" chooser (A-01) cannot be one
   unpaged dropdown. A search picker like the booking page's, without the Active filter, fits (C12).
-- The No-shows link and the dashboard tile must keep their current queries (C14, C15).
+- The No-shows link and the dashboard tile must keep their current queries (C14, C15, C23).
 
 ## Impacted modules
 - module:sample-system:web: changed.
   - AppointmentsPage gets the doctor chooser, the doctor's name, Clear All and the Any except Cancelled option (C6, C7, C13).
   - DoctorsPage's Today link adds `status=NOT_CANCELLED` (C5).
-  - The DoctorDetailPage and DashboardPage links stay as they are (C14, C15).
-- module:sample-system:api: changed. The appointment service accepts NOT_CANCELLED (C2). The repository adds an exclude-Cancelled condition, and the order stays by start time (C3, C16).
+  - The DoctorsPage test (`web/src/__tests__/DoctorsPage.test.tsx`, the HMS-6 Today link test) changes to expect the new href (C21).
+  - The DoctorDetailPage and DashboardPage links and their tests stay as they are (C14, C15, C23).
+- module:sample-system:api: changed.
+  - The appointment service accepts NOT_CANCELLED (C2).
+  - The repository filter type widens (C22) and adds an exclude-Cancelled condition. The order stays by start time (C3, C16).
 - module:sample-system:db: existing. No migration (C17).
 - http:GET:/api/appointments: changed. It accepts `status=NOT_CANCELLED` (A-04, C2).
 - http:GET:/api/doctors: existing. The chooser reads it with no status filter, so Inactive doctors are included (C11, A-01). It is paged at 20 (C10).
@@ -146,9 +159,9 @@ The main risks:
 - REQ-1, REQ-2, REQ-3, REQ-14: web chooser and name, using existing GET /api/doctors and GET /api/doctors/:id (C11, C12, C13).
 - REQ-4, REQ-5: web only. The chooser changes one URL parameter and leaves the others alone.
 - REQ-6: web only. The existing clear button becomes Clear All (C6, A-03).
-- REQ-7, REQ-8: web status option, plus the API service and repository change (C2, C3, C7, A-04).
-- REQ-9, REQ-10: web Today link (C5), plus the API exclusion matching the Today count rule (C4).
-- REQ-11: the No-shows and dashboard links are read and must not change (C14, C15).
+- REQ-7, REQ-8: web status option, plus the API service, filter type and repository change (C2, C3, C7, C22, A-04).
+- REQ-9, REQ-10: web Today link (C5) and its existing test (C21), plus the API exclusion matching the Today count rule (C4).
+- REQ-11: the No-shows and dashboard links are read and must not change (C14, C15, C23).
 - REQ-12, REQ-13: page size and order are read and must not change (C10, C16).
 
 ## Assumed
