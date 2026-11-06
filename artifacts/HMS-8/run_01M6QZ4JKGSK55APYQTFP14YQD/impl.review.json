@@ -1,0 +1,192 @@
+{
+  "artifact_sha256": "64eabc5d66a4d1a05ab0755635b9faf8985e6940de2426991f73b10a90101aad",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "f.oneOf('status', [...APPOINTMENT_STATUSES, 'NOT_CANCELLED'] as const)",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L36"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (!values.includes(v)) return this.fail(name, `must be one of ${values.join(', ')}`);",
+          "ref": "sample-system:api/src/lib/validate.ts#L65"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status?: AppointmentStatus | 'NOT_CANCELLED';",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L44"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "starts_at &gt;= $2 AND starts_at &lt; $3 AND status &lt;&gt; 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L132"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "onClick={() =&gt; onChange(undefined, '')}",
+          "ref": "sample-system:web/src/components/Picker.tsx#L28"
+        },
+        {
+          "quote": "set('doctorId', id === undefined ? '' : String(id));",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L60"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;strong&gt;{selectedLabel}&lt;/strong&gt;",
+          "ref": "sample-system:web/src/components/Picker.tsx#L27"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "for (const [k, v] of Object.entries(params)) if (v !== undefined &amp;&amp; v !== '') q.set(k, String(v));",
+          "ref": "sample-system:web/src/api/client.ts#L42"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`${d.fullName} (${d.code}) · ${d.specialization.name}`",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#claim:C4"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`Only while at least one filter is set`",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#claim:C14"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const next = new URLSearchParams(params);",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L22"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "web/src/__tests__/DoctorsPage.test.tsx",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impl.md#L26"
+        },
+        {
+          "quote": "&lt;option value=\"NOT_CANCELLED\"&gt;Any except Cancelled&lt;/option&gt;",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L65"
+        },
+        {
+          "quote": "if (f.status === 'NOT_CANCELLED') where.push(\"a.status &lt;&gt; 'CANCELLED'\");",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L72"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add AppointmentsPage tests for the Picker label, keeping other filters, Clear All visibility and the NOT_CANCELLED option. Add API tests for status=NOT_CANCELLED excluding Cancelled and for an invalid status giving a 400.",
+      "text": "Only the DoctorsPage test changed. Nothing tests the new AppointmentsPage doctor Picker, the label, Clear All visibility, the Any except Cancelled option, or the API's NOT_CANCELLED filter and its 400 for other values (S-1 to S-4)."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": ": doctor.data",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L39"
+        },
+        {
+          "quote": "{value !== undefined &amp;&amp; selectedLabel ? (",
+          "ref": "sample-system:web/src/components/Picker.tsx#L25"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "When doctor.error is set, show an ErrorBanner or pass the error to the Picker's error prop.",
+      "text": "If GET /api/doctors/:id fails (for example a 404 for a stale doctorId in the URL), doctor.error is never shown. The label stays empty, the Picker shows its search box, and the list stays filtered to that id with nothing telling staff why."
+    }
+  ],
+  "package_sha256": "f8586422f28ed1802f1a1deaebef662f3dcfc80763023bc335af4ea4f027bb4a",
+  "questions": [],
+  "recorded_at": "2026-11-06T09:06:53Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 and CO-3 to CO-6 are in the diff as designed: a Picker searching with no status, the design label, the NOT_CANCELLED option and branch, Clear All gated on the five filter keys, and the Today link and its test. CO-2, CO-7 and CO-8 are unchanged.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "Validation uses Fields.oneOf, which gives the 400 ValidationError. SQL stays in the repository with bound parameters plus one fixed literal. No migration or logging changes. Build, test, lint, sast and secrets all pass.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Five files are changed, 44 lines added and 8 deleted, and all of them map to CO-1 and CO-3 to CO-6. The GEN-SIZE-01 soft check passes. No unrelated edits.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Bad status values still get a 400 and the fixed condition avoids SQL injection. But the doctor label lookup error is ignored, and none of the new list-page or API behaviour has a test.",
+      "score": 4
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The Summary and Changes sections match the diff file by file, including the Clear All condition, the Today href order and the test name.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}

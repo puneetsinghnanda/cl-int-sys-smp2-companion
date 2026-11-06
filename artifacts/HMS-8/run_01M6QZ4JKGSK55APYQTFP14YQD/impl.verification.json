@@ -1,0 +1,81 @@
+{
+  "artifact_path": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impl.md",
+  "artifact_sha256": "64eabc5d66a4d1a05ab0755635b9faf8985e6940de2426991f73b10a90101aad",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "e20b951a29f6aef703923d892e431eacfda7caa6e1c0e346f3b6fcd983355efa",
+  "claims": {
+    "total": 10,
+    "unverified": [
+      {
+        "id": "C10",
+        "reason": "element absent: `new URLSearchParams(params)` is in none of the cites"
+      }
+    ],
+    "verified": 9
+  },
+  "decided_at": "2026-11-06T09:06:54Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-2",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md",
+      "sha256": "42358b2515450494074ee4e85508c7791b3c755e3e822e4ffc47d3c48b0c96a7",
+      "verification_sha256": "f350b9cda3e3db8c92ff7091cba9efda01bfa0bf5d01e4d85fb2a984cca017a0"
+    },
+    {
+      "path": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md",
+      "sha256": "27a56fb6c5c77620388a68804cade76e555a471888785e875f98064fab7c3d95",
+      "verification_sha256": "d8aa296d092448db27f4df4bc1dd7b0e1af4b3be0f02211e47c7d1bd649b093e"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "PASS",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc",
+      "diff_sha256": "83f99d94faf5d450a74fe6da21caea7437e3d0e5d7f7e541c2792aee878a70d0",
+      "repo": "sample-system",
+      "tree_sha": "dde15588741cb3055cf14e2cbe60f2730bb488d3"
+    }
+  ],
+  "review_sha256": "bb3663c3837005550adffd1b5b09a68929cfe1671813839a32d5b739cd2a12ff",
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.75,
+    "S2": 1.0,
+    "S3": 4.8,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 5,
+      "lines": 52,
+      "sensitive": false
+    }
+  },
+  "signature": "uL2Nyd6BgRM4WCqaRf7c_2dVIRgtAK6lCRf69grxtLkNbNhHd6PCVeFy0VNwZaqdRY3UU2_nwbHaQQrhRRzOBg",
+  "skill": "implement@1.1.0",
+  "step": "impl",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
