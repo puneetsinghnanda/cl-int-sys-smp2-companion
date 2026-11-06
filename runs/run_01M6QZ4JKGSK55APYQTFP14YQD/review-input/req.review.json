@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
   "step": "req",
-  "attempt": 1,
-  "artifact_sha256": "4e7b7ddb08119624b30160d8ab04358275fb56eb433c2db20420478a66b7934a",
-  "package_sha256": "e643462b266e238703bacd58905dcc80974c0e5e4b7ba70a4f40a106cc34e019",
+  "attempt": 2,
+  "artifact_sha256": "21ea23abcc5278cf34af72ae9fd62e5fb3032e9b40fc280a88a84a26953f2670",
+  "package_sha256": "86efb069454766d0472ec5e5d2f95b9103ea0dc6bd97a65703114af6f262691c",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,47 +12,37 @@
     "version": "0.1.6",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 4.8,
+  "rubric_score": 4.75,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "Each of AC1-AC5 and the user story maps to REQ-1..REQ-13. The patient chooser and the dashboard tile are listed under Out of scope with reasons."},
-    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and can be tested. REQ-2 bundles two behaviours: the chooser is always shown, and the chooser can clear the doctor filter."},
-    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites a ticket line or an IDE answer, and nothing is invented. One claim (C5) adds an inference that its source does not contain, but no REQ depends on it."},
-    {"id": "RR-R4", "score": 5, "reason": "The clash between Inactive in the glossary and the chooser contents was raised as Q-01 with the glossary quoted, and the user answered it. No clash with the baseline was missed."},
-    {"id": "RR-R5", "score": 5, "reason": "Q-01..Q-04 were precise, offered real options and went to an engineer. None of them could have been answered from the context pack."},
+    {"id": "RR-R1", "score": 5, "reason": "AC1-AC5 map to REQ-1, REQ-4, REQ-5, REQ-7 and REQ-9 to REQ-14. The patient chooser and the dashboard tile are under Out of scope with reasons. IDE answers A-01 to A-04 map to REQ-2, REQ-3, REQ-6 and REQ-8."},
+    {"id": "RR-R2", "score": 5, "reason": "The compound REQ-2 from attempt 1 is now split into REQ-2 (always shown) and REQ-14 (chooser can clear the filter). Each REQ has one behaviour a tester can check."},
+    {"id": "RR-R3", "score": 4, "reason": "Every known REQ cites a ticket line or an IDE answer, and nothing is invented. C5 still adds an inference ('filtering past appointments is not new use') that its glossary cite does not contain."},
+    {"id": "RR-R4", "score": 5, "reason": "The clash between the glossary's Inactive entry and the chooser contents was asked as Q-01, quoting the glossary, and A-01 resolved it. No baseline clash was missed."},
+    {"id": "RR-R5", "score": 5, "reason": "Q-01 to Q-04 were precise, offered real options and went to an engineer. The context pack could not answer any of them."},
     {"id": "RR-R6", "score": 5, "reason": "The wording is plain, and glossary terms (Front-desk staff, Cancelled, Inactive) are used consistently."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "REQ-2 is a compound requirement. It combines 'chooser always shown' (A-02) with 'chooser can clear the doctor filter' (ticket AC2), which are two separate behaviours with different sources.",
-      "cites": [
-        {"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#L47", "quote": "whether or not a doctor filter is set, and the chooser lets staff clear the doctor filter."}
-      ],
-      "suggested_fix": "Split REQ-2 into two REQs: one for 'chooser always shown' citing ide-answers#a-02, and one for 'chooser offers a clear/Any doctor option' citing ticket L26."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
       "category": "traceability",
-      "text": "C5 says 'filtering past appointments is not new use', but the cited glossary entry only says Inactive items are kept for history and not offered for new use. The second half of the claim is the artifact's own inference.",
+      "text": "Carried over from attempt 1 (F-2), not fixed. C5 says 'filtering past appointments is not new use'. The cited glossary entry only says Inactive items are kept for history and not offered for new use. The second half is the artifact's own inference.",
       "cites": [
         {"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#L30", "quote": "filtering past appointments is not new use."},
         {"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}
       ],
       "claim_ref": "C5",
-      "suggested_fix": "Limit C5 to the quoted glossary text, or cite A-01 as the basis for treating filtering as allowed."
+      "suggested_fix": "Limit C5 to the glossary text, or add runs/run_01M6QZ4JKGSK55APYQTFP14YQD/ide-answers.md#a-01 as the cite for offering Inactive doctors."
     },
     {
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
       "category": "completeness",
-      "text": "When the Clear All button is shown is an open behaviour question, but it is filed under Out of scope and not under Unknown, so it is never tracked as an unknown.",
+      "text": "Carried over from attempt 1 (F-3), not fixed. When the Clear All button shows is an open behaviour question. It is filed under Out of scope, not as an unknown or an assumed REQ, so it is not tracked.",
       "cites": [
-        {"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#L193", "quote": "When the Clear All button shows (always, or only while a filter is set): the answer did not say, so the design step should state it."}
+        {"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#L200", "quote": "When the Clear All button shows (always, or only while a filter is set): the answer did not say, so the design step should state it."}
       ],
-      "suggested_fix": "Record it as an unknown that is deferred to design, or as an assumed REQ with a stated basis."
+      "suggested_fix": "Record it as an unknown deferred to design, or as an assumed REQ with a stated basis."
     }
   ],
   "claims_checked": [

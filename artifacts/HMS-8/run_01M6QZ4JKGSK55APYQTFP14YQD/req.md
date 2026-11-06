@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M6QZ4JKGSK55APYQTFP14YQD
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.2.0
 inputs:
   - path: artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/ticket.md
@@ -29,8 +29,8 @@ claims:
   - id: C5
     text: "An Inactive doctor is kept for history but `not offered for new use`; filtering past appointments is not new use."
     cites: ["context/glossary.md#inactive"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 assumed: []
 unknown: []
 requirements:
@@ -44,8 +44,8 @@ requirements:
     title: Doctor chooser always shown
     type: functional
     status: known
-    statement: "The appointment list always shows a doctor chooser (`Always shown`), whether or not a doctor filter is set, and the chooser lets staff clear the doctor filter."
-    cites: ["runs/run_01M6QZ4JKGSK55APYQTFP14YQD/ide-answers.md#a-02", "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/ticket.md#L26"]
+    statement: "The appointment list always shows a doctor chooser (`Always shown`), whether or not a doctor filter is set."
+    cites: ["runs/run_01M6QZ4JKGSK55APYQTFP14YQD/ide-answers.md#a-02"]
   - id: REQ-3
     title: Chooser offers all doctors
     type: functional
@@ -112,6 +112,12 @@ requirements:
     status: known
     statement: "The appointment list stays `ordered by start time`."
     cites: ["artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/ticket.md#L33"]
+  - id: REQ-14
+    title: Chooser can clear the doctor filter
+    type: functional
+    status: known
+    statement: "From the doctor chooser, staff can `clear the doctor filter` so the list is no longer filtered to a doctor."
+    cites: ["artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/ticket.md#L26"]
 unknowns: []
 questions: []
 answers:
@@ -153,7 +159,7 @@ meaning to Clear All (REQ-6), and every other link to the list must stay unchang
 
 ## Requirements
 - REQ-1 Show the filtered doctor's name (known): when filtered to a doctor, the list shows the doctor's name, not the id.
-- REQ-2 Doctor chooser always shown (known): the list always shows a doctor chooser, and the chooser can clear the doctor filter.
+- REQ-2 Doctor chooser always shown (known): the list always shows a doctor chooser, whether or not a doctor filter is set.
 - REQ-3 Chooser offers all doctors (known): Active and Inactive doctors are offered.
 - REQ-4 Changing the doctor keeps other filters (known): status, dates and patient filter stay.
 - REQ-5 Clearing the doctor keeps other filters (known): status, dates and patient filter stay.
@@ -165,10 +171,11 @@ meaning to Clear All (REQ-6), and every other link to the list must stay unchang
 - REQ-11 Other links unchanged (known): for example the doctor page's No-shows link.
 - REQ-12 Page size unchanged (known): 20 per page.
 - REQ-13 Order unchanged (known): ordered by start time.
+- REQ-14 Chooser can clear the doctor filter (known): from the chooser, staff can clear the doctor filter.
 
 ## Known
-- REQ-1, REQ-4, REQ-5, REQ-7, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13: stated in the ticket's acceptance criteria (L25–L33).
-- REQ-2: ticket L26, decided by A-02 (always shown).
+- REQ-1, REQ-4, REQ-5, REQ-7, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14: stated in the ticket's acceptance criteria (L25–L33).
+- REQ-2: decided by A-02 (always shown).
 - REQ-3: decided by A-01 (all doctors).
 - REQ-6: decided by A-03 (Clear All).
 - REQ-8: decided by A-04 (`status=NOT_CANCELLED`).
@@ -185,7 +192,7 @@ None open.
 Answered in the IDE:
 - A-01 (Q-01, answered by eng-3c51): which doctors the chooser offers. Answer: All doctors (proposed default). Decides REQ-3. No mismatch.
 - A-02 (Q-02, answered by eng-3c51): chooser always shown or only when filtered. Answer: Always shown (proposed default). Decides REQ-2. No mismatch.
-- A-03 (Q-03, answered by eng-3c51): what happens to "Clear doctor / patient filter". Answer: Make it a Clear All button to clear all the filters. Decides REQ-6. No mismatch: the ticket only describes today's button (C3), and AC 2 is met by the chooser (REQ-4, REQ-5).
+- A-03 (Q-03, answered by eng-3c51): what happens to "Clear doctor / patient filter". Answer: Make it a Clear All button to clear all the filters. Decides REQ-6. No mismatch: the ticket only describes today's button (C3), and AC 2 is met by the chooser (REQ-4, REQ-5, REQ-14).
 - A-04 (Q-04, answered by eng-3c51): how "Any except Cancelled" is written. Answer: status=NOT_CANCELLED (proposed default). Decides REQ-8. No mismatch.
 
 ## Out of scope
