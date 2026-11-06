@@ -1,0 +1,48 @@
+{
+  "artifact_path": "artifacts/SMOKE-1793952585/run_01M6QYG870B82B527RPZ3MNGXP/req.md",
+  "artifact_sha256": "d9a776228e1c820231ad7bada9af86b79e7d465e7081a3e0e4b7ae2f0ba8cd53",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "110e5f95e15e9f7bcbae604d466a8bb99e374c8d059b33d321d1a2d555f178a1",
+  "claims": {
+    "total": 1,
+    "verified": 1
+  },
+  "decided_at": "2026-11-06T08:09:55Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "PASS",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "6fcd80d32c37af3cc55be9fefdefb29f06ce1121be42d1e02ebfcbb0cb02f1f1",
+  "run_id": "run_01M6QYG870B82B527RPZ3MNGXP",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 5.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "XL-7v_32rUYcMEdj280Ft-Xw04-N3Vts4XQXOw172bKplyDHx8ml2e5uQjWtd1nLsJ5nhigHCZG_joAkrWe8DA",
+  "skill": "requirement-review@1.2.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
