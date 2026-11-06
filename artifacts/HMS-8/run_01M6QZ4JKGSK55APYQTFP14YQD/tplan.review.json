@@ -1,0 +1,221 @@
+{
+  "artifact_sha256": "44734f17fc71159b9bc47ac53ce1c6eebc7f9cd336b835aa6576075270b0f938",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "no page is tested end to end in a browser",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "getByRole('link', { name: /Appointments today/ }).getAttribute('href')).toBe('/appointments?from=2026-10-19&amp;to=2026-10-19')",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L26"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "toBe('/appointments?doctorId=1&amp;status=NO_SHOW&amp;from=2026-09-20&amp;to=2026-10-19')",
+          "ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L49"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect(byDoctor.body.page_size).toBe(20);",
+          "ref": "sample-system:api/test/appointments.test.ts#L90"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer with `{ items, page, page_size, total }` at 20 per page.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#claim:C13"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: status=NOT_CANCELLED (proposed default)",
+          "ref": "runs/run_01M6QZ4JKGSK55APYQTFP14YQD/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The hospital time zone is `Asia/Kolkata` (UTC+05:30)",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#claim:C1"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Negative: an unknown status value is a 400 with a field error on status",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/tplan.md#L64"
+        },
+        {
+          "quote": "then the list URL carries status=NOT_CANCELLED and the request to GET /api/appointments sends status=NOT_CANCELLED",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L84"
+        },
+        {
+          "quote": "Any other value is a 400 ValidationError on status",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#L201"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Trace TP-13 to design EP-1 and REQ-8 as a design-derived negative test, rather than claiming it covers S-4/AC3.",
+      "text": "TP-13 (unknown status is a 400) lists S-4/AC3 in its covers list. AC3 only says the URL and request carry status=NOT_CANCELLED and says nothing about rejecting other values. The behaviour comes from the design's EP-1, not from AC3."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "it avoids a button that does nothing, but it is one more condition to test",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#L183"
+        },
+        {
+          "quote": "shown while any of doctorId, patientId, status, from or to is set",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#L189"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add a unit test that Clear All is absent with no filters and present once a filter is set, following the Q-01 default.",
+      "text": "The design shows Clear All only while at least one filter is set, and calls this one more condition to test. No TP checks that Clear All is hidden when no filter is set."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "a string, optional (absent or empty means any status)",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#L200"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add an integration case showing that GET /api/appointments?status= lists every status.",
+      "text": "The design says an absent or empty status means any status, but no test checks status= (empty). That is the remaining boundary of the changed field."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "Page behaviour is tested at unit level with Vitest, jsdom and Testing Library (C1).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/tplan.md#L83"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "For each TP, name the target file (the web __tests__ folder or the api test folder) and the HMS-8 REQ-n name prefix.",
+      "text": "The strategy requires every test name to start with its requirement ID, and the rubric asks for matching folders. The plan names no target test files (for example a new AppointmentsPage web test or api/test/appointments.test.ts) and gives no ID prefix rule."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "It excludes an appointment at 23:45 the evening before.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/tplan.md#L106"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Add an end-of-day case to TP-15.",
+      "text": "The Today-boundary test checks the start of the local day (00:30 included, 23:45 the evening before excluded) but not the end of the day, such as 23:45 today included and 00:00 the next local day excluded."
+    }
+  ],
+  "package_sha256": "4df4ea39b4acc64e7d1ac332bdbacbd00e722c6e169b86d8e55f5c14d454e6ef",
+  "questions": [],
+  "recorded_at": "2026-11-06T09:32:59Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All 20 acceptance criteria from S-1/AC1 to S-6/AC4 appear in at least one covers list. TP-13 is mapped to an AC that does not state its behaviour, but no criterion is left untested.",
+      "score": 5
+    },
+    {
+      "id": "TP-R2",
+      "reason": "Page behaviour is tested at unit level with jsdom and API behaviour at integration level with Supertest. No test uses e2e, and each level is the cheapest one that proves the criterion.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "Has a negative test for an unknown status value (TP-13) and a local-midnight boundary test (TP-15 at 00:30 and 23:45 the evening before). It misses the empty status value and the end of the day.",
+      "score": 4
+    },
+    {
+      "id": "TP-R4",
+      "reason": "The tools match the strategy layers. The plan names no test files or folders, and it does not say test names will start with requirement IDs as the strategy requires.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are concrete and a tester can run them. Each one gives the level and the criteria it covers.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}
