@@ -1,0 +1,307 @@
+{
+  "artifact_sha256": "42358b2515450494074ee4e85508c7791b3c755e3e822e4ffc47d3c48b0c96a7",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "onClick={() =&gt; onChange(undefined, '')}&gt;",
+          "ref": "sample-system:web/src/components/Picker.tsx#L28"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(await api.doctors({ q, status: 'ACTIVE' }))",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L77"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctorId &amp;&amp; !labels.doctor ? api.doctor(doctorId) : undefined",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L32"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`${d.fullName} (${d.code}) · ${d.specialization.name}`",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L36"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status?: AppointmentStatus;",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L43"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (f.status !== undefined) add('a.status = ?', f.status);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L70"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AND status &lt;&gt; 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L129"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "query({ doctorId: d.id, from: today, to: today })",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L86"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function query(params: Record&lt;string, string | number | undefined&gt;): string {",
+          "ref": "sample-system:web/src/api/client.ts#L40"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The existing DoctorsPage test asserts the Today link href",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#claim:C21"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Invalid input is 400 with one\nmessage per field (`ValidationError`)",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "default: \"Only while at least one filter is set\"",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#item:Q-01"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{Object.entries(STATUS_LABEL).map(([v, l]) =&gt;",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Clear doctor / patient filter",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L40"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const next = new URLSearchParams(params);",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L18"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY a.starts_at, a.id LIMIT",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L79"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', RECORD_STATUSES);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L42"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "from: from ? dayBounds(from, tz).start : undefined,",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L46"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "onClick={() =&gt; onChange(undefined, '')}&gt;",
+          "ref": "sample-system:web/src/components/Picker.tsx#L28"
+        },
+        {
+          "quote": "CO-2 Picker: existing. Its clear action serves REQ-14 (C1).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#components"
+        }
+      ],
+      "claim_ref": "C1",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State that the existing 'Change' button is the clear control for S-2 AC2/AC3, or specify an explicit clear label on the list page.",
+      "text": "CO-2 says Picker's clear action serves REQ-14, but that action is a button labelled 'Change'. The design does not say whether S-2 AC2's 'clear the doctor filter from the chooser' is met by this button or needs a clearer label."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "{value !== undefined &amp;&amp; selectedLabel ? (",
+          "ref": "sample-system:web/src/components/Picker.tsx#L25"
+        },
+        {
+          "quote": "params.get(k) ?? undefined",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L14"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "In CO-1, state that doctorId is converted with Number() for Picker, and what is shown until GET /api/doctors/:id returns.",
+      "text": "Picker shows the selection only when value and selectedLabel are both set, and value is a number. The design does not say how the string doctorId from the URL is converted, or what Picker shows while the label lookup is still loading (S-1 AC1, AC4)."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "const add = (sql: string, value: unknown): void =&gt; {",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L64"
+        },
+        {
+          "quote": "NOT_CANCELLED adds `a.status &lt;&gt; 'CANCELLED'` with no parameter.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#components"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Note in CO-6 that the NOT_CANCELLED branch pushes the literal condition into `where` without calling `add`.",
+      "text": "CO-6 says NOT_CANCELLED adds a condition with no parameter, but the repo's only condition helper `add` always pushes a parameter. The design should say the condition goes straight into `where` rather than through `add`."
+    }
+  ],
+  "package_sha256": "23b790922d368847c7f3bf77e067e8e524a729ffe233f0f751ccace4de593024",
+  "questions": [],
+  "recorded_at": "2026-11-06T08:53:58Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Only existing web and api modules, reused Picker, existing endpoints and the set helper. No new endpoint, table, store or job. Matches the impact's module list.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-6 each map to components, and every AC has a mechanism: Picker plus label lookup, set helper, Clear All, NOT_CANCELLED in service and repo, Today link and test, order and paging untouched.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "EP-1 status has type, nullability, format, example and error. Web-side detail is thinner: the string-to-number doctorId for Picker, how Picker behaves while the label loads, and the label on the clear control.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "All 20 claims match the cited lines. Choices trace to A-01 to A-04 and to the split Q-01 default, which state.json records as accepted. Nothing invented.",
+      "score": 5
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs cover Picker vs dropdown (paging), label format, the inline NOT_CANCELLED vs a shared type, and Clear All visibility.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, consistent structure. Ids match across the front matter and the body.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
