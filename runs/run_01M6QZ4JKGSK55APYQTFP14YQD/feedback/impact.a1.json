@@ -1,0 +1,39 @@
+{
+  "dropped": [
+    "F-2"
+  ],
+  "dropped_findings": [
+    {
+      "id": "F-2",
+      "reason": "quote not found",
+      "severity": "minor",
+      "text": "REQ-11 covers only the No-shows link and the dashboard tile. DoctorDetailPage's 'All upcoming appointments' link and the other dashboard status tiles also open the appointment list and must stay unchanged."
+    }
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "expect(link.getAttribute('href')).toBe(`/appointments?doctorId=1&amp;from=${today}&amp;to=${today}`);",
+          "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L62"
+        },
+        {
+          "quote": "DoctorsPage's Today link adds `status=NOT_CANCELLED` (C5).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#L135"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The existing DoctorsPage test asserts the Today link href with no status. REQ-9 adds status=NOT_CANCELLED, so this test will break, and the artifact does not list it as an affected reader."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
