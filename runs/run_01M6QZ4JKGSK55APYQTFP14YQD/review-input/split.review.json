@@ -1,0 +1,68 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "27a56fb6c5c77620388a68804cade76e555a471888785e875f98064fab7c3d95",
+  "package_sha256": "a6aacb5aa0ad8959b4bbff059d8cb916b270f149d32ffe2cc46617230b412bb6",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.45,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All 14 known REQs are traced. The stories' traces together cover REQ-1 to REQ-14 with no gaps, and the intent has no assumed REQs."},
+    {"id": "SS-R2", "score": 4, "reason": "Most stories have one outcome each. S-6 puts three separate unchanged constraints in one story: other links (REQ-11), page size (REQ-12) and order (REQ-13)."},
+    {"id": "SS-R3", "score": 4, "reason": "The ACs use Given/When/Then and cover the boundary cases: the 00:30 IST time-zone case, 21 rows against a page size of 20, the Cancelled exclusion, and start time versus booking order. S-6 AC1/AC2 compare against an unstated earlier behaviour."},
+    {"id": "SS-R4", "score": 5, "reason": "Values come from the intent: 20 per page, NOT_CANCELLED and Asia/Kolkata. The UTC+05:30 offset and the 19:00 UTC previous-date instant are worked out inline."},
+    {"id": "SS-R5", "score": 4, "reason": "Clear, and uses the glossary terms consistently. Some wording is awkward, for example 'page 1 shows the first 20 per page', and S-4 AC2's Given depends on AC1."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-6 AC2 does not say which filters the dashboard tile should open with. 'Same filters as before this change' can only be checked against an earlier build, so a tester cannot verify it from the story alone.",
+      "cites": [{"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L148", "quote": "when staff select it, then the list opens with the same filters as before this change"}],
+      "suggested_fix": "Say what the tile's link should set, at least that its status is not changed to NOT_CANCELLED, so the AC catches the Today-link change leaking into the tile."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "S-6 AC3 is awkwardly worded: 'page 1 shows the first 20 per page'.",
+      "cites": [{"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L149", "quote": "then page 1 shows the first 20 per page and the 21st appointment is on page 2"}],
+      "suggested_fix": "Reword as 'page 1 shows the first 20 appointments and the 21st is on page 2'."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "S-4 AC2's Given relies on the setup in AC1 ('the Cancelled appointment', 'that day'), so the AC cannot be read or tested on its own.",
+      "cites": [{"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L135", "quote": "Given the Cancelled appointment is the latest-starting appointment of that day"}],
+      "suggested_fix": "Restate the full setup in AC2, for example: a doctor's day has a Scheduled appointment and a later-starting Cancelled one."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "other",
+      "text": "S-6 bundles three separate unchanged constraints (other links, page size, order) into one story, against the one-outcome-per-story rule.",
+      "cites": [{"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/split.md#L99", "quote": "trace: [REQ-11, REQ-12, REQ-13]"}],
+      "suggested_fix": "Either accept S-6 as one regression story or split it into separate stories for links (REQ-11) and for paging and order (REQ-12, REQ-13)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [
+      {"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#claim:C2", "quote": "The hospital time zone is `Asia/Kolkata`."},
+      {"ref": "context/glossary.md#period", "quote": "A run of whole hospital-local days ending today"}
+    ]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/req.md#claim:C4", "quote": "The doctors list's Today column counts any status `except Cancelled`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason; its slot becomes free again."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#no-show", "quote": "A past appointment the patient did not attend"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}]}
+  ],
+  "questions": []
+}
