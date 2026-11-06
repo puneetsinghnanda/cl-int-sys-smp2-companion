@@ -1,0 +1,261 @@
+{
+  "artifact_sha256": "3e7bcae19cacb6c38dea3a6d706b6397ec7fd15f1b506b13a691330f0a017a68",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L12"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('doctors:read'),",
+          "ref": "sample-system:api/src/routes/doctors.ts#L14"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "params.push(value);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L65"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const byName = `d.full_name ILIKE ${p(`%${f.q.text.replace(/[\\\\%_]/g, '\\\\$&amp;')}%`)}`;",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L85"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "pageSize: 20,",
+          "ref": "sample-system:api/src/config.ts#L41"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409.",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AND status &lt;&gt; 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L129"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the list page uses the same label.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md#claim:C4"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function query(params: Record&lt;string, string | number | undefined&gt;): string {",
+          "ref": "sample-system:web/src/api/client.ts#L40"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "It is an existing guard for REQ-11 and must keep passing unchanged.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#claim:C23"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The existing DoctorsPage test asserts the Today link href",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/impact.md#claim:C21"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Existing control: each response is capped at 20 per page (C7), and the search value is a bound, escaped parameter (C6).",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/threat.md#L92"
+        },
+        {
+          "quote": "const results = useAsync(() =&gt; search(q), q);",
+          "ref": "sample-system:web/src/components/Picker.tsx#L21"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Either accept T-4 as an existing risk that HMS-8 does not change (the same Picker is already used on the booking page), or add a new implement control such as a short delay before searching.",
+      "text": "T-4's mitigation (20 rows per response, bound search value) does not limit how many requests are sent per keystroke. Picker sends a search on every change of q, with no delay or rate limit, and the model does not say so."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The filters hold ids and a status, not personal data.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/threat.md#L137"
+        },
+        {
+          "quote": "One line per request: method, path, status, duration. Never bodies or query values.",
+          "ref": "sample-system:api/src/middleware/requestLog.ts#L3"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/src/middleware/requestLog.ts#L10, which removes the query string before logging, as the control for T-13.",
+      "text": "T-13 says the filters hold no personal data, but patientId identifies a patient. The real control is requestLog, which drops the query string and never logs query values. The model does not cite it."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Clear and ordered by risk",
+          "ref": "C:/dev/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L46"
+        },
+        {
+          "quote": "T-1 AppointmentsPage, information disclosure: the label or list could expose more data.",
+          "ref": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/threat.md#L157"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a risk level to each threat and order the Threats section from highest to lowest risk.",
+      "text": "Threats are listed by component, with no risk rating and no ordering by risk. The rubric's level 5 for clarity asks for ordering by risk."
+    }
+  ],
+  "package_sha256": "7a84bb6c6827f65ec971215b30b2fccae265d2777fe32cbc38cf2404ec3fdb1b",
+  "questions": [],
+  "recorded_at": "2026-11-06T08:57:46Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All eight design components, CO-1 to CO-8, appear with at least one threat each. The components that show personal data (CO-1, CO-6, CO-7) each have an information disclosure or tampering threat.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats fit their component, for example the SQL branch for NOT_CANCELLED, the widened status allowed list and the weakened Today href test. T-12 is fairly generic.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Every mitigation cites a control or names a new one for implement. T-4's mitigation (20 rows per page) does not address how often requests are sent, and T-13 reasons from the data instead of the log code that removes the query string.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "Assumed, Unknown and Open questions are all None, and the cited controls do check out. The missing limit on requests per keystroke in Picker is not stated as a gap.",
+      "score": 4
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Readable and consistent between the front matter and the body. Threats are listed by component, not by risk, and carry no risk rating.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}

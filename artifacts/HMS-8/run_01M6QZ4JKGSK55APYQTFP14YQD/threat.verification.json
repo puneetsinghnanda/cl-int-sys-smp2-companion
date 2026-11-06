@@ -1,0 +1,68 @@
+{
+  "artifact_path": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/threat.md",
+  "artifact_sha256": "3e7bcae19cacb6c38dea3a6d706b6397ec7fd15f1b506b13a691330f0a017a68",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "8ad350a394c17d12b14f1a08972b06a51f5b30ddf3d380eeaab5c3faeac2ab1c",
+  "claims": {
+    "total": 16,
+    "verified": 16
+  },
+  "decided_at": "2026-11-06T08:57:47Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-3",
+      "reason": "bad citation format C:/dev/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L46"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-2",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/design.md",
+      "sha256": "42358b2515450494074ee4e85508c7791b3c755e3e822e4ffc47d3c48b0c96a7",
+      "verification_sha256": "f350b9cda3e3db8c92ff7091cba9efda01bfa0bf5d01e4d85fb2a984cca017a0"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "3b9290922b91d232a0ab0bbb7c9608e2814dc5a9b34385a95a0fa6f74b1a46fd",
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8947,
+    "S2": 1.0,
+    "S3": 4.3,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "G3R3JYxH-1c8-fPefDoQYtshru5eckIb53W9a15ENP34QNU4agVzkHzgZHLNSF6se1NTFSpYkGKbbT9hc9IhBA",
+  "skill": "threat-model@1.1.0",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
