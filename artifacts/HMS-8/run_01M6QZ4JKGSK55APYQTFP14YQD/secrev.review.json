@@ -1,0 +1,167 @@
+{
+  "artifact_sha256": "20f2d74e547f81d9cad597fc4f015f0ae6f3dc2b5cbc67c46a90a151c27aa974",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', [...APPOINTMENT_STATUSES, 'NOT_CANCELLED'] as const);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L36"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (f.status === 'NOT_CANCELLED') where.push(\"a.status &lt;&gt; 'CANCELLED'\");",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L72"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status?: AppointmentStatus | 'NOT_CANCELLED';",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L44"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L12"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;strong&gt;{selectedLabel}&lt;/strong&gt;{' '}",
+          "ref": "sample-system:web/src/components/Picker.tsx#L27"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (!values.includes(v)) return this.fail(name, `must be one of ${values.join(', ')}`);",
+          "ref": "sample-system:api/src/lib/validate.ts#L65"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ": doctor.data",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L39"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "const doctorId = filters.doctorId ? Number(filters.doctorId) : undefined;",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L30"
+        },
+        {
+          "quote": "doctorId &amp;&amp; picked?.id !== doctorId ? api.doctor(doctorId) : Promise.resolve(undefined)",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L33"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword SF-2: non-integer or non-positive numeric doctorId values (for example 1.5 or -1) trigger a failing lookup; NaN is already skipped.",
+      "text": "SF-2 says a doctorId converted with Number() is sent to GET /api/doctors/:id without a check. But a non-numeric value gives NaN, and the `doctorId &amp;&amp;` guard skips the lookup for NaN. Only values like 1.5 or -1 reach the API."
+    }
+  ],
+  "package_sha256": "3673c6ec6044b3e86f49f5a8f662669f35df571bb02694630dcb1edf38fb2033",
+  "questions": [],
+  "recorded_at": "2026-11-06T09:29:05Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The injection surface (fixed NOT_CANCELLED SQL, bound params), the oneOf allow-list with a 400, React-escaped label, unchanged route auth and logging were all checked against code. I found no missed weakness in the changed files.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Both findings and every claim point at exact lines that match the code: appointmentRepo.ts L44/L72, appointmentService.ts L36, routes L12, Picker L27, AppointmentsPage L30/L39.",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Both findings are UX or robustness points with no exploit path, so minor is right. The API still rejects bad ids through parseId.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "Each finding gives a concrete fix: show the lookup or ValidationError next to the chooser, and guard with Number.isInteger before the lookup.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "There are no false positives. SF-2 slightly overstates the trigger: a non-numeric doctorId becomes NaN, which is falsy, so no lookup is sent. Only non-integer or non-positive numbers reach the API.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}

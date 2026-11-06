@@ -1,0 +1,49 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "20f2d74e547f81d9cad597fc4f015f0ae6f3dc2b5cbc67c46a90a151c27aa974",
+  "package_sha256": "3673c6ec6044b3e86f49f5a8f662669f35df571bb02694630dcb1edf38fb2033",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.9,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The injection surface (fixed NOT_CANCELLED SQL, bound params), the oneOf allow-list with a 400, React-escaped label, unchanged route auth and logging were all checked against code. I found no missed weakness in the changed files."},
+    {"id": "SC-R2", "score": 5, "reason": "Both findings and every claim point at exact lines that match the code: appointmentRepo.ts L44/L72, appointmentService.ts L36, routes L12, Picker L27, AppointmentsPage L30/L39."},
+    {"id": "SC-R3", "score": 5, "reason": "Both findings are UX or robustness points with no exploit path, so minor is right. The API still rejects bad ids through parseId."},
+    {"id": "SC-R4", "score": 5, "reason": "Each finding gives a concrete fix: show the lookup or ValidationError next to the chooser, and guard with Number.isInteger before the lookup."},
+    {"id": "SC-R5", "score": 4, "reason": "There are no false positives. SF-2 slightly overstates the trigger: a non-numeric doctorId becomes NaN, which is falsy, so no lookup is sent. Only non-integer or non-positive numbers reach the API."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "SF-2 says a doctorId converted with Number() is sent to GET /api/doctors/:id without a check. But a non-numeric value gives NaN, and the `doctorId &amp;&amp;` guard skips the lookup for NaN. Only values like 1.5 or -1 reach the API.",
+      "cites": [
+        {"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L30", "quote": "const doctorId = filters.doctorId ? Number(filters.doctorId) : undefined;"},
+        {"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L33", "quote": "doctorId &amp;&amp; picked?.id !== doctorId ? api.doctor(doctorId) : Promise.resolve(undefined)"}
+      ],
+      "suggested_fix": "Reword SF-2: non-integer or non-positive numeric doctorId values (for example 1.5 or -1) trigger a failing lookup; NaN is already skipped."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L36", "quote": "const status = f.oneOf('status', [...APPOINTMENT_STATUSES, 'NOT_CANCELLED'] as const);"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L72", "quote": "if (f.status === 'NOT_CANCELLED') where.push(\"a.status &lt;&gt; 'CANCELLED'\");"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L44", "quote": "status?: AppointmentStatus | 'NOT_CANCELLED';"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L12", "quote": "requirePermission('appointments:read'),"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/Picker.tsx#L27", "quote": "&lt;strong&gt;{selectedLabel}&lt;/strong&gt;{' '}"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/validate.ts#L65", "quote": "if (!values.includes(v)) return this.fail(name, `must be one of ${values.join(', ')}`);"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L39", "quote": ": doctor.data"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]}
+  ],
+  "questions": []
+}

@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-06T09:26:04Z",
+  "heartbeat_at": "2026-11-06T09:29:08Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -56,7 +56,7 @@
     "open_non_blocking": 1,
     "round": 1
   },
-  "rev": 34,
+  "rev": 37,
   "run_id": "run_01M6QZ4JKGSK55APYQTFP14YQD",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -388,7 +388,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/secrev.md",
+          "artifact_sha256": "20f2d74e547f81d9cad597fc4f015f0ae6f3dc2b5cbc67c46a90a151c27aa974",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-06T09:29:08Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "64eabc5d66a4d1a05ab0755635b9faf8985e6940de2426991f73b10a90101aad",
+              "step": "impl"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS",
+          "record": "artifacts/HMS-8/run_01M6QZ4JKGSK55APYQTFP14YQD/secrev.verification.json",
+          "skill": "secure-code-review@1.1.0",
+          "skill_started_at": "2026-11-06T09:26:30Z",
+          "started_at": "2026-11-06T09:26:20Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -397,7 +420,7 @@
       },
       "id": "secrev",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -420,7 +443,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-8",
-  "updated_at": "2026-11-06T09:26:04Z",
+  "updated_at": "2026-11-06T09:29:08Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }
