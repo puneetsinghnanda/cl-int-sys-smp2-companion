@@ -1,0 +1,142 @@
+{
+  "artifact_sha256": "d91af6d2d33b27873ad261064f8454e09c4904922e83e8ea0b13ffb56bc031e8",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "One bookable interval of a doctor's slot length, starting at the start of an availability block.",
+          "ref": "context/glossary.md#slot"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled",
+          "ref": "context/intent-baseline.md#booking-rules"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-01",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L57"
+        },
+        {
+          "quote": "Following your Q-01 answer, today's counts match the day schedule",
+          "ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-04"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-04 to REQ-4 cites and to A-04.requirements.",
+      "text": "REQ-4 cites only A-01, whose answer picks no option ('What makes sense? Use that'). The user's explicit confirmation of the 'match day schedule' reading is in A-04, which REQ-4 does not cite."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "A day on which the doctor has no slots shows `Not available` instead of counts.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L62"
+        },
+        {
+          "quote": "A day with no availability shows \"Not available\" instead of counts.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ticket.md#L25"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add ide-answers.md#a-04 to REQ-5 cites.",
+      "text": "REQ-5 changes the ticket's 'no availability' into 'no slots' but cites only ticket L25. The user confirmed the 'no slots' test in A-04, which REQ-5 does not cite."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "The term \"Day schedule\" is not in the glossary.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L176"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Move the note to a glossary-gaps note or the Summary.",
+      "text": "The missing glossary term 'Day schedule' is recorded under Out of scope. It is a glossary gap, not a scope exclusion."
+    }
+  ],
+  "package_sha256": "efb7b6d1f66e5b961dda9ce3cdb036a9be0a171237dc99ec803bbfa17fbffca3",
+  "questions": [],
+  "recorded_at": "2026-11-11T06:15:51Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six ticket ACs map to REQ-1..REQ-10. The user-story goal of offering the day with the most free slots is listed under Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and checkable. REQ-4 puts the general counting rule and the past-slot rule in one statement, and REQ-10 joins 'unchanged' with the URL-date exception.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every status is cited. REQ-4 rests on reading A-01's open-ended answer as 'match day schedule' and cites only A-01, not A-04, where the user confirmed that reading.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The ticket's internal clash (AC 2 sentence 1 vs sentence 2) and the day-schedule date gap were raised as Q-01 and Q-02, and A-01 records the mismatch citing ticket L24. No baseline conflict was missed.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "The questions gave real options and a proposed default, and A-03 was asked again with the Q-01 outcome. A-01's 'What makes sense?' suggests the person answering was unsure of the product rule.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and readable. Some backtick quoting is odd (`6 days ahead`, `unchanged`), and the glossary gap for 'Day schedule' is filed under Out of scope.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
