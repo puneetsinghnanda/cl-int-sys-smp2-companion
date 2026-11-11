@@ -1,0 +1,44 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "975d49ead62e9cb9b24bcc552a10f4477a29d8ab65034b95e00fd5e8c36bda02",
+  "package_sha256": "21f9edf856fa0c211635a8e5dd764e2de19f8c645badb54667199e997191f97c",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All seven design components (CO-1 to CO-7) have at least one threat. The changed write endpoints EP-3 to EP-5 are covered by T-6 and T-11, and the slots route by T-9."},
+    {"id": "TM-R2", "score": 4, "reason": "The threats are specific to this change (patient data, one query per range, the TZ midnight shift, ?date= input). T-3 does not notice that the detail route is gated by doctors:read while the slots route uses appointments:read."},
+    {"id": "TM-R3", "score": 4, "reason": "Mitigations are concrete and mostly cited or marked as new tests. The T-5 logging control and the T-4 exclusion-constraint control are not backed by any claim, and the C8 cite does not show the date validation it relies on."},
+    {"id": "TM-R4", "score": 4, "reason": "No gaps are declared. That is mostly fair, but the permission-scope difference between the detail route and the slots route is neither stated nor asked."},
+    {"id": "TM-R5", "score": 4, "reason": "Clear, consistent frontmatter and prose. Threats are ordered by component, not by risk."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "completeness", "text": "T-3 and T-11 say the route has the same permission checks as everywhere else. But nextSevenDays exposes appointment-derived booking load under doctors:read, while the day schedule needs appointments:read. Once sign-in splits roles, this widens access.", "cites": [{"ref": "sample-system:api/src/routes/doctors.ts#L30", "quote": "requirePermission('doctors:read'),"}, {"ref": "sample-system:api/src/routes/doctors.ts#L64", "quote": "requirePermission('appointments:read'),"}, {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#T-3", "quote": "the route passes through identify and requirePermission like every API route (C1)"}], "suggested_fix": "State in T-3 that the counts are gated by doctors:read, unlike the slots route (appointments:read). Then either accept this, citing the HMS-7 noShowsLast30Days precedent, or ask which permission should apply."},
+    {"id": "F-2", "severity": "minor", "category": "traceability", "text": "The T-5 'existing control' on logging is not backed by any claim. The supporting fact is in context/conventions.md, which is not among the threat model's inputs.", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#T-5", "quote": "Existing control: logs carry method, route and error message only, never request bodies or contact details."}, {"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"}], "suggested_fix": "Add a claim citing context/conventions.md#logging-and-data and list that file as an input."},
+    {"id": "F-3", "severity": "minor", "category": "traceability", "text": "C8 says the slots route validates its date, but the cited api-inventory entry only gives the method, path and source line. The validation is only visible in the route code.", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#C8", "quote": "is unchanged and still validates its date"}, {"ref": "sample-system:api/src/routes/doctors.ts#L67", "quote": "if (typeof date !== 'string' || !isDay(date)) throw badRequest('date must be a date in YYYY-MM-DD form');"}], "claim_ref": "C8", "suggested_fix": "Cite sample-system:api/src/routes/doctors.ts#L67 for C8."},
+    {"id": "F-4", "severity": "minor", "category": "traceability", "text": "The T-4 exclusion-constraint control has no claim behind it, although context/architecture.md#double-booking supports it.", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#T-4", "quote": "the database's exclusion constraints still reject overlapping Scheduled appointments"}, {"ref": "context/architecture.md#double-booking", "quote": "exclusion constraints forbid overlapping Scheduled"}], "suggested_fix": "Add a claim citing context/architecture.md#double-booking and reference it in T-4."},
+    {"id": "F-5", "severity": "minor", "category": "style", "text": "Threats are listed by component, not by risk. The rubric's top clarity score asks for risk ordering.", "cites": [{"ref": "C:/dev/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#TM-R5", "quote": "Clear and ordered by risk"}], "suggested_fix": "Order T-1..T-11 by risk, with the information-disclosure threats first, or add a risk rank to each."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C12", "quote": "holds one entry per day with date, available, booked and free"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#overview", "quote": "If the doctor is Inactive, return `nextSevenDays: null` (A-07)."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C15", "quote": "HMS-7 set the precedent that `the read-only count in a PATCH body is ignored`"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/doctors.ts#L67", "quote": "throw badRequest('date must be a date in YYYY-MM-DD form')"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Once sign-in splits roles, should per-day booked/free counts on the doctor detail be visible with doctors:read only, or should they need appointments:read like the day schedule?", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-1"}
+  ]
+}

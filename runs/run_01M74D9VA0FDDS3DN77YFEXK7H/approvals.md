@@ -73,3 +73,11 @@ comment: Low band from 5 dropped reviewer findings (anchor not found) counted in
 }
 ```
 <!-- tsl:signature-end G-escalate-impact-a2 -->
+
+## G-escalate-threat-a1 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md (sha256 975d49ead62e9cb9b24bcc552a10f4477a29d8ab65034b95e00fd5e8c36bda02)
+Reason for gate: overall quality came out low (only 64% of claims are backed by a verified source)
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

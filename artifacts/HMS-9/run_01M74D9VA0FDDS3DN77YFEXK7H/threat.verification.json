@@ -1,0 +1,75 @@
+{
+  "artifact_path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md",
+  "artifact_sha256": "975d49ead62e9cb9b24bcc552a10f4477a29d8ab65034b95e00fd5e8c36bda02",
+  "attempt": 1,
+  "band": "Low",
+  "caps": [],
+  "checks_sha256": "3f95491463a5352477be5e4b279a02253bc302b26f4506e69dc4bd421743911e",
+  "claims": {
+    "total": 9,
+    "verified": 9
+  },
+  "decided_at": "2026-11-11T07:42:32Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "bad citation format artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#T-3"
+    },
+    {
+      "id": "F-2",
+      "reason": "bad citation format artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#T-5"
+    },
+    {
+      "id": "F-3",
+      "reason": "bad citation format artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#C8"
+    },
+    {
+      "id": "F-4",
+      "reason": "bad citation format artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#T-4"
+    },
+    {
+      "id": "F-5",
+      "reason": "bad citation format C:/dev/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#TM-R5"
+    }
+  ],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md",
+      "sha256": "2ea8104748653909b30e76525dd490d16d20f1645fa07ff4f40b533297f55d50",
+      "verification_sha256": "de0a615feacc852bc53263173a85949c9ee45076f8809890edda167f9b16478c"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "ESCALATE",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "e6f1c883e008e40adb764e339ce4a55f03cf0a25a6934e6562c9169348be646f",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.6429,
+    "S2": 1.0,
+    "S3": 4.3,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "WqXcS4ov-nxPSGW5EyrwM332o8fGrqKCLOFjKhz7waGZ9Cmkq27S-uQPPxwUU086EHSgMNg9axbpG7pSTpWFBw",
+  "skill": "threat-model@1.1.0",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
