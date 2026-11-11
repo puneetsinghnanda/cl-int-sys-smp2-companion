@@ -1,0 +1,49 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "55d9f148a282742c44c27b5a30262b86d6778980faf553426b2250d25ad80373",
+  "package_sha256": "dcdd327575b714b173479d9af01c14460c2e404cd7b0edd4df6fc024375e5c6c",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The change adds no route, new input, SQL or logging. ?date= goes through validDay, and the server's isDay check still guards /slots. The one real issue, appointment-derived counts served under doctors:read, is reported."},
+    {"id": "SC-R2", "score": 4, "reason": "Every citation points to the exact line in the code as it is now. However, pack_sha records the base commit, and lines such as doctorService L75/L174/L180 exist only at the head commit."},
+    {"id": "SC-R3", "score": 5, "reason": "SF-1 is rated minor. That fits, because every permission is granted in the MVP, so it has no effect today."},
+    {"id": "SC-R4", "score": 5, "reason": "SF-1 gives a concrete fix: if the stricter option is chosen, return nextSevenDays: null to callers without appointments:read."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives. Each 'checked, no finding' item agrees with the code."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "pack_sha pins sample-system to the base commit c2709e1, but the cited lines (doctorService.ts L75/L174/L180, DoctorDetailPage.tsx L30) are HMS-9 code that exists only at the head commit c7d693b. If these refs are resolved at pack_sha, they point to the wrong lines.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/secrev.md#L15", "quote": "sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#L21", "quote": "head_sha: c7d693b59a821d278fa1514a278f7608e940b564"},
+        {"ref": "sample-system:api/src/services/doctorService.ts#L74", "quote": "// HMS-9: Inactive doctors get no next-7-days summary."}
+      ],
+      "suggested_fix": "Pin the sample-system citations to the head commit c7d693b, or state which commit the code refs are resolved at."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/doctors.ts#L30", "quote": "requirePermission('doctors:read'),"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/doctors.ts#L64", "quote": "requirePermission('appointments:read'),"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L174", "quote": "const appointments = await new AppointmentRepo(this.db).occupyingBetween(id, start, end);"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L177", "quote": "return { date, available: false, booked: null, free: null };"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L30", "quote": "const urlDate = validDay(searchParams.get('date'));"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L75", "quote": "const nextSevenDays = doctor.status === 'INACTIVE' ? null : await this.nextSevenDays(id, doctor.slotMinutes, availability);"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117", "quote": "WHERE a.doctor_id = $1 AND a.status &lt;&gt; 'CANCELLED' AND a.starts_at &lt; $3 AND a.ends_at &gt; $2"}]}
+  ],
+  "questions": []
+}

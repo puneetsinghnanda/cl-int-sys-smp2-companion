@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M74D9VA0FDDS3DN77YFEXK7H
 ticket: HMS-9
 workflow: brownfield-change@1.4.0
-step: ut@1.1.0
+step: secrev@1.1.0
 created_at: '2026-11-11T08:14:58Z'
 status: open
 ---
@@ -35,6 +35,18 @@ decision:
   A. Yes, the verifier provides a database
   B. No, add one to the verifier
 **Proposed default:** Yes, the verifier provides a database
+answer:
+answered_by:
+decision:
+
+## Q-04 · non-blocking · ask: tech lead · round 3
+**Question:** When sign-in splits roles, should the per-day booked/free counts on the doctor detail need appointments:read, like the day schedule, or stay under doctors:read, like the HMS-7 No-shows count?
+**Why it matters:** In the MVP every permission is granted (C1), so nothing changes today; after sign-in, a doctors:read-only user would see appointment-derived load (C2, C3).
+**Evidence:** sample-system:api/src/routes/doctors.ts#L30, sample-system:api/src/routes/doctors.ts#L64, context/architecture.md#identity
+**Options:**
+  A. Keep doctors:read (aggregate counts only, as HMS-7 does)
+  B. Return null unless the caller also has appointments:read
+**Proposed default:** Keep doctors:read (aggregate counts only, as HMS-7 does)
 answer:
 answered_by:
 decision:

@@ -1,0 +1,161 @@
+{
+  "artifact_sha256": "55d9f148a282742c44c27b5a30262b86d6778980faf553426b2250d25ad80373",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('doctors:read'),",
+          "ref": "sample-system:api/src/routes/doctors.ts#L30"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/doctors.ts#L64"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const appointments = await new AppointmentRepo(this.db).occupyingBetween(id, start, end);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L174"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return { date, available: false, booked: null, free: null };",
+          "ref": "sample-system:api/src/services/doctorService.ts#L177"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const urlDate = validDay(searchParams.get('date'));",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L30"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const nextSevenDays = doctor.status === 'INACTIVE' ? null : await this.nextSevenDays(id, doctor.slotMinutes, availability);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L75"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE a.doctor_id = $1 AND a.status &lt;&gt; 'CANCELLED' AND a.starts_at &lt; $3 AND a.ends_at &gt; $2",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/secrev.md#L15"
+        },
+        {
+          "quote": "head_sha: c7d693b59a821d278fa1514a278f7608e940b564",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#L21"
+        },
+        {
+          "quote": "// HMS-9: Inactive doctors get no next-7-days summary.",
+          "ref": "sample-system:api/src/services/doctorService.ts#L74"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Pin the sample-system citations to the head commit c7d693b, or state which commit the code refs are resolved at.",
+      "text": "pack_sha pins sample-system to the base commit c2709e1, but the cited lines (doctorService.ts L75/L174/L180, DoctorDetailPage.tsx L30) are HMS-9 code that exists only at the head commit c7d693b. If these refs are resolved at pack_sha, they point to the wrong lines."
+    }
+  ],
+  "package_sha256": "dcdd327575b714b173479d9af01c14460c2e404cd7b0edd4df6fc024375e5c6c",
+  "questions": [],
+  "recorded_at": "2026-11-11T08:35:36Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The change adds no route, new input, SQL or logging. ?date= goes through validDay, and the server's isDay check still guards /slots. The one real issue, appointment-derived counts served under doctors:read, is reported.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Every citation points to the exact line in the code as it is now. However, pack_sha records the base commit, and lines such as doctorService L75/L174/L180 exist only at the head commit.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "SF-1 is rated minor. That fits, because every permission is granted in the MVP, so it has no effect today.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "SF-1 gives a concrete fix: if the stricter option is chosen, return nextSevenDays: null to callers without appointments:read.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives. Each 'checked, no finding' item agrees with the code.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
