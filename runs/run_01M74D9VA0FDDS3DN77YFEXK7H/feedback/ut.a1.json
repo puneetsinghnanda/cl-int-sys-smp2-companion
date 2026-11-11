@@ -1,0 +1,61 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then today's row shows booked 0 and free 0, not 'Not available', because the day has slots.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-2"
+        },
+        {
+          "quote": "REQ-6: free 0 is shown, not \"Not available\".",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-2 AC3 has no listed test: a day whose slots have all passed empty should show booked 0, free 0, not 'Not available'. The web REQ-6 test only checks that free 0 is shown, and the API tests never pin booked 0/free 0 for a day that has slots."
+    },
+    {
+      "cites": [
+        {
+          "quote": "REQ-4: a Scheduled appointment counts as booked.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests"
+        },
+        {
+          "quote": "the 09:00 slot holds a Completed appointment, the 09:30 slot is empty, and the clock is 09:45 local",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-1"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "Only a Scheduled appointment is tested as booked. S-1 AC3 (Completed) and S-2 AC2 (No-show) require passed slots with those statuses to count as booked, and the 09:45 test does not say which status it uses."
+    },
+    {
+      "cites": [
+        {
+          "quote": "when staff open doctor D's page with no ?date= parameter, then the day schedule shows 12 Nov (local today)",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-3"
+        },
+        {
+          "quote": "Without a valid ?date= the day schedule still starts at `todayIn`.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C7"
+        }
+      ],
+      "id": "F-4",
+      "severity": "major",
+      "text": "No web test covers S-3 AC3, where the page has no ?date= and the day schedule must fall back to local today (todayIn). It also has no test for S-4 AC3, where every row shows 'Not available'."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-4"
+  ],
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
