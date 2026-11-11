@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M74D9VA0FDDS3DN77YFEXK7H
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.1.0
 inputs:
   - path: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: c2709e164850ab7e177e4bccfc42a5dd9b961fdc
-    head_sha: 6cf90f3eef092f7c40d39f7b10a02e0c444bbe6b
-    diff_sha256: 9f5516bddad24aab9727df1415382cdbf00fedece7b44458b56e685929bebcfa
+    head_sha: c7d693b59a821d278fa1514a278f7608e940b564
+    diff_sha256: 66af2e3a8c86e62f84f5868047f3a5a4c99531b29ec3dc7d66cfc85d3cd081d9
     files:
       - api/src/services/doctorService.ts
       - api/src/types.ts
@@ -27,6 +27,9 @@ code:
       - web/src/__tests__/DoctorDetailPage.test.tsx
       - web/src/api/types.ts
       - web/src/pages/DoctorDetailPage.tsx
+resolves:
+  - id: F-1
+    how: "Added the T-1 entry-keys test and the T-7 UTC-vs-local midnight test to api/test/doctors-next-seven-days.test.ts."
 claims:
   - id: C1
     text: "Doctor rules, including the doctor detail and the day schedule, live in `DoctorService`."
@@ -55,14 +58,20 @@ claims:
   - id: C9
     text: "Logs carry `method, route and error message` only; this change adds no new log lines."
     cites: ["context/conventions.md#logging-and-data"]
+  - id: C10
+    text: "S-1 AC1 fixes the clock at `2026-11-11T19:00Z`, 00:30 on 12 Nov in Asia/Kolkata, with rows 12 Nov to 18 Nov."
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-1"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 assumed: []
 unknown: []
 questions: []
-summary: "Adds a read-only nextSevenDays summary to the doctor detail. The server computes it with the day schedule's slot-state rule, now shared. The doctor page gets a 'Next 7 days' section whose rows link to ?date=, and the day schedule reads that parameter. Inactive doctors get null and no section."
+summary: "Adds a read-only nextSevenDays summary to the doctor detail. The server computes it with the day schedule's slot-state rule, now shared. The doctor page gets a 'Next 7 days' section whose rows link to ?date=, and the day schedule reads that parameter. Inactive doctors get null and no section. Regression tests cover the entry keys, the UTC-vs-local midnight case, the schedule match and PATCH ignoring the field."
 ---
 # Change: HMS-9
+
+Resolved review findings:
+- F-1: Added the T-1 entry-keys test and the T-7 UTC-vs-local midnight test to api/test/doctors-next-seven-days.test.ts.
 
 ## Summary
 - **CO-1, CO-2 (api).** `DoctorService.get` now returns `nextSevenDays`.
@@ -74,7 +83,7 @@ summary: "Adds a read-only nextSevenDays summary to the doctor detail. The serve
 - **CO-7 (web).** `DoctorDetailPage`:
   - renders "Next 7 days" (date, booked, free, or "Not available") before "Upcoming appointments", only when `nextSevenDays` is not null;
   - links each date to `/doctors/:id?date=YYYY-MM-DD`;
-  - starts the day schedule's date from `?date=` when `validDay` accepts it (a strict YYYY-MM-DD real date, threat T-9), else from `todayIn`, and follows later changes of the parameter;
+  - starts the day schedule's date from `?date=` when `validDay` accepts it (a strict YYYY-MM-DD real date), else from `todayIn`, and follows later changes of the parameter;
   - leaves the picker and every other section unchanged.
 - No new logging and no new routes.
 
@@ -83,14 +92,16 @@ summary: "Adds a read-only nextSevenDays summary to the doctor detail. The serve
 - `api/src/types.ts`: CO-4 adds `NextDay` and `DoctorDetail.nextSevenDays`.
 - `web/src/api/types.ts`: CO-6 adds `NextDay` and `DoctorDetail.nextSevenDays`.
 - `web/src/pages/DoctorDetailPage.tsx`: CO-7 adds the section, `validDay` and the `?date=` handling.
-- `web/src/__tests__/DoctorDetailPage.test.tsx`: the existing typed fixture gains `nextSevenDays: null`, because the DoctorDetail type is marked changed (CO-6, threat T-8).
-- `api/test/doctors-next-seven-days.test.ts`: two regression tests from the design and threat model.
+- `web/src/__tests__/DoctorDetailPage.test.tsx`: the existing typed fixture gains `nextSevenDays: null`, because the DoctorDetail type is marked changed (CO-6).
+- `api/test/doctors-next-seven-days.test.ts`: the regression tests the design and threat model ask implement for.
   - "HMS-9 REQ-4": the summary equals the day schedule's states for every day (T-4).
+  - "HMS-9 REQ-3 (T-1)": each entry holds only date, available, booked and free.
+  - "HMS-9 REQ-2 (T-7)": with the clock at 2026-11-11T19:00Z, which is 00:30 on 12 Nov in Asia/Kolkata, the dates are 2026-11-12 to 2026-11-18 (S-1 AC1, C10).
   - "HMS-9 REQ-10": `nextSevenDays` in a PATCH body is ignored (T-6).
 
 ## Known
 - REQ-1 to REQ-3, REQ-5, REQ-6: CO-7 renders the rows from `nextSevenDays` (C2, C6).
-- REQ-2: today and the 7 days come from the hospital zone (C4).
+- REQ-2: today and the 7 days come from the hospital zone (C4), and the midnight test pins this (C10).
 - REQ-4: one shared `slotStates` rule over `daySlots` (C1, C5).
 - REQ-7, REQ-8: the `?date=` link and the initial date, with a fallback to `todayIn` (C7).
 - REQ-9: null for Inactive doctors, and the section is hidden (C3).
