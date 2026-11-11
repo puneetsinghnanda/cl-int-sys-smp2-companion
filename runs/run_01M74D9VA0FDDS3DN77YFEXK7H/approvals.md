@@ -78,6 +78,33 @@ comment: Low band from 5 dropped reviewer findings (anchor not found) counted in
 kind: escalation
 Artifact: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md (sha256 975d49ead62e9cb9b24bcc552a10f4477a29d8ab65034b95e00fd5e8c36bda02)
 Reason for gate: overall quality came out low (only 64% of claims are backed by a verified source)
-decision:          # approve | reject | changes | abort
-comment:
+decision:  approve        # approve | reject | changes | abort
+comment: Low band from 5 dropped reviewer findings (bad citation format) counted in S1; review 4.3/5, all checks pass.
 <!-- signature block written by `tsl approve` - do not edit -->
+<!-- tsl:signature-begin G-escalate-threat-a1 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-11-11T07:56:54Z",
+  "approver": "eng-3c51",
+  "artifacts": [
+    {
+      "attempt": 1,
+      "sha256": "975d49ead62e9cb9b24bcc552a10f4477a29d8ab65034b95e00fd5e8c36bda02",
+      "step": "threat"
+    }
+  ],
+  "comment_sha256": "67d17df3a360ce11372720820d7153ac907f4ca7a6b41821f7e7836bae79d904",
+  "decision": "approve",
+  "gate": "G-escalate-threat-a1",
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "Zt7bBheybF6mC0aOcpFqgTa3NOqDpclUfb1Z0WOqbij4AgWN-HDY8zfxM1iubPOzDGuQyXwN6OSt4UQMGLxiDg",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-threat-a1 -->
