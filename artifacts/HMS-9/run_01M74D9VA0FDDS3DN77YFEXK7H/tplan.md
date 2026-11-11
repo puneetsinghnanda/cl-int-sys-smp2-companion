@@ -2,7 +2,7 @@
 schema: test-plan.v1
 run_id: run_01M74D9VA0FDDS3DN77YFEXK7H
 step: tplan
-attempt: 1
+attempt: 2
 skill: test-plan@1.1.0
 inputs:
   - path: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md
@@ -15,6 +15,11 @@ inputs:
     sha256: 57a01551ebf3a7429a78830822e19e5384fc83b3f91c6b101bbcfb9cec22038f
 pack_sha:
   sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc
+resolves:
+  - id: F-1
+    how: "Added TP-21, a unit test that an Inactive doctor's page with upcoming appointments keeps every other section and action as before."
+  - id: F-2
+    how: "Added TP-22 and TP-23, integration tests that POST ignores nextSevenDays in the body and that POST and availability PUT responses carry the computed field."
 claims:
   - id: C1
     text: "API tests use Vitest and `Supertest` against a throwaway PostgreSQL 16 with a fixed clock."
@@ -40,8 +45,14 @@ claims:
   - id: C8
     text: "The day link uses a `?date=` parameter on the doctor page."
     cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C17"]
+  - id: C9
+    text: "DoctorService.create ends with `return this.get(id);`, so the POST response is the doctor detail."
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C18"]
+  - id: C10
+    text: "DoctorService.replaceAvailability ends with `return this.get(id);`, so the availability PUT response is the doctor detail."
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C20"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
-known: [TP-1, TP-2, TP-3, TP-4, TP-5, TP-6, TP-7, TP-8, TP-9, TP-10, TP-11, TP-12, TP-13, TP-14, TP-15, TP-16, TP-17, TP-18, TP-19, TP-20]
+known: [TP-1, TP-2, TP-3, TP-4, TP-5, TP-6, TP-7, TP-8, TP-9, TP-10, TP-11, TP-12, TP-13, TP-14, TP-15, TP-16, TP-17, TP-18, TP-19, TP-20, TP-21, TP-22, TP-23]
 assumed: []
 unknown: []
 questions: []
@@ -59,22 +70,30 @@ tests:
   - {id: TP-11, title: "Web: each date links to /doctors/:id?date=YYYY-MM-DD, including a 'Not available' day", covers: [S-3/AC1, S-3/AC4], level: unit}
   - {id: TP-12, title: "Web: opening /doctors/:id?date=2026-11-14 sets the day schedule date to 2026-11-14", covers: [S-3/AC2, S-3/AC4], level: unit}
   - {id: TP-13, title: "Web: without ?date= the day schedule starts at local today across UTC midnight (todayIn)", covers: [S-3/AC3], level: unit}
-  - {id: TP-14, title: "Web negative: an invalid ?date= (2026-02-30, markup, wrong format) is ignored; validDay rejects it", covers: [S-3/AC2], level: unit}
+  - {id: TP-14, title: "Web negative: an invalid ?date= is ignored and the day schedule falls back to today", covers: [S-3/AC2], level: unit}
   - {id: TP-15, title: "API: an Inactive doctor's nextSevenDays is null", covers: [S-4/AC1], level: integration}
   - {id: TP-16, title: "Web: no 'Next 7 days' section when nextSevenDays is null (Inactive doctor)", covers: [S-4/AC1, S-4/AC4], level: unit}
   - {id: TP-17, title: "Web regression: the existing HMS-7 tests and the other sections still render with the new section", covers: [S-4/AC2], level: unit}
   - {id: TP-18, title: "Web: no availability shows 7 'Not available' rows and the existing empty messages", covers: [S-4/AC3], level: unit}
-  - {id: TP-19, title: "API negative: nextSevenDays in a PATCH body is ignored and not echoed", covers: [S-4/AC2], level: integration}
+  - {id: TP-19, title: "API negative: nextSevenDays sent in a PATCH body is ignored; response holds the computed value", covers: [S-4/AC2], level: integration}
   - {id: TP-20, title: "API negative: each entry holds only date, available, booked, free; unknown doctor is still 404", covers: [S-1/AC2, S-4/AC2], level: integration}
+  - {id: TP-21, title: "Web regression: Inactive doctor with upcoming appointments keeps all other sections and actions", covers: [S-4/AC4], level: unit}
+  - {id: TP-22, title: "API negative: POST ignores nextSevenDays in the body; response holds the computed value", covers: [S-4/AC2], level: integration}
+  - {id: TP-23, title: "API: availability PUT response recomputes nextSevenDays from the new blocks", covers: [S-4/AC2, S-2/AC1], level: integration}
 ---
 # Test plan: HMS-9
+
+Resolved review findings:
+- F-1: Added TP-21, a unit test that an Inactive doctor's page with upcoming appointments keeps every other section and action as before.
+- F-2: Added TP-22 and TP-23, integration tests that POST ignores nextSevenDays in the body and that POST and availability PUT responses carry the computed field.
 
 ## Scope
 **In scope:**
 - The new `nextSevenDays` field on the doctor detail (C6), including how it counts against the day schedule.
-- The Inactive null, the PATCH read-only handling (C7) and the hospital-zone dates.
+- The Inactive null and the hospital-zone dates.
+- The field's read-only handling and recomputation on every route that returns the doctor detail: PATCH (C7), POST (C9) and availability PUT (C10).
 - The "Next 7 days" section on the doctor page, and the `?date=` link and parameter (C8).
-- Regression of the rest of the page.
+- Regression of the rest of the page, for both active and Inactive doctors.
 
 API behaviour is tested at the integration level with Supertest and a fixed clock (C1). Page behaviour is tested at the unit level with Testing Library (C2), in the existing doctor page test file (C5). Every test name starts with its HMS-9 requirement ID (C3).
 
@@ -94,16 +113,19 @@ API behaviour is tested at the integration level with Supertest and a fixed cloc
 - TP-11, unit. Row links use `?date=`, including on a "Not available" day. Covers S-3/AC1 and S-3/AC4.
 - TP-12, unit. `?date=` sets the day schedule's date. Covers S-3/AC2 and S-3/AC4.
 - TP-13, unit. Without `?date=`, the date falls back to local today across UTC midnight. Covers S-3/AC3.
-- TP-14, unit, negative. An invalid `?date=` is ignored. Covers S-3/AC2.
+- TP-14, unit, negative. An invalid `?date=` (for example 2026-02-30, markup, or the wrong format) is ignored, and the date falls back to today. Covers S-3/AC2.
 - TP-15, integration. An Inactive doctor gets null. Covers S-4/AC1.
 - TP-16, unit. The section is hidden for an Inactive doctor. Covers S-4/AC1 and S-4/AC4.
 - TP-17, unit, regression. The HMS-7 tests and the other sections are unchanged. Covers S-4/AC2.
 - TP-18, unit. No availability: 7 "Not available" rows, and the existing empty messages stay. Covers S-4/AC3.
-- TP-19, integration, negative. A PATCH body containing `nextSevenDays` is ignored. Covers S-4/AC2.
+- TP-19, integration, negative. A `nextSevenDays` value sent in a PATCH body is ignored; the response holds the computed value. Covers S-4/AC2.
 - TP-20, integration, negative. Entry keys only, and an unknown doctor is still 404. Covers S-1/AC2 and S-4/AC2.
+- TP-21, unit, regression. An Inactive doctor with upcoming appointments keeps the existing Inactive warning, upcoming list, details and actions as before; only the new section is absent. Covers S-4/AC4.
+- TP-22, integration, negative. POST ignores `nextSevenDays` in the body, and the response holds the value computed for the new doctor. Covers S-4/AC2.
+- TP-23, integration. The availability PUT response recomputes `nextSevenDays` from the new blocks, so a day that gains a block becomes available. Covers S-4/AC2 and S-2/AC1.
 
 ## Known
-- TP-1 to TP-20: each maps to story criteria and a level the strategy names (C1 to C3). Every S-n/ACm from S-1/AC1 to S-4/AC4 appears in at least one covers list. The negative tests TP-14, TP-19 and TP-20 cover the new `?date=` input and the new response field.
+- TP-1 to TP-23: each maps to story criteria and a level the strategy names (C1 to C3). Every S-n/ACm from S-1/AC1 to S-4/AC4 appears in at least one covers list. The negative tests TP-14, TP-19, TP-20 and TP-22 cover the new `?date=` input and the new response field on every route that returns it.
 
 ## Assumed
 None.
