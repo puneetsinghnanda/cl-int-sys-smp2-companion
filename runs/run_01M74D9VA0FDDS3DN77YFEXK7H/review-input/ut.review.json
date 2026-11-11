@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
   "step": "ut",
-  "attempt": 1,
-  "artifact_sha256": "74b974b2580147d2e7a56c36c20673e6554f1ba623f91b77887b8ce1b0ee66e1",
-  "package_sha256": "2bde7d9ba7a1565bc678a9c7aad7cb79d3a99df26824f0729dfe29f386045b22",
+  "attempt": 2,
+  "artifact_sha256": "768c7066bf58de0904f8850f42d866c3b25d9b670241692cc3abb9b4a22ed719",
+  "package_sha256": "061b85b4838316cec64055e2e371643e1c0a6dfa1854f47d795250bede4ce697",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,96 +12,181 @@
     "version": "0.1.6",
     "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
   },
-  "rubric_score": 4.25,
+  "rubric_score": 4.45,
   "rubric_items": [
-    {"id": "UT-R1", "score": 4, "reason": "Tests trace every REQ, and with impl's regression tests most changed paths are covered. Some story ACs are not tested: S-2 AC3 (booked 0/free 0 on a day with slots), the web fallback to today with no ?date=, and Completed/No-show counting as booked."},
-    {"id": "UT-R2", "score": 4, "reason": "Assertions check observable results: exact booked/free counts, null values, a 404, link hrefs, the schedule date. A few entries (for example 'the other sections are still shown') are vague about what they assert."},
-    {"id": "UT-R3", "score": 4, "reason": "Covers the unknown-doctor 404, the invalid ?date=, validDay strictness, Cancelled freeing a slot and passed slots. Missing the all-passed-empty-slots edge (S-2 AC3) and the all-'Not available' page (S-4 AC3)."},
-    {"id": "UT-R4", "score": 5, "reason": "Uses Vitest+Supertest with a fixed clock for the API and Testing Library for the web, in the existing api/test and web/src/__tests__ locations. Test names start with REQ IDs, as the strategy asks."},
-    {"id": "UT-R5", "score": 5, "reason": "Reports no test or coverage numbers. It defers to checks.json and correctly says coverage is skipped, which matches the verifier's coverage step status 'skip' (exit 78)."}
+    {
+      "id": "UT-R1",
+      "score": 4,
+      "reason": "The earlier gaps F-1, F-2 and F-4 are now covered: the all-passed-empty day, Completed/No-show counted as booked, the todayIn fallback and the all-Not-available page. No listed test opens a 'Not available' row's link (S-3 AC4), but the summary says every AC is covered."
+    },
+    {
+      "id": "UT-R2",
+      "score": 4,
+      "reason": "Most tests assert exact observable values: booked/free counts, null, a 404, hrefs and the 2026-11-12 fallback date. The 09:45 test no longer gives expected counts, and 'other sections are still shown' is vague."
+    },
+    {
+      "id": "UT-R3",
+      "score": 5,
+      "reason": "Covers the unknown-doctor 404, an invalid ?date=, validDay strictness, the UTC-midnight fallback, Cancelled freeing a slot, a day whose slots all passed empty, and a page where every row is Not available."
+    },
+    {
+      "id": "UT-R4",
+      "score": 5,
+      "reason": "API tests use Vitest+Supertest with a fixed clock under api/test. Web tests use Testing Library in the existing DoctorDetailPage.test.tsx. Every test name starts with an HMS-9 REQ ID."
+    },
+    {
+      "id": "UT-R5",
+      "score": 5,
+      "reason": "Reports no test or coverage numbers and defers to checks.json. It correctly says coverage is skipped, which matches the verifier's coverage step (status skip, exit 78)."
+    }
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
+      "severity": "minor",
       "category": "completeness",
-      "text": "S-2 AC3 has no listed test: a day whose slots have all passed empty should show booked 0, free 0, not 'Not available'. The web REQ-6 test only checks that free 0 is shown, and the API tests never pin booked 0/free 0 for a day that has slots.",
+      "text": "The summary says every story AC is covered, but no listed test selects a 'Not available' row and checks that it opens its ?date= (S-3 AC4). The REQ-7 link test does not say it covers a Not available row.",
       "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-2", "quote": "then today's row shows booked 0 and free 0, not 'Not available', because the day has slots."},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests", "quote": "REQ-6: free 0 is shown, not \"Not available\"."}
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#summary",
+          "quote": "They now cover every story acceptance criterion the change serves."
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-3",
+          "quote": "Given the 'Not available' row for 16 Nov, when staff select that row, then the doctor page opens with ?date=2026-11-16"
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests",
+          "quote": "REQ-7: the row link is `/doctors/1?date=…`."
+        }
       ],
-      "suggested_fix": "Add an API test with today's slots all passed and empty at 18:00 local. Assert available: true, booked 0, free 0."
+      "suggested_fix": "Extend the REQ-7 web test to assert that a 'Not available' row also links to /doctors/1?date=&lt;that day&gt;, or soften the summary's claim."
     },
     {
       "id": "F-2",
-      "severity": "major",
-      "category": "completeness",
-      "text": "Only a Scheduled appointment is tested as booked. S-1 AC3 (Completed) and S-2 AC2 (No-show) require passed slots with those statuses to count as booked, and the 09:45 test does not say which status it uses.",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "Previous F-3 is only partly resolved. The 09:45 test no longer states its expected counts, and no test pins S-1 AC3's booked 1, free 1 with a future 10:00 slot.",
       "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests", "quote": "REQ-4: a Scheduled appointment counts as booked."},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-1", "quote": "the 09:00 slot holds a Completed appointment, the 09:30 slot is empty, and the clock is 09:45 local"}
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests",
+          "quote": "at 09:45 local, the passed booked slot stays booked and the passed empty slot counts as neither"
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-1",
+          "quote": "then today's row shows booked 1 and free 1"
+        }
       ],
-      "suggested_fix": "Use Completed and No-show appointments in the passed-slot tests, and name the status in the test titles."
+      "suggested_fix": "Add the 10:00 slot to the 09:45 test and assert booked 1, free 1 exactly, as S-1 AC3 states."
     },
     {
       "id": "F-3",
       "severity": "minor",
-      "category": "consistency",
-      "text": "The 09:45 test expects booked 1, free 0. S-1 AC3 uses the same setup with a future 10:00 slot and expects free 1, so the test does not check that a future slot stays free next to passed slots.",
-      "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests", "quote": "so the row shows booked 1, free 0."},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-1", "quote": "then today's row shows booked 1 and free 1"}
-      ],
-      "suggested_fix": "Add the 10:00 slot and assert booked 1, free 1, matching S-1 AC3."
-    },
-    {
-      "id": "F-4",
-      "severity": "major",
-      "category": "completeness",
-      "text": "No web test covers S-3 AC3, where the page has no ?date= and the day schedule must fall back to local today (todayIn). It also has no test for S-4 AC3, where every row shows 'Not available'.",
-      "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#item:S-3", "quote": "when staff open doctor D's page with no ?date= parameter, then the day schedule shows 12 Nov (local today)"},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C7", "quote": "Without a valid ?date= the day schedule still starts at `todayIn`."}
-      ],
-      "suggested_fix": "Add 'HMS-9 REQ-8 edge: no ?date= uses todayIn' and 'HMS-9 REQ-5: no availability shows 7 Not available rows'."
-    },
-    {
-      "id": "F-5",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "Claim C7 says the field is null for Inactive doctors, but its only cite, impl C2, covers just the field name and entry shape. The null rule is impl C3.",
-      "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#claim:C7", "quote": "The change adds `nextSevenDays` to the doctor detail, null for Inactive doctors."},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C2", "quote": "The new field is named `nextSevenDays` and holds one entry per day with date, available, booked and free."}
-      ],
-      "claim_ref": "C7",
-      "suggested_fix": "Add impl.md#claim:C3 to C7's cites."
-    },
-    {
-      "id": "F-6",
-      "severity": "minor",
       "category": "style",
-      "text": "The new API test file sets up its own database and clock beside the existing doctors-next-seven-days.test.ts for the same feature. This likely duplicates the setup code.",
+      "text": "Previous F-6 still applies. The new edges file sets up its own database and clock beside the existing doctors-next-seven-days.test.ts for the same feature, which likely duplicates setup code.",
       "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests", "quote": "(new; uses its own database and clock)"},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#changes", "quote": "`api/test/doctors-next-seven-days.test.ts`: the regression tests the design and threat model ask implement for."}
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/ut.md#tests",
+          "quote": "(new; uses its own database and clock)"
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#changes",
+          "quote": "the regression tests the design and threat model ask implement for"
+        }
       ],
-      "suggested_fix": "Extend the existing doctors-next-seven-days.test.ts, or move the shared fixture and clock setup into a helper."
+      "suggested_fix": "Move the shared fixture and clock setup into a helper, or extend the existing doctors-next-seven-days.test.ts."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "New requirements get new IDs and tests."}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
-    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx", "quote": "DoctorDetailPage No-shows (HMS-7)"}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C2", "quote": "The new field is named `nextSevenDays`"}, {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C3", "quote": "For an Inactive doctor the field is `null`."}]}
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#layers",
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#layers",
+          "quote": "Vitest with jsdom and Testing Library."
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#requirement-ids",
+          "quote": "New requirements get new IDs and tests."
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#database-for-tests",
+          "quote": "Without either, database tests are skipped."
+        }
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#gaps",
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."
+        }
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx",
+          "quote": "DoctorDetailPage No-shows (HMS-7)"
+        }
+      ]
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C2",
+          "quote": "The new field is named `nextSevenDays`"
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C3",
+          "quote": "For an Inactive doctor the field is `null`."
+        }
+      ]
+    },
+    {
+      "claim_id": "C8",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C7",
+          "quote": "Without a valid ?date= the day schedule still starts at `todayIn`."
+        }
+      ]
+    }
   ],
   "questions": [
     {
       "id": "Q-1",
-      "text": "checks.json shows the test step passed but records no per-test report. Does the verifier image (node-22@1) provide PostgreSQL 16 or HMS_TEST_DATABASE_URL, so that the HMS-9 API tests actually ran rather than skipped?",
+      "text": "checks.json shows the test step passed, but its report_sha256 is null, so there is no per-test report. Does the node-22@1 verifier provide PostgreSQL 16 or HMS_TEST_DATABASE_URL, so that the HMS-9 API tests actually ran rather than skipped?",
       "ask_role": "tech_lead",
       "blocking": false
     }

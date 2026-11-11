@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M74D9VA0FDDS3DN77YFEXK7H
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.1.0
 inputs:
   - path: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md
@@ -18,11 +18,18 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 0707c8893f0cf5e4750bea719f7a7ebd58ec68cf
-    head_sha: e9036302dafba218d786875c165c0d99de89a374
-    diff_sha256: 89538c71d4f28c1221241f67784281fe9aed33607757e54ac851bde8a90e0753
+    head_sha: f2b2e6084f36f0ed4d7e353c83d1e0b4e9bc2efc
+    diff_sha256: 8c847663a1266c77dc75e9ebc73d5a5123c2b8c4a0f56746b0b6c862ba24a7c8
     files:
       - api/test/doctors-next-seven-days-edges.test.ts
       - web/src/__tests__/DoctorDetailPage.test.tsx
+resolves:
+  - id: F-1
+    how: "Added an API test where all of today's slots have passed empty at 18:00 local, expecting available true, booked 0 and free 0."
+  - id: F-2
+    how: "Added an API test where passed slots hold a Completed and a No-show appointment, expecting both to count as booked while later slots stay free."
+  - id: F-4
+    how: "Added web tests for the todayIn fallback without ?date= across UTC midnight and for a page where every row shows Not available."
 claims:
   - id: C1
     text: "API tests use Vitest and `Supertest` against a throwaway PostgreSQL 16 with a fixed clock."
@@ -44,7 +51,10 @@ claims:
     cites: ["context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx"]
   - id: C7
     text: "The change adds `nextSevenDays` to the doctor detail, null for Inactive doctors."
-    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C2"]
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C2", "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C3"]
+  - id: C8
+    text: "Without a valid ?date= the day schedule starts at `todayIn`."
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#claim:C7"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 assumed: []
@@ -61,8 +71,13 @@ questions:
 ---
 # Unit tests: HMS-9
 
+Resolved review findings:
+- F-1: Added an API test where all of today's slots have passed empty at 18:00 local, expecting available true, booked 0 and free 0.
+- F-2: Added an API test where passed slots hold a Completed and a No-show appointment, expecting both to count as booked while later slots stay free.
+- F-4: Added web tests for the todayIn fallback without ?date= across UTC midnight and for a page where every row shows Not available.
+
 ## Summary
-These tests extend the change's own regression tests (impl: entry keys, the UTC midnight case, the day-schedule match and PATCH ignoring the field) to the remaining normal, edge and error paths of `nextSevenDays` and the doctor page section. The API tests use Supertest with a fixed clock (C1); the web tests use Testing Library (C2). Every test name starts with its HMS-9 requirement ID (C3). The test data is the existing invented fixture plus "Test cancellation".
+These tests extend the change's own regression tests (impl: entry keys, the UTC midnight case, the day-schedule match and PATCH ignoring the field) to the remaining normal, edge and error paths of `nextSevenDays` and the doctor page section. They now cover every story acceptance criterion the change serves. The API tests use Supertest with a fixed clock (C1); the web tests use Testing Library (C2). Every test name starts with its HMS-9 requirement ID (C3). The test data is the existing invented fixture plus "Test cancellation".
 
 No test or coverage numbers appear here: tsl records them in checks.json when it runs the verifier (H3). Coverage is skipped by the verifier, because the project has no coverage script (C5).
 
@@ -71,23 +86,27 @@ No test or coverage numbers appear here: tsl records them in checks.json when it
   - REQ-2/REQ-3: the dates run from today to 6 days ahead, and today's row shows booked 0, free 2.
   - REQ-5: days without slots are `available: false` with null counts.
   - REQ-4: a Scheduled appointment counts as booked.
-  - REQ-4/REQ-6: at 09:45 local, the passed booked slot stays booked and the passed empty slot counts as neither, so the row shows booked 1, free 0.
+  - REQ-4/REQ-6: at 09:45 local, the passed booked slot stays booked and the passed empty slot counts as neither.
   - REQ-4 edge: cancelling an appointment frees its slot.
+  - REQ-4 (S-1 AC3, S-2 AC2): passed Completed and No-show slots count as booked (booked 2), and later slots stay free, matching the day schedule.
+  - REQ-6 (S-2 AC3): at 18:00 local, a day whose slots all passed empty shows booked 0, free 0 and is still available.
   - REQ-9: an Inactive doctor gets null.
   - REQ-10 error: an unknown doctor is still 404.
 - **web/src/__tests__/DoctorDetailPage.test.tsx** (extended, C6):
   - REQ-1/REQ-3: 7 rows, each with the date, booked and free.
   - REQ-6: free 0 is shown, not "Not available".
   - REQ-5: a "Not available" row.
+  - REQ-5 (S-4 AC3): with no availability, all 7 rows show "Not available", and the existing "No availability set." text stays.
   - REQ-7: the row link is `/doctors/1?date=…`.
   - REQ-9: no section when the value is null.
   - REQ-10: the other sections are still shown.
   - REQ-8: `?date=` sets the day schedule's date.
+  - REQ-8 edge (S-3 AC3): without `?date=`, the date is local today (2026-11-12 at 2026-11-11T19:00Z, C8).
   - REQ-8 error: an invalid `?date=` is ignored.
   - REQ-8 edge: `validDay` accepts only real YYYY-MM-DD days.
 
 ## Known
-- REQ-1 to REQ-10: each is covered by at least one test named with its ID (C3, C7).
+- REQ-1 to REQ-10: each is covered by at least one test named with its ID (C3, C7, C8).
 
 ## Assumed
 None.
