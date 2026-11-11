@@ -1,0 +1,80 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "eae5648a4c5f715a31b8b95e228481ab276edd53bc982865e666502a745aa23f",
+  "package_sha256": "0a9d89dbe5d0cf4d9cf3e4a095551264e1881f46ebce4a21e0e5abe898af46b7",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "CO-1, CO-2, CO-4, CO-6 and CO-7 are in the code as designed: Inactive gives null, one occupyingBetween query covers the range, slotStates is shared, and ?date= is read. There are small gaps in the tests the design and threat model call for."},
+    {"id": "IM-R2", "score": 5, "reason": "Rules stay in DoctorService and the helpers come from lib. No new logging and no new routes. Both type files are updated together, and the fixture is typed as the web DoctorDetail."},
+    {"id": "IM-R3", "score": 5, "reason": "Six files change (149 lines added, 11 deleted). All of them are needed. The schedule() refactor is only the extraction the design asked for."},
+    {"id": "IM-R4", "score": 3, "reason": "Edge cases in the code are handled: Inactive gives null, a day with no slots gives null counts, and validDay strictly checks ?date=. But the T-1 key test, the T-7 midnight test and the web tests for ?date=/the section are missing."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary matches the diff for each file. It cites threat items T-4/T-6/T-8/T-9, but threat.md is not listed as an input. 'Two regression tests from the design and threat model' leaves out the other tests the threat model asked for."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "completeness", "text": "The threat model asks implement for new tests: one asserting that nextSevenDays entries hold only date/available/booked/free (T-1), and one for a UTC-vs-local midnight instant (T-7, S-1 AC1). Neither was added. The only new api tests cover T-4 and T-6.", "cites": [
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#L56", "quote": "A unit test asserts the entry keys."},
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#L86", "quote": "tests cover a UTC-vs-local midnight instant (S-1 AC1)"},
+      {"ref": "sample-system:api/test/doctors-next-seven-days.test.ts#L7", "quote": "regression tests the design asks implement for (threat model T-4, T-6)"}
+    ], "suggested_fix": "Add an api test asserting Object.keys of each entry equals [date, available, booked, free]. Add a test with the clock at 2026-11-11T19:00Z that expects the dates 2026-11-12 to 2026-11-18."},
+    {"id": "F-2", "severity": "minor", "category": "completeness", "text": "No web test renders the Next 7 days section, the 'Not available' row, the row links, or validDay/?date= handling (T-9). The only fixture sets nextSevenDays to null, so the new UI path is never run in tests.", "cites": [
+      {"ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L15", "quote": "noShowsWindow: WINDOW, nextSevenDays: null,"},
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#L96", "quote": "accept ?date= only when it matches YYYY-MM-DD and is a real date, else fall back to todayIn"}
+    ], "suggested_fix": "Add DoctorDetailPage tests for the section with rows (including available:false), hidden when null, the row href, and validDay rejecting values like 2026-02-30 and junk."},
+    {"id": "F-3", "severity": "minor", "category": "correctness", "text": "The URL sync only runs when urlDate changes. If staff pick a date by hand and then click the row for the date already in the URL, the day schedule does not move to it. Removing ?date= also leaves the old date in place.", "cites": [
+      {"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L34", "quote": "if (urlDate) setDate(urlDate);"},
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L217", "quote": "keeps the date state in sync when the URL's `date` changes"}
+    ]},
+    {"id": "F-4", "severity": "minor", "category": "traceability", "text": "The artifact cites threat-model items (T-4, T-6, T-8, T-9) as the reason for its changes, but threat.md is not in its inputs list, so those references cannot be traced through the envelope.", "cites": [
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#L87", "quote": "two regression tests from the design and threat model."},
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md#L86", "quote": "because the DoctorDetail type is marked changed (CO-6, threat T-8)"}
+    ], "suggested_fix": "Add artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md with its sha256 to inputs."},
+    {"id": "F-5", "severity": "minor", "category": "other", "text": "The new api tests are skipped when Postgres is unavailable. The verifier's test step has no report, so a passing test step does not prove the REQ-4 and REQ-10 regression tests ran.", "cites": [
+      {"ref": "sample-system:api/test/doctors-next-seven-days.test.ts#L8", "quote": "describe.skipIf(!pgAvailable())('doctor next 7 days (HMS-9)'"},
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.checks.json#L110", "quote": "\"report_sha256\": null"}
+    ]}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/services/doctorService.ts#L157", "quote": "the one slot-state rule shared by the day schedule and the next 7 days"}
+    ]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/types.ts#L71", "quote": "nextSevenDays: NextDay[] | null;"}
+    ]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/services/doctorService.ts#L75", "quote": "doctor.status === 'INACTIVE' ? null : await this.nextSevenDays("}
+    ]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/services/doctorService.ts#L170", "quote": "const today = localDay(now, tz);"},
+      {"ref": "sample-system:api/src/services/doctorService.ts#L171", "quote": "Array.from({ length: 7 }, (_, i) =&gt; addDays(today, i))"}
+    ]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/services/doctorService.ts#L159", "quote": "return daySlots(blocks, slotMinutes, date, this.config.timeZone)"}
+    ]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [
+      {"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L25", "quote": "export function DoctorDetailPage() {"}
+    ]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [
+      {"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L31", "quote": "useState(() =&gt; urlDate ?? todayIn(timeZone))"}
+    ]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [
+      {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L73", "quote": "the read-only count in a PATCH body is ignored"},
+      {"ref": "sample-system:api/test/doctors-next-seven-days.test.ts#L41", "quote": "expect(res.body.nextSevenDays).toEqual(before);"}
+    ]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [
+      {"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}
+    ]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Does the verifier's node-22@1 test step have Postgres available, so that the HMS-9 api tests (describe.skipIf(!pgAvailable())) actually ran rather than being skipped?", "ask_role": "engineer", "blocking": false, "finding_ref": "F-5"}
+  ]
+}

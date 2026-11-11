@@ -4,7 +4,13 @@
     "session_id": "ffc1a7b9-efdc-4188-8a4c-10ca1821c6bf",
     "since": "2026-11-11T07:57:07Z"
   },
-  "branch": {},
+  "branch": {
+    "sample-system": {
+      "base_sha": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc",
+      "head_sha": null,
+      "name": "tsl/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H"
+    }
+  },
   "created_at": "2026-11-11T04:19:20Z",
   "cursor": null,
   "end_reason": null,
@@ -55,7 +61,7 @@
       "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-11-11T07:57:07Z",
+  "heartbeat_at": "2026-11-11T08:08:39Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -96,7 +102,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 32,
+  "rev": 36,
   "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -358,16 +364,44 @@
       "status": "ACCEPTED"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.md",
+          "artifact_sha256": "eae5648a4c5f715a31b8b95e228481ab276edd53bc982865e666502a745aa23f",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-11T08:08:39Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "2ea8104748653909b30e76525dd490d16d20f1645fa07ff4f40b533297f55d50",
+              "step": "design"
+            },
+            {
+              "name": "stories",
+              "sha256": "7e5a680cb8c89a9d3304be453d11ee6e38652b7841fcf7f39799be1b9d6659f0",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impl.verification.json",
+          "skill": "implement@1.1.0",
+          "skill_started_at": "2026-11-11T07:59:15Z",
+          "started_at": "2026-11-11T07:57:20Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "impl",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -414,7 +448,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-9",
-  "updated_at": "2026-11-11T07:57:07Z",
+  "updated_at": "2026-11-11T08:08:39Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }

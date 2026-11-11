@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "A unit test asserts the entry keys.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#L56"
+        },
+        {
+          "quote": "tests cover a UTC-vs-local midnight instant (S-1 AC1)",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/threat.md#L86"
+        },
+        {
+          "quote": "regression tests the design asks implement for (threat model T-4, T-6)",
+          "ref": "sample-system:api/test/doctors-next-seven-days.test.ts#L7"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The threat model asks implement for new tests: one asserting that nextSevenDays entries hold only date/available/booked/free (T-1), and one for a UTC-vs-local midnight instant (T-7, S-1 AC1). Neither was added. The only new api tests cover T-4 and T-6."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
