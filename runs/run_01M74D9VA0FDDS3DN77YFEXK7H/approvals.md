@@ -42,6 +42,34 @@ comment: Low band from one soft size check (code notes in Summary); content revi
 kind: escalation
 Artifact: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md (sha256 6a8917d093b964f8c187482843359ed33a2b14310dd1885d78d828836927e08a)
 Reason for gate: overall quality came out low (only 65% of claims are backed by a verified source)
-decision:          # approve | reject | changes | abort
-comment:
+decision:    approve      # approve | reject | changes | abort
+comment: Low band from 5 dropped reviewer findings (anchor not found) counted in S1; artifact claims 13/15 verified,
+  review 4.6/5, PATCH effect added.
 <!-- signature block written by `tsl approve` - do not edit -->
+<!-- tsl:signature-begin G-escalate-impact-a2 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-11-11T07:20:21Z",
+  "approver": "eng-3c51",
+  "artifacts": [
+    {
+      "attempt": 2,
+      "sha256": "6a8917d093b964f8c187482843359ed33a2b14310dd1885d78d828836927e08a",
+      "step": "impact"
+    }
+  ],
+  "comment_sha256": "7d8be4585bc26f89ec6ed8d2c388058b9408fae256aced3a50b87735d1ba2584",
+  "decision": "approve",
+  "gate": "G-escalate-impact-a2",
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "PbF9FBW9UFmqwv-dgPiTr1IFfcUg_xQQDK-NBLSqnovDw5bLd2Oyv3BnfxSqUQ245DPyjk_0DgVF9tJPoNc9AA",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-impact-a2 -->
