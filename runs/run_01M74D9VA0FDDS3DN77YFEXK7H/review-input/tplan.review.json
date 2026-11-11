@@ -1,0 +1,115 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "ea213a47687806b24cedabed74187b4b5daab6e2a4cdb92445beb6987f0d5e0d",
+  "package_sha256": "6ed7c85aba473823fcd35823cf50a62868d50c27da85c7e0dcc0d9993f283015",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 4, "reason": "Every S-n/ACm appears in a covers list. S-4/AC4 is only weakly tested: TP-16 checks that the section is hidden, not that the other sections and actions are unchanged. S-3/AC4's same-as-hand-picked check is not tested directly."},
+    {"id": "TP-R2", "score": 5, "reason": "API rules are tested at integration level with Supertest. Page rendering and ?date= handling are unit tests with Testing Library. That is the cheapest level that proves each one, and no e2e tests are planned."},
+    {"id": "TP-R3", "score": 4, "reason": "There are negative tests for PATCH ignore, invalid ?date=, entry keys and the 404, plus good boundaries (UTC vs local midnight, free 0, all passed). Missing: POST body ignore (EP-4) and the recomputed field in the availability PUT response (EP-5)."},
+    {"id": "TP-R4", "score": 4, "reason": "Tools match the strategy and the web test file is named. Test titles start with 'API:'/'Web:' instead of a requirement ID, which goes against the requirement-ID rule the plan cites. No API test file is named."},
+    {"id": "TP-R5", "score": 4, "reason": "Titles are concrete and runnable, with exact clocks and dates. A few are ambiguous: TP-19 says 'not echoed', and TP-14 names 'validDay', a symbol absent from the design and module map."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "S-4/AC4 requires every section and action of an Inactive doctor's page to be unchanged, but its only test, TP-16, checks only that the Next 7 days section is absent. TP-17 covers the unchanged-sections regression for active doctors only (S-4/AC2).",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L87", "quote": "then every section and action on the page is the same as on the build before this change"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L64", "quote": "Web: no 'Next 7 days' section when nextSevenDays is null (Inactive doctor)"}
+      ],
+      "suggested_fix": "Add a unit test that renders an Inactive doctor with upcoming appointments and checks that the other sections and actions are still present and unchanged. Map it to S-4/AC4."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The design makes the POST and availability PUT responses carry nextSevenDays, and says the field is ignored in a POST body. The plan has a negative test only for PATCH (TP-19). Nothing tests POST-body ignore or the recomputed field in the PUT response.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L242", "quote": "computed for the new doctor. The field is ignored in the request body."},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L243", "quote": "computed from the new availability"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L67", "quote": "API negative: nextSevenDays in a PATCH body is ignored and not echoed"}
+      ],
+      "suggested_fix": "Add integration tests showing that POST /api/doctors ignores nextSevenDays in the body, and that PUT /api/doctors/:id/availability returns nextSevenDays built from the new blocks."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The plan says every test name starts with its HMS-9 requirement ID, but each title starts with 'API:'/'Web:' and no test is mapped to a REQ-n. Existing tests use names like 'HMS-7 REQ-8: ...'.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L79", "quote": "Every test name starts with its HMS-9 requirement ID (C3)."},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L49", "quote": "API: at 2026-11-11T19:00Z (00:30 on 12 Nov IST)"},
+        {"ref": "context/generated/test-layout.json#L104", "quote": "HMS-7 REQ-8: the read-only count in a PATCH body is ignored"}
+      ],
+      "claim_ref": "C3",
+      "suggested_fix": "Give each TP an 'HMS-9 REQ-n:' prefix derived from the story trace, for example 'HMS-9 REQ-2: ...' for TP-1."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-3/AC4 requires the 16 Nov day schedule opened via the link to match what it shows when 16 Nov is picked by hand. TP-12 checks only 14 Nov setting the date, and TP-11 checks only the link href.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L75", "quote": "shows exactly what it shows today when 16 Nov is picked by hand"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L60", "quote": "Web: opening /doctors/:id?date=2026-11-14 sets the day schedule date to 2026-11-14"}
+      ],
+      "suggested_fix": "Add a check to TP-12 (or a new test) that opens ?date=2026-11-16 for a day without availability and compares the result with picking 16 Nov by hand."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "TP-20 (entry keys and the 404) and TP-19 (PATCH ignore) are mapped to S-1/AC2 and S-4/AC2. Those criteria are about counts matching the day schedule and other sections being unchanged, so the mapping overstates what these tests cover.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L68", "quote": "API negative: each entry holds only date, available, booked, free; unknown doctor is still 404"}
+      ],
+      "suggested_fix": "Trace TP-19 and TP-20 to the design endpoints (EP-1, EP-3) and to REQ-10, rather than to S-1/AC2."
+    },
+    {
+      "id": "F-6",
+      "severity": "minor",
+      "category": "style",
+      "text": "TP-19 says nextSevenDays is 'not echoed', but under the design the PATCH response does carry nextSevenDays, computed after the update. A tester could read the title as 'the response omits the field'.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L67", "quote": "nextSevenDays in a PATCH body is ignored and not echoed"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L241", "quote": "The response carries `nextSevenDays` as in EP-1, computed after the update."}
+      ],
+      "suggested_fix": "Reword the title: the sent value is ignored, and the response holds the computed nextSevenDays."
+    },
+    {
+      "id": "F-7",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "TP-14 names a web helper 'validDay' that the design never names. The design only says the parameter must hold a valid YYYY-MM-DD.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L62", "quote": "is ignored; validDay rejects it"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L216", "quote": "when it holds a valid `YYYY-MM-DD`, else from `todayIn(timeZone)` as now"}
+      ],
+      "suggested_fix": "Describe the behaviour without naming a symbol, or cite where validDay exists in the web package."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "no page is tested end to end in a browser"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx", "quote": "web/src/__tests__/DoctorDetailPage.test.tsx"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C12", "quote": "The new field is named `nextSevenDays` and holds one entry per day with date, available, booked and free."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C15", "quote": "HMS-7 set the precedent that `the read-only count in a PATCH body is ignored`"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#claim:C17", "quote": "The day link uses a `?date=` parameter on the doctor page."}]}
+  ],
+  "questions": []
+}

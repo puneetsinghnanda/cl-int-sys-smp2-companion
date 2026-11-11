@@ -1,0 +1,49 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then every section and action on the page is the same as on the build before this change",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L87"
+        },
+        {
+          "quote": "Web: no 'Next 7 days' section when nextSevenDays is null (Inactive doctor)",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L64"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-4/AC4 requires every section and action of an Inactive doctor's page to be unchanged, but its only test, TP-16, checks only that the Next 7 days section is absent. TP-17 covers the unchanged-sections regression for active doctors only (S-4/AC2)."
+    },
+    {
+      "cites": [
+        {
+          "quote": "computed for the new doctor. The field is ignored in the request body.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L242"
+        },
+        {
+          "quote": "computed from the new availability",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L243"
+        },
+        {
+          "quote": "API negative: nextSevenDays in a PATCH body is ignored and not echoed",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/tplan.md#L67"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The design makes the POST and availability PUT responses carry nextSevenDays, and says the field is ignored in a POST body. The plan has a negative test only for PATCH (TP-19). Nothing tests POST-body ignore or the recomputed field in the PUT response."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "feedback.v1",
+  "step": "tplan"
+}
