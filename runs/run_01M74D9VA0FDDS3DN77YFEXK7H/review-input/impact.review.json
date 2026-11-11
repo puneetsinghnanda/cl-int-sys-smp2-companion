@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
   "step": "impact",
-  "attempt": 1,
-  "artifact_sha256": "2fa0b437273809a6e84c1d4970975669f0c53d9380dfd2a0177189ecaa65c6b4",
-  "package_sha256": "7c447056f890b0b9517fc221164449d0048bdca745520ef0f1cbcc98bc9159ad",
+  "attempt": 2,
+  "artifact_sha256": "6a8917d093b964f8c187482843359ed33a2b14310dd1885d78d828836927e08a",
+  "package_sha256": "3a91075a0b7e1121d5cf5f284cbbdef44dbc646e23eda2f379cace6699e1c2dd",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,77 +12,203 @@
     "version": "0.1.6",
     "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457"
   },
-  "rubric_score": 3.6,
+  "rubric_score": 4.6,
   "rubric_items": [
-    {"id": "IA-R1", "score": 3, "reason": "Lists the right modules, APIs and tables. It misses one indirect effect: PATCH /api/doctors/:id has to ignore the new read-only field, as the HMS-7 precedent did."},
-    {"id": "IA-R2", "score": 4, "reason": "Every module, API and table id is in the generated facts and cited. A few claims are weakly cited: C9 says 'does not take a slot' and C11 states caller facts, but the cited sources do not prove either."},
-    {"id": "IA-R3", "score": 3, "reason": "Covers the other GET callers (DoctorFormPage, BookAppointmentPage) and the client type. Misses the PATCH write path and the existing tests that pin the shape of the doctor detail."},
-    {"id": "IA-R4", "score": 4, "reason": "The changed API and module status rest on the cited A-05 answer. The caller list in C11 comes from the skill's own question text, not from facts with call edges, but it is stated as fact."},
-    {"id": "IA-R5", "score": 5, "reason": "Clear summary, risks listed first, and each REQ is mapped to the claims behind it."}
+    {
+      "id": "IA-R1",
+      "score": 5,
+      "reason": "Lists every touched element: the api and web modules (changed), the db module (existing), GET detail (changed), the slots and PATCH routes (existing), and the doctor, availability_block and appointment tables. F-1 from a1 is fixed."
+    },
+    {
+      "id": "IA-R2",
+      "score": 4,
+      "reason": "Every module, API and table id is in the generated facts and cited. Some claims are still weakly cited: C9 (slot-taking rule), C11 (caller list) and the DoctorFormPage half of C14. C15 cites test-layout.json, which is not a declared input."
+    },
+    {
+      "id": "IA-R3",
+      "score": 5,
+      "reason": "Covers the other GET callers, the client type, the PATCH write path and the three existing tests that read the doctor detail shape. The architecture says no background jobs exist."
+    },
+    {
+      "id": "IA-R4",
+      "score": 4,
+      "reason": "The changed statuses rest on the cited A-05 answer. The caller facts (DoctorFormPage and BookAppointmentPage use GET, DoctorFormPage uses PATCH) are stated as fact without a call-edge fact behind them."
+    },
+    {
+      "id": "IA-R5",
+      "score": 5,
+      "reason": "Clear summary, risks listed first, resolved findings stated, and each REQ is mapped to its claims."
+    }
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "PATCH /api/doctors/:id is missing as an indirect effect. HMS-7 required a server-computed detail field to be ignored in PATCH bodies. The new next-7-days field needs the same handling, and DoctorFormPage edits through this route.",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Still open from a1 (F-3): C9 says CANCELLED does not take a slot, but the cited data-model section only lists the status values. It does not say which statuses take a slot.",
       "cites": [
-        {"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts", "quote": "HMS-7 REQ-8: the read-only count in a PATCH body is ignored"},
-        {"ref": "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id", "quote": "http:PATCH:/api/doctors/:id"},
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#impacted-modules", "quote": "They need no change, but their tests and fixtures may need the new field in the client type."}
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claims",
+          "quote": "Appointment status includes `CANCELLED`, which does not take a slot."
+        },
+        {
+          "ref": "context/data-model.md#appointments",
+          "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED."
+        }
       ],
-      "suggested_fix": "Add http:PATCH:/api/doctors/:id as existing, with a note that the new summary field is read-only and ignored in PATCH bodies, following the HMS-7 REQ-8 test."
+      "claim_ref": "C9",
+      "suggested_fix": "Cite a source that states the slot-taking rule (for example appointmentRepo occupyingBetween at the pinned SHA), or narrow C9 to the list of status values."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "completeness",
-      "text": "Existing tests that pin the doctor detail response are not named as affected readers: the HMS-6 'detail unchanged' test, the HMS-7 privacy test on the detail, and the DoctorDetailPage 'other sections still shown' test.",
+      "category": "traceability",
+      "text": "Still open from a1 (F-4): C11's caller list comes from the skill's own premise in the A-05 question text. The user only picked an option, and the generated facts have no call edges to prove it.",
       "cites": [
-        {"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-today.test.ts", "quote": "HMS-6: without with_today the list and the detail are unchanged"},
-        {"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx", "quote": "HMS-7 REQ-8: the other sections are still shown"}
+        {
+          "ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05",
+          "quote": "GET /api/doctors/:id is also called by DoctorFormPage and BookAppointmentPage."
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claims",
+          "quote": "`DoctorFormPage` and BookAppointmentPage also call the doctor detail route, so they receive the added field and ignore it."
+        }
       ],
-      "suggested_fix": "List these tests under Indirect effects as readers of the doctor detail shape that may need updating."
+      "claim_ref": "C11",
+      "suggested_fix": "Ground the caller list in a product-code citation (file#line at the pinned SHA), or mark it assumed."
     },
     {
       "id": "F-3",
       "severity": "minor",
       "category": "traceability",
-      "text": "C9 says CANCELLED does not take a slot, but the cited data-model section only lists the status values. Nothing in it says which statuses take a slot.",
+      "text": "C14 says DoctorFormPage saves edits through PATCH, but its only cite is the api-inventory route entry. That entry proves where the route is declared, not who calls it.",
       "cites": [
-        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claims", "quote": "Appointment status includes `CANCELLED`, which does not take a slot."},
-        {"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED."}
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claims",
+          "quote": "is declared in api/src/routes/doctors.ts, and DoctorFormPage saves edits through it."
+        },
+        {
+          "ref": "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id",
+          "quote": "\"path\": \"api/src/routes/doctors.ts\","
+        }
       ],
-      "claim_ref": "C9",
-      "suggested_fix": "Cite a source that states the slot-taking rule (for example the double-booking section or the appointment repository) or narrow C9 to the status list."
+      "claim_ref": "C14",
+      "suggested_fix": "Cite DoctorFormPage.tsx submit at the pinned SHA for the PATCH call, or split C14 into the proven route claim and an assumed caller claim."
     },
     {
       "id": "F-4",
       "severity": "minor",
       "category": "traceability",
-      "text": "C11's caller list comes from the skill's own premise in the A-05 question. The user only picked an option, and the generated facts have no call edges. So 'DoctorFormPage and BookAppointmentPage call the route' is not proven by a fact.",
+      "text": "C15 and the PATCH entry cite context/generated/test-layout.json, but that file is not in the frontmatter inputs, so its sha256 is not pinned.",
       "cites": [
-        {"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05", "quote": "GET /api/doctors/:id is also called by DoctorFormPage and BookAppointmentPage."},
-        {"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05", "quote": "answer: Extend doctor detail (proposed default)"}
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claims",
+          "quote": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts"
+        }
       ],
-      "claim_ref": "C11",
-      "suggested_fix": "Ground the caller list in a fact or product-code citation, or mark it assumed."
+      "claim_ref": "C15",
+      "suggested_fix": "Add context/generated/test-layout.json with its sha256 to inputs."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The a1 F-2 fix (the existing detail-shape tests are now listed under Indirect effects) was made, but the resolves list only records F-1.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#impacted-modules",
+          "quote": "api/test/doctors-today.test.ts (HMS-6, which checks the detail is otherwise unchanged)"
+        },
+        {
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#resolves",
+          "quote": "PATCH /api/doctors/:id is now listed as existing"
+        }
+      ],
+      "suggested_fix": "Add a resolves entry for F-2 that describes the added test list."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id", "quote": "api/src/routes/doctors.ts"}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots", "quote": "api/src/routes/doctors.ts"}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/doctors/:id", "quote": "web/src/App.tsx"}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage", "quote": "\"name\": \"DoctorDetailPage\""}]},
-    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "quote": "\"name\": \"DoctorService\""}, {"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions"}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/slots.ts:daySlots", "quote": "\"name\": \"daySlots\""}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/data-model.md#doctors", "quote": "local wall-clock times, no overlaps per weekday"}]},
-    {"claim_id": "C9", "verdict": "unsupported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED."}]},
-    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05", "quote": "answer: Extend doctor detail (proposed default)"}, {"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts", "quote": "the doctor detail counts the doctor’s No-shows in the last 30 days"}]},
-    {"claim_id": "C11", "verdict": "not-checked", "cites": [{"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05", "quote": "GET /api/doctors/:id is also called by DoctorFormPage and BookAppointmentPage."}]},
-    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
-    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "\"name\": \"todayIn\""}]}
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id", "quote": "api/src/routes/doctors.ts"}]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots", "quote": "api/src/routes/doctors.ts"}]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/api-inventory.json#ui:/doctors/:id", "quote": "web/src/App.tsx"}]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage", "quote": "\"name\": \"DoctorDetailPage\""}]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService", "quote": "\"name\": \"DoctorService\""},
+        {"ref": "context/architecture.md#components", "quote": "services hold the rules and"}
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/slots.ts:daySlots", "quote": "\"name\": \"daySlots\""}]
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported",
+      "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}]
+    },
+    {
+      "claim_id": "C8",
+      "verdict": "supported",
+      "cites": [{"ref": "context/data-model.md#doctors", "quote": "local wall-clock times, no overlaps per weekday"}]
+    },
+    {
+      "claim_id": "C9",
+      "verdict": "unsupported",
+      "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED."}]
+    },
+    {
+      "claim_id": "C10",
+      "verdict": "supported",
+      "cites": [
+        {"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05", "quote": "answer: Extend doctor detail (proposed default)"},
+        {"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts", "quote": "the doctor detail counts the doctor’s No-shows in the last 30 days"}
+      ]
+    },
+    {
+      "claim_id": "C11",
+      "verdict": "not-checked",
+      "cites": [{"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-05", "quote": "GET /api/doctors/:id is also called by DoctorFormPage and BookAppointmentPage."}]
+    },
+    {
+      "claim_id": "C12",
+      "verdict": "supported",
+      "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]
+    },
+    {
+      "claim_id": "C13",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "\"name\": \"todayIn\""}]
+    },
+    {
+      "claim_id": "C14",
+      "verdict": "unsupported",
+      "cites": [{"ref": "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id", "quote": "\"path\": \"api/src/routes/doctors.ts\","}]
+    },
+    {
+      "claim_id": "C15",
+      "verdict": "supported",
+      "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts", "quote": "HMS-7 REQ-8: the read-only count in a PATCH body is ignored"}]
+    }
   ],
   "questions": []
 }

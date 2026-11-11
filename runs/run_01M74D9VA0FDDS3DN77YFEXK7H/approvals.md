@@ -37,3 +37,11 @@ comment: Low band from one soft size check (code notes in Summary); content revi
 }
 ```
 <!-- tsl:signature-end G-escalate-req-a1 -->
+
+## G-escalate-impact-a2 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md (sha256 6a8917d093b964f8c187482843359ed33a2b14310dd1885d78d828836927e08a)
+Reason for gate: overall quality came out low (only 65% of claims are backed by a verified source)
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl approve` - do not edit -->

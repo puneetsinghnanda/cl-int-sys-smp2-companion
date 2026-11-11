@@ -1,42 +1,49 @@
 {
   "artifact_path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md",
-  "artifact_sha256": "2fa0b437273809a6e84c1d4970975669f0c53d9380dfd2a0177189ecaa65c6b4",
-  "attempt": 1,
-  "band": "Medium",
+  "artifact_sha256": "6a8917d093b964f8c187482843359ed33a2b14310dd1885d78d828836927e08a",
+  "attempt": 2,
+  "band": "Low",
   "caps": [],
-  "checks_sha256": "449bf0ded202670b7314dab55b19496a8e888da56dbff55fcd9efdc9f12d8ee8",
+  "checks_sha256": "06465788fd61d030b0dbf2aeab69c8cd8b837bdbf9886d4c2c54321cc30892ae",
   "claims": {
-    "total": 13,
+    "total": 15,
     "unverified": [
       {
         "id": "C9",
         "reason": "reviewer: unsupported"
+      },
+      {
+        "id": "C14",
+        "reason": "reviewer: unsupported"
       }
     ],
-    "verified": 12
+    "verified": 13
   },
-  "decided_at": "2026-11-11T07:13:25Z",
+  "decided_at": "2026-11-11T07:16:37Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [
     {
-      "id": "F-3",
-      "reason": "anchor not found"
-    }
-  ],
-  "findings_kept": [
-    {
       "id": "F-1",
-      "severity": "major"
+      "reason": "anchor not found"
     },
     {
       "id": "F-2",
-      "severity": "minor"
+      "reason": "anchor not found"
+    },
+    {
+      "id": "F-3",
+      "reason": "anchor not found"
     },
     {
       "id": "F-4",
-      "severity": "minor"
+      "reason": "anchor not found"
+    },
+    {
+      "id": "F-5",
+      "reason": "anchor not found"
     }
   ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -46,7 +53,7 @@
     }
   ],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "RETRY",
+  "outcome": "ESCALATE",
   "pack": {
     "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
     "signed_at": "2026-11-03T10:45:54Z",
@@ -54,15 +61,15 @@
       "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "1f8dea7ba8e6a4759e0d441f250155c8b0cc8612d0f56dcbd6c694cbad01a46a",
   "product_changes": null,
-  "review_sha256": "e0cc2bf7261f62bbbc465d2c56853014f40a62389117bd5bff122161048922ad",
+  "review_sha256": "82250344db28bb2d481eb863582bc5701288ddcfa74ca803bcfc37ebf491ee40",
   "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.8824,
+    "S1": 0.65,
     "S2": 1.0,
-    "S3": 3.6,
+    "S3": 4.6,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -71,7 +78,7 @@
       "sensitive": false
     }
   },
-  "signature": "oubBtPEunzp5PUgYzLqQoeRuoxA_rXsg-ed_VdUFS7p_CylrxGataxDV9Msx8Hh5sOTWzjJAK-0beOaHbiPeDA",
+  "signature": "aHUcLUHLl-_swIYQTQoLxebVJfZrjy3bhMQlYyO-XOLHhhu4EozxGm8EZ98mUUJ9gGDZugO09GZmhjgkgVMIDw",
   "skill": "impact-analysis@1.3.0",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
