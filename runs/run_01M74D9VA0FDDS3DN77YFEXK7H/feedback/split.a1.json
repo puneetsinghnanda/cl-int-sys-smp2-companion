@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then the 'No availability set.' message and the empty upcoming appointments table are shown as before",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L79"
+        },
+        {
+          "quote": "the existing Inactive warning and the upcoming appointments are shown as before, and the Book appointment button is still hidden",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L81"
+        },
+        {
+          "quote": "The rest of the doctor page is `unchanged`",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L92"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-4 AC3 and AC4 assert existing UI behaviour that is not in the intent or the glossary: the 'No availability set.' message, an Inactive warning, and a hidden Book appointment button. These values are not sourced."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "feedback.v1",
+  "step": "split"
+}

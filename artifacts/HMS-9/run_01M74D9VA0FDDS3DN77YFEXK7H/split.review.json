@@ -1,0 +1,160 @@
+{
+  "artifact_sha256": "36473248c692065f043940604bd204b3879d9bca0a869c8deb47967079e93af6",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The hospital time zone is `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L18"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "One bookable interval of a doctor's slot length, starting at the start of an availability block.",
+          "ref": "context/glossary.md#slot"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "its slot becomes free again",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past slot with a non-cancelled appointment counts as booked; a past slot without one counts as neither.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L56"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Each row links to the doctor page with a `?date=` parameter set to that row's date (YYYY-MM-DD).",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L74"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "then the 'No availability set.' message and the empty upcoming appointments table are shown as before",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L79"
+        },
+        {
+          "quote": "the existing Inactive warning and the upcoming appointments are shown as before, and the Book appointment button is still hidden",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L81"
+        },
+        {
+          "quote": "The rest of the doctor page is `unchanged`",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#L92"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite a source that shows these strings and behaviours exist, or say 'shown exactly as before this change' without naming unsourced UI text.",
+      "text": "S-4 AC3 and AC4 assert existing UI behaviour that is not in the intent or the glossary: the 'No availability set.' message, an Inactive warning, and a hidden Book appointment button. These values are not sourced."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "then the 15 Nov row counts that slot as free, not booked, matching the day schedule for 15 Nov",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L47"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "List all the 15 Nov slots and state the expected booked and free numbers, as S-1 AC2 does.",
+      "text": "S-1 AC4 gives no other slots for 15 Nov and no expected counts. 'Counts that slot as free' is not something a tester can see directly; only the comparison with the day schedule can be checked."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given an active doctor whose slots on 14 Nov are 09:00, 09:30 and 10:00 local",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L43"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a clock to the Given, for example 'the clock is 12 Nov 10:00 local'.",
+      "text": "S-1 AC2 and AC4 use the dates 14 Nov and 15 Nov but give no clock. Whether those dates fall inside the 7-day window depends on the current date, which the Given does not fix."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "title: Inactive doctors show no section, and the rest of the page is unchanged",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#L71"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Split S-4 into one story for REQ-9 and one for REQ-10.",
+      "text": "S-4 combines two outcomes: no section for inactive doctors (REQ-9), and the rest of the page staying unchanged (REQ-10)."
+    }
+  ],
+  "package_sha256": "80764babe3e66c9685d6b01aa430726ee80915112f40d6c4e28306f01ad4e239",
+  "questions": [],
+  "recorded_at": "2026-11-11T06:28:11Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All ten known requirements, REQ-1 to REQ-10, are traced by S-1 to S-4. The intent has no assumed requirements.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories have one outcome. S-4 bundles two: hiding the section for inactive doctors, and keeping the rest of the page unchanged.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The ACs use Given/When/Then and catch the likely wrong builds: the UTC/IST midnight case, counting past slots as booked, 'Not available' vs free 0. S-1 AC4 states no expected counts, and S-1 AC2/AC4 give no clock.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Most values come from the intent. S-4 AC3/AC4 assert page behaviour that neither input mentions: the 'No availability set.' message, an Inactive warning and a hidden Book appointment button.",
+      "score": 3
+    },
+    {
+      "id": "SS-R5",
+      "reason": "The terms match the glossary and the intent, and the prose summary agrees with the frontmatter ACs.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
