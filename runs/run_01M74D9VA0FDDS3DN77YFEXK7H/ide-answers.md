@@ -42,3 +42,13 @@ entries as the user's own answers.
 - question: REQ-6 (re-asked after Q-01): Following your Q-01 answer, today's counts match the day schedule: past slots with an appointment count as booked, and past empty slots count as neither. So late today a row could read e.g. '5 booked, 0 free'. 'Not available' would then appear only when the day has no slots at all (the same test as the day schedule's 'No availability on this day'). Confirm?
 - options: Yes, confirm | Not available if 0 free
 - answer: Yes, confirm
+
+## A-05
+- step: impact
+- attempt: 1
+- asked_at: 2026-11-11T07:10:08Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_019GmuJH1J3BGx3E5aBofVZj
+- question: Q-01: Where should the 'Next 7 days' counts come from? HMS-7 added the No-shows count as server-computed fields on GET /api/doctors/:id (noShowsLast30Days). Today GET /api/doctors/:id/slots returns one day's slots for the day schedule. GET /api/doctors/:id is also called by DoctorFormPage and BookAppointmentPage.
+- options: Extend doctor detail (proposed default) | Call /slots per day | New summary endpoint
+- answer: Extend doctor detail (proposed default)

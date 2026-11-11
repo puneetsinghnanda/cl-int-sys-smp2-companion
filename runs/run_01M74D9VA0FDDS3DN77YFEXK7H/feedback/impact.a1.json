@@ -1,0 +1,43 @@
+{
+  "dropped": [
+    "F-3"
+  ],
+  "dropped_findings": [
+    {
+      "id": "F-3",
+      "reason": "anchor not found",
+      "severity": "minor",
+      "text": "C9 says CANCELLED does not take a slot, but the cited data-model section only lists the status values. Nothing in it says which statuses take a slot."
+    }
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "HMS-7 REQ-8: the read-only count in a PATCH body is ignored",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts"
+        },
+        {
+          "quote": "http:PATCH:/api/doctors/:id",
+          "ref": "context/generated/api-inventory.json#http:PATCH:/api/doctors/:id"
+        },
+        {
+          "quote": "They need no change, but their tests and fixtures may need the new field in the client type.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "PATCH /api/doctors/:id is missing as an indirect effect. HMS-7 required a server-computed detail field to be ignored in PATCH bodies. The new next-7-days field needs the same handling, and DoctorFormPage edits through this route."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
