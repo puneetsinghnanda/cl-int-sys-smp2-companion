@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M74D9VA0FDDS3DN77YFEXK7H
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.7.0
 inputs:
   - path: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md
@@ -21,6 +21,11 @@ inputs:
     sha256: dd1254b0a78f85d6da3dd3722fd41947c0cec5177fe5b46028e49af681dc4c85
 pack_sha:
   sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc
+resolves:
+  - id: F-1
+    how: "C15 and EP-3 now cite impact claim C15, which states the HMS-7 ignore-in-PATCH precedent."
+  - id: F-2
+    how: "The PATCH, POST and availability-replace responses are marked changed because they return get() and so carry nextSevenDays."
 claims:
   - id: C1
     text: "Doctor rules, including the doctor detail and the day schedule, live in `DoctorService`."
@@ -65,14 +70,29 @@ claims:
     text: "Availability, slots and today use the hospital time zone `HOSPITAL_TZ`."
     cites: ["context/architecture.md#time-and-slots"]
   - id: C15
-    text: "The read-only summary must be ignored in a `PATCH` body, as HMS-7 did for its count."
-    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C14"]
+    text: "HMS-7 set the precedent that `the read-only count in a PATCH body is ignored`; nextSevenDays gets the same treatment."
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C15"]
   - id: C16
     text: "Routes parse input and services hold the rules; the web app calls the API only through `web/src/api/client.ts`."
     cites: ["context/architecture.md#components"]
   - id: C17
     text: "The day link uses a `?date=` parameter on the doctor page."
     cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#claim:C5"]
+  - id: C18
+    text: "DoctorService.create ends with `return this.get(id);`, so the POST response is the doctor detail."
+    cites: ["sample-system:api/src/services/doctorService.ts#L91"]
+  - id: C19
+    text: "DoctorService.update ends with `return this.get(id);`, so the PATCH response is the doctor detail."
+    cites: ["sample-system:api/src/services/doctorService.ts#L108"]
+  - id: C20
+    text: "DoctorService.replaceAvailability ends with `return this.get(id);`, so the availability PUT response is the doctor detail."
+    cites: ["sample-system:api/src/services/doctorService.ts#L122"]
+  - id: C21
+    text: "The doctor create route `POST` /api/doctors is declared in api/src/routes/doctors.ts."
+    cites: ["context/generated/api-inventory.json#http:POST:/api/doctors"]
+  - id: C22
+    text: "The availability replace route `PUT` /api/doctors/:id/availability is declared in api/src/routes/doctors.ts."
+    cites: ["context/generated/api-inventory.json#http:PUT:/api/doctors/:id/availability"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 assumed: []
@@ -95,7 +115,7 @@ components:
     change: existing
     cites: ["context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"]
   - id: CO-4
-    name: api DoctorDetail type gains nextSevenDays
+    name: api DoctorDetail type gains nextSevenDays; NextDay declared beside it in api/src/types.ts
     module: module:sample-system:api
     change: changed
     cites: ["sample-system:api/src/types.ts#L60", "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-06"]
@@ -105,7 +125,7 @@ components:
     change: existing
     cites: ["context/generated/module-map.json#sym:sample-system:api/src/lib/slots.ts:daySlots", "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:addDays"]
   - id: CO-6
-    name: web DoctorDetail type gains nextSevenDays
+    name: web DoctorDetail type gains nextSevenDays; NextDay declared beside it in web/src/api/types.ts
     module: module:sample-system:web
     change: changed
     cites: ["sample-system:web/src/api/types.ts#L58", "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-06"]
@@ -135,9 +155,24 @@ endpoints:
   - id: EP-3
     method: PATCH
     path: /api/doctors/:id
-    change: existing
-    fields: []
-    cites: ["context/generated/api-inventory.json#http:PATCH:/api/doctors/:id", "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C14"]
+    change: changed
+    fields:
+      - {name: nextSevenDays, type: "array of NextDay", nullable: true, format: "response only, same as EP-1 (computed after the update); ignored if sent in the request body", example: "same as EP-1", status: known}
+    cites: ["context/generated/api-inventory.json#http:PATCH:/api/doctors/:id", "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C15", "sample-system:api/src/services/doctorService.ts#L108"]
+  - id: EP-4
+    method: POST
+    path: /api/doctors
+    change: changed
+    fields:
+      - {name: nextSevenDays, type: "array of NextDay", nullable: true, format: "response only, same as EP-1 (computed for the new doctor); ignored if sent in the request body", example: "same as EP-1", status: known}
+    cites: ["context/generated/api-inventory.json#http:POST:/api/doctors", "sample-system:api/src/services/doctorService.ts#L91"]
+  - id: EP-5
+    method: PUT
+    path: /api/doctors/:id/availability
+    change: changed
+    fields:
+      - {name: nextSevenDays, type: "array of NextDay", nullable: true, format: "response only, same as EP-1 (computed from the new availability)", example: "same as EP-1", status: known}
+    cites: ["context/generated/api-inventory.json#http:PUT:/api/doctors/:id/availability", "sample-system:api/src/services/doctorService.ts#L122"]
 answers:
   - id: A-06
     kind: question
@@ -151,6 +186,10 @@ answers:
     decides: [EP-1, CO-1, CO-7, C13]
 ---
 # Design: HMS-9
+
+Resolved review findings:
+- F-1: C15 and EP-3 now cite impact claim C15, which states the HMS-7 ignore-in-PATCH precedent.
+- F-2: The PATCH, POST and availability-replace responses are marked changed because they return get() and so carry nextSevenDays.
 
 ## Overview
 The doctor detail response (`GET /api/doctors/:id`) gains a read-only field, `nextSevenDays`, as decided in A-05 and A-06. The web doctor page renders it as the "Next 7 days" section.
@@ -166,6 +205,10 @@ The doctor detail response (`GET /api/doctors/:id`) gains a read-only field, `ne
 - Trade-off: a small refactor of `schedule()`, in return for one rule instead of two copies. The existing day-schedule tests guard the refactor.
 - Trade-off: one appointment query for the whole week, instead of seven per-day queries. This costs a little in-memory filtering, but the doctor detail still makes a fixed number of queries.
 
+**Write responses.** `create`, `update` and `replaceAvailability` all end with `return this.get(id)` (C18 to C20). So the POST, PATCH and availability PUT responses also carry `nextSevenDays` (EP-3, EP-4, EP-5).
+- Trade-off: we keep one DoctorDetail shape for every doctor response, rather than adding a GET-only variant. This costs one extra summary computation per write, which is small next to the write itself.
+- The field stays read-only. It is ignored when sent in a POST or PATCH body, following the HMS-7 precedent (C15), and implement adds a test for the PATCH case.
+
 **The web page (CO-7).** `DoctorDetailPage`:
 - renders the section from `d.nextSevenDays` and hides it when the value is null (REQ-9);
 - shows each row's date, booked and free counts, or "Not available" when `available` is false (REQ-5, REQ-6);
@@ -175,15 +218,18 @@ The doctor detail response (`GET /api/doctors/:id`) gains a read-only field, `ne
 
 Trade-off: the date picker does not write back to the URL. That keeps today's picker behaviour unchanged (REQ-10), but a hand-picked date isn't bookmarkable.
 
-**The PATCH route (EP-3).** No change. Its body reader takes only the doctor's editable fields, which is why HMS-7's read-only count is ignored (C15). `nextSevenDays` sent in a PATCH body is ignored in the same way; implement adds a test for it.
+**Types and tests.** `NextDay` is declared next to `DoctorDetail` in both api/src/types.ts (CO-4) and web/src/api/types.ts (CO-6), as the two packages already keep separate copies of DoctorDetail (C9, C10). The impact names these tests and fixtures as readers of the doctor detail shape, and they need `nextSevenDays` added or expected:
+- api/test/doctors-today.test.ts
+- api/test/doctors-no-shows.test.ts
+- web/src/__tests__/DoctorDetailPage.test.tsx
 
 ## Components
 - CO-1, DoctorService.get, **changed** (api). Adds `nextSevenDays`.
 - CO-2, the shared slot-state rule in DoctorService, **changed** (api). Used by `schedule()` and by the summary.
 - CO-3, AppointmentRepo, **existing** (api). Reads non-cancelled appointments over the range.
-- CO-4, the api DoctorDetail type in api/src/types.ts, **changed**. Gains `nextSevenDays: NextDay[] | null`.
+- CO-4, the api DoctorDetail type in api/src/types.ts, **changed**. Gains `nextSevenDays: NextDay[] | null`, with `NextDay` declared beside it.
 - CO-5, the lib/slots and lib/time helpers, **existing** (api).
-- CO-6, the web DoctorDetail type in web/src/api/types.ts, **changed**. Gains the same field.
+- CO-6, the web DoctorDetail type in web/src/api/types.ts, **changed**. Gains the same field, with `NextDay` beside it.
 - CO-7, DoctorDetailPage, **changed** (web). Adds the section and the `?date=` handling.
 - EP-1, GET /api/doctors/:id, **changed**. New fields:
   - `nextSevenDays`: array or null. Null when the doctor is Inactive. Otherwise 7 entries in date order, from today to 6 days ahead.
@@ -192,13 +238,15 @@ Trade-off: the date picker does not write back to the URL. That keeps today's pi
   - `nextSevenDays[].booked`: integer or null. The BOOKED slots as the day schedule shows them; null when not available.
   - `nextSevenDays[].free`: integer or null. The FREE slots as the day schedule shows them; null when not available.
 - EP-2, GET /api/doctors/:id/slots, **existing**. Still serves the day schedule.
-- EP-3, PATCH /api/doctors/:id, **existing**. `nextSevenDays` in the body is ignored.
+- EP-3, PATCH /api/doctors/:id, **changed**. The response carries `nextSevenDays` as in EP-1, computed after the update. The field is ignored in the request body.
+- EP-4, POST /api/doctors, **changed**. The response carries `nextSevenDays` as in EP-1, computed for the new doctor. The field is ignored in the request body.
+- EP-5, PUT /api/doctors/:id/availability, **changed**. The response carries `nextSevenDays` as in EP-1, computed from the new availability.
 
 How the stories are served:
 - S-1 → CO-1, CO-2, CO-5, CO-7, EP-1
 - S-2 → CO-1, CO-7, EP-1
 - S-3 → CO-7, EP-2
-- S-4 → CO-1, CO-7, EP-1, EP-3
+- S-4 → CO-1, CO-7, EP-1, EP-3, EP-4, EP-5
 
 ## Known
 - REQ-1 to REQ-3: CO-7 renders the rows from EP-1 (C7, C12).
@@ -207,7 +255,7 @@ How the stories are served:
 - REQ-5, REQ-6: `available` is false only when the day has no slots; otherwise free can be 0 (C12).
 - REQ-7, REQ-8: the `?date=` link and the initial date state in CO-7 (C8, C17).
 - REQ-9: `nextSevenDays` is null for Inactive doctors, and the page hides the section (C13).
-- REQ-10: the slots and PATCH routes are unchanged (C15), and the other page sections are untouched.
+- REQ-10: the slots route is unchanged. The write routes only gain the read-only response field (C15, C18 to C22), and the other page sections are untouched.
 
 ## Assumed
 None.
