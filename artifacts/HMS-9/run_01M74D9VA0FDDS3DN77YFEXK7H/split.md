@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M74D9VA0FDDS3DN77YFEXK7H
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.2.0
 inputs:
   - path: artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md
@@ -11,6 +11,9 @@ inputs:
     sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff
 pack_sha:
   sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc
+resolves:
+  - id: F-1
+    how: "S-4 AC3 and AC4 now compare against the page as it was before this change and name no unsourced UI text."
 claims:
   - id: C1
     text: "The hospital time zone is `Asia/Kolkata`."
@@ -27,6 +30,9 @@ claims:
   - id: C5
     text: "The day link uses a `?date=` parameter on the doctor page."
     cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#item:REQ-7", "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-02"]
+  - id: C6
+    text: "The rest of the doctor page is `unchanged`."
+    cites: ["artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md#item:REQ-10"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10]
 known: [S-1, S-2, S-3, S-4]
 assumed: []
@@ -66,7 +72,7 @@ stories:
       - id: AC3
         text: "Given the clock is 2026-11-11T19:00Z (00:30 on 12 Nov in Asia/Kolkata), when staff open doctor D's page with no ?date= parameter, then the day schedule shows 12 Nov (local today), as it does now."
       - id: AC4
-        text: "Given the 'Not available' row for 16 Nov, when staff select that row, then the doctor page opens with ?date=2026-11-16 and the day schedule shows its existing 'No availability on this day' message."
+        text: "Given the 'Not available' row for 16 Nov, when staff select that row, then the doctor page opens with ?date=2026-11-16 and the day schedule for 16 Nov shows exactly what it shows today when 16 Nov is picked by hand."
   - id: S-4
     title: Inactive doctors show no section, and the rest of the page is unchanged
     trace: [REQ-9, REQ-10]
@@ -74,13 +80,16 @@ stories:
       - id: AC1
         text: "Given an Inactive doctor who has availability blocks and Scheduled appointments on dates within the next week, when staff open the doctor page, then no 'Next 7 days' section is shown."
       - id: AC2
-        text: "Given an active doctor with upcoming appointments, when staff open the doctor page, then the details, No-shows (last 30 days), weekly availability, upcoming appointments and day schedule show the same content as before this change."
+        text: "Given an active doctor with upcoming appointments, when staff open the doctor page, then every section other than 'Next 7 days' shows the same content as on the build before this change, for the same doctor and clock."
       - id: AC3
-        text: "Given an active doctor with no availability set and no upcoming appointments, when staff open the doctor page, then the 'No availability set.' message and the empty upcoming appointments table are shown as before, and every row in 'Next 7 days' shows 'Not available'."
+        text: "Given an active doctor with no availability set and no upcoming appointments, when staff open the doctor page, then every section other than 'Next 7 days' shows the same content as on the build before this change, and every row in 'Next 7 days' shows 'Not available'."
       - id: AC4
-        text: "Given an Inactive doctor with upcoming appointments, when staff open the doctor page, then the existing Inactive warning and the upcoming appointments are shown as before, and the Book appointment button is still hidden."
+        text: "Given an Inactive doctor with upcoming appointments, when staff open the doctor page, then every section and action on the page is the same as on the build before this change, for the same doctor and clock."
 ---
 # Stories: HMS-9
+
+Resolved review findings:
+- F-1: S-4 AC3 and AC4 now compare against the page as it was before this change and name no unsourced UI text.
 
 ## Stories
 
@@ -102,14 +111,14 @@ Traces REQ-7, REQ-8.
 - AC1: Selecting the 14 Nov row goes to the doctor page with `?date=2026-11-14` (A-02).
 - AC2: Opening the doctor page with `?date=2026-11-14` shows 14 Nov in the day schedule.
 - AC3: Without the parameter, the day schedule shows local today, which is 12 Nov at 00:30 IST while the UTC date is still 11 Nov.
-- AC4: Selecting a "Not available" day opens its date, and the day schedule shows its existing "No availability on this day" message.
+- AC4: Selecting a "Not available" day opens its date, and the day schedule for that date looks exactly as it does when the date is picked by hand.
 
 ### S-4 Inactive doctors show no section, and the rest of the page is unchanged
 Traces REQ-9, REQ-10.
 - AC1: An Inactive doctor with availability and upcoming appointments shows no "Next 7 days" section.
-- AC2: An active doctor with upcoming appointments: the details, No-shows, weekly availability, upcoming appointments and day schedule are unchanged.
-- AC3: An active doctor with no availability and no upcoming appointments: the existing empty messages are unchanged, and every new row shows "Not available".
-- AC4: An Inactive doctor with upcoming appointments: the Inactive warning and the list are unchanged, and the Book appointment button stays hidden.
+- AC2: An active doctor with upcoming appointments: every other section matches the build before this change.
+- AC3: An active doctor with no availability and no upcoming appointments: every other section matches the build before this change, and every new row shows "Not available".
+- AC4: An Inactive doctor with upcoming appointments: every section and action matches the build before this change.
 
 ## Known
 - S-1: built from known REQ-1 to REQ-4. The counting rule comes from A-01.
