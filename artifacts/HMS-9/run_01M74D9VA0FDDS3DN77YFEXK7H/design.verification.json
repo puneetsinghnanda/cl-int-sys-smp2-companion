@@ -1,0 +1,87 @@
+{
+  "artifact_path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md",
+  "artifact_sha256": "2f36a47bacf0ce9bff533275047b2f15037108cd94a5b458ab30f2f9c457c118",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "e1fd019fab26e8da9b5f6ac140824b1c905496ad14acbeb46f6a988897dda757",
+  "claims": {
+    "total": 17,
+    "unverified": [
+      {
+        "id": "C15",
+        "reason": "reviewer: unsupported"
+      }
+    ],
+    "verified": 16
+  },
+  "decided_at": "2026-11-11T07:35:34Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md",
+      "sha256": "6a8917d093b964f8c187482843359ed33a2b14310dd1885d78d828836927e08a",
+      "verification_sha256": "9a65653d55e71c5b4bb49fce7f26fdf5b149cb5638c76a6ac3d1da9300bf1fdb"
+    },
+    {
+      "path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md",
+      "sha256": "7e5a680cb8c89a9d3304be453d11ee6e38652b7841fcf7f39799be1b9d6659f0",
+      "verification_sha256": "ec1de50cf35d6b9ee80971c92a0f12b44b6e91f3c796dd755ffd8f8869119559"
+    },
+    {
+      "path": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/req.md",
+      "sha256": "d91af6d2d33b27873ad261064f8454e09c4904922e83e8ea0b13ffb56bc031e8",
+      "verification_sha256": "74252d6d65438e538f8f0dbe9c3229bf8c96efef745961360bc034c4c8dab7ca"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "8087a9ddc5d7eb4ea15ae19332419d13440204fa7f543adcc702f49dfef4715b",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9524,
+    "S2": 1.0,
+    "S3": 4.6,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "AzRZzQWDz7ganw8PUK90uUI8oXh932R8BiIG6KDniahfLSHUaynT16RofeqF6vH6yKq38AY9nqIubS_kYJ9sBw",
+  "skill": "design@1.7.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

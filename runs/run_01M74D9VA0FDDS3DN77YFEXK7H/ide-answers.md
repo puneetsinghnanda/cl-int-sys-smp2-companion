@@ -52,3 +52,23 @@ entries as the user's own answers.
 - question: Q-01: Where should the 'Next 7 days' counts come from? HMS-7 added the No-shows count as server-computed fields on GET /api/doctors/:id (noShowsLast30Days). Today GET /api/doctors/:id/slots returns one day's slots for the day schedule. GET /api/doctors/:id is also called by DoctorFormPage and BookAppointmentPage.
 - options: Extend doctor detail (proposed default) | Call /slots per day | New summary endpoint
 - answer: Extend doctor detail (proposed default)
+
+## A-06
+- step: design
+- attempt: 1
+- asked_at: 2026-11-11T07:32:10Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_014nuGq5eTucXHomcPMeg618
+- question: Q-01: What shape should the new field on GET /api/doctors/:id take? It follows the HMS-7 camelCase style (noShowsLast30Days).
+- options: nextSevenDays array (proposed default) | Counts only, no flag
+- answer: nextSevenDays array (proposed default)
+
+## A-07
+- step: design
+- attempt: 1
+- asked_at: 2026-11-11T07:32:10Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_014nuGq5eTucXHomcPMeg618
+- question: Q-02: For an Inactive doctor (no 'Next 7 days' section, REQ-9), what should GET /api/doctors/:id return in that field?
+- options: null (proposed default) | Always computed
+- answer: null (proposed default)

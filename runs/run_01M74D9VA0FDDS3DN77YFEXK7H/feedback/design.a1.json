@@ -1,0 +1,53 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The read-only summary must be ignored in a `PATCH` body, as HMS-7 did for its count.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L68-L69"
+        },
+        {
+          "quote": "The doctor update route `PATCH` /api/doctors/:id is declared in api/src/routes/doctors.ts, and DoctorFormPage saves edits through it.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C14"
+        },
+        {
+          "quote": "HMS-7 set the precedent that `the read-only count in a PATCH body is ignored`",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C15"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "C15 (PATCH ignores the read-only summary as HMS-7 did) cites impact C14, which only says where the PATCH route is declared. The ignore precedent is impact C15."
+    },
+    {
+      "cites": [
+        {
+          "quote": "await repo.update(id, patch, actor);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L106-L108"
+        },
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L91"
+        },
+        {
+          "quote": "EP-3, PATCH /api/doctors/:id, **existing**. `nextSevenDays` in the body is ignored.",
+          "ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L195"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "update(), create() and replaceAvailability() all return this.get(id), so the PATCH and other write responses will also carry nextSevenDays. EP-3 is marked existing with no field changes and does not say this."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "schema": "feedback.v1",
+  "step": "design"
+}

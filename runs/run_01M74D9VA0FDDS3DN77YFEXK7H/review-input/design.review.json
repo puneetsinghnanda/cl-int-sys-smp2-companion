@@ -1,0 +1,92 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M74D9VA0FDDS3DN77YFEXK7H",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "2f36a47bacf0ce9bff533275047b2f15037108cd94a5b458ab30f2f9c457c118",
+  "package_sha256": "3ab373046c86f91d945ceefdb8d69f9e930b9f05efecc8c8a5ea74426a1269c2",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Built on existing DoctorService, daySlots, localDay/addDays/dayBounds, AppointmentRepo and DoctorDetailPage. It follows the HMS-7 detail-field precedent and adds no new infrastructure."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 to S-4 are each mapped to components and endpoints. REQ-1 to REQ-10 are traced in Known, including the PAST-as-neither rule, Not available, ?date= and Inactive null."},
+    {"id": "DS-R3", "score": 4, "reason": "Every nextSevenDays field has a type, nullability, format and example. However, the NextDay type has no stated home, and the PATCH/POST responses (built by get()) silently gain the field while EP-3 lists no field changes."},
+    {"id": "DS-R4", "score": 4, "reason": "Nearly every choice is cited or decided by A-06/A-07, and types.ts lines are cited directly. But C15 cites impact C14, which does not state the ignore-in-PATCH precedent."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-offs are given for the shared rule refactor, the single week query and the picker not writing back to the URL."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear and consistent. One small traceability slip in the C15 citation."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "traceability",
+      "text": "C15 (PATCH ignores the read-only summary as HMS-7 did) cites impact C14, which only says where the PATCH route is declared. The ignore precedent is impact C15.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L68-L69", "quote": "The read-only summary must be ignored in a `PATCH` body, as HMS-7 did for its count."},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C14", "quote": "The doctor update route `PATCH` /api/doctors/:id is declared in api/src/routes/doctors.ts, and DoctorFormPage saves edits through it."},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C15", "quote": "HMS-7 set the precedent that `the read-only count in a PATCH body is ignored`"}
+      ],
+      "claim_ref": "C15",
+      "suggested_fix": "Cite impact.md#claim:C15 (or the doctors-no-shows test) for C15 and for EP-3."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "completeness",
+      "text": "update(), create() and replaceAvailability() all return this.get(id), so the PATCH and other write responses will also carry nextSevenDays. EP-3 is marked existing with no field changes and does not say this.",
+      "cites": [
+        {"ref": "sample-system:api/src/services/doctorService.ts#L106-L108", "quote": "await repo.update(id, patch, actor);"},
+        {"ref": "sample-system:api/src/services/doctorService.ts#L91", "quote": "return this.get(id);"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L195", "quote": "EP-3, PATCH /api/doctors/:id, **existing**. `nextSevenDays` in the body is ignored."}
+      ],
+      "suggested_fix": "State that the PATCH, POST and availability-replace responses gain nextSevenDays because they reuse get(), or explicitly scope the summary to GET only."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The new NextDay type is used in both DoctorDetail types, but the design does not say where it is declared or whether api and web each define it.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L184", "quote": "Gains `nextSevenDays: NextDay[] | null`."}
+      ],
+      "suggested_fix": "Name NextDay's declaration site in api/src/types.ts and web/src/api/types.ts, alongside DoctorDetail."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Impact lists existing tests that check the doctor detail shape and will be affected by the new field (e.g. HMS-6's 'otherwise unchanged' test). The design mentions only the day-schedule tests.",
+      "cites": [
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#L144", "quote": "api/test/doctors-today.test.ts (HMS-6, which checks the detail is otherwise unchanged)"},
+        {"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/design.md#L166", "quote": "The existing day-schedule tests guard the refactor."}
+      ],
+      "suggested_fix": "Note that the detail-shape tests and fixtures (doctors-today, doctors-no-shows, DoctorDetailPage.test) need nextSevenDays."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L141", "quote": "async schedule(id: number, date: string): Promise&lt;DaySchedule&gt; {"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/slots.ts:daySlots", "quote": "\"name\": \"daySlots\","}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:localDay", "quote": "\"name\": \"localDay\","}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:addDays", "quote": "\"name\": \"addDays\","}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L146", "quote": "const { start, end } = dayBounds(date, tz);"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L114", "quote": "async occupyingBetween(doctorId: number, from: Date, to: Date): Promise&lt;AppointmentSummary[]&gt; {"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage", "quote": "\"name\": \"DoctorDetailPage\","}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn", "quote": "\"name\": \"todayIn\","}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L60", "quote": "export interface DoctorDetail extends DoctorSummary {"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L58", "quote": "export interface DoctorDetail extends DoctorSummary {"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C10", "quote": "The counts are added to the doctor detail response, following the HMS-7 `noShowsLast30Days` precedent."}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-06", "quote": "answer: nextSevenDays array (proposed default)"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M74D9VA0FDDS3DN77YFEXK7H/ide-answers.md#a-07", "quote": "answer: null (proposed default)"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}]},
+    {"claim_id": "C15", "verdict": "unsupported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/impact.md#claim:C14", "quote": "The doctor update route `PATCH` /api/doctors/:id is declared in api/src/routes/doctors.ts, and DoctorFormPage saves edits through it."}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-9/run_01M74D9VA0FDDS3DN77YFEXK7H/split.md#claim:C5", "quote": "The day link uses a `?date=` parameter on the doctor page."}]}
+  ],
+  "questions": []
+}
