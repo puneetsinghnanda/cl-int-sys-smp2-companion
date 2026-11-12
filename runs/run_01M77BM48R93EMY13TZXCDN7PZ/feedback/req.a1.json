@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Default for name ties: compare doctor names the way the doctor list already sorts them.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L199"
+        },
+        {
+          "quote": "assumed: []",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L46"
+        },
+        {
+          "quote": "Entries are ordered by slot start, earliest first; ties by doctor name.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L30"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The tie-break collation default ('the way the doctor list already sorts them') is a real assumption, but it sits under Out of scope while assumed is []. The context pack does not document how the doctor list sorts, and same-name ties are left unspecified."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "feedback.v1",
+  "step": "req"
+}
