@@ -1,0 +1,97 @@
+{
+  "artifact_sha256": "771d35b82d83d1b5f186421ffeba5352efe7545d6c12c914038a6749d1960744",
+  "attempt": 1,
+  "finished_at": "2026-11-12T07:43:39Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "check_ids": [
+        "RR-C13"
+      ],
+      "codes": [
+        "E-H4-04"
+      ],
+      "detail": "RR-C13: A-03 is not used: it decides no requirement and REQ-14 is not kept open; A-03 answers the assumption in REQ-14 but does not decide it",
+      "id": "H4",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "check_ids": [
+        "RR-C05"
+      ],
+      "codes": [
+        "E-H5-02"
+      ],
+      "detail": "RR-C05: C6 cites web/src/pages/BookAppointmentPage.tsx, not a declared input",
+      "id": "H5",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [],
+  "product_changes": null,
+  "run_id": "run_01M77B1NEGA2SK4TJPT0CAK6MX",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "RR-C10",
+      "pass": true
+    },
+    {
+      "id": "RR-C11",
+      "pass": true
+    },
+    {
+      "id": "RR-C12",
+      "pass": false
+    }
+  ],
+  "started_at": "2026-11-12T07:43:39Z",
+  "step": "req",
+  "tool_log_sha256": "dc5a5e6a55dbf1ae8771dca14c69aa14dbedc954f235230eeda3054fc8b1583e",
+  "tsl_version": "0.1.6",
+  "verifier": null
+}
