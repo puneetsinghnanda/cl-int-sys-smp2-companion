@@ -1,0 +1,172 @@
+{
+  "artifact_sha256": "4a00b08471ecde2b4d9db5168ee234536a1669de0d906f565501f522bd4ec217",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "'/:id/earliest-slots',",
+          "ref": "sample-system:api/src/routes/specializations.ts#L17-L19"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/specializations.ts#L19"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async earliestSlots(specializationId: number): Promise&lt;{ items: EarliestSlotEntry[] }&gt; {",
+          "ref": "sample-system:api/src/services/doctorService.ts#L171"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE d.specialization_id = $1 AND d.status = 'ACTIVE'",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L175"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = await repo.refStatus('specialization', specializationId);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L173"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "departmentName: string;",
+          "ref": "sample-system:api/src/types.ts#L83-L89"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface EarliestSlotEntry {",
+          "ref": "sample-system:api/src/types.ts#L83"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (status === null) throw notFound(`Specialization ${specializationId} not found`);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L174-L175"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "unsupported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const days = Array.from({ length: 7 }, (_, i) =&gt; addDays(today, i));",
+          "ref": "sample-system:api/src/services/doctorService.ts#L179"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const an = a.fullName.toLowerCase();",
+          "ref": "sample-system:api/src/services/doctorService.ts#L29-L32"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Errors use the standard `ValidationError` and HttpError helpers",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#claim:C8"
+        },
+        {
+          "quote": "if (status !== 'ACTIVE') throw badRequest('specialization is Inactive');",
+          "ref": "sample-system:api/src/services/doctorService.ts#L175"
+        },
+        {
+          "quote": "export const badRequest = (message: string): HttpError =&gt; new HttpError(400, 'BAD_REQUEST', message);",
+          "ref": "sample-system:api/src/lib/errors.ts#L21"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword C8: errors use the HttpError helpers notFound (404) and badRequest (400 'specialization is Inactive'). Drop ValidationError.",
+      "text": "Claim C8 says errors use the standard ValidationError, but the Inactive case throws badRequest. That is a plain HttpError with code BAD_REQUEST, not a ValidationError with per-field messages. The behaviour is right; only the claim's wording is wrong."
+    }
+  ],
+  "package_sha256": "d9ed42d4d46f680bbced4579b5e60e12309d11561c689299c9e457fc496bfd82",
+  "questions": [],
+  "recorded_at": "2026-11-12T08:59:31Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1, CO-2, CO-3 and CO-6 match the design. The code reuses refStatus, occupyingBetween, slotStates, localDay, addDays, dayBounds and formatCode. It returns an unpaged { items } and keeps the design's error codes and sort order.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "Router, service, repo and types are layered as the conventions require. SQL uses $1 parameters. Errors go through the notFound and badRequest HttpError helpers, and the 404 message matches the referenceService pattern.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Only the 4 files the design names changed (+82/-2). The 2 deleted lines are import lines extended for badRequest and EarliestSlotEntry. nextSevenDays, schedule and the existing handlers are untouched.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Covers a malformed id (parseId gives 400), an unknown id (404), an Inactive specialization (400), no Active doctors (empty items), no FREE slot (slot null, sorted last), started slots (PAST) and Cancelled appointments (left out by occupyingBetween).",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary and file list match the code. One flaw: claim C8 says errors use ValidationError, but the code uses only the notFound and badRequest HttpError helpers.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
