@@ -1,0 +1,81 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "4055a25777930a25c9816a4c18cc3a7b9cb2e9473573c0d26767ed9812a445d8",
+  "package_sha256": "959125881f2b0806b9350c71cf14437f6dd82032b1105e236e98a5961c810074",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.15,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "Stories S-1 to S-5 trace all 17 known REQs (REQ-1 to REQ-17). The intent has no assumed REQs."},
+    {"id": "SS-R2", "score": 4, "reason": "Most stories carry one outcome. S-4 puts the unpaged list together with the error answers, and S-5 puts the privacy rules together with the no-change rule."},
+    {"id": "SS-R3", "score": 3, "reason": "The ACs are Given/When/Then and S-2 AC4 is a good time-zone check. But S-3 AC4 does not test case-insensitive names, S-2 AC1/AC2 do not pin slot times, and no AC covers a Cancelled appointment."},
+    {"id": "SS-R4", "score": 4, "reason": "The values are example data or derived inline: 21st doctor from 20 per page, 09:30 local = 04:00Z. The UTC+05:30 offset is not in the cited intent claim, which names only Asia/Kolkata."},
+    {"id": "SS-R5", "score": 5, "reason": "The frontmatter and body agree and terms are used the same way throughout. The derivations are written out inline."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "S-3 AC4 cannot catch a case-sensitive name sort for null-slot entries. 'Dr. Amy' sorts before 'dr. bob' with or without case. No AC checks the doctor-id tie-break for null-slot entries either, though REQ-17 applies wherever entries are ordered by name.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L73", "quote": "then the order is dr. zed, Dr. Amy, dr. bob."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L125", "quote": "Entries with slot: null come last, ordered by name ignoring case."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L149", "quote": "Wherever entries are ordered by doctor name, names compare ignoring case"}
+      ],
+      "suggested_fix": "Use null-slot names where case changes the order, e.g. 'dr. amy' and 'Dr. Bob' (expect amy first). Add a null-slot tie with the same name to check the id order."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "correctness",
+      "text": "S-2 AC1/AC2 do not give the time of the boundary FREE slots. A now+7x24h window ends at 08:00 local on 2026-10-26. It passes AC2 when that day's slots are after 08:00, so the end-of-today+6 boundary goes untested.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L57", "quote": "D's only FREE slots are on 2026-10-26 (one day past today+6)"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L55", "quote": "D's only FREE slots are on 2026-10-25 (today+6)"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L23", "quote": "The window runs from now until the end of the 6th day after today in the hospital time zone"}
+      ],
+      "suggested_fix": "Pin the times: put a FREE slot at 07:30 local on 2026-10-26 (expect null), and one late in the day on 2026-10-25 after 08:00 (expect it returned)."
+    },
+    {
+      "id": "F-3",
+      "severity": "major",
+      "category": "completeness",
+      "text": "No AC covers a slot whose appointment was Cancelled. That slot is free again and must be returned. An implementation that treats any appointment as taking the slot passes every AC in S-1, and S-5 has no Cancelled case for the day schedule.",
+      "cites": [
+        {"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason; its slot becomes free again."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C2", "quote": "not overlapping a Scheduled appointment"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L45", "quote": "Given D's first slot of the window is BOOKED and the next slot that date is FREE"}
+      ],
+      "suggested_fix": "Add to S-1: D's first window slot had a Cancelled appointment, so the endpoint returns that slot. Add a matching S-5 AC: the day schedule with a Cancelled appointment is unchanged."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claim C1 adds 'UTC+05:30 all year' and the 00:00-05:29 date gap. The cited req claim C1 names only Asia/Kolkata. The offset is real-world tz data, not a value from the intent, so it is a derived value that the cited source does not cover.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L16", "quote": "The hospital time zone is `Asia/Kolkata` (UTC+05:30 all year)"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C1", "quote": "The hospital time zone is `Asia/Kolkata`."}
+      ],
+      "claim_ref": "C1",
+      "suggested_fix": "Say the offset comes from the fixed IANA Asia/Kolkata zone (no DST), or cite a context section that states UTC+05:30."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C1", "quote": "The hospital time zone is `Asia/Kolkata`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C5", "quote": "Doctor codes such as `D-0001` are display codes derived from row ids, not stored."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C8", "quote": "System lists normally answer `20 per page`; this endpoint is a stated exception."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C3", "quote": "The day schedule of one doctor and date is served from `api/src/routes/doctors.ts`."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "A doctor, patient, department or specialization kept for history but not offered for new use."}]}
+  ],
+  "questions": []
+}

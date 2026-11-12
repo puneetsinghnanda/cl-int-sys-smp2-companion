@@ -1,0 +1,73 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then the order is dr. zed, Dr. Amy, dr. bob.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L73"
+        },
+        {
+          "quote": "Entries with slot: null come last, ordered by name ignoring case.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L125"
+        },
+        {
+          "quote": "Wherever entries are ordered by doctor name, names compare ignoring case",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L149"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-3 AC4 cannot catch a case-sensitive name sort for null-slot entries. 'Dr. Amy' sorts before 'dr. bob' with or without case. No AC checks the doctor-id tie-break for null-slot entries either, though REQ-17 applies wherever entries are ordered by name."
+    },
+    {
+      "cites": [
+        {
+          "quote": "D's only FREE slots are on 2026-10-26 (one day past today+6)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L57"
+        },
+        {
+          "quote": "D's only FREE slots are on 2026-10-25 (today+6)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L55"
+        },
+        {
+          "quote": "The window runs from now until the end of the 6th day after today in the hospital time zone",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L23"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "S-2 AC1/AC2 do not give the time of the boundary FREE slots. A now+7x24h window ends at 08:00 local on 2026-10-26. It passes AC2 when that day's slots are after 08:00, so the end-of-today+6 boundary goes untested."
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place, with a reason; its slot becomes free again.",
+          "ref": "context/glossary.md#cancelled"
+        },
+        {
+          "quote": "not overlapping a Scheduled appointment",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#claim:C2"
+        },
+        {
+          "quote": "Given D's first slot of the window is BOOKED and the next slot that date is FREE",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L45"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "No AC covers a slot whose appointment was Cancelled. That slot is free again and must be returned. An implementation that treats any appointment as taking the slot passes every AC in S-1, and S-5 has no Cancelled case for the day schedule."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-3"
+  ],
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "feedback.v1",
+  "step": "split"
+}
