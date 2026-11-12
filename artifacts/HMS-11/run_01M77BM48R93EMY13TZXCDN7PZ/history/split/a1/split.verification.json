@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md",
+  "artifact_sha256": "4055a25777930a25c9816a4c18cc3a7b9cb2e9473573c0d26767ed9812a445d8",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "f44ae36da674457dd517e852e765874c86f72b9160d1f6b300faa7a0d0cee79f",
+  "claims": {
+    "total": 5,
+    "verified": 5
+  },
+  "decided_at": "2026-11-12T07:59:13Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "major"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md",
+      "sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+      "verification_sha256": "42543930cabf9b5f3b9c078dae772957a148f6933b52064ae4387e3f270937ee"
+    }
+  ],
+  "key_id": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "d984f28c560591be17d96b496cb396901283a7b9dfc86710a59b7f9099dded22",
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.15,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "SwrUpG_f4qa3EYmFUFsT0VnH7Bzc6H2DOvzIYRIxocDfBeOXPnt8cWbUb3DKChflZyl5f32ogslEZi2IRtYHAA",
+  "skill": "story-split@1.2.0",
+  "step": "split",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
