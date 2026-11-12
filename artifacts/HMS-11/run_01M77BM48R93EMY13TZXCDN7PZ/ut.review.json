@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "8574c5255d9fa1d911d6a8bfd334614f33938e0258e16f8734acff0e3bee51fb",
-  "attempt": 1,
+  "artifact_sha256": "175a3914be8e6f603d52c04b468985b7d12362215c74376ae5dba04c791b2cf7",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -81,106 +81,91 @@
       ],
       "claim_id": "C8",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "APT-6: cancels with a required reason, and the slot is free again",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        },
+        {
+          "quote": "expect((await book(app, 1, 2, MONDAY, '11:00')).status).toBe(201);",
+          "ref": "sample-system:api/test/appointments.test.ts#L65"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "unsupported"
     }
   ],
   "findings": [
     {
-      "category": "completeness",
+      "category": "correctness",
       "cites": [
         {
-          "quote": "known: [S-1, S-2, S-3, S-4, S-5]",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ut.md#L44"
+          "quote": "the day schedule for booked, empty and cancelled dates stays pinned by the existing APT-10 and APT-6 tests (C9)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ut.md#L78"
         },
         {
-          "quote": "known: [S-1, S-2, S-3, S-4, S-5, S-6]",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#L50"
+          "quote": "expect((await book(app, 1, 2, MONDAY, '11:00')).status).toBe(201);",
+          "ref": "sample-system:api/test/appointments.test.ts#L65"
         },
         {
-          "quote": "when staff book it through the existing booking endpoint, then booking succeeds under the existing rules",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L117"
+          "quote": "Given a doctor and date with only a Cancelled appointment, when staff read that day schedule before and after the change, then both responses are the same.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L115"
+        },
+        {
+          "quote": "api/src/services/doctorService.ts",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#L62"
         }
       ],
+      "claim_ref": "C9",
       "id": "F-1",
       "severity": "major",
-      "suggested_fix": "Add a test that books the returned FREE slot through the existing booking endpoint. If S-6 AC1-AC3 rely on existing day-schedule tests, name those tests under Known.",
-      "text": "S-6 and REQ-16 are dropped from trace and known with no reason given, though impl.md claims S-6. S-6 AC4 (booking a FREE slot the endpoint returned) has no test."
+      "suggested_fix": "Add HMS-11 REQ-16 (S-6 AC2, AC3) tests that GET /api/doctors/:id/slots for a date with no appointment and for one with only a Cancelled appointment, and assert the exact slot states. Or correct C9 and the S-6 entry under Known.",
+      "text": "C9 says APT-10 and APT-6 pin the day schedule for booked, empty and Cancelled dates. APT-6 never reads /slots: it cancels and then books 11:00. No test reads the day schedule for a Cancelled-only date or a date with no appointment (S-6 AC3, AC2), yet doctorService.ts changed."
     },
     {
       "category": "completeness",
       "cites": [
         {
-          "quote": "Given a specialization with one more Active doctor than the 20 per page convention (a 21st doctor)",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L91"
+          "quote": "expect(text).not.toContain('Penicillin');",
+          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L94"
         },
         {
-          "quote": "expect(Object.keys((await earliest(1)).body)).toEqual(['items']);",
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L64"
+          "quote": "medicalNotes: 'Invented note'",
+          "ref": "sample-system:api/test/helpers.ts#L46"
         },
         {
-          "quote": "S-4: covered by the unpaged, 404, 400 and empty-items tests.",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ut.md#L91"
+          "quote": "then the response has no patient name, allergies, notes or other medical history",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L105"
         }
       ],
       "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Add 21 Active doctors to one specialization. Assert that items.length is 21 and that the body has no page, page_size or total.",
-      "text": "S-4 AC1 needs 21 Active doctors returned unpaged. The test only checks that the body keys are ['items'] for a specialization with one doctor, yet the artifact says S-4 is covered."
+      "severity": "minor",
+      "suggested_fix": "Add expect(text).not.toContain('Invented note') to the booked-slot test.",
+      "text": "S-5 AC2 also forbids medical notes. The booked-slot test checks for the patient name and the allergy (Penicillin) but not the fixture's medicalNotes value, 'Invented note'."
     },
     {
-      "category": "completeness",
+      "category": "correctness",
       "cites": [
         {
-          "quote": "Given two doctors with the same full name and the same earliest slot start",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L81"
+          "quote": "expect((await earliest('abc')).status).toBe(400);",
+          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L133"
         },
         {
-          "quote": "await addDoctor('dr. kim', []);",
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L160"
+          "quote": "expect(res.body.error.code).toBe('NOT_FOUND');",
+          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L129"
         }
       ],
       "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "Add two doctors with the same name and the same 09:00 availability, and assert that the lower id comes first.",
-      "text": "S-3 AC3 (same name and same non-null slot, lower id first) has no test. The id tie-break is only tested for null-slot entries (dr. kim and Dr. Kim with no availability)."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "Given an Inactive Cardiology doctor with an earlier FREE slot than any Active one",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L59"
-        },
-        {
-          "quote": "request(app).patch('/api/doctors/2').send({ status: 'INACTIVE' })",
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L126"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "suggested_fix": "Add an Inactive doctor with an earlier slot next to an Active doctor, and assert that only the Active doctor appears.",
-      "text": "S-1 AC5 needs an Inactive doctor with an earlier FREE slot than an Active one to be left out. The test only makes the specialization's only doctor Inactive, so it never mixes Inactive and Active doctors."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "HMS-11 REQ-6 (S-1 AC5): the slot is the first FREE slot the day schedule shows",
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L56"
-        },
-        {
-          "quote": "AC5: Inactive doctors, and doctors of other specializations, never appear, even with an earlier FREE slot.",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L129"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "suggested_fix": "Change the label to (S-1 AC1) or drop the AC reference.",
-      "text": "The day-schedule match test is labelled S-1 AC5, but S-1 AC5 is the Inactive or other-specialization exclusion rule. The label points to the wrong acceptance criterion."
+      "suggested_fix": "Also assert res.body.error.code for the malformed id, using the code that parseId returns.",
+      "text": "The malformed-id test asserts only the 400 status. Unlike the 404 test, it does not check the error code, so any 400 passes."
     }
   ],
-  "package_sha256": "5a9483ba0f4cbd486266b9f67044794f01d04e084a63c87f623756634e6967aa",
+  "package_sha256": "3f6c3dfdbaf6cb6c90ee525b0afd569060b9f12bf775895fc185d455a4fed2cd",
   "questions": [],
-  "recorded_at": "2026-11-12T09:04:35Z",
+  "recorded_at": "2026-11-12T09:09:35Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -191,31 +176,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Tests cover most of the new endpoint: entry shape, the FREE rule, booked and cancelled slots, the window, errors and ordering. The 21-doctor unpaged case (S-4 AC1) and S-6/REQ-16 are not covered, and the artifact does not say why.",
+      "reason": "Prior F-2 to F-5 are fixed: 21-doctor unpaged suite, Dr. Same id tie-break, Inactive earlier-slot doctor, AC1 relabel. S-6 AC4 and a router check were added. S-6 AC2/AC3 (empty and Cancelled-only day schedule) lean on APT-6, which never reads the day schedule.",
       "score": 4
     },
     {
       "id": "UT-R2",
-      "reason": "Most assertions check observable results: exact toEqual on entries and slots, exact key sets, ordered names and error codes. The REQ-10 test only checks that the body keys are ['items'], and only for one doctor.",
-      "score": 4
+      "reason": "Assertions check observable results: exact toEqual on entries and slots, exact key sets, ordered names, id order for same-name ties, length 21 with keys ['items'], and status plus error message on failures. Minor gaps: medicalNotes is not checked, and the malformed-id test checks only the status.",
+      "score": 5
     },
     {
       "id": "UT-R3",
-      "reason": "Covers 404, 400 for a malformed id, 400 for an Inactive specialization, the today+6 and today+7 boundaries, UTC midnight and started slots. Missing: same name and same slot broken by id (S-3 AC3), and an Inactive doctor with an earlier slot (S-1 AC5).",
-      "score": 4
+      "reason": "Covers 404 (NOT_FOUND), 400 for a malformed id, 400 'specialization is Inactive', today+6 and today+7 boundaries, the UTC-midnight zone case, started slots, booked and Cancelled slots, ties with and without slots, and an empty list.",
+      "score": 5
     },
     {
       "id": "UT-R4",
-      "reason": "Vitest and Supertest with a fixed clock, a fresh database per suite and skipIf(!pgAvailable()). The file is in api/test, and the 'HMS-n REQ-n' title prefix matches the neighbouring ticket tests in test-layout.json.",
+      "reason": "Vitest and Supertest with an injected fixed clock. Each suite gets a fresh database, guarded by skipIf(!pgAvailable()). The file is in api/test, titles start with 'HMS-11 REQ-n' like the neighbouring ticket tests, and fixture data is invented.",
       "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "States no test or coverage numbers and leaves them to the verifier (H3). The stated count of 14 tests matches the file. The coverage skip matches checks.json, where coverage status is skip (exit 78).",
+      "reason": "Gives no pass or coverage numbers and leaves them to the verifier (H3). The stated 17 tests in three suites matches the file (15+1+1). checks.json shows test pass and coverage skip (exit 78), as C4 says. Only the test file changed.",
       "score": 5
     }
   ],
-  "rubric_score": 4.25,
+  "rubric_score": 4.7,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "review.v1",
   "status": "ok",

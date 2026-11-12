@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ut.md",
-  "artifact_sha256": "8574c5255d9fa1d911d6a8bfd334614f33938e0258e16f8734acff0e3bee51fb",
-  "attempt": 1,
+  "artifact_sha256": "175a3914be8e6f603d52c04b468985b7d12362215c74376ae5dba04c791b2cf7",
+  "attempt": 2,
   "budget_tokens": 45000,
-  "checks_sha256": "d2abe3a3cd59ee7c0816dd2c99bb02e119e7691d1197f83fe7cf81ecc0300f6d",
+  "checks_sha256": "287f33a5e108396b608ec6ae6f14c6aae032c0d40f04baf8e83179fe115d73e1",
   "context_sections": [
     {
       "id": "test-strategy",
@@ -39,10 +39,31 @@
       "path": "context/generated/test-layout.json"
     }
   ],
-  "package_sha256": "5a9483ba0f4cbd486266b9f67044794f01d04e084a63c87f623756634e6967aa",
-  "prepared_at": "2026-11-12T09:02:40Z",
+  "package_sha256": "3f6c3dfdbaf6cb6c90ee525b0afd569060b9f12bf775895fc185d455a4fed2cd",
+  "prepared_at": "2026-11-12T09:07:22Z",
   "prepared_by": "tsl@0.1.6",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
   "rubric": {
     "items": [
       {

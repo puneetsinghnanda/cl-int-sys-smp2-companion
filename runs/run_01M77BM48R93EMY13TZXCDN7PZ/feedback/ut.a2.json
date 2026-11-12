@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "the day schedule for booked, empty and cancelled dates stays pinned by the existing APT-10 and APT-6 tests (C9)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ut.md#L78"
+        },
+        {
+          "quote": "expect((await book(app, 1, 2, MONDAY, '11:00')).status).toBe(201);",
+          "ref": "sample-system:api/test/appointments.test.ts#L65"
+        },
+        {
+          "quote": "Given a doctor and date with only a Cancelled appointment, when staff read that day schedule before and after the change, then both responses are the same.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L115"
+        },
+        {
+          "quote": "api/src/services/doctorService.ts",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#L62"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "C9 says APT-10 and APT-6 pin the day schedule for booked, empty and Cancelled dates. APT-6 never reads /slots: it cancels and then books 11:00. No test reads the day schedule for a Cancelled-only date or a date with no appointment (S-6 AC3, AC2), yet doctorService.ts changed."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
