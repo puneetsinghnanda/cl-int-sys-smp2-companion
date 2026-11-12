@@ -1,0 +1,114 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "70d1424e50aa75d6c53ad7e3bf5b1a34de201f5a3140cd21e886a0c9c00428d6",
+  "package_sha256": "1be4e094e07d236a6760a0b4de470c4eecb4278da6d43cce819eb10e329097f1",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All eight design components (CO-1 to CO-8) have at least one threat. That includes every component that touches personal data: the service, DoctorRepo.activeBySpecialization (phone and email) and occupyingBetween (patient names)."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats are specific to this route: contact or patient-name leakage, unpaged per-doctor cost, the parseId path and the 404/400 existence oracle. T-10 is labelled tampering but describes a stale-read correctness issue."},
+    {"id": "TM-R3", "score": 4, "reason": "Most mitigations cite an existing control or name a new one with a test. The T-6 request-log control has no citation and is weaker than stated. T-8 says 'should' while the summary says 'must'."},
+    {"id": "TM-R4", "score": 4, "reason": "Accepted risks are stated openly (T-1, T-5, T-6, T-9, T-13). T-5 accepts DoS risk based on the design's unchecked 'lists are short' premise, yet Assumed and Open questions are both empty."},
+    {"id": "TM-R5", "score": 4, "reason": "Readable, and the front matter matches the body. Threats are ordered by component, not by risk, and none has a likelihood or impact rating."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "T-6 relies on an 'existing request log' but cites nothing for it. requestLog records method, path, status and duration. It does not record the actor, and REQUEST_LOG=off disables it. So it cannot show who looked something up, which is the threat T-6 states.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L99", "quote": "The existing request log records the method and route; no new control is needed."},
+        {"ref": "sample-system:api/src/middleware/requestLog.ts#L5", "quote": "if (process.env.REQUEST_LOG === 'off') {"},
+        {"ref": "sample-system:api/src/middleware/requestLog.ts#L13", "quote": "console.log(`[api] ${req.method} ${path} ${res.statusCode} ${ms.toFixed(1)}ms`);"}
+      ],
+      "suggested_fix": "Cite sample-system:api/src/middleware/requestLog.ts#L13. State that the log has no actor and can be switched off, so the repudiation risk is accepted rather than mitigated."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "T-8 says implement 'should' select only the needed columns. The summary lists a column-limited query as a new control that implement must build. The two disagree on how strong the requirement is.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L109", "quote": "Implement should select only the needed columns (id, full name, department name, slot length)."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L163", "quote": "and a column-limited, parameterised query (T-7, T-8)"}
+      ],
+      "suggested_fix": "Change T-8 to 'must', or drop column limiting from the list of required new controls."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are listed in component order and have no likelihood or impact rating. The rubric's top clarity score requires ordering by risk.",
+      "cites": [
+        {"ref": "/home/yash/projects/tsl/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L46", "quote": "Clear and ordered by risk"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L149", "quote": "T-1 (spoofing, router): no sign-in in the MVP."}
+      ],
+      "suggested_fix": "Give each threat a risk level and order the Threats list from highest to lowest risk."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "T-5 accepts residual DoS risk from the unpaged response with per-doctor queries. The design's only basis for this is that 'the lists are short', and that premise is not recorded as an assumption or raised as a question.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L94", "quote": "Accepted residual risk for the MVP, because the response is unpaged by decision (C14)."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L205", "quote": "It is slower for large specializations, which is acceptable because the lists are short."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L66", "quote": "assumed: []"}
+      ],
+      "suggested_fix": "List 'Active doctors per specialization stay few' under Assumed so a human can confirm it, or state the expected upper bound."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claim C7 adds 'a read-only route writes none', but the cited data-model section only says that appointment_event records every change. The added clause is an inference, not something the source states.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L38", "quote": "a read-only route writes none."},
+        {"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}
+      ],
+      "claim_ref": "C7",
+      "suggested_fix": "Limit C7 to what the source says, and present the read-only point as reasoning in T-6."
+    },
+    {
+      "id": "F-6",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-10 is labelled tampering, but a stale free-slot read is a race or correctness issue. Nothing in it modifies data through occupyingBetween, so the STRIDE label is wrong.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L117", "quote": "stride: tampering"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L118", "quote": "A slot shown as free can be booked by someone else before staff book it"}
+      ],
+      "suggested_fix": "Relabel T-10 or move it to a note. Give occupyingBetween an information-disclosure threat instead, since it returns patient names (already mitigated by T-4)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "every permission is granted"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#double-booking", "quote": "The database, not the service, is the final guard: exclusion constraints forbid overlapping Scheduled"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "repositories hold the SQL"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C18", "quote": "Each entry is flat, with `departmentName` as a string, as the user chose."}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C19", "quote": "The new route requires `appointments:read`, the same as the day schedule"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C6", "quote": "DoctorRepo already reads a specialization's status, or null when it does not exist, with `refStatus`."}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/codes.ts#L22", "quote": "throw badRequest(`${name} must be a positive integer`)"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C12", "quote": "Unknown ids answer 404 through `notFound`."}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C21", "quote": "The window is `today to today+6`."}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C22", "quote": "The response has `no paging`."}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C17", "quote": "The new route is not in the api inventory; impact lists it as new: `earliest-slots`."}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Is there an expected upper bound on Active doctors per specialization? The unpaged response costs 2 queries per doctor plus 1, and accepting T-5 as residual risk depends on that bound.", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-4"}
+  ]
+}
