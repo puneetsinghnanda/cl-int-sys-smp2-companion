@@ -1,9 +1,9 @@
 {
-  "built_by": "tsl@0.1.5",
+  "built_by": "tsl@0.1.6",
   "extractors": [
     {
       "name": "js-routes",
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "name": "js-test-layout",
@@ -15,7 +15,7 @@
     },
     {
       "name": "repo-tree",
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "name": "sql-migrations",
@@ -42,7 +42,7 @@
       "kind": "fact",
       "path": "context/generated/api-inventory.json",
       "required": true,
-      "sha256": "dd1254b0a78f85d6da3dd3722fd41947c0cec5177fe5b46028e49af681dc4c85",
+      "sha256": "ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9",
       "tokens_est": 3212
     },
     {
@@ -121,7 +121,7 @@
       "kind": "fact",
       "path": "context/generated/db-schema.json",
       "required": true,
-      "sha256": "d0487757e73c20b1eaced48f38b101f87348f97927b76d4b7bd46fc6f5f985ff",
+      "sha256": "e2a9d2990f6618ea5d55994a16c6264b0186b851cc3216014b812c4a4b98908a",
       "tokens_est": 9536
     },
     {
@@ -131,7 +131,7 @@
       "kind": "fact",
       "path": "context/generated/dependency-graph.json",
       "required": true,
-      "sha256": "013698b3c0dbc393d6584e9c3b7280be1c8abb48c328a2c866f6eaa13a94fa65",
+      "sha256": "bea6f222ec746764db7ba68e1f6d2bcbd46426ad46ca452666144bdb6358d72a",
       "tokens_est": 2212
     },
     {
@@ -189,13 +189,13 @@
     },
     {
       "empty_reason": null,
-      "fact_count": 159,
+      "fact_count": 243,
       "id": "module-map",
       "kind": "fact",
       "path": "context/generated/module-map.json",
       "required": true,
-      "sha256": "07674e27e969e7fd56aba8a2a1419c1f597c1b4a9c490b574a56b82ff6571114",
-      "tokens_est": 11367
+      "sha256": "4158c8fcd239c22cb8f1029dd11f61d8839867ff8088bd9ab76197e2db96db4b",
+      "tokens_est": 17772
     },
     {
       "anchors": [
@@ -221,13 +221,13 @@
     },
     {
       "empty_reason": null,
-      "fact_count": 20,
+      "fact_count": 22,
       "id": "test-layout",
       "kind": "fact",
       "path": "context/generated/test-layout.json",
       "required": true,
-      "sha256": "57a01551ebf3a7429a78830822e19e5384fc83b3f91c6b101bbcfb9cec22038f",
-      "tokens_est": 3867
+      "sha256": "c0752ab8543e23547679dbe34f6381f656d36b0eb5506efb2a56f94dcb729cd6",
+      "tokens_est": 4504
     },
     {
       "anchors": [
@@ -254,14 +254,14 @@
   ],
   "sources": [
     {
-      "commit": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc",
+      "commit": "7681f87749883d71abb4011d118366ca1242e1cc",
       "default_branch": "main",
       "files_excluded": 4,
-      "files_scanned": 120,
+      "files_scanned": 122,
       "repo": "sample-system",
       "scope": "."
     }
   ],
   "system": "SYS-SMP2",
-  "tokens_total_est": 33339
+  "tokens_total_est": 40381
 }

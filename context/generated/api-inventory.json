@@ -2,7 +2,7 @@
   "empty_reason": null,
   "extractor": {
     "name": "js-routes",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "facts": [
     {
@@ -534,7 +534,7 @@
   "schema": "context-facts.v1",
   "section": "api-inventory",
   "sources": {
-    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
   },
   "unresolved": []
 }

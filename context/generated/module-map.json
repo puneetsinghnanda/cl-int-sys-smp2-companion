@@ -2,7 +2,7 @@
   "empty_reason": null,
   "extractor": {
     "name": "repo-tree",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "facts": [
     {
@@ -25,13 +25,13 @@
       }
     },
     {
-      "files": 51,
+      "files": 53,
       "id": "module:sample-system:api",
       "kind": "module",
       "languages": {
         "json": 3,
         "mts": 1,
-        "ts": 47
+        "ts": 49
       },
       "name": "api",
       "source": {
@@ -88,6 +88,30 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 20,
+      "id": "sym:sample-system:api/src/auth/identity.ts:Actor",
+      "kind": "symbol",
+      "name": "Actor",
+      "source": {
+        "line": 16,
+        "path": "api/src/auth/identity.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 9,
+      "id": "sym:sample-system:api/src/auth/identity.ts:Permission",
+      "kind": "symbol",
+      "name": "Permission",
+      "source": {
+        "line": 9,
+        "path": "api/src/auth/identity.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 52,
       "id": "sym:sample-system:api/src/auth/identity.ts:actorOf",
       "kind": "symbol",
@@ -132,6 +156,30 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 20,
+      "id": "sym:sample-system:api/src/config.ts:AppConfig",
+      "kind": "symbol",
+      "name": "AppConfig",
+      "source": {
+        "line": 9,
+        "path": "api/src/config.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 8,
+      "id": "sym:sample-system:api/src/config.ts:DbConfig",
+      "kind": "symbol",
+      "name": "DbConfig",
+      "source": {
+        "line": 2,
+        "path": "api/src/config.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 27,
       "id": "sym:sample-system:api/src/config.ts:intEnv",
       "kind": "symbol",
@@ -154,6 +202,30 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 12,
+      "id": "sym:sample-system:api/src/db.ts:Database",
+      "kind": "symbol",
+      "name": "Database",
+      "source": {
+        "line": 9,
+        "path": "api/src/db.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 8,
+      "id": "sym:sample-system:api/src/db.ts:Queryable",
+      "kind": "symbol",
+      "name": "Queryable",
+      "source": {
+        "line": 6,
+        "path": "api/src/db.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 17,
       "id": "sym:sample-system:api/src/db.ts:createPool",
       "kind": "symbol",
@@ -172,6 +244,18 @@
       "source": {
         "line": 18,
         "path": "api/src/db.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 5,
+      "id": "sym:sample-system:api/src/lib/codes.ts:CodePrefix",
+      "kind": "symbol",
+      "name": "CodePrefix",
+      "source": {
+        "line": 5,
+        "path": "api/src/lib/codes.ts",
         "repo": "sample-system"
       }
     },
@@ -319,6 +403,18 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 9,
+      "id": "sym:sample-system:api/src/lib/periods.ts:DayWindow",
+      "kind": "symbol",
+      "name": "DayWindow",
+      "source": {
+        "line": 4,
+        "path": "api/src/lib/periods.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 19,
       "id": "sym:sample-system:api/src/lib/periods.ts:lastDays",
       "kind": "symbol",
@@ -391,6 +487,18 @@
       "name": "DAY_MS",
       "source": {
         "line": 9,
+        "path": "api/src/lib/time.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 41,
+      "id": "sym:sample-system:api/src/lib/time.ts:LocalParts",
+      "kind": "symbol",
+      "name": "LocalParts",
+      "source": {
+        "line": 37,
         "path": "api/src/lib/time.ts",
         "repo": "sample-system"
       }
@@ -594,12 +702,48 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 48,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentFilter",
+      "kind": "symbol",
+      "name": "AppointmentFilter",
+      "source": {
+        "line": 39,
+        "path": "api/src/repositories/appointmentRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 178,
       "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo",
       "kind": "symbol",
       "name": "AppointmentRepo",
       "source": {
         "line": 57,
+        "path": "api/src/repositories/appointmentRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 19,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow",
+      "kind": "symbol",
+      "name": "DetailRow",
+      "source": {
+        "line": 15,
+        "path": "api/src/repositories/appointmentRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 56,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:NewAppointment",
+      "kind": "symbol",
+      "name": "NewAppointment",
+      "source": {
+        "line": 49,
         "path": "api/src/repositories/appointmentRepo.ts",
         "repo": "sample-system"
       }
@@ -616,6 +760,18 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 14,
+      "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:SummaryRow",
+      "kind": "symbol",
+      "name": "SummaryRow",
+      "source": {
+        "line": 4,
+        "path": "api/src/repositories/appointmentRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 38,
       "id": "sym:sample-system:api/src/repositories/appointmentRepo.ts:toSummary",
       "kind": "symbol",
@@ -623,6 +779,30 @@
       "source": {
         "line": 27,
         "path": "api/src/repositories/appointmentRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 52,
+      "id": "sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorFields",
+      "kind": "symbol",
+      "name": "DoctorFields",
+      "source": {
+        "line": 42,
+        "path": "api/src/repositories/doctorRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 61,
+      "id": "sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorFilter",
+      "kind": "symbol",
+      "name": "DoctorFilter",
+      "source": {
+        "line": 53,
+        "path": "api/src/repositories/doctorRepo.ts",
         "repo": "sample-system"
       }
     },
@@ -638,12 +818,72 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 20,
+      "id": "sym:sample-system:api/src/repositories/doctorRepo.ts:Row",
+      "kind": "symbol",
+      "name": "Row",
+      "source": {
+        "line": 5,
+        "path": "api/src/repositories/doctorRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 32,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:DetailRow",
+      "kind": "symbol",
+      "name": "DetailRow",
+      "source": {
+        "line": 21,
+        "path": "api/src/repositories/patientRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 20,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:ListRow",
+      "kind": "symbol",
+      "name": "ListRow",
+      "source": {
+        "line": 15,
+        "path": "api/src/repositories/patientRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 60,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientFields",
+      "kind": "symbol",
+      "name": "PatientFields",
+      "source": {
+        "line": 44,
+        "path": "api/src/repositories/patientRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 233,
       "id": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
       "kind": "symbol",
       "name": "PatientRepo",
       "source": {
         "line": 82,
+        "path": "api/src/repositories/patientRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 14,
+      "id": "sym:sample-system:api/src/repositories/patientRepo.ts:Row",
+      "kind": "symbol",
+      "name": "Row",
+      "source": {
+        "line": 5,
         "path": "api/src/repositories/patientRepo.ts",
         "repo": "sample-system"
       }
@@ -671,12 +911,36 @@
       }
     },
     {
+      "decl": "type",
+      "end_line": 3,
+      "id": "sym:sample-system:api/src/repositories/referenceRepo.ts:RefKind",
+      "kind": "symbol",
+      "name": "RefKind",
+      "source": {
+        "line": 3,
+        "path": "api/src/repositories/referenceRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 59,
       "id": "sym:sample-system:api/src/repositories/referenceRepo.ts:ReferenceRepo",
       "kind": "symbol",
       "name": "ReferenceRepo",
       "source": {
         "line": 16,
+        "path": "api/src/repositories/referenceRepo.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 11,
+      "id": "sym:sample-system:api/src/repositories/referenceRepo.ts:Row",
+      "kind": "symbol",
+      "name": "Row",
+      "source": {
+        "line": 5,
         "path": "api/src/repositories/referenceRepo.ts",
         "repo": "sample-system"
       }
@@ -759,6 +1023,18 @@
       }
     },
     {
+      "decl": "type",
+      "end_line": 7,
+      "id": "sym:sample-system:api/src/routes/reference.ts:Kind",
+      "kind": "symbol",
+      "name": "Kind",
+      "source": {
+        "line": 7,
+        "path": "api/src/routes/reference.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 26,
       "id": "sym:sample-system:api/src/routes/reference.ts:referenceHandlers",
       "kind": "symbol",
@@ -803,6 +1079,18 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 26,
+      "id": "sym:sample-system:api/src/services/dashboardService.ts:Dashboard",
+      "kind": "symbol",
+      "name": "Dashboard",
+      "source": {
+        "line": 12,
+        "path": "api/src/services/dashboardService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 80,
       "id": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService",
       "kind": "symbol",
@@ -825,13 +1113,73 @@
       }
     },
     {
-      "end_line": 202,
+      "decl": "type",
+      "end_line": 10,
+      "id": "sym:sample-system:api/src/services/dashboardService.ts:Period",
+      "kind": "symbol",
+      "name": "Period",
+      "source": {
+        "line": 10,
+        "path": "api/src/services/dashboardService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 23,
+      "id": "sym:sample-system:api/src/services/doctorService.ts:DaySchedule",
+      "kind": "symbol",
+      "name": "DaySchedule",
+      "source": {
+        "line": 15,
+        "path": "api/src/services/doctorService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 13,
+      "id": "sym:sample-system:api/src/services/doctorService.ts:DoctorListRow",
+      "kind": "symbol",
+      "name": "DoctorListRow",
+      "source": {
+        "line": 13,
+        "path": "api/src/services/doctorService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 232,
       "id": "sym:sample-system:api/src/services/doctorService.ts:DoctorService",
       "kind": "symbol",
       "name": "DoctorService",
       "source": {
         "line": 26,
         "path": "api/src/services/doctorService.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 23,
+      "id": "sym:sample-system:api/src/services/index.ts:AppContext",
+      "kind": "symbol",
+      "name": "AppContext",
+      "source": {
+        "line": 17,
+        "path": "api/src/services/index.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 16,
+      "id": "sym:sample-system:api/src/services/index.ts:Services",
+      "kind": "symbol",
+      "name": "Services",
+      "source": {
+        "line": 8,
+        "path": "api/src/services/index.ts",
         "repo": "sample-system"
       }
     },
@@ -869,12 +1217,108 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 132,
+      "id": "sym:sample-system:api/src/types.ts:AppointmentDetail",
+      "kind": "symbol",
+      "name": "AppointmentDetail",
+      "source": {
+        "line": 127,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 126,
+      "id": "sym:sample-system:api/src/types.ts:AppointmentEvent",
+      "kind": "symbol",
+      "name": "AppointmentEvent",
+      "source": {
+        "line": 118,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 3,
+      "id": "sym:sample-system:api/src/types.ts:AppointmentStatus",
+      "kind": "symbol",
+      "name": "AppointmentStatus",
+      "source": {
+        "line": 3,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 58,
+      "id": "sym:sample-system:api/src/types.ts:AppointmentSummary",
+      "kind": "symbol",
+      "name": "AppointmentSummary",
+      "source": {
+        "line": 49,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 30,
+      "id": "sym:sample-system:api/src/types.ts:AvailabilityBlock",
+      "kind": "symbol",
+      "name": "AvailabilityBlock",
+      "source": {
+        "line": 25,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 8,
       "id": "sym:sample-system:api/src/types.ts:BLOOD_GROUPS",
       "kind": "symbol",
       "name": "BLOOD_GROUPS",
       "source": {
         "line": 8,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 72,
+      "id": "sym:sample-system:api/src/types.ts:DoctorDetail",
+      "kind": "symbol",
+      "name": "DoctorDetail",
+      "source": {
+        "line": 59,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 48,
+      "id": "sym:sample-system:api/src/types.ts:DoctorListRow",
+      "kind": "symbol",
+      "name": "DoctorListRow",
+      "source": {
+        "line": 46,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 43,
+      "id": "sym:sample-system:api/src/types.ts:DoctorSummary",
+      "kind": "symbol",
+      "name": "DoctorSummary",
+      "source": {
+        "line": 31,
         "path": "api/src/types.ts",
         "repo": "sample-system"
       }
@@ -891,6 +1335,102 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 99,
+      "id": "sym:sample-system:api/src/types.ts:NextAppointment",
+      "kind": "symbol",
+      "name": "NextAppointment",
+      "source": {
+        "line": 95,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 80,
+      "id": "sym:sample-system:api/src/types.ts:NextDay",
+      "kind": "symbol",
+      "name": "NextDay",
+      "source": {
+        "line": 75,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 17,
+      "id": "sym:sample-system:api/src/types.ts:Page",
+      "kind": "symbol",
+      "name": "Page",
+      "source": {
+        "line": 12,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 117,
+      "id": "sym:sample-system:api/src/types.ts:PatientDetail",
+      "kind": "symbol",
+      "name": "PatientDetail",
+      "source": {
+        "line": 104,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 103,
+      "id": "sym:sample-system:api/src/types.ts:PatientListItem",
+      "kind": "symbol",
+      "name": "PatientListItem",
+      "source": {
+        "line": 100,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 92,
+      "id": "sym:sample-system:api/src/types.ts:PatientSummary",
+      "kind": "symbol",
+      "name": "PatientSummary",
+      "source": {
+        "line": 81,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 1,
+      "id": "sym:sample-system:api/src/types.ts:RecordStatus",
+      "kind": "symbol",
+      "name": "RecordStatus",
+      "source": {
+        "line": 1,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 24,
+      "id": "sym:sample-system:api/src/types.ts:RefEntry",
+      "kind": "symbol",
+      "name": "RefEntry",
+      "source": {
+        "line": 18,
+        "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 9,
       "id": "sym:sample-system:api/src/types.ts:SLOT_MINUTES",
       "kind": "symbol",
@@ -898,6 +1438,30 @@
       "source": {
         "line": 9,
         "path": "api/src/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 6,
+      "id": "sym:sample-system:api/test/doctors-next-seven-days-edges.test.ts:NextDay",
+      "kind": "symbol",
+      "name": "NextDay",
+      "source": {
+        "line": 6,
+        "path": "api/test/doctors-next-seven-days-edges.test.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 6,
+      "id": "sym:sample-system:api/test/doctors-today.test.ts:Row",
+      "kind": "symbol",
+      "name": "Row",
+      "source": {
+        "line": 6,
+        "path": "api/test/doctors-today.test.ts",
         "repo": "sample-system"
       }
     },
@@ -1045,6 +1609,18 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 18,
+      "id": "sym:sample-system:db/testing/pg-harness.ts:PgServer",
+      "kind": "symbol",
+      "name": "PgServer",
+      "source": {
+        "line": 15,
+        "path": "db/testing/pg-harness.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 88,
       "id": "sym:sample-system:db/testing/pg-harness.ts:adminQuery",
       "kind": "symbol",
@@ -1089,6 +1665,30 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 8,
+      "id": "sym:sample-system:db/testing/provided.ts:ProvidedContext",
+      "kind": "symbol",
+      "name": "ProvidedContext",
+      "source": {
+        "line": 5,
+        "path": "db/testing/provided.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 15,
+      "id": "sym:sample-system:db/testing/test-db.ts:TestDb",
+      "kind": "symbol",
+      "name": "TestDb",
+      "source": {
+        "line": 11,
+        "path": "db/testing/test-db.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 40,
       "id": "sym:sample-system:db/testing/test-db.ts:freshDatabase",
       "kind": "symbol",
@@ -1122,6 +1722,17 @@
       }
     },
     {
+      "end_line": 86,
+      "id": "sym:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx:nextRows",
+      "kind": "symbol",
+      "name": "nextRows",
+      "source": {
+        "line": 81,
+        "path": "web/src/__tests__/DoctorDetailPage.test.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 35,
       "id": "sym:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx:noShowsCell",
       "kind": "symbol",
@@ -1133,7 +1744,7 @@
       }
     },
     {
-      "end_line": 30,
+      "end_line": 18,
       "id": "sym:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx:renderPage",
       "kind": "symbol",
       "name": "renderPage",
@@ -1232,6 +1843,246 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 118,
+      "id": "sym:sample-system:web/src/api/types.ts:AppointmentDetail",
+      "kind": "symbol",
+      "name": "AppointmentDetail",
+      "source": {
+        "line": 113,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 3,
+      "id": "sym:sample-system:web/src/api/types.ts:AppointmentStatus",
+      "kind": "symbol",
+      "name": "AppointmentStatus",
+      "source": {
+        "line": 3,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 56,
+      "id": "sym:sample-system:web/src/api/types.ts:AppointmentSummary",
+      "kind": "symbol",
+      "name": "AppointmentSummary",
+      "source": {
+        "line": 47,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 29,
+      "id": "sym:sample-system:web/src/api/types.ts:AvailabilityBlock",
+      "kind": "symbol",
+      "name": "AvailabilityBlock",
+      "source": {
+        "line": 24,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 143,
+      "id": "sym:sample-system:web/src/api/types.ts:Dashboard",
+      "kind": "symbol",
+      "name": "Dashboard",
+      "source": {
+        "line": 137,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 134,
+      "id": "sym:sample-system:web/src/api/types.ts:DaySchedule",
+      "kind": "symbol",
+      "name": "DaySchedule",
+      "source": {
+        "line": 127,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 67,
+      "id": "sym:sample-system:web/src/api/types.ts:DoctorDetail",
+      "kind": "symbol",
+      "name": "DoctorDetail",
+      "source": {
+        "line": 57,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 46,
+      "id": "sym:sample-system:web/src/api/types.ts:DoctorListRow",
+      "kind": "symbol",
+      "name": "DoctorListRow",
+      "source": {
+        "line": 43,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 42,
+      "id": "sym:sample-system:web/src/api/types.ts:DoctorSummary",
+      "kind": "symbol",
+      "name": "DoctorSummary",
+      "source": {
+        "line": 30,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 94,
+      "id": "sym:sample-system:web/src/api/types.ts:NextAppointment",
+      "kind": "symbol",
+      "name": "NextAppointment",
+      "source": {
+        "line": 90,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 75,
+      "id": "sym:sample-system:web/src/api/types.ts:NextDay",
+      "kind": "symbol",
+      "name": "NextDay",
+      "source": {
+        "line": 70,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 10,
+      "id": "sym:sample-system:web/src/api/types.ts:Page",
+      "kind": "symbol",
+      "name": "Page",
+      "source": {
+        "line": 4,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 112,
+      "id": "sym:sample-system:web/src/api/types.ts:PatientDetail",
+      "kind": "symbol",
+      "name": "PatientDetail",
+      "source": {
+        "line": 99,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 98,
+      "id": "sym:sample-system:web/src/api/types.ts:PatientListItem",
+      "kind": "symbol",
+      "name": "PatientListItem",
+      "source": {
+        "line": 95,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 87,
+      "id": "sym:sample-system:web/src/api/types.ts:PatientSummary",
+      "kind": "symbol",
+      "name": "PatientSummary",
+      "source": {
+        "line": 76,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 135,
+      "id": "sym:sample-system:web/src/api/types.ts:Period",
+      "kind": "symbol",
+      "name": "Period",
+      "source": {
+        "line": 135,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "type",
+      "end_line": 2,
+      "id": "sym:sample-system:web/src/api/types.ts:RecordStatus",
+      "kind": "symbol",
+      "name": "RecordStatus",
+      "source": {
+        "line": 2,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 23,
+      "id": "sym:sample-system:web/src/api/types.ts:RefEntry",
+      "kind": "symbol",
+      "name": "RefEntry",
+      "source": {
+        "line": 17,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 16,
+      "id": "sym:sample-system:web/src/api/types.ts:Settings",
+      "kind": "symbol",
+      "name": "Settings",
+      "source": {
+        "line": 11,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 126,
+      "id": "sym:sample-system:web/src/api/types.ts:Slot",
+      "kind": "symbol",
+      "name": "Slot",
+      "source": {
+        "line": 119,
+        "path": "web/src/api/types.ts",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 13,
       "id": "sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable",
       "kind": "symbol",
@@ -1243,12 +2094,36 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 11,
+      "id": "sym:sample-system:web/src/components/AppointmentTable.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 6,
+        "path": "web/src/components/AppointmentTable.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 11,
       "id": "sym:sample-system:web/src/components/AvailabilityEditor.tsx:AvailabilityEditor",
       "kind": "symbol",
       "name": "AvailabilityEditor",
       "source": {
         "line": 11,
+        "path": "web/src/components/AvailabilityEditor.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 8,
+      "id": "sym:sample-system:web/src/components/AvailabilityEditor.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 3,
         "path": "web/src/components/AvailabilityEditor.tsx",
         "repo": "sample-system"
       }
@@ -1276,6 +2151,18 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 10,
+      "id": "sym:sample-system:web/src/components/Field.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 3,
+        "path": "web/src/components/Field.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 13,
       "id": "sym:sample-system:web/src/components/Layout.tsx:Layout",
       "kind": "symbol",
@@ -1293,6 +2180,18 @@
       "name": "ListInput",
       "source": {
         "line": 10,
+        "path": "web/src/components/ListInput.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/components/ListInput.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 2,
         "path": "web/src/components/ListInput.tsx",
         "repo": "sample-system"
       }
@@ -1331,6 +2230,30 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 6,
+      "id": "sym:sample-system:web/src/components/Pagination.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 1,
+        "path": "web/src/components/Pagination.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/components/Picker.tsx:Option",
+      "kind": "symbol",
+      "name": "Option",
+      "source": {
+        "line": 3,
+        "path": "web/src/components/Picker.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 19,
       "id": "sym:sample-system:web/src/components/Picker.tsx:Picker",
       "kind": "symbol",
@@ -1338,6 +2261,30 @@
       "source": {
         "line": 19,
         "path": "web/src/components/Picker.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 16,
+      "id": "sym:sample-system:web/src/components/Picker.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 8,
+        "path": "web/src/components/Picker.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/components/SlotPicker.tsx:Props",
+      "kind": "symbol",
+      "name": "Props",
+      "source": {
+        "line": 2,
+        "path": "web/src/components/SlotPicker.tsx",
         "repo": "sample-system"
       }
     },
@@ -1360,6 +2307,18 @@
       "source": {
         "line": 3,
         "path": "web/src/components/StatusBadge.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/hooks/useAsync.ts:AsyncState",
+      "kind": "symbol",
+      "name": "AsyncState",
+      "source": {
+        "line": 2,
+        "path": "web/src/hooks/useAsync.ts",
         "repo": "sample-system"
       }
     },
@@ -1573,12 +2532,12 @@
       }
     },
     {
-      "end_line": 143,
+      "end_line": 188,
       "id": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage",
       "kind": "symbol",
       "name": "DoctorDetailPage",
       "source": {
-        "line": 18,
+        "line": 25,
         "path": "web/src/pages/DoctorDetailPage.tsx",
         "repo": "sample-system"
       }
@@ -1595,12 +2554,23 @@
       }
     },
     {
-      "end_line": 35,
+      "end_line": 48,
       "id": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:remove",
       "kind": "symbol",
       "name": "remove",
       "source": {
-        "line": 26,
+        "line": 39,
+        "path": "web/src/pages/DoctorDetailPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "end_line": 22,
+      "id": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:validDay",
+      "kind": "symbol",
+      "name": "validDay",
+      "source": {
+        "line": 18,
         "path": "web/src/pages/DoctorDetailPage.tsx",
         "repo": "sample-system"
       }
@@ -1612,6 +2582,18 @@
       "name": "DoctorFormPage",
       "source": {
         "line": 40,
+        "path": "web/src/pages/DoctorFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
+      "decl": "interface",
+      "end_line": 24,
+      "id": "sym:sample-system:web/src/pages/DoctorFormPage.tsx:Form",
+      "kind": "symbol",
+      "name": "Form",
+      "source": {
+        "line": 13,
         "path": "web/src/pages/DoctorFormPage.tsx",
         "repo": "sample-system"
       }
@@ -1683,6 +2665,18 @@
       }
     },
     {
+      "decl": "interface",
+      "end_line": 29,
+      "id": "sym:sample-system:web/src/pages/PatientFormPage.tsx:Form",
+      "kind": "symbol",
+      "name": "Form",
+      "source": {
+        "line": 13,
+        "path": "web/src/pages/PatientFormPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 166,
       "id": "sym:sample-system:web/src/pages/PatientFormPage.tsx:PatientFormPage",
       "kind": "symbol",
@@ -1749,6 +2743,18 @@
       }
     },
     {
+      "decl": "type",
+      "end_line": 7,
+      "id": "sym:sample-system:web/src/pages/SettingsPage.tsx:Kind",
+      "kind": "symbol",
+      "name": "Kind",
+      "source": {
+        "line": 7,
+        "path": "web/src/pages/SettingsPage.tsx",
+        "repo": "sample-system"
+      }
+    },
+    {
       "end_line": 23,
       "id": "sym:sample-system:web/src/pages/SettingsPage.tsx:RefList",
       "kind": "symbol",
@@ -1785,7 +2791,7 @@
   "schema": "context-facts.v1",
   "section": "module-map",
   "sources": {
-    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
   },
   "unresolved": []
 }

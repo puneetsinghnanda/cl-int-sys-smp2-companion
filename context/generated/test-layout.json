@@ -85,6 +85,45 @@
     },
     {
       "framework": "unknown",
+      "id": "test:sample-system:api/test/doctors-next-seven-days-edges.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/doctors-next-seven-days-edges.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "HMS-9 REQ-2/REQ-3: rows run from today to 6 days ahead with date, booked and free",
+        "HMS-9 REQ-5: a day without slots is not available and has no counts",
+        "HMS-9 REQ-4: a Scheduled appointment counts as booked, not free",
+        "HMS-9 REQ-4/REQ-6: after both slots start, the booked one stays booked and the empty one counts as neither",
+        "HMS-9 REQ-4 edge: a Cancelled appointment frees its slot again",
+        "HMS-9 REQ-4 (S-1 AC3, S-2 AC2): passed slots with a Completed or No-show appointment count as booked; a future slot stays free",
+        "HMS-9 REQ-6 (S-2 AC3): a day whose slots have all passed empty shows booked 0 and free 0, still available",
+        "HMS-9 REQ-9: an Inactive doctor has nextSevenDays null",
+        "HMS-9 REQ-10 error: an unknown doctor is still 404"
+      ]
+    },
+    {
+      "framework": "unknown",
+      "id": "test:sample-system:api/test/doctors-next-seven-days.test.ts",
+      "kind": "test",
+      "module": "module:sample-system:api",
+      "source": {
+        "line": 1,
+        "path": "api/test/doctors-next-seven-days.test.ts",
+        "repo": "sample-system"
+      },
+      "titles": [
+        "HMS-9 REQ-4: each day counts exactly the BOOKED and FREE slots the day schedule shows",
+        "HMS-9 REQ-3 (T-1): each entry carries only date, available, booked and free",
+        "HMS-9 REQ-2 (T-7): days follow the hospital zone across UTC midnight",
+        "HMS-9 REQ-10: nextSevenDays in a PATCH body is ignored"
+      ]
+    },
+    {
+      "framework": "unknown",
       "id": "test:sample-system:api/test/doctors-no-shows.test.ts",
       "kind": "test",
       "module": "module:sample-system:api",
@@ -305,7 +344,16 @@
         "DoctorDetailPage No-shows (HMS-7)",
         "HMS-7 REQ-5/REQ-7: a doctor with none shows 0, still linked",
         "HMS-7 REQ-8: the other sections are still shown",
-        "HMS-7 REQ-6 edge: noShowsQuery uses the exact parameter names the list reads"
+        "HMS-7 REQ-6 edge: noShowsQuery uses the exact parameter names the list reads",
+        "DoctorDetailPage Next 7 days (HMS-9)",
+        "HMS-9 REQ-1/REQ-3: shows one row per day with the date, booked and free",
+        "HMS-9 REQ-7: each date links to the doctor page with ?date= for that day",
+        "HMS-9 REQ-9: no section when nextSevenDays is null (Inactive doctor)",
+        "HMS-9 REQ-10: the other sections are still shown with the new section",
+        "HMS-9 REQ-8: ?date= opens the day schedule on that date",
+        "HMS-9 REQ-8 edge (S-3 AC3): without ?date= the day schedule starts at local today, across UTC midnight",
+        "HMS-9 REQ-8 error: an invalid ?date= is ignored",
+        "HMS-9 REQ-8 edge: validDay accepts only real YYYY-MM-DD days"
       ]
     },
     {
@@ -391,7 +439,7 @@
   "schema": "context-facts.v1",
   "section": "test-layout",
   "sources": {
-    "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
   },
   "unresolved": []
 }
