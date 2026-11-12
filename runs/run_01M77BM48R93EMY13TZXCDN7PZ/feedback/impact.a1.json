@@ -1,0 +1,61 @@
+{
+  "dropped": [
+    "F-3",
+    "F-4",
+    "F-5"
+  ],
+  "dropped_findings": [
+    {
+      "id": "F-3",
+      "reason": "quote not found",
+      "severity": "minor",
+      "text": "The user chose to refresh the stale pack first because HMS-9 changed doctorService.ts, yet REQ-6 and the other REQs that depend on the slot rule stay 'known'. HMS-9 added a 7-day use of the shared slot rule that this impact does not reflect."
+    },
+    {
+      "id": "F-4",
+      "reason": "anchor not found",
+      "severity": "minor",
+      "text": "C12 links SUMMARY_SELECT to REQ-15 (medical history). The join selects only the patient's full_name, so the exposure risk is the patient's identity, not medical history."
+    },
+    {
+      "id": "F-5",
+      "reason": "quote not found",
+      "severity": "minor",
+      "text": "C22's cite lists the appointment statuses but does not say that CANCELLED frees a slot. The proof is the status filter in AppointmentRepo.occupyingBetween."
+    }
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "REQ-14 and REQ-15 to C12",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#known"
+        },
+        {
+          "quote": "column:doctor.phone",
+          "ref": "context/generated/db-schema.json#column:doctor.phone"
+        },
+        {
+          "quote": "column:doctor.email",
+          "ref": "context/generated/db-schema.json#column:doctor.email"
+        },
+        {
+          "quote": "d.phone, d.email, d.fee_paise, d.slot_minutes, d.status",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L25"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-14 (no contact details) is tied only to C12, which is about patient summaries. Doctor rows read through DoctorRepo also carry doctor.phone and doctor.email, so that leak risk for the new entries is missing."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
