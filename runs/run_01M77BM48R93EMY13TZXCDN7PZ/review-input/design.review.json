@@ -1,0 +1,98 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "5bbb2ba02b9021065e0ec9ff8410030043417595f497f433b47f9e00817a8237",
+  "package_sha256": "e1daffd7c16c548aaf8c7d976d7241b6f183f80b21caa1e934573fd0608d0e40",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Built on the existing specializations router, the DoctorService private slotStates rule, DoctorRepo, AppointmentRepo.occupyingBetween and the lib helpers. No new infrastructure, no migration, and the route/service/repo layering is kept."},
+    {"id": "DS-R2", "score": 5, "reason": "Each story S-1 to S-6 maps to components, and every AC is served: window and PAST rule, the case-insensitive sort with an id tie-break, the unpaged list, 404 and 400, the explicit mapping that keeps out phone, email and patient data, and no change to other routes."},
+    {"id": "DS-R3", "score": 5, "reason": "Each EP-1 field has a name, type, nullability, format and example. The 400 message and the 404 status are given exactly, and the start example matches S-1 AC2. The error code values (BAD_REQUEST, NOT_FOUND) are only implied."},
+    {"id": "DS-R4", "score": 4, "reason": "Every structural choice is cited or decided by A-03 or A-04, and the code confirms the cited symbols. One trade-off rests on an uncited premise ('the lists are short'), and one sentence puts the Cancelled-appointment filter in the wrong place."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-offs explain why the code sits in DoctorService, why queries run per doctor, why nextSevenDays is left alone, and why fields are mapped one by one instead of returning DoctorSummary. Each line states its cost."},
+    {"id": "DS-R6", "score": 5, "reason": "The flow is numbered and clear, and IDs are used the same way throughout the frontmatter and the body. One small inconsistency: new methods are labelled 'changed' while the new type is labelled 'new'."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The design says the slot-state rule ignores Cancelled appointments. It does not: slotStates treats any appointment it is given as BOOKED. Cancelled ones are dropped by the SQL in occupyingBetween, so FREE depends on using that exact repo method.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L198", "quote": "The slot-state rule already marks started slots PAST, ignores Cancelled appointments"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117", "quote": "WHERE a.doctor_id = $1 AND a.status &lt;&gt; 'CANCELLED'"},
+        {"ref": "sample-system:api/src/services/doctorService.ts#L161", "quote": "const state: 'FREE' | 'BOOKED' | 'PAST' = taken ? 'BOOKED' : s.start.getTime() &lt;= now ? 'PAST' : 'FREE';"}
+      ],
+      "suggested_fix": "Say that Cancelled appointments are left out by AppointmentRepo.occupyingBetween, and that earliestSlots must use it (not another appointment query) for S-1 AC4 to hold."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The per-doctor query trade-off rests on 'the lists are short', which nothing cites. S-4 AC1 tests more than 20 doctors. The query count also leaves out the refStatus lookup, so the real cost is 2N+2 queries.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L205", "quote": "It is slower for large specializations, which is acceptable because the lists are short."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L91", "quote": "Given a specialization with one more Active doctor than the 20 per page convention (a 21st doctor)"}
+      ],
+      "suggested_fix": "Cite a source for the expected specialization size, or describe it as an accepted cost without one. Give the count as 2N+2 queries (refStatus, doctor list, then availability and appointments per doctor)."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Impact lists POST, PATCH and DELETE /api/specializations as existing routes on the router this change touches. The design's endpoints list includes only GET /api/specializations, so the regression scope for S-6 is narrower than impact's.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#L176", "quote": "http:POST:/api/specializations: existing (same router)."},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L231", "quote": "EP-3 GET /api/specializations: existing, unchanged."}
+      ],
+      "suggested_fix": "Add POST /api/specializations, PATCH /api/specializations/:id and DELETE /api/specializations/:id to the endpoints list as existing and unchanged."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The change labels are inconsistent. The new methods earliestSlots and activeBySpecialization are marked 'changed' (meaning their class changes), but the new EarliestSlotEntry type in an existing file is marked 'new'.",
+      "cites": [
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L213", "quote": "CO-3 DoctorRepo.activeBySpecialization: changed (new method"},
+        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L216", "quote": "CO-6 EarliestSlotEntry in api/src/types.ts: new type in an existing file (C16)."}
+      ],
+      "suggested_fix": "Use one convention: either name CO-2 and CO-3 by their containing class and mark them changed, or mark all three new symbols as new."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/specializations.ts#L6", "quote": "export const specializationsRouter = Router();"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/specializations.ts#L7", "quote": "const h = referenceHandlers('specializations');"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L157", "quote": "the one slot-state rule shared by the day schedule and the next 7 days"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L20", "quote": "state: 'FREE' | 'BOOKED' | 'PAST'"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L131", "quote": "async availability(id: number): Promise&lt;AvailabilityBlock[]&gt;"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L167", "quote": "async refStatus(kind: 'department' | 'specialization', id: number): Promise&lt;string | null&gt;"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L114", "quote": "async occupyingBetween(doctorId: number, from: Date, to: Date)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/slots.ts#L38", "quote": "Slots of one hospital-local day as UTC instants."}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L171", "quote": "const days = Array.from({ length: 7 }, (_, i) =&gt; addDays(today, i));"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L170", "quote": "const today = localDay(now, tz);"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L172", "quote": "const { start } = dayBounds(days[0]!, tz);"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/errors.ts#L23", "quote": "export const notFound = (message: string): HttpError =&gt; new HttpError(404, 'NOT_FOUND', message);"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/errors.ts#L21", "quote": "export const badRequest = (message: string): HttpError =&gt; new HttpError(400, 'BAD_REQUEST', message);"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/auth/identity.ts#L37", "quote": "export function requirePermission(permission: Permission): RequestHandler"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/codes.ts#L7", "quote": "export function formatCode(prefix: CodePrefix, id: number): string"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:DoctorSummary", "quote": "sym:sample-system:api/src/types.ts:DoctorSummary"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#claim:C1", "quote": "The new route is not in the facts; it is the endpoint REQ-1 asks for"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/ide-answers.md#a-03", "quote": "answer: Flat (proposed default)"}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/ide-answers.md#a-04", "quote": "answer: appointments:read (proposed default)"}]},
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#item:REQ-2", "quote": "in the hospital time zone (`today to today+6`)"}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#item:REQ-10", "quote": "with every Active doctor of the specialization and `no paging`"}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#item:REQ-17", "quote": "names compare ignoring case, with `doctor id as the final tie-break`"}]},
+    {"claim_id": "C24", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/index.ts#L12", "quote": "doctors: DoctorService;"}, {"ref": "sample-system:api/src/routes/doctors.ts#L68", "quote": "ctx(req).services.doctors.schedule"}]}
+  ],
+  "questions": []
+}

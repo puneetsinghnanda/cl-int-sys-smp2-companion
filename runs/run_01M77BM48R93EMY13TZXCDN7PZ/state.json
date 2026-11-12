@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-12T08:11:38Z",
+  "heartbeat_at": "2026-11-12T08:34:31Z",
   "owner": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
   "owner_pseudonym": "eng-3fd6",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 1,
     "round": 1
   },
-  "rev": 20,
+  "rev": 24,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -218,7 +218,41 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md",
+          "artifact_sha256": "5bbb2ba02b9021065e0ec9ff8410030043417595f497f433b47f9e00817a8237",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-12T08:34:31Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "impact",
+              "sha256": "b3712ec525363e682a68725a8ce7c97e0c2a43155dd944473156ef7e4c4173fd",
+              "step": "impact"
+            },
+            {
+              "name": "stories",
+              "sha256": "d4dc5ed961e49e2c861c4e3256457f48726f4adc5af1ce2363cc97491f9a4d26",
+              "step": "split"
+            },
+            {
+              "name": "intent",
+              "sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.verification.json",
+          "skill": "design@1.7.0",
+          "skill_started_at": "2026-11-12T08:22:53Z",
+          "started_at": "2026-11-12T08:22:42Z",
+          "write_rejects": 1
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -227,7 +261,7 @@
       },
       "id": "design",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -298,7 +332,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-11",
-  "updated_at": "2026-11-12T08:11:38Z",
+  "updated_at": "2026-11-12T08:34:31Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }
