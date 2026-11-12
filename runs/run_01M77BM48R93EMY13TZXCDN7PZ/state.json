@@ -2,7 +2,7 @@
   "active_session": {
     "host_hash": "h_2203e682",
     "session_id": "450a64e5-5734-4915-9f3b-3f04dbf98fb5",
-    "since": "2026-11-12T07:47:43Z"
+    "since": "2026-11-12T08:51:51Z"
   },
   "branch": {},
   "created_at": "2026-11-12T07:47:43Z",
@@ -10,38 +10,38 @@
   "end_reason": null,
   "gates": [
     {
-      "approver_key": null,
+      "approver_key": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
       "artifacts": [
         {
           "sha256": "70d1424e50aa75d6c53ad7e3bf5b1a34de201f5a3140cd21e886a0c9c00428d6",
           "step": "threat"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-11-12T08:51:50Z",
+      "decision": "approve",
       "id": "G-escalate-threat-a1",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "APPROVED",
       "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-11-12T08:39:43Z",
+  "heartbeat_at": "2026-11-12T08:51:51Z",
   "owner": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
   "owner_pseudonym": "eng-3fd6",
   "pack": {
     "checked_offline": false,
     "commits_behind": {
-      "sample-system": 1
+      "sample-system": 0
     },
     "drift_files": {
-      "sample-system": 7
+      "sample-system": 0
     },
     "fresh": true,
-    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "reasons": [],
-    "signed_at": "2026-11-03T10:45:54Z",
+    "signed_at": "2026-11-12T08:22:30Z",
     "source_sha": {
-      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
   "pinned": {
@@ -66,10 +66,10 @@
     "open_non_blocking": 1,
     "round": 1
   },
-  "rev": 27,
+  "rev": 29,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -312,7 +312,7 @@
       },
       "id": "threat",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "ACCEPTED"
     },
     {
       "attempts": [],
@@ -371,7 +371,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-11",
-  "updated_at": "2026-11-12T08:39:43Z",
+  "updated_at": "2026-11-12T08:51:51Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }
