@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M77BM48R93EMY13TZXCDN7PZ
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.2.0
 inputs:
   - path: artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md
@@ -41,8 +41,8 @@ claims:
   - id: C9
     text: "An Inactive `specialization` is kept for history but not offered for new use."
     cites: ["context/glossary.md#inactive"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17]
 assumed: []
 unknown: []
 requirements:
@@ -142,9 +142,20 @@ requirements:
     status: known
     statement: "`No other endpoint, page or booking rule changes`."
     cites: ["artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L37"]
+  - id: REQ-17
+    title: Name comparison and final tie-break
+    type: functional
+    status: known
+    statement: "Wherever entries are ordered by doctor name, names compare ignoring case, with `doctor id as the final tie-break`."
+    cites: ["artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L30-L31", "runs/run_01M77BM48R93EMY13TZXCDN7PZ/ide-answers.md#a-01"]
 unknowns: []
 questions: []
-answers: []
+answers:
+  - id: A-01
+    kind: assumption
+    about: REQ-17
+    answer: "Yes, confirm"
+    requirements: [REQ-17]
 glossary:
   - {term: Front-desk staff, found: true}
   - {term: Slot, found: true}
@@ -175,11 +186,13 @@ HMS-11 adds one read-only endpoint, `GET /api/specializations/:id/earliest-slots
 - REQ-14 No contact details (known).
 - REQ-15 No medical history (known).
 - REQ-16 Nothing else changes (known).
+- REQ-17 Name comparison (known): wherever entries are ordered by doctor name, names compare ignoring case, with doctor id as the final tie-break.
 
 ## Known
 - REQ-1 to REQ-16: stated in the ticket acceptance criteria (L21–L37).
-- REQ-2 and REQ-10 also match decisions from the cancelled run of this ticket (A-01 window, A-02 no paging).
+- REQ-2 and REQ-10 also match decisions from the cancelled run of this ticket (A-01 window, A-02 no paging). That A-01 was asked against older ticket wording, which the current ticket now matches.
 - REQ-1, REQ-3 and REQ-6 use the existing meanings of Specialization, Department and Day schedule, confirmed in the cancelled run (A-04).
+- REQ-17: the assumption was confirmed in the IDE (A-01 of this run).
 
 ## Assumed
 None.
@@ -191,11 +204,11 @@ None.
 None.
 
 Answered in the IDE:
-- None in this run. Reused from the cancelled run run_01M77B1NEGA2SK4TJPT0CAK6MX: A-01 (window today to today+6), A-02 (no paging), A-04 (existing meanings of Specialization, Department, Day schedule).
+- A-01 (this run): REQ-17, do names compare ignoring case with doctor id as the final tie-break? "Yes, confirm". Decides REQ-17. No mismatch; the ticket leaves this unstated.
+- Reused from the cancelled run run_01M77B1NEGA2SK4TJPT0CAK6MX: A-01 (window today to today+6), A-02 (no paging), A-04 (existing meanings of Specialization, Department, Day schedule).
 
 ## Out of scope
 - The booking page "Earliest free slot" section: the ticket defers it to a later story (L17–L18). Prior answer A-06 in the cancelled run chose "API + booking page section"; the ticket was rewritten afterwards to the API only.
 - Which permission the route declares, and whether the rule is shared with the day schedule in code, are design decisions.
-- Default for name ties: compare doctor names the way the doctor list already sorts them. Trade-off: consistent with existing lists, but name collation is not stated in the ticket.
 - Glossary entries for Specialization, Department and Day schedule are left to the glossary owner.
 - No instruction-like text and no credentials or personal data were found in the inputs.

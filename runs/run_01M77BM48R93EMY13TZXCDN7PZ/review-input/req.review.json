@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "step": "req",
-  "attempt": 1,
-  "artifact_sha256": "261d9d2a66ec2f67e7fe575241d44d1d84f014ab56905d7a30bec7775e16cd15",
-  "package_sha256": "0c3b7ae0a9cb24b4687e7969cfd86a9b57758f9262f53fc712fa24ecbb11c79a",
+  "attempt": 2,
+  "artifact_sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+  "package_sha256": "02a0c4e81baee64b7c5f76bd2a0c821191cba6c4ee321b15283e3ea3ad2e95a2",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,80 +12,199 @@
     "version": "0.1.6",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 3.75,
+  "rubric_score": 4.35,
   "rubric_items": [
-    {"id": "RR-R1", "score": 4, "reason": "All nine acceptance criteria are covered by REQ-1..REQ-16, and the booking page is listed as out of scope with a reason. REQ-2 drops the link saying the window must match HMS-9's next-7-days days."},
-    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and testable. REQ-10 repeats REQ-1's 'every Active doctor'. REQ-13 does not give the error body shape or code, so a tester cannot fully check it."},
-    {"id": "RR-R3", "score": 3, "reason": "Every REQ cites the ticket. But a name-collation default ('the way the doctor list already sorts them') is listed under Out of scope while assumed is [], and the context pack does not support it."},
-    {"id": "RR-R4", "score": 4, "reason": "The no-paging clash with conventions#lists is surfaced (C8) and settled by the ticket and A-02. The A-06 scope difference is disclosed with a reason. There is no silent contradiction with the intent baseline."},
-    {"id": "RR-R5", "score": 4, "reason": "No questions are asked, which suits an explicit ticket. The collation and tie-break default should have been raised as an assumption or a non-blocking question, not left under Out of scope."},
-    {"id": "RR-R6", "score": 4, "reason": "Plain and readable. Specialization, Department and Day schedule are missing from the glossary; this is disclosed and their meanings come from A-04."}
+    {
+      "id": "RR-R1",
+      "score": 4,
+      "reason": "REQ-1 to REQ-16 cover all nine acceptance criteria, REQ-17 closes the gap in the tie-break, and the booking page is out of scope with a reason. REQ-2 still leaves out the ticket's condition that the window uses the same days as HMS-9 (attempt-1 F-2 is still open)."
+    },
+    {
+      "id": "RR-R2",
+      "score": 4,
+      "reason": "Most REQs are atomic and checkable. REQ-12 and REQ-13 give only the status and message, not the error body from conventions#errors. REQ-1 and REQ-3 also carry glossary definitions inside the behaviour statement."
+    },
+    {
+      "id": "RR-R3",
+      "score": 5,
+      "reason": "Every REQ cites the ticket or an IDE answer. The old collation default is now REQ-17, confirmed by this run's A-01, so attempt-1 F-1 is resolved. Nothing invented is marked known."
+    },
+    {
+      "id": "RR-R4",
+      "score": 4,
+      "reason": "Nothing clashes with the intent baseline. The no-paging exception to conventions#lists is surfaced (C8) and settled by the ticket and A-02. The scope difference with cancelled-run A-06 is disclosed only as prose, not as a recorded mismatch."
+    },
+    {
+      "id": "RR-R5",
+      "score": 5,
+      "reason": "One precise, non-blocking IDE question (A-01), with real options and the right person answering. No questions are left open. Reused answers avoid asking again."
+    },
+    {
+      "id": "RR-R6",
+      "score": 4,
+      "reason": "Plain and readable, and the missing glossary terms are disclosed. The id A-01 now means two different answers (this run and the cancelled run), so the reader has to rely on the qualifiers."
+    }
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "The tie-break collation default ('the way the doctor list already sorts them') is a real assumption, but it sits under Out of scope while assumed is []. The context pack does not document how the doctor list sorts, and same-name ties are left unspecified.",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Carried over from attempt-1 F-2, still open. REQ-2 leaves out the ticket's condition that the window covers the same days as the doctor page's next-7-days summary (HMS-9). A tester could check that consistency.",
       "cites": [
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L199", "quote": "Default for name ties: compare doctor names the way the doctor list already sorts them."},
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L46", "quote": "assumed: []"},
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L30", "quote": "Entries are ordered by slot start, earliest first; ties by doctor name."}
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L24",
+          "quote": "the same days as the doctor page's next-7-days summary (HMS-9)"
+        },
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L59",
+          "quote": "The window runs from now until the end of the 6th day after today in the hospital time zone"
+        }
       ],
-      "suggested_fix": "Move the collation default into an assumed REQ (or into REQ-8/REQ-9 with status assumed) and give its basis. Add a deterministic final tie-break, such as doctor id, for doctors with the same name."
+      "suggested_fix": "Add to REQ-2: the window covers the same days as the HMS-9 next-7-days summary on the doctor page."
     },
     {
       "id": "F-2",
       "severity": "minor",
       "category": "completeness",
-      "text": "REQ-2 leaves out the ticket's condition that the window covers the same days as the doctor page's next-7-days summary (HMS-9). That is a consistency check a tester could run.",
+      "text": "Carried over from attempt-1 F-3, still open. REQ-12 and REQ-13 give only the status codes and message. They do not give the standard JSON error body or code, and they do not cover a malformed (non-numeric) id, even though C6 cites the convention.",
       "cites": [
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L24", "quote": "the same days as the doctor page's next-7-days summary (HMS-9)"},
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L59", "quote": "The window runs from now until the end of the 6th day after today in the hospital time zone"}
+        {
+          "ref": "context/conventions.md#errors",
+          "quote": "API errors are JSON `{ \"error\": { \"code\", \"message\", \"fields\"? } }`"
+        },
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L125",
+          "quote": "An Inactive specialization returns 400 with the message `specialization is Inactive`."
+        },
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L119",
+          "quote": "An unknown specialization id `returns 404`."
+        }
       ],
-      "suggested_fix": "Add to REQ-2: the window covers the same days as the HMS-9 next-7-days summary."
+      "suggested_fix": "State that the 404 and 400 responses use the standard error body from conventions#errors, or list the malformed-id case as a design decision under Out of scope."
     },
     {
       "id": "F-3",
       "severity": "minor",
-      "category": "completeness",
-      "text": "REQ-12 and REQ-13 give only the status codes. They do not give the JSON error shape or code, and they do not cover a malformed (non-numeric) id. Conventions use 400 for per-field ValidationError input errors.",
-      "cites": [
-        {"ref": "context/conventions.md#errors", "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409."},
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L125", "quote": "An Inactive specialization returns 400 with the message `specialization is Inactive`."}
-      ],
-      "suggested_fix": "State that errors use the standard { error: { code, message } } body, and add that a malformed id returns a 400 ValidationError, following conventions#errors."
-    },
-    {
-      "id": "F-4",
-      "severity": "minor",
       "category": "traceability",
-      "text": "REQ-2, REQ-10 and the glossary meanings cite IDE answers from the cancelled run. A-01 was asked against an older ticket text (the 7th day after today), so the answer's context differs from the current ticket. No mismatch is recorded.",
+      "text": "The answers block records only this run's A-01. The reused cancelled-run answers A-01, A-02 and A-04 are missing from it. Cancelled-run A-06 differs from the ticket on scope but has no mismatch recorded; the difference appears only in prose.",
       "cites": [
-        {"ref": "runs/run_01M77B1NEGA2SK4TJPT0CAK6MX/ide-answers.md#a-01", "quote": "from now until the end of the 7th day after today"},
-        {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L194", "quote": "Reused from the cancelled run run_01M77B1NEGA2SK4TJPT0CAK6MX"}
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L156",
+          "quote": "about: REQ-17"
+        },
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L208",
+          "quote": "Reused from the cancelled run run_01M77B1NEGA2SK4TJPT0CAK6MX: A-01 (window today to today+6), A-02 (no paging)"
+        },
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L211",
+          "quote": "Prior answer A-06 in the cancelled run chose \"API + booking page section\""
+        },
+        {
+          "ref": "runs/run_01M77B1NEGA2SK4TJPT0CAK6MX/ide-answers.md#a-06",
+          "quote": "answer: API + booking page section"
+        }
       ],
-      "suggested_fix": "Make the ticket lines the primary basis, and note that A-01 was given against earlier ticket wording that the current ticket now matches."
+      "suggested_fix": "Add answers entries for the reused cancelled-run answers, qualified by run id. Give A-06 a mismatch noting that the rewritten ticket limits the scope to the API."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#booking-rules", "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled"}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots", "quote": "\"path\": \"api/src/routes/doctors.ts\""}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/specializations", "quote": "\"path\": \"api/src/routes/specializations.ts\""}]},
-    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#codes", "quote": "D-0001, P-000001 and A-000001 are display codes derived from row ids; they are not stored."}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409."}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}, {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L32", "quote": "every Active doctor of the specialization and no paging"}]},
-    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "A doctor, patient, department or specialization kept for history but not offered for new use."}]}
-  ],
-  "questions": [
     {
-      "id": "Q-1",
-      "text": "How should doctor names be compared for ordering (collation, case), and what breaks a tie between two doctors with the same name (for example doctor id or code)?",
-      "ask_role": "tech_lead",
-      "blocking": false,
-      "finding_ref": "F-1"
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/intent-baseline.md#constraints",
+          "quote": "Hospital time zone Asia/Kolkata, currency INR."
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/intent-baseline.md#booking-rules",
+          "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled"
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots",
+          "quote": "\"path\": \"api/src/routes/doctors.ts\""
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/generated/api-inventory.json#http:GET:/api/specializations",
+          "quote": "\"path\": \"api/src/routes/specializations.ts\""
+        }
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/data-model.md#codes",
+          "quote": "D-0001, P-000001 and A-000001 are display codes derived from row ids; they are not stored."
+        }
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/conventions.md#errors",
+          "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409."
+        }
+      ]
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/intent-baseline.md#data-protection",
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."
+        }
+      ]
+    },
+    {
+      "claim_id": "C8",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/conventions.md#lists",
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."
+        },
+        {
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L32",
+          "quote": "every Active doctor of the specialization and no paging"
+        }
+      ]
+    },
+    {
+      "claim_id": "C9",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#inactive",
+          "quote": "A doctor, patient, department or specialization kept for history but not offered for new use."
+        }
+      ]
     }
-  ]
+  ],
+  "questions": []
 }

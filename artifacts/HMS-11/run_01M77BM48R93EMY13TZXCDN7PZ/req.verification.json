@@ -1,21 +1,21 @@
 {
   "artifact_path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md",
-  "artifact_sha256": "261d9d2a66ec2f67e7fe575241d44d1d84f014ab56905d7a30bec7775e16cd15",
-  "attempt": 1,
-  "band": "Medium",
+  "artifact_sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+  "attempt": 2,
+  "band": "High",
   "caps": [],
-  "checks_sha256": "4b1204602548787c0ca7d6375e5919a33f0e071750d1cc3d9ec3d1cc43a6c16c",
+  "checks_sha256": "17bdd05cf2ac0f13efe6cb91ad3f86dd877111168fcb9ef241c5970c061724da",
   "claims": {
     "total": 9,
     "verified": 9
   },
-  "decided_at": "2026-11-12T07:51:03Z",
+  "decided_at": "2026-11-12T07:54:42Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -24,16 +24,12 @@
     {
       "id": "F-3",
       "severity": "minor"
-    },
-    {
-      "id": "F-4",
-      "severity": "minor"
     }
   ],
   "gate_failures": [],
   "inputs": [],
   "key_id": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
     "signed_at": "2026-11-03T10:45:54Z",
@@ -41,15 +37,15 @@
       "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "75886d4ec73350df5c9dca29adcf90535f55d9e93a8eea0a798a52de8de43b48",
   "product_changes": null,
-  "review_sha256": "d52c459472ab3581b6752f4831a802767c7f437a73873354130bcd2163df7ef5",
+  "review_sha256": "552199cea5038e0b07e57ea2de04d3d7dee7d1e367b0da4b2f1765285efa2fe6",
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 3.75,
+    "S3": 4.35,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -58,7 +54,7 @@
       "sensitive": false
     }
   },
-  "signature": "7jADHpMBcqr2xNrCpQS6K_Ck5UIMwFE7mvHPUlp-hPlcSAOlyIIXM5OZ1i8mrCsyAyXuOKssGgfCCFFnfzm0AQ",
+  "signature": "gAn-2rbp0wu-qJBLuHaqDNl0-6_A7IcRrzBP3eqKa6hZJ9zCJJ4c-bL3B6jQN1yPuZy1qSxiIjtDQh-bTgxKCg",
   "skill": "requirement-review@1.2.0",
   "step": "req",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

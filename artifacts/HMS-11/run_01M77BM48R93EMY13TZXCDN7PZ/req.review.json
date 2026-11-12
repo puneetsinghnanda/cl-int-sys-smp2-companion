@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "261d9d2a66ec2f67e7fe575241d44d1d84f014ab56905d7a30bec7775e16cd15",
-  "attempt": 1,
+  "artifact_sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -99,27 +99,6 @@
   ],
   "findings": [
     {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "Default for name ties: compare doctor names the way the doctor list already sorts them.",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L199"
-        },
-        {
-          "quote": "assumed: []",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L46"
-        },
-        {
-          "quote": "Entries are ordered by slot start, earliest first; ties by doctor name.",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ticket.md#L30"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Move the collation default into an assumed REQ (or into REQ-8/REQ-9 with status assumed) and give its basis. Add a deterministic final tie-break, such as doctor id, for doctors with the same name.",
-      "text": "The tie-break collation default ('the way the doctor list already sorts them') is a real assumption, but it sits under Out of scope while assumed is []. The context pack does not document how the doctor list sorts, and same-name ties are left unspecified."
-    },
-    {
       "category": "completeness",
       "cites": [
         {
@@ -131,57 +110,61 @@
           "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L59"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Add to REQ-2: the window covers the same days as the HMS-9 next-7-days summary.",
-      "text": "REQ-2 leaves out the ticket's condition that the window covers the same days as the doctor page's next-7-days summary (HMS-9). That is a consistency check a tester could run."
+      "suggested_fix": "Add to REQ-2: the window covers the same days as the HMS-9 next-7-days summary on the doctor page.",
+      "text": "Carried over from attempt-1 F-2, still open. REQ-2 leaves out the ticket's condition that the window covers the same days as the doctor page's next-7-days summary (HMS-9). A tester could check that consistency."
     },
     {
       "category": "completeness",
       "cites": [
         {
-          "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409.",
+          "quote": "API errors are JSON `{ \"error\": { \"code\", \"message\", \"fields\"? } }`",
           "ref": "context/conventions.md#errors"
         },
         {
           "quote": "An Inactive specialization returns 400 with the message `specialization is Inactive`.",
           "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L125"
+        },
+        {
+          "quote": "An unknown specialization id `returns 404`.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L119"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "State that errors use the standard { error: { code, message } } body, and add that a malformed id returns a 400 ValidationError, following conventions#errors.",
-      "text": "REQ-12 and REQ-13 give only the status codes. They do not give the JSON error shape or code, and they do not cover a malformed (non-numeric) id. Conventions use 400 for per-field ValidationError input errors."
+      "suggested_fix": "State that the 404 and 400 responses use the standard error body from conventions#errors, or list the malformed-id case as a design decision under Out of scope.",
+      "text": "Carried over from attempt-1 F-3, still open. REQ-12 and REQ-13 give only the status codes and message. They do not give the standard JSON error body or code, and they do not cover a malformed (non-numeric) id, even though C6 cites the convention."
     },
     {
       "category": "traceability",
       "cites": [
         {
-          "quote": "from now until the end of the 7th day after today",
-          "ref": "runs/run_01M77B1NEGA2SK4TJPT0CAK6MX/ide-answers.md#a-01"
+          "quote": "about: REQ-17",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L156"
         },
         {
-          "quote": "Reused from the cancelled run run_01M77B1NEGA2SK4TJPT0CAK6MX",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L194"
+          "quote": "Reused from the cancelled run run_01M77B1NEGA2SK4TJPT0CAK6MX: A-01 (window today to today+6), A-02 (no paging)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L208"
+        },
+        {
+          "quote": "Prior answer A-06 in the cancelled run chose \"API + booking page section\"",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md#L211"
+        },
+        {
+          "quote": "answer: API + booking page section",
+          "ref": "runs/run_01M77B1NEGA2SK4TJPT0CAK6MX/ide-answers.md#a-06"
         }
       ],
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "Make the ticket lines the primary basis, and note that A-01 was given against earlier ticket wording that the current ticket now matches.",
-      "text": "REQ-2, REQ-10 and the glossary meanings cite IDE answers from the cancelled run. A-01 was asked against an older ticket text (the 7th day after today), so the answer's context differs from the current ticket. No mismatch is recorded."
+      "suggested_fix": "Add answers entries for the reused cancelled-run answers, qualified by run id. Give A-06 a mismatch noting that the rewritten ticket limits the scope to the API.",
+      "text": "The answers block records only this run's A-01. The reused cancelled-run answers A-01, A-02 and A-04 are missing from it. Cancelled-run A-06 differs from the ticket on scope but has no mismatch recorded; the difference appears only in prose."
     }
   ],
-  "package_sha256": "0c3b7ae0a9cb24b4687e7969cfd86a9b57758f9262f53fc712fa24ecbb11c79a",
-  "questions": [
-    {
-      "ask_role": "tech_lead",
-      "blocking": false,
-      "finding_ref": "F-1",
-      "id": "Q-1",
-      "text": "How should doctor names be compared for ordering (collation, case), and what breaks a tie between two doctors with the same name (for example doctor id or code)?"
-    }
-  ],
-  "recorded_at": "2026-11-12T07:51:00Z",
+  "package_sha256": "02a0c4e81baee64b7c5f76bd2a0c821191cba6c4ee321b15283e3ea3ad2e95a2",
+  "questions": [],
+  "recorded_at": "2026-11-12T07:54:41Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -192,36 +175,36 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "All nine acceptance criteria are covered by REQ-1..REQ-16, and the booking page is listed as out of scope with a reason. REQ-2 drops the link saying the window must match HMS-9's next-7-days days.",
+      "reason": "REQ-1 to REQ-16 cover all nine acceptance criteria, REQ-17 closes the gap in the tie-break, and the booking page is out of scope with a reason. REQ-2 still leaves out the ticket's condition that the window uses the same days as HMS-9 (attempt-1 F-2 is still open).",
       "score": 4
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs are atomic and testable. REQ-10 repeats REQ-1's 'every Active doctor'. REQ-13 does not give the error body shape or code, so a tester cannot fully check it.",
+      "reason": "Most REQs are atomic and checkable. REQ-12 and REQ-13 give only the status and message, not the error body from conventions#errors. REQ-1 and REQ-3 also carry glossary definitions inside the behaviour statement.",
       "score": 4
     },
     {
       "id": "RR-R3",
-      "reason": "Every REQ cites the ticket. But a name-collation default ('the way the doctor list already sorts them') is listed under Out of scope while assumed is [], and the context pack does not support it.",
-      "score": 3
+      "reason": "Every REQ cites the ticket or an IDE answer. The old collation default is now REQ-17, confirmed by this run's A-01, so attempt-1 F-1 is resolved. Nothing invented is marked known.",
+      "score": 5
     },
     {
       "id": "RR-R4",
-      "reason": "The no-paging clash with conventions#lists is surfaced (C8) and settled by the ticket and A-02. The A-06 scope difference is disclosed with a reason. There is no silent contradiction with the intent baseline.",
+      "reason": "Nothing clashes with the intent baseline. The no-paging exception to conventions#lists is surfaced (C8) and settled by the ticket and A-02. The scope difference with cancelled-run A-06 is disclosed only as prose, not as a recorded mismatch.",
       "score": 4
     },
     {
       "id": "RR-R5",
-      "reason": "No questions are asked, which suits an explicit ticket. The collation and tie-break default should have been raised as an assumption or a non-blocking question, not left under Out of scope.",
-      "score": 4
+      "reason": "One precise, non-blocking IDE question (A-01), with real options and the right person answering. No questions are left open. Reused answers avoid asking again.",
+      "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Plain and readable. Specialization, Department and Day schedule are missing from the glossary; this is disclosed and their meanings come from A-04.",
+      "reason": "Plain and readable, and the missing glossary terms are disclosed. The id A-01 now means two different answers (this run and the cancelled run), so the reader has to rely on the qualifiers.",
       "score": 4
     }
   ],
-  "rubric_score": 3.75,
+  "rubric_score": 4.35,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "review.v1",
   "status": "ok",
