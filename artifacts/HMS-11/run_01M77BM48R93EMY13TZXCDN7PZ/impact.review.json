@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "c7264d619b9fcddd3a82f4a48120beaa7f7e7a6bb3c181f0e756a3088435051b",
-  "attempt": 1,
+  "artifact_sha256": "b3712ec525363e682a68725a8ce7c97e0c2a43155dd944473156ef7e4c4173fd",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -25,8 +25,8 @@
     {
       "cites": [
         {
-          "quote": "routes/specializations.ts:specializationsRouter",
-          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/specializations.ts:specializationsRouter"
+          "quote": "export const specializationsRouter = Router();",
+          "ref": "sample-system:api/src/routes/specializations.ts#L6"
         }
       ],
       "claim_id": "C3",
@@ -205,7 +205,7 @@
     {
       "cites": [
         {
-          "quote": "weekly\n`availability_block` rows",
+          "quote": "`availability_block` rows",
           "ref": "context/data-model.md#doctors"
         }
       ],
@@ -231,34 +231,37 @@
       ],
       "claim_id": "C23",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "completeness",
       "cites": [
-        {
-          "quote": "REQ-14 and REQ-15 to C12",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#known"
-        },
         {
           "quote": "column:doctor.phone",
           "ref": "context/generated/db-schema.json#column:doctor.phone"
-        },
-        {
-          "quote": "column:doctor.email",
-          "ref": "context/generated/db-schema.json#column:doctor.email"
         },
         {
           "quote": "d.phone, d.email, d.fee_paise, d.slot_minutes, d.status",
           "ref": "sample-system:api/src/repositories/doctorRepo.ts#L25"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add a risk and claim saying DoctorRepo rows include phone and email, and map REQ-14 to it, so the response must leave these fields out.",
-      "text": "REQ-14 (no contact details) is tied only to C12, which is about patient summaries. Doctor rows read through DoctorRepo also carry doctor.phone and doctor.email, so that leak risk for the new entries is missing."
+      "claim_id": "C24",
+      "verdict": "supported"
     },
+    {
+      "cites": [
+        {
+          "quote": "column:doctor.email",
+          "ref": "context/generated/db-schema.json#column:doctor.email"
+        },
+        {
+          "quote": "email: r.email,",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L37"
+        }
+      ],
+      "claim_id": "C25",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
       "category": "completeness",
       "cites": [
@@ -271,10 +274,10 @@
           "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/referenceRepo.ts:ReferenceRepo"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Add a claim naming ReferenceRepo (or whichever repo is chosen) as the reader for the specialization existence and Inactive checks.",
-      "text": "The specialization table is read to check that it exists and is not Inactive (REQ-12, REQ-13), but the impact never names that reader. ReferenceRepo is in the facts and is not listed."
+      "suggested_fix": "Add a claim naming ReferenceRepo (or the repo design picks) as the reader for the specialization existence and Inactive checks.",
+      "text": "Carried over from a1 F-2: the specialization table is read to check that it exists and is not Inactive (REQ-12, REQ-13), but the impact never names the reader. ReferenceRepo is in the facts and is still not listed."
     },
     {
       "category": "consistency",
@@ -284,14 +287,18 @@
           "ref": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/ide-answers.md#a-02"
         },
         {
-          "quote": "the one slot-state rule shared by the day schedule and the next 7 days",
-          "ref": "sample-system:api/src/services/doctorService.ts#L157"
+          "quote": "today to 6 days ahead in the hospital zone, counted exactly as the day schedule shows each day",
+          "ref": "sample-system:api/src/services/doctorService.ts#L166"
+        },
+        {
+          "quote": "REQ-6 ties to http:GET:/api/doctors/:id/slots and C6, C7.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#known"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "After the refresh, re-check C6 and C7 against the new DoctorService and note the existing 7-day helper as a candidate for reuse.",
-      "text": "The user chose to refresh the stale pack first because HMS-9 changed doctorService.ts, yet REQ-6 and the other REQs that depend on the slot rule stay 'known'. HMS-9 added a 7-day use of the shared slot rule that this impact does not reflect."
+      "suggested_fix": "After the refresh, re-check C6 and C7 against the new DoctorService, and list nextSevenDays and slotStates as candidates for reuse.",
+      "text": "Carried over from a1 F-3: the user chose to refresh the pack first because HMS-9 changed doctorService.ts. Yet REQ-6 stays known on C6 and C7, and the HMS-9 seven-day helper that already shares the slot rule (today to today+6) is not mentioned."
     },
     {
       "category": "correctness",
@@ -301,15 +308,15 @@
           "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22"
         },
         {
-          "quote": "which joins the patient row, so reusing them carries patient data the new entries must not expose (REQ-15)",
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#c12"
+          "quote": "REQ-15 (no medical history) ties to C12 and table:patient.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md#known"
         }
       ],
       "claim_ref": "C12",
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "Change C12 to say patient names (identity) must not leak, and keep REQ-15 traced through the patient table rule.",
-      "text": "C12 links SUMMARY_SELECT to REQ-15 (medical history). The join selects only the patient's full_name, so the exposure risk is the patient's identity, not medical history."
+      "suggested_fix": "Reword C12 so patient names (identity) must not leak, and keep REQ-15 traced through the patient table rule in data-model#patients.",
+      "text": "Carried over from a1 F-4: C12 and the Known section tie SUMMARY_SELECT to REQ-15 (medical history). The join selects only the patient's full_name, so the exposure risk is patient identity, not medical history."
     },
     {
       "category": "traceability",
@@ -324,23 +331,23 @@
         }
       ],
       "claim_ref": "C22",
-      "id": "F-5",
+      "id": "F-4",
       "severity": "minor",
       "suggested_fix": "Cite the occupyingBetween filter (or the double-booking section) as the source for 'frees the slot'.",
-      "text": "C22's cite lists the appointment statuses but does not say that CANCELLED frees a slot. The proof is the status filter in AppointmentRepo.occupyingBetween."
+      "text": "Carried over from a1 F-5: C22's cite lists the appointment statuses but does not say that CANCELLED frees a slot. The proof is the status filter in AppointmentRepo.occupyingBetween."
     }
   ],
-  "package_sha256": "d1ae2b24d883b7dfc83d174af9159cb22071eb7236be81b6a847e52e0d82a14c",
+  "package_sha256": "0cc499510ac9539f30102970d6f33b8366eced395dd43690ba07b254d91908b5",
   "questions": [
     {
       "ask_role": "stage_approver",
       "blocking": false,
-      "finding_ref": "F-3",
+      "finding_ref": "F-2",
       "id": "Q-1",
-      "text": "Once the context pack is refreshed against main (A-02), should the impact step be re-run before design? HMS-9 changed doctorService.ts, where the shared slot rule and a 7-day helper now live."
+      "text": "When the context pack is refreshed against main (A-02), should the impact step be re-run before design? HMS-9 changed doctorService.ts, where the shared slot rule and a seven-day helper now live."
     }
   ],
-  "recorded_at": "2026-11-12T08:08:47Z",
+  "recorded_at": "2026-11-12T08:11:38Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -351,31 +358,31 @@
   "rubric_items": [
     {
       "id": "IA-R1",
-      "reason": "All touched modules, APIs and tables are listed. The impact misses the doctor contact columns (phone and email) that come with DoctorRepo rows, and it does not name the reader of the specialization table.",
+      "reason": "All touched modules, APIs and tables are listed. F-1 is fixed: the doctor phone and email columns are now covered (C24, C25). The reader of the specialization table (ReferenceRepo) is still not named.",
       "score": 4
     },
     {
       "id": "IA-R2",
-      "reason": "Every module, API and table id exists in the generated facts and has a cite. Some claims rest only on a symbol's existence (C4, C10) or on a section that does not state the claim (C22).",
+      "reason": "Every module, API, table and symbol id exists in the generated facts and has a cite. C22 rests on a section that lists statuses but does not say that CANCELLED frees a slot. C12 links the patient join to REQ-15 even though the join selects only the name.",
       "score": 4
     },
     {
       "id": "IA-R3",
-      "reason": "It covers the day-schedule rule and the risk of patient data in SUMMARY_SELECT. It misses the contact-column risk from DoctorRepo and the ReferenceRepo reader, and it never says whether any jobs are affected.",
-      "score": 3
+      "reason": "It covers the shared slot rule, the patient join in SUMMARY_SELECT, and the doctor contact columns from DoctorRepo. It still misses the ReferenceRepo reader and the HMS-9 seven-day helper that already uses the same slot rule, and it does not say whether any jobs are affected.",
+      "score": 4
     },
     {
       "id": "IA-R4",
-      "reason": "Statuses are backed by facts, and C23 cites answer A-02. But every REQ is marked known even though the pack is stale for doctorService.ts, where the slot rule lives.",
+      "reason": "Statuses rest on facts, and C23 cites answer A-02. Every REQ is still marked known even though the user chose to refresh the stale pack because HMS-9 changed doctorService.ts, where REQ-6's rule lives.",
       "score": 4
     },
     {
       "id": "IA-R5",
-      "reason": "The summary is clear and ranks the three risks. The item list is grouped by type, not by risk, and the Known section is a single terse line.",
+      "reason": "The summary is clear and ranks the three risks. The Known section now spells out the REQ mappings. The item list is grouped by type, not by risk.",
       "score": 4
     }
   ],
-  "rubric_score": 3.8,
+  "rubric_score": 4.0,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "review.v1",
   "status": "ok",

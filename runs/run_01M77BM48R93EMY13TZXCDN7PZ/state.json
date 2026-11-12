@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-12T08:08:48Z",
+  "heartbeat_at": "2026-11-12T08:11:38Z",
   "owner": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
   "owner_pseudonym": "eng-3fd6",
   "pack": {
@@ -47,10 +47,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 0,
-    "round": 0
+    "open_non_blocking": 1,
+    "round": 1
   },
-  "rev": 17,
+  "rev": 20,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -163,7 +163,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md",
+          "artifact": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/history/impact/a1/impact.md",
           "artifact_sha256": "c7264d619b9fcddd3a82f4a48120beaa7f7e7a6bb3c181f0e756a3088435051b",
           "band": "Medium",
           "cause": "first",
@@ -178,10 +178,33 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.verification.json",
+          "record": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/history/impact/a1/impact.verification.json",
           "skill": "impact-analysis@1.3.0",
           "skill_started_at": "2026-11-12T08:02:04Z",
           "started_at": "2026-11-12T08:01:55Z"
+        },
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md",
+          "artifact_sha256": "b3712ec525363e682a68725a8ce7c97e0c2a43155dd944473156ef7e4c4173fd",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-12T08:11:38Z",
+          "feedback": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/feedback/impact.a1.json",
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+              "step": "req"
+            }
+          ],
+          "n": 2,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.verification.json",
+          "skill": "impact-analysis@1.3.0",
+          "skill_started_at": "2026-11-12T08:09:00Z",
+          "started_at": "2026-11-12T08:08:58Z"
         }
       ],
       "budget_used": {
@@ -192,7 +215,7 @@
       },
       "id": "impact",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -275,7 +298,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-11",
-  "updated_at": "2026-11-12T08:08:48Z",
+  "updated_at": "2026-11-12T08:11:38Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }

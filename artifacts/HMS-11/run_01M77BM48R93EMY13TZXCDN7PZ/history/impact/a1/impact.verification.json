@@ -1,0 +1,76 @@
+{
+  "artifact_path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impact.md",
+  "artifact_sha256": "c7264d619b9fcddd3a82f4a48120beaa7f7e7a6bb3c181f0e756a3088435051b",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "54ee0e2dcf43aec2e721633f3d2afc713d113d67aa2e8754e68ca11713312a86",
+  "claims": {
+    "total": 23,
+    "verified": 23
+  },
+  "decided_at": "2026-11-12T08:08:48Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-3",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-4",
+      "reason": "anchor not found"
+    },
+    {
+      "id": "F-5",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md",
+      "sha256": "9020c22eea6b4e433f7a024deb321a42e4042b10165a1d67058dd3d9e7f1fc2c",
+      "verification_sha256": "42543930cabf9b5f3b9c078dae772957a148f6933b52064ae4387e3f270937ee"
+    }
+  ],
+  "key_id": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ae4d727959f16ea4341951dbf9e4178aa3b946bf6dd8c7b7d0cc78e0226ac102",
+    "signed_at": "2026-11-03T10:45:54Z",
+    "source_sha": {
+      "sample-system": "c2709e164850ab7e177e4bccfc42a5dd9b961fdc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "26a94dc0fa60d7358fbcd1c03b8bcdc62cbd28364bcb44d71c2900dfb6110fc8",
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8929,
+    "S2": 1.0,
+    "S3": 3.8,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "aLZORL_RdSUtH5whWfScg3IuY2T5zg8ds7pNgaXwRWbF-vx_J39Gds6UOvBOqCCCYuBytv27WwMw_BBcZ3rVCg",
+  "skill": "impact-analysis@1.3.0",
+  "step": "impact",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

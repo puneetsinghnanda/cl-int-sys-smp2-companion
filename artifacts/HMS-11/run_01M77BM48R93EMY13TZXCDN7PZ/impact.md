@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M77BM48R93EMY13TZXCDN7PZ
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.3.0
 inputs:
   - path: artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/req.md
@@ -19,6 +19,9 @@ inputs:
     sha256: 2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55
 pack_sha:
   sample-system: c2709e164850ab7e177e4bccfc42a5dd9b961fdc
+resolves:
+  - id: F-1
+    how: "C24 and C25 record that doctor rows carry phone and email, and REQ-14 now maps to them."
 claims:
   - id: C1
     text: "The new route is not in the facts; it is the endpoint REQ-1 asks for, `earliest-slots` under the specializations path."
@@ -89,6 +92,12 @@ claims:
   - id: C23
     text: "Design waits for a refreshed context pack: the user chose `Refresh the context pack first` because the pack is behind sample-system main."
     cites: ["runs/run_01M77BM48R93EMY13TZXCDN7PZ/ide-answers.md#a-02"]
+  - id: C24
+    text: "Doctor rows carry the contact column `phone`; rows read through DoctorRepo include it, so the new entries must leave it out (REQ-14)."
+    cites: ["context/generated/db-schema.json#column:doctor.phone"]
+  - id: C25
+    text: "Doctor rows carry the contact column `email`; rows read through DoctorRepo include it, so the new entries must leave it out (REQ-14)."
+    cites: ["context/generated/db-schema.json#column:doctor.email"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17]
 assumed: []
@@ -135,7 +144,7 @@ tables:
     cites: ["context/data-model.md#reference-lists"]
   - id: table:doctor
     change: existing
-    cites: ["context/data-model.md#doctors"]
+    cites: ["context/data-model.md#doctors", "context/generated/db-schema.json#column:doctor.phone", "context/generated/db-schema.json#column:doctor.email"]
   - id: table:availability_block
     change: existing
     cites: ["context/data-model.md#doctors"]
@@ -155,7 +164,7 @@ answers:
 # Impact analysis: HMS-11
 
 ## Summary
-HMS-11 adds one read-only route, `GET /api/specializations/:id/earliest-slots`, to the `api` module. It joins the existing specializations router (C2, C3) and reuses the day-schedule slot rule built in `DoctorService` (C6, C7), so the new answer and the day schedule cannot disagree. Nothing is written: every table is only read, no migration is needed (C20), and the web and db modules are untouched. The main risks are (1) re-deriving the slot rule instead of sharing it; (2) leaking patient data, because appointment summaries join the patient row (C12); and (3) regressing the other specializations routes on the same router. Design waits for a refreshed context pack (C23, A-02).
+HMS-11 adds one read-only route, `GET /api/specializations/:id/earliest-slots`, to the `api` module. It joins the existing specializations router (C2, C3) and reuses the day-schedule slot rule built in `DoctorService` (C6, C7), so the new answer and the day schedule cannot disagree. Nothing is written: every table is only read, no migration is needed (C20), and the web and db modules are untouched. The main risks are (1) re-deriving the slot rule instead of sharing it; (2) leaking personal data: doctor rows carry phone and email (C24, C25), and appointment summaries join the patient row (C12); and (3) regressing the other specializations routes on the same router. Design waits for a refreshed context pack (C23, A-02).
 
 ## Impacted modules
 - module:sample-system:api: changed (new route, service logic and reads).
@@ -170,13 +179,21 @@ HMS-11 adds one read-only route, `GET /api/specializations/:id/earliest-slots`, 
 - http:POST:/api/appointments: existing (booking rules unchanged).
 - table:specialization: existing (read for existence and Inactive status).
 - table:department: existing (read for the department name).
-- table:doctor: existing (read by specialization and status).
+- table:doctor: existing (read by specialization and status; its phone and email columns must not reach the response).
 - table:availability_block: existing (read for the slot grid).
 - table:appointment: existing (read for BOOKED slots; Cancelled ones free the slot, C22).
 - table:patient: existing (joined by `SUMMARY_SELECT` if summaries are reused; never exposed).
 
 ## Known
-- REQ-1 to REQ-17: each maps to the api module items above, using the cited facts. REQ-6 ties to http:GET:/api/doctors/:id/slots, REQ-12 and REQ-13 to C13 and C14, REQ-14 and REQ-15 to C12, and REQ-16 to the existing routes and the web module.
+- REQ-1 to REQ-17: each maps to the api module items above, using the cited facts.
+- REQ-6 ties to http:GET:/api/doctors/:id/slots and C6, C7.
+- REQ-12 and REQ-13 tie to C13 and C14.
+- REQ-14 (no contact details) ties to C24 and C25: doctor phone and email come with DoctorRepo rows and must be left out.
+- REQ-15 (no medical history) ties to C12 and table:patient.
+- REQ-16 ties to the existing routes and the web module.
+
+Resolved review findings:
+- F-1: C24 and C25 record that doctor rows carry phone and email, and REQ-14 now maps to them.
 
 ## Assumed
 None.
