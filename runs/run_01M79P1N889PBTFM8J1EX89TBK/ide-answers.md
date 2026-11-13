@@ -22,3 +22,13 @@ entries as the user's own answers.
 - question: Q-01: The Visit summary must count all-time Completed and No-show appointments, but the patient page's appointments come from `repo.appointments(id, now, limit = 100)` (api/src/repositories/patientRepo.ts L232), so counting them in the browser undercounts past 100. Where should the patient page get the two counts?
 - options: Add to GET /api/patients/:id (proposed default) | New endpoint | Count in the browser
 - answer: Add to GET /api/patients/:id (proposed default)
+
+## A-03
+- step: design
+- attempt: 1
+- asked_at: 2026-11-13T05:54:47Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01Rh3MJ4CcjSQMGBgVurnaHU
+- question: Q-01: GET /api/patients/:id will return the patient's all-time Completed and No-show counts (A-02). The stories assert exact counts (e.g. Completed 2, No-show 1). PatientDetail fields are camelCase (`medicalHistory`, `emergencyContact` are nested objects). What should the field look like?
+- options: visitSummary { completed, noShow } (proposed default) | Flat completedCount + noShowCount | visit_summary { completed, no_show }
+- answer: visitSummary { completed, noShow } (proposed default)

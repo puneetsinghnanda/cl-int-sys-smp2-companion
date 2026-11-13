@@ -1,0 +1,73 @@
+{
+  "artifact_path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md",
+  "artifact_sha256": "799df78b60dcfbc79dc1465cb608d0c935c43fb6ef1c5d88f90d28404b564347",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "cf7e265571261218cfc85d457b6354a4a3cd2ffaf78b7343e80b21baef91315d",
+  "claims": {
+    "total": 19,
+    "verified": 19
+  },
+  "decided_at": "2026-11-13T05:59:39Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-2",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impact.md",
+      "sha256": "b10e7cb73c12bbff7abeae12f23ba3794012ee5148e168718f14935a18f1732d",
+      "verification_sha256": "a7184a688322d46a3d861f2ba7fe96e6c6b4777dcb1ada74a02443ba43fc8d49"
+    },
+    {
+      "path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md",
+      "sha256": "db8ef532a356ccb24887a9fadcb6dc8a8fbc5338ae76d37cb71b224324490de8",
+      "verification_sha256": "0f74295b39a21d499571af36ce0a82369bd747cc61f65c529df653f3b9a487fa"
+    },
+    {
+      "path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md",
+      "sha256": "a03c0b2820af5070279380915fbacc62e5ebb19c702b593d4bd9e20385a7a8f6",
+      "verification_sha256": "4c70cfab81d7331ddf4100840e3d764434112f5d35f1792890dc6c68c09a0ed3"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "87507da1d74d7fc3b80751e3f9257ccf22a9801b319b35a46eb44eaca6390ede",
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9048,
+    "S2": 1.0,
+    "S3": 4.85,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "MjyyrfcXq8lIXGn3vKDF0CcJCtDB5jEOoLACf-5sNOTgjowA4Hp5tIeCvh5QBzwuTmtRdDyLtItRc7DvvEbODA",
+  "skill": "design@1.8.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

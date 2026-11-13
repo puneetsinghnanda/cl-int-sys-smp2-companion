@@ -1,0 +1,280 @@
+{
+  "artifact_sha256": "799df78b60dcfbc79dc1465cb608d0c935c43fb6ef1c5d88f90d28404b564347",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export class PatientRepo {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L84"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class PatientService {",
+          "ref": "sample-system:api/src/services/patientService.ts#L13"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientDetail extends PatientSummary {",
+          "ref": "sample-system:api/src/types.ts#L97"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientDetail extends PatientSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L92"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function PatientDetailPage() {",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L14"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const patientsRouter = Router();",
+          "ref": "sample-system:api/src/routes/patients.ts#L8"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async appointments(id: number, now: Date, limit = 100)",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L232"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Add to GET /api/patients/:id (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: visitSummary { completed, noShow } (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointments: await repo.appointments(id, this.clock())",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(await repo.insert(fields, actor));",
+          "ref": "sample-system:api/src/services/patientService.ts#L58"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/patientService.ts#L69"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;AppointmentTable items={p.appointments} hide=\"patient\" /&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;h2&gt;Appointments&lt;/h2&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L75"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CREATE INDEX appointment_patient_start_idx ON appointment (patient_id, starts_at);",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L28"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "capped by a default `limit = 100`",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#claim:C8"
+        },
+        {
+          "quote": "async appointments(id: number, now: Date, limit = 100): Promise&lt;AppointmentSummary[]&gt; {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L232"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/src/repositories/patientRepo.ts#L232 directly for C8.",
+      "text": "C8, the 100-row cap that justifies server-side counting, cites another artifact's claim (impact.md#claim:C6) rather than the product code line that defines the cap."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Returns `{ completed, noShow }` as numbers. A patient with no rows gets 0 and 0.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#components"
+        },
+        {
+          "quote": "(await this.db.query&lt;{ n: string }&gt;('SELECT count(*) AS n FROM appointment WHERE patient_id = $1', [id])).rows[0]?.n ?? 0,",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L227"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State that CO-1 follows the appointmentCount pattern: Number() on each count, or cast to ::int in SQL.",
+      "text": "CO-1 says the method returns the counts as numbers, but Postgres count(*) comes back as a string. The repo's existing count method converts it with Number(...). The design does not mention this conversion, which the integer type in EP-1 depends on."
+    }
+  ],
+  "package_sha256": "9a93edaf04d494e0221497a63ba678a1fa0451eef21431ab0c97f7658b7c0cd3",
+  "questions": [],
+  "recorded_at": "2026-11-13T05:59:27Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Uses only existing modules and layers: SQL in PatientRepo, rules in PatientService, the existing route and client. There is no new endpoint, table or infrastructure, and the existing patient_id index is reused.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story and AC is mapped. S-1 is served by CO-1..CO-5 and EP-1, with AC5 handled by the patient_id scope. S-2 is served by the status filter, including AC4. S-3 is served because CO-5 only inserts a block and CO-8 and the medical history are untouched.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "EP-1 gives visitSummary and both subfields with name, type, nullability, format and example. EP-2 and EP-3 reference the same shape and give the new-patient value of 0 and 0. CO-3 states the exact TS type.",
+      "score": 5
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Files and types are proven by sym facts and code lines, and the field shape is decided by A-03. However, the 100-row cap (C8) is cited second-hand through an impact claim instead of the product line.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Explains why the counts are computed on the server (the cap), why POST and PATCH also carry the field (shared get), why it counts by status rather than date, why no migration is needed (index) and the label-wording default.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent. The frontmatter and body match, and the component-to-story mapping is explicit.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.85,
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
