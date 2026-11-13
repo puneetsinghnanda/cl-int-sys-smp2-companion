@@ -1,0 +1,158 @@
+{
+  "artifact_sha256": "fe24d61d00ae55f25e7c5ca0830c60ca1a538922ee61b9e6460f81033870bd6c",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "decided by the same rule the doctor page uses for its DOC-7 flags (`withinAvailability`)",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "applies only to Scheduled appointments whose start time has not passed, as on the doctor page (`starts_at &gt;= now`)",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#item:REQ-3"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the doctor page's `50-appointment limit` is a list size and is not copied",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#item:REQ-4"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The hospital time zone is `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#claim:C6"
+        },
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "weekday, start time, end time, in hospital local time",
+          "ref": "context/glossary.md#availability-block"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "then the closed-appointment text and the history show as they did before this change",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#L91"
+        },
+        {
+          "quote": "when, doctor, patient, reason for visit, actions and history stay as they are",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#item:REQ-9"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Have S-5 AC3 say that when, doctor, patient, reason for visit and history show as before for Completed, Cancelled and No-show appointments. Drop the undefined 'closed-appointment text' or define it from a cited source.",
+      "text": "S-5 AC3, the closed-appointment case of REQ-9, checks only the 'closed-appointment text' and the history. That term is not in the intent. When, doctor, patient and reason for visit, all listed in REQ-9, go unchecked for closed appointments."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "and a Scheduled appointment from Tuesday 17 November 2026 01:00 to 01:30 local",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#L55"
+        },
+        {
+          "quote": "a Scheduled appointment whose start time has passed shows no outside-availability notice",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#item:REQ-3"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add 'that has not started (the clock is before 16 November 2026 19:30 UTC)' to S-1 AC5.",
+      "text": "S-1 AC5 uses a fixed date (17 Nov 2026) but does not say the appointment has not started. If the test clock is after that date, REQ-3 correctly hides the notice, so the AC depends on the real date."
+    }
+  ],
+  "package_sha256": "7d0bd23d2248db9074b430252769fa4c6b3c4f283f6169f4e64a74b099e6e949",
+  "questions": [],
+  "recorded_at": "2026-11-13T05:59:24Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All nine known REQs are traced. S-1 covers REQ-1 to REQ-4, S-2 covers REQ-5, S-3 covers REQ-6 and REQ-7, S-4 covers REQ-8 and S-5 covers REQ-9. Nothing is assumed or unknown, so nothing else needs tracing.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Each story has one outcome: the availability notice, the Inactive notice, both notices in order, no notice on closed appointments, and the rest of the page unchanged.",
+      "score": 5
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The ACs use Given/When/Then and catch the likely wrong builds: a UTC-vs-local check, the copied 50 limit, a missing starts_at filter, and the Inactive notice gated on time. S-5 AC3 leaves most REQ-9 fields unchecked for closed appointments, and S-1 AC5 depends on the real date.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Both notice texts match the intent. The 51st appointment is derived inline from the 50 limit. The AC5 instant is derived inline from Asia/Kolkata = UTC+05:30, and the dates check out: 16 Nov 2026 is a Monday and 17 Nov 2026 a Tuesday.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable, with terms used consistently. One exception: S-5 AC3 uses 'closed-appointment text', a term that is in neither the intent nor the glossary.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
