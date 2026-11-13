@@ -72,3 +72,38 @@ comment: Accept the threat model; H2 design-input check is a known workflow bug
 }
 ```
 <!-- tsl:signature-end G-escalate-threat-a6 -->
+
+## G-threat-review · required role: tech_lead
+kind: workflow_gate
+Artifact: artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md (sha256 609ea127ccfe69d407c35a3e299f35d838b2a3775c4a20d674c4c726cdb1973d)
+Reason for gate: workflow gate (always)
+decision: abort
+comment: hands-on test done
+<!-- signature block written by `tsl gate` - do not edit -->
+<!-- tsl:signature-begin G-threat-review -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-11-13T11:42:32Z",
+  "approver": "eng-3c51",
+  "artifacts": [
+    {
+      "attempt": 6,
+      "sha256": "609ea127ccfe69d407c35a3e299f35d838b2a3775c4a20d674c4c726cdb1973d",
+      "step": "threat"
+    }
+  ],
+  "comment_sha256": "3f56158706bd603f743b1ef1288fe12d2bfd8ac5f0a5bd74fe82772a264e904d",
+  "decision": "abort",
+  "gate": "G-threat-review",
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "kind": "workflow_gate",
+  "role": "tech_lead",
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "XEeqfCy0bBsJaHoFL8kvPyeiSP-u4235vvmEYEK7n0LMfaoJETzEYnFo4ySyZFEOm3gWG1NI-ajB8D4SztRLAQ",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-threat-review -->
