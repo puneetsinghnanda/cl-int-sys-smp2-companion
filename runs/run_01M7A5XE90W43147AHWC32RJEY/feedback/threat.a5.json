@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 5,
+  "gate_failures": [
+    {
+      "detail": "threat-model.stride-per-component: input design missing or has no front matter",
+      "id": "H2"
+    }
+  ],
+  "kind": "checks",
+  "must_resolve": [
+    "H2"
+  ],
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "feedback.v1",
+  "step": "threat"
+}

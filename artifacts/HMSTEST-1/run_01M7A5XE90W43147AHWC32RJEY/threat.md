@@ -2,7 +2,7 @@
 schema: threat-model.v1
 run_id: run_01M7A5XE90W43147AHWC32RJEY
 step: threat
-attempt: 4
+attempt: 5
 skill: threat-model@1.1.0
 inputs:
   - {path: context/architecture.md, sha256: 9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a}
@@ -71,7 +71,7 @@ threats:
 
 No design exists for a security-review run, so every architecture component is modelled instead.
 
-Attempt 4 follows the approver's change request at gate G-escalate-threat-a3: T-14 adds the login rate-limiting threat; T-1 keeps its wording unchanged.
+T-14 adds the login rate-limiting threat requested at gate G-escalate-threat-a3; T-1 keeps its wording unchanged.
 
 ## Components
 - **API routes**: one router per resource mounted under `/api` (C1); handles patients, doctors, appointments, departments, specializations (C11).

@@ -1,0 +1,80 @@
+{
+  "artifact_sha256": "7415f6e7740826a028e2d927b478bbd23973975265b9e0a6087ca9e7d6f9e833",
+  "attempt": 4,
+  "finished_at": "2026-11-13T11:38:22Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "check_ids": [
+        "threat-model.stride-per-component"
+      ],
+      "codes": [
+        "E-H2-02"
+      ],
+      "detail": "threat-model.stride-per-component: input design missing or has no front matter",
+      "id": "H2",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [],
+  "product_changes": null,
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-13T11:38:22Z",
+  "step": "threat",
+  "tool_log_sha256": "66875bcc3ec21ef25d5c021c2015bd96ab27bee407aadec875adb1606f7c2ac4",
+  "tsl_version": "0.1.6",
+  "verifier": null
+}
