@@ -50,7 +50,7 @@
       "category": "style",
       "text": "Threats are listed in component order and have no likelihood or impact rating. The rubric's top clarity score requires ordering by risk.",
       "cites": [
-        {"ref": "/home/yash/projects/tsl/AI-Skill-Library/plugins/truminds/skills/threat-model/rubric.md#L46", "quote": "Clear and ordered by risk"},
+        {"ref": "truminds:skills/threat-model/rubric.md#L46", "quote": "Clear and ordered by risk"},
         {"ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/threat.md#L149", "quote": "T-1 (spoofing, router): no sign-in in the MVP."}
       ],
       "suggested_fix": "Give each threat a risk level and order the Threats list from highest to lowest risk."
