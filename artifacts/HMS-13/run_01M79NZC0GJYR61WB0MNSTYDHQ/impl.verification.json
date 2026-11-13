@@ -1,0 +1,79 @@
+{
+  "artifact_path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impl.md",
+  "artifact_sha256": "0f2c4f20475bbde55247932470829b031ff1e2cdc92e598958cdae21bc853691",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "1808708927f9c8fceb9b5b680013ada572df6158baa40a23e372a3ab787839ba",
+  "claims": {
+    "total": 14,
+    "verified": 14
+  },
+  "decided_at": "2026-11-13T06:36:22Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-2",
+      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#S-1"
+    },
+    {
+      "id": "F-3",
+      "reason": "anchor not found"
+    }
+  ],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md",
+      "sha256": "385aa8939befa99e8d415e886be5a4faac02d8447880d56dc1a4477012f582fb",
+      "verification_sha256": "76bb796f150630c344ca8da0d9cb64b8ba30b6240a407307db2a4d5dbbb8bf6c"
+    },
+    {
+      "path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md",
+      "sha256": "fe24d61d00ae55f25e7c5ca0830c60ca1a538922ee61b9e6460f81033870bd6c",
+      "verification_sha256": "4281018e8df508128e191d8aec714674454726aed8b17f761fb64718be1af7be"
+    }
+  ],
+  "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
+  "outcome": "PASS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "1cdd91da50b7e2e3213df50391a66ba3db4d3dc797fc6c31b7b6b8d59c4d40f1",
+      "repo": "sample-system",
+      "tree_sha": "1bec4f1ab87cd774949dcbf064c7e4d215c0b3f2"
+    }
+  ],
+  "review_sha256": "26e8ac3d4a0b8d238d95c5b2641e946e4d8b7d581573383f0480f3a43d33bfb4",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8235,
+    "S2": 1.0,
+    "S3": 4.4,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 6,
+      "lines": 91,
+      "sensitive": false
+    }
+  },
+  "signature": "bjNv1tLVuJT9NFZ1nhCLvWBa1DQuJDLVwpPs4rYu36B-sF7RkTUJ3IRCK8loLgv5uXaGS9jBwfqxP06Uh-zCDQ",
+  "skill": "implement@1.1.0",
+  "step": "impl",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

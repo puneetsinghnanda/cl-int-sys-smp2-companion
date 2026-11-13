@@ -1,0 +1,77 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "0f2c4f20475bbde55247932470829b031ff1e2cdc92e598958cdae21bc853691",
+  "package_sha256": "0614fec2bdf5051cc63dda25455acb1f8a0636bab9e0f1a3514b8abad26856ac",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.4,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "CO-1, CO-2, CO-6, CO-7 and EP-1 to EP-6 match the design. One small gap: the return type of AppointmentRepo.detail changed even though the design says CO-5 is unchanged. The code needs this to compile, and the artifact discloses it under Assumed."},
+    {"id": "IM-R2", "score": 5, "reason": "The rule sits in the service and the 404 path is kept. No logging was added. The notices use the doctor page's warning/role=status markup, and the non-null doctor lookup follows the existing reschedule pattern backed by the DOC-5 guard."},
+    {"id": "IM-R3", "score": 5, "reason": "Six files, 88 lines added and 3 deleted, all tied to CO-1/2/5/6/7 plus one test file. SUMMARY_SELECT and AppointmentSummary are untouched, and the GEN-SIZE soft check passed."},
+    {"id": "IM-R4", "score": 4, "reason": "The code handles closed, already-started and Inactive cases, uses the inclusive &gt;= now window and reuses the timezone-aware withinAvailability. The tests skip the AC4 cap case, the AC5 midnight timezone case, Completed/No-show, and the page's notice order."},
+    {"id": "IM-R5", "score": 4, "reason": "The Summary and Changes sections match the diff file by file and in behaviour. One trace slip: C3 is cited for the 'only when Scheduled' behaviour, but C3 only names the component."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The design lists AppointmentRepo.detail as existing and unchanged (CO-5), but the implementation narrows its return type. The change is type-only and is disclosed under Assumed, so it departs slightly from the design without changing behaviour.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-5", "quote": "AppointmentRepo.detail, SUMMARY_SELECT and AppointmentSummary (api, existing): unchanged (A-06)"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L92", "quote": "async detail(id: number): Promise&lt;Omit&lt;AppointmentDetail, 'doctorStatus' | 'outsideAvailability'&gt; | null&gt;"}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "Have the design step record AppointmentRepo.detail as a type-only change, or have the stage approver confirm the Assumed CO-5 entry."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "There are API tests for REQ-1/2/3/5/7/8/9 only. Nothing covers the no-cap case (S-1 AC4), the midnight timezone case (S-1 AC5) or Completed/No-show (S-4 AC2/AC3), and no web test checks that the notices appear in order and only for Scheduled appointments (S-3).",
+      "cites": [
+        {"ref": "sample-system:api/test/appointments-fit.test.ts#L50", "quote": "HMS-13 REQ-8: a Cancelled appointment never carries the availability flag"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#S-1", "quote": "Given an Active doctor whose only availability block is Monday 19:00 to 20:00 hospital local time"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impl.md#changes", "quote": "\"HMS-13 REQ-8\" (a Cancelled appointment carries no flag)"}
+      ],
+      "suggested_fix": "Add API tests for the 51st-appointment case, the Tuesday 01:00 Asia/Kolkata case and Completed/No-show. Add a web test for AppointmentDetailPage that checks the notice order and that no notice shows on a closed appointment."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The summary cites C3 for 'only when the appointment is Scheduled', but C3 only names the CO-7 component. It does not establish the Scheduled-only behaviour.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impl.md#summary", "quote": "Both appear only when the appointment is Scheduled (C3)."},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impl.md#claims", "quote": "The page change is the `AppointmentDetailPage notices` component."}
+      ],
+      "suggested_fix": "Cite design CO-7 ('inside the Scheduled branch') or the AppointmentDetailPage line that checks the Scheduled status."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-1", "quote": "AppointmentService.get (computes doctorStatus and outsideAvailability)"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:EP-1", "quote": "GET /api/appointments/:id (changed): fields `doctorStatus`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-7", "quote": "name: AppointmentDetailPage notices"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-5", "quote": "AppointmentRepo.detail, SUMMARY_SELECT and AppointmentSummary (api, existing): unchanged (A-06)"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L5", "quote": "import { isSlot, withinAvailability } from '../lib/slots';"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L9", "quote": "import { DoctorRepo } from '../repositories/doctorRepo';"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L92", "quote": "async detail(id: number): Promise&lt;Omit&lt;AppointmentDetail, 'doctorStatus' | 'outsideAvailability'&gt; | null&gt;"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-01", "quote": "answer: No, follow the doctor page (proposed default)"}, {"ref": "sample-system:api/src/services/appointmentService.ts#L65", "quote": "startsAt.getTime() &gt;= this.clock().getTime()"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-02", "quote": "don't copy the doctor page's 50-appointment limit"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-04", "quote": "the outside-availability notice comes first and the Inactive notice second"}, {"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L72", "quote": "{scheduled &amp;&amp; a.outsideAvailability &amp;&amp; ("}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-08", "quote": "answer: false (proposed default)"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L128", "quote": "export interface AppointmentDetail extends AppointmentSummary {"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L114", "quote": "export interface AppointmentDetail extends AppointmentSummary {"}]}
+  ],
+  "questions": []
+}
