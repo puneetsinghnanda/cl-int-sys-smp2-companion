@@ -2,7 +2,7 @@
 schema: threat-model.v1
 run_id: run_01M7A5XE90W43147AHWC32RJEY
 step: threat
-attempt: 5
+attempt: 6
 skill: threat-model@1.1.0
 inputs:
   - {path: context/architecture.md, sha256: 9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a}

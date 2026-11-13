@@ -37,3 +37,11 @@ comment: Add one threat for login rate limiting; keep "T-1" wording, cost $0 –
 }
 ```
 <!-- tsl:signature-end G-escalate-threat-a3 -->
+
+## G-escalate-threat-a6 · required role: tech_lead
+kind: escalation
+Artifact: artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md (sha256 609ea127ccfe69d407c35a3e299f35d838b2a3775c4a20d674c4c726cdb1973d)
+Reason for gate: the step still failed its quality checks after the maximum number of retries
+decision:          # approve | reject | changes | abort
+comment:
+<!-- signature block written by `tsl gate` - do not edit -->
