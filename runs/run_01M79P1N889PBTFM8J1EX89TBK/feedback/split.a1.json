@@ -1,0 +1,61 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
+          "ref": "context/glossary.md#no-show"
+        },
+        {
+          "quote": "Given a patient with 1 Completed appointment, 1 Scheduled appointment and 1 Cancelled appointment, where the Cancelled one is the most recent",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L64"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No AC has a past appointment that is still Scheduled. A version that counts by date (past and not Cancelled = Completed or No-show) instead of by closed status passes every AC. The glossary says a No-show is closed rather than left Scheduled."
+    },
+    {
+      "cites": [
+        {
+          "quote": "The Visit summary shows the number of the patient's `Completed` appointments.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-2"
+        },
+        {
+          "quote": "Given a patient with 2 Completed appointments and 1 No-show appointment, when staff open the patient page",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L58"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "Every AC sets up a single patient. A count missing the patient filter (all Completed/No-show appointments in the system) passes on a test database with one patient. REQ-2 and REQ-3 require only the patient's own appointments to be counted."
+    },
+    {
+      "cites": [
+        {
+          "quote": "Given a patient with medical history recorded, when staff open the patient page, then the medical history shows the same fields and values as before the change.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L71"
+        },
+        {
+          "quote": "The patient page's `medical history` is unchanged.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-8"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "REQ-8 (medical history unchanged) is tested only for a patient whose history is recorded. The partition with no medical history is missing, although the rubric asks for each partition of an unchanged requirement."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-3"
+  ],
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "feedback.v1",
+  "step": "split"
+}
