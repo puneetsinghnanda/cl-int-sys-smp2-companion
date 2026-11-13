@@ -1,0 +1,215 @@
+{
+  "artifact_sha256": "a03c0b2820af5070279380915fbacc62e5ebb19c702b593d4bd9e20385a7a8f6",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "upcoming first, then past",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "above the appointments list",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L16"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the number of the patient's Completed appointments",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L17"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the number of their No-show",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L17"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Scheduled and Cancelled appointments are not counted in either number",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L19"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "shows 0 for each",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "including the appointments list and medical history",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L21"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "closed by staff once its start time has passed",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Today, Last 7 days or Last 30 days",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: All time (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "how often a patient has attended or missed",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ticket.md#L12"
+        },
+        {
+          "quote": "with no period picker",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#L36"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Remove the ticket L12-L13 cite from REQ-6 and keep only ide-answers.md#a-01.",
+      "text": "REQ-6 (counting window) cites ticket L12-L13. Those lines are the user story and say nothing about a time window or a period picker. Only answer A-01 supports REQ-6."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "by default the counts are labelled with the status names",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#L93"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Move the label default to Assumed with the glossary as its basis, or state that label wording is left to design.",
+      "text": "Out of scope sets a default for the count labels (\"Completed\" and \"No-show\"). That is a behaviour decision, not an exclusion, so it should be listed under Assumed."
+    }
+  ],
+  "package_sha256": "3a9be3c43b633e22ebb2af8576b776d7d7dbb399575e9b1fdcec7e4d850783b8",
+  "questions": [],
+  "recorded_at": "2026-11-13T05:33:38Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Each acceptance criterion (L16-L22) maps to REQ-1..REQ-9. The follow-up goal in the user story and any rates are listed under Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Criterion 2 is split into separate Completed and No-show counts, and criterion 5 into list, history and rest of page. Each REQ describes one behaviour that a tester can check.",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known REQ cites the ticket or answer A-01. The label wording is a default the author picked, but it sits under Out of scope instead of Assumed. REQ-6 also cites user-story lines that say nothing about a time window.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The ticket does not clash with the baseline. The time-window gap against the glossary Period was asked as Q-01, and the user answered it.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Only one question was asked. It is real, it offered three concrete options, it had a proposed default, and it is answered and recorded.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "The wording is plain. Completed, No-show, Scheduled and Cancelled match the glossary. The terms missing from the glossary are named and traced to ticket lines.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.75,
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
