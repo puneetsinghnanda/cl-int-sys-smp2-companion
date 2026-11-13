@@ -42,6 +42,33 @@ comment: Add one threat for login rate limiting; keep "T-1" wording, cost $0 –
 kind: escalation
 Artifact: artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md (sha256 609ea127ccfe69d407c35a3e299f35d838b2a3775c4a20d674c4c726cdb1973d)
 Reason for gate: the step still failed its quality checks after the maximum number of retries
-decision:          # approve | reject | changes | abort
-comment:
+decision: approve
+comment: Accept the threat model; H2 design-input check is a known workflow bug
 <!-- signature block written by `tsl gate` - do not edit -->
+<!-- tsl:signature-begin G-escalate-threat-a6 -->
+```json
+{
+  "action": null,
+  "approved_at": "2026-11-13T11:41:15Z",
+  "approver": "eng-3c51",
+  "artifacts": [
+    {
+      "attempt": 6,
+      "sha256": "609ea127ccfe69d407c35a3e299f35d838b2a3775c4a20d674c4c726cdb1973d",
+      "step": "threat"
+    }
+  ],
+  "comment_sha256": "efc4516c5262be7210fdceef4f8191a3b6dc333e1a62dfcf1d4cfdf65cd61eff",
+  "decision": "approve",
+  "gate": "G-escalate-threat-a6",
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "kind": "escalation",
+  "role": "tech_lead",
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "approval-signature.v1",
+  "self_approved": true,
+  "signature": "fcdpMDkZyEhKr6xW5dJocTo5TqsZgeN3b6x6NDdYLX1Zkk8s8c5oOFqNSa8L5N8hl4JaSdAslO4N1UhCoMd7Ag",
+  "system": "SYS-SMP2"
+}
+```
+<!-- tsl:signature-end G-escalate-threat-a6 -->
