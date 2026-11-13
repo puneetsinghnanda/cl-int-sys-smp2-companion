@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "{ completed, noShow }, same as EP-1",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#item:EP-3"
+        },
+        {
+          "quote": "GET, and the POST and PATCH responses (C6)",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#scope"
+        },
+        {
+          "quote": "PATCH on an unknown patient id is still 404",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#item:TP-19"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The plan puts the PATCH response's visitSummary in scope, and EP-3 changes that response, but no test checks that a successful PATCH returns visitSummary. The only PATCH test is the unknown-id 404."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "feedback.v1",
+  "step": "tplan"
+}
