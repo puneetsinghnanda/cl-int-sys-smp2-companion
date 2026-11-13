@@ -1,0 +1,158 @@
+{
+  "artifact_sha256": "1c41e77a20f10411d6ac8d660c83a3e1b1bb57c6e2e71fdb93cbba7387c92ba3",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "const doctor = (await doctors.get(detail.doctor.id))!;",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L60"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return { ...detail, doctorStatus: doctor.status, outsideAvailability };",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L68"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (!detail) throw notFound(`Appointment ${formatCode('A', id)} not found`);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L57"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctors.get(detail.doctor.id)",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L60"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;p className=\"warning\" role=\"status\"&gt;",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L73"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "unknown ids 404, conflicts 409",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`get` adds doctorStatus and outsideAvailability; withinAvailability is imported from the slots library.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impl.md#L97"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "would turn a broken invariant into an unhandled error",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/secrev.md#L77"
+        },
+        {
+          "quote": "res.status(500).json({ error: { code: 'INTERNAL', message: 'Something went wrong' } });",
+          "ref": "sample-system:api/src/middleware/errorHandler.ts#L21"
+        }
+      ],
+      "claim_ref": "C1",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Describe the impact as an opaque 500 (on action responses, after the mutation has committed), not as an unhandled error. Name the error to raise, e.g. an explicit HttpError with a generic message.",
+      "text": "SF-1 calls the failure an 'unhandled error'. In fact the global errorHandler catches the TypeError, logs only the message and returns a generic 500. So nothing is disclosed, and the 'generic error' the fix asks for already exists."
+    }
+  ],
+  "package_sha256": "a6deb7f830b3ba4c4467ee03707a8df899f5f5afeaf33cdaa01aaf7649544808",
+  "questions": [],
+  "recorded_at": "2026-11-13T06:46:43Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "No new route, no request-driven lookup, only status copied from doctor, fixed-text UI, no logging. The single real weakness (non-null assertion at L60) is found. Scans attached and match impl.checks.json hashes.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 and every code claim point at the exact line (appointmentService.ts L57, L60, L68; AppointmentDetailPage.tsx L73), and each line matches the quoted text.",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Minor fits SF-1. DOC-5 blocks deleting a doctor who has appointments (doctorService.ts L127-137, plus FK 23503), so the risk is defensive only. Reschedule uses the same pattern.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "The fix direction is clear (replace the assertion with an explicit error). It does not say which error or status, and the global handler already returns a generic 500.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives. SF-1 overstates impact a little by calling the failure 'unhandled' when the global errorHandler catches it.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.75,
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
