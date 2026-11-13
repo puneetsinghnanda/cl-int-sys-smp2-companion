@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "c9fa0e7de9134df8f23a46360f3107121aabf823600825ddf178dae99b8b63ca",
-  "attempt": 1,
+  "artifact_sha256": "9ef1e10d9aab39ff308817358511375fc54a2e2e3af4a8c545072f90b2cfc8d5",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -15,7 +15,7 @@
     {
       "cites": [
         {
-          "quote": "Web tests use\nVitest with jsdom and Testing Library",
+          "quote": "Vitest with jsdom and Testing Library",
           "ref": "context/test-strategy.md#layers"
         }
       ],
@@ -61,102 +61,64 @@
       ],
       "claim_id": "C6",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "{ completed, noShow }, same as EP-1",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#item:EP-3"
-        },
-        {
-          "quote": "GET, and the POST and PATCH responses (C6)",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#scope"
-        },
-        {
-          "quote": "PATCH on an unknown patient id is still 404",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#item:TP-19"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an integration test: PATCH a patient that has Completed and No-show appointments and assert the response's visitSummary equals the GET detail counts.",
-      "text": "The plan puts the PATCH response's visitSummary in scope, and EP-3 changes that response, but no test checks that a successful PATCH returns visitSummary. The only PATCH test is the unknown-id 404."
     },
     {
-      "category": "completeness",
       "cites": [
         {
-          "quote": "HMS-7 REQ-8: the read-only count in a PATCH body is ignored",
-          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts"
+          "quote": "other pages have no web tests",
+          "ref": "context/test-strategy.md#gaps"
         },
+        {
+          "quote": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L1",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/test/doctors-no-shows.test.ts",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
         {
           "quote": "HMS-9 REQ-10: nextSevenDays in a PATCH body is ignored",
           "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-next-seven-days.test.ts"
         }
       ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "Add 'HMS-5 REQ-2: visitSummary in a PATCH body is ignored' at integration level.",
-      "text": "There is no negative test that a client-sent visitSummary in a POST or PATCH body is ignored. The project already tests this for earlier read-only counts (HMS-7, HMS-9)."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "other pages have no web tests, and no page is tested end to end in a browser",
-          "ref": "context/test-strategy.md#gaps"
-        },
-        {
-          "quote": "Page rendering is proven with Testing Library under jsdom (C2)",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#scope"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Name the target files, e.g. api/test/patients-visit-summary.test.ts and web/src/__tests__/PatientDetailPage.test.tsx.",
-      "text": "The plan names no test files or folders. The patient page has no existing web test, so the unit tests need a new file under web/src/__tests__, and the plan should say so."
-    },
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
       "category": "traceability",
       "cites": [
         {
-          "quote": "GET on an unknown patient id is still 404 and carries no visitSummary",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#item:TP-18"
+          "quote": "Trade-off: a separate file keeps its own database, so the counts are not disturbed by other tests.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#scope"
         },
         {
-          "quote": "a Visit summary appears above the appointments list with a Completed count of 2 and a No-show count of 1",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#item:S-1"
+          "quote": "The harness starts a temporary cluster from PostgreSQL 16 binaries",
+          "ref": "context/test-strategy.md#database-for-tests"
         }
       ],
-      "id": "F-4",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Trace the regression negatives to the design endpoints (EP-1, EP-3) or mark them as non-AC tests instead of mapping them to S-1/AC1.",
-      "text": "TP-18, TP-19 and TP-21 are listed as covering S-1/AC1, but AC1 says nothing about 404s or the key set. This overstates S-1 coverage in the Known section."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "is still counted with the clock far later",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md#item:TP-4"
-        },
-        {
-          "quote": "against a throwaway PostgreSQL 16 with a fixed clock",
-          "ref": "context/test-strategy.md#layers"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "suggested_fix": "State the fixed clock date, e.g. a date more than 30 days after 2 January 2025.",
-      "text": "TP-4's title says 'the clock far later' instead of a concrete fixed-clock date. The strategy requires a fixed clock, so the tester has to choose a value."
+      "suggested_fix": "Remove the per-file database claim, or cite the harness line that proves it. Otherwise, rely on per-patient fixtures so other tests cannot change the counts.",
+      "text": "The trade-off says a separate test file keeps its own database. The test strategy does not say the database is isolated per file; it only says the harness starts a temporary cluster or uses HMS_TEST_DATABASE_URL."
     }
   ],
-  "package_sha256": "bd2745117eb9b6c60c110db79c37f629af708dc3a9376c6359dacce63c912052",
+  "package_sha256": "67ed3cb5aff5da21ea47bac91b1134806d50751c0f86bd1926e790736efaef8b",
   "questions": [],
-  "recorded_at": "2026-11-13T06:42:03Z",
+  "recorded_at": "2026-11-13T06:45:27Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -167,31 +129,31 @@
   "rubric_items": [
     {
       "id": "TP-R1",
-      "reason": "All 14 acceptance criteria (S-1 AC1-AC5, S-2 AC1-AC4, S-3 AC1-AC5) have at least one test that matches the criterion's given/then.",
+      "reason": "All 14 criteria (S-1 AC1-AC5, S-2 AC1-AC4, S-3 AC1-AC5) have at least one test that matches the criterion's given and then. No test claims a criterion that does not exist.",
       "score": 5
     },
     {
       "id": "TP-R2",
-      "reason": "Counting rules are tested at API integration level and rendering with jsdom unit tests. The one manual test (TP-17, layout) is justified by the strategy's no-browser-tests gap.",
+      "reason": "Counting rules are tested as API integration tests and rendering as jsdom unit tests. The only manual test is TP-17, a layout check, and it is justified by the project's lack of browser tests.",
       "score": 5
     },
     {
       "id": "TP-R3",
-      "reason": "Has 404 negatives for GET and PATCH, a 400 negative for POST and a key-set boundary test. Missing: a positive check of the PATCH response's visitSummary, and a test that visitSummary sent in a request body is ignored.",
-      "score": 4
+      "reason": "Each changed endpoint has a negative test: 404 for GET and PATCH, 400 for POST. There is a key-set boundary test (TP-21), a PATCH response check (TP-22) and a test that visitSummary in a PATCH body is ignored (TP-23).",
+      "score": 5
     },
     {
       "id": "TP-R4",
-      "reason": "Tools (Vitest, Supertest, fixed clock, Testing Library) and the HMS-5 REQ-n name prefix follow the strategy. No target test files or folders are named, and PatientDetailPage has no existing web test file.",
-      "score": 4
+      "reason": "Uses the strategy's tools (Vitest, Supertest, fixed clock, jsdom, Testing Library) and the HMS-5 REQ-n name prefix. The target files api/test/patients-visit-summary.test.ts and web/src/__tests__/PatientDetailPage.test.tsx follow existing names.",
+      "score": 5
     },
     {
       "id": "TP-R5",
-      "reason": "Titles are concrete and runnable. Some 'covers' mappings are stretched, and TP-4's 'clock far later' gives no fixed clock value.",
-      "score": 4
+      "reason": "Titles give concrete data and expected values. TP-4 now names its fixed clock date (1 March 2025). The endpoint regression tests are clearly marked as such in the body.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.55,
+  "rubric_score": 5.0,
   "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
   "schema": "review.v1",
   "status": "ok",

@@ -1,36 +1,20 @@
 {
   "artifact_path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/tplan.md",
-  "artifact_sha256": "c9fa0e7de9134df8f23a46360f3107121aabf823600825ddf178dae99b8b63ca",
-  "attempt": 1,
+  "artifact_sha256": "9ef1e10d9aab39ff308817358511375fc54a2e2e3af4a8c545072f90b2cfc8d5",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "15533d2f08094a2166f2e61899815b274e3067685ab891dbae4c8525744c27d3",
+  "checks_sha256": "96bc7bc0ffcff309fe433c06dc0c5f8e120025e12827cc9763997f5e3049751e",
   "claims": {
-    "total": 6,
-    "verified": 6
+    "total": 9,
+    "verified": 9
   },
-  "decided_at": "2026-11-13T06:42:05Z",
+  "decided_at": "2026-11-13T06:45:28Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
-      "severity": "minor"
-    },
-    {
-      "id": "F-3",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
-      "severity": "minor"
-    },
-    {
-      "id": "F-5",
       "severity": "minor"
     }
   ],
@@ -48,7 +32,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -56,15 +40,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "fa7394d56b33cd7c8e50fb742bce2a641096b3953d0bb6c3c8bf9600aec7f5cd",
   "product_changes": null,
-  "review_sha256": "7662fb07762a3754901536c12fd15cd0d7868feafe51b47e7f928ea51c8663c4",
+  "review_sha256": "bc466c82f2bde2ebc712d446b855417329465614d25f0b2168760ffa450fe225",
   "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.55,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -73,7 +57,7 @@
       "sensitive": false
     }
   },
-  "signature": "RQMYLK_cznk93G6e9jBfvH4hocx4g7CKvD-LXpxhfPc83pzy0ZFLAQ7uAfou1RXf0K5gc46ncPlr0HjEprGbBw",
+  "signature": "jkVfMfrhDxVkqHcTM9_z-uOmH2Y5Gy-kFhGW3hKzORufB3GZvt-mZHiOhSmCv42Os6kUkJYEa2hxWBBPIKBpCA",
   "skill": "test-plan@1.2.0",
   "step": "tplan",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
