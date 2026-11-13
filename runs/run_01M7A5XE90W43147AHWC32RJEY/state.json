@@ -1,8 +1,8 @@
 {
   "active_session": {
     "host_hash": "h_0000",
-    "session_id": "64b00ff9-370f-4eab-8dc3-132600159d66",
-    "since": "2026-11-13T10:12:45Z"
+    "session_id": "090724e9-bcb0-43fc-93f4-d51370e2c5af",
+    "since": "2026-11-13T11:36:17Z"
   },
   "branch": {},
   "created_at": "2026-11-13T10:05:40Z",
@@ -10,22 +10,22 @@
   "end_reason": null,
   "gates": [
     {
-      "approver_key": null,
+      "approver_key": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
       "artifacts": [
         {
           "sha256": "37729e8de61b4742d117e068b990c380bfa6239723611c5da65e3482033c0727",
           "step": "threat"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-11-13T11:36:15Z",
+      "decision": "changes",
       "id": "G-escalate-threat-a3",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "CHANGES",
       "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-11-13T10:16:24Z",
+  "heartbeat_at": "2026-11-13T11:36:17Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -58,10 +58,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 17,
+  "rev": 19,
   "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -118,14 +118,14 @@
         }
       ],
       "budget_used": {
-        "checks": 2,
+        "checks": 0,
         "review": 0,
-        "rework": 0,
+        "rework": 1,
         "verifier": 0
       },
       "id": "threat",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "READY"
     },
     {
       "attempts": [],
@@ -136,7 +136,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMSTEST-1",
-  "updated_at": "2026-11-13T10:16:24Z",
+  "updated_at": "2026-11-13T11:36:17Z",
   "workflow": "security-review@1.0.0",
   "workflow_sha256": "f210e05977339093bb74196444ee3f82ebf57b45eb0f9ee9a6cd5fe1c83487fc"
 }

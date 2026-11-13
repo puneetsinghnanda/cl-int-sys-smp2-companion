@@ -1,0 +1,13 @@
+{
+  "comment": "Add one threat for login rate limiting; keep \"T-1\" wording, cost $0 – café ✓",
+  "comment_sha256": "27ece97a9d4080e36dfa67bdb13c980347f048164c9c55ae3357dc2cdff0c34c",
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 3,
+  "gate_failures": [],
+  "kind": "rework",
+  "must_resolve": [],
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "feedback.v1",
+  "step": "threat"
+}
