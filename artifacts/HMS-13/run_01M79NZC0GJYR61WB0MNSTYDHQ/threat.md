@@ -2,7 +2,7 @@
 schema: threat-model.v1
 run_id: run_01M79NZC0GJYR61WB0MNSTYDHQ
 step: threat
-attempt: 1
+attempt: 2
 skill: threat-model@1.1.0
 inputs:
   - path: artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md
@@ -15,6 +15,15 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-2
+    how: "T-3 is now listed as an accepted MVP gap that this change does not widen, not as a covered threat."
+  - id: F-1
+    how: "T-11 now states that every actor is the fixed staff actor, so it is an accepted MVP gap that this change does not widen."
+  - id: F-3
+    how: "T-8 now cites the summary's doctor fields instead of the medical-history rule."
+  - id: F-5
+    how: "T-5 and T-12 now state their security consequence: a hidden notice leaves an unbookable appointment in place."
 claims:
   - id: C1
     text: "Every API request passes through `identify`, and routes call requirePermission."
@@ -34,9 +43,6 @@ claims:
   - id: C6
     text: "Logs carry `method, route and error message only`."
     cites: ["context/conventions.md#logging-and-data"]
-  - id: C7
-    text: "`Medical history` leaves the database only for the patient's own page."
-    cites: ["context/data-model.md#patients"]
   - id: C8
     text: "`appointment_event` records every appointment change with time and actor."
     cites: ["context/data-model.md#appointments"]
@@ -73,6 +79,15 @@ claims:
   - id: C19
     text: "The DOC-7 flags on the doctor page come from `DoctorService.get`, which the design leaves existing."
     cites: ["artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-8"]
+  - id: C20
+    text: "In the MVP `every actor holds every permission`."
+    cites: ["sample-system:api/src/auth/identity.ts#L30"]
+  - id: C21
+    text: "Every request gets the fixed actor `MVP_ACTOR`, whose id is staff."
+    cites: ["sample-system:api/src/auth/identity.ts#L22"]
+  - id: C22
+    text: "An appointment summary's doctor holds only id, code and `fullName: string`."
+    cites: ["sample-system:api/src/types.ts#L53"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
 known: [T-1, T-2, T-3, T-4, T-5, T-6, T-7, T-8, T-9, T-10, T-11, T-12, T-13, T-14]
 assumed: []
@@ -93,7 +108,7 @@ threats:
     component: AppointmentService.get (computes doctorStatus and outsideAvailability)
     stride: spoofing
     threat: "A caller could read an appointment's detail, now with the doctor's status, without being a real staff member."
-    mitigation: "Existing control: every request passes through identify, and the route requires appointments:read (C1, C3). In the MVP every request is the staff actor (C2). This known gap is not widened by this change and is closed when sign-in replaces identify."
+    mitigation: "Accepted MVP gap, not widened by this change. Every request passes through identify, and the route declares appointments:read (C1, C3). In the MVP every request is the staff actor and every actor holds every permission (C2, C20), so these declarations do not stop an unauthenticated caller today. The new fields add no personal data and no new route. The gap closes when sign-in replaces identify."
   - id: T-4
     component: AppointmentService.get (computes doctorStatus and outsideAvailability)
     stride: information_disclosure
@@ -102,7 +117,7 @@ threats:
   - id: T-5
     component: AppointmentDetail type (API)
     stride: tampering
-    threat: "The API and web copies of AppointmentDetail could drift, so the page reads a missing or misnamed field and shows or hides a notice wrongly."
+    threat: "The API and web copies of AppointmentDetail could drift, so the page reads a missing or misnamed field. The security consequence is integrity of what staff see: a notice that should warn them stays hidden, and an appointment the doctor cannot take stays in place."
     mitigation: "Existing control: TypeScript strict in both workspaces (C13). New control the implement step must build: an API test asserting doctorStatus and outsideAvailability on GET /api/appointments/:id, with the web type updated to the same names."
   - id: T-6
     component: DoctorRepo.get and DoctorRepo.availability
@@ -118,7 +133,7 @@ threats:
     component: AppointmentRepo.detail, SUMMARY_SELECT and AppointmentSummary
     stride: information_disclosure
     threat: "Editing the shared summary query to add the new fields would push doctor data into every list, dashboard and patient response, and widen what lists expose."
-    mitigation: "Existing controls: the design keeps SUMMARY_SELECT unchanged (C16), and medical history never leaves the database outside the patient's own page (C7)."
+    mitigation: "Existing controls: the design keeps SUMMARY_SELECT unchanged (C16), so a summary's doctor keeps only id, code and fullName (C22). The implement step must not edit the shared query or AppointmentSummary."
   - id: T-9
     component: AppointmentDetail type (web)
     stride: tampering
@@ -132,12 +147,12 @@ threats:
   - id: T-11
     component: AppointmentDetailPage notices
     stride: repudiation
-    threat: "Staff could act on a notice, by cancelling or rescheduling, with no trace of who did it."
-    mitigation: "Existing control: the notices only point to existing actions, and every change is recorded in appointment_event with time and actor (C8)."
+    threat: "Staff could act on a notice, by cancelling or rescheduling, and later deny it, because the record cannot tell staff members apart."
+    mitigation: "Accepted MVP gap, not widened by this change. Every change is recorded in appointment_event with time and actor (C8), but every request carries the fixed MVP_ACTOR, staff (C21, C2). The record shows when and what, not which person. The notices add no new write. The gap closes when sign-in sets a real actor."
   - id: T-12
     component: DoctorService.get DOC-7 flags and DoctorDetailPage
     stride: tampering
-    threat: "Changing the shared rule for the appointment page could silently change which appointments the doctor page flags."
+    threat: "Changing the shared rule for the appointment page could silently change which appointments the doctor page flags. The security consequence is integrity of what staff see: flags that should warn them disappear, and unbookable appointments stay in place."
     mitigation: "Design control: DoctorService.get stays existing (C19), and withinAvailability is reused without edits (T-7). The implement step must not modify either."
   - id: T-13
     component: BookAppointmentPage
@@ -148,7 +163,7 @@ threats:
     component: AppointmentService.get (computes doctorStatus and outsideAvailability)
     stride: elevation_of_privilege
     threat: "A new field or code path could need, or bypass, a permission it does not check."
-    mitigation: "Existing control: no new route or permission is added. The fields ride on routes that already require appointments:read or appointments:write (C3, C4)."
+    mitigation: "Existing control: no new route or permission is added. The fields ride on routes that already declare appointments:read or appointments:write (C3, C4), the same as today (see T-3 for the MVP gap)."
 ---
 # Threat model: HMS-13
 
@@ -166,25 +181,33 @@ threats:
 No new data class is introduced. The new fields hold the doctor's status and a boolean, and neither is personal data.
 
 ## Threats
-- T-1 (information_disclosure, AppointmentService.get): over-sharing the doctor record. A new control copies only `status`, and a test checks there are no extra fields.
-- T-2 (denial_of_service, AppointmentService.get): extra reads per response. They are by-id and bounded (C5, C9), and the availability read is skipped when the rule does not apply.
-- T-3 (spoofing, AppointmentService.get): unauthenticated reads. Covered by identify and appointments:read (C1, C3). The MVP staff-only gap (C2) is not widened.
-- T-4 (information_disclosure, AppointmentService.get): leaking internals on a missing doctor. Doctors are never deleted (C12), it is handled like reschedule (C18), and logs stay minimal (C6).
-- T-5 (tampering, AppointmentDetail type (API)): API/web type drift. TypeScript strict (C13) plus a new API test on both fields.
-- T-6 (tampering, DoctorRepo.get and DoctorRepo.availability): SQL alteration via an id. parseId (C17) and parameterised queries (C5).
-- T-7 (tampering, withinAvailability): a wrong zone. The zone comes from configuration (C10), and the rule is reused unchanged.
-- T-8 (information_disclosure, AppointmentRepo.detail, SUMMARY_SELECT and AppointmentSummary): fields leaking into lists. SUMMARY_SELECT is unchanged (C16), and medical history is never in lists (C7).
-- T-9 (tampering, AppointmentDetail type (web)): client-altered flags. Display only; writes are still enforced on the server (C4).
-- T-10 (tampering, AppointmentDetailPage notices): markup injection. The notices are fixed texts only (C15).
-- T-11 (repudiation, AppointmentDetailPage notices): untraced follow-up actions. appointment_event records every change (C8).
-- T-12 (tampering, DoctorService.get DOC-7 flags and DoctorDetailPage): changing the doctor page's flags. Both pieces stay unedited (C19).
-- T-13 (information_disclosure, BookAppointmentPage): unneeded fields in the booking response. The page uses only the id (C14), and the fields are not personal data.
-- T-14 (elevation_of_privilege, AppointmentService.get): a path missing its permission check. No new route or permission; the existing checks apply (C3, C4).
+Ordered by risk.
+- T-1 (information_disclosure, AppointmentService.get; risk medium): over-sharing the doctor record. A new control copies only `status`, and a test checks there are no extra fields.
+- T-5 (tampering, AppointmentDetail type (API); risk medium): API/web type drift hides a notice. TypeScript strict (C13) plus a new API test on both fields.
+- T-3 (spoofing, AppointmentService.get; risk medium, accepted): unauthenticated reads. The MVP grants every permission to the staff actor (C2, C20). This is an accepted gap that the change does not widen.
+- T-11 (repudiation, AppointmentDetailPage notices; risk medium, accepted): follow-up actions can't be tied to a person. The actor is always staff (C21). This is an accepted gap that the change does not widen.
+- T-8 (information_disclosure, AppointmentRepo.detail, SUMMARY_SELECT and AppointmentSummary; risk low): fields leaking into lists. SUMMARY_SELECT is unchanged (C16), and the summary's doctor keeps only id, code and fullName (C22).
+- T-12 (tampering, DoctorService.get DOC-7 flags and DoctorDetailPage; risk low): changing the doctor page's flags. Both pieces stay unedited (C19).
+- T-4 (information_disclosure, AppointmentService.get; risk low): leaking internals on a missing doctor. Doctors are never deleted (C12), it is handled like reschedule (C18), and logs stay minimal (C6).
+- T-2 (denial_of_service, AppointmentService.get; risk low): extra reads per response. They are by-id and bounded (C5, C9), and the availability read is skipped when the rule does not apply.
+- T-6 (tampering, DoctorRepo.get and DoctorRepo.availability; risk low): SQL alteration via an id. parseId (C17) and parameterised queries (C5).
+- T-7 (tampering, withinAvailability; risk low): a wrong zone. The zone comes from configuration (C10), and the rule is reused unchanged.
+- T-10 (tampering, AppointmentDetailPage notices; risk low): markup injection. The notices are fixed texts only (C15).
+- T-9 (tampering, AppointmentDetail type (web); risk low): client-altered flags. Display only; writes are still enforced on the server (C4).
+- T-13 (information_disclosure, BookAppointmentPage; risk low): unneeded fields in the booking response. The page uses only the id (C14), and the fields are not personal data.
+- T-14 (elevation_of_privilege, AppointmentService.get; risk low): a path missing its permission check. No new route or permission (C3, C4); the MVP gap is under T-3.
 
 ## Known
-- T-1, T-5: real gaps that new controls close, and the implement step must build them.
-- T-2, T-3, T-4, T-6, T-7, T-8, T-9, T-11, T-13, T-14: covered by existing, cited controls.
-- T-10, T-12: covered by design choices the implement step must keep.
+- New controls the implement step must build: T-1, T-5.
+- Covered by existing, cited controls: T-2, T-4, T-6, T-7, T-8, T-9, T-13, T-14.
+- Covered by design choices the implement step must keep: T-10, T-12.
+- Accepted MVP gaps that this change does not widen: T-3 (every actor holds every permission, C20) and T-11 (every actor is staff, C21). Both close when sign-in replaces identify.
+
+Resolved from the review of attempt 1:
+- F-2: T-3 is now listed as an accepted MVP gap that this change does not widen, not as a covered threat.
+- F-1: T-11 now states that every actor is the fixed staff actor, so it is an accepted MVP gap that this change does not widen.
+- F-3: T-8 now cites the summary's doctor fields instead of the medical-history rule.
+- F-5: T-5 and T-12 now state their security consequence: a hidden notice leaves an unbookable appointment in place.
 
 ## Assumed
 None.

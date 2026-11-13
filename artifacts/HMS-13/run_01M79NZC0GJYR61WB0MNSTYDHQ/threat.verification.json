@@ -1,38 +1,25 @@
 {
   "artifact_path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md",
-  "artifact_sha256": "82e1b6476900c2c718322314d64f695a851669e46d4c7642358cbb5b3cb8d4cd",
-  "attempt": 1,
-  "band": "Medium",
+  "artifact_sha256": "7666bd153bba387b3455e11888ced6c47b8aac97b033d240ba119fb4d62784fc",
+  "attempt": 2,
+  "band": "High",
   "caps": [],
-  "checks_sha256": "45ce65e7a3c8c256e3745b2f109ab9717827cea5f3163b4444e53bc88858268e",
+  "checks_sha256": "66fc49e2f8e14aa849d96d8aa7fc08c696574c2196aca528e4187bf4603f2938",
   "claims": {
-    "total": 19,
-    "verified": 19
+    "total": 21,
+    "verified": 21
   },
-  "decided_at": "2026-11-13T06:22:34Z",
+  "decided_at": "2026-11-13T06:27:22Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [
     {
-      "id": "F-1",
-      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-11"
-    },
-    {
-      "id": "F-3",
-      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-8"
-    },
-    {
-      "id": "F-5",
-      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-5"
+      "id": "F-2",
+      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-4"
     }
   ],
   "findings_kept": [
     {
-      "id": "F-2",
-      "raised_from": "minor",
-      "severity": "major"
-    },
-    {
-      "id": "F-4",
+      "id": "F-1",
       "severity": "minor"
     }
   ],
@@ -45,7 +32,7 @@
     }
   ],
   "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -53,15 +40,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "43f791cb102ba0430ce01019ea2982c9b9bd3a7da0b17376256357ac2575c5e9",
   "product_changes": null,
-  "review_sha256": "9133ec60f7884e46ce2bc4b582c8123bb9d9d3119a62e706e85a92b40e7f8713",
+  "review_sha256": "21d3b534c77d4c587f2ca011f4e362651430d3a5a6ff5871d527015c90dd19b5",
   "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.875,
+    "S1": 0.9565,
     "S2": 1.0,
-    "S3": 4.2,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -70,7 +57,7 @@
       "sensitive": false
     }
   },
-  "signature": "eyM3F5XMOP5BeZovB8uniaYKi-jyhlWEwxr-GY7mHCqKhiVOZAawfgBCgpe8CGnp5yil7SCEabL6uOFTY63_Dg",
+  "signature": "alYpuGSMO72MY2o29BmJmvBAiJvsFRkpUqnBDTx9DIC28iMx4qaeCdV_wF0euQt1DQf5pUIR3qRta3vnYFTNCQ",
   "skill": "threat-model@1.1.0",
   "step": "threat",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

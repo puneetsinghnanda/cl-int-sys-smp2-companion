@@ -1,0 +1,326 @@
+{
+  "artifact_sha256": "82e1b6476900c2c718322314d64f695a851669e46d4c7642358cbb5b3cb8d4cd",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L28"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:write'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L36"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE d.id = $1",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L100"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "local wall-clock times, no overlaps per weekday",
+          "ref": "context/data-model.md#doctors"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (!detail) throw notFound(",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L56"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Doctors and patients with appointments are made Inactive, never deleted.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "TypeScript strict everywhere.",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "After booking, the booking page uses only the returned `appt.id` to navigate.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#claim:C27"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "renders `&lt;p className=\"warning\" role=\"status\"&gt;` notices",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-7"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SUMMARY_SELECT and AppointmentSummary (api, existing): unchanged (A-06).",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-5"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "parseId(req.params.id, 'id')",
+          "ref": "sample-system:api/src/routes/appointments.ts#L30"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const doctor = (await new DoctorRepo(tx).get(current.doctor_id))!;",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L95"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DoctorService.get DOC-7 flags and DoctorDetailPage (existing): unchanged",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-8"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "every change is recorded in appointment_event with time and actor (C8)",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-11"
+        },
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        },
+        {
+          "quote": "export const MVP_ACTOR: Actor = { id: 'staff', roles: ['staff'] };",
+          "ref": "sample-system:api/src/auth/identity.ts#L22"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Say in T-11 that the MVP actor is always 'staff', so who did it is not recorded until sign-in exists. Move T-11 from 'covered by existing controls' to a stated, accepted gap that this change does not widen.",
+      "text": "T-11 says appointment_event records who made each change. In the MVP every actor is the fixed 'staff', so events cannot tell staff members apart. The repudiation threat is still open, not covered by an existing control."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "T-2, T-3, T-4, T-6, T-7, T-8, T-9, T-11, T-13, T-14: covered by existing, cited controls.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#known"
+        },
+        {
+          "quote": "AUTH-2: in the MVP every actor holds every permission.",
+          "ref": "sample-system:api/src/auth/identity.ts#L30"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "In Known, list T-3 (and T-11) as existing MVP gaps that this change does not widen, separate from the threats that are actually covered.",
+      "text": "The Known section lists T-3 as covered by existing controls. T-3's own mitigation admits requirePermission grants every permission in the MVP, so it is a known gap, not an effective control."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "medical history never leaves the database outside the patient's own page (C7)",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-8"
+        },
+        {
+          "quote": "doctor: { id: number; code: string; fullName: string };",
+          "ref": "sample-system:api/src/types.ts#L53"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Remove C7 from T-8, or replace it with a citation showing that AppointmentSummary holds only the doctor's id, code and fullName.",
+      "text": "T-8 is about doctor fields leaking into appointment lists, but its mitigation cites C7, which is about patient medical history. C7 does not reduce this threat. The relevant control is that SUMMARY_SELECT stays unchanged."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "T-1 (information_disclosure, AppointmentService.get): over-sharing the doctor record.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#threats"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Add a short risk rating to each threat and order the Threats section by it.",
+      "text": "Threats are listed by component order with no likelihood or impact rating, so readers cannot see which ones matter most. For example, T-1 (new control needed) and T-10 (fixed strings) are given equal weight."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "The API and web copies of AppointmentDetail could drift",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-5"
+        },
+        {
+          "quote": "Changing the shared rule for the appointment page could silently change which appointments the doctor page flags.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-12"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Either describe these as integrity risks with a clear security consequence, or note them as non-security quality risks passed on to the implement step's tests.",
+      "text": "T-5 (API and web type drift) and T-12 (shared-rule regression) are correctness risks with no attacker, labelled as STRIDE tampering. This makes the threat list look broader than its real security content."
+    }
+  ],
+  "package_sha256": "d09b572117b4ba0478bbfa82a99ad4994af556da8f281dbf6263bbf674fb89ca",
+  "questions": [],
+  "recorded_at": "2026-11-13T06:22:22Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All nine design components (CO-1 to CO-9) appear as threat components with at least one threat each. The endpoint changes are covered through CO-1 (T-3, T-14).",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats fit their component, for example T-1 on spreading a DoctorSummary that holds phone and email. T-5 and T-12 are correctness or regression risks labelled as tampering.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Mitigations are either cited existing controls or clearly stated new controls (T-1, T-5). T-11 overstates what appointment_event proves in the MVP, and T-8 relies on C7, which does not apply.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "T-3 states the MVP gap where every permission is granted, but Known still lists T-3 as covered. The repudiation gap (every actor is 'staff') is not stated. Assumed, Unknown and Open questions are all empty.",
+      "score": 3
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Readable, and the frontmatter matches the body. Threats are grouped by component with no risk rating, so they are not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}
