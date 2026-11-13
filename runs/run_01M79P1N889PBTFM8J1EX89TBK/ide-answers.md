@@ -12,3 +12,13 @@ entries as the user's own answers.
 - question: Q-01: HMS-5 asks the patient page to count the patient's Completed and No-show appointments (ticket L17-L18), but gives no time window. The glossary's "Period" (Today / Last 7 days / Last 30 days) is used by the dashboard and the doctor page's No-shows count. Which window should the Visit summary use?
 - options: All time (proposed default) | Selectable Period | Fixed Last 30 days
 - answer: All time (proposed default)
+
+## A-02
+- step: impact
+- attempt: 1
+- asked_at: 2026-11-13T05:46:14Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01H5Rs6jNFzAW9zA9CRHv9aF
+- question: Q-01: The Visit summary must count all-time Completed and No-show appointments, but the patient page's appointments come from `repo.appointments(id, now, limit = 100)` (api/src/repositories/patientRepo.ts L232), so counting them in the browser undercounts past 100. Where should the patient page get the two counts?
+- options: Add to GET /api/patients/:id (proposed default) | New endpoint | Count in the browser
+- answer: Add to GET /api/patients/:id (proposed default)

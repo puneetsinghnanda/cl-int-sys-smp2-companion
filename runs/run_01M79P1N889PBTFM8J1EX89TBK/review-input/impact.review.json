@@ -1,0 +1,73 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "step": "impact",
+  "attempt": 1,
+  "artifact_sha256": "b10e7cb73c12bbff7abeae12f23ba3794012ee5148e168718f14935a18f1732d",
+  "package_sha256": "3add8e0a5720f29e47cfe308d5d1154bd757568658992824322dc262eb13480f",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "IA-R1", "score": 4, "reason": "The artifact lists the api, web and db modules, GET/POST/PATCH patient routes and both tables. The UI route ui:/patients/:id, whose page gains the Visit summary, is not listed as a changed element."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, API and table id is in the generated facts and cited. C6 cites a broad 121-line range (L180-L300) for a single-line fact, so it is weakly cited."},
+    {"id": "IA-R3", "score": 5, "reason": "It covers the other callers of api.patient (form and booking pages), the POST/PATCH responses built by get, and background jobs (none). The count path has the patient index."},
+    {"id": "IA-R4", "score": 4, "reason": "Statuses rest on facts or on A-02. The camelCase field name is a default, but it is listed under Known and tied to A-02, which only decided where the counts go."},
+    {"id": "IA-R5", "score": 4, "reason": "Clear and well structured, and each REQ maps to claims. Impacted items are grouped by kind, not ordered by risk."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "minor", "category": "traceability",
+     "text": "C6 cites a 121-line range of patientRepo.ts for the `limit = 100` default. That default is on one line (L232), which the A-02 question itself names.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impact.md#L21", "quote": "sample-system:api/src/repositories/patientRepo.ts#L180-L300"},
+       {"ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-02", "quote": "(api/src/repositories/patientRepo.ts L232)"}
+     ],
+     "claim_ref": "C6",
+     "suggested_fix": "Cite sample-system:api/src/repositories/patientRepo.ts#L232."},
+    {"id": "F-2", "severity": "minor", "category": "completeness",
+     "text": "The web module is marked changed because PatientDetailPage gains the Visit summary, but the UI route fact ui:/patients/:id, which renders that page, is not listed as an impacted element.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impact.md#L44", "quote": "{id: \"module:sample-system:web\", change: changed"},
+       {"ref": "context/generated/api-inventory.json#ui:/patients/:id", "quote": "\"id\": \"ui:/patients/:id\""}
+     ],
+     "suggested_fix": "Add {id: \"ui:/patients/:id\", change: changed} under apis, citing the api-inventory fact and PatientDetailPage.tsx#L76."},
+    {"id": "F-3", "severity": "minor", "category": "traceability",
+     "text": "A-02 only chose where the counts come from. The artifact still says A-02 decides C21, the camelCase field-name default, and cites a-02 for it, even though that default is a self-chosen trade-off.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impact.md#L54", "quote": "decides: [\"http:GET:/api/patients/:id\", \"module:sample-system:api\", C20, C21]"},
+       {"ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-02", "quote": "options: Add to GET /api/patients/:id (proposed default) | New endpoint | Count in the browser"},
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impact.md#L76", "quote": "Trade-off: this keeps the convention, but design may still rename it."}
+     ],
+     "claim_ref": "C21",
+     "suggested_fix": "Drop C21 from A-02's decides list and its a-02 cite; ground C21 on the code fact only, or record the naming as an assumed default."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id", "quote": "api/src/routes/patients.ts"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/patients/:id", "quote": "web/src/App.tsx"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/App.tsx#L32", "quote": "&lt;Route path=\"/patients/:id\" element={&lt;PatientDetailPage /&gt;} /&gt;"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L18", "quote": "const patient = useAsync(() =&gt; api.patient(id), id);"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76", "quote": "&lt;AppointmentTable items={p.appointments} hide=\"patient\" /&gt;"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L232", "quote": "async appointments(id: number, now: Date, limit = 100)"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L42", "quote": "appointments: await repo.appointments(id, this.clock())"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail", "quote": "sym:sample-system:api/src/types.ts:PatientDetail"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail", "quote": "sym:sample-system:web/src/api/types.ts:PatientDetail"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/client.ts#L71", "quote": "patient: (id: number | string) =&gt; send&lt;PatientDetail&gt;"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/PatientFormPage.tsx#L51", "quote": "editing ? api.patient(id) : Promise.resolve(undefined)"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L33", "quote": "patientId &amp;&amp; !labels.patient ? api.patient(patientId) : undefined"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L58", "quote": "return this.get(await repo.insert(fields, actor));"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L69", "quote": "return this.get(id);"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_patient_start_idx", "quote": "appointment_patient_start_idx"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-02", "quote": "answer: Add to GET /api/patients/:id (proposed default)"}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L174", "quote": "medicalHistory: {"}]}
+  ],
+  "questions": []
+}
