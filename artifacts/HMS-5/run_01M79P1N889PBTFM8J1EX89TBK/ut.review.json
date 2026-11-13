@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "99355da5ffc2da685f0068ea1b9f59082fbe75bef06ca6237a6be4fae85f48d6",
-  "attempt": 1,
+  "artifact_sha256": "b5a78bc6d59435951ea9dc8efa47066936a0d7edf594c762798ad046c70b014c",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -15,7 +15,7 @@
     {
       "cites": [
         {
-          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "quote": "Vitest with jsdom and Testing Library",
           "ref": "context/test-strategy.md#layers"
         }
       ],
@@ -57,6 +57,10 @@
         {
           "quote": "`PatientService.get` adds `visitSummary` to the detail.",
           "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impl.md#L44"
+        },
+        {
+          "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
         }
       ],
       "claim_id": "C6",
@@ -78,33 +82,29 @@
       "category": "completeness",
       "cites": [
         {
-          "quote": "method: PATCH",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#item:EP-3"
+          "quote": "the No-show count is 3 and the Completed count is 0",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#item:S-1"
         },
         {
-          "quote": "path: /api/patients",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#item:EP-2"
-        },
-        {
-          "quote": "request(app).get('/api/patients/9999')",
-          "ref": "sample-system:api/test/patients-visit-summary.test.ts#L78"
+          "quote": "S-1: covered by the API count, scope and all-time tests",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ut.md#L81"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add HMS-5 tests: PATCH on an unknown patient still returns 404, and POST with invalid fields is still rejected with field errors.",
-      "text": "EP-2 (POST) and EP-3 (PATCH) changed, but neither has an error-path test. The only error test is GET /api/patients/9999 returning 404. Rubric trigger: changed endpoint without an error-path test."
+      "severity": "minor",
+      "suggested_fix": "Add an API test for a patient with only No-show appointments that expects { completed: 0, noShow: 3 }, or say in Known that S-1 AC2 is covered only indirectly.",
+      "text": "No test seeds a patient with only No-show appointments (S-1 AC2: 3 No-show, 0 Completed). A swap is still caught by the {2,1} fixture, but the AC has no test of its own, and the S-1 Known line does not say so."
     },
     {
-      "category": "correctness",
+      "category": "completeness",
       "cites": [
         {
-          "quote": "the appointments list and the other sections are still shown (S-3 AC1, AC4)",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ut.md#L56"
+          "quote": "renderPage({ ...PATIENT, appointments: [APPOINTMENT, PAST] });",
+          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L83"
         },
         {
-          "quote": "appointments: [APPOINTMENT],",
-          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L20"
+          "quote": "expect(p.appointments).toHaveLength(6);",
+          "ref": "sample-system:api/test/patients-visit-summary.test.ts#L44"
         },
         {
           "quote": "upcoming first, then past, exactly as before the change",
@@ -112,88 +112,30 @@
         }
       ],
       "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Add a fixture with one upcoming and one past appointment and assert row order (S-3 AC1). Add a past-only case (S-3 AC2), or drop the AC1 mapping.",
-      "text": "The artifact says the web tests cover S-3 AC1, but the fixture has one appointment and the test checks only that a link exists, so 'upcoming first, then past' is never tested. S-3 AC2 has no test."
+      "severity": "minor",
+      "suggested_fix": "In the API test, assert the order of the patient 1 appointments (Tuesday upcoming first, then Monday past), or say that the web tests cover only rendering order.",
+      "text": "The S-3 AC1/AC2 web tests only show that the page keeps the order of the mocked rows. No API test checks that the server still returns upcoming first, then past; the API test checks only the number of appointments."
     },
     {
-      "category": "completeness",
+      "category": "correctness",
       "cites": [
         {
-          "quote": "0 is shown for each count (S-2 AC2)",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ut.md#L55"
+          "quote": "expect(screen.getByRole('heading', { name: 'Medical history' })).toBeTruthy();",
+          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L78"
         },
         {
-          "quote": "visitSummary: { completed: 0, noShow: 0 }, appointments: []",
-          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L54"
-        },
-        {
-          "quote": "Given a patient with only Scheduled and Cancelled appointments",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#item:S-2"
+          "quote": "every part of the page other than the new Visit summary shows the same content and layout",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#item:S-3"
         }
       ],
       "id": "F-3",
       "severity": "minor",
-      "text": "S-2 AC2 (only Scheduled and Cancelled appointments gives 0 and 0) is mapped to a web test that mocks visitSummary as 0 and 0. No API test seeds a patient with only Scheduled and Cancelled appointments."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "the Visit summary offers no period picker",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#item:S-1"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "text": "No test checks S-1 AC4: that the Visit summary offers no period picker."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "HMS-5 REQ-8: the summary holds two integers and nothing else",
-          "ref": "sample-system:api/test/patients-visit-summary.test.ts#L81"
-        },
-        {
-          "quote": "The patient page's `medical history` is unchanged.",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#claim:C8"
-        }
-      ],
-      "id": "F-5",
-      "severity": "minor",
-      "text": "The API test for the summary's field shape is tagged REQ-8, but REQ-8 is 'medical history is unchanged'. The test name points to the wrong requirement."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "HMS-5 REQ-8: medical history is shown as before, with and without entries",
-          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L72"
-        }
-      ],
-      "id": "F-6",
-      "severity": "minor",
-      "text": "The web REQ-8 test is titled 'with and without entries' but renders only the patient with entries. The no-entries case is a separate test."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "The user chose the field shape `visitSummary { completed, noShow }`.",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impl.md#claim:C7"
-        }
-      ],
-      "claim_ref": "C6",
-      "id": "F-7",
-      "severity": "minor",
-      "suggested_fix": "Cite module-map facts for PatientRepo and PatientService instead of, or as well as, impl C7.",
-      "text": "C6 says the field is added through PatientRepo and PatientService, but its only cite is impl C7, which covers just the field shape the user chose."
+      "text": "The REQ-7/REQ-9 web test checks only that the elements exist (getBy...toBeTruthy). It cannot catch changed content or layout, which S-3 AC4 requires."
     }
   ],
-  "package_sha256": "f1b42f6093d775677cda6148b23322f00e65b3209acb85ff6f5f58bc883dce9f",
+  "package_sha256": "eed27bbf49dab7025a640412166e59bb91a58e2e8e4a9f0e9fd30a409b4ebf1c",
   "questions": [],
-  "recorded_at": "2026-11-13T06:21:54Z",
+  "recorded_at": "2026-11-13T06:31:01Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -204,31 +146,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Every changed part (CO-1 to CO-5, EP-1 to EP-3) has a test. Some story ACs are mapped to tests but not exercised: S-3 AC1/AC2 ordering, S-1 AC4 no period picker, and S-2 AC2 (Scheduled and Cancelled only) at the API.",
-      "score": 4
+      "reason": "Tests cover every changed path (CO-1 to CO-5, EP-1 to EP-3): GET, POST and PATCH carry visitSummary, and the web block is tested. The earlier gaps for S-2 AC2 at the API, S-1 AC4 and S-3 AC1/AC2 are now tested. Only S-1 AC2 has no test of its own.",
+      "score": 5
     },
     {
       "id": "UT-R2",
-      "reason": "API tests use exact toEqual on visitSummary and check status codes. The web REQ-7/REQ-9 test only checks that elements exist (toBeTruthy), so it cannot catch a changed order or content.",
+      "reason": "The API tests use exact toEqual and status checks, and the web order tests compare the row codes. The REQ-7/REQ-9 web test still only checks that elements exist (toBeTruthy), which is weak for 'same content and layout'.",
       "score": 4
     },
     {
       "id": "UT-R3",
-      "reason": "Good edge cases: past unclosed Scheduled, latest Cancelled, other patient, all time, zero. The only error test is GET 404; the changed POST and PATCH endpoints have no error-path test.",
-      "score": 3
+      "reason": "Tests cover 404 on GET and PATCH and 400 with field errors on POST. They also cover a past Scheduled appointment that was never closed, the latest Cancelled appointment, a second patient, all time, zero, only Scheduled and Cancelled, an empty list, and no medical history.",
+      "score": 5
     },
     {
       "id": "UT-R4",
-      "reason": "Uses Vitest+Supertest with its own throwaway DB and a fixed clock, and Vitest+jsdom+Testing Library on the web side. Test names start with HMS-5 REQ-n, as existing tests in test-layout do.",
+      "reason": "Vitest+Supertest on its own throwaway DB with a controllable clock and skipIf(!pgAvailable()); Vitest+jsdom+Testing Library on web. All test names start with HMS-5 REQ-n.",
       "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "Reports no counts or coverage. It defers results to the verifier, and checks.json shows coverage skipped (exit 78), which matches C5.",
+      "reason": "The artifact states no test counts or coverage and leaves results to the verifier. checks.json shows test passed and coverage skipped (exit 78), which matches C5.",
       "score": 5
     }
   ],
-  "rubric_score": 4.05,
+  "rubric_score": 4.75,
   "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
   "schema": "review.v1",
   "status": "ok",

@@ -1,0 +1,96 @@
+{
+  "artifact_path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/ut.md",
+  "artifact_sha256": "99355da5ffc2da685f0068ea1b9f59082fbe75bef06ca6237a6be4fae85f48d6",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "e51d5c87baa19a826f85fc7b27eb6040a1c7f8a5fa54c7516885bab72c63a20c",
+  "claims": {
+    "total": 7,
+    "verified": 7
+  },
+  "decided_at": "2026-11-13T06:22:08Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    },
+    {
+      "id": "F-6",
+      "severity": "minor"
+    },
+    {
+      "id": "F-7",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impl.md",
+      "sha256": "72eafcaf6291816266d51f848b24dd9000dc0c3aab1c974d8f12b91e8fe0e1a4",
+      "verification_sha256": "dbd35eac70e753864d561e5c05cfe8323e8d32ccf7f79fd508aa4c6e4bd6ab0d"
+    },
+    {
+      "path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md",
+      "sha256": "db8ef532a356ccb24887a9fadcb6dc8a8fbc5338ae76d37cb71b224324490de8",
+      "verification_sha256": "0f74295b39a21d499571af36ce0a82369bd747cc61f65c529df653f3b9a487fa"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "a5bc7f4a1a8b6639560ddda9dd7df04b81fd66a0",
+      "diff_sha256": "86daf92692f63219ea14465f5517e5b560a416db3b542e5ff0ee87e636b062be",
+      "repo": "sample-system",
+      "tree_sha": "c7e3ff910b99b8b362154b3659740108d58fcd3e"
+    }
+  ],
+  "review_sha256": "7ad8fddb7b5b9baeb0b040d12a9307acee8a3d308a377219496697f75f6e3e2b",
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9286,
+    "S2": 1.0,
+    "S3": 4.05,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 2,
+      "lines": 170,
+      "sensitive": false
+    }
+  },
+  "signature": "wHExWM2zdthvXZ9og1EuGPQYjiGa4DQYJhGGJKGhGhQN8m7Z8lgxAbKdQTMAbGKhsat-UC0uXhWOIaDfbUkAAg",
+  "skill": "unit-test@1.2.0",
+  "step": "ut",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
