@@ -1,0 +1,85 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "4ac588db013a5e386b1768e14973edb892b7f1ec0225d0d53ffbbd470f7a8bd2",
+  "package_sha256": "c88484d17b3583a1521f4eb5ab4f53eb308619b0b8d0c90a2bc9d6893740549b",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "Each of the six ticket acceptance criteria maps to a REQ (AC1-REQ-1, AC2-REQ-2/3/4, AC3-REQ-5, AC4-REQ-6/7, AC5-REQ-8, AC6-REQ-9). Out-of-scope items give reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "Each REQ covers one behaviour a tester can check. One flaw: the REQ-5 YAML statement misplaces its backticks, so the exact notice text a tester would assert on is unclear."},
+    {"id": "RR-R3", "score": 5, "reason": "Every REQ cites a ticket line or an IDE answer. REQ-3 and REQ-4 rest on A-01 and A-02. The only assumption (REQ-6) was confirmed in A-04. No invented values."},
+    {"id": "RR-R4", "score": 5, "reason": "The divergence from AC2 caused by dropping the 50-cap is recorded as a mismatch on A-02 and cites ticket L28-L30. No baseline conflict was left silent."},
+    {"id": "RR-R5", "score": 4, "reason": "Questions are precise, offer real options and propose defaults. The override of AC2 was decided by an engineer, but it is arguably a product decision."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain wording and consistent glossary terms. Small glitches: a malformed quote in REQ-5, a stray `Yes, confirm` in REQ-6, and a non-scope bullet listed under Out of scope."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "In the REQ-5 YAML statement, the backticks end after 'The doctor is Inactive.', so the rest of the notice text falls outside the quote. The ticket and the body (L142) have the full two-sentence notice.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#L71", "quote": "shows the notice `The doctor is Inactive.` Cancel this appointment"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/ticket.md#L31-L32", "quote": "Cancel this appointment or book the patient with another doctor.\" above the actions."}
+      ],
+      "suggested_fix": "Quote the full notice: `The doctor is Inactive. Cancel this appointment or book the patient with another doctor.`"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "The REQ-6 statement ends with '(`Yes, confirm`)', which is the A-04 answer text. Placed there, it reads like the label of a page action.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#L77", "quote": "both above the actions (`Yes, confirm`)."}
+      ],
+      "suggested_fix": "Remove '(`Yes, confirm`)' from the statement. The A-04 cite already records the confirmation."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Claim C6 (hospital time zone Asia/Kolkata) is declared, but no requirement or body section uses it.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#L33", "quote": "The hospital time zone is `Asia/Kolkata`."}
+      ],
+      "claim_ref": "C6",
+      "suggested_fix": "Either drop C6, or use it where it applies (for example, weekly availability is evaluated in hospital local time)."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "style",
+      "text": "The last Out of scope bullet is an input-hygiene note, not an out-of-scope item.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/req.md#L178", "quote": "No instruction-like text, credential or personal data was found in the inputs."}
+      ],
+      "suggested_fix": "Move this note to a separate section or to the summary."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-02", "quote": "Use the same rule (withinAvailability on not-yet-started Scheduled appointments)"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-01", "quote": "The doctor page flags only Scheduled appointments that haven't started yet (`starts_at &gt;= now` in doctorRepo.ts)"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-02", "quote": "The doctor page checks only its first 50 upcoming Scheduled appointments (limit 50 in doctorRepo.ts)"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "appointments never change."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/ticket.md#L20-L22", "quote": "an Inactive doctor's Scheduled appointments stay and need rescheduling or"}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "AC2 says an appointment not flagged on the doctor page is not flagged on its appointment page. An engineer (A-02) chose to flag appointments beyond the doctor page's first 50. Does product accept this departure from AC2?",
+      "ask_role": "product_owner",
+      "blocking": false
+    }
+  ]
+}
