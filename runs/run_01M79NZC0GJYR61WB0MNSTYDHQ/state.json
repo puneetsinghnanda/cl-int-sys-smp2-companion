@@ -25,7 +25,7 @@
       "step": "req"
     }
   ],
-  "heartbeat_at": "2026-11-13T05:59:31Z",
+  "heartbeat_at": "2026-11-13T06:09:00Z",
   "owner": "key_01M77FBDN0DQ96SZ33BBPACWN4",
   "owner_pseudonym": "eng-1df5",
   "pack": {
@@ -66,7 +66,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 10,
+  "rev": 13,
   "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -137,7 +137,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impact.md",
+          "artifact_sha256": "bd45142e0a0598bb74a129f97375f07f813464619554f9ec0c9b56fd02046bfd",
+          "band": "Medium",
+          "cause": "first",
+          "decided_at": "2026-11-13T06:09:00Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "4ac588db013a5e386b1768e14973edb892b7f1ec0225d0d53ffbbd470f7a8bd2",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impact.verification.json",
+          "skill": "impact-analysis@1.3.0",
+          "skill_started_at": "2026-11-13T05:59:52Z",
+          "started_at": "2026-11-13T05:59:42Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -146,7 +169,7 @@
       },
       "id": "impact",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -229,7 +252,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-13",
-  "updated_at": "2026-11-13T05:59:31Z",
+  "updated_at": "2026-11-13T06:09:00Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }

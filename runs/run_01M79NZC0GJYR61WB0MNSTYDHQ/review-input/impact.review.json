@@ -1,0 +1,86 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "step": "impact",
+  "attempt": 1,
+  "artifact_sha256": "bd45142e0a0598bb74a129f97375f07f813464619554f9ec0c9b56fd02046bfd",
+  "package_sha256": "4da6478a1741cd3fec7af0d1639900f56a051e272499fe8e2f6484b7fb15c967",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457"
+  },
+  "rubric_score": 3.5,
+  "rubric_items": [
+    {"id": "IA-R1", "score": 3, "reason": "Modules, tables and most APIs are listed. One indirect effect is missing: POST /api/appointments (book) also returns AppointmentDetail through this.get(id), so it gains the new fields. The artifact does not list it."},
+    {"id": "IA-R2", "score": 4, "reason": "Every module, API and table id exists in the generated facts and is cited. Claims match the code lines. One statement credits A-06 with more than the answer decided."},
+    {"id": "IA-R3", "score": 3, "reason": "It covers the doctor and dashboard readers of the shared query, the four action endpoints and background jobs. It misses the book endpoint and its consumer BookAppointmentPage, and it leaves the patient detail reader out of the API list."},
+    {"id": "IA-R4", "score": 4, "reason": "Each change status rests on a cited fact or on A-05/A-06. 'The four action endpoints' is a complete set stated as fact, and the code disproves it. The shared-query-unchanged decision is credited to A-06."},
+    {"id": "IA-R5", "score": 4, "reason": "Readable, and the summary names the main risks. The 'Impacted modules' section mixes in APIs and tables, and the list is not ordered by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "POST /api/appointments (book) also ends with this.get(id) and returns AppointmentDetail, which BookAppointmentPage consumes. It gains the new fields too, but it is missing from apis, and the artifact claims the shared detail shape reaches only 'the four action endpoints'.",
+      "cites": [
+        {"ref": "sample-system:api/src/services/appointmentService.ts#L79", "quote": "await repo.event(newId, 'BOOKED', actor, { to: startsAt });"},
+        {"ref": "sample-system:web/src/api/client.ts#L80", "quote": "send&lt;AppointmentDetail&gt;('/api/appointments', { method: 'POST', body })"},
+        {"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L56", "quote": "const appt = await api.book({ doctorId, patientId, startsAt: start, reason });"},
+        {"ref": "context/generated/api-inventory.json#http:POST:/api/appointments", "quote": "\"id\": \"http:POST:/api/appointments\""},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impact.md#summary", "quote": "the four action endpoints return the same detail shape (C7)"}
+      ],
+      "claim_ref": "C7",
+      "suggested_fix": "Add http:POST:/api/appointments (changed, additive) with a cite to appointmentService.ts#L83, and change 'four action endpoints' to cover book as well."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The summary names the patient queries as readers of the shared summary query (C13), but apis lists the doctor and dashboard readers only. GET /api/patients/:id, which reads SUMMARY_SELECT through PatientRepo.appointments, is not listed as existing.",
+      "cites": [
+        {"ref": "sample-system:api/src/repositories/patientRepo.ts#L224", "quote": "${SUMMARY_SELECT} WHERE a.patient_id = $1"},
+        {"ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id", "quote": "http:GET:/api/patients/:id"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impact.md#summary", "quote": "which the doctor, dashboard and patient queries share (C11, C12, C13)"}
+      ],
+      "suggested_fix": "Add http:GET:/api/patients/:id as existing, citing patientRepo.ts#L224 and A-06."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "A-06 decides only that the new fields go on AppointmentDetail. The artifact also credits it with keeping the shared summary query unchanged. The detail row is read through SUMMARY_SELECT, which selects only the doctor's name, so how the doctor's status gets read is still open.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impact.md#impacted-modules", "quote": "AppointmentSummary and the shared summary query stay as they are (A-06)"},
+        {"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-06", "quote": "Should the new fields go on AppointmentDetail only?"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L88", "quote": "this.db.query&lt;DetailRow&gt;(`${SUMMARY_SELECT} WHERE a.id = $1${lock}`"}
+      ],
+      "suggested_fix": "Separate what A-06 decided (the type) from the query decision. Either mark 'shared query unchanged' as assumed, or state how detail() reads the doctor's status (an extra query or a detail-only select)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"path\": \"web/src/App.tsx\""}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L26", "quote": "useAsync(() =&gt; api.appointment(id)"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/client.ts#L78", "quote": "send&lt;AppointmentDetail&gt;(`/api/appointments/${id}`)"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"path\": \"api/src/routes/appointments.ts\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L55", "quote": "await new AppointmentRepo(this.db).detail(id)"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L101", "quote": "return this.get(id);"}, {"ref": "sample-system:api/src/services/appointmentService.ts#L119", "quote": "async close(id: number, outcome: 'COMPLETED' | 'NO_SHOW', actor: string)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L35", "quote": "setVersion((v) =&gt; v + 1);"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L51", "quote": "doctor: { id: number; code: string; fullName: string };"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22", "quote": "d.full_name AS doctor_name"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L6", "quote": "import { SUMMARY_SELECT, toSummary } from '../repositories/appointmentRepo';"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:doctor.status", "quote": "\"id\": \"column:doctor.status\""}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/data-model.md#doctors", "quote": "`availability_block` rows (weekday 1 = Monday"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/slots.ts:withinAvailability", "quote": "sym:sample-system:api/src/lib/slots.ts:withinAvailability"}, {"ref": "sample-system:api/src/lib/slots.ts#L27", "quote": "lies inside one availability block, whatever the slot grid (DOC-7)"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L68", "quote": "const outsideAvailability = upcoming"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]}
+  ],
+  "questions": []
+}

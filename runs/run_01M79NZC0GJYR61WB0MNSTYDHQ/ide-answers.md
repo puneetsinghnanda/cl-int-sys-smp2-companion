@@ -42,3 +42,23 @@ entries as the user's own answers.
 - question: REQ-6: I assumed that when both notices apply, the outside-availability notice comes first and the Inactive notice second, both above the actions (the same order as AC1 and AC3). Is that right?
 - options: Yes, confirm | Inactive notice first
 - answer: Yes, confirm
+
+## A-05
+- step: impact
+- attempt: 1
+- asked_at: 2026-11-13T06:03:04Z
+- answered_by: eng-1df5
+- tool_use_id: toolu_01XPkBBTHwcSVQgcMFzju8Z1
+- question: Q-01: Today the appointment detail (GET /api/appointments/:id) has no doctor status and no availability result. Where should the appointment page get them?
+- options: Add both to GET /:id (proposed default) | Web also calls GET /api/doctors/:id | Web re-implements the rule
+- answer: Add both to GET /:id (proposed default)
+
+## A-06
+- step: impact
+- attempt: 1
+- asked_at: 2026-11-13T06:03:04Z
+- answered_by: eng-1df5
+- tool_use_id: toolu_01XPkBBTHwcSVQgcMFzju8Z1
+- question: Q-02: The appointment detail is built from SUMMARY_SELECT / toSummary in appointmentRepo.ts, which the appointment list, the doctor's upcoming list, the dashboard and the patient page share. Should the new fields go on AppointmentDetail only?
+- options: AppointmentDetail only (proposed default) | Add to AppointmentSummary too
+- answer: AppointmentDetail only (proposed default)
