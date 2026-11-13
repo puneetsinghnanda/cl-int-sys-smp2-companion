@@ -1,23 +1,18 @@
 {
   "artifact_path": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/secrev.md",
-  "artifact_sha256": "97181601b2c0be88173f0def2e717922eafa54a2f5adc934354b6f76878d2432",
-  "attempt": 1,
+  "artifact_sha256": "7fe527c979cdbc5099b3b88d421f319a66ffc21ab652c6247c627a71a0cfa6ac",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "aeaa26e7caeb3d619d954c604086201be516a6e23bee6479ca63d696f18fa435",
+  "checks_sha256": "40a82cb9adc4370eff173a071cd8c72d4a7553b97f280d78537cd51d404a73d2",
   "claims": {
     "total": 6,
     "verified": 6
   },
-  "decided_at": "2026-11-13T06:35:22Z",
+  "decided_at": "2026-11-13T06:38:09Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
-  "findings_kept": [
-    {
-      "id": "F-1",
-      "severity": "major"
-    }
-  ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -27,7 +22,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -35,15 +30,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "bd189a27c3c6a636cb6e2ea347c90c809aa4dbe338b37574c0c5bbc3cc06e61e",
   "product_changes": null,
-  "review_sha256": "188667817496637dabad8c18c8082a52307c9dd96157bd5d266f7a8d7f09445a",
+  "review_sha256": "4c3ce71004f218614d1c43b1d39f7e61299872e297771824ff447905bc834ded",
   "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.8,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -52,7 +47,7 @@
       "sensitive": false
     }
   },
-  "signature": "8bsBT-Mf9KB88DT839AIrmfIfIjfwAiVkJqbGlouckfi2lXfW1d93oH-ovhmYOTe-NLLUBF1GS1P1P_9RbFmDw",
+  "signature": "KW15VPEwwKN0tOdh0H-Z9xVD1XDHtQXylghbgba_exZK4PlqPDZDb70FxDp5mUypKS8B323zW3jllOskut_kDA",
   "skill": "secure-code-review@1.2.0",
   "step": "secrev",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

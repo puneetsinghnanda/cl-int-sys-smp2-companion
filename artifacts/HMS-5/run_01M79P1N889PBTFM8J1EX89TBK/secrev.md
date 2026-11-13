@@ -2,7 +2,7 @@
 schema: secure-review.v1
 run_id: run_01M79P1N889PBTFM8J1EX89TBK
 step: secrev
-attempt: 1
+attempt: 2
 skill: secure-code-review@1.2.0
 inputs:
   - {path: artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impl.md, sha256: 72eafcaf6291816266d51f848b24dd9000dc0c3aab1c974d8f12b91e8fe0e1a4}
@@ -15,12 +15,14 @@ claims:
   - {id: C3, text: "SQL belongs in `api/src/repositories`, and rules in api/src/services.", cites: ["context/conventions.md#code-layout"]}
   - {id: C4, text: "Unknown ids return `404`, and invalid input returns 400 with one message per field.", cites: ["context/conventions.md#errors"]}
   - {id: C5, text: "Logs carry method, route and error message only, `never request bodies`, contact details or medical data.", cites: ["context/conventions.md#logging-and-data"]}
-  - {id: C6, text: "The added field is `visitSummary { completed, noShow }`, as the user chose.", cites: ["runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03"]}
+  - {id: C6, text: "The change adds the field `visitSummary { completed, noShow }` to the patient detail.", cites: ["artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impl.md#claim:C7"]}
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "C6 now cites the change artifact's claim C7 instead of the design step's IDE answer."}
 scans:
   - {kind: sast, report_sha256: 56ff2da3c6133c0042a0f6e33cdd0763135eba58ce64ed389e6d5f23e73acc62}
   - {kind: secrets, report_sha256: 5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3}
@@ -32,6 +34,8 @@ findings: []
 The change carries low risk, and I found no security weakness. The SAST and secrets reports from the verifier are attached by hash; I did not restate their results.
 
 The change does three things. It adds one count query to the existing patient repository, two integer fields to the patient detail response (C6), and a read-only block on the patient page. It adds no route, no permission, no dependency and no log line.
+
+Retry fix for F-1: C6 now cites the change artifact's claim C7 instead of the design step's IDE answer.
 
 ## Findings
 None. What I checked in the diff:
