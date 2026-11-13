@@ -1,0 +1,394 @@
+{
+  "artifact_sha256": "385aa8939befa99e8d415e886be5a4faac02d8447880d56dc1a4477012f582fb",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class AppointmentService {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L17"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async get(id: number): Promise&lt;AppointmentDetail&gt; {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L54"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "private readonly clock: () =&gt; Date,",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L21"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const tz = this.config.timeZone;",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L40"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L83"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L101"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L115"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L129"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class DoctorRepo {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L74"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Promise&lt;DoctorSummary | null&gt;",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L99"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status: RecordStatus;",
+          "ref": "sample-system:api/src/types.ts#L42"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async availability(id: number): Promise&lt;AvailabilityBlock[]&gt; {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L131"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function withinAvailability(blocks: AvailabilityBlock[], start: Date, end: Date, tz: string): boolean {",
+          "ref": "sample-system:api/src/lib/slots.ts#L28"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "!withinAvailability(availability, new Date(a.startsAt), new Date(a.endsAt), this.config.timeZone)",
+          "ref": "sample-system:api/src/services/doctorService.ts#L69"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a.status = 'SCHEDULED' AND a.starts_at &gt;= $2",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface AppointmentDetail extends AppointmentSummary {",
+          "ref": "sample-system:api/src/types.ts#L128"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface AppointmentDetail extends AppointmentSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L114"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type RecordStatus = 'ACTIVE' | 'INACTIVE';",
+          "ref": "sample-system:api/src/types.ts#L1"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type RecordStatus = 'ACTIVE' | 'INACTIVE';",
+          "ref": "sample-system:web/src/api/types.ts#L2"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function AppointmentDetailPage() {",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L22"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L44"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;div className=\"actions\"&gt;",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L73"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "setVersion((v) =&gt; v + 1);",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L35"
+        }
+      ],
+      "claim_id": "C24",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;p className=\"warning\" role=\"status\"&gt;",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L134"
+        }
+      ],
+      "claim_id": "C25",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:SUMMARY_SELECT",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:SUMMARY_SELECT"
+        }
+      ],
+      "claim_id": "C26",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "navigate(`/appointments/${appt.id}`);",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L57"
+        }
+      ],
+      "claim_id": "C27",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"
+        }
+      ],
+      "claim_id": "C28",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "name: DoctorService.get DOC-7 flags and DoctorDetailPage",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#L151"
+        },
+        {
+          "quote": "module: module:sample-system:api",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#L152"
+        },
+        {
+          "quote": "web/src/pages/DoctorDetailPage.tsx",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Split CO-8 into an api component (DoctorService.get) and a web component (DoctorDetailPage), or note both modules.",
+      "text": "CO-8 combines DoctorService.get (api) and DoctorDetailPage (web) but declares only module:sample-system:api. DoctorDetailPage lives in the web module."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "async get(id: number, forUpdate = false): Promise&lt;DoctorSummary | null&gt;",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L99"
+        },
+        {
+          "quote": "const doctor = (await new DoctorRepo(tx).get(current.doctor_id))!;",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L95"
+        },
+        {
+          "quote": "adds `doctorStatus` from DoctorRepo.get",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#L240"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "In CO-1, state that an appointment's doctor always exists (FK, and DOC-5 forbids deleting doctors with appointments) and handle null the same way reschedule does.",
+      "text": "doctorStatus is nullable:false, but DoctorRepo.get returns DoctorSummary | null. CO-1 does not say why the doctor always exists or how get handles null (e.g. the non-null assertion reschedule uses)."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "- S-3 (both, in order): CO-7.",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#L235"
+        },
+        {
+          "quote": "lies in none of its doctor's availability blocks and whose doctor is Inactive",
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#L71"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "List S-3 as served by CO-1, CO-3, CO-4, CO-7 and EP-1.",
+      "text": "Story coverage lists only CO-7 for S-3. S-3 AC1 also needs CO-1/EP-1 to set both doctorStatus and outsideAvailability."
+    }
+  ],
+  "package_sha256": "48bfa9ed371fd4bca5cee6e6b6fde3b3cf9de0ebf8ab0838042ea22749ee8cc1",
+  "questions": [],
+  "recorded_at": "2026-11-13T06:17:41Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "The design reuses AppointmentService.get, DoctorRepo.get/availability, withinAvailability and the configured zone. The rule stays in the service, as the layering requires. There is no new endpoint, table, migration or infrastructure, and SUMMARY_SELECT is left alone per A-06.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story AC maps to a behaviour. S-1 AC3/AC4/AC5 are covered by starts_at &gt;= now, no cap and the hospital zone. S-2 AC2 works because the Inactive notice does not depend on start time. S-4 works because the flag is false and notices render only in the Scheduled branch.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Both new fields on all six endpoints have a name, type, nullability, format and example. The outsideAvailability condition is stated exactly enough to test.",
+      "score": 5
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices are cited or decided by A-07/A-08, and the cited lines match the code. Gap: doctorStatus is declared not null, but DoctorRepo.get can return null, and the design never says why the doctor always exists or how null is handled.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "The trade-offs are explained: extra queries vs. changing SUMMARY_SELECT, the action endpoints gaining fields additively, the outsideAvailability name clashing with the doctor detail's id list, and service-vs-route placement.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent overall. One slip: CO-8 bundles a web page under the api module.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
