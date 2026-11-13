@@ -1,0 +1,242 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "7f75c260f898f41730fed5398fa2787fb5fa1cb2f647d765acc74a10dd35002d",
+  "package_sha256": "0586aeea00bc8d8fd650630787493a1cbb8adae3506947538dc468b1bcd7ad62",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.45,
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "score": 4,
+      "reason": "With the implement step's tests, every branch of AppointmentService.get and every page-notice condition is tested. Gaps: S-2 AC2 (a started Scheduled appointment with an Inactive doctor) has no API test, and S-5 AC2/AC3 are claimed but not checked."
+    },
+    {
+      "id": "UT-R2",
+      "score": 4,
+      "reason": "Most assertions check observable results: flag values, the doctor-page list, 404 status, notice order and DOM position. Weak spots: the S-4 close-response asserts cannot tell apart status logic, and history is only checked through its heading, with an empty history."
+    },
+    {
+      "id": "UT-R3",
+      "score": 5,
+      "reason": "Covers the 51st appointment past the doctor-page cap, the local weekday across UTC midnight, the exact start instant and one minute after, Completed/No-show with an Inactive doctor, a stray flag on closed statuses, and the unknown-id 404."
+    },
+    {
+      "id": "UT-R4",
+      "score": 5,
+      "reason": "API tests are in api/test and use Vitest, Supertest, the fixed clock and skipIf(!pgAvailable()). Web tests are in web/src/__tests__ and use Testing Library with a stubbed fetch. Every test name starts with HMS-13 REQ-n."
+    },
+    {
+      "id": "UT-R5",
+      "score": 5,
+      "reason": "No test counts or coverage numbers are made up. Counts are left to checks.json, and the coverage skip matches the verifier (coverage step status skip, exit 78)."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-2 AC2 (a started Scheduled appointment with an Inactive doctor still shows the Inactive notice) is not tested at the API level. Known maps S-2 only to the page test, and no new or existing test checks doctorStatus for an appointment that has already started.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#L63",
+          "quote": "Given a Scheduled appointment whose start time has already passed and whose doctor is Inactive"
+        },
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/ut.md#L93",
+          "quote": "S-2: covered by the page test for the Inactive notice and its placement."
+        }
+      ],
+      "suggested_fix": "Add an API test: make a doctor Inactive, then GET a Scheduled appointment using a clock after its start, and assert doctorStatus INACTIVE with outsideAvailability false."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The S-4 close-response asserts cannot fail. When complete and no-show run, doctor 2 is still Active and Monday 09:00-10:00 is inside its block, so outsideAvailability is false whatever the status. The artifact still says both the close responses and GET are covered.",
+      "cites": [
+        {
+          "ref": "sample-system:api/test/appointments-fit-edges.test.ts#L78",
+          "quote": "toMatchObject({ status: 'COMPLETED', outsideAvailability: false })"
+        },
+        {
+          "ref": "sample-system:api/test/appointments-fit-edges.test.ts#L80",
+          "quote": "put('/api/doctors/2/availability')"
+        },
+        {
+          "ref": "sample-system:api/test/helpers.ts#L42",
+          "quote": "feePaise: 80000, slotMinutes: 30, availability: [{ weekday: 1, start: '09:00', end: '10:00' }]"
+        },
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/ut.md#L81",
+          "quote": "both in the close responses and afterwards on GET"
+        }
+      ],
+      "suggested_fix": "Move the availability change before the complete and no-show calls, or say that only the GET checks are meaningful."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Known says S-5 is covered, but the REQ-9 page test only checks AC1. AC2 (page exactly as before when there is no notice) is not checked. History is only checked by waiting for its heading, using a fixture with an empty history.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/ut.md#L96",
+          "quote": "S-5: covered by the page test checking that the details, actions and history are unchanged."
+        },
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#L89",
+          "quote": "then the page shows exactly what it showed before this change."
+        },
+        {
+          "ref": "sample-system:web/src/__tests__/AppointmentDetailPage.test.tsx#L15",
+          "quote": "cancellationReason: null, history: []"
+        },
+        {
+          "ref": "sample-system:web/src/__tests__/AppointmentDetailPage.test.tsx#L32",
+          "quote": "await screen.findByRole('heading', { name: 'History' });"
+        }
+      ],
+      "suggested_fix": "Use a fixture with at least one history event and assert it renders. Add a no-notice test that checks the details, actions and history, or narrow the S-5 Known line to AC1."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "style",
+      "text": "The API edge tests depend on running in order. The REQ-3 boundary test reads doctor 3's first appointment, which the AC5 test creates. The S-4 test avoids a clash with a booking made in the first test. Running one test alone breaks them.",
+      "cites": [
+        {
+          "ref": "sample-system:api/test/appointments-fit-edges.test.ts#L66",
+          "quote": "get('/api/appointments?doctorId=3')).body.items[0]"
+        },
+        {
+          "ref": "sample-system:api/test/appointments-fit-edges.test.ts#L74",
+          "quote": "Patient 1 already holds Monday 09:00 with doctor 1 (first test)"
+        }
+      ],
+      "suggested_fix": "Have each test create the doctor or appointment it needs, or move the shared setup into beforeAll."
+    }
+  ],
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#layers",
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#layers",
+          "quote": "Web tests use Vitest with jsdom and Testing Library."
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#requirement-ids",
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID"
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#database-for-tests",
+          "quote": "Without either, database tests are skipped."
+        }
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#gaps",
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."
+        }
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/impl.md#claim:C1",
+          "quote": "to add doctorStatus and outsideAvailability"
+        }
+      ]
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-02",
+          "quote": "don't copy the doctor page's 50-appointment limit"
+        }
+      ]
+    },
+    {
+      "claim_id": "C8",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "sample-system:api/test/helpers.ts#L9",
+          "quote": "Monday 19 October 2026, 08:00 in Asia/Kolkata"
+        }
+      ]
+    },
+    {
+      "claim_id": "C9",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "sample-system:api/test/helpers.ts#L23",
+          "quote": "doctor 1: 15-minute slots, Mon–Fri 09:00–12:00"
+        }
+      ]
+    },
+    {
+      "claim_id": "C10",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L19",
+          "quote": "vi.stubGlobal('fetch', vi.fn(async (url: string) =&gt;"
+        }
+      ]
+    },
+    {
+      "claim_id": "C11",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#claim:C4",
+          "quote": "The hospital time zone is `Asia/Kolkata`."
+        }
+      ]
+    }
+  ],
+  "questions": []
+}
