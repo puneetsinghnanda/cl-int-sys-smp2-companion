@@ -1,0 +1,128 @@
+{
+  "artifact_sha256": "97181601b2c0be88173f0def2e717922eafa54a2f5adc934354b6f76878d2432",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409.",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: visitSummary { completed, noShow } (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "cites: [\"runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03\"]",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/secrev.md#L18"
+        },
+        {
+          "quote": "- step: design",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03"
+        }
+      ],
+      "claim_ref": "C6",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite the underlying fact instead, e.g. the module-map PatientDetail symbol (api/src/types.ts) or the code line that declares visitSummary.",
+      "text": "C6 cites ide-answers A-03, which the design step asked. This artifact has no answers list, so the cite is an answer from an earlier step that tsl's H4 check may reject."
+    }
+  ],
+  "package_sha256": "295583090ebcffcd85f596c9cb1ba0a525cc14724c358d9f98ef7e342964bc09",
+  "questions": [],
+  "recorded_at": "2026-11-13T06:35:19Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "Checked at head: visitSummary binds patient_id as $1 with fixed status literals. get throws notFound before counting. Patient routes call requirePermission. The page renders numbers as text. No weakness was missed.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "The code line ranges (patientRepo L221-L229, patientService L41-L42, PatientDetailPage L76-L81) match head exactly. C6 cites an answer from the design step instead of a fact.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "No findings and low risk is correct: no new route, no injection, no new data class, no logging change.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "No weaknesses exist, so no fixes are needed. Each checked area states plainly why it is safe.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives raised.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}

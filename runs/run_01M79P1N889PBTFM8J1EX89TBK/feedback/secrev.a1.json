@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "cites: [\"runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03\"]",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/secrev.md#L18"
+        },
+        {
+          "quote": "- step: design",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "C6 cites ide-answers A-03, which the design step asked. This artifact has no answers list, so the cite is an answer from an earlier step that tsl's H4 check may reject."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "feedback.v1",
+  "step": "secrev"
+}

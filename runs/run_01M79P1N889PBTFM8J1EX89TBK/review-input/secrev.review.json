@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "97181601b2c0be88173f0def2e717922eafa54a2f5adc934354b6f76878d2432",
+  "package_sha256": "295583090ebcffcd85f596c9cb1ba0a525cc14724c358d9f98ef7e342964bc09",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "Checked at head: visitSummary binds patient_id as $1 with fixed status literals. get throws notFound before counting. Patient routes call requirePermission. The page renders numbers as text. No weakness was missed."},
+    {"id": "SC-R2", "score": 4, "reason": "The code line ranges (patientRepo L221-L229, patientService L41-L42, PatientDetailPage L76-L81) match head exactly. C6 cites an answer from the design step instead of a fact."},
+    {"id": "SC-R3", "score": 5, "reason": "No findings and low risk is correct: no new route, no injection, no new data class, no logging change."},
+    {"id": "SC-R4", "score": 5, "reason": "No weaknesses exist, so no fixes are needed. Each checked area states plainly why it is safe."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives raised."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "traceability",
+      "text": "C6 cites ide-answers A-03, which the design step asked. This artifact has no answers list, so the cite is an answer from an earlier step that tsl's H4 check may reject.",
+      "cites": [
+        {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/secrev.md#L18", "quote": "cites: [\"runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03\"]"},
+        {"ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03", "quote": "- step: design"}
+      ],
+      "claim_ref": "C6",
+      "suggested_fix": "Cite the underlying fact instead, e.g. the module-map PatientDetail symbol (api/src/types.ts) or the code line that declares visitSummary."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03", "quote": "answer: visitSummary { completed, noShow } (proposed default)"}]}
+  ],
+  "questions": []
+}
