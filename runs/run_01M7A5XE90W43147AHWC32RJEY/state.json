@@ -1,0 +1,70 @@
+{
+  "active_session": null,
+  "branch": {},
+  "created_at": "2026-11-13T10:05:40Z",
+  "cursor": null,
+  "end_reason": null,
+  "gates": [],
+  "heartbeat_at": "2026-11-13T10:05:40Z",
+  "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "owner_pseudonym": "eng-3c51",
+  "pack": {
+    "checked_offline": false,
+    "commits_behind": {
+      "sample-system": 0
+    },
+    "drift_files": {
+      "sample-system": 0
+    },
+    "fresh": true,
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "reasons": [],
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "pinned": {
+    "plugin": "0.1.6",
+    "skills": {
+      "threat-model": "1.1.0"
+    },
+    "tsl": "0.1.6"
+  },
+  "prs": [],
+  "questions": {
+    "answered_sha256": {},
+    "open_blocking": 0,
+    "open_non_blocking": 0,
+    "round": 0
+  },
+  "rev": 0,
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "run-state.v1",
+  "status": "RUNNING",
+  "steps": [
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "threat",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "id": "G-threat-review",
+      "kind": "gate",
+      "status": "PENDING"
+    }
+  ],
+  "system": "SYS-SMP2",
+  "ticket": "HMSTEST-1",
+  "updated_at": "2026-11-13T10:05:40Z",
+  "workflow": "security-review@1.0.0",
+  "workflow_sha256": "f210e05977339093bb74196444ee3f82ebf57b45eb0f9ee9a6cd5fe1c83487fc"
+}
