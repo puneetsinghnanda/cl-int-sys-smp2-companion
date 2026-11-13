@@ -1,0 +1,81 @@
+{
+  "artifact_path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md",
+  "artifact_sha256": "3b73301c3668c7c6795bf855a6f90becbe9d71d8186dc4a1818064a8be8446fd",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "3aa5e6199cadd3357ac3056db6a27510346cdd744026837878aedb5f12c05316",
+  "claims": {
+    "total": 13,
+    "verified": 13
+  },
+  "decided_at": "2026-11-13T06:51:06Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "quote not found"
+    },
+    {
+      "id": "F-3",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md",
+      "sha256": "fe24d61d00ae55f25e7c5ca0830c60ca1a538922ee61b9e6460f81033870bd6c",
+      "verification_sha256": "4281018e8df508128e191d8aec714674454726aed8b17f761fb64718be1af7be"
+    },
+    {
+      "path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md",
+      "sha256": "385aa8939befa99e8d415e886be5a4faac02d8447880d56dc1a4477012f582fb",
+      "verification_sha256": "76bb796f150630c344ca8da0d9cb64b8ba30b6240a407307db2a4d5dbbb8bf6c"
+    }
+  ],
+  "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "7a28c83c3e74ae69fc1a7dad1cdfc60f0b7e3ca56e76195abbc86274a31edfc4",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8889,
+    "S2": 1.0,
+    "S3": 4.55,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "XodB2rM5rT0jGQzttGI-GJ3bsiafU7YNeOfvYzf6V8e_2lBoZBuy85B1HbOzby9YsTBA41mrb9Gf3PY1uwRkAA",
+  "skill": "test-plan@1.1.0",
+  "step": "tplan",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

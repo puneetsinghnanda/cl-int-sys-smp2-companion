@@ -1,0 +1,98 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "3b73301c3668c7c6795bf855a6f90becbe9d71d8186dc4a1818064a8be8446fd",
+  "package_sha256": "1764fad0e0d4993f0ab9f1f640945c0121f3474a5e0222fa07541acc133fe51a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 5, "reason": "All 15 acceptance criteria (S-1 AC1-AC5, S-2 AC1-AC3, S-3 AC1, S-4 AC1-AC3, S-5 AC1-AC3) have at least one test, and no test claims a criterion that does not exist. TP-19 is mapped loosely."},
+    {"id": "TP-R2", "score": 5, "reason": "The API rule and the fields are tested at Supertest integration level, which is needed for the clock, zone and DB. Rendering is tested at Testing Library unit level. The existing DOC-7 lib and doctor tests are reused, not duplicated. Nothing is e2e or manual."},
+    {"id": "TP-R3", "score": 4, "reason": "Good boundaries: the exact start instant (TP-5), UTC midnight in Asia/Kolkata (TP-7) and the 51st appointment (TP-6). Negatives: 404 (TP-19) and no leak into summaries (TP-20). But the new fields on the changed POST endpoints EP-2 to EP-6 are not checked."},
+    {"id": "TP-R4", "score": 4, "reason": "Tools match the strategy (Vitest, Supertest, fixed clock, jsdom, Testing Library), and the PG skip and the no-browser gap are noted. But the plan names no target test files, the API folder is never named, and AppointmentDetailPage has no existing web test to sit beside."},
+    {"id": "TP-R5", "score": 4, "reason": "Titles are concrete and runnable. TP-15 leaves out the Inactive-doctor setup the S-4 ACs require. Tests list story ACs but not the REQ-n prefix their names must start with."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The design changes EP-2 to EP-6 (book, reschedule, cancel, complete, no-show) to return doctorStatus and outsideAvailability. Every planned API test reads only GET /:id, so the new fields on these responses, including the always-false flag on closed results, are never asserted.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:EP-2", "quote": "the same two fields as EP-1, because it returns the detail (C6)"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:EP-4", "quote": "is always false because the result is CANCELLED"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md#item:TP-14", "quote": "Cancel, complete and no-show return flag false, with availability changed beforehand"}
+      ],
+      "suggested_fix": "Make TP-14 assert both fields on the POST cancel/complete/no-show responses. Add one integration check that the POST book and reschedule responses carry doctorStatus and outsideAvailability."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "TP-19 (unknown id returns 404) is mapped to S-1/AC1 and S-2/AC1, but those criteria are about notices on an existing Scheduled appointment. A 404 proves neither, so the mapping overstates coverage.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md#item:TP-19", "quote": "Negative: unknown appointment id returns 404 without the new fields"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md#tests", "quote": "TP-19 (integration, negative, S-1/AC1, S-2/AC1)"}
+      ],
+      "suggested_fix": "Map TP-19 to EP-1 as a negative endpoint test, not to story ACs. Or state that it guards the error path of S-1/S-2 without proving them."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The plan requires names to start with \"HMS-13 REQ-n\" but maps every test only to story ACs. It never says which REQ-n each TP name uses, and S-1 alone spans REQ-1 to REQ-4.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md#scope", "quote": "Test names start with \"HMS-13 REQ-n\" (C3)."},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#item:S-1", "quote": "trace: [REQ-1, REQ-2, REQ-3, REQ-4]"}
+      ],
+      "suggested_fix": "Give each TP its REQ-n prefix (e.g. TP-6 -&gt; REQ-4, TP-12/TP-13 -&gt; REQ-6/REQ-7)."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Every S-4 AC requires an Inactive doctor, so the page must suppress the Inactive notice on closed statuses. TP-15 mentions only a stray flag, not doctorStatus INACTIVE as input, so the Inactive suppression may go untested.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md#item:TP-15", "quote": "Page shows neither notice on closed statuses, even with a stray flag"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#item:S-4", "quote": "Given a Completed appointment whose doctor is Inactive"}
+      ],
+      "suggested_fix": "State that TP-15 renders each closed status with doctorStatus INACTIVE and outsideAvailability true, and asserts that neither notice shows."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The plan puts page tests 'next to the existing page tests', but AppointmentDetailPage has no web tests today. No new test file path is named for web or API, and the 'unchanged' tests (TP-17, TP-18) have no baseline to compare against.",
+      "cites": [
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/tplan.md#scope", "quote": "next to the existing page tests (C8)"},
+        {"ref": "context/test-strategy.md#gaps", "quote": "other pages have no web tests, and no page is tested end to end in a browser"},
+        {"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#item:S-5", "quote": "then the page shows exactly what it showed before this change."}
+      ],
+      "suggested_fix": "Name the files (e.g. web/src/__tests__/AppointmentDetailPage.test.tsx, api/test/appointments-notices.test.ts). Have TP-17/TP-18 assert an explicit list of the elements shown before the change."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "no page is tested end to end in a browser"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors.test.ts", "quote": "DOC-7: changing availability keeps appointments and flags those outside it"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/lib.test.ts", "quote": "DOC-7: tells whether an appointment still fits the availability"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx", "quote": "web/src/__tests__/DoctorDetailPage.test.tsx"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:EP-1", "quote": "EP-1 GET /api/appointments/:id (changed): fields `doctorStatus`"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md#item:CO-5", "quote": "SUMMARY_SELECT and AppointmentSummary (api, existing): unchanged (A-06)"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-02", "quote": "but don't copy the doctor page's 50-appointment limit"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/split.md#claim:C4", "quote": "The hospital time zone is `Asia/Kolkata`."}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M79NZC0GJYR61WB0MNSTYDHQ/ide-answers.md#a-08", "quote": "answer: false (proposed default)"}]}
+  ],
+  "questions": []
+}
