@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "14ee26a151d6c02468eb67bacdba7dc03b9b9a4a4c57cfb10d3d1444838dd116",
-  "attempt": 1,
+  "artifact_sha256": "db8ef532a356ccb24887a9fadcb6dc8a8fbc5338ae76d37cb71b224324490de8",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -57,10 +57,6 @@
         {
           "quote": "Both counts cover `All time`: every Completed and No-show appointment of the patient, with no period picker.",
           "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-6"
-        },
-        {
-          "quote": "answer: All time (proposed default)",
-          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-01"
         }
       ],
       "claim_id": "C6",
@@ -125,64 +121,44 @@
       ],
       "claim_id": "C12",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "closed instead of staying Scheduled",
+          "ref": "context/glossary.md#no-show"
+        },
+        {
+          "quote": "closed by staff once its start time has passed",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
     }
   ],
   "findings": [
     {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
-          "ref": "context/glossary.md#no-show"
-        },
-        {
-          "quote": "Given a patient with 1 Completed appointment, 1 Scheduled appointment and 1 Cancelled appointment, where the Cancelled one is the most recent",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L64"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an S-2 AC: a patient with 1 Completed appointment and 1 Scheduled appointment whose start time has passed but was never closed. Then: Completed count 1, No-show count 0.",
-      "text": "No AC has a past appointment that is still Scheduled. A version that counts by date (past and not Cancelled = Completed or No-show) instead of by closed status passes every AC. The glossary says a No-show is closed rather than left Scheduled."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "The Visit summary shows the number of the patient's `Completed` appointments.",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-2"
-        },
-        {
-          "quote": "Given a patient with 2 Completed appointments and 1 No-show appointment, when staff open the patient page",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L58"
-        }
-      ],
-      "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Add an S-1 AC: patient A has 1 Completed appointment and patient B has 2 Completed and 1 No-show. Then patient A's page shows Completed 1 and No-show 0.",
-      "text": "Every AC sets up a single patient. A count missing the patient filter (all Completed/No-show appointments in the system) passes on a test database with one patient. REQ-2 and REQ-3 require only the patient's own appointments to be counted."
-    },
-    {
       "category": "completeness",
       "cites": [
         {
-          "quote": "Given a patient with medical history recorded, when staff open the patient page, then the medical history shows the same fields and values as before the change.",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L71"
+          "quote": "Given a patient with only past appointments and no upcoming one, when staff open the patient page",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/split.md#L80"
         },
         {
-          "quote": "The patient page's `medical history` is unchanged.",
-          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-8"
+          "quote": "The patient page's appointments list is `unchanged`.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-7"
         }
       ],
-      "id": "F-3",
-      "severity": "major",
-      "suggested_fix": "Add an S-3 AC: Given a patient with no medical history recorded, when staff open the patient page, then the medical history area shows the same content as before the change.",
-      "text": "REQ-8 (medical history unchanged) is tested only for a patient whose history is recorded. The partition with no medical history is missing, although the rubric asks for each partition of an unchanged requirement."
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Optionally add an S-3 AC: Given a patient with no appointments, when staff open the patient page, then the appointments list shows the same empty-state content as before the change.",
+      "text": "REQ-7 (appointments list unchanged) is tested only for a patient with upcoming+past or only past appointments. There is no case for a patient with no appointments, where the list's empty state sits next to the new Visit summary."
     }
   ],
-  "package_sha256": "9b66ac62f4fec4ff714827bde17f9bdc2a4bb45c0d2625a32320f28768a7d4c3",
+  "package_sha256": "013e88d179904e6606f514c3acb5cac0d530e9d59591420e1941264e2593c075",
   "questions": [],
-  "recorded_at": "2026-11-13T05:38:31Z",
+  "recorded_at": "2026-11-13T05:42:50Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -193,31 +169,31 @@
   "rubric_items": [
     {
       "id": "SS-R1",
-      "reason": "All nine known REQs are traced: S-1 covers REQ-1/2/3/6, S-2 covers REQ-4/5 and S-3 covers REQ-7/8/9. The intent has no assumed REQs.",
+      "reason": "All nine known REQs are traced. S-1 covers REQ-1/2/3/6, S-2 covers REQ-4/5 and S-3 covers REQ-7/8/9. The intent has no assumed or unknown REQs.",
       "score": 5
     },
     {
       "id": "SS-R2",
-      "reason": "Each story has one outcome, but S-1 bundles placement, two counts and the counting window. That is acceptable and each part has its own AC.",
+      "reason": "Each story has one user-facing outcome. S-1 still bundles placement, two counts and the counting window, but each part has its own AC.",
       "score": 4
     },
     {
       "id": "SS-R3",
-      "reason": "The ACs are Given/When/Then and checkable. Three gaps: no past still-Scheduled appointment (date-based counting passes), no other patient's appointments (an unscoped count passes) and no patient without medical history.",
-      "score": 3
+      "reason": "All ACs are Given/When/Then and can be checked. The new S-2 AC4 catches date-based counting, S-1 AC5 catches an unscoped count and S-3 AC5 covers the no-medical-history case. Only a minor gap remains: no empty appointments-list case for REQ-7.",
+      "score": 5
     },
     {
       "id": "SS-R4",
-      "reason": "Every value comes from the intent or the cited glossary Period (Today, Last 7 days, Last 30 days). The 2 January 2025 date is only an example and its reason is given inline.",
+      "reason": "Every value comes from the intent or the cited glossary Period. The 2 January 2025 date is an example, and the AC gives its reason inline (outside any Last 30 days period).",
       "score": 5
     },
     {
       "id": "SS-R5",
-      "reason": "Status names, the Visit summary and the patient page are named the same way throughout and match the glossary. The front matter and the body agree.",
+      "reason": "Status names, Visit summary and patient page are named the same way throughout and match the glossary. The front matter, body and resolves lines agree.",
       "score": 5
     }
   ],
-  "rubric_score": 4.3,
+  "rubric_score": 4.8,
   "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
   "schema": "review.v1",
   "status": "ok",

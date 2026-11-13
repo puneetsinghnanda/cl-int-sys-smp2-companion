@@ -2,12 +2,16 @@
 schema: stories.v1
 run_id: run_01M79P1N889PBTFM8J1EX89TBK
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.3.0
 inputs:
   - {path: artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md, sha256: a03c0b2820af5070279380915fbacc62e5ebb19c702b593d4bd9e20385a7a8f6}
   - {path: context/glossary.md, sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff}
 pack_sha: {sample-system: 7681f87749883d71abb4011d118366ca1242e1cc}
+resolves:
+  - {id: F-1, how: "S-2 AC4 adds a past appointment that is still Scheduled and must not be counted."}
+  - {id: F-2, how: "S-1 AC5 adds a second patient whose appointments must not be counted on the first patient's page."}
+  - {id: F-3, how: "S-3 AC5 adds a patient with no medical history recorded."}
 claims:
   - {id: C1, text: "The patient page shows a `Visit summary` above the appointments list.", cites: ["artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-1"]}
   - {id: C2, text: "The Visit summary shows the number of the patient's `Completed` appointments.", cites: ["artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#item:REQ-2"]}
@@ -21,6 +25,7 @@ claims:
   - {id: C10, text: "The appointments list shows appointments `upcoming first, then past`.", cites: ["artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/req.md#claim:C1"]}
   - {id: C11, text: "A No-show is a past appointment the patient `did not attend`.", cites: ["context/glossary.md#no-show"]}
   - {id: C12, text: "The glossary Period includes `Last 30 days`.", cites: ["context/glossary.md#period"]}
+  - {id: C13, text: "A past appointment the patient missed is `closed instead of staying Scheduled`, so a past appointment can still be Scheduled until staff close it.", cites: ["context/glossary.md#no-show"]}
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
 known: [S-1, S-2, S-3]
 assumed: []
@@ -35,6 +40,7 @@ stories:
       - {id: AC2, text: "Given a patient with 3 No-show appointments and no other appointments, when staff open the patient page, then the No-show count is 3 and the Completed count is 0, so the two counts are not swapped or merged."}
       - {id: AC3, text: "Given a patient whose only Completed appointment started on 2 January 2025, well outside any Last 30 days period, when staff open the patient page, then the Completed count is 1, because the counts cover All time."}
       - {id: AC4, text: "Given any patient, when staff open the patient page, then the Visit summary offers no period picker (Today, Last 7 days or Last 30 days)."}
+      - {id: AC5, text: "Given patient A with 1 Completed appointment and patient B with 2 Completed appointments and 1 No-show appointment, when staff open patient A's page, then the Completed count is 1 and the No-show count is 0, so patient B's appointments are not counted."}
   - id: S-2
     title: "Only Completed and No-show appointments are counted"
     trace: [REQ-4, REQ-5]
@@ -42,6 +48,7 @@ stories:
       - {id: AC1, text: "Given a patient with 1 Completed appointment, 1 Scheduled appointment and 1 Cancelled appointment, where the Cancelled one is the most recent, when staff open the patient page, then the Completed count is 1 and the No-show count is 0."}
       - {id: AC2, text: "Given a patient with only Scheduled and Cancelled appointments, when staff open the patient page, then the Visit summary shows 0 for each."}
       - {id: AC3, text: "Given a patient with no appointments at all, when staff open the patient page, then the Visit summary shows 0 for each."}
+      - {id: AC4, text: "Given a patient with 1 Completed appointment and 1 Scheduled appointment whose start time has passed but which staff have not closed, when staff open the patient page, then the Completed count is 1 and the No-show count is 0, because counting follows the closed status, not the date."}
   - id: S-3
     title: "The rest of the patient page is unchanged"
     trace: [REQ-7, REQ-8, REQ-9]
@@ -50,6 +57,7 @@ stories:
       - {id: AC2, text: "Given a patient with only past appointments and no upcoming one, when staff open the patient page, then the appointments list shows the same rows in the same order as before the change."}
       - {id: AC3, text: "Given a patient with medical history recorded, when staff open the patient page, then the medical history shows the same fields and values as before the change."}
       - {id: AC4, text: "Given any patient, when staff open the patient page, then every part of the page other than the new Visit summary shows the same content and layout as before the change."}
+      - {id: AC5, text: "Given a patient with no medical history recorded, when staff open the patient page, then the medical history area shows the same content as before the change."}
 ---
 # Stories: HMS-5
 
@@ -59,17 +67,25 @@ stories:
 - AC2: Given a patient with 3 No-show appointments and no other appointments, when staff open the patient page, then the No-show count is 3 and the Completed count is 0, so the two counts are not swapped or merged.
 - AC3: Given a patient whose only Completed appointment started on 2 January 2025, well outside any Last 30 days period, when staff open the patient page, then the Completed count is 1, because the counts cover All time.
 - AC4: Given any patient, when staff open the patient page, then the Visit summary offers no period picker (Today, Last 7 days or Last 30 days).
+- AC5: Given patient A with 1 Completed appointment and patient B with 2 Completed appointments and 1 No-show appointment, when staff open patient A's page, then the Completed count is 1 and the No-show count is 0, so patient B's appointments are not counted.
 
 **S-2 Only Completed and No-show appointments are counted** (REQ-4, REQ-5)
 - AC1: Given a patient with 1 Completed appointment, 1 Scheduled appointment and 1 Cancelled appointment, where the Cancelled one is the most recent, when staff open the patient page, then the Completed count is 1 and the No-show count is 0.
 - AC2: Given a patient with only Scheduled and Cancelled appointments, when staff open the patient page, then the Visit summary shows 0 for each.
 - AC3: Given a patient with no appointments at all, when staff open the patient page, then the Visit summary shows 0 for each.
+- AC4: Given a patient with 1 Completed appointment and 1 Scheduled appointment whose start time has passed but which staff have not closed, when staff open the patient page, then the Completed count is 1 and the No-show count is 0, because counting follows the closed status, not the date.
 
 **S-3 The rest of the patient page is unchanged** (REQ-7, REQ-8, REQ-9)
 - AC1: Given a patient with one upcoming Scheduled appointment and one past Completed appointment, when staff open the patient page, then the appointments list shows them upcoming first, then past, exactly as before the change.
 - AC2: Given a patient with only past appointments and no upcoming one, when staff open the patient page, then the appointments list shows the same rows in the same order as before the change.
 - AC3: Given a patient with medical history recorded, when staff open the patient page, then the medical history shows the same fields and values as before the change.
 - AC4: Given any patient, when staff open the patient page, then every part of the page other than the new Visit summary shows the same content and layout as before the change.
+- AC5: Given a patient with no medical history recorded, when staff open the patient page, then the medical history area shows the same content as before the change.
+
+## Resolved findings
+- F-1: S-2 AC4 adds a past appointment that is still Scheduled and must not be counted.
+- F-2: S-1 AC5 adds a second patient whose appointments must not be counted on the first patient's page.
+- F-3: S-3 AC5 adds a patient with no medical history recorded.
 
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-3 and REQ-6 (REQ-6 decided by answer A-01, All time).
