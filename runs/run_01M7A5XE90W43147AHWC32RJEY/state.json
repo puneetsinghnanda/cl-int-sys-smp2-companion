@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-13T10:07:23Z",
+  "heartbeat_at": "2026-11-13T10:10:50Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -42,22 +42,40 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 1,
+  "rev": 6,
   "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
   "schema": "run-state.v1",
   "status": "RUNNING",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md",
+          "artifact_sha256": "d46f95d790f54517dd8d667de77214336a266d9c3361c3d737d8dcfb2e3600e9",
+          "band": null,
+          "cause": "first",
+          "decided_at": "2026-11-13T10:10:50Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.verification.json",
+          "skill": "threat-model@1.1.0",
+          "skill_started_at": "2026-11-13T10:07:46Z",
+          "started_at": "2026-11-13T10:07:41Z",
+          "write_rejects": 2
+        }
+      ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 0,
         "rework": 0,
         "verifier": 0
       },
       "id": "threat",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -68,7 +86,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMSTEST-1",
-  "updated_at": "2026-11-13T10:07:23Z",
+  "updated_at": "2026-11-13T10:10:50Z",
   "workflow": "security-review@1.0.0",
   "workflow_sha256": "f210e05977339093bb74196444ee3f82ebf57b45eb0f9ee9a6cd5fe1c83487fc"
 }
