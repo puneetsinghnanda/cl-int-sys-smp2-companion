@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-13T05:14:35Z",
+  "heartbeat_at": "2026-11-13T05:24:08Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -46,17 +46,34 @@
   "prs": [],
   "questions": {
     "answered_sha256": {},
-    "open_blocking": 0,
-    "open_non_blocking": 0,
-    "round": 0
+    "open_blocking": 2,
+    "open_non_blocking": 1,
+    "round": 1
   },
-  "rev": 0,
+  "rev": 3,
   "run_id": "run_01M79N8EKRWG8SNV1WGK3BC9Q0",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "PAUSED_INPUT",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md",
+          "artifact_sha256": "c7f51a6eedf36587928b158a00d7455c27554519e4cf0386922b4376b69c6f9e",
+          "band": "Low",
+          "cause": "first",
+          "decided_at": "2026-11-13T05:24:08Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "NEEDS-INPUT",
+          "record": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.verification.json",
+          "skill": "requirement-review@1.3.0",
+          "skill_started_at": "2026-11-13T05:17:00Z",
+          "started_at": "2026-11-13T05:15:57Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -65,7 +82,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "WAITING_INPUT"
     },
     {
       "attempts": [],
@@ -172,7 +189,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-4",
-  "updated_at": "2026-11-13T05:14:35Z",
+  "updated_at": "2026-11-13T05:24:08Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "7e2d7f98dabf16d5c133ebd2df7dd1bf0e5c4cf587457159a55a971f9aba0e98"
 }

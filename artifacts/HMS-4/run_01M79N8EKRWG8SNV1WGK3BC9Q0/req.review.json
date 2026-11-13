@@ -1,0 +1,335 @@
+{
+  "artifact_sha256": "c7f51a6eedf36587928b158a00d7455c27554519e4cf0386922b4376b69c6f9e",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The patient list has a column \"Last visit\".",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L16"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "of the patient's most recent Completed appointment",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L17"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Cancelled, No-show and Scheduled appointments are never shown",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L18"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient with no Completed appointment shows \"-\".",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L19"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The list stays 20 per page",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "keeps its current search and sort order",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointment column is unchanged",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L21"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No medical history appears in the list",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L22"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "closed by staff once its start time has passed",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The patient list already shows each patient's next appointment (HMS-1).",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Latest start, start date (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Same as Next appt, with time",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Not sortable (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Only show the date (proposed default)",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, that list (proposed default)",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Last visit shows the appointment's start date with its time",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md#L39"
+        },
+        {
+          "quote": "It shows the date (hospital time zone) of the patient's most recent Completed appointment.",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/ticket.md#L17"
+        },
+        {
+          "quote": "answer: Instant + date-only helper (proposed default)",
+          "ref": "runs/run_01M6GDYQX07XECMVT06FY0Z6YF/ide-answers.md#a-12"
+        },
+        {
+          "quote": "answer: Same as Next appt, with time",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-02"
+        }
+      ],
+      "claim_ref": "C14",
+      "id": "F-1",
+      "severity": "blocker",
+      "suggested_fix": "Mark REQ-4 as unknown and ask, in this run, for date only or date with time, citing ticket L17 and both earlier answers.",
+      "text": "REQ-4 (date with time) relies on one earlier-run answer. Ticket L17 asks for 'the date', and another earlier HMS-4 run chose a date-only helper. The artifact picked one side without asking."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "No questions were asked in the IDE in this run because answers from earlier HMS-4 runs were reused",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md#L98"
+        },
+        {
+          "quote": "answers: []",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md#L50"
+        },
+        {
+          "quote": "the reviewer wants it confirmed in this run",
+          "ref": "runs/run_01M6GRSJH8H42FGV284MDTDAZY/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Confirm the reused decisions (a-01 to a-04, a-03) in this run's IDE. List them under answers with decides and mismatch fields.",
+      "text": "All decisions come from answers in other runs. Nothing was asked in this run, and answers: [] is empty, so no answer records a mismatch. An earlier run treated reused answers as needing confirmation in the run."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "keeps its current sort order and the Last visit column is `Not sortable`",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md#L44"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "suggested_fix": "Split into REQ-9a (sort order unchanged, ticket L20) and REQ-9b (Last visit not sortable, answer a-03).",
+      "text": "REQ-9 is compound. It combines 'the list keeps its current sort order' with 'the Last visit column is not sortable', and each needs its own test."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Earlier answers define them (C13, C17)",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md#L95"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Cite only C17 (patient list) and ticket L14/L17. State that 'Next appointment' remains undefined in the glossary.",
+      "text": "The Unknown section says C13 defines the missing glossary terms. C13 is about the value source and defines neither 'Patient list' nor 'Next appointment'."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the context pack is 4 commits behind sample-system (E-CTX-10)",
+          "ref": "artifacts/HMS-4/run_01M79N8EKRWG8SNV1WGK3BC9Q0/req.md#L65"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "text": "The summary says the context pack is 4 commits behind (E-CTX-10) but gives no citation for it."
+    }
+  ],
+  "package_sha256": "3024a10fc4b56aa4c5bc19194df190bc4f923cd51fed2aaa04891a02a5f76498",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": true,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Ticket L17 says Last visit shows 'the date'. One earlier HMS-4 run chose date with time (a-02), another chose a date-only helper (a-12). Which should this run use: date only, or date with time like Next appointment?"
+    },
+    {
+      "ask_role": "stage_approver",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-2",
+      "text": "Can answers from earlier HMS-4 runs (value source, sortability, highlight, list identity) be reused in this run without confirming them again, or must they be asked again here?"
+    }
+  ],
+  "recorded_at": "2026-11-13T05:23:49Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria and the user story are covered: as REQ-1 to REQ-12, or as Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and testable. REQ-9 combines two behaviours: the list keeps its sort order, and the new column is not sortable.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "REQ-4 is marked known based on an answer reused from another run. A different earlier run chose a date-only display. No answer was confirmed in this run.",
+      "score": 3
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The prose notes the clash between the ticket's 'date' and the reused 'with time' answer, but it is not raised as a question. A contradicting earlier answer goes unmentioned.",
+      "score": 3
+    },
+    {
+      "id": "RR-R5",
+      "reason": "No questions were asked even though the earlier answers disagree on format, and an earlier run asked for confirmation within the run itself.",
+      "score": 2
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and readable. The Unknown section says C13 defines glossary terms, which it does not.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.65,
+  "run_id": "run_01M79N8EKRWG8SNV1WGK3BC9Q0",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
