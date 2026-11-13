@@ -1,0 +1,80 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "5d04bc37e0dc25e7d86d3575cff07bb4917e1e5ba94458ea4b574d24494392af",
+  "package_sha256": "3517af3ed5f3d3d3b92af2ec50bc864d514ef5c2d3aed423153084ed53f372da",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All 8 design components (CO-1 to CO-8) appear by exact name and each has at least one threat. Changed endpoints EP-1 to EP-3 are covered through patientsRouter and PatientService.get."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats fit their component: unscoped count, SQL injection on the id, no-auth MVP, response widening on POST/PATCH. T-7, T-8 and T-12 are correctness or regression risks labelled as STRIDE tampering."},
+    {"id": "TM-R3", "score": 4, "reason": "Each mitigation is either cited (C1-C13) or named as a new control for implement, with tests (S-1 AC5, S-3 AC1/AC2). T-6 has no real control, only an accepted MVP risk, and it cites patients:read although POST/PATCH use patients:write."},
+    {"id": "TM-R4", "score": 4, "reason": "The no-sign-in gap is stated openly in T-6 and T-10. But the text calls it an 'accepted MVP risk' without citing who accepted it, and assumed, unknown and questions are all empty."},
+    {"id": "TM-R5", "score": 4, "reason": "Readable, and the frontmatter and body match one to one. Threats follow component order rather than risk, so the highest-risk items (no auth, T-6/T-10) come after lower-risk type-drift items."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "minor", "category": "correctness",
+     "text": "T-5 says the create and update responses also expose the counts, but T-6's mitigation cites only patients:read (C3). POST and PATCH are gated by patients:write, so T-6's permission control does not describe those paths.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L38", "quote": "the route declares patients:read through requirePermission (C2, C3)"},
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L37", "quote": "the create and update responses built by the same get (C12)"},
+       {"ref": "sample-system:api/src/routes/patients.ts#L20", "quote": "requirePermission('patients:write')"}
+     ],
+     "claim_ref": "C3",
+     "suggested_fix": "In T-6, name both permissions: patients:read for GET /:id and patients:write for POST and PATCH, which also return visitSummary."},
+    {"id": "F-2", "severity": "minor", "category": "traceability",
+     "text": "T-6 calls the risk an 'accepted MVP risk', but no context section or answer records that acceptance. The architecture section only says every permission is granted in the MVP.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L38", "quote": "accepted MVP risk, unchanged by HMS-5"},
+       {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+     ],
+     "suggested_fix": "Say the risk is inherited and unchanged by HMS-5, or cite where it was accepted. Otherwise list it as Assumed."},
+    {"id": "F-3", "severity": "minor", "category": "other",
+     "text": "Threats are listed by component, not by risk. The no-authentication threats (T-6, T-10) sit after lower-impact type-drift threats (T-7, T-8).",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L68", "quote": "T-10 (patientsRouter, spoofing): there is no sign-in in the MVP."},
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L66", "quote": "T-8 (Web type PatientDetail, tampering): the web and API types drift apart."}
+     ],
+     "suggested_fix": "Order the Threats section by risk, or add a risk rank to each threat."},
+    {"id": "F-4", "severity": "minor", "category": "style",
+     "text": "T-7, T-8 and T-12 are functional or regression defects (text counts, type drift, table changed by mistake) with no adversary. Labelling them STRIDE tampering overstates them as security threats.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L39", "quote": "The database driver returns count(*) as text"},
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L44", "quote": "Changes for the Visit summary alter the appointments list"}
+     ],
+     "suggested_fix": "Mark these as integrity or correctness risks, or move them to a non-STRIDE note, so the security threats stand out."},
+    {"id": "F-5", "severity": "minor", "category": "traceability",
+     "text": "Claim C8 cites context/conventions.md, but that file is not in the artifact's inputs list, so its hash is not pinned.",
+     "cites": [
+       {"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/threat.md#L21", "quote": "context/conventions.md#logging-and-data"}
+     ],
+     "claim_ref": "C8",
+     "suggested_fix": "Add context/conventions.md with its sha256 to inputs."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`. In the MVP"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/patients.ts#L28", "quote": "requirePermission('patients:read'),"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/patients.ts#L30", "quote": "get(parseId(req.params.id, 'id'))"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#claim:C18", "quote": "Index `appointment_patient_start_idx` exists on the appointment table, led by patient_id."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/architecture.md#deployment-shape", "quote": "the API, which also serves\n`web/dist`"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#claim:C10", "quote": "The user chose the field shape `visitSummary { completed, noShow }`."}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#claim:C12", "quote": "Creating a patient returns the detail from `this.get`."}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "Status is SCHEDULED,\nCOMPLETED, CANCELLED or NO_SHOW"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "T-6 calls open access to the patient detail (now with attendance counts) an accepted MVP risk. Who accepted it, and does it still hold now that HMS-5 adds these counts?", "ask_role": "stage_approver", "blocking": false, "finding_ref": "F-2"}
+  ]
+}
