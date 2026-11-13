@@ -1,0 +1,167 @@
+{
+  "artifact_sha256": "72eafcaf6291816266d51f848b24dd9000dc0c3aab1c974d8f12b91e8fe0e1a4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientDetail extends PatientSummary {",
+          "ref": "sample-system:api/src/types.ts#L105"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientDetail extends PatientSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L100"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function PatientDetailPage() {",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L14"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New method: one query, `count(*) FILTER (WHERE status = 'COMPLETED')` and `FILTER (WHERE status = 'NO_SHOW')`, `WHERE patient_id = $1`.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#L94"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: visitSummary { completed, noShow } (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Adds a block headed \"Visit summary\" directly above the `Appointments` heading",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#L100"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The design asks for no regression test, and the unit-test step owns the new tests.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/impl.md#L55"
+        },
+        {
+          "quote": "The patient and appointments parts are unchanged.",
+          "ref": "artifacts/HMS-5/run_01M79P1N889PBTFM8J1EX89TBK/design.md#L96"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Replace the sentence with 'Tests: none added; the unit-test step owns the new tests.' and drop the claim about what the design asks for.",
+      "text": "The Changes section says 'The design asks for no regression test', but design.md never mentions tests or a regression test. The real reason for adding no tests is that the unit-test step owns them, and the statement should say only that."
+    }
+  ],
+  "package_sha256": "2d8cd61291b70f0781700af3253fc19c776fde4b72707585ea8aa3ae70eebb8b",
+  "questions": [],
+  "recorded_at": "2026-11-13T06:12:59Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-5 are in the code as designed: one FILTER count query bound to patient_id = $1, the service.get line matches CO-2 exactly, both types gain the field, and the block sits directly above the Appointments heading.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL is in api/src/repositories and the rule wiring is in api/src/services, as code-layout requires. The query is parameterized, nothing is logged, and it follows the same Number() pattern as appointmentCount.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Only the 5 design files changed (+27/-2). The only extra edit is the Omit&lt;..., 'visitSummary'&gt; return type on PatientRepo.get, which strict typing needs. Build, test, lint, sast and secrets all pass.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "No new endpoint. An unknown id still hits notFound before visitSummary runs. A missing row falls back to 0 through ?? 0, and text counts go through Number(), so S-2 AC2/AC3 get 0 and 0.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary and Changes list match the diff file by file. One statement is not backed by the design: it says the design asks for no regression test, but the design does not mention tests.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M79P1N889PBTFM8J1EX89TBK",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
