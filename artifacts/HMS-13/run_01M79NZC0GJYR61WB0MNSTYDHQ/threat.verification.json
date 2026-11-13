@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md",
+  "artifact_sha256": "82e1b6476900c2c718322314d64f695a851669e46d4c7642358cbb5b3cb8d4cd",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "45ce65e7a3c8c256e3745b2f109ab9717827cea5f3163b4444e53bc88858268e",
+  "claims": {
+    "total": 19,
+    "verified": 19
+  },
+  "decided_at": "2026-11-13T06:22:34Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-11"
+    },
+    {
+      "id": "F-3",
+      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-8"
+    },
+    {
+      "id": "F-5",
+      "reason": "bad citation format artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/threat.md#T-5"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-2",
+      "raised_from": "minor",
+      "severity": "major"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-13/run_01M79NZC0GJYR61WB0MNSTYDHQ/design.md",
+      "sha256": "385aa8939befa99e8d415e886be5a4faac02d8447880d56dc1a4477012f582fb",
+      "verification_sha256": "76bb796f150630c344ca8da0d9cb64b8ba30b6240a407307db2a4d5dbbb8bf6c"
+    }
+  ],
+  "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "9133ec60f7884e46ce2bc4b582c8123bb9d9d3119a62e706e85a92b40e7f8713",
+  "run_id": "run_01M79NZC0GJYR61WB0MNSTYDHQ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.875,
+    "S2": 1.0,
+    "S3": 4.2,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "eyM3F5XMOP5BeZovB8uniaYKi-jyhlWEwxr-GY7mHCqKhiVOZAawfgBCgpe8CGnp5yil7SCEabL6uOFTY63_Dg",
+  "skill": "threat-model@1.1.0",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
