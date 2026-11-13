@@ -1,11 +1,11 @@
 {
-  "artifact_sha256": "37729e8de61b4742d117e068b990c380bfa6239723611c5da65e3482033c0727",
-  "attempt": 3,
+  "artifact_sha256": "7415f6e7740826a028e2d927b478bbd23973975265b9e0a6087ca9e7d6f9e833",
+  "attempt": 4,
   "claims_checked": [],
   "findings": [],
   "package_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "questions": [],
-  "recorded_at": "2026-11-13T10:16:24Z",
+  "recorded_at": "2026-11-13T11:38:26Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",

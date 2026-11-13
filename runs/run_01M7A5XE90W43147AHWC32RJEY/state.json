@@ -25,7 +25,7 @@
       "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-11-13T11:36:35Z",
+  "heartbeat_at": "2026-11-13T11:38:27Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -58,7 +58,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 20,
+  "rev": 24,
   "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -101,7 +101,7 @@
         },
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md",
+          "artifact": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/history/threat/a3/threat.md",
           "artifact_sha256": "37729e8de61b4742d117e068b990c380bfa6239723611c5da65e3482033c0727",
           "band": null,
           "cause": "retry_checks",
@@ -110,22 +110,39 @@
           "inputs": [],
           "n": 3,
           "outcome": "ESCALATE",
-          "record": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.verification.json",
+          "record": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/history/threat/a3/threat.verification.json",
           "skill": "threat-model@1.1.0",
           "skill_started_at": "2026-11-13T10:15:37Z",
           "started_at": "2026-11-13T10:15:24Z",
           "write_rejects": 1
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md",
+          "artifact_sha256": "7415f6e7740826a028e2d927b478bbd23973975265b9e0a6087ca9e7d6f9e833",
+          "band": null,
+          "cause": "gate_changes",
+          "decided_at": "2026-11-13T11:38:27Z",
+          "feedback": "runs/run_01M7A5XE90W43147AHWC32RJEY/feedback/threat.a3.json",
+          "inputs": [],
+          "n": 4,
+          "outcome": "RETRY",
+          "record": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.verification.json",
+          "skill": "threat-model@1.1.0",
+          "skill_started_at": "2026-11-13T11:37:04Z",
+          "started_at": "2026-11-13T11:36:52Z",
+          "write_rejects": 1
         }
       ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 0,
         "rework": 1,
         "verifier": 0
       },
       "id": "threat",
       "kind": "skill",
-      "status": "READY"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -136,7 +153,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMSTEST-1",
-  "updated_at": "2026-11-13T11:36:35Z",
+  "updated_at": "2026-11-13T11:38:27Z",
   "workflow": "security-review@1.0.0",
   "workflow_sha256": "f210e05977339093bb74196444ee3f82ebf57b45eb0f9ee9a6cd5fe1c83487fc"
 }

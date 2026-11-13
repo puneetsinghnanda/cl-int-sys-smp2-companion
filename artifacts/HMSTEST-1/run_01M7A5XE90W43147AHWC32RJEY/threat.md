@@ -2,7 +2,7 @@
 schema: threat-model.v1
 run_id: run_01M7A5XE90W43147AHWC32RJEY
 step: threat
-attempt: 3
+attempt: 4
 skill: threat-model@1.1.0
 inputs:
   - {path: context/architecture.md, sha256: 9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a}
@@ -27,8 +27,9 @@ claims:
   - {id: C13, text: "Render runs migrate and `seed-if-empty` before the API.", cites: ["context/architecture.md#deployment-shape"]}
   - {id: C14, text: "Repositories hold the `SQL`; services hold the rules and transactions.", cites: ["context/architecture.md#components"]}
   - {id: C15, text: "`No background jobs` exist yet.", cites: ["context/architecture.md#open-points"]}
+  - {id: C16, text: "`Sign-in` is planned to replace identify and requirePermission only; no sign-in route exists yet.", cites: ["context/architecture.md#identity"]}
 trace: []
-known: [T-1, T-2, T-3, T-4, T-5, T-6, T-7, T-9, T-10, T-11, T-12, T-13]
+known: [T-1, T-2, T-3, T-4, T-5, T-6, T-7, T-9, T-10, T-11, T-12, T-13, T-14]
 assumed: [A-1]
 unknown:
   - {id: U-1, blocking: false}
@@ -64,14 +65,17 @@ threats:
   - {id: T-11, component: Web app, stride: tampering, threat: "A browser page calling the API outside the client module would bypass shared handling (C2).", mitigation: "Existing control: the web app talks to the API only through web/src/api/client.ts (C2)."}
   - {id: T-12, component: Deployment, stride: tampering, threat: "seed-if-empty could load invented seed data into a production database that happens to be empty (C13).", mitigation: "Existing control: seed data is invented (example.com emails, unassigned phone range) per data rules; new control: disable seeding in production, pending Q-01."}
   - {id: T-13, component: Deployment, stride: information_disclosure, threat: "The public service serves both web/dist and the API from one origin, so the API is exposed wherever the web app is (C12).", mitigation: "New control from T-1: authentication on the API; until then, Q-01 decides whether real data may be deployed."}
+  - {id: T-14, component: Identity, stride: spoofing, threat: "Once sign-in exists, repeated login attempts without a rate limit let a caller guess staff credentials (C16).", mitigation: "New control for the implement step: rate limiting on the sign-in route, with the limit value set by the tech lead (no value exists in the inputs; see Q-02)."}
 ---
 # Threat model: HMSTEST-1
 
 No design exists for a security-review run, so every architecture component is modelled instead.
 
+Attempt 4 follows the approver's change request at gate G-escalate-threat-a3: T-14 adds the login rate-limiting threat; T-1 keeps its wording unchanged.
+
 ## Components
 - **API routes**: one router per resource mounted under `/api` (C1); handles patients, doctors, appointments, departments, specializations (C11).
-- **Identity**: `identify` and `requirePermission` (C3, C4); every request is the actor `staff` (C5).
+- **Identity**: `identify` and `requirePermission` (C3, C4); every request is the actor `staff` (C5). Sign-in is planned to replace both (C16).
 - **Services**: rules and transactions (C14), including appointment state changes and double-booking handling (C6, C7).
 - **Repositories**: the SQL over patient, doctor and appointment tables (C14); patient rows hold medical history (C9).
 - **Web app**: talks to the API only through `web/src/api/client.ts` (C2).
@@ -91,16 +95,17 @@ No design exists for a security-review run, so every architecture component is m
 - T-11 Web app, tampering: calls bypassing the client. Mitigation: single client module (existing).
 - T-12 Deployment, tampering: seed data loaded into an empty production database. Mitigation: invented seed data (existing); disable seeding in production (new, Q-01).
 - T-13 Deployment, information disclosure: API exposed with the web app. Mitigation: authentication (new, Q-01).
+- T-14 Identity, spoofing: unlimited login attempts allow credential guessing once sign-in exists. Mitigation: rate limiting on the sign-in route (new; limit value to be set by the tech lead, Q-02).
 
 ## Known
-- T-1, T-2, T-3, T-4, T-5, T-6, T-7, T-9, T-10, T-11, T-12, T-13: each threat and its control rest on cited claims C1 to C15 from the architecture, data-model and api-inventory sections.
+- T-1, T-2, T-3, T-4, T-5, T-6, T-7, T-9, T-10, T-11, T-12, T-13, T-14: each threat and its control rest on cited claims C1 to C16 from the architecture, data-model and api-inventory sections.
 
 ## Assumed
 - A-1: repositories use parameterised queries (supports T-8). Basis: repositories hold the SQL (C14); not checked against the code in this step, to be confirmed by secure-code-review.
 
 ## Unknown
 - U-1: whether real patient data may be deployed before sign-in (Q-01).
-- U-2: whether any request rate or body size limit exists (Q-02).
+- U-2: whether any request rate or body size limit exists, including on the future sign-in route (Q-02).
 
 ## Open questions
 - Q-01 (non-blocking, tech lead): Is real patient data allowed in any deployment before sign-in replaces `identify` and `requirePermission`?

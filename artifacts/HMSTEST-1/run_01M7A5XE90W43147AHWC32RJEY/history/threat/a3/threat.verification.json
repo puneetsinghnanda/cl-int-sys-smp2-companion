@@ -1,0 +1,52 @@
+{
+  "artifact_path": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md",
+  "artifact_sha256": "37729e8de61b4742d117e068b990c380bfa6239723611c5da65e3482033c0727",
+  "attempt": 3,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "d740e74b866ed72b1eb15f9154a7a183306acab982a3a0847dcdad61c5fcf0b3",
+  "claims": {
+    "total": 15,
+    "verified": 15
+  },
+  "decided_at": "2026-11-13T10:16:24Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H2"
+  ],
+  "inputs": [],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "ESCALATE",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": "4076d5c98f3d398dc08c9fedfcb22dfd8e5d92baf9091ac004526f81c239b927",
+  "product_changes": null,
+  "review_sha256": "e4933d2b78b0edcf52450b77d3f5d97eca64016726728b8be8b071cab1ca1814",
+  "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "QSKOO-Z2mnyJvevxrfnAPFkM98kqoTVsydRiWmr3hXeMTM4s-0d5jaSyuPKdD_yHxrXDEEh4H4brQyiWUp7rAg",
+  "skill": "threat-model@1.1.0",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

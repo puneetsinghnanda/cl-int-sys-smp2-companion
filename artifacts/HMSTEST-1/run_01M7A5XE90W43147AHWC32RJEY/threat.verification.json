@@ -1,17 +1,17 @@
 {
   "artifact_path": "artifacts/HMSTEST-1/run_01M7A5XE90W43147AHWC32RJEY/threat.md",
-  "artifact_sha256": "37729e8de61b4742d117e068b990c380bfa6239723611c5da65e3482033c0727",
-  "attempt": 3,
+  "artifact_sha256": "7415f6e7740826a028e2d927b478bbd23973975265b9e0a6087ca9e7d6f9e833",
+  "attempt": 4,
   "band": null,
   "caps": [
     "reviewer-missing"
   ],
-  "checks_sha256": "d740e74b866ed72b1eb15f9154a7a183306acab982a3a0847dcdad61c5fcf0b3",
+  "checks_sha256": "e1db9c166748809165b13e4a8c55d3c6ad736ad6799a90c5ede4251c076e5b88",
   "claims": {
-    "total": 15,
-    "verified": 15
+    "total": 16,
+    "verified": 16
   },
-  "decided_at": "2026-11-13T10:16:24Z",
+  "decided_at": "2026-11-13T11:38:27Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
   "findings_kept": [],
@@ -20,7 +20,7 @@
   ],
   "inputs": [],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "ESCALATE",
+  "outcome": "RETRY",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -28,9 +28,9 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": "4076d5c98f3d398dc08c9fedfcb22dfd8e5d92baf9091ac004526f81c239b927",
+  "prev_attempt_sha256": "b6e826a512768a6093d382c36d1ed8907da40438fd9cd5529174e61ec9f91ba2",
   "product_changes": null,
-  "review_sha256": "e4933d2b78b0edcf52450b77d3f5d97eca64016726728b8be8b071cab1ca1814",
+  "review_sha256": "46f1ff5cf6ebf739a7344983f437deb0b876f5192d5ce094445cd7aeb4457ba4",
   "run_id": "run_01M7A5XE90W43147AHWC32RJEY",
   "schema": "verification.v1",
   "signals": {
@@ -45,7 +45,7 @@
       "sensitive": false
     }
   },
-  "signature": "QSKOO-Z2mnyJvevxrfnAPFkM98kqoTVsydRiWmr3hXeMTM4s-0d5jaSyuPKdD_yHxrXDEEh4H4brQyiWUp7rAg",
+  "signature": "IVOerQyYC7skNel3-P5F_BgXRCnwGQOb8RBZTgxh4li6e4ls3jEvw5XmBQ8nohbWoU1CNo0XL0MllUFDSBQnAg",
   "skill": "threat-model@1.1.0",
   "step": "threat",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
