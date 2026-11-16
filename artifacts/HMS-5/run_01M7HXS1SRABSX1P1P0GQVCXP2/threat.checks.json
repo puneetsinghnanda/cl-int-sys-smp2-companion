@@ -1,0 +1,81 @@
+{
+  "artifact_sha256": "7e9eaacd8cadb9e3c84a9653fce0625500ba609b1667cd6f332b9a23ff94f6d8",
+  "attempt": 1,
+  "finished_at": "2026-11-16T10:44:03Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md",
+      "sha256": "6b3552127892f854ede7005400b9a776feb4cc4afee2e60ffd25feedc9fb1a59",
+      "verification_sha256": "f33bb54d73f8053cb48049ee587b2bb502382105e102616befbe9e6d3e0391a7"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-16T10:44:03Z",
+  "step": "threat",
+  "tool_log_sha256": "8df0cbf8e5d2732ab09f3ff89e8d6656b2e75cc1433843d6a1e32f68a8ecd79c",
+  "tsl_version": "0.1.6",
+  "verifier": null
+}

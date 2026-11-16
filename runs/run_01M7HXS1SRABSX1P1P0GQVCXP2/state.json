@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-16T10:42:23Z",
+  "heartbeat_at": "2026-11-16T10:47:22Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -47,10 +47,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 1,
-    "round": 1
+    "open_non_blocking": 2,
+    "round": 2
   },
-  "rev": 15,
+  "rev": 18,
   "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -217,7 +217,31 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md",
+          "artifact_sha256": "7e9eaacd8cadb9e3c84a9653fce0625500ba609b1667cd6f332b9a23ff94f6d8",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-16T10:47:22Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "6b3552127892f854ede7005400b9a776feb4cc4afee2e60ffd25feedc9fb1a59",
+              "step": "design"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.verification.json",
+          "skill": "threat-model@1.2.0",
+          "skill_started_at": "2026-11-16T10:42:59Z",
+          "started_at": "2026-11-16T10:42:40Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -226,7 +250,7 @@
       },
       "id": "threat",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -285,7 +309,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-5",
-  "updated_at": "2026-11-16T10:42:23Z",
+  "updated_at": "2026-11-16T10:47:22Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "7e2d7f98dabf16d5c133ebd2df7dd1bf0e5c4cf587457159a55a971f9aba0e98"
 }

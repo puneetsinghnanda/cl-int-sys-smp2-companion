@@ -1,0 +1,312 @@
+{
+  "artifact_sha256": "7e9eaacd8cadb9e3c84a9653fce0625500ba609b1667cd6f332b9a23ff94f6d8",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('patients:read'),",
+          "ref": "sample-system:api/src/routes/patients.ts#L28"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "res.json(await ctx(req).services.patients.get(parseId(req.params.id, 'id')));",
+          "ref": "sample-system:api/src/routes/patients.ts#L30"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Index `appointment_patient_start_idx` exists on the appointment table, led by patient_id.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C18"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "chronic conditions, current medications, notes). Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Render builds all workspaces, then runs migrate, seed-if-empty and the API, which also serves",
+          "ref": "context/architecture.md#deployment-shape"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The user chose the field shape `visitSummary { completed, noShow }`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C10"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Creating a patient returns the detail from `this.get`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C12"
+        },
+        {
+          "quote": "Updating a patient returns `this.get(id)`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C13"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Existing control: the count is filtered by patient_id, which leads index appointment_patient_start_idx (C6)",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-3"
+        },
+        {
+          "quote": "New control implement must build: WHERE patient_id = the bound id",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-2"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "In T-3 write: existing control is the index (C6); the patient_id filter is the new control from T-2.",
+      "text": "T-3 labels the patient_id filter an existing control, but T-2 says the same filter is a new control implement must build. Only the index is existing."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the same callers already receive the patient's full appointments list",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-5"
+        },
+        {
+          "quote": "The appointments loaded for the patient page are capped by a default `limit = 100`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C8"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say the callers already receive the patient's appointments with their statuses (up to 100), and cite design.md#claim:C8.",
+      "text": "T-5 says callers already receive the patient's full appointments list, with no cite. The design says that list is capped at 100, which is the reason the counts are computed on the server."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Create and update responses are built by `this.get`, so they also carry the counts.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#claim:C12"
+        },
+        {
+          "quote": "Updating a patient returns `this.get(id)`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C13"
+        }
+      ],
+      "claim_ref": "C12",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add design.md#claim:C13 to the cites of C12.",
+      "text": "Claim C12 covers create and update responses but cites only design claim C12, which proves create. The update half is proven by design claim C13, which is not cited."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "T-1 (PatientRepo.visitSummary, tampering): crafted input changes the count SQL.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#threats"
+        },
+        {
+          "quote": "This is an accepted MVP risk.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#threats"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Order the Threats section by residual risk, starting with T-6 and T-10, then T-2, T-5 and T-1.",
+      "text": "Threats are ordered by component, not by risk, and none carries a risk level. The only accepted residual risk (T-6) sits in the middle of the list."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "The web type drifts from the API type, so the page reads a missing or renamed field",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-8"
+        },
+        {
+          "quote": "Changes for the Visit summary alter the appointments list, so staff see rows hidden or reordered.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-12"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Reword each as a threat to the component (for example a tampered response body the page trusts), or note that it is an integrity regression risk.",
+      "text": "T-8 and T-12 describe developer regressions (type drift, list changed by mistake), not actions by an attacker. Labelling them tampering makes these two threats generic."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "tested by S-1 AC5 (a second patient's appointments are not counted)",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-2"
+        },
+        {
+          "quote": "S-3 AC1 and AC2 check its rows and order stay as before",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-12"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Back the AC references with a cited claim, for example through the design's story mapping.",
+      "text": "T-2 and T-12 rely on story acceptance criteria (S-1 AC5, S-3 AC1 and AC2) as controls, but split.md is not an input and no claim cites it. The criteria do exist in split.md."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "accepted MVP risk, unchanged by HMS-5",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/threat.md#item:T-6"
+        },
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "id": "F-7",
+      "severity": "minor",
+      "suggested_fix": "List the risk acceptance under Assumed, or cite the decision that accepts it.",
+      "text": "T-6 calls open access to the counts an accepted MVP risk, but no cited decision records who accepted it. The architecture section only states the MVP behaviour; assumed and questions are empty."
+    }
+  ],
+  "package_sha256": "8e7ec31dcf05de6c273bb8e3475609b6f80e31f56e2ef5a5410e296a4d372f0d",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-7",
+      "id": "Q-1",
+      "text": "T-6 treats open access to the new attendance counts as an accepted MVP risk. Is that acceptance recorded anywhere beyond the architecture note that the MVP grants every permission, and does it cover the new counts?"
+    }
+  ],
+  "recorded_at": "2026-11-16T10:47:05Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All eight design components CO-1 to CO-8 have at least one threat; the components that handle personal data (CO-1, CO-2, CO-5, CO-6) each have an information disclosure or identity threat.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats are specific to the component (SQL input, unscoped count, count(*) as text, reuse of get by POST/PATCH). T-8 and T-12 are functional regression risks labelled tampering, not attacker threats.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Every threat has a mitigation that is cited or named as a new control for implement. T-3 calls the patient_id filter existing while T-2 calls it new, and T-5 leans on an uncited, imprecise statement.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "The MVP no-sign-in gap is stated openly in T-6 and T-10, but the risk acceptance is asserted without a cited decision while assumed and questions are empty.",
+      "score": 4
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Clear and consistent; front matter and body agree. Threats are ordered by component, not by risk, and carry no risk ranking.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}
