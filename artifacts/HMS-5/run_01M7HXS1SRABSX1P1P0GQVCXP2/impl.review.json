@@ -1,0 +1,163 @@
+{
+  "artifact_sha256": "8e51cdc532c9d078189ef65d82908cd9cb0c30cef84798e830b88330c8773492",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientRepo\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientDetail\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientDetail\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PatientDetailPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "PatientRepo.visitSummary(id): counts the patient's COMPLETED and NO_SHOW appointments",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#item:CO-1"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: visitSummary { completed, noShow } (proposed default)",
+          "ref": "runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "PatientDetailPage: Visit summary block above the Appointments heading",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#item:CO-5"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the same pattern as `appointmentCount` (threat T-7)",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impl.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Drop the T-7 mention, or add threat.md to inputs and back the sentence with a claim that cites the T-7 item.",
+      "text": "The Summary justifies the Number() conversion with threat T-7, but threat.md is not in the artifact's inputs and no claim cites it, so the reference cannot be traced from this artifact. T-7 does exist in the run's threat.md and the code satisfies it."
+    }
+  ],
+  "package_sha256": "38fa4fd7ee98400eae2c44cd42ad3fd7c2c270ca537b6fbdc488ff03d9717786",
+  "questions": [],
+  "recorded_at": "2026-11-16T10:59:13Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-5 are implemented as designed: one FILTER count query bound to patient_id, PatientService.get attaches visitSummary (so EP-1 to EP-3 carry it), both PatientDetail types declare it, and the block sits directly above the Appointments heading.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL stays in api/src/repositories and the rule in api/src/services; the query uses a bound parameter and fixed status literals; no logging was added; the unknown-id 404 path in get is unchanged.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Five files, 29 lines added and 2 deleted, all named by the design. The only extra edit is the Omit on PatientRepo.get's return type, which the new required field needs to keep compiling.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Counts go through Number() with a ?? 0 fallback, so text counts and a missing row both yield integers; notFound is thrown before visitSummary runs; no new endpoint was added.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "Summary and Changes match the code I read in all five files. One small gap: the body leans on threat T-7, but threat.md is not among the artifact's inputs and the reference has no citation.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
