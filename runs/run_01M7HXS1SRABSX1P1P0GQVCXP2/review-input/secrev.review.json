@@ -1,0 +1,126 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "2c0cf4f15b8622f97e7e7f1a197b9981d4affb39d42ed6c724a6946be3ae11ea",
+  "package_sha256": "72ea8f7133718763a33a596388b9015be887672ccef779a99ff1d141e88529be",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 5.0,
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "score": 5,
+      "reason": "I read the changed code at head: bound $1 with fixed status literals, notFound thrown before the count, no new route or request input, React text rendering. I found no weakness the artifact missed. Both scans are attached by hash."
+    },
+    {
+      "id": "SC-R2",
+      "score": 5,
+      "reason": "There are no findings to locate. The line references for the checks (patientRepo.ts L221-L230, patientService.ts L41 and L44, PatientDetailPage.tsx L75-L80) match the code at head exactly."
+    },
+    {
+      "id": "SC-R3",
+      "score": 5,
+      "reason": "No findings and a low-risk verdict fit a read-only change of two integers on existing permissioned routes. The MVP all-staff identity is correctly treated as an existing accepted design point, not a new issue."
+    },
+    {
+      "id": "SC-R4",
+      "score": 5,
+      "reason": "No fix is needed because no weakness exists. Each check states what was verified and where, so nothing is left without direction."
+    },
+    {
+      "id": "SC-R5",
+      "score": 5,
+      "reason": "The artifact raises no false alarms. It reports zero findings and asks no questions."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "Claim C5 restates the logging rule as 'medical data', but the cited convention says 'medical history'. This is wording only and does not change the conclusion, because the change adds no log line.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/secrev.md#claim:C5",
+          "quote": "contact details or medical data."
+        },
+        {
+          "ref": "context/conventions.md#logging-and-data",
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"
+        }
+      ],
+      "claim_ref": "C5",
+      "suggested_fix": "Change 'medical data' to 'medical history' in C5 so it matches context/conventions.md#logging-and-data."
+    }
+  ],
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/architecture.md#identity",
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`."
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/architecture.md#identity",
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted."
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/conventions.md#code-layout",
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/conventions.md#errors",
+          "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409."
+        }
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/conventions.md#logging-and-data",
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"
+        }
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impl.md#claim:C7",
+          "quote": "The user chose the field shape `visitSummary { completed, noShow }`."
+        }
+      ]
+    }
+  ],
+  "questions": []
+}

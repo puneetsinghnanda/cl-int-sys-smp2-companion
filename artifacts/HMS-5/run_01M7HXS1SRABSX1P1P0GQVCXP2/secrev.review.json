@@ -1,0 +1,128 @@
+{
+  "artifact_sha256": "2c0cf4f15b8622f97e7e7f1a197b9981d4affb39d42ed6c724a6946be3ae11ea",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "message per field (`ValidationError`), unknown ids 404, conflicts 409.",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The user chose the field shape `visitSummary { completed, noShow }`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impl.md#claim:C7"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "contact details or medical data.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/secrev.md#claim:C5"
+        },
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_ref": "C5",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Change 'medical data' to 'medical history' in C5 so it matches context/conventions.md#logging-and-data.",
+      "text": "Claim C5 restates the logging rule as 'medical data', but the cited convention says 'medical history'. This is wording only and does not change the conclusion, because the change adds no log line."
+    }
+  ],
+  "package_sha256": "72ea8f7133718763a33a596388b9015be887672ccef779a99ff1d141e88529be",
+  "questions": [],
+  "recorded_at": "2026-11-16T11:11:32Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "I read the changed code at head: bound $1 with fixed status literals, notFound thrown before the count, no new route or request input, React text rendering. I found no weakness the artifact missed. Both scans are attached by hash.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "There are no findings to locate. The line references for the checks (patientRepo.ts L221-L230, patientService.ts L41 and L44, PatientDetailPage.tsx L75-L80) match the code at head exactly.",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "No findings and a low-risk verdict fit a read-only change of two integers on existing permissioned routes. The MVP all-staff identity is correctly treated as an existing accepted design point, not a new issue.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "No fix is needed because no weakness exists. Each check states what was verified and where, so nothing is left without direction.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "The artifact raises no false alarms. It reports zero findings and asks no questions.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 5.0,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
