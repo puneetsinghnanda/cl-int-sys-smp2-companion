@@ -1,0 +1,164 @@
+{
+  "artifact_sha256": "2d92a2cd06d503d0970a4028aaed4d79e146605e47bc500151795a39ae022231",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The appointment page of a Cancelled appointment shows a \"Book again\" button.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-1"
+        },
+        {
+          "quote": "The appointment page of a No-show appointment shows a \"Book again\" button.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "has today''s date in the hospital time zone (Asia/Kolkata) chosen.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-7"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The reason for visit keeps its 300-character limit.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-16"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A doctor, patient, department or specialization kept for history but not offered for new use.",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Show both (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "including free slots (APT-2), no overlapping appointments for the patient (APT-3)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-12"
+        },
+        {
+          "quote": "then the booking is refused with \"slot no longer available\" (APT-4).",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md#L142-L143"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an S-5 AC: given the Book again page for doctor D today, an already-booked slot of D is not offered (or is refused) as today under APT-2.",
+      "text": "REQ-12 names three unchanged booking rules (APT-2 free slots, APT-3, APT-4). S-5 has ACs for APT-3 and APT-4 only. Nothing tests the APT-2 free-slot partition, for example that only free slots are offered or bookable from the Book again page."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "enter a reason for visit with a 301st character (one past the 300-character limit)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md#L131"
+        },
+        {
+          "quote": "The reason for visit keeps its 300-character limit.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-16"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an AC: a reason for visit of exactly 300 characters is accepted and booked from the Book again page.",
+      "text": "S-3 AC5 tests only the rejecting side of the 300-character limit (301 chars). No AC checks that exactly 300 characters is accepted, so an off-by-one tightening of the limit would pass."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "when staff choose doctor, patient, date and slot and book, then it behaves as today.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md#L151"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State the observable result, e.g. 'a Scheduled appointment is created for the chosen doctor, patient and slot'.",
+      "text": "S-6 AC2 and AC3 end with 'behaves as today' and give no observable outcome, so they are hard to check objectively."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "so this is 19:00 UTC on 16 November, the local side of midnight",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md#L121"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Reword to 'past midnight locally but still 16 November in UTC'.",
+      "text": "The phrase 'the local side of midnight' in S-2 AC2 is unclear. The worked UTC conversion already makes the point."
+    }
+  ],
+  "package_sha256": "afb620ab1a0e0f05bb95bb4b9be2459133ba841a6e543155a7e6bc3279b6e985",
+  "questions": [],
+  "recorded_at": "2026-11-16T06:46:49Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 19 known REQs (REQ-1 to REQ-19) are traced by at least one story. The intent has no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories have one outcome. S-5 groups booking rules, new ID and the untouched original. S-3 groups prefill, editability and the limit. Both are still small.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then and mostly discriminating. The time-zone AC uses a real local/UTC date split. Gaps: no AC for the APT-2 free-slot rule, only one side of the 300-char limit is tested, and S-6 ACs say 'behaves as today'.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Values come from the intent or ticket: 300 chars, Asia/Kolkata, the button texts and the APT rule ids. The UTC+05:30 instant is worked out inline in the AC.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms are clear and consistent with the glossary. Minor awkward wording in S-2 AC2 ('the local side of midnight').",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
