@@ -1,0 +1,191 @@
+{
+  "artifact_sha256": "de7e03e0c4719555cb144c4266549b71a0d7e1c80b5f4405a5f96c4cb7b86b71",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Vitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New requirements get new IDs and tests.",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "no page is tested end to end in a browser",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "name: visitSummary.completed, type: integer, nullable: false",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#item:EP-1"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "other pages have no web tests",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/test/doctors-no-shows.test.ts",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-no-shows.test.ts"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "HMS-9 REQ-10: nextSevenDays in a PATCH body is ignored",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-next-seven-days.test.ts"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "because the appointments the page already loads stop at a default `limit = 100` (C8)",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#overview"
+        },
+        {
+          "quote": "TP-21 (integration, boundary, EP-1): `visitSummary` holds only the two integer keys.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/tplan.md#tests"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add an integration test: a patient with 101 Completed appointments returns visitSummary.completed = 101 while the appointments list stays capped.",
+      "text": "No boundary test has a patient with more than 100 Completed/No-show appointments. The design computes the counts on the server because the loaded list stops at 100, so a count above the cap is the boundary that proves the count is not derived from the list."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "These guard the design's endpoints EP-1, EP-2 and EP-3 rather than a story outcome.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/tplan.md#tests"
+        },
+        {
+          "quote": "TP-20 (integration, negative, EP-2): POST with invalid fields is still 400 with field errors and no `visitSummary`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/tplan.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Keep the covers link but say in the Known section that TP-18 to TP-23 do not count towards criterion coverage, which TP-1 to TP-17 already give in full.",
+      "text": "TP-20 (POST with invalid fields is 400) is linked to S-2/AC3, which is about a patient with no appointments showing 0 for each. The test does not assert that criterion; the plan admits these tests guard endpoints, not story outcomes."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "PAT-3: shows details, history and appointments, upcoming first",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/patients.test.ts"
+        },
+        {
+          "quote": "TP-12 (integration, S-3/AC1, S-3/AC2): the API still orders appointments upcoming first",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/tplan.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State that TP-12 adds the past-only case and the order with visitSummary present, and that PAT-3 stays as the upcoming-first regression.",
+      "text": "TP-12 re-tests the existing appointment order of the patient detail, which api/test/patients.test.ts already asserts (PAT-3). The plan does not say whether TP-12 adds new cases (past-only) or relies on that existing test."
+    }
+  ],
+  "package_sha256": "732d267c41c037e53143b406626db3dcd9839773793b32b600672b80ddea8505",
+  "questions": [],
+  "recorded_at": "2026-11-16T11:15:53Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All 14 acceptance criteria (S-1/AC1-5, S-2/AC1-4, S-3/AC1-5) map to at least one test whose title asserts the criterion's outcome; no test claims a criterion that does not exist.",
+      "score": 5
+    },
+    {
+      "id": "TP-R2",
+      "reason": "Counting rules sit at API integration level, rendering at jsdom unit level, and the single manual test (TP-17, layout) is justified by the absence of browser tests. TP-12 overlaps an existing test but is not at too high a level.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "Each of EP-1, EP-2 and EP-3 has a success and a negative test, plus a key-shape boundary and a PATCH-body-ignored test. Missing: a boundary above the 100-appointment list cap that motivated the server-side count.",
+      "score": 4
+    },
+    {
+      "id": "TP-R4",
+      "reason": "Uses Vitest with Supertest on throwaway PostgreSQL and a fixed clock, and Testing Library under jsdom; target files follow api/test and web/src/__tests__; titles start with the HMS-5 REQ id like neighbouring tests.",
+      "score": 5
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are concrete, with data and expected values a tester can run. The TP-4 wording 'outside its Last 30 days period' is awkward, and the regression tests' covers links are loose, though the plan says so.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}
