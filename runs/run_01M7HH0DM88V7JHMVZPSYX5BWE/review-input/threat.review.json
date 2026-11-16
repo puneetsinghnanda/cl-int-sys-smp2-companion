@@ -1,0 +1,94 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "b062b9abf98120e79e673fa509bbc276a21da33c6c16090e390e07764f92fd1d",
+  "package_sha256": "8792f6771c3223579fb19c100b1fa5840cd19aee99e6745672a92bc87b7bb0d3",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All seven design components (CO-1 to CO-7) appear with at least one threat. EP-1 and the action routes are covered through T-9 and T-11."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats fit the change: the UI-only disabled state, the reason kept out of the URL, and patient data on the detail page. T-8 is a correctness bug labelled as tampering."},
+    {"id": "TM-R3", "score": 4, "reason": "Mitigations cite existing controls or name new ones for implement. T-1 and T-5 present unconfirmed server checks as existing controls."},
+    {"id": "TM-R4", "score": 3, "reason": "T-6 is honestly marked assumed. T-1 depends on the same unconfirmed server check but is listed as known, and the server-side 300-character check is never confirmed."},
+    {"id": "TM-R5", "score": 4, "reason": "Readable and consistent, and the summary matches the front matter. Threats are grouped by component, not ordered by risk."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "consistency",
+      "text": "T-1 is listed as known, but its mitigation relies on POST /api/appointments refusing Inactive records. T-6 marks that same check as assumed, and no cited source shows the server enforces it.",
+      "cites": [
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#T-1", "quote": "Implement must confirm the route refuses Inactive doctors and patients, and add a test if none exists (see T-6)."},
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#assumed", "quote": "T-6: assumes POST /api/appointments already refuses an Inactive doctor or patient"},
+        {"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}
+      ],
+      "claim_ref": "C12",
+      "suggested_fix": "Move T-1 to assumed alongside T-6, or merge them, so the unconfirmed server-side Active check is stated as one assumption."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "T-5 says the server already enforces the 300-character limit. Its cite C9 (REQ-16) is a requirement and does not show where the limit is enforced, so the control may be client-only.",
+      "cites": [
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#T-5", "quote": "the booking request is validated server-side as today, including the 300-character limit"},
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-16", "quote": "The reason for visit keeps its 300-character limit."}
+      ],
+      "claim_ref": "C9",
+      "suggested_fix": "Mark the server-side length check as assumed and have implement confirm it in code."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are ordered by component, not by risk. The rubric's level 5 for clarity asks for risk order.",
+      "cites": [
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#threats", "quote": "T-13 (todayIn helper, tampering): the date is only a default; the server validates slots."}
+      ]
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-8 describes a wrong or missing status literal. That is a functional bug, not an attacker tampering with data, so the STRIDE category does not fit.",
+      "cites": [
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#T-8", "quote": "A wrong or missing status literal could make the page treat an Inactive record as Active and offer Book again."}
+      ],
+      "suggested_fix": "Present T-8 as a defensive coding note, or tie it to T-1/T-6 as the client half of the elevation-of-privilege threat."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the\npatient's own page."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/architecture.md#double-booking", "quote": "exclusion constraints forbid overlapping Scheduled\nappointments per doctor and per patient. The service turns those violations into 409 responses."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-09", "quote": "answer: Navigation state (proposed default)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-06", "quote": "answer: doctor_status/patient_status (proposed default)"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-16", "quote": "The reason for visit keeps its 300-character limit."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-12", "quote": "follows the existing rules unchanged, including free slots (APT-2)"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:POST:/api/appointments", "quote": "\"path\": \"api/src/routes/appointments.ts\""}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "Invalid input is 400 with one\nmessage per field (`ValidationError`)"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]}
+  ],
+  "questions": [
+    {
+      "id": "Q-1",
+      "text": "If POST /api/appointments does not refuse Inactive doctors or patients today, can implement add that check to the service layer? The design says the booking path (EP-2) stays unchanged.",
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1"
+    }
+  ]
+}

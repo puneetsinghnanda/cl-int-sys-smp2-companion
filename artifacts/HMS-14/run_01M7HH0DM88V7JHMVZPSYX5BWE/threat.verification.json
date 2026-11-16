@@ -1,0 +1,73 @@
+{
+  "accepted_default": true,
+  "artifact_path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md",
+  "artifact_sha256": "b062b9abf98120e79e673fa509bbc276a21da33c6c16090e390e07764f92fd1d",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "774dd0bf0776a5cb5a16f7f63fd2342f1c9532637d3092f1718fe2bcb2e811b1",
+  "claims": {
+    "total": 14,
+    "verified": 14
+  },
+  "decided_at": "2026-11-16T07:22:44Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-1",
+      "reason": "bad citation format artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#T-1"
+    },
+    {
+      "id": "F-2",
+      "reason": "bad citation format artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#T-5"
+    },
+    {
+      "id": "F-4",
+      "reason": "bad citation format artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/threat.md#T-8"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md",
+      "sha256": "4623a1e818ebe4e3423442e8697a9912d8940c0b19ebe9de19fb8b428bc6a035",
+      "verification_sha256": "fae785a44dae245b25559e3d00ec9d106fd19be62aab359480abdaba36853490"
+    }
+  ],
+  "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "09e050c003c51aa59506e8f38f73b84311b4af2d285387333867b8f6cb406937",
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.8333,
+    "S2": 1.0,
+    "S3": 4.2,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "xPFYSNEOjei5efBKC7IErLNOBgBZbxPEPdCASkdHHmf1HeyM4yn-wlLWQ97MxnWr8A3-r8v6ZCS_RvexCgWhCQ",
+  "skill": "threat-model@1.1.0",
+  "step": "threat",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
