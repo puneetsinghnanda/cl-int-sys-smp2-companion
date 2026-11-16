@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/repositories/appointmentRepo.ts — CO-5: select and map doctor_status and patient_status.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#L107"
+        },
+        {
+          "quote": "HMS-14 REQ-9/REQ-12 error: an Inactive doctor is still refused on booking.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L77"
+        },
+        {
+          "quote": "Each changed function or route has a normal-path test and at least one edge or error test.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L67"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The detail read changed (appointmentRepo detail now carries doctor_status/patient_status), but no HMS-14 error-path test is listed for GET detail, such as an unknown id still returning 404. The only error test listed is on booking, which did not change."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

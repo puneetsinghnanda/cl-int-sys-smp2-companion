@@ -1,0 +1,256 @@
+{
+  "artifact_sha256": "3b73a6676a2a9147ec342825ac3fcc951d27c44b8939e9324cc2b81ec0098cdf",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web tests use\nVitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        },
+        {
+          "quote": "\"exit_code\": 78,",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.checks.json#L140"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "against a throwaway PostgreSQL 16 with a fixed clock",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctor_status/patient_status (proposed default)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#claim:C12"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/appointments.test.ts\",",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "api/src/repositories/appointmentRepo.ts — CO-5: select and map doctor_status and patient_status.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#L107"
+        },
+        {
+          "quote": "HMS-14 REQ-9/REQ-12 error: an Inactive doctor is still refused on booking.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L77"
+        },
+        {
+          "quote": "Each changed function or route has a normal-path test and at least one edge or error test.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L67"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add 'HMS-14 REQ-17 error: an unknown appointment id on the detail GET is still 404' to api/test/appointments-book-again.test.ts.",
+      "text": "The detail read changed (appointmentRepo detail now carries doctor_status/patient_status), but no HMS-14 error-path test is listed for GET detail, such as an unknown id still returning 404. The only error test listed is on booking, which did not change."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "S-5: covered by the API new-id, unchanged-original and Inactive-refusal tests.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L91"
+        },
+        {
+          "quote": "then the booking is refused with \"slot no longer available\" (APT-4).",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md#L147"
+        },
+        {
+          "quote": "APT-4: two simultaneous bookings of one slot leave exactly one appointment",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say in Known that S-5 AC1/AC2/AC5 are covered by the existing APT-2/3/4 tests in api/test/appointments.test.ts, or add HMS-14 tests for them.",
+      "text": "Known says S-5 is covered, but none of the listed tests addresses S-5 AC1 (APT-4 slot taken), AC2 (APT-3 overlap) or AC5 (APT-2 free slots only). These rest on the existing APT tests, and the artifact does not say so."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Server-side Active checks already exist on booking (C4, C5)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#L101"
+        },
+        {
+          "quote": "HMS-14 REQ-9/REQ-12 error: an Inactive doctor is still refused on booking.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L77"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a REQ-10/REQ-12 error test: an Inactive patient is still refused on booking. Or point to the existing PAT-7 test.",
+      "text": "The change relies on the server refusing both an Inactive doctor and an Inactive patient on booking. The HMS-14 API tests only check the Inactive-doctor refusal."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "S-1: Book again shows on Cancelled and No-show, not on Scheduled or Completed.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L79"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Start the web test names with 'HMS-14 REQ-n' (story id after it if wanted), as the API tests do.",
+      "text": "The web test entries start with story ids (S-1, S-2/S-3, S-4), not requirement ids. This conflicts with C3's claim that every test name starts with its requirement id."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "\"HMS-14 REQ-10: an Inactive patient shows as INACTIVE on the original appointment\"",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#L115"
+        },
+        {
+          "quote": "The tests from the impl step (web/src/__tests__/bookAgain.test.ts) are kept unchanged.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L87"
+        },
+        {
+          "quote": "\"lines_deleted\": 14,",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.checks.json#L78"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Say whether the impl API tests in appointments-book-again.test.ts were replaced by 'INACTIVE after the PATCH', and list what was removed.",
+      "text": "The impl step's separate API tests for an Inactive patient (REQ-10) and an Inactive doctor (REQ-9) are not listed. The ut step changed that file (14 lines deleted) but only says the impl web tests are kept."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "base_sha: fd6a0c3789c63eb26f68198b71035ae127ac999e",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md#L20"
+        },
+        {
+          "quote": "head_sha: 6024bbc03bdacd61913a128ab9cf8eb42cbc4556",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#L21"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "text": "The ut code base_sha is not the impl step's head_sha, so the tests may have been written on a different tree from the reviewed change."
+    }
+  ],
+  "package_sha256": "dd6e38d011f24f7ded8f08793634bf6d929e3bd52f71d01e004a164700417de4",
+  "questions": [
+    {
+      "ask_role": "engineer",
+      "blocking": false,
+      "finding_ref": "F-6",
+      "id": "Q-1",
+      "text": "The ut step's base_sha (fd6a0c3) is not the impl step's head_sha (6024bbc). Was the impl branch rebased or merged before the tests were written, and does the tree under test contain the impl change?"
+    }
+  ],
+  "recorded_at": "2026-11-16T08:34:21Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover the detail fields, the four action routes, where Book again shows, its disabled reasons, navigation and reason prefill. S-5 AC1/AC2/AC5 and the Inactive-patient refusal are claimed or relied on but no HMS-14 test listed for them.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check results you can see: exact disabled texts, the exact navigation URL and state, the PATCH status, the new id against the original and the 2026-11-17 date. Test bodies are not in the pack, so no 5.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Edges are well covered: UTC midnight, the 301st character, missing or non-text state, no reason, both Inactive. The only error-path test is the booking refusal. The changed detail GET has no error test.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Frameworks and file locations match the strategy and layout. Web test entries start with story ids (S-1, S-4) instead of requirement ids, which is a small naming deviation.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "Results are deferred to the verifier and checks.json. Coverage is correctly not reported: the verifier coverage step is a skip with exit 78.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.1,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

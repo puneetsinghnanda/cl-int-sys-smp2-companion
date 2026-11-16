@@ -1,0 +1,77 @@
+{
+  "artifact_path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ut.md",
+  "artifact_sha256": "3b73a6676a2a9147ec342825ac3fcc951d27c44b8939e9324cc2b81ec0098cdf",
+  "attempt": 1,
+  "budget_tokens": 45000,
+  "checks_sha256": "c695b0ac58648a80342b94e88759f83cec8e9611815f4fd63d09f39f668a4a4e",
+  "context_sections": [
+    {
+      "id": "test-strategy",
+      "included": true,
+      "path": "context/test-strategy.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "test-layout",
+      "included": true,
+      "path": "context/test-layout.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "change",
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md"
+    },
+    {
+      "name": "test_strategy",
+      "path": "context/test-strategy.md"
+    },
+    {
+      "name": "test_layout",
+      "path": "context/generated/test-layout.json"
+    }
+  ],
+  "package_sha256": "dd6e38d011f24f7ded8f08793634bf6d929e3bd52f71d01e004a164700417de4",
+  "prepared_at": "2026-11-16T08:32:06Z",
+  "prepared_by": "tsl@0.1.6",
+  "previous_findings": [],
+  "rubric": {
+    "items": [
+      {
+        "id": "UT-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "UT-R2",
+        "weight": 0.25
+      },
+      {
+        "id": "UT-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "UT-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "UT-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/unit-test/rubric.md",
+    "sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review-package.v1",
+  "skill": "unit-test@1.1.0",
+  "step": "ut",
+  "truncated": false
+}
