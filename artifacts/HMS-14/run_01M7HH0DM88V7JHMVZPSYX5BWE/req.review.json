@@ -1,0 +1,193 @@
+{
+  "artifact_sha256": "7f7f379c0fac62230826a6d88863ac42c7c9dd2da60c5db6afedef2d3e5ebcdb",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "reschedule (APT-5), cancel (APT-6), and mark",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ticket.md#L15"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Once an appointment is Cancelled or No-show it cannot be changed (APT-8), and the",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ticket.md#L16"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "slot from its address",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ticket.md#L19"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "slot leave exactly one.",
+          "ref": "context/intent-baseline.md#booking-rules"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a cancellation reason exists exactly when CANCELLED.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "keeps its 300-character limit.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ticket.md#L32"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "Is it the appointment's own reason-for-visit field (not the cancellation reason a Cancelled appointment also has)?",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-02"
+        },
+        {
+          "quote": "\"id\": \"column:appointment.reason\"",
+          "ref": "context/generated/db-schema.json#column:appointment.reason"
+        },
+        {
+          "quote": "\"id\": \"column:appointment.cancellation_reason\"",
+          "ref": "context/generated/db-schema.json#column:appointment.cancellation_reason"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite the db-schema columns as the basis for REQ-6 and REQ-19, and keep only the remaining product question if one is still needed.",
+      "text": "Q-02 asked whether 'reason for visit' means the appointment's own field and not the cancellation reason. The context pack already answers this: the appointment table has separate reason and cancellation_reason columns."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Any change to booking rules APT-1 to APT-4 or to the appointment API: the ticket requires them unchanged.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#out-of-scope"
+        },
+        {
+          "quote": "Booking from there follows the existing rules unchanged",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/ticket.md#L29"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Remove 'or to the appointment API', or give it a separate reason (for example, a design-step decision) instead of crediting it to the ticket.",
+      "text": "Out of scope says the ticket requires the appointment API to stay unchanged. The ticket only says booking rules stay unchanged and never mentions the appointment API."
+    }
+  ],
+  "package_sha256": "4a5e7b2a960eac1d04988f4da100d725309c6ba704fb34c4e6c814169a282f48",
+  "questions": [],
+  "recorded_at": "2026-11-16T06:44:04Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria map to REQ-1..REQ-17. The edge cases (both Inactive, empty reason, cancellation reason) are covered by REQ-11, REQ-18 and REQ-19. How the reason is passed is in Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Each REQ covers one behaviour with a condition a tester can check. Doctor and patient, and the Cancelled and No-show states, are split into separate REQs.",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every REQ marked known cites ticket lines, the baseline or IDE answers A-01..A-03. Nothing is invented, and REQ-18 was confirmed by the user before it was marked known.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The ticket and baseline do not clash. The ticket's closed-appointment and booking rules match intent-baseline booking-rules and closed-appointments, and REQ-12 and REQ-14 cite both.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "The questions were few, offered real options and had proposed defaults. Part of Q-02 was already answered by the data model, which has separate reason and cancellation_reason columns.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording, and the glossary terms Cancelled, No-show, Scheduled, Completed and Inactive are used consistently. The missing glossary entry for 'Reason for visit' is stated openly.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

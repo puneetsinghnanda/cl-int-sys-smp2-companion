@@ -1,0 +1,57 @@
+{
+  "artifact_path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md",
+  "artifact_sha256": "7f7f379c0fac62230826a6d88863ac42c7c9dd2da60c5db6afedef2d3e5ebcdb",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "a29915e0ef3e4518ebd1565ea9f9163bf42add3a261ef414d3eb48cbb56636e4",
+  "claims": {
+    "total": 10,
+    "verified": 10
+  },
+  "decided_at": "2026-11-16T06:44:05Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "f2648be6c38a82e29c98e5c83201a00d2a9c82d88e4e552817e81ca40c066ad9",
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.9,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "Frk7mgny9WifcUvJwaFuVUxT0kiTg4EfZ-w_zQqEzgTEoubNOYlS7EHI75wzfhzzgaX2FWQgA77EoupgTqKGBg",
+  "skill": "requirement-review@1.2.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
