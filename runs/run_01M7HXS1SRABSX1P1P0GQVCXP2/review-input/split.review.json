@@ -1,0 +1,216 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "0e92bcecf3892dbdc506bcfd34075fd333587ff93608dae1d0478f0464d0a588",
+  "package_sha256": "95c2d433d5dba03051fa2cf47808166e76dae2909e7cafa948e8afa375f9c49d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "score": 5,
+      "reason": "All nine known REQs are traced: S-1 covers REQ-1, 2, 3, 6; S-2 covers REQ-4, 5; S-3 covers REQ-7, 8, 9. The intent has no assumed or unknown items."
+    },
+    {
+      "id": "SS-R2",
+      "score": 5,
+      "reason": "Three stories, each one user-visible outcome (see the counts, what is excluded, nothing else changes). None exceeds five criteria."
+    },
+    {
+      "id": "SS-R3",
+      "score": 4,
+      "reason": "All ACs are Given/When/Then and most discriminate well (distinct counts, Cancelled most recent, past Scheduled not closed, other patient, old date). S-3 AC4 is unbounded, and the list regression ACs omit Cancelled and No-show rows."
+    },
+    {
+      "id": "SS-R4",
+      "score": 5,
+      "reason": "Statuses, All time, 0 for each and the Period options come from the intent or glossary. Counts and the 2 January 2025 date are concrete scenario values, with the reason stated inline."
+    },
+    {
+      "id": "SS-R5",
+      "score": 5,
+      "reason": "Clear, consistent glossary terms (Completed, No-show, Scheduled, Cancelled, Visit summary). Body sections mirror the front matter with the same ids."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-3 AC4 covers 'every part' of the page for 'any patient' without naming the parts or a baseline, so a tester has no bounded list to check. It restates REQ-9 rather than making it checkable.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/split.md#item:S-3",
+          "quote": "every part of the page other than the new Visit summary shows the same content and layout as before the change"
+        }
+      ],
+      "suggested_fix": "Name the other page parts from the ui facts or product code at the pinned SHA (for example the patient details block) and state each one stays the same."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The appointments-list regression ACs use only Scheduled and Completed rows or unspecified past rows. A list wrongly filtered to drop Cancelled or No-show rows would still pass both.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/split.md#item:S-3",
+          "quote": "Given a patient with one upcoming Scheduled appointment and one past Completed appointment"
+        },
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/split.md#item:S-3",
+          "quote": "Given a patient with only past appointments and no upcoming one"
+        }
+      ],
+      "suggested_fix": "In S-3 AC2, give the patient past Completed, No-show and Cancelled appointments and state that all of them still appear in the same order."
+    }
+  ],
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-1",
+          "quote": "above the appointments list."
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-2",
+          "quote": "The Visit summary shows the number of the patient's"
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-3",
+          "quote": "The Visit summary shows the number of the patient's"
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-4",
+          "quote": "appointments are not counted in either number."
+        }
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-5",
+          "quote": "A patient with no Completed or No-show appointments shows"
+        }
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-6",
+          "quote": "every Completed and No-show appointment of the patient, with no period picker."
+        },
+        {
+          "ref": "runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-01",
+          "quote": "answer: All time (proposed default)"
+        }
+      ]
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-7",
+          "quote": "The patient page's appointments list is"
+        }
+      ]
+    },
+    {
+      "claim_id": "C8",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-8",
+          "quote": "Medical history unchanged"
+        }
+      ]
+    },
+    {
+      "claim_id": "C9",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#item:REQ-9",
+          "quote": "is unchanged apart from the new Visit summary."
+        }
+      ]
+    },
+    {
+      "claim_id": "C10",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#claim:C1",
+          "quote": "The patient page already lists the patient's appointments"
+        }
+      ]
+    },
+    {
+      "claim_id": "C11",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#no-show",
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled."
+        }
+      ]
+    },
+    {
+      "claim_id": "C12",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#period",
+          "quote": "Today, Last 7 days or Last 30 days"
+        }
+      ]
+    },
+    {
+      "claim_id": "C13",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/glossary.md#no-show",
+          "quote": "closed instead of staying Scheduled"
+        },
+        {
+          "ref": "context/glossary.md#completed",
+          "quote": "closed by staff once its start time has passed"
+        }
+      ]
+    }
+  ],
+  "questions": []
+}
