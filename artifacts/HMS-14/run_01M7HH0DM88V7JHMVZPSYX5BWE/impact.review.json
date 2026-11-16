@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "30f5450bae61a4421862f609473ac9ef42339b5cd9631233ea00e641a8480d30",
-  "attempt": 1,
+  "artifact_sha256": "3cf57d63dc48bf5b85fdf28d00d95961c0515ef54dd27cbf7aedb33756379f54",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -161,6 +161,78 @@
       ],
       "claim_id": "C16",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/repositories/appointmentRepo.ts\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"
+        },
+        {
+          "quote": "answer: Extend appointment GET (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/services/appointmentService.ts\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService"
+        },
+        {
+          "quote": "services hold the rules and\ntransactions, repositories hold the SQL",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/api/types.ts\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"
+        },
+        {
+          "quote": "answer: Extend appointment GET (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, include actions (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-05"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/hooks/useSettings.tsx\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/api/settings\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/settings"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
     }
   ],
   "findings": [
@@ -168,45 +240,19 @@
       "category": "completeness",
       "cites": [
         {
-          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow",
-          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"
+          "quote": "sym:sample-system:api/src/types.ts:AppointmentDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail"
         },
         {
-          "quote": "sym:sample-system:web/src/api/types.ts:AppointmentDetail",
-          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"
-        },
-        {
-          "quote": "other readers of the appointment detail response must tolerate the added fields",
-          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary"
+          "quote": "`DetailRow` in appointmentRepo and the detail response built by `AppointmentService` add doctor and patient status",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#impacted-modules"
         }
       ],
-      "claim_ref": "C14",
+      "claim_ref": "C17",
       "id": "F-1",
       "severity": "major",
-      "suggested_fix": "Under module:sample-system:api and module:sample-system:web, list DetailRow, AppointmentService and the web AppointmentDetail type. Name the readers of the detail response, or mark them unknown, since the facts have no call edges.",
-      "text": "The extended GET /api/appointments/:id response needs changes in appointmentRepo DetailRow (API) and the AppointmentDetail type (web). Neither is listed. The other readers of the detail response are named as a risk but never identified."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "Availability, slots and \"today\" use the hospital time zone",
-          "ref": "context/architecture.md#time-and-slots"
-        },
-        {
-          "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings",
-          "ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"
-        },
-        {
-          "quote": "\"today\" follows the hospital time zone setting (C11)",
-          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#known"
-        }
-      ],
-      "claim_ref": "C11",
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "List http:GET:/api/settings and useSettings as existing, read dependencies of BookAppointmentPage, or record how the web side gets the hospital time zone.",
-      "text": "REQ-7 needs 'today' in hospital time on the web book page. C11 cites HOSPITAL_TZ, which is API config. The artifact does not say how the web page gets it, although useSettings and GET /api/settings exist in the facts."
+      "suggested_fix": "Under module:sample-system:api, add sym:sample-system:api/src/types.ts:AppointmentDetail as changed. Add a claim that cites it and A-04.",
+      "text": "Extending GET /api/appointments/:id (A-04) also changes the API's own contract type AppointmentDetail in api/src/types.ts. The artifact lists only DetailRow, AppointmentService and the web AppointmentDetail type. Prior F-1 is otherwise resolved."
     },
     {
       "category": "traceability",
@@ -214,25 +260,22 @@
         {
           "quote": "\"path\": \"web/src/App.tsx\",",
           "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        },
+        {
+          "quote": "`AppointmentDetailPage`, route `/appointments/:id`",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary"
         }
       ],
       "claim_ref": "C3",
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "text": "C1 and C3 tie the appointment page to ui:/appointments/:id, and C2 and C4 tie the book page to ui:/appointments/new, by name only. The UI route facts cite only web/src/App.tsx, not the page components."
+      "suggested_fix": "Say that the page-to-route mapping is inferred from the App.tsx route lines, or cite App.tsx#L35-L36 directly.",
+      "text": "Carried over from prior F-3: C3 and C4 tie the pages to ui:/appointments/:id and ui:/appointments/new by name only. The UI route facts cite only web/src/App.tsx, not the page components."
     }
   ],
-  "package_sha256": "4384ebd57fd16882688219b6c3b5ef319f8cac3d2e81f8f23f843c4086f46211",
-  "questions": [
-    {
-      "ask_role": "engineer",
-      "blocking": false,
-      "finding_ref": "F-1",
-      "id": "Q-1",
-      "text": "Besides AppointmentDetailPage, which callers read the GET /api/appointments/:id detail response or the DetailRow shape? Do any action routes (cancel, reschedule and others) return it too? The facts have no call edges."
-    }
-  ],
-  "recorded_at": "2026-11-16T06:55:23Z",
+  "package_sha256": "97a15f7c9b6d35eadbcd20fa2c7de722d2e77b0f76944a928d9ab1388ced218c",
+  "questions": [],
+  "recorded_at": "2026-11-16T07:00:46Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -243,31 +286,31 @@
   "rubric_items": [
     {
       "id": "IA-R1",
-      "reason": "Modules, APIs and tables are listed, but the symbols that carry the changed detail response (appointmentRepo DetailRow, web AppointmentDetail type) are not named.",
-      "score": 3
+      "reason": "The modules, APIs, tables, DetailRow, AppointmentService, the web AppointmentDetail type and useSettings are now listed. The API-side contract type AppointmentDetail in api/src/types.ts, which the extended GET response also changes, is not listed.",
+      "score": 4
     },
     {
       "id": "IA-R2",
-      "reason": "Every module, API and table id exists in the generated facts and is cited. The page-to-route mapping (C3, C4) is inferred from names only.",
+      "reason": "Every module, API, table and symbol id exists in the generated facts and is cited. The page-to-route claims (C3, C4) still rest on names only, because the UI route facts point only at web/src/App.tsx.",
       "score": 4
     },
     {
       "id": "IA-R3",
-      "reason": "Jobs (none) and the booking path are covered. Other readers of the extended GET detail response are flagged as a risk but never identified. The source of the hospital time zone on the web side is not traced.",
-      "score": 3
+      "reason": "Jobs (none), the booking path, the settings source and the action routes that may read the detail shape (A-05) are covered. One reader-side type on the API (api/src/types.ts AppointmentDetail) is missed.",
+      "score": 4
     },
     {
       "id": "IA-R4",
-      "reason": "The api and GET-detail 'changed' statuses rest on the cited answer A-04. The other statuses are justified by schema facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to the context.",
+      "reason": "Changed statuses rest on the cited answer A-04, and the action-route scope on A-05. Existing statuses are backed by schema and inventory facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to reviewed context.",
       "score": 5
     },
     {
       "id": "IA-R5",
-      "reason": "The artifact is clear and grouped well, and the summary names the main risks. The impacted list is not ordered by risk.",
+      "reason": "The artifact is clear, the summary names the risks, and the answers are recorded with mismatch notes. The impacted list is grouped by kind rather than ordered by risk.",
       "score": 4
     }
   ],
-  "rubric_score": 3.65,
+  "rubric_score": 4.15,
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "schema": "review.v1",
   "status": "ok",

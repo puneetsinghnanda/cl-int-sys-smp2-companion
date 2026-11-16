@@ -42,3 +42,13 @@ entries as the user's own answers.
 - question: Q-01: The appointment page needs the doctor's and patient's Active/Inactive status to disable "Book again". The pack has no payload facts for `GET /api/appointments/:id`, and `GET /api/patients/:id` is the patient's own page data (it may carry medical history). Where should the appointment page get the two statuses?
 - options: Extend appointment GET (proposed default) | Call doctor and patient GETs | Leave it to design
 - answer: Extend appointment GET (proposed default)
+
+## A-05
+- step: impact
+- attempt: 2
+- asked_at: 2026-11-16T06:58:11Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01GZLDEWVZTEtHqT9nWmbK8U
+- question: Q-02: The pack has no call facts, and the product code isn't readable here, so I can't see who else reads the appointment detail shape (`DetailRow` in api/src/repositories/appointmentRepo.ts, `AppointmentDetail` in web/src/api/types.ts). Should the impact treat the action routes (cancel, reschedule, complete, no-show) as possible readers too?
+- options: Yes, include actions (proposed default) | Detail GET only | Leave unknown
+- answer: Yes, include actions (proposed default)

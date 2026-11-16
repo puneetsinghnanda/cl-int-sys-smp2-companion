@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/types.ts:AppointmentDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail"
+        },
+        {
+          "quote": "`DetailRow` in appointmentRepo and the detail response built by `AppointmentService` add doctor and patient status",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Extending GET /api/appointments/:id (A-04) also changes the API's own contract type AppointmentDetail in api/src/types.ts. The artifact lists only DetailRow, AppointmentService and the web AppointmentDetail type. Prior F-1 is otherwise resolved."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "feedback.v1",
+  "step": "impact"
+}

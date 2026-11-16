@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "step": "impact",
-  "attempt": 1,
-  "artifact_sha256": "30f5450bae61a4421862f609473ac9ef42339b5cd9631233ea00e641a8480d30",
-  "package_sha256": "4384ebd57fd16882688219b6c3b5ef319f8cac3d2e81f8f23f843c4086f46211",
+  "attempt": 2,
+  "artifact_sha256": "3cf57d63dc48bf5b85fdf28d00d95961c0515ef54dd27cbf7aedb33756379f54",
+  "package_sha256": "97a15f7c9b6d35eadbcd20fa2c7de722d2e77b0f76944a928d9ab1388ced218c",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,50 +12,70 @@
     "version": "0.1.6",
     "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457"
   },
-  "rubric_score": 3.65,
+  "rubric_score": 4.15,
   "rubric_items": [
-    {"id": "IA-R1", "score": 3, "reason": "Modules, APIs and tables are listed, but the symbols that carry the changed detail response (appointmentRepo DetailRow, web AppointmentDetail type) are not named."},
-    {"id": "IA-R2", "score": 4, "reason": "Every module, API and table id exists in the generated facts and is cited. The page-to-route mapping (C3, C4) is inferred from names only."},
-    {"id": "IA-R3", "score": 3, "reason": "Jobs (none) and the booking path are covered. Other readers of the extended GET detail response are flagged as a risk but never identified. The source of the hospital time zone on the web side is not traced."},
-    {"id": "IA-R4", "score": 5, "reason": "The api and GET-detail 'changed' statuses rest on the cited answer A-04. The other statuses are justified by schema facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to the context."},
-    {"id": "IA-R5", "score": 4, "reason": "The artifact is clear and grouped well, and the summary names the main risks. The impacted list is not ordered by risk."}
+    {
+      "id": "IA-R1",
+      "score": 4,
+      "reason": "The modules, APIs, tables, DetailRow, AppointmentService, the web AppointmentDetail type and useSettings are now listed. The API-side contract type AppointmentDetail in api/src/types.ts, which the extended GET response also changes, is not listed."
+    },
+    {
+      "id": "IA-R2",
+      "score": 4,
+      "reason": "Every module, API, table and symbol id exists in the generated facts and is cited. The page-to-route claims (C3, C4) still rest on names only, because the UI route facts point only at web/src/App.tsx."
+    },
+    {
+      "id": "IA-R3",
+      "score": 4,
+      "reason": "Jobs (none), the booking path, the settings source and the action routes that may read the detail shape (A-05) are covered. One reader-side type on the API (api/src/types.ts AppointmentDetail) is missed."
+    },
+    {
+      "id": "IA-R4",
+      "score": 5,
+      "reason": "Changed statuses rest on the cited answer A-04, and the action-route scope on A-05. Existing statuses are backed by schema and inventory facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to reviewed context."
+    },
+    {
+      "id": "IA-R5",
+      "score": 4,
+      "reason": "The artifact is clear, the summary names the risks, and the answers are recorded with mismatch notes. The impacted list is grouped by kind rather than ordered by risk."
+    }
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "major",
       "category": "completeness",
-      "text": "The extended GET /api/appointments/:id response needs changes in appointmentRepo DetailRow (API) and the AppointmentDetail type (web). Neither is listed. The other readers of the detail response are named as a risk but never identified.",
+      "text": "Extending GET /api/appointments/:id (A-04) also changes the API's own contract type AppointmentDetail in api/src/types.ts. The artifact lists only DetailRow, AppointmentService and the web AppointmentDetail type. Prior F-1 is otherwise resolved.",
       "cites": [
-        {"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"},
-        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail", "quote": "sym:sample-system:web/src/api/types.ts:AppointmentDetail"},
-        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary", "quote": "other readers of the appointment detail response must tolerate the added fields"}
+        {
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail",
+          "quote": "sym:sample-system:api/src/types.ts:AppointmentDetail"
+        },
+        {
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#impacted-modules",
+          "quote": "`DetailRow` in appointmentRepo and the detail response built by `AppointmentService` add doctor and patient status"
+        }
       ],
-      "claim_ref": "C14",
-      "suggested_fix": "Under module:sample-system:api and module:sample-system:web, list DetailRow, AppointmentService and the web AppointmentDetail type. Name the readers of the detail response, or mark them unknown, since the facts have no call edges."
+      "claim_ref": "C17",
+      "suggested_fix": "Under module:sample-system:api, add sym:sample-system:api/src/types.ts:AppointmentDetail as changed. Add a claim that cites it and A-04."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "completeness",
-      "text": "REQ-7 needs 'today' in hospital time on the web book page. C11 cites HOSPITAL_TZ, which is API config. The artifact does not say how the web page gets it, although useSettings and GET /api/settings exist in the facts.",
-      "cites": [
-        {"ref": "context/architecture.md#time-and-slots", "quote": "Availability, slots and \"today\" use the hospital time zone"},
-        {"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"},
-        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#known", "quote": "\"today\" follows the hospital time zone setting (C11)"}
-      ],
-      "claim_ref": "C11",
-      "suggested_fix": "List http:GET:/api/settings and useSettings as existing, read dependencies of BookAppointmentPage, or record how the web side gets the hospital time zone."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
       "category": "traceability",
-      "text": "C1 and C3 tie the appointment page to ui:/appointments/:id, and C2 and C4 tie the book page to ui:/appointments/new, by name only. The UI route facts cite only web/src/App.tsx, not the page components.",
+      "text": "Carried over from prior F-3: C3 and C4 tie the pages to ui:/appointments/:id and ui:/appointments/new by name only. The UI route facts cite only web/src/App.tsx, not the page components.",
       "cites": [
-        {"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"path\": \"web/src/App.tsx\","}
+        {
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id",
+          "quote": "\"path\": \"web/src/App.tsx\","
+        },
+        {
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary",
+          "quote": "`AppointmentDetailPage`, route `/appointments/:id`"
+        }
       ],
-      "claim_ref": "C3"
+      "claim_ref": "C3",
+      "suggested_fix": "Say that the page-to-route mapping is inferred from the App.tsx route lines, or cite App.tsx#L35-L36 directly."
     }
   ],
   "claims_checked": [
@@ -74,9 +94,13 @@
     {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
     {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
     {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots", "quote": "\"path\": \"api/src/routes/doctors.ts\","}]},
-    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]}
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow", "quote": "\"path\": \"api/src/repositories/appointmentRepo.ts\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService", "quote": "\"path\": \"api/src/services/appointmentService.ts\","}, {"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail", "quote": "\"path\": \"web/src/api/types.ts\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-05", "quote": "answer: Yes, include actions (proposed default)"}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "\"path\": \"web/src/hooks/useSettings.tsx\","}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"path\": \"/api/settings\","}]}
   ],
-  "questions": [
-    {"id": "Q-1", "text": "Besides AppointmentDetailPage, which callers read the GET /api/appointments/:id detail response or the DetailRow shape? Do any action routes (cancel, reschedule and others) return it too? The facts have no call edges.", "ask_role": "engineer", "blocking": false, "finding_ref": "F-1"}
-  ]
+  "questions": []
 }
