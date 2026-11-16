@@ -52,3 +52,33 @@ entries as the user's own answers.
 - question: Q-02: The pack has no call facts, and the product code isn't readable here, so I can't see who else reads the appointment detail shape (`DetailRow` in api/src/repositories/appointmentRepo.ts, `AppointmentDetail` in web/src/api/types.ts). Should the impact treat the action routes (cancel, reschedule, complete, no-show) as possible readers too?
 - options: Yes, include actions (proposed default) | Detail GET only | Leave unknown
 - answer: Yes, include actions (proposed default)
+
+## A-06
+- step: design
+- attempt: 1
+- asked_at: 2026-11-16T07:09:22Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01P9D2iZtoUyynHpKPQMbu7M
+- question: Q-01: The appointment detail response (`GET /api/appointments/:id`) must now carry the doctor's and patient's status (A-04). The API uses snake_case (`page_size`), and the web app already has a `RecordStatus` type. Which field names and format?
+- options: doctor_status/patient_status (proposed default) | Nested objects | Booleans
+- answer: doctor_status/patient_status (proposed default)
+
+## A-07
+- step: design
+- attempt: 1
+- asked_at: 2026-11-16T07:09:22Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01P9D2iZtoUyynHpKPQMbu7M
+- question: Q-02: "Book again" opens the book appointment page with doctor, patient and reason for visit in its address (it already takes doctor, patient, date and slot that way). What should the new reason parameter be called?
+- options: reason (proposed default) | reason_for_visit
+- answer: reason (proposed default)
+
+## A-08
+- step: design
+- attempt: 1
+- asked_at: 2026-11-16T07:09:22Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01P9D2iZtoUyynHpKPQMbu7M
+- question: C5: I assumed the book appointment page already picks today's date in the hospital time zone (via `todayIn` in web/src/lib/format.ts) when the address has no date, so "Book again" can simply leave date and slot out. Implement must confirm in code. Is that right?
+- options: Yes, confirm | Pass today explicitly
+- answer: Yes, confirm

@@ -1,0 +1,311 @@
+{
+  "artifact_sha256": "9f8e6042fd0c9d65252c4d7f5fb89c44643be407c24768daf4c37fa73eab6e27",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/pages/AppointmentDetailPage.tsx\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/pages/BookAppointmentPage.tsx\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/api/types.ts:AppointmentDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/types.ts:AppointmentDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: Yes, confirm",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-08"
+        },
+        {
+          "quote": "sym:sample-system:web/src/lib/format.ts:todayIn",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:todayIn"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: doctor_status/patient_status (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-06"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/api/types.ts:RecordStatus",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:RecordStatus"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: reason (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-07"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The doctor table already has a status column, `column:doctor.status`.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#claim:C7"
+        },
+        {
+          "quote": "The patient table already has a status column, `column:patient.status`.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#claim:C8"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "exclusion constraints forbid overlapping Scheduled",
+          "ref": "context/architecture.md#double-booking"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "example: \"Inactive\", status: known",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#L117"
+        },
+        {
+          "quote": "Implement must confirm the exact stored literals and compare against them in CO-1.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#L216"
+        },
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Mark the EP-1 fields assumed (add EP-1 and CO-4 to assumed), or give the type as RecordStatus with its literals marked 'implement must confirm', and keep the example consistent with that.",
+      "text": "EP-1 doctor_status/patient_status are marked status: known with example \"Inactive\", but Assumed says the exact stored literals are unconfirmed. Existing status columns use uppercase literals (SCHEDULED, NO_SHOW), so \"Inactive\" is a guess stated as known."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "the detail response built by `AppointmentService` add doctor and patient status",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#L164"
+        },
+        {
+          "quote": "CO-6 AppointmentService — existing: passes the detail through; booking rules unchanged (S-5).",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#L195"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Mark CO-6 as possibly changed (if it maps DetailRow to AppointmentDetail), or list it under Assumed with 'implement must confirm'.",
+      "text": "The impact puts AppointmentService in the change path because it builds the detail response. The design marks CO-6 existing ('passes the detail through') with no IDE answer or cite to show that no mapping code changes."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "changed: add `doctor_status` and `patient_status`.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#L193"
+        },
+        {
+          "quote": "sym:sample-system:api/src/types.ts:RecordStatus",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:RecordStatus"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State that CO-4 types the two fields as the API RecordStatus, and cite that symbol.",
+      "text": "CO-4 adds the fields to the API AppointmentDetail type with no type. CO-3 uses the web RecordStatus, but the API already has its own RecordStatus symbol that CO-4 does not mention."
+    },
+    {
+      "category": "security",
+      "cites": [
+        {
+          "quote": "the reason travels in the URL, and that is acceptable because the reason for visit is not medical history (C12)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#L185"
+        },
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "The trade-off accepts putting the reason for visit in the URL because it is not medical history. That rests on the design's own reading: no context defines whether a free-text visit reason can hold clinical detail, and URLs appear in browser history."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "cites: [\"artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#claim:C7\"]",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#L57"
+        },
+        {
+          "quote": "The patient table already has a status column, `column:patient.status`.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#L45"
+        }
+      ],
+      "claim_ref": "C11",
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Add impact.md#claim:C8 to C11's cites.",
+      "text": "C11 says the patient status comes from the patient table, but it cites only impact C7 (the doctor column). Impact C8 covers patient.status and is not cited."
+    }
+  ],
+  "package_sha256": "2beda7cc75129c0986a5218eb49ada928deced2bbdfb59e7a865a2f7853fbb02",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-4",
+      "id": "Q-1",
+      "text": "Can a free-text reason for visit hold clinical detail that should not appear in a URL or browser history? If so, should Book again pass it some other way than an address parameter?"
+    }
+  ],
+  "recorded_at": "2026-11-16T07:13:45Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Uses only existing modules and layers (route/service/repo, client.ts, todayIn, existing booking endpoints). It adds no new endpoint, table or infrastructure, and the DB exclusion constraints stay the guard.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "The story mapping covers S-1 to S-6. Every AC (visibility, prefill, today in IST, no slot, reason carry-over and limit, inactive reasons, booking rules, regression) traces to a component or endpoint.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "The EP-1 fields have name, type, nullability, format and example. But the type is a plain string, not the RecordStatus enum, and the example literal \"Inactive\" is unverified, so the ACs cannot test the exact value yet.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "The EP-1 fields are marked known with example \"Inactive\", while Assumed says the stored literals are unconfirmed. Appointment status uses uppercase literals, so this guess is stated as fact.",
+      "score": 3
+    },
+    {
+      "id": "DS-R5",
+      "reason": "The trade-offs cover the link vs a rebook endpoint, extending detail vs extra GETs, and the implicit vs explicit date, each with a reason.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and well structured. There is a small inconsistency between the known EP-1 field status and the Assumed section.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
