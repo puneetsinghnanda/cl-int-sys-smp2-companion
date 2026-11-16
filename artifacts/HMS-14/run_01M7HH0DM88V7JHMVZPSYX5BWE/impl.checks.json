@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "00642c4ed762e3d789bea25ef1e09537643badd27798cea83b9d9be54092c992",
-  "attempt": 1,
-  "finished_at": "2026-11-16T07:31:22Z",
+  "artifact_sha256": "a34a17f3621e8c2ea198aa79c62757daaea0286c964804d0f596c1292edb2fcc",
+  "attempt": 2,
+  "finished_at": "2026-11-16T08:25:45Z",
   "gates": [
     {
       "codes": [],
@@ -68,18 +68,20 @@
   "product_changes": [
     {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "diff_sha256": "35c92b8e50a534b43caad68b6cb8282ab62ecc3de461a58584335fe8ca1f890b",
+      "diff_sha256": "4f9b3791b8d56eff383aa2e793c1b00884b0cebd6ce57effa6db53c7bee8a413",
       "files": [
         "api/src/repositories/appointmentRepo.ts",
         "api/src/types.ts",
+        "api/test/appointments-book-again.test.ts",
+        "web/src/__tests__/bookAgain.test.ts",
         "web/src/api/types.ts",
         "web/src/pages/AppointmentDetailPage.tsx",
         "web/src/pages/BookAppointmentPage.tsx"
       ],
-      "lines_added": 55,
+      "lines_added": 129,
       "lines_deleted": 7,
       "repo": "sample-system",
-      "tree_sha": "0d08a4612008786ea2de0ff0f8eadfafc01434b6"
+      "tree_sha": "6024bbc03bdacd61913a128ab9cf8eb42cbc4556"
     }
   ],
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
@@ -94,44 +96,44 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-16T07:25:14Z",
+  "started_at": "2026-11-16T08:24:21Z",
   "step": "impl",
-  "tool_log_sha256": "d234a35f5ade1e49294bd50fdceceec28cc3734b99b4a485218d6ff961b117b7",
+  "tool_log_sha256": "38d7f2c49be7abcc53453a5c9f773c4c5e3ceef7a9afe1d305477891ce2764e0",
   "tsl_version": "0.1.6",
   "verifier": {
     "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
     "profile": "node-22@1",
     "steps": [
       {
-        "duration_ms": 10410,
+        "duration_ms": 10170,
         "exit_code": 0,
         "name": "build",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 34914,
+        "duration_ms": 39494,
         "exit_code": 0,
         "name": "test",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 4756,
+        "duration_ms": 4741,
         "exit_code": 0,
         "name": "lint",
-        "report_sha256": "9300676fcee7fc85b159e9b355308d04d191436e7e96d8a93deec97410a6f27e",
+        "report_sha256": "36a9e74b0959ef811b8862a5960e656b851aaf94a084af7b93aa1315cfb3a631",
         "status": "pass"
       },
       {
-        "duration_ms": 20342,
+        "duration_ms": 19284,
         "exit_code": 0,
         "name": "sast",
-        "report_sha256": "e5b2a8f4ef67bf05037aafa2a0c0830d1c5e285297131521b3050c4569ca01bc",
+        "report_sha256": "d4c0c4d336829398efcbd0de45dc48de7bb1db64d6fd712f545f01e4c056a222",
         "status": "pass"
       },
       {
-        "duration_ms": 485,
+        "duration_ms": 211,
         "exit_code": 0,
         "name": "secrets",
         "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",

@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "step": "impl",
-  "attempt": 1,
-  "artifact_sha256": "00642c4ed762e3d789bea25ef1e09537643badd27798cea83b9d9be54092c992",
-  "package_sha256": "fb5920c986534896c401d61d61308164252cb6e833ef09f14b331feefaf6be1b",
+  "attempt": 2,
+  "artifact_sha256": "a34a17f3621e8c2ea198aa79c62757daaea0286c964804d0f596c1292edb2fcc",
+  "package_sha256": "4e53c22b30b64f0eb95a7558b70dea1d4e190fa91f7ae62b36e57c05723974be",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,40 +12,47 @@
     "version": "0.1.6",
     "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
   },
-  "rubric_score": 4.4,
+  "rubric_score": 4.5,
   "rubric_items": [
-    {"id": "IM-R1", "score": 4, "reason": "CO-1 to CO-5 are built as designed and CO-6 is confirmed as a pass-through. One gap: the design asked implement to use the confirmed status literals in tests and to regression-check EP-4 to EP-7, and no tests were added."},
-    {"id": "IM-R2", "score": 5, "reason": "Uses snake_case API fields as A-06 and the lists convention require, keeps SQL in the repository and the rule in the service, and the id stays a bound parameter. No convention breaks found."},
-    {"id": "IM-R3", "score": 4, "reason": "Five files, all named in the design, 55 lines added and 7 deleted. A small amount of noise: the two status columns go into the shared SUMMARY_SELECT, so dashboard, doctor and patient summary queries now fetch columns they do not use."},
+    {"id": "IM-R1", "score": 4, "reason": "CO-1 to CO-5 are built as designed, CO-6 is confirmed as a pass-through, and the literal tests are now added (prior F-1 is fixed). Small gap: of the EP-4 to EP-7 regression checks the design asks for, only cancel (EP-4) is tested."},
+    {"id": "IM-R2", "score": 5, "reason": "API fields are snake_case per A-06. SQL stays in the repository and rules in the service. The id is still a bound parameter. Tests sit in the existing api/test and web __tests__ folders. No convention breaks found."},
+    {"id": "IM-R3", "score": 4, "reason": "Seven files: the five source files the design names plus two test files. Some noise remains: the status columns go into the shared SUMMARY_SELECT, so the dashboard, doctor and patient summary queries fetch columns they never use."},
     {"id": "IM-R4", "score": 5, "reason": "location.state is type-checked and cut to 300 characters. Any status other than ACTIVE blocks the button. With no state the reason starts empty. Server-side Active and length checks stay in place."},
-    {"id": "IM-R5", "score": 4, "reason": "The summary matches the diff for each component. Two inaccuracies: it says only list reads share SUMMARY_SELECT, and it says the design names no tests."}
+    {"id": "IM-R5", "score": 5, "reason": "The summary matches the diff for each component and test file. It now names every SUMMARY_SELECT reader (dashboard, doctor and patient repositories), so prior F-2 is fixed."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
+      "severity": "minor",
       "category": "completeness",
-      "text": "No tests were added, and the artifact says the design names no tests. It does: the design asks implement to use the confirmed status literals in tests and to regression-check the action routes EP-4 to EP-7 (A-05).",
+      "text": "The design asks for a regression check on EP-5 to EP-7 (reschedule, complete, no-show) too, 'same as EP-4'. The new tests cover only the cancel action. Low risk, because all four routes return this.get(id).",
       "cites": [
-        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#changes", "quote": "Tests: none added. The design names no regression tests; the unit-test step covers the stories."},
-        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#assumed", "quote": "implement must confirm the literals and use them in tests"},
-        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#components", "quote": "if it returns the detail shape, the two fields are added for free; regression-check (A-05)"}
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#components", "quote": "EP-5 POST /api/appointments/:id/reschedule — existing: same as EP-4."},
+        {"ref": "sample-system:api/test/appointments-book-again.test.ts#L26", "quote": "HMS-14 REQ-17 (A-05): the cancel action returns the same detail shape with both statuses"}
       ],
-      "suggested_fix": "Add tests that GET /api/appointments/:id and an action route return doctor_status/patient_status as 'ACTIVE'/'INACTIVE', and a unit test of bookAgainBlockers. Or fix the Changes line so it states the deferral accurately."
+      "suggested_fix": "Add one assertion for reschedule, complete or no-show returning doctor_status and patient_status. Or state in Known that only cancel is pinned because all four routes share this.get."
     },
     {
       "id": "F-2",
       "severity": "minor",
-      "category": "consistency",
-      "text": "The summary says only the list reads share SUMMARY_SELECT. dashboardService, doctorRepo and patientRepo also use it, so their queries now select two columns they do not use. Harmless because toSummary drops them, but the summary leaves these readers out.",
+      "category": "correctness",
+      "text": "The API tests depend on run order and shared state: the cancel test uses appointment 1, which the first test booked, and the INACTIVE tests rely on earlier PATCHes whose response status is never checked.",
       "cites": [
-        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#summary", "quote": "The list reads ignore the extra columns because `toSummary` maps only its own fields."},
-        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L26", "quote": "d.status AS doctor_status, p.status AS patient_status"},
-        {"ref": "sample-system:api/src/services/dashboardService.ts#L6", "quote": "import { SUMMARY_SELECT, toSummary } from '../repositories/appointmentRepo';"},
-        {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"},
-        {"ref": "sample-system:api/src/repositories/patientRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"}
+        {"ref": "sample-system:api/test/appointments-book-again.test.ts#L27", "quote": "const res = await request(app).post('/api/appointments/1/cancel').send({ reason: 'Patient requested' });"},
+        {"ref": "sample-system:api/test/appointments-book-again.test.ts#L33", "quote": "await request(app).patch('/api/patients/1').send({ status: 'INACTIVE' });"}
       ],
-      "suggested_fix": "Name all SUMMARY_SELECT readers in the summary. Or add the two columns only in the get() query so the shared summary select stays unchanged."
+      "suggested_fix": "Book the appointment in beforeAll or inside each test, and assert that the PATCH returns 204 before reading the detail."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The Summary now names all SUMMARY_SELECT readers, which fixes prior F-2. But resolves lists only F-1, so the F-2 fix is not traced.",
+      "cites": [
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#summary", "quote": "The other readers of the shared select are the list reads, the dashboard service, the doctor repository and the patient repository (C14, C15, C16)."},
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#resolves", "quote": "Regression tests now pin the ACTIVE and INACTIVE status literals on the detail GET and the cancel action, and unit-test bookAgainBlockers."}
+      ],
+      "suggested_fix": "Add an F-2 entry to resolves that names the dashboard, doctor and patient readers."
     }
   ],
   "claims_checked": [
@@ -61,15 +68,11 @@
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L109", "quote": "<input value={reason} maxLength={300} onChange={(e) => setReason(e.target.value)} />"}]},
     {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-09", "quote": "- answer: Navigation state (proposed default)"}]},
     {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-06", "quote": "- answer: doctor_status/patient_status (proposed default)"}]},
-    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-01", "quote": "- answer: Show both (proposed default)"}]}
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-01", "quote": "- answer: Show both (proposed default)"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L6", "quote": "import { SUMMARY_SELECT, toSummary } from '../repositories/appointmentRepo';"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-05", "quote": "- answer: Yes, include actions (proposed default)"}]}
   ],
-  "questions": [
-    {
-      "id": "Q-1",
-      "text": "The design asks implement to use the confirmed RecordStatus literals in tests and to regression-check EP-4 to EP-7. Should those tests be written in impl, or is it acceptable to leave them to the unit-test step?",
-      "ask_role": "tech_lead",
-      "blocking": false,
-      "finding_ref": "F-1"
-    }
-  ]
+  "questions": []
 }
