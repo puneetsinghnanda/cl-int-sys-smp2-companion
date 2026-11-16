@@ -1,0 +1,147 @@
+{
+  "artifact_sha256": "3b73a6676a2a9147ec342825ac3fcc951d27c44b8939e9324cc2b81ec0098cdf",
+  "attempt": 1,
+  "finished_at": "2026-11-16T08:32:02Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md",
+      "sha256": "a34a17f3621e8c2ea198aa79c62757daaea0286c964804d0f596c1292edb2fcc",
+      "verification_sha256": "7261f8dd2f900959e93d025556f15857c769647c3afdca23b4e7e5df906ae631"
+    },
+    {
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md",
+      "sha256": "88e8cd0212df1bcdf5574b26e6415ef50243df439a57102ca81559c2f68fc854",
+      "verification_sha256": "ddc7cc851d620cb5c372da2864a9038848fbba0fc8049d072e8cd378b6f28417"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "fd6a0c3789c63eb26f68198b71035ae127ac999e",
+      "diff_sha256": "fcc2c5d63322329d314f378fd18cf74592e48ba5bd88836d9ff40e0e91b4c36f",
+      "files": [
+        "api/test/appointments-book-again.test.ts",
+        "web/src/__tests__/AppointmentDetailPage.test.tsx",
+        "web/src/__tests__/BookAppointmentPage.test.tsx"
+      ],
+      "lines_added": 221,
+      "lines_deleted": 14,
+      "repo": "sample-system",
+      "tree_sha": "77aa86d7a4032dfc5fab3e59bce65e47c36985d0"
+    }
+  ],
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-16T08:31:00Z",
+  "step": "ut",
+  "tool_log_sha256": "20428d3ea8776ea86c9bf5fe5bf083970af45b505808237388eff36a0efdfc50",
+  "tsl_version": "0.1.6",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 5576,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 35619,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 2562,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "3b54d77f97314402301b6a8db678fbecd1f7b1d5ca0bada80de460cdb2d0dfc4",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 14581,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "c9580c9e3c118abeba88f6bf08572dc10e80f3c8176e2afac375f8ea344014e1",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 220,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 229,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}
