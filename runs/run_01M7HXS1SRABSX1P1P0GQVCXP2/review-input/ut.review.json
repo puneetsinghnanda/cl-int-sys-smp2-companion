@@ -1,0 +1,139 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "49b6ce6770304f00661ff14a83ffca19fa6f251519d937d610a7d0604c741d8f",
+  "package_sha256": "15c7723a1d97dbc6502e3c89ad663c8cf39f6fe457aa08103022689ca4a1235a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "score": 5,
+      "reason": "CO-1, CO-2 and CO-5 are all exercised: GET, POST and PATCH each carry visitSummary in a success test, and the page block is tested for placement, values and zeros. Every AC of S-1, S-2 and S-3 maps to a test that exists in the two test files."
+    },
+    {
+      "id": "UT-R2",
+      "score": 5,
+      "reason": "Assertions check observable results: exact visitSummary objects, exact key set and integer type, HTTP status, rendered heading order, rendered count text and row order. A few error tests assert status only, which is acceptable for unchanged paths."
+    },
+    {
+      "id": "UT-R3",
+      "score": 5,
+      "reason": "Each changed endpoint has an error-path test (GET 404 and 400, PATCH 404, POST 400). Edges cover latest-start Cancelled, past-but-Scheduled, other patient's rows, zero counts, clock moved far ahead, PATCH body override, and the web load error."
+    },
+    {
+      "id": "UT-R4",
+      "score": 4,
+      "reason": "Vitest and Supertest on a throwaway database with an injected clock, jsdom and Testing Library on the web, files in the existing test folders, names start with HMS-5 and a REQ id. Minor: API endpoint tests are labelled REQ-1, which is a page-placement requirement."
+    },
+    {
+      "id": "UT-R5",
+      "score": 5,
+      "reason": "The artifact states no test counts and no coverage figure, and defers results to checks.json. It says coverage is skipped and database tests may be skipped, both matching the test strategy."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The PATCH and POST endpoint tests are labelled REQ-1, but REQ-1 is about the page showing a Visit summary above the appointments list. The tests themselves are sound; only the requirement label is loose. REQ-2/REQ-3 (the counts) or REQ-5 would fit the API responses better.",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ut.md#tests",
+          "quote": "the PATCH response carries the counts"
+        },
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ut.md#tests",
+          "quote": "PATCH on an unknown patient is still 404; POST with invalid fields is still 400"
+        },
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/split.md#claim:C1",
+          "quote": "above the appointments list"
+        }
+      ],
+      "suggested_fix": "Rename the PATCH and POST API tests to start with HMS-5 REQ-2/REQ-3 (and REQ-5 for the zero case), and update the Tests list to match."
+    }
+  ],
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#layers",
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."
+        }
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#layers",
+          "quote": "Vitest with jsdom and Testing Library."
+        }
+      ]
+    },
+    {
+      "claim_id": "C3",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#requirement-ids",
+          "quote": "New requirements get new IDs and tests."
+        }
+      ]
+    },
+    {
+      "claim_id": "C4",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#database-for-tests",
+          "quote": "Without either, database tests are skipped."
+        }
+      ]
+    },
+    {
+      "claim_id": "C5",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#gaps",
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."
+        }
+      ]
+    },
+    {
+      "claim_id": "C6",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impl.md#claim:C7",
+          "quote": "The user chose the field shape `visitSummary { completed, noShow }`."
+        }
+      ]
+    },
+    {
+      "claim_id": "C7",
+      "verdict": "supported",
+      "cites": [
+        {
+          "ref": "context/test-strategy.md#gaps",
+          "quote": "other pages have no web tests"
+        }
+      ]
+    }
+  ],
+  "questions": []
+}
