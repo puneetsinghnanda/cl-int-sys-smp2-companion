@@ -1,30 +1,25 @@
 {
   "artifact_path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/secrev.md",
-  "artifact_sha256": "b80ec544ca3d7609ea41150e4138127aaaa93174ed0e92d82bb2b9af28885f76",
-  "attempt": 1,
+  "artifact_sha256": "3b32f70e6bb42369148aed8e7c215a934520ce38f7f1cf980474f2f61774b300",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "1f5c89f174c23f891535d28865eac2d155031bd1814c2454aeeac60b6634d311",
+  "checks_sha256": "de772a5d423623f7e0b8b6b64fa1365555581092329334f7944f872b4b21db43",
   "claims": {
-    "total": 14,
-    "verified": 14
+    "total": 16,
+    "verified": 16
   },
-  "decided_at": "2026-11-16T06:56:57Z",
+  "decided_at": "2026-11-16T06:59:34Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [
     {
-      "id": "F-2",
+      "id": "F-1",
       "reason": "file too large"
     }
   ],
   "findings_kept": [
     {
-      "id": "F-1",
-      "raised_from": "minor",
-      "severity": "major"
-    },
-    {
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor"
     }
   ],
@@ -37,7 +32,7 @@
     }
   ],
   "key_id": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -45,15 +40,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "8256989613d8b08772789fc3425a4e85c3e51202bfa8e98ec8d4ba93117e5f08",
   "product_changes": null,
-  "review_sha256": "940ad3df3a7e10eab588b322037e88da1550045e26329fba96ce6afcf663cfb4",
+  "review_sha256": "c3ffad5e5a54c7fac59327d500f204cdd0fb0f6a072cdb410741fbdd3a21a60a",
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.9412,
+    "S1": 0.9444,
     "S2": 1.0,
-    "S3": 4.45,
+    "S3": 4.65,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -62,7 +57,7 @@
       "sensitive": false
     }
   },
-  "signature": "Ic9J5EFw6QHuP5h9HMkC8sOnQJbWlMgGb8AdpSBaQ32pJJhX4zXG2fAVpySE4S9ljhXRK-rwPzTjPghxxzJLAA",
+  "signature": "3wNEtMPnkJ7cKd60Djq36krKGAcqmK6bifTzQdUHIrqSLBAgyjRBiJCaXuJ3YpIkhjTxL6W34FVGV4CqG5OnBQ",
   "skill": "secure-code-review@1.1.0",
   "step": "secrev",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

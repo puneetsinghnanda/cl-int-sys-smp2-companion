@@ -1,0 +1,260 @@
+{
+  "artifact_sha256": "b80ec544ca3d7609ea41150e4138127aaaa93174ed0e92d82bb2b9af28885f76",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/specializations.ts#L19"
+        },
+        {
+          "quote": "answer: appointments:read (proposed default)",
+          "ref": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/ide-answers.md#L44"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "earliestSlots(parseId(req.params.id, 'id'))",
+          "ref": "sample-system:api/src/routes/specializations.ts#L21"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (typeof value !== 'string' || !ID.test(value)) throw badRequest(`${name} must be a positive integer`);",
+          "ref": "sample-system:api/src/lib/codes.ts#L22"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE d.specialization_id = $1 AND d.status = 'ACTIVE'",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L175"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SELECT d.id, d.full_name, dp.name AS department_name, d.slot_minutes",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L172"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "fullName: doctor.fullName, departmentName: doctor.departmentName, slot });",
+          "ref": "sample-system:api/src/services/doctorService.ts#L196"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (status !== 'ACTIVE') throw badRequest('specialization is Inactive');",
+          "ref": "sample-system:api/src/services/doctorService.ts#L175"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async refStatus(kind: 'department' | 'specialization', id: number)",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L182-L183"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const appointments = await appointmentRepo.occupyingBetween(doctor.id, start, end);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L187"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"sast\",",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.checks.json#L127-L130"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"secrets\",",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.checks.json#L133-L137"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- api/src/types.ts",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#L60-L63"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const ID = /^[1-9]\\d{0,9}$/;",
+          "ref": "sample-system:api/src/lib/codes.ts#L18"
+        },
+        {
+          "quote": "serial PRIMARY KEY",
+          "ref": "sample-system:db/migrations/20261016T090000__create_reference_lists.sql#L16"
+        },
+        {
+          "quote": "res.status(500).json({ error: { code: 'INTERNAL', message: 'Something went wrong' } });",
+          "ref": "sample-system:api/src/middleware/errorHandler.ts#L21"
+        },
+        {
+          "quote": "the malformed id is rejected by `parseId`",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/secrev.md#L94"
+        }
+      ],
+      "claim_ref": "C4",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a minor finding: ids above 2147483647 give a 500. The fix direction is for parseId (or this route) to reject ids above the int4 maximum with a 400. Note that this behaviour predates the change.",
+      "text": "parseId accepts ids up to 9999999999, but specialization.id is a serial (int4) column. An id such as 3000000000 reaches refStatus, Postgres raises out-of-range, and the route answers 500 instead of 404. The review says malformed ids are fully handled."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "the verifier's SAST and secrets steps both passed (C12, C13)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/secrev.md#L86"
+        },
+        {
+          "quote": "\"uri\": \"/src/api/src/lib/codes.ts\",",
+          "ref": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/verifier/impl/a1/sast.sarif#L78"
+        },
+        {
+          "quote": "\"uri\": \"/src/api/src/middleware/errorHandler.ts\",",
+          "ref": "runs/run_01M77BM48R93EMY13TZXCDN7PZ/verifier/impl/a1/sast.sarif#L107"
+        }
+      ],
+      "claim_ref": "C12",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add one line to the Scans bullet: SAST reported 4 results, all in unchanged files (ci.yml, codes.ts, errorHandler.ts), so the change adds no new result.",
+      "text": "The review says SAST 'passed' but does not mention that the SARIF holds 4 results, for example in codes.ts and errorHandler.ts. It also does not state that none of them touch the four changed files."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "sample-system:api/src/lib/codes.ts#L21-L22",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/secrev.md#L28"
+        },
+        {
+          "quote": "const ID = /^[1-9]\\d{0,9}$/;",
+          "ref": "sample-system:api/src/lib/codes.ts#L18"
+        }
+      ],
+      "claim_ref": "C4",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/src/lib/codes.ts#L18-L22.",
+      "text": "C4's '...only a positive integer of up to ten digits' comes from the ID regex on codes.ts L18, but the citation covers only L21-L22."
+    }
+  ],
+  "package_sha256": "db42c928b2a054b070821833114fefd610c1e2011ff474cdf734637b09657cfd",
+  "questions": [],
+  "recorded_at": "2026-11-16T06:56:54Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "Covers authorisation, validation, injection, data exposure, error leakage and the N+1 cost. It misses that ids above the int4 maximum pass parseId and end in a 500. It also does not triage the four SAST results.",
+      "score": 4
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 cites the exact loop line (L184). Most claims cite the exact lines. C4 cites L21-L22, but its 'up to ten digits' detail comes from the regex on L18.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "SF-1 is rated minor. That fits an authenticated, read-only, unpaged route whose cost grows with doctor count. No severity looks inflated or understated.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "The fix direction for SF-1 is concrete: batch the availability and occupyingBetween reads into one query each.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives. The one finding is real: the per-doctor queries in the loop at doctorService.ts L184-L187 exist.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
