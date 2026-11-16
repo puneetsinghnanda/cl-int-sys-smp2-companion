@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7HH0DM88V7JHMVZPSYX5BWE
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.2.0
 inputs:
   - path: artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md
@@ -27,6 +27,9 @@ claims:
   - id: C5
     text: "When both doctor and patient are Inactive the disabled button shows both reasons, as answered `Show both (proposed default)`."
     cites: ["runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-01"]
+  - id: C6
+    text: "Booking again keeps the free-slot rule `APT-2` unchanged."
+    cites: ["artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md#item:REQ-12"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18, REQ-19]
 known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
@@ -93,6 +96,8 @@ stories:
         text: 'Given the page opened by "Book again" from appointment A, when staff book a free slot, then a new appointment is created with its own ID, different from A''s ID.'
       - id: AC4
         text: 'Given a Cancelled appointment A with its history, when staff book again from it successfully, then A keeps its status, cancellation reason and history entries exactly as before (APT-8, APT-11).'
+      - id: AC5
+        text: 'Given the page opened by "Book again" for doctor D today, where one of D''s slots today already holds a Scheduled appointment, when staff view the slots for today, then that booked slot is not offered as free and only free slots can be booked, as today (APT-2).'
   - id: S-6
     title: The appointment and book appointment pages work as today
     trace: [REQ-17]
@@ -143,6 +148,7 @@ Traces REQ-12, REQ-13, REQ-14.
 - AC2: Given the page opened by "Book again" and a patient who already has a Scheduled appointment overlapping the chosen slot, when staff book it, then the booking is refused as today (APT-3).
 - AC3: Given the page opened by "Book again" from appointment A, when staff book a free slot, then a new appointment is created with its own ID, different from A's ID.
 - AC4: Given a Cancelled appointment A with its history, when staff book again from it successfully, then A keeps its status, cancellation reason and history entries exactly as before (APT-8, APT-11).
+- AC5: Given the page opened by "Book again" for doctor D today, where one of D's slots today already holds a Scheduled appointment, when staff view the slots for today, then that booked slot is not offered as free and only free slots can be booked, as today (APT-2).
 
 ### S-6 The appointment and book appointment pages work as today
 Traces REQ-17.
@@ -155,7 +161,7 @@ Traces REQ-17.
 - S-2: built from known REQ-4, REQ-5, REQ-7, REQ-8 (ticket acceptance criterion 2).
 - S-3: built from known REQ-6, REQ-15, REQ-16, REQ-18, REQ-19 (ticket criteria 2 and 5, answers A-02 and A-03).
 - S-4: built from known REQ-9, REQ-10, REQ-11 (ticket criterion 3, answer A-01).
-- S-5: built from known REQ-12, REQ-13, REQ-14 (ticket criterion 4).
+- S-5: built from known REQ-12, REQ-13, REQ-14 (ticket criterion 4); AC5 covers the APT-2 free-slot rule.
 - S-6: built from known REQ-17 (ticket criterion 6).
 
 ## Assumed
