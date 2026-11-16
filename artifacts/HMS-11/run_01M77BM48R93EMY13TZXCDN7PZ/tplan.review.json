@@ -1,0 +1,209 @@
+{
+  "artifact_sha256": "0d24280e44466cc38d7f76a7689df8e5476ae112f90ca33487401fe28795c8b1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID (DOC-1, APT-4, ...).",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "no page is tested end to end in a browser",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/appointments.test.ts\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "impact lists it as new: `earliest-slots`",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C17"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CO-8 web app: existing, no change.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L218"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The window is `today to today+6`.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C21"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Name ties compare ignoring case, with `doctor id as the final tie-break`.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C23"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The new route requires `appointments:read`",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#claim:C19"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ISO-8601 UTC instant with milliseconds and Z, as toISOString prints",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/design.md#L156"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The hospital time zone is `Asia/Kolkata`, a fixed IANA zone with no daylight saving (UTC+05:30)",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#claim:C1"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Each test name starts with its requirement id (C2).",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/tplan.md#L101"
+        },
+        {
+          "quote": "HMS-9 REQ-2 (T-7): days follow the hospital zone across UTC midnight",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-next-seven-days.test.ts"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_ref": "C2",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Name the file (e.g. api/test/specializations-earliest-slots.test.ts) and give each TP its 'HMS-11 REQ-n:' prefix from the story trace.",
+      "text": "Test naming is underspecified. Neighbouring tests start with 'HMS-n REQ-m:', but the plan has no TP-to-REQ mapping and no title prefix. It also does not name the new test file, so the strategy's requirement-ID naming cannot be checked."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Negative: a malformed path id gives 400 before any lookup\", covers: [S-4/AC3]",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/tplan.md#L77"
+        },
+        {
+          "quote": "Given no specialization has the requested id, when staff call the endpoint, then it returns 404.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L95"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Trace TP-17 to the design's parseId behaviour (EP-1 / CO-1) or mark it as an extra input-validation negative test rather than coverage of S-4/AC3.",
+      "text": "TP-17 expects 400 for a malformed id but says it covers S-4/AC3, which is about an unknown id returning 404. It is a useful extra negative test, but it does not prove AC3."
+    }
+  ],
+  "package_sha256": "d0b0f2a31662b4656194bd622c4d82ef3108f5f9fe6de8f1b670069c262e3271",
+  "questions": [],
+  "recorded_at": "2026-11-16T07:02:37Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TP-R1",
+      "reason": "All 25 acceptance criteria across S-1 to S-6 map to at least one TP. No criterion is untested and none is invented.",
+      "score": 5
+    },
+    {
+      "id": "TP-R2",
+      "reason": "Every test is an API integration test. The plan explains why: the rules sit in a service over the database and the comparator is private. No e2e or manual tests are planned.",
+      "score": 5
+    },
+    {
+      "id": "TP-R3",
+      "reason": "The window has boundary tests on both sides of 08:00 (TP-5, TP-6), a started-slot test and a local-midnight test. The new endpoint has 404, malformed-id 400 and Inactive 400 negatives.",
+      "score": 5
+    },
+    {
+      "id": "TP-R4",
+      "reason": "Matches Vitest, Supertest, throwaway PostgreSQL, fixed clock and the api/test folder. It does not name the new file or the 'HMS-11 REQ-n:' title prefix that neighbouring tests use.",
+      "score": 4
+    },
+    {
+      "id": "TP-R5",
+      "reason": "Titles are concrete and runnable, with fixed times, names and expected outcomes, e.g. 'dr. alpha before Dr. Beta'.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.85,
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "tplan"
+}
