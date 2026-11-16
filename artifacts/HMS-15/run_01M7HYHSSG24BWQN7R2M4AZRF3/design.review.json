@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "116700b9fb0e648af08a38f89132fa7ce8d1c5bddba540438ae5eefe41816860",
-  "attempt": 1,
+  "artifact_sha256": "c9a1ede4306bc083606d25524f9f23a42bd6bc2c7879ad56be7df79f2ab386f4",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -25,8 +25,8 @@
     {
       "cites": [
         {
-          "quote": "export interface NextAppointment {",
-          "ref": "sample-system:api/src/types.ts#L95"
+          "quote": "sym:sample-system:api/src/types.ts:NextAppointment",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:NextAppointment"
         }
       ],
       "claim_id": "C3",
@@ -35,8 +35,8 @@
     {
       "cites": [
         {
-          "quote": "export interface NextAppointment {",
-          "ref": "sample-system:web/src/api/types.ts#L90"
+          "quote": "sym:sample-system:web/src/api/types.ts:NextAppointment",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:NextAppointment"
         }
       ],
       "claim_id": "C4",
@@ -45,8 +45,8 @@
     {
       "cites": [
         {
-          "quote": "export interface PatientDetail extends PatientSummary {",
-          "ref": "sample-system:api/src/types.ts#L105"
+          "quote": "sym:sample-system:api/src/types.ts:PatientDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail"
         }
       ],
       "claim_id": "C5",
@@ -55,8 +55,8 @@
     {
       "cites": [
         {
-          "quote": "export interface PatientDetail extends PatientSummary {",
-          "ref": "sample-system:web/src/api/types.ts#L100"
+          "quote": "sym:sample-system:web/src/api/types.ts:PatientDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail"
         }
       ],
       "claim_id": "C6",
@@ -235,68 +235,60 @@
       ],
       "claim_id": "C23",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "consistency",
       "cites": [
-        {
-          "quote": "moves into a shared `PatientRepo.nextAppointment(id, now)`, which both `list` and `get` call",
-          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L173"
-        },
-        {
-          "quote": "`list` keeps its one-query-per-page form or calls the same SQL fragment",
-          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L187"
-        },
         {
           "quote": "earliest Scheduled appointment starting after `now`, in one query per page",
           "ref": "sample-system:api/src/repositories/patientRepo.ts#L100"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Pick one approach: share a SQL fragment (status, &gt; now, ORDER BY starts_at, id LIMIT 1) used by the list's lateral join and by nextAppointment(id, now), so list stays one query per page. Then make the Overview match.",
-      "text": "The Overview says list and get both call PatientRepo.nextAppointment(id, now), but CO-1 says list may instead keep its one-query-per-page form. Calling a per-id method from list would break HMS-1's one query per page (an N+1 query). The design does not pick an option."
+      "claim_id": "C24",
+      "verdict": "supported"
     },
     {
-      "category": "completeness",
+      "cites": [
+        {
+          "quote": "LEFT JOIN LATERAL (",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L125"
+        }
+      ],
+      "claim_id": "C25",
+      "verdict": "supported"
+    },
+    {
       "cites": [
         {
           "quote": "Promise&lt;Omit&lt;PatientDetail, 'appointments'&gt; | null&gt;",
           "ref": "sample-system:api/src/repositories/patientRepo.ts#L148"
-        },
-        {
-          "quote": "add `next_appointment: NextAppointment | null`",
-          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L189"
         }
       ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "In CO-1, note that repo.get's return type becomes Omit&lt;PatientDetail, 'appointments' | 'next_appointment'&gt;.",
-      "text": "PatientRepo.get returns Omit&lt;PatientDetail, 'appointments'&gt;. Once CO-3 adds next_appointment to PatientDetail, repo.get's return type must also omit next_appointment, or it will fail to type-check. CO-1/CO-3 do not mention this."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "appointments: await repo.appointments(id, this.clock())",
-          "ref": "sample-system:api/src/services/patientService.ts#L42"
-        },
-        {
-          "quote": "using the same `this.clock()` value as `appointments`",
-          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L188"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "In CO-2, state: const now = this.clock(); pass now to both appointments and nextAppointment.",
-      "text": "PatientService.get calls this.clock() separately (inside today() and for appointments). The design's promise to use 'the same this.clock() instant' means reading the clock once into a local now. The current code does not do that yet."
+      "claim_id": "C26",
+      "verdict": "supported"
     }
   ],
-  "package_sha256": "36f45d1cebb6a2a8363a666ea255335d5b588925aecdc177d77c016aa6e41809",
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "`const now = this.clock()` once, passed to both `appointments` and `nextAppointment`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L214"
+        },
+        {
+          "quote": "Resolved review findings:",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L234"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add F-3 to resolves and to the Resolved review findings section, pointing at CO-2.",
+      "text": "Prior F-3 (read the clock once into a local now) is fixed in CO-2, but it is missing from the front-matter resolves list and from the 'Resolved review findings' section, which list only F-1 and F-2."
+    }
+  ],
+  "package_sha256": "24ce8f75565b02adc7f7d59035b13fc1c84e4fca23ce89954d89dadf4029abda",
   "questions": [],
-  "recorded_at": "2026-11-16T11:30:56Z",
+  "recorded_at": "2026-11-16T11:37:02Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -307,36 +299,36 @@
   "rubric_items": [
     {
       "id": "DS-R1",
-      "reason": "Builds on the existing PatientRepo/PatientService layering, the HMS-1 NextAppointment type, dateTime/useSettings and the existing routes. No new infrastructure and no migration.",
+      "reason": "Built on the existing PatientRepo/PatientService layers, the HMS-1 NextAppointment type and the HMS-1 lateral-join SQL, dateTime with useSettings, and existing routes. No new infrastructure and no migration.",
       "score": 5
     },
     {
       "id": "DS-R2",
-      "reason": "S-1..S-4 are each mapped to components. Strict &gt; now covers S-2 AC3. Using this.clock() per request covers S-1 AC4. The dateTime link covers S-1 AC2/AC3 and S-3. The table and the Book appointment button are untouched for S-4.",
+      "reason": "S-1 to S-4 map to components. Strict &gt; now and status SCHEDULED cover S-2. One server now per request covers S-1 AC4. The dateTime Link covers S-1 AC2/AC3 and S-3. A plain-text empty state covers S-3 AC2. The table and the button are untouched (S-4).",
       "score": 5
     },
     {
       "id": "DS-R3",
-      "reason": "Every new field on EP-1..EP-3 has a name, type, nullability, format and example. The null condition is precise enough to test.",
+      "reason": "Every new field on EP-1 to EP-3 has a name, type, nullability, format and example. The null condition (no Scheduled appointment strictly after the request instant) can be tested exactly.",
       "score": 5
     },
     {
       "id": "DS-R4",
-      "reason": "Every choice is cited or decided by A-03/A-04, and all 23 claims check out. One gap: CO-1 leaves open how list uses the extracted query, but it is still marked known.",
-      "score": 4
+      "reason": "All 26 claims check out against the code, module map, api inventory and IDE answers. A-03 and A-04 decide the choices. The design now picks one list approach (shared fragment, list keeps lateral join), so CO-1 is honestly known.",
+      "score": 5
     },
     {
       "id": "DS-R5",
-      "reason": "Explains the trade-offs for server vs client, snake_case naming and skipping a migration. The 'indexed lookup' claim holds: appointment_patient_start_idx exists.",
+      "reason": "Explains server vs client, shared fragment vs per-id calls (no N+1, but the SQL is spliced in two places), snake_case naming and no migration.",
       "score": 5
     },
     {
       "id": "DS-R6",
-      "reason": "Clear and well structured, but the Overview and CO-1 describe the list refactor differently.",
-      "score": 4
+      "reason": "The Overview and CO-1 now agree on the list refactor. The structure is clear and consistent.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.8,
+  "rubric_score": 5.0,
   "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
   "schema": "review.v1",
   "status": "ok",

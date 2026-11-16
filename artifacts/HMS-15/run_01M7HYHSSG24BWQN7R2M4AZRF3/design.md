@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M7HYHSSG24BWQN7R2M4AZRF3
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.8.0
 inputs:
   - path: artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md
@@ -19,6 +19,11 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "The list keeps its single lateral-join query per page and get runs the same shared SQL fragment for one patient, so no per-row calls are added."
+  - id: F-2
+    how: "CO-1 changes the repository get return type to omit both appointments and next_appointment."
 claims:
   - id: C1
     text: "The patient page is rendered by `PatientDetailPage`."
@@ -89,6 +94,15 @@ claims:
   - id: C23
     text: "The appointment detail page route is `/appointments/:id`."
     cites: ["context/generated/api-inventory.json#ui:/appointments/:id"]
+  - id: C24
+    text: "The HMS-1 list loads next appointments `in one query per page`."
+    cites: ["sample-system:api/src/repositories/patientRepo.ts#L100"]
+  - id: C25
+    text: "The list joins the next appointment with a `LEFT JOIN LATERAL` subquery."
+    cites: ["sample-system:api/src/repositories/patientRepo.ts#L125"]
+  - id: C26
+    text: "The repository get returns `Omit<PatientDetail, 'appointments'>`, which must also omit the new field."
+    cites: ["sample-system:api/src/repositories/patientRepo.ts#L148"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
 known: [CO-1, CO-2, CO-3, CO-4, CO-5, CO-6, CO-7, EP-1, EP-2, EP-3]
 assumed: []
@@ -96,12 +110,12 @@ unknown: []
 questions: []
 components:
   - id: CO-1
-    name: "PatientRepo.nextAppointment(id, now) — the HMS-1 lateral query extracted so list and get share it"
+    name: "PatientRepo — shared next-appointment SQL fragment, used by list and nextAppointment(id, now)"
     module: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "sample-system:api/src/repositories/patientRepo.ts#L129", "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-03"]
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo", "sample-system:api/src/repositories/patientRepo.ts#L129", "sample-system:api/src/repositories/patientRepo.ts#L100", "sample-system:api/src/repositories/patientRepo.ts#L148", "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-03"]
   - id: CO-2
-    name: "PatientService.get — adds next_appointment using the same this.clock() instant as appointments"
+    name: "PatientService.get — one now from this.clock() for appointments and next_appointment"
     module: module:sample-system:api
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "sample-system:api/src/services/patientService.ts#L42", "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-03"]
@@ -170,7 +184,15 @@ answers:
 # Design: HMS-15
 
 ## Overview
-The API computes the next appointment and the web page shows it. `GET /api/patients/:id` gains a nullable `next_appointment` field of the existing HMS-1 type `NextAppointment` (`{id, starts_at, doctor_name}`), as the user chose in A-03. To get it, the HMS-1 lateral query in `PatientRepo.list` (status `'SCHEDULED'`, `a.starts_at > now`, ordered by `a.starts_at, a.id`, first row) moves into a shared `PatientRepo.nextAppointment(id, now)`, which both `list` and `get` call. So the patients list and the patient page always agree. `PatientService.get` passes the same `this.clock()` instant it already uses for `appointments`. That instant is the request time, which is page-load time (REQ-10). The comparison is strictly after now, so an appointment that starts exactly at now, or has already started, is never next (REQ-7). Closed statuses are never matched (REQ-6). Instants stay in UTC (C17).
+The API computes the next appointment and the web page shows it. `GET /api/patients/:id` gains a nullable `next_appointment` field of the existing HMS-1 type `NextAppointment` (`{id, starts_at, doctor_name}`), as the user chose in A-03.
+
+The selection rule from HMS-1 becomes one shared SQL fragment in `PatientRepo`: status `'SCHEDULED'`, `a.starts_at > now`, ordered by `a.starts_at, a.id`, first row.
+- `list` keeps using the fragment inside its existing single `LEFT JOIN LATERAL` query per page (C24, C25).
+- A new `PatientRepo.nextAppointment(id, now)` runs the same fragment for one patient, and `get` uses it.
+
+So the patients list and the patient page always agree. The list keeps its single lateral-join query per page and get runs the same shared SQL fragment for one patient, so no per-row calls are added.
+
+`PatientService.get` reads `now = this.clock()` once and passes it to both `appointments` and `nextAppointment`. That instant is the request time, which is page-load time (REQ-10). The comparison is strictly after now, so an appointment that starts exactly at now, or has already started, is never next (REQ-7). Closed statuses are never matched (REQ-6). Instants stay in UTC (C17).
 
 On the web, `PatientDetailPage` renders the line between the "Appointments" heading and `AppointmentTable`:
 - with an appointment: "Next appointment:" followed by a `Link` to `/appointments/{id}` whose text is `dateTime(starts_at, timeZone)`, with `timeZone` from `useSettings`, exactly as the table does. Then the doctor's name follows as plain text (A-04).
@@ -180,12 +202,16 @@ On the web, `PatientDetailPage` renders the line between the "Appointments" head
 
 Trade-offs:
 - Server versus client: computing on the server reuses tested HMS-1 SQL and the server clock, so there is no browser clock skew. The cost is one extra indexed lookup per detail request.
+- Shared fragment versus per-id calls: the list stays one query per page, at the cost of the SQL being spliced in two places.
 - Naming: `next_appointment` and `starts_at` are snake_case inside a mostly camelCase `PatientDetail`. We reuse them unchanged so the list and the detail share one type, which is consistent but mixes cases.
 - No database change: the existing columns and query cover everything, so no migration is needed.
 
 ## Components
-- CO-1 `PatientRepo.nextAppointment(id, now)` (changed, api): extract the HMS-1 lateral query; `list` keeps its one-query-per-page form or calls the same SQL fragment.
-- CO-2 `PatientService.get` (changed, api): add `next_appointment: await repo.nextAppointment(id, now)` using the same `this.clock()` value as `appointments`.
+- CO-1 `PatientRepo` (changed, api):
+  - one shared next-appointment SQL fragment (status 'SCHEDULED', starts_at > now, ORDER BY starts_at, id, LIMIT 1), which `list` keeps using in its single `LEFT JOIN LATERAL` query per page;
+  - new `nextAppointment(id, now)` that runs the same fragment for one patient;
+  - CO-1 changes the repository get return type to omit both appointments and next_appointment (`Omit<PatientDetail, 'appointments' | 'next_appointment'>`).
+- CO-2 `PatientService.get` (changed, api): `const now = this.clock()` once, passed to both `appointments` and `nextAppointment`; adds `next_appointment` to the response.
 - CO-3 API `PatientDetail` (changed, api): add `next_appointment: NextAppointment | null`.
 - CO-4 Web `PatientDetail` (changed, web): mirror `next_appointment: NextAppointment | null`.
 - CO-5 `PatientDetailPage` (changed, web): the Next appointment line or "No upcoming appointment", placed between the Appointments heading and `AppointmentTable`; the date/time text links to `/appointments/:id`.
@@ -205,8 +231,12 @@ Story mapping:
 - S-3 → CO-5
 - S-4 → CO-7
 
+Resolved review findings:
+- F-1: The list keeps its single lateral-join query per page and get runs the same shared SQL fragment for one patient, so no per-row calls are added.
+- F-2: CO-1 changes the repository get return type to omit both appointments and next_appointment.
+
 ## Known
-- CO-1: `PatientRepo` and the HMS-1 query are in the module map and the code (C7, C8, C9); the shape was chosen in A-03.
+- CO-1: `PatientRepo`, the HMS-1 query, the one-query-per-page list and the repository `get` return type are all in the module map and the code (C7, C8, C9, C24, C25, C26); the shape was chosen in A-03.
 - CO-2: `PatientService.get` uses `this.clock()` (C10, C11); the API field was chosen in A-03.
 - CO-3, CO-4: both `PatientDetail` and `NextAppointment` symbols exist (C3, C4, C5, C6).
 - CO-5: `PatientDetailPage` exists (C1, C19); the link element was chosen in A-04.
