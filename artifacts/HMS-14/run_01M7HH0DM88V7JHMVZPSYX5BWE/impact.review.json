@@ -1,0 +1,275 @@
+{
+  "artifact_sha256": "30f5450bae61a4421862f609473ac9ef42339b5cd9631233ea00e641a8480d30",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/pages/AppointmentDetailPage.tsx\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/pages/BookAppointmentPage.tsx\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/appointments/:id\",",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/appointments/new\",",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/new"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/appointments.ts\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "column:appointment.reason",
+          "ref": "context/generated/db-schema.json#column:appointment.reason"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "column:doctor.status",
+          "ref": "context/generated/db-schema.json#column:doctor.status"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "column:patient.status",
+          "ref": "context/generated/db-schema.json#column:patient.status"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "exclusion constraints forbid overlapping Scheduled",
+          "ref": "context/architecture.md#double-booking"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Extend appointment GET (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/doctors.ts\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"
+        },
+        {
+          "quote": "sym:sample-system:web/src/api/types.ts:AppointmentDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"
+        },
+        {
+          "quote": "other readers of the appointment detail response must tolerate the added fields",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary"
+        }
+      ],
+      "claim_ref": "C14",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Under module:sample-system:api and module:sample-system:web, list DetailRow, AppointmentService and the web AppointmentDetail type. Name the readers of the detail response, or mark them unknown, since the facts have no call edges.",
+      "text": "The extended GET /api/appointments/:id response needs changes in appointmentRepo DetailRow (API) and the AppointmentDetail type (web). Neither is listed. The other readers of the detail response are named as a risk but never identified."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        },
+        {
+          "quote": "sym:sample-system:web/src/hooks/useSettings.tsx:useSettings",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings"
+        },
+        {
+          "quote": "\"today\" follows the hospital time zone setting (C11)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#known"
+        }
+      ],
+      "claim_ref": "C11",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "List http:GET:/api/settings and useSettings as existing, read dependencies of BookAppointmentPage, or record how the web side gets the hospital time zone.",
+      "text": "REQ-7 needs 'today' in hospital time on the web book page. C11 cites HOSPITAL_TZ, which is API config. The artifact does not say how the web page gets it, although useSettings and GET /api/settings exist in the facts."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/App.tsx\",",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-3",
+      "severity": "minor",
+      "text": "C1 and C3 tie the appointment page to ui:/appointments/:id, and C2 and C4 tie the book page to ui:/appointments/new, by name only. The UI route facts cite only web/src/App.tsx, not the page components."
+    }
+  ],
+  "package_sha256": "4384ebd57fd16882688219b6c3b5ef319f8cac3d2e81f8f23f843c4086f46211",
+  "questions": [
+    {
+      "ask_role": "engineer",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Besides AppointmentDetailPage, which callers read the GET /api/appointments/:id detail response or the DetailRow shape? Do any action routes (cancel, reschedule and others) return it too? The facts have no call edges."
+    }
+  ],
+  "recorded_at": "2026-11-16T06:55:23Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Modules, APIs and tables are listed, but the symbols that carry the changed detail response (appointmentRepo DetailRow, web AppointmentDetail type) are not named.",
+      "score": 3
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id exists in the generated facts and is cited. The page-to-route mapping (C3, C4) is inferred from names only.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Jobs (none) and the booking path are covered. Other readers of the extended GET detail response are flagged as a risk but never identified. The source of the hospital time zone on the web side is not traced.",
+      "score": 3
+    },
+    {
+      "id": "IA-R4",
+      "reason": "The api and GET-detail 'changed' statuses rest on the cited answer A-04. The other statuses are justified by schema facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to the context.",
+      "score": 5
+    },
+    {
+      "id": "IA-R5",
+      "reason": "The artifact is clear and grouped well, and the summary names the main risks. The impacted list is not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.65,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}

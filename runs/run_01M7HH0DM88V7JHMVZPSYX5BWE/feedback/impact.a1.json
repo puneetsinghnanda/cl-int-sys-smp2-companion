@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"
+        },
+        {
+          "quote": "sym:sample-system:web/src/api/types.ts:AppointmentDetail",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"
+        },
+        {
+          "quote": "other readers of the appointment detail response must tolerate the added fields",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The extended GET /api/appointments/:id response needs changes in appointmentRepo DetailRow (API) and the AppointmentDetail type (web). Neither is listed. The other readers of the detail response are named as a risk but never identified."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
