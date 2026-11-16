@@ -1,0 +1,292 @@
+{
+  "artifact_sha256": "6b3552127892f854ede7005400b9a776feb4cc4afee2e60ffd25feedc9fb1a59",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/repositories/patientRepo.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/services/patientService.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/types.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/api/types.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/pages/PatientDetailPage.tsx",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/patients.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/routes/patients.ts:patientsRouter"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "capped by a default `limit = 100`",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impact.md#claim:C6"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Add to GET /api/patients/:id (proposed default)",
+          "ref": "runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: visitSummary { completed, noShow } (proposed default)",
+          "ref": "runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "repo.appointments(id, this.clock())",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(await repo.insert(fields, actor));",
+          "ref": "sample-system:api/src/services/patientService.ts#L58"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/patientService.ts#L69"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "rules in `api/src/services`; SQL in `api/src/repositories`",
+          "ref": "context/conventions.md#code-layout"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The patient page renders the appointments list with `AppointmentTable`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C16"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The patient page's appointments section starts with the heading `Appointments`.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#claim:C17"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointment_patient_start_idx",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Default: the labels use the glossary status names.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#components"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a claim citing context/glossary.md#completed and #no-show for the two labels, and list glossary.md in inputs.",
+      "text": "The label default (\"Completed\", \"No-show\") is justified by the glossary, but no claim or component cites context/glossary.md and it is not listed in the design inputs."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "EP-3 PATCH /api/patients/:id, changed. Field `visitSummary` (object, not null, same as EP-1, known).",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/design.md#components"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Repeat the visitSummary.completed and visitSummary.noShow field rows under EP-2 and EP-3 in the front matter.",
+      "text": "EP-2 and EP-3 list only the visitSummary object. The completed and noShow sub-fields (type, nullability, format) are given by reference to EP-1 or by example, not per field."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Callers found by searching web/src: PatientDetailPage, PatientFormPage and BookAppointmentPage call `api.patient`",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impact.md#known"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add one line under CO-4 or CO-7 stating that the other api.patient callers ignore the additive field and need no change.",
+      "text": "Impact names PatientFormPage and BookAppointmentPage as other consumers of the patient detail. The design does not say they are unaffected by the new non-null field on the web PatientDetail type."
+    }
+  ],
+  "package_sha256": "5394493052f12fedc362edecfbb9089e6045d28c8d82c362b3c63059a714a1a6",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "The design defaults the Visit summary labels to the glossary status names \"Completed\" and \"No-show\". Is that wording acceptable, or does product want different labels?"
+    }
+  ],
+  "recorded_at": "2026-11-16T10:42:10Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "SQL goes in PatientRepo, the rule in PatientService, router and web client are reused; no new module, endpoint, table, migration or infrastructure.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1, S-2 and S-3 each map to components; patient scoping, the status-only filter, zero counts, all-time window and the unchanged rest of the page are all covered.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "EP-1 gives name, type, nullability, format and example for the object and both counts. EP-2 and EP-3 list only the object and give the sub-fields by reference or example.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices are cited or decided by A-02 and A-03, with no invented infrastructure. The label default leans on the glossary without a citation, and glossary.md is not an input.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Explains server-side counting versus the capped list, POST/PATCH carrying the field, status versus date counting, index use with no migration, and the label wording.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Short and consistently structured; front matter and body agree on components, endpoints and fields.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
