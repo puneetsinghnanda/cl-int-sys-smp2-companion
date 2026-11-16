@@ -1,0 +1,142 @@
+{
+  "artifact_sha256": "8d0cdda0228533bf20acfae2614ed1e7051e24f67db59538f0a060c00e87d78b",
+  "attempt": 1,
+  "finished_at": "2026-11-16T11:44:07Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md",
+      "sha256": "c9a1ede4306bc083606d25524f9f23a42bd6bc2c7879ad56be7df79f2ab386f4",
+      "verification_sha256": "982387872eab4bca4cfdb88130f32572fa9fbf3b581e586f1b5d021f4a4d62ea"
+    },
+    {
+      "path": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md",
+      "sha256": "37e1c1b4a8f6927e7237a6d3526934d298e5ce3a870e6da718f067bf13f3507d",
+      "verification_sha256": "b38bb4104c56928ad6964e881aab5fc7e58f7a4083738eeb2c52e2b6b0aa5e41"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "c67395543d40400b2c3a9199763c057ccd05188578a42a63e3e0e9347ec918a8",
+      "files": [
+        "api/src/repositories/patientRepo.ts",
+        "api/src/services/patientService.ts",
+        "api/src/types.ts",
+        "web/src/api/types.ts",
+        "web/src/pages/PatientDetailPage.tsx"
+      ],
+      "lines_added": 47,
+      "lines_deleted": 12,
+      "repo": "sample-system",
+      "tree_sha": "7f074fb32f05198b8507ba46acb09ceaae451afb"
+    }
+  ],
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-16T11:41:12Z",
+  "step": "impl",
+  "tool_log_sha256": "be76647d2413662813b5d0e24edf8f76cf5d6ae79e27e857ebd5b548537eddfe",
+  "tsl_version": "0.1.6",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 16234,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 36577,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 4342,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "9300676fcee7fc85b159e9b355308d04d191436e7e96d8a93deec97410a6f27e",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 36829,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "62daed9e618ef5c0ae9aa300ed286f31dc53b3b858676a5b225286ef81f13196",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1342,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      }
+    ]
+  }
+}

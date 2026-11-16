@@ -1,0 +1,194 @@
+{
+  "artifact_sha256": "8d0cdda0228533bf20acfae2614ed1e7051e24f67db59538f0a060c00e87d78b",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "async nextAppointment(id: number, now: Date): Promise&lt;NextAppointment | null&gt; {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L155"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "LEFT JOIN LATERAL (${nextAppointmentSql('pg.id', p(now))}) n ON true",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L138"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const now = this.clock();",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        },
+        {
+          "quote": "next_appointment: await repo.nextAppointment(id, now),",
+          "ref": "sample-system:api/src/services/patientService.ts#L46"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "next_appointment: NextAppointment | null;",
+          "ref": "sample-system:api/src/types.ts#L118"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "next_appointment: NextAppointment | null;",
+          "ref": "sample-system:web/src/api/types.ts#L113"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;AppointmentTable items={p.appointments} hide=\"patient\" /&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L88"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{dateTime(p.next_appointment.starts_at, timeZone)}&lt;/Link&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L82"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Date and time (proposed default)",
+          "ref": "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-04"
+        },
+        {
+          "quote": "{' '}with {p.next_appointment.doctor_name}",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L83"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{' '}with {p.next_appointment.doctor_name}",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L83"
+        },
+        {
+          "quote": "Then the doctor's name follows as plain text (A-04).",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L198"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Then the doctor's name follows as plain text (A-04).",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L198"
+        },
+        {
+          "quote": "cites: [\"artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L200\"]",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#L56"
+        }
+      ],
+      "claim_ref": "C9",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Change the C9 cite to design.md#L198.",
+      "text": "Claim C9 cites design.md#L200, but the quoted phrase 'doctor's name follows as plain text' is on line 198. Line 200 is blank."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "No tests were added: the design asks for no regression tests, and the unit-test step owns them.",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#L80"
+        },
+        {
+          "quote": "computing on the server reuses tested HMS-1 SQL and the server clock",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L204"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say only that the unit-test step owns the tests, or cite where the design says no tests are needed.",
+      "text": "The summary says the design asks for no regression tests, but the design says nothing about tests. Its only 'test' wording is 'tested HMS-1 SQL'."
+    }
+  ],
+  "package_sha256": "191aad7bcdd10edc411844cd73abf04b59f11f295c9a78093dc6235c93624e39",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "id": "Q-1",
+      "text": "AS-1: the code joins the date/time and the doctor's name with the word 'with' (e.g. '15 Mar 2027, 10:00 with &lt;doctor&gt;'). The ticket gives no separator. Is 'with' acceptable?"
+    }
+  ],
+  "recorded_at": "2026-11-16T11:46:26Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-7 are built as designed: a shared fragment used by list and nextAppointment, one clock read in get, both types updated, the line placed before AppointmentTable, and only the date/time is a link.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL stays in the repository and rules in the service. The 404 path uses notFound. The web reaches the API only through the client and reuses dateTime/useSettings. Build, lint, sast and secrets all pass.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Only the 5 files the design names were changed (+47/-12). AppointmentTable and the Book appointment button are untouched.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "The empty result maps to null and the page shows a plain-text 'No upcoming appointment'. The 404 for an unknown id is kept. The comparison is strictly after now, so appointments that have started are excluded.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary matches the diff, but it says the design asks for no regression tests, which the design does not state, and C9 cites a design line that does not hold the quoted text.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
