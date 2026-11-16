@@ -1,0 +1,145 @@
+{
+  "artifact_sha256": "3054686c1ee1ec1e6f05993d831044fb058e06c509ab0d9300f743d21b2ac834",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/patients/:id"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient never has two overlapping Scheduled appointments.",
+          "ref": "context/intent-baseline.md#booking-rules"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/lib/format.ts:dateTime\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "compared and shown in the hospital time zone `Asia/Kolkata`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/req.md#L92"
+        },
+        {
+          "quote": "shows the appointment's date and time in the `same format as the table`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/req.md#L50"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Limit REQ-9 to comparing now with start times in Asia/Kolkata, and let REQ-2 alone govern how times are displayed.",
+      "text": "REQ-9 joins two checks: using Asia/Kolkata to compare now with start times, and using it to display times. Displaying is already set by REQ-2's 'same format as the table', so the two could disagree."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The next appointment on the line links to that appointment's detail page `/appointments/:id`.",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/req.md#L104"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State which element is clickable, for example the date and time text.",
+      "text": "REQ-11 does not say which part of the line is the link (the date/time, the doctor's name or the whole line), so a tester cannot check it exactly."
+    }
+  ],
+  "package_sha256": "9ca0afae9a13fdaacc909e90aff7edbbc9fe1b137d8ba0bb2aa95d0a1b0b0ecd",
+  "questions": [],
+  "recorded_at": "2026-11-16T10:46:45Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Every part of ACs 1-4 (label, date/time format, doctor, earliest Scheduled after now, empty state, exclusions, unchanged page) maps to REQ-1..REQ-8. Out of scope items each give a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and testable. REQ-9 combines comparing and displaying in Asia/Kolkata, and REQ-11 does not say which element is the link.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Each known status cites the ticket, the baseline or an IDE answer (A-01, A-02). Nothing is invented. The claimed routes and formatter exist in the generated inventories.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "I found no clash between the ticket and the baseline. The time zone constraint and the booking rules support the ticket rather than contradicting it.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Two minimal questions, answered in the IDE: Q-01 (link) gave real options and a default, and the REQ-10 assumption was confirmed. Neither question could be answered from the context pack.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording. The glossary terms Scheduled, Cancelled, Completed and No-show are used consistently and match the glossary.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
