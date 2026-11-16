@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md",
-  "artifact_sha256": "a0638ebe808f46fbd58e208f6d1d777700ea94bba5bca6046a3124e697f45e66",
-  "attempt": 1,
+  "artifact_sha256": "0983aa2b07bd7f46075864bf2914b9331dc70e996be6fe9387cef4ad80e9ff74",
+  "attempt": 2,
   "budget_tokens": 15000,
-  "checks_sha256": "431d6e5378d629be047ab4b46154f40fe8e099088078fad14a45ed3781cc94c3",
+  "checks_sha256": "0ccbc839dfe3bdceebab4c38ae9ec05a060e06ab2ae40a7487bf3b00f8146b8a",
   "context_sections": [
     {
       "id": "intent-baseline#goals",
@@ -35,10 +35,23 @@
       "path": "context/glossary.md"
     }
   ],
-  "package_sha256": "c9c6c8097fae8f9bd108b028d12beb409a285d1d77ccc281d4986f6df75c6057",
-  "prepared_at": "2026-11-16T10:19:53Z",
+  "package_sha256": "215ef0914e3feafc5e02febb28b13bc2b082a03b9afca3a9b3dbd201ce33b174",
+  "prepared_at": "2026-11-16T10:24:51Z",
   "prepared_by": "tsl@0.1.6",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
   "rubric": {
     "items": [
       {

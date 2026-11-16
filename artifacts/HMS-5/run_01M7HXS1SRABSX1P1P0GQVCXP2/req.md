@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M7HXS1SRABSX1P1P0GQVCXP2
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.3.0
 inputs:
   - {path: artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md, sha256: a817dc99b614c6c2bf0fbf80ff876558cbcef844f31ad5a1e793c65c09d8ddee}
@@ -21,7 +21,7 @@ claims:
   - {id: C9, text: "A Completed appointment is one the patient attended, closed `once its start time has passed`.", cites: ["context/glossary.md#completed"]}
   - {id: C10, text: "A No-show is a past appointment the patient `did not attend`.", cites: ["context/glossary.md#no-show"]}
   - {id: C11, text: "The glossary Period offers `Last 30 days` and is used by the dashboard tiles and the doctor page's No-shows count.", cites: ["context/glossary.md#period"]}
-  - {id: C12, text: "In the ended run of this ticket the user chose to count over `All time`.", cites: ["runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-01"]}
+  - {id: C12, text: "The user chose to count over `All time`.", cites: ["runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-01"]}
   - {id: C13, text: "Front-desk staff act as `staff` in the MVP.", cites: ["context/glossary.md#front-desk-staff"]}
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
@@ -33,13 +33,14 @@ requirements:
   - {id: REQ-3, title: "No-show count", type: functional, status: known, statement: "The Visit summary shows the number of the patient's `No-show` appointments.", cites: ["artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L17-L18"]}
   - {id: REQ-4, title: "Other statuses not counted", type: functional, status: known, statement: "`Scheduled and Cancelled` appointments are not counted in either number.", cites: ["artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L19"]}
   - {id: REQ-5, title: "Zero counts", type: functional, status: known, statement: "A patient with no Completed or No-show appointments shows `0 for each`.", cites: ["artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L20"]}
-  - {id: REQ-6, title: "Counting window", type: functional, status: known, statement: "Both counts cover `All time`: every Completed and No-show appointment of the patient, with no period picker.", cites: ["runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-01", "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L12-L13"]}
+  - {id: REQ-6, title: "Counting window", type: functional, status: known, statement: "Both counts cover `All time`: every Completed and No-show appointment of the patient, with no period picker.", cites: ["runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-01", "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L12-L13"]}
   - {id: REQ-7, title: "Appointments list unchanged", type: constraint, status: known, statement: "The patient page's appointments list is `unchanged`.", cites: ["artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L21-L22"]}
   - {id: REQ-8, title: "Medical history unchanged", type: constraint, status: known, statement: "The patient page's `medical history` is unchanged.", cites: ["artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L21-L22", "context/intent-baseline.md#data-protection"]}
   - {id: REQ-9, title: "Rest of page unchanged", type: constraint, status: known, statement: "`The rest of the patient page` is unchanged apart from the new Visit summary.", cites: ["artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L21"]}
 unknowns: []
 questions: []
-answers: []
+answers:
+  - {id: A-01, kind: question, about: Q-01, answer: "All time (proposed default)", requirements: [REQ-6]}
 glossary:
   - {term: "Visit summary", found: false}
   - {term: "Patient page", found: false}
@@ -53,7 +54,7 @@ glossary:
 # Requirements review: HMS-5
 
 ## Summary
-HMS-5 adds a `Visit summary` above the appointments list on the patient page (C2). The summary shows two counts, the patient's `Completed` and `No-show` appointments (C3, C4), and leaves out Scheduled and Cancelled ones (C5). A patient with neither shows 0 for each (C6). The ticket gives no time window; the user already decided `All time` in the ended run of this ticket (C12), and that answer is reused here. The main risk is touching the patient page, the one page that shows medical history (C8), so the rest of the page must stay unchanged (C7).
+HMS-5 adds a `Visit summary` above the appointments list on the patient page (C2). The summary shows two counts, the patient's `Completed` and `No-show` appointments (C3, C4), and leaves out Scheduled and Cancelled ones (C5). A patient with neither shows 0 for each (C6). The ticket gives no time window; the user chose `All time` in this run (C12). The main risk is touching the patient page, the one page that shows medical history (C8), so the rest of the page must stay unchanged (C7).
 
 ## Requirements
 - REQ-1 Visit summary placement (known): the patient page shows a Visit summary above the appointments list.
@@ -71,7 +72,7 @@ HMS-5 adds a `Visit summary` above the appointments list on the patient page (C2
 - REQ-2, REQ-3: ticket L17-L18; the glossary defines Completed (C9) and No-show (C10).
 - REQ-4: ticket L19.
 - REQ-5: ticket L20.
-- REQ-6: the earlier answer A-01 of run_01M79P1N889PBTFM8J1EX89TBK (All time), reused.
+- REQ-6: answer A-01 of this run (All time).
 - REQ-7, REQ-8, REQ-9: ticket L21-L22; baseline data protection keeps medical history on the patient's own page.
 
 ## Assumed
@@ -84,10 +85,10 @@ None. "Visit summary" and "Patient page" are not in the glossary; the ticket def
 None open.
 
 Answered in the IDE:
-- None in this run. The one question this ticket raises, which time window the counts use (all time, a selectable Period (C11) or a fixed last 30 days), was answered by the user in the ended run run_01M79P1N889PBTFM8J1EX89TBK as A-01: "All time (proposed default)". It decides REQ-6 and was not asked again. No mismatch: the ticket gives no window.
+- A-01 (Q-01, answered by the user in this run): which time window the counts use. Options were all time, a selectable Period (C11) or a fixed last 30 days. Answer: "All time (proposed default)". Decides REQ-6. No mismatch: the ticket gives no window. It matches the answer given in the ended run run_01M79P1N889PBTFM8J1EX89TBK.
 
 ## Out of scope
 - Rates, percentages or highlighting of patients who often miss appointments: the ticket asks only for the two numbers (L17-L18).
 - Following up with patients (user story L12-L13) stays a manual task for staff.
-- Labels and layout: by default the counts are labelled with the status names "Completed" and "No-show". Trade-off: this matches the glossary, but the wording may differ from what product prefers.
+- Labels and layout of the two counts: the ticket names only the "Visit summary" heading (L16); the rest is left to design.
 - No instruction-like text, credentials or personal data were found in the inputs.

@@ -1,0 +1,245 @@
+{
+  "artifact_sha256": "a0638ebe808f46fbd58e208f6d1d777700ea94bba5bca6046a3124e697f45e66",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The patient page already lists the patient's appointments, upcoming first, then past",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The patient page shows a \"Visit summary\" above the appointments list.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L16"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "It shows the number of the patient's Completed appointments",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L17"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "and the number of their No-show",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L17-L18"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Scheduled and Cancelled appointments are not counted in either number.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L19"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient with no Completed or No-show appointments shows 0 for each.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The rest of the patient page, including the appointments list and medical history, is",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L21"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "tiles and the doctor page's No-shows count use the same rule.",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: All time (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`.",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "REQ-6: the earlier answer A-01 of run_01M79P1N889PBTFM8J1EX89TBK (All time), reused.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#known"
+        },
+        {
+          "quote": "It decides REQ-6 and was not asked again.",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#open-questions"
+        },
+        {
+          "quote": "answer: All time (proposed default)",
+          "ref": "runs/run_01M79P1N889PBTFM8J1EX89TBK/ide-answers.md#a-01"
+        }
+      ],
+      "claim_ref": "C12",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Either ask the window question again in this run and cite its own answer, or mark REQ-6 assumed with the earlier A-01 as its basis and list it under Assumed.",
+      "text": "REQ-6 is marked known on answer A-01 of a different, ended run. This run has no ide-answers file and its answers list is empty, so the window was not decided in this run. The answer is real, but whether it carries over was not confirmed."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "by default the counts are labelled with the status names \"Completed\" and \"No-show\"",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#out-of-scope"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Move the label default to an assumed requirement with the glossary as basis, or drop it and leave labels to design.",
+      "text": "The Out of scope section states a default for the count labels. That is an assumption about in-scope behaviour, not an exclusion, and it is not tracked while the Assumed section says None."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "REQ-9 Rest of page unchanged (known).",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/req.md#requirements"
+        },
+        {
+          "quote": "The rest of the patient page, including the appointments list and medical history, is",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/ticket.md#L21"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State in REQ-9 which parts it covers beyond the appointments list and medical history, e.g. patient details and actions render as before.",
+      "text": "REQ-9 (rest of page unchanged) overlaps REQ-7 and REQ-8, which are carved out of the same ticket line, and it names no condition a tester could check."
+    }
+  ],
+  "package_sha256": "c9c6c8097fae8f9bd108b028d12beb409a285d1d77ccc281d4986f6df75c6057",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "Answer A-01 (count over All time) was given in the ended run run_01M79P1N889PBTFM8J1EX89TBK. Does it still hold for this new run of HMS-5, or should the window be asked again?"
+    }
+  ],
+  "recorded_at": "2026-11-16T10:22:00Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All five acceptance criteria map to REQ-1..REQ-9; the missing time window is covered by REQ-6; rates and follow-up are listed under Out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "REQ-1..REQ-6 are atomic and checkable. REQ-9 (rest of page unchanged) overlaps REQ-7 and REQ-8 and gives no concrete check.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "REQ-6 is marked known on an answer from a different, ended run while this run's answers list is empty. A label default sits in Out of scope and is not tracked as assumed. Nothing is invented: the cited answer exists.",
+      "score": 3
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No ticket/baseline contradiction exists. The gap between the glossary Period and an all-time count is described and tied to answer A-01, but only in prose, not as a question in this run.",
+      "score": 4
+    },
+    {
+      "id": "RR-R5",
+      "reason": "No questions raised. The one needed question (time window) was reused from the earlier run rather than asked or confirmed here; that is disclosed clearly.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording, glossary status names used consistently, and the two non-glossary terms are flagged with their ticket lines.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.05,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
