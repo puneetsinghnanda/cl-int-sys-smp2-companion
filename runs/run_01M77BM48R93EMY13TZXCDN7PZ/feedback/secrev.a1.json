@@ -1,0 +1,47 @@
+{
+  "dropped": [
+    "F-2"
+  ],
+  "dropped_findings": [
+    {
+      "id": "F-2",
+      "reason": "file too large",
+      "severity": "minor",
+      "text": "The review says SAST 'passed' but does not mention that the SARIF holds 4 results, for example in codes.ts and errorHandler.ts. It also does not state that none of them touch the four changed files."
+    }
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "const ID = /^[1-9]\\d{0,9}$/;",
+          "ref": "sample-system:api/src/lib/codes.ts#L18"
+        },
+        {
+          "quote": "serial PRIMARY KEY",
+          "ref": "sample-system:db/migrations/20261016T090000__create_reference_lists.sql#L16"
+        },
+        {
+          "quote": "res.status(500).json({ error: { code: 'INTERNAL', message: 'Something went wrong' } });",
+          "ref": "sample-system:api/src/middleware/errorHandler.ts#L21"
+        },
+        {
+          "quote": "the malformed id is rejected by `parseId`",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/secrev.md#L94"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "parseId accepts ids up to 9999999999, but specialization.id is a serial (int4) column. An id such as 3000000000 reaches refStatus, Postgres raises out-of-range, and the route answers 500 instead of 404. The review says malformed ids are fully handled."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "feedback.v1",
+  "step": "secrev"
+}
