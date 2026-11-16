@@ -1,7 +1,7 @@
 {
   "artifact_sha256": "85c4262cd43a2611594f9848a169403d450d7a134cde3616a7acff5dea7b7bf3",
   "attempt": 3,
-  "finished_at": "2026-11-12T09:10:39Z",
+  "finished_at": "2026-11-16T06:51:23Z",
   "gates": [
     {
       "codes": [],
@@ -19,10 +19,10 @@
     },
     {
       "codes": [],
-      "detail": "verifier not run yet",
+      "detail": "",
       "id": "H3",
-      "pass": false,
-      "status": "pending"
+      "pass": true,
+      "status": "pass"
     },
     {
       "codes": [],
@@ -90,9 +90,56 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-12T09:10:39Z",
+  "started_at": "2026-11-16T06:49:52Z",
   "step": "ut",
-  "tool_log_sha256": "ea32636878763ace6ff027ac166aab862c011576ba5db2c8b0cd070a4b7830c7",
+  "tool_log_sha256": "1df9d21522fe090a677f9f7bd493728ca4dcede947deeba3e1b97f2e10004121",
   "tsl_version": "0.1.6",
-  "verifier": null
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 11718,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 37237,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 6575,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "b99e9c28ceaa78bec1eaee336b6fb6aed0d97acfc94ff835824d0ebd5fd484d1",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 23512,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "8c0ace47bac1973a4fc6b8c8eb30ef645e0c47aed2e6751eb4a86ca7bdb65e8b",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 507,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 356,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
 }

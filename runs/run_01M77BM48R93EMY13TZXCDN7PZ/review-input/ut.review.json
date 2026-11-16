@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "step": "ut",
-  "attempt": 2,
-  "artifact_sha256": "175a3914be8e6f603d52c04b468985b7d12362215c74376ae5dba04c791b2cf7",
-  "package_sha256": "3f6c3dfdbaf6cb6c90ee525b0afd569060b9f12bf775895fc185d455a4fed2cd",
+  "attempt": 3,
+  "artifact_sha256": "85c4262cd43a2611594f9848a169403d450d7a134cde3616a7acff5dea7b7bf3",
+  "package_sha256": "c675161516d5a67b70ffbd8e0e53a9f7c723d1fb7d9bd4c8e987a69760397d2e",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,100 +12,35 @@
     "version": "0.1.6",
     "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
   },
-  "rubric_score": 4.7,
+  "rubric_score": 5.0,
   "rubric_items": [
     {
       "id": "UT-R1",
-      "score": 4,
-      "reason": "Prior F-2 to F-5 are fixed: 21-doctor unpaged suite, Dr. Same id tie-break, Inactive earlier-slot doctor, AC1 relabel. S-6 AC4 and a router check were added. S-6 AC2/AC3 (empty and Cancelled-only day schedule) lean on APT-6, which never reads the day schedule."
+      "score": 5,
+      "reason": "Prior F-1 is fixed. New tests read /api/doctors/1/slots for an empty date, a cancelled-only date and a booked date (test L145-169), which covers S-6 AC1-AC3. S-1 to S-5 and S-6 AC4 were already covered, so every changed path and every AC now has a test."
     },
     {
       "id": "UT-R2",
       "score": 5,
-      "reason": "Assertions check observable results: exact toEqual on entries and slots, exact key sets, ordered names, id order for same-name ties, length 21 with keys ['items'], and status plus error message on failures. Minor gaps: medicalNotes is not checked, and the malformed-id test checks only the status."
+      "reason": "Assertions check observable results: exact toEqual on entries, exact key sets, ordered names and ids, slot counts and states. Prior F-2 is fixed by the 'Invented note' check (L95), and prior F-3 by the BAD_REQUEST error-code check (L136)."
     },
     {
       "id": "UT-R3",
       "score": 5,
-      "reason": "Covers 404 (NOT_FOUND), 400 for a malformed id, 400 'specialization is Inactive', today+6 and today+7 boundaries, the UTC-midnight zone case, started slots, booked and Cancelled slots, ties with and without slots, and an empty list."
+      "reason": "Covers 404 NOT_FOUND, 400 BAD_REQUEST for a malformed id, 400 'specialization is Inactive', the today+6 and today+7 boundaries, UTC midnight, started slots, booked and Cancelled slots, ties with and without a slot, an empty list and 21 unpaged doctors."
     },
     {
       "id": "UT-R4",
       "score": 5,
-      "reason": "Vitest and Supertest with an injected fixed clock. Each suite gets a fresh database, guarded by skipIf(!pgAvailable()). The file is in api/test, titles start with 'HMS-11 REQ-n' like the neighbouring ticket tests, and fixture data is invented."
+      "reason": "Uses Vitest and Supertest in api/test with an injected fixed clock. Each suite gets a fresh database behind skipIf(!pgAvailable()). Titles start 'HMS-11 REQ-n' like the neighbouring HMS-9 tests, and the fixture data is invented."
     },
     {
       "id": "UT-R5",
       "score": 5,
-      "reason": "Gives no pass or coverage numbers and leaves them to the verifier (H3). The stated 17 tests in three suites matches the file (15+1+1). checks.json shows test pass and coverage skip (exit 78), as C4 says. Only the test file changed."
+      "reason": "Gives no pass or coverage numbers and leaves them to the verifier. The stated count of 20 tests in three suites matches the file (18+1+1). checks.json shows test pass and coverage skip (exit 78). Only the test file changed (269 lines added, 0 deleted)."
     }
   ],
-  "findings": [
-    {
-      "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "C9 says APT-10 and APT-6 pin the day schedule for booked, empty and Cancelled dates. APT-6 never reads /slots: it cancels and then books 11:00. No test reads the day schedule for a Cancelled-only date or a date with no appointment (S-6 AC3, AC2), yet doctorService.ts changed.",
-      "cites": [
-        {
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/ut.md#L78",
-          "quote": "the day schedule for booked, empty and cancelled dates stays pinned by the existing APT-10 and APT-6 tests (C9)"
-        },
-        {
-          "ref": "sample-system:api/test/appointments.test.ts#L65",
-          "quote": "expect((await book(app, 1, 2, MONDAY, '11:00')).status).toBe(201);"
-        },
-        {
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L115",
-          "quote": "Given a doctor and date with only a Cancelled appointment, when staff read that day schedule before and after the change, then both responses are the same."
-        },
-        {
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#L62",
-          "quote": "api/src/services/doctorService.ts"
-        }
-      ],
-      "claim_ref": "C9",
-      "suggested_fix": "Add HMS-11 REQ-16 (S-6 AC2, AC3) tests that GET /api/doctors/:id/slots for a date with no appointment and for one with only a Cancelled appointment, and assert the exact slot states. Or correct C9 and the S-6 entry under Known."
-    },
-    {
-      "id": "F-2",
-      "severity": "minor",
-      "category": "completeness",
-      "text": "S-5 AC2 also forbids medical notes. The booked-slot test checks for the patient name and the allergy (Penicillin) but not the fixture's medicalNotes value, 'Invented note'.",
-      "cites": [
-        {
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L94",
-          "quote": "expect(text).not.toContain('Penicillin');"
-        },
-        {
-          "ref": "sample-system:api/test/helpers.ts#L46",
-          "quote": "medicalNotes: 'Invented note'"
-        },
-        {
-          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md#L105",
-          "quote": "then the response has no patient name, allergies, notes or other medical history"
-        }
-      ],
-      "suggested_fix": "Add expect(text).not.toContain('Invented note') to the booked-slot test."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
-      "category": "correctness",
-      "text": "The malformed-id test asserts only the 400 status. Unlike the 404 test, it does not check the error code, so any 400 passes.",
-      "cites": [
-        {
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L133",
-          "quote": "expect((await earliest('abc')).status).toBe(400);"
-        },
-        {
-          "ref": "sample-system:api/test/specializations-earliest-slots.test.ts#L129",
-          "quote": "expect(res.body.error.code).toBe('NOT_FOUND');"
-        }
-      ],
-      "suggested_fix": "Also assert res.body.error.code for the malformed id, using the code that parseId returns."
-    }
-  ],
+  "findings": [],
   "claims_checked": [
     {
       "claim_id": "C1",
@@ -184,20 +119,6 @@
         {
           "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#claim:C9",
           "quote": "The window is `today to today+6`."
-        }
-      ]
-    },
-    {
-      "claim_id": "C9",
-      "verdict": "unsupported",
-      "cites": [
-        {
-          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts",
-          "quote": "APT-6: cancels with a required reason, and the slot is free again"
-        },
-        {
-          "ref": "sample-system:api/test/appointments.test.ts#L65",
-          "quote": "expect((await book(app, 1, 2, MONDAY, '11:00')).status).toBe(201);"
         }
       ]
     }

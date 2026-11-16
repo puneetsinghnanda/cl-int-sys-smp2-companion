@@ -1,0 +1,129 @@
+{
+  "artifact_sha256": "85c4262cd43a2611594f9848a169403d450d7a134cde3616a7acff5dea7b7bf3",
+  "attempt": 3,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID (DOC-1, APT-4, ...).",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/appointments.test.ts\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The route is added to the existing `specializationsRouter`.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#claim:C1"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Name ties compare ignoring case, with `doctor id as the final tie-break`.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#claim:C10"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The window is `today to today+6`.",
+          "ref": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md#claim:C9"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [],
+  "package_sha256": "c675161516d5a67b70ffbd8e0e53a9f7c723d1fb7d9bd4c8e987a69760397d2e",
+  "questions": [],
+  "recorded_at": "2026-11-16T06:53:33Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Prior F-1 is fixed. New tests read /api/doctors/1/slots for an empty date, a cancelled-only date and a booked date (test L145-169), which covers S-6 AC1-AC3. S-1 to S-5 and S-6 AC4 were already covered, so every changed path and every AC now has a test.",
+      "score": 5
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check observable results: exact toEqual on entries, exact key sets, ordered names and ids, slot counts and states. Prior F-2 is fixed by the 'Invented note' check (L95), and prior F-3 by the BAD_REQUEST error-code check (L136).",
+      "score": 5
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers 404 NOT_FOUND, 400 BAD_REQUEST for a malformed id, 400 'specialization is Inactive', the today+6 and today+7 boundaries, UTC midnight, started slots, booked and Cancelled slots, ties with and without a slot, an empty list and 21 unpaged doctors.",
+      "score": 5
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Uses Vitest and Supertest in api/test with an injected fixed clock. Each suite gets a fresh database behind skipIf(!pgAvailable()). Titles start 'HMS-11 REQ-n' like the neighbouring HMS-9 tests, and the fixture data is invented.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "Gives no pass or coverage numbers and leaves them to the verifier. The stated count of 20 tests in three suites matches the file (18+1+1). checks.json shows test pass and coverage skip (exit 78). Only the test file changed (269 lines added, 0 deleted).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 5.0,
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
