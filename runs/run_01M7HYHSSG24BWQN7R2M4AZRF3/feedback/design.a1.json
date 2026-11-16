@@ -1,0 +1,43 @@
+{
+  "dropped": [
+    "F-2"
+  ],
+  "dropped_findings": [
+    {
+      "id": "F-2",
+      "reason": "quote not found",
+      "severity": "minor",
+      "text": "PatientRepo.get returns Omit&lt;PatientDetail, 'appointments'&gt;. Once CO-3 adds next_appointment to PatientDetail, repo.get's return type must also omit next_appointment, or it will fail to type-check. CO-1/CO-3 do not mention this."
+    }
+  ],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "moves into a shared `PatientRepo.nextAppointment(id, now)`, which both `list` and `get` call",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L173"
+        },
+        {
+          "quote": "`list` keeps its one-query-per-page form or calls the same SQL fragment",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L187"
+        },
+        {
+          "quote": "earliest Scheduled appointment starting after `now`, in one query per page",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L100"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The Overview says list and get both call PatientRepo.nextAppointment(id, now), but CO-1 says list may instead keep its one-query-per-page form. Calling a per-id method from list would break HMS-1's one query per page (an N+1 query). The design does not pick an option."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "feedback.v1",
+  "step": "design"
+}

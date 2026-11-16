@@ -1,0 +1,344 @@
+{
+  "artifact_sha256": "116700b9fb0e648af08a38f89132fa7ce8d1c5bddba540438ae5eefe41816860",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface NextAppointment {",
+          "ref": "sample-system:api/src/types.ts#L95"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface NextAppointment {",
+          "ref": "sample-system:web/src/api/types.ts#L90"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientDetail extends PatientSummary {",
+          "ref": "sample-system:api/src/types.ts#L105"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientDetail extends PatientSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L100"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a.status = 'SCHEDULED' AND a.starts_at &gt; ${p(now)}",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L129"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY a.starts_at, a.id",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L130"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/patientService.ts:PatientService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointments: await repo.appointments(id, this.clock())",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(await repo.insert(fields, actor));",
+          "ref": "sample-system:api/src/services/patientService.ts#L58"
+        },
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/patientService.ts#L69"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:POST:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#http:POST:/api/patients"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:PATCH:/api/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#http:PATCH:/api/patients/:id"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;td&gt;{dateTime(a.startsAt, timeZone)}&lt;/td&gt;",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L34"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const { timeZone } = useSettings();",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L14"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC. Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;AppointmentTable items={p.appointments} hide=\"patient\" /&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&gt;Book appointment&lt;/Link&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L42"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: API field (proposed default)",
+          "ref": "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: Date and time (proposed default)",
+          "ref": "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "moves into a shared `PatientRepo.nextAppointment(id, now)`, which both `list` and `get` call",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L173"
+        },
+        {
+          "quote": "`list` keeps its one-query-per-page form or calls the same SQL fragment",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L187"
+        },
+        {
+          "quote": "earliest Scheduled appointment starting after `now`, in one query per page",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L100"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Pick one approach: share a SQL fragment (status, &gt; now, ORDER BY starts_at, id LIMIT 1) used by the list's lateral join and by nextAppointment(id, now), so list stays one query per page. Then make the Overview match.",
+      "text": "The Overview says list and get both call PatientRepo.nextAppointment(id, now), but CO-1 says list may instead keep its one-query-per-page form. Calling a per-id method from list would break HMS-1's one query per page (an N+1 query). The design does not pick an option."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Promise&lt;Omit&lt;PatientDetail, 'appointments'&gt; | null&gt;",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L148"
+        },
+        {
+          "quote": "add `next_appointment: NextAppointment | null`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L189"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "In CO-1, note that repo.get's return type becomes Omit&lt;PatientDetail, 'appointments' | 'next_appointment'&gt;.",
+      "text": "PatientRepo.get returns Omit&lt;PatientDetail, 'appointments'&gt;. Once CO-3 adds next_appointment to PatientDetail, repo.get's return type must also omit next_appointment, or it will fail to type-check. CO-1/CO-3 do not mention this."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "appointments: await repo.appointments(id, this.clock())",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        },
+        {
+          "quote": "using the same `this.clock()` value as `appointments`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/design.md#L188"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "In CO-2, state: const now = this.clock(); pass now to both appointments and nextAppointment.",
+      "text": "PatientService.get calls this.clock() separately (inside today() and for appointments). The design's promise to use 'the same this.clock() instant' means reading the clock once into a local now. The current code does not do that yet."
+    }
+  ],
+  "package_sha256": "36f45d1cebb6a2a8363a666ea255335d5b588925aecdc177d77c016aa6e41809",
+  "questions": [],
+  "recorded_at": "2026-11-16T11:30:56Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Builds on the existing PatientRepo/PatientService layering, the HMS-1 NextAppointment type, dateTime/useSettings and the existing routes. No new infrastructure and no migration.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1..S-4 are each mapped to components. Strict &gt; now covers S-2 AC3. Using this.clock() per request covers S-1 AC4. The dateTime link covers S-1 AC2/AC3 and S-3. The table and the Book appointment button are untouched for S-4.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Every new field on EP-1..EP-3 has a name, type, nullability, format and example. The null condition is precise enough to test.",
+      "score": 5
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Every choice is cited or decided by A-03/A-04, and all 23 claims check out. One gap: CO-1 leaves open how list uses the extracted query, but it is still marked known.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Explains the trade-offs for server vs client, snake_case naming and skipping a migration. The 'indexed lookup' claim holds: appointment_patient_start_idx exists.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and well structured, but the Overview and CO-1 describe the list refactor differently.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
