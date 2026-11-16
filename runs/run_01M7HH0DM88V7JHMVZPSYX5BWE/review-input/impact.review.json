@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "step": "impact",
-  "attempt": 2,
-  "artifact_sha256": "3cf57d63dc48bf5b85fdf28d00d95961c0515ef54dd27cbf7aedb33756379f54",
-  "package_sha256": "97a15f7c9b6d35eadbcd20fa2c7de722d2e77b0f76944a928d9ab1388ced218c",
+  "attempt": 3,
+  "artifact_sha256": "30ebb6e1817858069d5a93181df6db3c7a87be9543a54aba0c4d57f149520a02",
+  "package_sha256": "986653ed67660a519526c48ae72127774ec026c576eddf86890e6882b8974f0c",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,81 +12,24 @@
     "version": "0.1.6",
     "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457"
   },
-  "rubric_score": 4.15,
+  "rubric_score": 4.9,
   "rubric_items": [
-    {
-      "id": "IA-R1",
-      "score": 4,
-      "reason": "The modules, APIs, tables, DetailRow, AppointmentService, the web AppointmentDetail type and useSettings are now listed. The API-side contract type AppointmentDetail in api/src/types.ts, which the extended GET response also changes, is not listed."
-    },
-    {
-      "id": "IA-R2",
-      "score": 4,
-      "reason": "Every module, API, table and symbol id exists in the generated facts and is cited. The page-to-route claims (C3, C4) still rest on names only, because the UI route facts point only at web/src/App.tsx."
-    },
-    {
-      "id": "IA-R3",
-      "score": 4,
-      "reason": "Jobs (none), the booking path, the settings source and the action routes that may read the detail shape (A-05) are covered. One reader-side type on the API (api/src/types.ts AppointmentDetail) is missed."
-    },
-    {
-      "id": "IA-R4",
-      "score": 5,
-      "reason": "Changed statuses rest on the cited answer A-04, and the action-route scope on A-05. Existing statuses are backed by schema and inventory facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to reviewed context."
-    },
-    {
-      "id": "IA-R5",
-      "score": 4,
-      "reason": "The artifact is clear, the summary names the risks, and the answers are recorded with mismatch notes. The impacted list is grouped by kind rather than ordered by risk."
-    }
+    {"id": "IA-R1", "score": 5, "reason": "Prior F-1 is resolved. The API contract type AppointmentDetail in api/src/types.ts is now listed under module:sample-system:api with claim C23. Modules, APIs, tables, DetailRow, AppointmentService, the web type and useSettings are all covered."},
+    {"id": "IA-R2", "score": 5, "reason": "Every module, API, table and symbol id is in the generated facts and is cited. The page-to-route mapping in C3 and C4 is now openly marked as inferred from names (prior F-2 resolved)."},
+    {"id": "IA-R3", "score": 5, "reason": "Covers jobs (none, C12), the booking path, the settings source, and the action routes as possible readers of the detail shape (A-05). Both the API-side and web-side detail types are now in scope."},
+    {"id": "IA-R4", "score": 5, "reason": "Changed statuses rest on the cited answer A-04 and the action-route scope on A-05. Existing statuses are backed by schema and inventory facts. The exclusive claims are cited to reviewed context. The inference is labeled."},
+    {"id": "IA-R5", "score": 4, "reason": "Clear summary with risks named. Answers are recorded with mismatch notes. The impacted list is still grouped by kind, not ordered by risk."}
   ],
-  "findings": [
-    {
-      "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "Extending GET /api/appointments/:id (A-04) also changes the API's own contract type AppointmentDetail in api/src/types.ts. The artifact lists only DetailRow, AppointmentService and the web AppointmentDetail type. Prior F-1 is otherwise resolved.",
-      "cites": [
-        {
-          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail",
-          "quote": "sym:sample-system:api/src/types.ts:AppointmentDetail"
-        },
-        {
-          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#impacted-modules",
-          "quote": "`DetailRow` in appointmentRepo and the detail response built by `AppointmentService` add doctor and patient status"
-        }
-      ],
-      "claim_ref": "C17",
-      "suggested_fix": "Under module:sample-system:api, add sym:sample-system:api/src/types.ts:AppointmentDetail as changed. Add a claim that cites it and A-04."
-    },
-    {
-      "id": "F-2",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "Carried over from prior F-3: C3 and C4 tie the pages to ui:/appointments/:id and ui:/appointments/new by name only. The UI route facts cite only web/src/App.tsx, not the page components.",
-      "cites": [
-        {
-          "ref": "context/generated/api-inventory.json#ui:/appointments/:id",
-          "quote": "\"path\": \"web/src/App.tsx\","
-        },
-        {
-          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary",
-          "quote": "`AppointmentDetailPage`, route `/appointments/:id`"
-        }
-      ],
-      "claim_ref": "C3",
-      "suggested_fix": "Say that the page-to-route mapping is inferred from the App.tsx route lines, or cite App.tsx#L35-L36 directly."
-    }
-  ],
+  "findings": [],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage", "quote": "\"path\": \"web/src/pages/AppointmentDetailPage.tsx\","}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "quote": "\"path\": \"web/src/pages/BookAppointmentPage.tsx\","}]},
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"path\": \"/appointments/:id\","}]},
     {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/new", "quote": "\"path\": \"/appointments/new\","}]},
     {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "quote": "\"path\": \"api/src/routes/appointments.ts\","}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.reason", "quote": "column:appointment.reason"}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:doctor.status", "quote": "column:doctor.status"}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:patient.status", "quote": "column:patient.status"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:appointment", "quote": "\"column:appointment.reason\","}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:doctor", "quote": "\"column:doctor.status\","}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#table:patient", "quote": "\"column:patient.status\","}]},
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/architecture.md#double-booking", "quote": "exclusion constraints forbid overlapping Scheduled"}]},
     {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)"}]},
@@ -95,12 +38,13 @@
     {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
     {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/doctors/:id/slots", "quote": "\"path\": \"api/src/routes/doctors.ts\","}]},
     {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
-    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow", "quote": "\"path\": \"api/src/repositories/appointmentRepo.ts\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
-    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService", "quote": "\"path\": \"api/src/services/appointmentService.ts\","}, {"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions, repositories hold the SQL"}]},
-    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail", "quote": "\"path\": \"web/src/api/types.ts\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow", "quote": "\"id\": \"sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService", "quote": "\"path\": \"api/src/services/appointmentService.ts\","}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail", "quote": "\"id\": \"sym:sample-system:web/src/api/types.ts:AppointmentDetail\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]},
     {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-05", "quote": "answer: Yes, include actions (proposed default)"}]},
     {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "\"path\": \"web/src/hooks/useSettings.tsx\","}]},
-    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"path\": \"/api/settings\","}]}
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/settings", "quote": "\"path\": \"/api/settings\","}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail", "quote": "\"id\": \"sym:sample-system:api/src/types.ts:AppointmentDetail\","}, {"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04", "quote": "answer: Extend appointment GET (proposed default)"}]}
   ],
   "questions": []
 }

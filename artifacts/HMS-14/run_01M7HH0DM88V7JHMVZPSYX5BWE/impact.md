@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M7HH0DM88V7JHMVZPSYX5BWE
 step: impact
-attempt: 2
+attempt: 3
 skill: impact-analysis@1.3.0
 inputs:
   - path: artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/req.md
@@ -27,10 +27,10 @@ claims:
     text: "The book appointment page is rendered by `web/src/pages/BookAppointmentPage.tsx`."
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage"]
   - id: C3
-    text: "The appointment page is the UI route `/appointments/:id`."
+    text: "The appointment page is the UI route `/appointments/:id`, declared in web/src/App.tsx; the route-to-page mapping is inferred from names, since the route fact cites only App.tsx."
     cites: ["context/generated/api-inventory.json#ui:/appointments/:id"]
   - id: C4
-    text: "The book appointment page is the UI route `/appointments/new`."
+    text: "The book appointment page is the UI route `/appointments/new`, declared in web/src/App.tsx; the route-to-page mapping is inferred from names, since the route fact cites only App.tsx."
     cites: ["context/generated/api-inventory.json#ui:/appointments/new"]
   - id: C5
     text: "The appointment detail route GET /api/appointments/:id is served from `api/src/routes/appointments.ts`."
@@ -86,6 +86,9 @@ claims:
   - id: C22
     text: "Settings are served by the route `/api/settings`."
     cites: ["context/generated/api-inventory.json#http:GET:/api/settings"]
+  - id: C23
+    text: "The API's own contract type in `api/src/types.ts` (AppointmentDetail) changes to carry doctor and patient status."
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail", "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18, REQ-19]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18, REQ-19]
 assumed: []
@@ -97,7 +100,7 @@ modules:
     cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage", "context/generated/module-map.json#sym:sample-system:web/src/pages/BookAppointmentPage.tsx:BookAppointmentPage", "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"]
   - id: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow", "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"]
+    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow", "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail", "context/generated/api-inventory.json#http:GET:/api/appointments/:id", "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db", "context/generated/db-schema.json#table:appointment"]
@@ -144,7 +147,7 @@ answers:
     kind: question
     about: Q-01
     answer: "Extend appointment GET (proposed default)"
-    decides: [http:GET:/api/appointments/:id, module:sample-system:api, C14, C17, C19]
+    decides: [http:GET:/api/appointments/:id, module:sample-system:api, C14, C17, C19, C23]
   - id: A-05
     kind: question
     about: Q-02
@@ -154,11 +157,11 @@ answers:
 # Impact analysis: HMS-14
 
 ## Summary
-HMS-14 changes the web app's appointment page (`AppointmentDetailPage`, route `/appointments/:id`) to show a "Book again" button for Cancelled and No-show appointments, disabled when the doctor or patient is Inactive, and the book appointment page (`BookAppointmentPage`, route `/appointments/new`) to take a reason for visit when opened from it. Per A-04, `GET /api/appointments/:id` is extended to return the doctor's and patient's status. That changes the API detail row `DetailRow` (built through `AppointmentService`) and the web contract type `AppointmentDetail` (C17, C18, C19), and the appointment page never loads the full patient record (C13). No table or migration changes: the reason, doctor status and patient status columns already exist (C6, C7, C8). Main risks: per A-05, the cancel, reschedule, complete and no-show routes may return the same detail shape and need a regression check (C20); the book page's existing address handling must keep working (REQ-17).
+HMS-14 changes the web app's appointment page (`AppointmentDetailPage`, route `/appointments/:id`) to show a "Book again" button for Cancelled and No-show appointments, disabled when the doctor or patient is Inactive, and the book appointment page (`BookAppointmentPage`, route `/appointments/new`) to take a reason for visit when opened from it. Per A-04, `GET /api/appointments/:id` is extended to return the doctor's and patient's status. That changes the API detail row `DetailRow` (built through `AppointmentService`), the API contract type `AppointmentDetail` in api/src/types.ts and the web contract type `AppointmentDetail` in web/src/api/types.ts (C17, C18, C23, C19), and the appointment page never loads the full patient record (C13). No table or migration changes: the reason, doctor status and patient status columns already exist (C6, C7, C8). Main risks: per A-05, the cancel, reschedule, complete and no-show routes may return the same detail shape and need a regression check (C20); the book page's existing address handling must keep working (REQ-17).
 
 ## Impacted modules
-- module:sample-system:web — changed: AppointmentDetailPage gains the "Book again" button and its disabled states; BookAppointmentPage fills in the reason for visit from its address; the `AppointmentDetail` type gains doctor and patient status (C1, C2, C19).
-- module:sample-system:api — changed: `DetailRow` in appointmentRepo and the detail response built by `AppointmentService` add doctor and patient status (A-04, C17, C18).
+- module:sample-system:web — changed: AppointmentDetailPage gains the "Book again" button and its disabled states; BookAppointmentPage fills in the reason for visit from its address; the web `AppointmentDetail` type gains doctor and patient status (C1, C2, C19).
+- module:sample-system:api — changed: `DetailRow` in appointmentRepo, the API contract type `AppointmentDetail` in api/src/types.ts, and the detail response built by `AppointmentService` add doctor and patient status (A-04, C17, C18, C23).
 - module:sample-system:db — existing: no migration; the columns needed already exist (C6, C7, C8).
 - http:GET:/api/appointments/:id — changed: response adds doctor and patient status (C5, C14).
 - http:POST:/api/appointments/:id/cancel — existing: possible reader of the detail shape; regression-check (A-05).
@@ -174,12 +177,13 @@ HMS-14 changes the web app's appointment page (`AppointmentDetailPage`, route `/
 - table:patient — existing: status read (C8).
 
 ## Known
-- REQ-1 to REQ-3, REQ-9 to REQ-11: appointment page logic in module:sample-system:web, with statuses from the changed http:GET:/api/appointments/:id via `DetailRow` and `AppointmentDetail` (C17, C19).
+- REQ-1 to REQ-3, REQ-9 to REQ-11: appointment page logic in module:sample-system:web, with statuses from the changed http:GET:/api/appointments/:id via `DetailRow`, the API `AppointmentDetail` and the web `AppointmentDetail` (C17, C23, C19).
 - REQ-4 to REQ-8, REQ-15, REQ-16, REQ-18, REQ-19: book appointment page in module:sample-system:web; "today" follows the hospital time zone (C11), which the web side reads from http:GET:/api/settings via `useSettings` (C21, C22); only the appointment's own reason is copied (C6).
 - REQ-12, REQ-13: existing http:POST:/api/appointments and http:GET:/api/doctors/:id/slots, guarded by exclusion constraints (C10).
 - REQ-14: table:appointment and table:appointment_event are read, not changed, for the original (C16).
 - REQ-17: regression scope is the two pages in module:sample-system:web, the changed detail response, and the four action routes that may return it (C20).
 - No scheduled job is affected (C12).
+- Page-to-route mapping (C3, C4) is inferred from names: the UI route facts point only at web/src/App.tsx.
 
 ## Assumed
 None
@@ -191,5 +195,5 @@ None
 None open.
 
 Answered in the IDE:
-- A-04 (Q-01, answered by the user in the IDE): where the appointment page gets doctor and patient status → "Extend appointment GET (proposed default)". Decides http:GET:/api/appointments/:id (changed), module:sample-system:api (changed), C14, C17 and C19. No mismatch with the facts.
+- A-04 (Q-01, answered by the user in the IDE): where the appointment page gets doctor and patient status → "Extend appointment GET (proposed default)". Decides http:GET:/api/appointments/:id (changed), module:sample-system:api (changed), C14, C17, C19 and C23. No mismatch with the facts.
 - A-05 (Q-02, answered by the user in the IDE): whether the action routes count as possible readers of the detail shape → "Yes, include actions (proposed default)". Decides http:POST:/api/appointments/:id/cancel, /reschedule, /complete and /no-show (existing, regression-check) and C20. No mismatch; the pack has no call facts either way.

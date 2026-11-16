@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "3cf57d63dc48bf5b85fdf28d00d95961c0515ef54dd27cbf7aedb33756379f54",
-  "attempt": 2,
+  "artifact_sha256": "30ebb6e1817858069d5a93181df6db3c7a87be9543a54aba0c4d57f149520a02",
+  "attempt": 3,
   "claims_checked": [
     {
       "cites": [
@@ -55,8 +55,8 @@
     {
       "cites": [
         {
-          "quote": "column:appointment.reason",
-          "ref": "context/generated/db-schema.json#column:appointment.reason"
+          "quote": "\"column:appointment.reason\",",
+          "ref": "context/generated/db-schema.json#table:appointment"
         }
       ],
       "claim_id": "C6",
@@ -65,8 +65,8 @@
     {
       "cites": [
         {
-          "quote": "column:doctor.status",
-          "ref": "context/generated/db-schema.json#column:doctor.status"
+          "quote": "\"column:doctor.status\",",
+          "ref": "context/generated/db-schema.json#table:doctor"
         }
       ],
       "claim_id": "C7",
@@ -75,8 +75,8 @@
     {
       "cites": [
         {
-          "quote": "column:patient.status",
-          "ref": "context/generated/db-schema.json#column:patient.status"
+          "quote": "\"column:patient.status\",",
+          "ref": "context/generated/db-schema.json#table:patient"
         }
       ],
       "claim_id": "C8",
@@ -165,7 +165,7 @@
     {
       "cites": [
         {
-          "quote": "\"path\": \"api/src/repositories/appointmentRepo.ts\",",
+          "quote": "\"id\": \"sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow\",",
           "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:DetailRow"
         },
         {
@@ -181,10 +181,6 @@
         {
           "quote": "\"path\": \"api/src/services/appointmentService.ts\",",
           "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService"
-        },
-        {
-          "quote": "services hold the rules and\ntransactions, repositories hold the SQL",
-          "ref": "context/architecture.md#components"
         }
       ],
       "claim_id": "C18",
@@ -193,7 +189,7 @@
     {
       "cites": [
         {
-          "quote": "\"path\": \"web/src/api/types.ts\",",
+          "quote": "\"id\": \"sym:sample-system:web/src/api/types.ts:AppointmentDetail\",",
           "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentDetail"
         },
         {
@@ -233,49 +229,26 @@
       ],
       "claim_id": "C22",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "completeness",
       "cites": [
         {
-          "quote": "sym:sample-system:api/src/types.ts:AppointmentDetail",
+          "quote": "\"id\": \"sym:sample-system:api/src/types.ts:AppointmentDetail\",",
           "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentDetail"
         },
         {
-          "quote": "`DetailRow` in appointmentRepo and the detail response built by `AppointmentService` add doctor and patient status",
-          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#impacted-modules"
+          "quote": "answer: Extend appointment GET (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-04"
         }
       ],
-      "claim_ref": "C17",
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Under module:sample-system:api, add sym:sample-system:api/src/types.ts:AppointmentDetail as changed. Add a claim that cites it and A-04.",
-      "text": "Extending GET /api/appointments/:id (A-04) also changes the API's own contract type AppointmentDetail in api/src/types.ts. The artifact lists only DetailRow, AppointmentService and the web AppointmentDetail type. Prior F-1 is otherwise resolved."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "\"path\": \"web/src/App.tsx\",",
-          "ref": "context/generated/api-inventory.json#ui:/appointments/:id"
-        },
-        {
-          "quote": "`AppointmentDetailPage`, route `/appointments/:id`",
-          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md#summary"
-        }
-      ],
-      "claim_ref": "C3",
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "Say that the page-to-route mapping is inferred from the App.tsx route lines, or cite App.tsx#L35-L36 directly.",
-      "text": "Carried over from prior F-3: C3 and C4 tie the pages to ui:/appointments/:id and ui:/appointments/new by name only. The UI route facts cite only web/src/App.tsx, not the page components."
+      "claim_id": "C23",
+      "verdict": "supported"
     }
   ],
-  "package_sha256": "97a15f7c9b6d35eadbcd20fa2c7de722d2e77b0f76944a928d9ab1388ced218c",
+  "findings": [],
+  "package_sha256": "986653ed67660a519526c48ae72127774ec026c576eddf86890e6882b8974f0c",
   "questions": [],
-  "recorded_at": "2026-11-16T07:00:46Z",
+  "recorded_at": "2026-11-16T07:03:26Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -286,31 +259,31 @@
   "rubric_items": [
     {
       "id": "IA-R1",
-      "reason": "The modules, APIs, tables, DetailRow, AppointmentService, the web AppointmentDetail type and useSettings are now listed. The API-side contract type AppointmentDetail in api/src/types.ts, which the extended GET response also changes, is not listed.",
-      "score": 4
+      "reason": "Prior F-1 is resolved. The API contract type AppointmentDetail in api/src/types.ts is now listed under module:sample-system:api with claim C23. Modules, APIs, tables, DetailRow, AppointmentService, the web type and useSettings are all covered.",
+      "score": 5
     },
     {
       "id": "IA-R2",
-      "reason": "Every module, API, table and symbol id exists in the generated facts and is cited. The page-to-route claims (C3, C4) still rest on names only, because the UI route facts point only at web/src/App.tsx.",
-      "score": 4
+      "reason": "Every module, API, table and symbol id is in the generated facts and is cited. The page-to-route mapping in C3 and C4 is now openly marked as inferred from names (prior F-2 resolved).",
+      "score": 5
     },
     {
       "id": "IA-R3",
-      "reason": "Jobs (none), the booking path, the settings source and the action routes that may read the detail shape (A-05) are covered. One reader-side type on the API (api/src/types.ts AppointmentDetail) is missed.",
-      "score": 4
+      "reason": "Covers jobs (none, C12), the booking path, the settings source, and the action routes as possible readers of the detail shape (A-05). Both the API-side and web-side detail types are now in scope.",
+      "score": 5
     },
     {
       "id": "IA-R4",
-      "reason": "Changed statuses rest on the cited answer A-04, and the action-route scope on A-05. Existing statuses are backed by schema and inventory facts. The exclusive claims (only client.ts, no jobs, only the patient's page) are cited to reviewed context.",
+      "reason": "Changed statuses rest on the cited answer A-04 and the action-route scope on A-05. Existing statuses are backed by schema and inventory facts. The exclusive claims are cited to reviewed context. The inference is labeled.",
       "score": 5
     },
     {
       "id": "IA-R5",
-      "reason": "The artifact is clear, the summary names the risks, and the answers are recorded with mismatch notes. The impacted list is grouped by kind rather than ordered by risk.",
+      "reason": "Clear summary with risks named. Answers are recorded with mismatch notes. The impacted list is still grouped by kind, not ordered by risk.",
       "score": 4
     }
   ],
-  "rubric_score": 4.15,
+  "rubric_score": 4.9,
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "schema": "review.v1",
   "status": "ok",

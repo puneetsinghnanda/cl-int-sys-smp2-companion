@@ -1,27 +1,18 @@
 {
   "artifact_path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impact.md",
-  "artifact_sha256": "3cf57d63dc48bf5b85fdf28d00d95961c0515ef54dd27cbf7aedb33756379f54",
-  "attempt": 2,
+  "artifact_sha256": "30ebb6e1817858069d5a93181df6db3c7a87be9543a54aba0c4d57f149520a02",
+  "attempt": 3,
   "band": "High",
   "caps": [],
-  "checks_sha256": "01ae6bbfb76887e9551b9854079e8aa95748faec9110097ded8853ab6dceba65",
+  "checks_sha256": "a13fbb7d37321dd58774edc195855a98dc80759829e5408574d4ea21a74b3d52",
   "claims": {
-    "total": 22,
-    "verified": 22
+    "total": 23,
+    "verified": 23
   },
-  "decided_at": "2026-11-16T07:00:46Z",
+  "decided_at": "2026-11-16T07:03:26Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
-  "findings_kept": [
-    {
-      "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
-      "severity": "minor"
-    }
-  ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -31,7 +22,7 @@
     }
   ],
   "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -39,15 +30,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": "5ee8058cf2cfb1c9ce1e17b1095cf79909b0435fcea20795b48637b542b46be6",
+  "prev_attempt_sha256": "a4de1e778d1eabd396e249383ff996f9a5fbc4f142a0173709ad8e80bb5d27b7",
   "product_changes": null,
-  "review_sha256": "7505ef41d78ef288ca3630ee5408901631b750775d778172700adb533683ac3a",
+  "review_sha256": "73c77e9a238b5e15370856e19610c55b96d397b31cd2cb493551b84bd6474d63",
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.15,
+    "S3": 4.9,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -56,7 +47,7 @@
       "sensitive": false
     }
   },
-  "signature": "6nCYlrh2ffIogsT3_rMrfY0snowy89b3XTRgiQor_Skf49hHKc-eTKNszkXPXVUjqSgdD2T4nce-I7lu9coOCA",
+  "signature": "_7zHsHzxzQPJM_2KeR1145itokol3b48RqndwCG9zSBOzcMQBgtvoCBmGZGhECLqowD3ElB6hRNv2Fe69qpmDg",
   "skill": "impact-analysis@1.3.0",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
