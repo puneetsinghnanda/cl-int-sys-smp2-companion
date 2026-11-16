@@ -1,8 +1,8 @@
 {
   "active_session": {
     "host_hash": "h_2203e682",
-    "session_id": "450a64e5-5734-4915-9f3b-3f04dbf98fb5",
-    "since": "2026-11-12T08:51:51Z"
+    "session_id": "9c0d4cd8-df61-4be1-bc0f-d587c2aeb1de",
+    "since": "2026-11-16T06:49:06Z"
   },
   "branch": {
     "sample-system": {
@@ -34,7 +34,7 @@
       "step": "threat"
     }
   ],
-  "heartbeat_at": "2026-11-13T10:29:18Z",
+  "heartbeat_at": "2026-11-16T06:49:06Z",
   "owner": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
   "owner_pseudonym": "eng-3fd6",
   "pack": {
@@ -75,7 +75,7 @@
     "open_non_blocking": 1,
     "round": 1
   },
-  "rev": 47,
+  "rev": 48,
   "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -490,7 +490,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-11",
-  "updated_at": "2026-11-13T10:29:18Z",
+  "updated_at": "2026-11-16T06:49:06Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "4a888f835724eb3149928ab4cea3b30831a173236ac2adc1ac256e034df7f5f1"
 }

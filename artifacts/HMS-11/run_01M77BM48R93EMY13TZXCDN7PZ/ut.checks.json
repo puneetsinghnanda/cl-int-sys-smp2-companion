@@ -1,0 +1,98 @@
+{
+  "artifact_sha256": "85c4262cd43a2611594f9848a169403d450d7a134cde3616a7acff5dea7b7bf3",
+  "attempt": 3,
+  "finished_at": "2026-11-12T09:10:39Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "verifier not run yet",
+      "id": "H3",
+      "pass": false,
+      "status": "pending"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/impl.md",
+      "sha256": "4a00b08471ecde2b4d9db5168ee234536a1669de0d906f565501f522bd4ec217",
+      "verification_sha256": "3b4761d3841c6b42bac59e4ae619a628c29bc3a21459f2e7aef47478580cbae1"
+    },
+    {
+      "path": "artifacts/HMS-11/run_01M77BM48R93EMY13TZXCDN7PZ/split.md",
+      "sha256": "d4dc5ed961e49e2c861c4e3256457f48726f4adc5af1ce2363cc97491f9a4d26",
+      "verification_sha256": "aa8d4d78434c69e18653249ad50a2da5950927ffe93a85678059371bb91042fb"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "a87388be336f15edfb340b07b2ee3256ae80c4cb",
+      "diff_sha256": "084c2dbc6845dc300d93c32f631d1620342642f4f67052024c6f7315436c7196",
+      "files": [
+        "api/test/specializations-earliest-slots.test.ts"
+      ],
+      "lines_added": 269,
+      "lines_deleted": 0,
+      "repo": "sample-system",
+      "tree_sha": "a0482029233ca9947bd08f021258900b7a95e670"
+    }
+  ],
+  "run_id": "run_01M77BM48R93EMY13TZXCDN7PZ",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-12T09:10:39Z",
+  "step": "ut",
+  "tool_log_sha256": "ea32636878763ace6ff027ac166aab862c011576ba5db2c8b0cd070a4b7830c7",
+  "tsl_version": "0.1.6",
+  "verifier": null
+}
