@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Tests: none added. The design names no regression tests; the unit-test step covers the stories.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#changes"
+        },
+        {
+          "quote": "implement must confirm the literals and use them in tests",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#assumed"
+        },
+        {
+          "quote": "if it returns the detail shape, the two fields are added for free; regression-check (A-05)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#components"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No tests were added, and the artifact says the design names no tests. It does: the design asks implement to use the confirmed status literals in tests and to regression-check the action routes EP-4 to EP-7 (A-05)."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "feedback.v1",
+  "step": "impl"
+}

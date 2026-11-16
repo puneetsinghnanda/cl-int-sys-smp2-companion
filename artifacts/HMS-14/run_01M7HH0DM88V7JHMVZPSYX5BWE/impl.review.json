@@ -1,0 +1,238 @@
+{
+  "artifact_sha256": "00642c4ed762e3d789bea25ef1e09537643badd27798cea83b9d9be54092c992",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export type RecordStatus = 'ACTIVE' | 'INACTIVE';",
+          "ref": "sample-system:web/src/api/types.ts#L2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type RecordStatus = 'ACTIVE' | 'INACTIVE';",
+          "ref": "sample-system:api/src/types.ts#L1"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "params.get('date') ?? todayIn(timeZone)",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L22"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "this doctor is Inactive and cannot be booked",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L72"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "this patient is Inactive and cannot be booked",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L75"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const reason = f.optionalText('reason', 300) ?? null;",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L66"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const detail = await new AppointmentRepo(this.db).detail(id);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L55"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const SUMMARY_SELECT = `",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L21"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE a.id = $1${lock}`, [id]",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L88"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<input value={reason} maxLength={300} onChange={(e) => setReason(e.target.value)} />",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L109"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: Navigation state (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-09"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: doctor_status/patient_status (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-06"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: Show both (proposed default)",
+          "ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Tests: none added. The design names no regression tests; the unit-test step covers the stories.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#changes"
+        },
+        {
+          "quote": "implement must confirm the literals and use them in tests",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#assumed"
+        },
+        {
+          "quote": "if it returns the detail shape, the two fields are added for free; regression-check (A-05)",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#components"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add tests that GET /api/appointments/:id and an action route return doctor_status/patient_status as 'ACTIVE'/'INACTIVE', and a unit test of bookAgainBlockers. Or fix the Changes line so it states the deferral accurately.",
+      "text": "No tests were added, and the artifact says the design names no tests. It does: the design asks implement to use the confirmed status literals in tests and to regression-check the action routes EP-4 to EP-7 (A-05)."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "The list reads ignore the extra columns because `toSummary` maps only its own fields.",
+          "ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#summary"
+        },
+        {
+          "quote": "d.status AS doctor_status, p.status AS patient_status",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L26"
+        },
+        {
+          "quote": "import { SUMMARY_SELECT, toSummary } from '../repositories/appointmentRepo';",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L6"
+        },
+        {
+          "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L3"
+        },
+        {
+          "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L3"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Name all SUMMARY_SELECT readers in the summary. Or add the two columns only in the get() query so the shared summary select stays unchanged.",
+      "text": "The summary says only the list reads share SUMMARY_SELECT. dashboardService, doctorRepo and patientRepo also use it, so their queries now select two columns they do not use. Harmless because toSummary drops them, but the summary leaves these readers out."
+    }
+  ],
+  "package_sha256": "fb5920c986534896c401d61d61308164252cb6e833ef09f14b331feefaf6be1b",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "The design asks implement to use the confirmed RecordStatus literals in tests and to regression-check EP-4 to EP-7. Should those tests be written in impl, or is it acceptable to leave them to the unit-test step?"
+    }
+  ],
+  "recorded_at": "2026-11-16T08:22:45Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-5 are built as designed and CO-6 is confirmed as a pass-through. One gap: the design asked implement to use the confirmed status literals in tests and to regression-check EP-4 to EP-7, and no tests were added.",
+      "score": 4
+    },
+    {
+      "id": "IM-R2",
+      "reason": "Uses snake_case API fields as A-06 and the lists convention require, keeps SQL in the repository and the rule in the service, and the id stays a bound parameter. No convention breaks found.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Five files, all named in the design, 55 lines added and 7 deleted. A small amount of noise: the two status columns go into the shared SUMMARY_SELECT, so dashboard, doctor and patient summary queries now fetch columns they do not use.",
+      "score": 4
+    },
+    {
+      "id": "IM-R4",
+      "reason": "location.state is type-checked and cut to 300 characters. Any status other than ACTIVE blocks the button. With no state the reason starts empty. Server-side Active and length checks stay in place.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary matches the diff for each component. Two inaccuracies: it says only list reads share SUMMARY_SELECT, and it says the design names no tests.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
