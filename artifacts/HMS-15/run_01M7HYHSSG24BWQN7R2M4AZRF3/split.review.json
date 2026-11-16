@@ -1,0 +1,148 @@
+{
+  "artifact_sha256": "37e1c1b4a8f6927e7237a6d3526934d298e5ce3a870e6da718f067bf13f3507d",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend, closed instead of staying Scheduled.",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Now and appointment start times are compared and shown in the hospital time zone `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/req.md#item:REQ-9"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Link to appointment detail",
+          "ref": "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-01"
+        },
+        {
+          "quote": "links to that appointment's detail page `/appointments/:id`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/req.md#item:REQ-11"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, confirm",
+          "ref": "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place, with a reason",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The next appointment is the patient's `earliest` Scheduled appointment that starts after now.",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/req.md#item:REQ-4"
+        },
+        {
+          "quote": "Given now is 09:10 local and the patient's only Scheduled appointment started at 09:00 local today",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md#S-2"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an S-2 AC: given now equals a Scheduled appointment's start time to the second, the line does not show that appointment.",
+      "text": "No AC tests the strict 'after now' limit at the boundary, where an appointment's start time equals now. An implementation that uses &gt;= instead of &gt; would pass every current AC."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "With only Completed and No-show appointments (they are always past, C1, C2)",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md#S-2"
+        },
+        {
+          "quote": "Given the patient's most recent appointments are one Completed and one No-show",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md#S-2"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Make the body summary match the YAML Given wording.",
+      "text": "The body version of S-2 AC2 says 'only Completed and No-show appointments', but the YAML Given says 'most recent appointments are one Completed and one No-show'. The two set up different test data."
+    }
+  ],
+  "package_sha256": "19a5d0f705456dedf4ffc7d6a69a7b71c5dcbc1c03a8e015ff4b679562282659",
+  "questions": [],
+  "recorded_at": "2026-11-16T10:50:23Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 11 known REQs are traced. S-1 covers REQ-1-4, 9 and 10, S-2 covers REQ-5-7, S-3 covers REQ-11 and S-4 covers REQ-8. The intent has no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Each story is small. S-2 joins three exclusion rules with the empty state, but they all describe one outcome: what shows when there is no valid next appointment.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The ACs are Given/When/Then and mostly discriminating. The time-zone ACs use instants whose local and UTC dates differ, and the booking-order AC catches first-booked logic. No AC covers a start time exactly equal to now.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Every UTC instant is derived inline from Asia/Kolkata = UTC+05:30, and the conversions are correct. The other dates and times are test data, not invented limits.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms are consistent and clear. The body summaries of the ACs are shorter than the YAML versions and slightly change S-2 AC2's Given.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
