@@ -1,0 +1,86 @@
+{
+  "artifact_sha256": "cf017361088084539a49c028a0700dd890f58066291a6778cdda39715969e607",
+  "attempt": 1,
+  "finished_at": "2026-11-16T08:42:16Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md",
+      "sha256": "88e8cd0212df1bcdf5574b26e6415ef50243df439a57102ca81559c2f68fc854",
+      "verification_sha256": "ddc7cc851d620cb5c372da2864a9038848fbba0fc8049d072e8cd378b6f28417"
+    },
+    {
+      "path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md",
+      "sha256": "4623a1e818ebe4e3423442e8697a9912d8940c0b19ebe9de19fb8b428bc6a035",
+      "verification_sha256": "fae785a44dae245b25559e3d00ec9d106fd19be62aab359480abdaba36853490"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-16T08:42:16Z",
+  "step": "tplan",
+  "tool_log_sha256": "e53b1d5070c812c18986afcffef99fd191eced1f1551ddc9496b075f4de828c5",
+  "tsl_version": "0.1.6",
+  "verifier": null
+}

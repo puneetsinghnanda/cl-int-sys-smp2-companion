@@ -1,0 +1,44 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "cf017361088084539a49c028a0700dd890f58066291a6778cdda39715969e607",
+  "package_sha256": "a7eed9e75b95a828bee18f297ab1134e0dee4718ba91579aca74f6195aeba21b",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559"
+  },
+  "rubric_score": 4.0,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 4, "reason": "All 26 ACs across S-1..S-6 map to at least one TP. Two mappings are weak: TP-9 tests truncation where AC5 says 'rejects', and TP-10 is mapped to S-6/AC3."},
+    {"id": "TP-R2", "score": 4, "reason": "Page checks are unit and route checks are integration, with no e2e. TP-21 is labelled integration in the frontmatter but 'integration plus unit' in the body, because its page part is unit."},
+    {"id": "TP-R3", "score": 4, "reason": "Has a 404 negative for EP-1 (TP-15), a 301-char boundary (TP-9), a non-text navigation-state negative (TP-10) and both Inactive status values. TP-9's boundary behaviour drifts from the AC."},
+    {"id": "TP-R4", "score": 4, "reason": "Tools match the strategy (Vitest/Supertest/PG16, Vitest/jsdom/Testing Library). No test folders or files are named, and the titles do not carry the requirement-ID prefix that the strategy requires."},
+    {"id": "TP-R5", "score": 4, "reason": "Titles are concrete and runnable. There is a small level inconsistency on TP-21, and some 'reuse' entries do not show the asserted message."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "minor", "category": "correctness", "text": "TP-9 checks that a state reason is silently cut to 300 characters. S-3/AC5 says the page 'rejects it exactly as it does today', and the design adds no truncation. The test pins a new behaviour that differs from the AC.", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/tplan.md#item:TP-9", "quote": "Reason with a 301st character in state is cut to the 300-character limit"}, {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/split.md#item:S-3", "quote": "then the page rejects it exactly as it does today"}], "suggested_fix": "Change TP-9 so it checks that typing a 301st character is refused exactly as on the page today (maxLength 300). If truncating a long state value is wanted, add it to the design first."},
+    {"id": "F-2", "severity": "minor", "category": "consistency", "text": "TP-21 has level 'integration' in the frontmatter but 'integration plus unit' in the body. The Scheduled-page actions part (S-6/AC1) is page behaviour at unit level.", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/tplan.md#item:TP-21", "quote": "the four action routes return the detail with both statuses\", covers: [S-6/AC1], level: integration"}, {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/tplan.md#tests", "quote": "TP-21 (integration plus unit): Scheduled actions are unchanged"}], "suggested_fix": "Split TP-21 into a unit test for the Scheduled page actions and an integration test for the four action routes."},
+    {"id": "F-3", "severity": "minor", "category": "correctness", "text": "TP-21 states as fact that the four action routes return the detail with both statuses. The design only says the fields are added if those routes return the detail shape, which still needs confirming.", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#item:EP-4", "quote": "if it returns the detail shape, the two fields are added for free; regression-check (A-05)"}], "suggested_fix": "Make TP-21 conditional, or have it check each route against the response shape that route actually returns."},
+    {"id": "F-4", "severity": "minor", "category": "style", "text": "The strategy requires each test name to start with its requirement ID. The existing suites use an 'HMS-n REQ-n' prefix, but the TP titles carry no HMS-14/REQ ID. The plan also names no target folders (api/test, web/src/__tests__).", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}, {"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors-next-seven-days-edges.test.ts", "quote": "HMS-9 REQ-10 error: an unknown doctor is still 404"}], "suggested_fix": "Prefix each title with 'HMS-14 REQ-n' and give the target test file for each TP."},
+    {"id": "F-5", "severity": "minor", "category": "traceability", "text": "TP-17 relies on reusing the APT-4 test to prove the 'slot no longer available' refusal. The APT-4 title only says one appointment remains, so it may not assert that message.", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts", "quote": "APT-4: two simultaneous bookings of one slot leave exactly one appointment"}, {"ref": "split.md#item:S-5", "quote": "then the booking is refused with \"slot no longer available\" (APT-4)"}], "suggested_fix": "Confirm that the APT-4 test asserts the message. If it does not, add an assertion for the refusal text."},
+    {"id": "F-6", "severity": "minor", "category": "traceability", "text": "TP-10 (non-text reason in navigation state) is mapped to S-6/AC3. That AC is about the book page opened with nothing in its address, and TP-23 already covers it, so this mapping inflates coverage.", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/tplan.md#item:TP-10", "quote": "Negative: a non-text reason in navigation state is ignored\", covers: [S-3/AC3, S-6/AC3]"}], "suggested_fix": "Map TP-10 to S-3/AC3 only."},
+    {"id": "F-7", "severity": "minor", "category": "other", "text": "TP-16 plans new server-side Inactive refusal tests. The existing DOC-6 and PAT-7 tests already pin this, and the plan does not mark TP-16 as a reuse the way it marks TP-17 to TP-19.", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/doctors.test.ts", "quote": "DOC-6: an Inactive doctor cannot be booked but keeps existing appointments"}, {"ref": "context/generated/test-layout.json#test:sample-system:api/test/patients.test.ts", "quote": "PAT-7: an Inactive patient cannot be booked"}], "suggested_fix": "Mark TP-16 as reusing DOC-6 and PAT-7."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use\nVitest with jsdom and Testing Library"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "no page is tested end to end in a browser"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts", "quote": "APT-2: refuses times off the slot grid, outside availability, in the past or already taken"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts", "quote": "APT-3: a patient cannot be in two Scheduled appointments at once, with any doctors"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts", "quote": "APT-4: two simultaneous bookings of one slot leave exactly one appointment"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md#item:EP-1", "quote": "EP-1 GET /api/appointments/:id — changed. Fields: `doctor_status`"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-09", "quote": "answer: Navigation state (proposed default)"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-05", "quote": "answer: Yes, include actions (proposed default)"}]}
+  ],
+  "questions": []
+}
