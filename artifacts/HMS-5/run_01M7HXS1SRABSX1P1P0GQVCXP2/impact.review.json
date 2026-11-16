@@ -1,0 +1,286 @@
+{
+  "artifact_sha256": "fa6ab6455fe5e51978514472a7a9b283faddd40c715a8b3213d5d366d585470a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/patients.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/App.tsx",
+          "ref": "context/generated/api-inventory.json#ui:/patients/:id"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;Route path=\"/patients/:id\" element={&lt;PatientDetailPage /&gt;} /&gt;",
+          "ref": "sample-system:web/src/App.tsx#L32"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const patient = useAsync(() =&gt; api.patient(id), id);",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L18"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [],
+      "claim_id": "C5",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async appointments(id: number, now: Date, limit = 100): Promise&lt;AppointmentSummary[]&gt; {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L180-L300"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointments: await repo.appointments(id, this.clock())",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/types.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/api/types.ts",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "patient: (id: number | string) =&gt; send&lt;PatientDetail&gt;(`/api/patients/${id}`),",
+          "ref": "sample-system:web/src/api/client.ts#L71"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const existing = useAsync(() =&gt; (editing ? api.patient(id) : Promise.resolve(undefined)), id ?? 'new');",
+          "ref": "sample-system:web/src/pages/PatientFormPage.tsx#L51"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "patientId &amp;&amp; !labels.patient ? api.patient(patientId) : undefined,",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L33"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(await repo.insert(fields, actor));",
+          "ref": "sample-system:api/src/services/patientService.ts#L58"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.get(id);",
+          "ref": "sample-system:api/src/services/patientService.ts#L69"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointment_patient_start_idx",
+          "ref": "context/generated/db-schema.json#index:appointment_patient_start_idx"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Add to GET /api/patients/:id (proposed default)",
+          "ref": "runs/run_01M7HXS1SRABSX1P1P0GQVCXP2/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "medicalHistory: {",
+          "ref": "sample-system:api/src/types.ts#L104-L117"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Callers found by searching web/src: PatientDetailPage, PatientFormPage and BookAppointmentPage call `api.patient`",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impact.md#known"
+        },
+        {
+          "quote": "const patient = await new PatientRepo(tx).get(patientId!, '1900-01-01');",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L73"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a Known line: PatientRepo.get's return type is derived from PatientDetail and is used by PatientService and appointmentService; the new field must be left out of that type or supplied.",
+      "text": "The caller search covers web/src only. PatientRepo.get returns the patient detail shape and is also called from appointmentService, so a new required field on PatientDetail touches that return type. The artifact does not mention this API-side reader."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "sample-system:api/src/repositories/patientRepo.ts#L180-L300",
+          "ref": "artifacts/HMS-5/run_01M7HXS1SRABSX1P1P0GQVCXP2/impact.md#claim:C6"
+        }
+      ],
+      "claim_ref": "C6",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Narrow the C6 cite to the single line of PatientRepo.appointments that declares `limit = 100`.",
+      "text": "C6 cites a 120-line range for a single default parameter, and the range probably runs past the end of the file at the pack SHA. The cite does not point at the line that sets `limit = 100`."
+    }
+  ],
+  "package_sha256": "9b314464696b447ec88c94d1a7d3ee2b86bd6f32d15e8ce2ca636f641231ef93",
+  "questions": [],
+  "recorded_at": "2026-11-16T10:36:34Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "All three modules, the three patient endpoints and both tables are listed with a change status. One API-side reader of the patient detail shape (PatientRepo.get via appointmentService) is not named.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API, table, index and symbol id exists in the generated facts and is cited. C6 is weakly cited: a 120-line range (L180-L300) instead of the line that sets the limit.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Web callers of api.patient, the create/update responses and background jobs are covered. The caller search is limited to web/src; API-side users of PatientRepo.get are not considered.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Every REQ is traced and marked known on a fact or on answer A-02, which the decided items cite. The exclusive claims (only/no) rest on reviewed context sections. No guesses stated as facts.",
+      "score": 5
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Short and readable, with claims referenced inline. Items are ordered by kind (modules, APIs, tables) rather than by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.15,
+  "run_id": "run_01M7HXS1SRABSX1P1P0GQVCXP2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}

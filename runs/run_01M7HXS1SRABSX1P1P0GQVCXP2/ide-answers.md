@@ -12,3 +12,13 @@ entries as the user's own answers.
 - question: Q-01: HMS-5 asks the patient page to count the patient's Completed and No-show appointments but gives no time window. In the earlier HMS-5 run you chose "All time"; the reviewer wants it confirmed for this run. Which window should the Visit summary use?
 - options: All time (proposed default) | Selectable Period | Fixed Last 30 days
 - answer: All time (proposed default)
+
+## A-02
+- step: impact
+- attempt: 1
+- asked_at: 2026-11-16T10:31:48Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01W4LmcimHpaoTXnWabf1qzi
+- question: Q-01: The Visit summary must count all-time Completed and No-show appointments, but the patient page's appointments list is capped by a default `limit = 100` (api/src/repositories/patientRepo.ts), so counting in the browser undercounts. In the earlier HMS-5 run you chose to add the counts to GET /api/patients/:id. Where should the patient page get the two counts in this run?
+- options: Add to GET /api/patients/:id (proposed default) | New endpoint | Count in the browser
+- answer: Add to GET /api/patients/:id (proposed default)
