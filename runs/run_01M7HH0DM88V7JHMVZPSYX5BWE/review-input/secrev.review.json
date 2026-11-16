@@ -1,0 +1,49 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "1b0e50693aaba81be64107dbdb69404233e4e9fcb7dae32823057ee548476607",
+  "package_sha256": "80eaa37188cb56175cdd55c0a01dd9848b7faab41c1cb8d9a9079d0855e9b6c0",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The review covers the changed surface: static SQL columns, the reason's path through navigation state, validating that state, escaped rendering, server-side Inactive checks and no new route. I found no missed weakness in the changed lines."},
+    {"id": "SC-R2", "score": 5, "reason": "SF-1 cites BookAppointmentPage.tsx#L27, the exact line that reads location.state. Every claim cite lands on the quoted line in the product code or context."},
+    {"id": "SC-R3", "score": 5, "reason": "Minor fits SF-1. The reason stays out of the URL and logs and is only kept in the in-tab history state, which the A-09 decision accepted."},
+    {"id": "SC-R4", "score": 4, "reason": "The fix direction for SF-1 is concrete: replace the history entry without state after reading it. But it depends on a product-owner wish that is never asked as a question."},
+    {"id": "SC-R5", "score": 5, "reason": "The single finding is real and correctly sized. No false positives."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "SF-1's fix depends on whether the product owner wants the reason erased from history state, but the artifact lists no open questions. So that decision is never sent to anyone.",
+      "cites": [
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/secrev.md#findings", "quote": "if the product owner wants it erased"},
+        {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/secrev.md#open-questions", "quote": "## Open questions\nNone"}
+      ],
+      "suggested_fix": "Either add an open question for the product owner on erasing the navigation state after it is read, or state that SF-1 is accepted as-is under A-09."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L26", "quote": "d.status AS doctor_status, p.status AS patient_status"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "repositories hold the SQL"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L28", "quote": "typeof given === 'string' ? given.slice(0, 300) : ''"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L61", "quote": "state: a.reason ? { reason: a.reason } : undefined"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L24", "quote": "a.doctor_status !== 'ACTIVE' ? ['Doctor is inactive'] : []"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "routes call `requirePermission`"}, {"ref": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/impl.md#changes", "quote": "api/src/repositories/appointmentRepo.ts — CO-5: select and map doctor_status and patient_status."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L72", "quote": "this doctor is Inactive and cannot be booked"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L81", "quote": "<dd>{a.reason ?? '—'}</dd>"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HH0DM88V7JHMVZPSYX5BWE/ide-answers.md#a-09", "quote": "answer: Navigation state (proposed default)"}]}
+  ],
+  "questions": []
+}
