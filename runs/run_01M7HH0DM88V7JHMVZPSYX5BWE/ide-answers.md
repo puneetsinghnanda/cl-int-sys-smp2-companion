@@ -82,3 +82,13 @@ entries as the user's own answers.
 - question: C5: I assumed the book appointment page already picks today's date in the hospital time zone (via `todayIn` in web/src/lib/format.ts) when the address has no date, so "Book again" can simply leave date and slot out. Implement must confirm in code. Is that right?
 - options: Yes, confirm | Pass today explicitly
 - answer: Yes, confirm
+
+## A-09
+- step: design
+- attempt: 2
+- asked_at: 2026-11-16T07:15:55Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_014fZLYgxnjkNDCBWZBzPiR5
+- question: Q-03: Review flagged that a free-text reason for visit in the book page URL (`?reason=`, A-07) lands in browser history, and nothing in the pack says it can't hold clinical detail. How should "Book again" hand the reason to the book appointment page?
+- options: Navigation state (proposed default) | Keep ?reason= in URL | Pass source appointment id
+- answer: Navigation state (proposed default)

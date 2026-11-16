@@ -1,37 +1,20 @@
 {
   "artifact_path": "artifacts/HMS-14/run_01M7HH0DM88V7JHMVZPSYX5BWE/design.md",
-  "artifact_sha256": "9f8e6042fd0c9d65252c4d7f5fb89c44643be407c24768daf4c37fa73eab6e27",
-  "attempt": 1,
+  "artifact_sha256": "4623a1e818ebe4e3423442e8697a9912d8940c0b19ebe9de19fb8b428bc6a035",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "a2ff00bd7027a5f3cf286952533ffaba700243f5075598ea724f0c65387777b8",
+  "checks_sha256": "dff13f1e10e9e949e251d6c4456d77c453fae8ed6fdcbbc416ded16c13823687",
   "claims": {
-    "total": 15,
-    "verified": 15
+    "total": 18,
+    "verified": 18
   },
-  "decided_at": "2026-11-16T07:13:46Z",
+  "decided_at": "2026-11-16T07:20:01Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
-      "severity": "minor"
-    },
-    {
-      "id": "F-3",
-      "severity": "minor"
-    },
-    {
-      "id": "F-4",
-      "raised_from": "minor",
-      "severity": "major"
-    },
-    {
-      "id": "F-5",
       "severity": "minor"
     }
   ],
@@ -54,7 +37,7 @@
     }
   ],
   "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -62,15 +45,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "72973aac1f108b172d094372f1b4f55cbbb5efe32d60c4ec81a8a642f82d5e63",
   "product_changes": null,
-  "review_sha256": "fe695cb75d073181ab915aff17490a4e26c28a5debdceae3d38cac4e97645bb9",
+  "review_sha256": "b7b293926011eb6a09b7f088569c9add4ca28f24420b7fdb31a8f02c82eac278",
   "run_id": "run_01M7HH0DM88V7JHMVZPSYX5BWE",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.45,
+    "S3": 4.8,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -79,7 +62,7 @@
       "sensitive": false
     }
   },
-  "signature": "3Rwgx0iyHY-nNSZAL3dUcrBGNEPTdtX6AtGHGwqOpLbFWKi4G5eHVUdhpv3Ca48YBasWqs12qyYwdm-tjg2TCA",
+  "signature": "6TasClnsf551jMvwJa4awypkeNbmkjcs3TQsnvr0GSyrMeVZ6F_KVxOFSX9yrMkhBpklEIH8yW2fdnGAAe3zDw",
   "skill": "design@1.7.0",
   "step": "design",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
