@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "already open as the threat step's Q-05 for the tech lead",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/secrev.md#open-questions"
+        },
+        {
+          "quote": "questions: []",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#questions"
+        },
+        {
+          "quote": "Accepted risk: the count runs inside the existing single query",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-2"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The artifact says the unbounded-count question is already open as the threat step's Q-05 for the tech lead. threat.md has no questions at all (questions: []), so no Q-05 exists. The 'Open questions: None' rests on a reference that does not exist."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "feedback.v1",
+  "step": "secrev"
+}
