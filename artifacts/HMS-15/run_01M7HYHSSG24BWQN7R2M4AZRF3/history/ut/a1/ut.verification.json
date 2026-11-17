@@ -1,0 +1,79 @@
+{
+  "artifact_path": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/ut.md",
+  "artifact_sha256": "a4d3b56de31e7041194ecbada5bffd7f35cb0a13a31dbfa36959515dbe42d92a",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "ec06d7497d547b0f25507c523e597d2ad504b83bbf66f0e5c73e31041b390316",
+  "claims": {
+    "total": 7,
+    "verified": 7
+  },
+  "decided_at": "2026-11-17T05:05:10Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md",
+      "sha256": "8d0cdda0228533bf20acfae2614ed1e7051e24f67db59538f0a060c00e87d78b",
+      "verification_sha256": "1def39e8716801e2e709f20170e7079a9c9e7eb927dbc63f4d866986fd6fdf68"
+    },
+    {
+      "path": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md",
+      "sha256": "37e1c1b4a8f6927e7237a6d3526934d298e5ce3a870e6da718f067bf13f3507d",
+      "verification_sha256": "b38bb4104c56928ad6964e881aab5fc7e58f7a4083738eeb2c52e2b6b0aa5e41"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "18acc740b6c5d482d388549aa27e244bea382131",
+      "diff_sha256": "42cab99f65e73d68eca641e2cbebd98086125dece70fee61d8b8986dd11889d4",
+      "repo": "sample-system",
+      "tree_sha": "f950adc12c52376a071f90d7c8a8d6cb5bd1a09f"
+    }
+  ],
+  "review_sha256": "e3a3c62facc1a16484120af8a94441f4db202a80209e39fec3d8a3553adea7fa",
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.25,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 2,
+      "lines": 227,
+      "sensitive": false
+    }
+  },
+  "signature": "KQB-ojd1DhDcjFBRO_ZA4_cnRWloc2PnoXSv8f77oB6vgCbk3qZQqgTnNrAgga7k19jGlM_iCD5Fhyw5uuddDg",
+  "skill": "unit-test@1.2.0",
+  "step": "ut",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
