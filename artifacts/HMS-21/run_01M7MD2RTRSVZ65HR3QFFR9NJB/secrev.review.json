@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "582b3b4de2160c25b323508cc4b7557aa90e06e1e2917d5ffca6121c92461638",
-  "attempt": 1,
+  "artifact_sha256": "c26870d43e3cda15efd2f9be475a0933c82e8a4e94fcb4d8391cf198e0cfabcd",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -141,59 +141,60 @@
       ],
       "claim_id": "C14",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "traceability",
       "cites": [
-        {
-          "quote": "already open as the threat step's Q-05 for the tech lead",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/secrev.md#open-questions"
-        },
-        {
-          "quote": "questions: []",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#questions"
-        },
         {
           "quote": "Accepted risk: the count runs inside the existing single query",
           "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-2"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Point to threat item T-2 (accepted risk) instead of Q-05, or raise the unbounded-count question in this artifact for the tech lead.",
-      "text": "The artifact says the unbounded-count question is already open as the threat step's Q-05 for the tech lead. threat.md has no questions at all (questions: []), so no Q-05 exists. The 'Open questions: None' rests on a reference that does not exist."
+      "claim_id": "C15",
+      "verdict": "supported"
     },
     {
-      "category": "completeness",
       "cites": [
         {
           "quote": "the unpaged total count (C18) still scans every match",
           "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-8"
-        },
-        {
-          "quote": "The list stays paginated (C7).",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/secrev.md#findings"
         }
       ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "Extend SF-1, or add a note, to cover the list total count under started=true, and cite T-8 as the accepted risk.",
-      "text": "The review covers only the unbounded dashboard count. It says 'The list stays paginated' but leaves out that started=true has no period bound, so the unpaged total count in AppointmentRepo.list scans every match. The threat model records this as accepted risk T-8."
-    }
-  ],
-  "package_sha256": "98721b2f272a9556aa8708159d4bcf524a8466a1709b5594c9b60b47b9dc581b",
-  "questions": [
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
     {
-      "ask_role": "tech_lead",
-      "blocking": false,
-      "finding_ref": "F-1",
-      "id": "Q-1",
-      "text": "No artifact in this run holds an open question about the unbounded awaiting_outcome count; threat T-2 only accepts the risk. Do you accept that risk for HMS-21, or should a lower bound or a (status, starts_at) index be added?"
+      "cites": [
+        {
+          "quote": "SELECT count(*) AS n FROM appointment a ${clause}",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L78"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
     }
   ],
-  "recorded_at": "2026-11-17T11:03:45Z",
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "that count scans every started Scheduled row",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/secrev.md#findings"
+        },
+        {
+          "quote": "if (f.status !== undefined) add('a.status = ?', f.status);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L72"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword SF-2 to say every started row, or every started Scheduled row when status=SCHEDULED is set, as in the dashboard tile link.",
+      "text": "SF-2 says that with started=true the total count scans every started Scheduled row. The status filter is separate and optional. With started=true alone, the count scans every started row of any status. Only the tile link adds status=SCHEDULED."
+    }
+  ],
+  "package_sha256": "93f688071206348800a52286ff71c0e505d6728504c17355544db70f8e71f03c",
+  "questions": [],
+  "recorded_at": "2026-11-17T11:07:16Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -204,31 +205,31 @@
   "rubric_items": [
     {
       "id": "SC-R1",
-      "reason": "Injection, authorisation, validation, logging and web paths all checked against code and found sound. One gap: the unpaged total count that the started filter adds to the list (threat T-8) is not reviewed.",
-      "score": 4
+      "reason": "Injection, authorisation, validation, error, logging, web and dependency paths are all checked against the code. Both accepted DoS risks (T-2 and T-8) are now reviewed as SF-1 and SF-2. No new route or permission was left unreported.",
+      "score": 5
     },
     {
       "id": "SC-R2",
-      "reason": "SF-1 cites the exact line, dashboardService.ts#L58, and all 14 claims sit on the right product lines or context sections.",
+      "reason": "SF-1 cites dashboardService.ts#L58 and SF-2 cites appointmentRepo.ts#L78 and #L75, the exact lines. All 17 claims match the product code or context text they cite.",
       "score": 5
     },
     {
       "id": "SC-R3",
-      "reason": "SF-1 as minor matches its impact: a performance concern the threat model already accepted (T-2), with no confidentiality or integrity effect.",
+      "reason": "Both findings are minor. They are performance concerns with no effect on confidentiality or integrity, and the threat model already accepts them as risks.",
       "score": 5
     },
     {
       "id": "SC-R4",
-      "reason": "The fix direction is concrete (add a lower bound or an index on (status, starts_at)), but 'keep watching it' gives no trigger or threshold.",
+      "reason": "The fix direction is concrete: a (status, starts_at) index or a lower bound, with Q-01 asking the tech lead to choose. The trigger 'if the dashboard query slows' has no measurable threshold.",
       "score": 4
     },
     {
       "id": "SC-R5",
-      "reason": "No false positives. The one finding is real and correctly framed as a performance point rather than a weakness.",
+      "reason": "No false positives. Both findings are real and are framed as performance points, not weaknesses.",
       "score": 5
     }
   ],
-  "rubric_score": 4.5,
+  "rubric_score": 4.85,
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "schema": "review.v1",
   "status": "ok",

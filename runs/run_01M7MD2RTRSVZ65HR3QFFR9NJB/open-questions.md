@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M7MD2RTRSVZ65HR3QFFR9NJB
 ticket: HMS-21
 workflow: brownfield-change@1.4.0
-step: threat@1.2.0
+step: secrev@1.2.0
 created_at: '2026-11-17T09:55:21Z'
 status: open
 ---
@@ -49,6 +49,19 @@ decision:
 ## Q-05 · non-blocking · ask: tech lead · round 4
 **Question:** T-2 and T-8 accept unbounded count scans (awaitingOutcome has no lower bound, and the list total is unpaged) with no new control. Do you accept these performance risks for HMS-21, or should implement add a status/starts_at index?
 **Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-06 · non-blocking · ask: tech lead · round 5
+**Question:** Do you accept, for HMS-21, that the Awaiting outcome count and the started=true list total have no lower time bound (threat T-2 and T-8), or should a lower bound or a (status, starts_at) index be added?
+**Why it matters:** The threat model accepts both as risks, but no artifact of this run asks anyone to confirm them. The cost grows with Scheduled appointments left without an outcome.
+**Evidence:** artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-2, artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-8, sample-system:api/src/services/dashboardService.ts#L58, sample-system:api/src/repositories/appointmentRepo.ts#L78
+**Options:**
+  A. Accept the risk for now (no change)
+  B. Add a (status, starts_at) index in a follow-up
+  C. Add a lower time bound (changes REQ-5 behaviour)
+**Proposed default:** Accept the risk for now (no change)
 answer:
 answered_by:
 decision:
