@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "ab225f81cf0745abee32f33fff2b3da112c1ee68b29cd0d4454e886fa5350d34",
-  "package_sha256": "e84791c024af36139c85b1af5929f67d436665abc41375dff6436efc7ccb7fca",
+  "attempt": 2,
+  "artifact_sha256": "dcc06d1291e79f057d47f662fdc9b9f93994a0b3c695173acb9df34f900df06e",
+  "package_sha256": "5fac1f289df5300d00557dad16a630a2dd2236c6714efcd8e5c519bef1a8645a",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,81 +12,53 @@
     "version": "0.1.6",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.45,
+  "rubric_score": 4.8,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All 11 known REQs (REQ-1 to REQ-11) are traced by S-1 to S-4. The intent has no assumed REQs."},
-    {"id": "SS-R2", "score": 4, "reason": "S-1 to S-3 each have one outcome. S-4 puts two outcomes together: the dashboard is unchanged (REQ-8, REQ-9) and it shows no private data (REQ-10, REQ-11)."},
-    {"id": "SS-R3", "score": 4, "reason": "The ACs are Given/When/Then and mostly catch likely wrong implementations (most-recent status, by-date counting, a period applied to the count). No AC tests an appointment that starts exactly at now, so &lt; and &lt;= both pass."},
-    {"id": "SS-R4", "score": 5, "reason": "Values are test-fixture times and dates. The out-of-window date is explained inline using the glossary Period (C12). No limits are invented."},
-    {"id": "SS-R5", "score": 4, "reason": "Readable, with terms used consistently. However, the body text of S-4 AC4 differs from the front matter, and Open questions says None but then refers to an intent question that does not exist."}
+    {"id": "SS-R1", "score": 5, "reason": "Stories S-1 to S-4 trace all 11 known REQs (REQ-1 to REQ-11). The intent has no assumed REQs."},
+    {"id": "SS-R2", "score": 4, "reason": "S-1 to S-3 each have one outcome. S-4 still combines two: the dashboard is unchanged (REQ-8, REQ-9) and it shows no private data (REQ-10, REQ-11)."},
+    {"id": "SS-R3", "score": 5, "reason": "Each AC is Given/When/Then. S-1 AC3 now places a start at exactly now, so a &lt;= count fails it. Most-recent status, date-based counting and a period applied to the count or list are each caught. Both unchanged partitions are covered."},
+    {"id": "SS-R4", "score": 5, "reason": "All values are test-fixture times and dates. The out-of-window date is explained inline using the glossary Period (C12). No invented limits."},
+    {"id": "SS-R5", "score": 5, "reason": "Clear, consistent terms. The body and front-matter copies of every AC now match, and Q-01 is stated consistently in the front matter and the body."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "REQ-2 counts only appointments whose start time is before now, but no AC puts a Scheduled appointment at exactly now. The nearest is 10:30 against now at 10:00, so a &lt;= implementation passes every AC.",
-      "cites": [
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-2", "quote": "start time is before now"},
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-1", "quote": "another Scheduled appointment starts later today at 10:30"}
-      ],
-      "suggested_fix": "Add an S-1 AC: given it is 10:00 and a Scheduled appointment starts at exactly 10:00, the tile does not count it."
-    },
-    {
-      "id": "F-2",
-      "severity": "major",
-      "category": "traceability",
-      "text": "Open questions says the contact-details-in-list question is the intent's non-blocking question for the product owner. The intent has no questions and its Open questions section says None, so the artifact attributes a question to the intent that is not there.",
-      "cites": [
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#open-questions", "quote": "is the intent's non-blocking question for the product owner"},
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#open-questions", "quote": "None. The ticket fixes every value the requirements need"}
-      ],
-      "suggested_fix": "Either record it as this artifact's own non-blocking question for the product owner, or delete the attribution to the intent."
-    },
-    {
-      "id": "F-3",
-      "severity": "minor",
-      "category": "consistency",
-      "text": "The body text of S-4 AC4 has an extra sentence that the front-matter AC4 does not have, so the two copies of the criterion differ.",
-      "cites": [
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#stories", "quote": "Medical history never appears in lists or on the dashboard (C14)."}
-      ],
-      "suggested_fix": "Move that sentence into the Known rationale, or add it to the front-matter AC4, so both copies match."
-    },
-    {
-      "id": "F-4",
       "severity": "minor",
       "category": "other",
-      "text": "S-4 combines two separate outcomes: the dashboard is unchanged (REQ-8, REQ-9) and it shows no private data (REQ-10, REQ-11).",
+      "text": "Carried from attempt 1 (F-4), neither fixed nor rebutted: S-4 still combines two outcomes, an unchanged dashboard (REQ-8, REQ-9) and no private data (REQ-10, REQ-11).",
       "cites": [
         {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-4", "quote": "The rest of the dashboard is unchanged and shows no private data"}
       ],
-      "suggested_fix": "Split S-4 into one story for the unchanged dashboard (REQ-8, REQ-9) and one for no private data (REQ-10, REQ-11)."
+      "suggested_fix": "Split S-4 into one story for the unchanged dashboard (REQ-8, REQ-9) and one for no private data (REQ-10, REQ-11), or record why they belong together."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The front-matter resolves list covers only F-1 and F-2. The F-3 fix appears only as a body sentence, and F-4 is not addressed anywhere.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#stories", "quote": "I also moved the extra sentence out of the body copy of S-4 AC4, so both copies match"}
+      ],
+      "suggested_fix": "Add resolves entries for F-3 and F-4 (fixed, or kept with a reason), matching the body Retry fixes lines."
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-1", "quote": "Awaiting outcome tile"}]},
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-1", "quote": "The dashboard has a tile `Awaiting outcome`."}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-2", "quote": "start time is before now"}]},
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-3", "quote": "Completed, Cancelled and No-show"}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-4", "quote": "Future Scheduled not counted"}]},
-    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-5", "quote": "Independent of the period"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-4", "quote": "Scheduled appointments that have not `started yet` are never counted."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-5", "quote": "The count does not change with the `period selector`."}]},
     {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-6", "quote": "exactly the appointments it counts"}]},
-    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-7", "quote": "When there are no such appointments the tile"}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-8", "quote": "Other tiles unchanged"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-7", "quote": "When there are no such appointments the tile `shows 0`."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-8", "quote": "The `other tiles` of the dashboard are unchanged."}]},
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-9", "quote": "next 10 upcoming appointments"}]},
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-10", "quote": "No medical history"}]},
-    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-11", "quote": "No contact details"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-11", "quote": "No `contact details` appear on the tile or the dashboard."}]},
     {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/glossary.md#period", "quote": "Today, Last 7 days or Last 30 days"}]},
     {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/glossary.md#tile", "quote": "selecting it opens the list behind the count"}]},
     {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#claim:C7", "quote": "never in lists, the dashboard or logs"}]}
   ],
   "questions": [
-    {
-      "id": "Q-1",
-      "text": "May contact details (phone, email) appear in the appointment list that the Awaiting outcome tile opens, or should REQ-11 also cover that list?",
-      "ask_role": "product_owner",
-      "blocking": false,
-      "finding_ref": "F-2"
-    }
+    {"id": "Q-1", "text": "May contact details (phone, email) appear in the appointment list that the Awaiting outcome tile opens, or should the no-contact-details rule (REQ-11) also cover that list? The artifact records this as its own non-blocking Q-01.", "ask_role": "product_owner", "blocking": false}
   ]
 }

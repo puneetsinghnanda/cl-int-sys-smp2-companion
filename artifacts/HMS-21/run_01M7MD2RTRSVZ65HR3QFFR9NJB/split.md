@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7MD2RTRSVZ65HR3QFFR9NJB
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.3.0
 inputs:
   - {path: artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md, sha256: cdf917be0f8dfa8f1b3a5b08603bd0a50957b5f840e47e335b5c6a52a24591fc}
@@ -27,7 +27,18 @@ trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, R
 known: [S-1, S-2, S-3, S-4]
 assumed: []
 unknown: []
-questions: []
+questions:
+  - id: Q-01
+    blocking: false
+    ask: product owner
+    text: "May contact details (phone, email) appear in the appointment list that the Awaiting outcome tile opens, or should the no-contact-details rule also cover that list?"
+    why: "REQ-11 forbids contact details on the tile and the dashboard only; the list the tile opens is not named, so S-4 AC5 checks the tile and dashboard only."
+    evidence: ["artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-11", "context/glossary.md#tile"]
+    options: ["Tile and dashboard only, as REQ-11 states", "Also the appointment list the tile opens"]
+    default: "Tile and dashboard only, as REQ-11 states"
+resolves:
+  - {id: F-1, how: "S-1 AC3 now adds a Scheduled appointment that starts at exactly 10:00 when it is 10:00, and it is not counted."}
+  - {id: F-2, how: "The contact-details question is now this artifact's own non-blocking question Q-01 for the product owner."}
 stories:
   - id: S-1
     title: "See how many past appointments are still awaiting an outcome"
@@ -35,7 +46,7 @@ stories:
     acceptance_criteria:
       - {id: AC1, text: "Given it is 10:00 hospital time and two Scheduled appointments started today at 09:00 and 09:30, when staff open the dashboard, then a tile labelled Awaiting outcome shows 2."}
       - {id: AC2, text: "Given it is 10:00 and one Scheduled appointment started at 09:00, while a Completed one started at 09:15, a No-show one at 09:30 and a Cancelled one at 09:45 (the most recent of all), when staff open the dashboard, then the Awaiting outcome tile shows 1."}
-      - {id: AC3, text: "Given it is 10:00, one Scheduled appointment started at 09:00 and another Scheduled appointment starts later today at 10:30, when staff open the dashboard, then the Awaiting outcome tile shows 1, because the 10:30 one has not started yet."}
+      - {id: AC3, text: "Given it is exactly 10:00, one Scheduled appointment started at 09:00, another Scheduled appointment starts at exactly 10:00 and a third starts later today at 10:30, when staff open the dashboard, then the Awaiting outcome tile shows 1, because a start at 10:00 is not before now and the 10:30 one has not started yet."}
       - {id: AC4, text: "Given it is 10:00 and the only Scheduled appointments start at 10:30 today and tomorrow, and all earlier appointments are Completed, Cancelled or No-show, when staff open the dashboard, then the Awaiting outcome tile shows 0."}
       - {id: AC5, text: "Given the Awaiting outcome tile shows 2, when staff mark one of the two appointments Completed and open the dashboard again, then the tile shows 1."}
   - id: S-2
@@ -66,7 +77,7 @@ stories:
 **S-1 See how many past appointments are still awaiting an outcome** (REQ-1, REQ-2, REQ-3, REQ-4, REQ-7)
 - AC1: Given it is 10:00 hospital time and two Scheduled appointments started today at 09:00 and 09:30, when staff open the dashboard, then a tile labelled Awaiting outcome shows 2.
 - AC2: Given it is 10:00 and one Scheduled appointment started at 09:00, while a Completed one started at 09:15, a No-show one at 09:30 and a Cancelled one at 09:45 (the most recent of all), when staff open the dashboard, then the Awaiting outcome tile shows 1.
-- AC3: Given it is 10:00, one Scheduled appointment started at 09:00 and another Scheduled appointment starts later today at 10:30, when staff open the dashboard, then the Awaiting outcome tile shows 1, because the 10:30 one has not started yet.
+- AC3: Given it is exactly 10:00, one Scheduled appointment started at 09:00, another Scheduled appointment starts at exactly 10:00 and a third starts later today at 10:30, when staff open the dashboard, then the Awaiting outcome tile shows 1, because a start at 10:00 is not before now and the 10:30 one has not started yet.
 - AC4: Given it is 10:00 and the only Scheduled appointments start at 10:30 today and tomorrow, and all earlier appointments are Completed, Cancelled or No-show, when staff open the dashboard, then the Awaiting outcome tile shows 0.
 - AC5: Given the Awaiting outcome tile shows 2, when staff mark one of the two appointments Completed and open the dashboard again, then the tile shows 1.
 
@@ -82,16 +93,21 @@ stories:
 - AC1: Given it is 10:00, a Scheduled appointment started at 09:00 and another Scheduled appointment starts at 10:30, when staff open the dashboard with each period, then every tile other than Awaiting outcome shows the same count as before the change.
 - AC2: Given the same appointments, when staff open the dashboard, then the next 10 upcoming appointments list shows the 10:30 appointment and not the 09:00 one, exactly as before the change.
 - AC3: Given no Scheduled appointment starts after now, when staff open the dashboard, then the upcoming appointments area shows the same content as before the change.
-- AC4: Given a counted appointment belongs to a patient with allergies and notes recorded, when staff open the dashboard and then the list behind the Awaiting outcome tile, then no medical history appears on either. Medical history never appears in lists or on the dashboard (C14).
+- AC4: Given a counted appointment belongs to a patient with allergies and notes recorded, when staff open the dashboard and then the list behind the Awaiting outcome tile, then no medical history appears on either.
 - AC5: Given a counted appointment belongs to a patient with a phone number and email recorded, when staff open the dashboard, then no contact details appear on the tile or anywhere on the dashboard.
 
 Times are hospital-local clock times on one day unless a date is given. The count compares start instants with now, so no AC needs a local date that differs from its UTC date.
 
+Retry fixes:
+- F-1: S-1 AC3 now adds a Scheduled appointment that starts at exactly 10:00 when it is 10:00, and it is not counted.
+- F-2: The contact-details question is now this artifact's own non-blocking question Q-01 for the product owner.
+- I also moved the extra sentence out of the body copy of S-4 AC4, so both copies match; its rationale is under Known.
+
 ## Known
-- S-1: built from known REQ-1, REQ-2, REQ-3, REQ-4 and REQ-7 (C1 to C4, C7). AC2 puts the Cancelled appointment latest, so a count that takes the most recent status still fails it. AC3 puts a not-started Scheduled appointment on the same day, so a count by date instead of by start time fails it.
+- S-1: built from known REQ-1, REQ-2, REQ-3, REQ-4 and REQ-7 (C1 to C4, C7). AC2 puts the Cancelled appointment latest, so a count that takes the most recent status still fails it. AC3 puts one Scheduled appointment at exactly now and one later the same day, so a count that uses "at or before now", or a date instead of the start time, fails it.
 - S-2: built from known REQ-5 (C5). The 1 August appointment lies outside Last 30 days (C12), so a count that applied the period would differ by period.
 - S-3: built from known REQ-6 (C6, C13). AC2 checks the list applies no period, matching the count.
-- S-4: built from known REQ-8 to REQ-11 (C8 to C11). AC1 to AC3 cover the partitions with and without an upcoming appointment. AC4 extends the medical-history check to the list the tile opens (C14). AC5 keeps the contact-details check to the tile and dashboard, as REQ-11 states.
+- S-4: built from known REQ-8 to REQ-11 (C8 to C11). AC1 to AC3 cover the partitions with and without an upcoming appointment. AC4 extends the medical-history check to the list the tile opens, because medical history never appears in lists or on the dashboard (C14). AC5 checks the tile and dashboard, as REQ-11 states; Q-01 asks whether it should also cover the list.
 
 ## Assumed
 None.
@@ -100,4 +116,4 @@ None.
 None. Every known REQ is traced by a story, and the intent has no unknowns.
 
 ## Open questions
-None. Whether contact details may appear in the list the tile opens is the intent's non-blocking question for the product owner; until it is answered, S-4 AC5 checks the tile and dashboard only, as REQ-11 states.
+- Q-01 (non-blocking, product owner): may contact details (phone, email) appear in the appointment list the Awaiting outcome tile opens, or should the no-contact-details rule also cover that list? Default: tile and dashboard only, as REQ-11 states. Until it is answered, S-4 AC5 checks the tile and dashboard only.
