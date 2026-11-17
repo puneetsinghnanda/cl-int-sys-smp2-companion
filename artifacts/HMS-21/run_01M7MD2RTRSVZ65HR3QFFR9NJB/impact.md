@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M7MD2RTRSVZ65HR3QFFR9NJB
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.4.0
 inputs:
   - {path: artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md, sha256: cdf917be0f8dfa8f1b3a5b08603bd0a50957b5f840e47e335b5c6a52a24591fc}
@@ -34,14 +34,21 @@ claims:
   - {id: C19, text: "Routes parse input, `services hold the rules` and repositories hold the SQL.", cites: ["context/architecture.md#components"]}
   - {id: C20, text: "No `background jobs` exist yet.", cites: ["context/architecture.md#open-points"]}
   - {id: C21, text: "The user chose a `New filter on GET /api/appointments` for the list behind the tile.", cites: ["runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01"]}
+  - {id: C22, text: "The API dashboard test compares the whole totals object with `toEqual`.", cites: ["sample-system:api/test/dashboard.test.ts#L32"]}
+  - {id: C23, text: "The web dashboard test fixture is typed `const DATA: Dashboard`.", cites: ["sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"]}
+  - {id: C24, text: "The doctor detail page links to the appointment list as `All upcoming appointments`.", cites: ["sample-system:web/src/pages/DoctorDetailPage.tsx#L148"]}
+  - {id: C25, text: "The doctors page links each doctor's `today_count` to the appointment list.", cites: ["sample-system:web/src/pages/DoctorsPage.tsx#L86"]}
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "Both dashboard tests are named as indirect effects that must gain the new count."}
+  - {id: F-2, how: "The patient-page statement is replaced by the cited doctor-page links."}
 modules:
-  - {id: "module:sample-system:api", change: changed, cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "sample-system:api/src/services/appointmentService.ts#L24", "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01"]}
-  - {id: "module:sample-system:web", change: changed, cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage", "sample-system:web/src/pages/AppointmentsPage.tsx#L1"]}
+  - {id: "module:sample-system:api", change: changed, cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "sample-system:api/src/services/appointmentService.ts#L24", "sample-system:api/test/dashboard.test.ts#L32", "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01"]}
+  - {id: "module:sample-system:web", change: changed, cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage", "sample-system:web/src/pages/AppointmentsPage.tsx#L1", "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"]}
   - {id: "module:sample-system:db", change: existing, cites: ["context/generated/module-map.json#module:sample-system:db", "context/generated/db-schema.json#index:appointment_start_idx"]}
 apis:
   - {id: "http:GET:/api/dashboard", change: changed, cites: ["context/generated/api-inventory.json#http:GET:/api/dashboard", "sample-system:api/src/services/dashboardService.ts#L52"]}
@@ -57,7 +64,10 @@ answers:
 # Impact analysis: HMS-21
 
 ## Summary
-HMS-21 adds an Awaiting outcome count to the dashboard and a list behind it. The count belongs with the other tile counts in `DashboardService` (C1), so `GET /api/dashboard` gains one count and both `Dashboard` types gain its field (C2, C3). `DashboardPage` gains one more `Tile` (C4, C5). The appointment list can filter only by status and whole hospital-local days (C12, C13), so it cannot show "Scheduled and started before now". You chose to add a new filter to `GET /api/appointments` for that (A-01, C21). No table, column, index or migration changes: the count reads `appointment` by status and start time, and an index on `starts_at` already exists (C17). The main risks are keeping the count and the list on the same rule (strictly before now, no period), and leaving the existing Upcoming tile (C6, C11), the period tiles (C7) and the next-10 list (C8) unchanged.
+HMS-21 adds an Awaiting outcome count to the dashboard and a list behind it. The count belongs with the other tile counts in `DashboardService` (C1), so `GET /api/dashboard` gains one count and both `Dashboard` types gain its field (C2, C3). `DashboardPage` gains one more `Tile` (C4, C5). The appointment list can filter only by status and whole hospital-local days (C12, C13), so it cannot show "Scheduled and started before now". You chose to add a new filter to `GET /api/appointments` for that (A-01, C21). No table, column, index or migration changes: the count reads `appointment` by status and start time, and an index on `starts_at` already exists (C17). The main risks are:
+- keeping the count and the list on the same rule (strictly before now, no period);
+- leaving the existing Upcoming tile (C6, C11), the period tiles (C7) and the next-10 list (C8) unchanged;
+- updating the two existing dashboard tests that pin the totals shape (C22, C23).
 
 ## Impacted modules
 - module:sample-system:api, changed:
@@ -75,7 +85,10 @@ HMS-21 adds an Awaiting outcome count to the dashboard and a list behind it. The
 
 Indirect effects:
 - The web app reaches the dashboard through `/api/dashboard` in the api client (C10), and the appointment list through `appointments:` in the client (C15).
-- Patient and doctor pages also link to the appointment list. The new filter is optional, so their links are unaffected.
+- Existing tests that pin the totals shape must gain the new count. Both dashboard tests are named as indirect effects that must gain the new count.
+  - `api/test/dashboard.test.ts` compares the whole totals object with `toEqual` (C22).
+  - `web/src/__tests__/DashboardPage.test.tsx` types its fixture as `Dashboard` (C23).
+- Other pages link to the appointment list: the doctor detail page (C24) and the doctors page (C25), besides the dashboard tiles (C11). The patient-page statement is replaced by the cited doctor-page links. The new filter is optional, so these links are unaffected.
 - There are no background jobs to update (C20).
 
 Data protection: the dashboard carries counts only, with no contact details or medical history (DSH-9, C9). List rows carry the patient's name only (C16). So REQ-10 and REQ-11 hold as long as the change adds only a count and a filter.
@@ -85,7 +98,7 @@ Data protection: the dashboard carries counts only, with no contact details or m
 - REQ-2, REQ-3, REQ-4: the count is Scheduled appointments with a start before now. The Upcoming count already uses the opposite rule, `starts_at > $3` (C6), so the new count is its mirror on the same table (C18).
 - REQ-5: the period tiles apply `starts_at >= $4` (C7); the new count must not.
 - REQ-6: the list needs the new filter that you chose (A-01, C21), because days alone cannot express "before now" (C12, C13).
-- REQ-8, REQ-9: the other totals and the `LIMIT 10` next list (C8) stay unchanged.
+- REQ-8, REQ-9: the other totals and the `LIMIT 10` next list (C8) stay unchanged. The two existing dashboard tests guard this and need only the new field added (C22, C23).
 - REQ-10, REQ-11: counts and list rows carry no medical history or contact details (C9, C16).
 
 ## Assumed
@@ -101,3 +114,7 @@ Answered in the IDE:
 - A-01 (Q-01, answered by the user in this run): how the list behind the tile expresses "started before now". Answer: "New filter on GET /api/appointments (proposed default)". It decides http:GET:/api/appointments (changed) and C21. No mismatch with the facts: the facts show the list has no such filter today (C12, C13), so this is a new capability.
 
 Default (no question): the count is added to `GET /api/dashboard` rather than computed in the browser. Every other tile's count comes from that endpoint (C1, C10). Trade-off: one more count in the dashboard query, in exchange for one source for all tiles.
+
+Retry fixes:
+- F-1: Both dashboard tests are named as indirect effects that must gain the new count.
+- F-2: The patient-page statement is replaced by the cited doctor-page links.

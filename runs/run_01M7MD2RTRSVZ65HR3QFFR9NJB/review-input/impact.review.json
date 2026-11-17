@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "step": "impact",
-  "attempt": 1,
-  "artifact_sha256": "afb915d20a97e75c965b36b526855804df66b232cea64dfb756067cef4be43e4",
-  "package_sha256": "0a3d41d3c85ddb2f9ee4ce5dc3e1df2ec37e0bee0c3addb7caca025600ea3414",
+  "attempt": 2,
+  "artifact_sha256": "8689e330e66d26acb467dc140698e854ec473b908b160da36b7fd6ca981c1a99",
+  "package_sha256": "dd6dd8212e2ad79bb868c59f5a05bef0fcfa0125d80bf90e91b1fc66cd170394",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,38 +12,25 @@
     "version": "0.1.6",
     "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457"
   },
-  "rubric_score": 4.05,
+  "rubric_score": 4.9,
   "rubric_items": [
-    {"id": "IA-R1", "score": 4, "reason": "Lists the modules, endpoints and table that change: the api, the web, the dashboard and list endpoints, and appointment. It leaves out the existing tests that pin the shape of the dashboard totals."},
-    {"id": "IA-R2", "score": 5, "reason": "Every module, API, table and index id is in the generated facts and is cited. Claims C6 to C16 match the cited source lines."},
-    {"id": "IA-R3", "score": 3, "reason": "Covers the api client callers, background jobs and the close routes. It misses the test files that read the totals shape, and it wrongly says patient pages link to the appointment list."},
-    {"id": "IA-R4", "score": 4, "reason": "The new filter cites answer A-01, and the other statuses rest on facts. One uncited guess about patient-page links is stated as fact."},
-    {"id": "IA-R5", "score": 4, "reason": "Readable and well structured, and the summary names the main risks. The impacted list follows module order, not risk order."}
+    {"id": "IA-R1", "score": 5, "reason": "Lists every touched element: the api and web modules, the dashboard and list endpoints, the appointment table and index, the AppointmentsPage filter whitelist, both Dashboard types, and now both tests that pin the totals shape."},
+    {"id": "IA-R2", "score": 5, "reason": "Every module, symbol, API, table and index id is in the generated facts and is cited. Claims C1 to C25 match the cited source lines."},
+    {"id": "IA-R3", "score": 5, "reason": "Covers the api client callers, the other list linkers (DoctorsPage, DoctorDetailPage, the dashboard tiles), the close routes, background jobs (none) and both dashboard tests. The wrong patient-page statement is gone."},
+    {"id": "IA-R4", "score": 5, "reason": "The new list filter rests on answer A-01, which is cited. Every other status rests on a cited fact. No uncited guesses remain."},
+    {"id": "IA-R5", "score": 4, "reason": "Readable, and the summary names the main risks. The impacted list still follows module order rather than risk order, and retry notes are mixed into the analysis text."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "Adding a required count to both Dashboard types breaks two existing tests. The API test compares totals with toEqual, and a web test fixture is typed Dashboard. The artifact names neither test.",
-      "cites": [
-        {"ref": "sample-system:api/test/dashboard.test.ts#L32", "quote": "expect(res.body.totals).toEqual({"},
-        {"ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7", "quote": "const DATA: Dashboard = {"},
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules", "quote": "The web `Dashboard` type gains the new count (C3)."}
-      ],
-      "suggested_fix": "Add an indirect effect for api/test/dashboard.test.ts and web/src/__tests__/DashboardPage.test.tsx. Both must gain the new field."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
-      "category": "correctness",
-      "text": "The artifact says patient pages link to the appointment list, with no citation. PatientDetailPage only links to /appointments/new for booking. The links to the list are on DoctorsPage and DoctorDetailPage.",
+      "category": "style",
+      "text": "Retry bookkeeping text leaks into the analysis body under Indirect effects. These lines repeat the resolves notes instead of describing the impact.",
       "cites": [
-        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules", "quote": "Patient and doctor pages also link to the appointment list."},
-        {"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L42", "quote": "to={`/appointments/new?patientId=${p.id}`}&gt;Book appointment&lt;/Link&gt;"},
-        {"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L148", "quote": "&lt;Link to={`/appointments?doctorId=${d.id}&amp;status=SCHEDULED&amp;from=${todayIn(timeZone)}`}&gt;All upcoming appointments&lt;/Link&gt;"}
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules", "quote": "The patient-page statement is replaced by the cited doctor-page links."},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules", "quote": "Both dashboard tests are named as indirect effects that must gain the new count."}
       ],
-      "suggested_fix": "Name the actual callers (DashboardPage, DoctorsPage, DoctorDetailPage) and cite their lines, or drop the patient-page statement."
+      "suggested_fix": "Keep these sentences only under Retry fixes and in resolves. Leave the indirect-effects list as plain impact statements."
     }
   ],
   "claims_checked": [
@@ -65,9 +52,13 @@
     {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22", "quote": "p.full_name AS patient_name"}]},
     {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_start_idx", "quote": "\"name\": \"appointment_start_idx\""}]},
     {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW"}]},
-    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules and\ntransactions"}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "services hold the rules"}]},
     {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
-    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01", "quote": "answer: New filter on GET /api/appointments (proposed default)"}]}
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01", "quote": "answer: New filter on GET /api/appointments (proposed default)"}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/dashboard.test.ts#L32", "quote": "expect(res.body.totals).toEqual({"}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7", "quote": "const DATA: Dashboard = {"}]},
+    {"claim_id": "C24", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L148", "quote": "&gt;All upcoming appointments&lt;/Link&gt;"}]},
+    {"claim_id": "C25", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DoctorsPage.tsx#L86", "quote": "query({ doctorId: d.id, from: today, to: today })}`}&gt;{d.today_count}&lt;/Link&gt;"}]}
   ],
   "questions": []
 }

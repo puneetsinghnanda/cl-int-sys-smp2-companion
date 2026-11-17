@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "afb915d20a97e75c965b36b526855804df66b232cea64dfb756067cef4be43e4",
-  "attempt": 1,
+  "artifact_sha256": "8689e330e66d26acb467dc140698e854ec473b908b160da36b7fd6ca981c1a99",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -185,7 +185,7 @@
     {
       "cites": [
         {
-          "quote": "services hold the rules and\ntransactions",
+          "quote": "services hold the rules",
           "ref": "context/architecture.md#components"
         }
       ],
@@ -211,55 +211,70 @@
       ],
       "claim_id": "C21",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "completeness",
       "cites": [
         {
           "quote": "expect(res.body.totals).toEqual({",
           "ref": "sample-system:api/test/dashboard.test.ts#L32"
-        },
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
         {
           "quote": "const DATA: Dashboard = {",
           "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&gt;All upcoming appointments&lt;/Link&gt;",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L148"
+        }
+      ],
+      "claim_id": "C24",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "query({ doctorId: d.id, from: today, to: today })}`}&gt;{d.today_count}&lt;/Link&gt;",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L86"
+        }
+      ],
+      "claim_id": "C25",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "The patient-page statement is replaced by the cited doctor-page links.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules"
         },
         {
-          "quote": "The web `Dashboard` type gains the new count (C3).",
+          "quote": "Both dashboard tests are named as indirect effects that must gain the new count.",
           "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an indirect effect for api/test/dashboard.test.ts and web/src/__tests__/DashboardPage.test.tsx. Both must gain the new field.",
-      "text": "Adding a required count to both Dashboard types breaks two existing tests. The API test compares totals with toEqual, and a web test fixture is typed Dashboard. The artifact names neither test."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "Patient and doctor pages also link to the appointment list.",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules"
-        },
-        {
-          "quote": "to={`/appointments/new?patientId=${p.id}`}&gt;Book appointment&lt;/Link&gt;",
-          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L42"
-        },
-        {
-          "quote": "&lt;Link to={`/appointments?doctorId=${d.id}&amp;status=SCHEDULED&amp;from=${todayIn(timeZone)}`}&gt;All upcoming appointments&lt;/Link&gt;",
-          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L148"
-        }
-      ],
-      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Name the actual callers (DashboardPage, DoctorsPage, DoctorDetailPage) and cite their lines, or drop the patient-page statement.",
-      "text": "The artifact says patient pages link to the appointment list, with no citation. PatientDetailPage only links to /appointments/new for booking. The links to the list are on DoctorsPage and DoctorDetailPage."
+      "suggested_fix": "Keep these sentences only under Retry fixes and in resolves. Leave the indirect-effects list as plain impact statements.",
+      "text": "Retry bookkeeping text leaks into the analysis body under Indirect effects. These lines repeat the resolves notes instead of describing the impact."
     }
   ],
-  "package_sha256": "0a3d41d3c85ddb2f9ee4ce5dc3e1df2ec37e0bee0c3addb7caca025600ea3414",
+  "package_sha256": "dd6dd8212e2ad79bb868c59f5a05bef0fcfa0125d80bf90e91b1fc66cd170394",
   "questions": [],
-  "recorded_at": "2026-11-17T10:10:07Z",
+  "recorded_at": "2026-11-17T10:13:58Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -270,31 +285,31 @@
   "rubric_items": [
     {
       "id": "IA-R1",
-      "reason": "Lists the modules, endpoints and table that change: the api, the web, the dashboard and list endpoints, and appointment. It leaves out the existing tests that pin the shape of the dashboard totals.",
-      "score": 4
+      "reason": "Lists every touched element: the api and web modules, the dashboard and list endpoints, the appointment table and index, the AppointmentsPage filter whitelist, both Dashboard types, and now both tests that pin the totals shape.",
+      "score": 5
     },
     {
       "id": "IA-R2",
-      "reason": "Every module, API, table and index id is in the generated facts and is cited. Claims C6 to C16 match the cited source lines.",
+      "reason": "Every module, symbol, API, table and index id is in the generated facts and is cited. Claims C1 to C25 match the cited source lines.",
       "score": 5
     },
     {
       "id": "IA-R3",
-      "reason": "Covers the api client callers, background jobs and the close routes. It misses the test files that read the totals shape, and it wrongly says patient pages link to the appointment list.",
-      "score": 3
+      "reason": "Covers the api client callers, the other list linkers (DoctorsPage, DoctorDetailPage, the dashboard tiles), the close routes, background jobs (none) and both dashboard tests. The wrong patient-page statement is gone.",
+      "score": 5
     },
     {
       "id": "IA-R4",
-      "reason": "The new filter cites answer A-01, and the other statuses rest on facts. One uncited guess about patient-page links is stated as fact.",
-      "score": 4
+      "reason": "The new list filter rests on answer A-01, which is cited. Every other status rests on a cited fact. No uncited guesses remain.",
+      "score": 5
     },
     {
       "id": "IA-R5",
-      "reason": "Readable and well structured, and the summary names the main risks. The impacted list follows module order, not risk order.",
+      "reason": "Readable, and the summary names the main risks. The impacted list still follows module order rather than risk order, and retry notes are mixed into the analysis text.",
       "score": 4
     }
   ],
-  "rubric_score": 4.05,
+  "rubric_score": 4.9,
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "schema": "review.v1",
   "status": "ok",

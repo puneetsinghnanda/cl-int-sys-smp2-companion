@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-17T10:10:13Z",
+  "heartbeat_at": "2026-11-17T10:14:04Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 3,
     "round": 2
   },
-  "rev": 13,
+  "rev": 16,
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -148,7 +148,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md",
+          "artifact": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/history/impact/a1/impact.md",
           "artifact_sha256": "afb915d20a97e75c965b36b526855804df66b232cea64dfb756067cef4be43e4",
           "band": "High",
           "cause": "first",
@@ -163,10 +163,32 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.verification.json",
+          "record": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/history/impact/a1/impact.verification.json",
           "skill": "impact-analysis@1.4.0",
           "skill_started_at": "2026-11-17T10:02:53Z",
           "started_at": "2026-11-17T10:02:43Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md",
+          "artifact_sha256": "8689e330e66d26acb467dc140698e854ec473b908b160da36b7fd6ca981c1a99",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-17T10:14:04Z",
+          "feedback": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/feedback/impact.a1.json",
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "cdf917be0f8dfa8f1b3a5b08603bd0a50957b5f840e47e335b5c6a52a24591fc",
+              "step": "req"
+            }
+          ],
+          "n": 2,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.verification.json",
+          "skill": "impact-analysis@1.4.0",
+          "skill_started_at": "2026-11-17T10:10:33Z",
+          "started_at": "2026-11-17T10:10:27Z"
         }
       ],
       "budget_used": {
@@ -177,7 +199,7 @@
       },
       "id": "impact",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -260,7 +282,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-21",
-  "updated_at": "2026-11-17T10:10:13Z",
+  "updated_at": "2026-11-17T10:14:04Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "7e2d7f98dabf16d5c133ebd2df7dd1bf0e5c4cf587457159a55a971f9aba0e98"
 }

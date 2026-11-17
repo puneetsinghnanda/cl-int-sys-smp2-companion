@@ -1,24 +1,20 @@
 {
   "artifact_path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md",
-  "artifact_sha256": "afb915d20a97e75c965b36b526855804df66b232cea64dfb756067cef4be43e4",
-  "attempt": 1,
+  "artifact_sha256": "8689e330e66d26acb467dc140698e854ec473b908b160da36b7fd6ca981c1a99",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "e2f403f43017d810aacc34005a9870313c1f23a47bf65a10fba8f7cfb9772434",
+  "checks_sha256": "90b912e2558423a7fb3f15ba2c48b9d3c570d91ad14f5f9ad00e9b5dd9e09733",
   "claims": {
-    "total": 21,
-    "verified": 21
+    "total": 25,
+    "verified": 25
   },
-  "decided_at": "2026-11-17T10:10:13Z",
+  "decided_at": "2026-11-17T10:14:04Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
       "severity": "minor"
     }
   ],
@@ -31,7 +27,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -39,15 +35,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "7117b58029c3d164069662d1f9456c1428d0116356bf0d3f3de8f3a728ccd3bc",
   "product_changes": null,
-  "review_sha256": "5f3db3db6755b1c9fa7697bf4505490921ab35208894dc4119503ee5e5093c50",
+  "review_sha256": "b3624ada9ef084fb9411b5661f34d0903b0736242664dfce39b73d11bd4d68e1",
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.05,
+    "S3": 4.9,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -56,7 +52,7 @@
       "sensitive": false
     }
   },
-  "signature": "HIbGgZHRfKk3NavyX6ArjMaOUXgPC0xyZROzuLcgA8ifhYaVAwaQOIwUDvcU0ikcN5WBA2vZp8SUNG5Oqu5gAA",
+  "signature": "XotF-LNCielhcb5rkhaB7jx_Z7-ARrkq6qP2lhGLwIkl_UybyyKEsYBiMAHUem85Pt2jvVpNjXNaUL8cw4YzDw",
   "skill": "impact-analysis@1.4.0",
   "step": "impact",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
