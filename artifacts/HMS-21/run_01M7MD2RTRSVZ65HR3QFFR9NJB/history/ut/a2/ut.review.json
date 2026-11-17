@@ -1,0 +1,191 @@
+{
+  "artifact_sha256": "869cd948ae237cdd7dc6523c0169d39ab7ae1d31a568028ccb2d384640922937",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctor 1: 15-minute slots",
+          "ref": "sample-system:api/test/helpers.ts#L23"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const NOW = new Date('2026-10-19T02:30:00Z');",
+          "ref": "sample-system:api/test/helpers.ts#L10"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "fullName: 'Test Patient One'",
+          "ref": "sample-system:api/test/helpers.ts#L45"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Its own database, so no other test's state moves these counts.",
+          "ref": "sample-system:api/test/dashboard-no-shows.test.ts#L7"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "vi.stubGlobal('fetch', vi.fn(async () =&gt; new Response(JSON.stringify(DATA), { status: 200 })));",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L16"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "It is returned as `totals.awaitingOutcome` (C1).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impl.md#summary"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "On Tuesday 09:00 it is 3 for every period (S-2)",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
+        },
+        {
+          "quote": "one Scheduled appointment started on 1 August 2026 (outside Last 30 days)",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-2"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Move the clock back to book a Scheduled appointment on 1 August 2026. Then assert the count and the started=true list include it for today, 7d and 30d.",
+      "text": "The REQ-5 test is mapped to S-2, but no Scheduled appointment starts outside Last 30 days. All counted appointments are within a day of now, so a count wrongly limited to 30 days would still pass. S-2 AC1 is not asserted."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "when staff mark one of the two appointments Completed and open the dashboard again, then the tile shows 1",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-1"
+        },
+        {
+          "quote": "Given the Awaiting outcome tile shows 0, when staff select it, then the appointment list shows no appointments.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-3"
+        },
+        {
+          "quote": "REQ-7 edge: the count is 0 before any appointment has started.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "In the REQ-7 test, also call started=true and assert total 0. Add one test that completes an open appointment and checks the count drops by one.",
+      "text": "Some acceptance criteria have no test: S-1 AC5 (the count drops after one appointment is completed) and S-3 AC3 (a 0 count opens an empty list). The REQ-7 zero test never calls the list."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the Upcoming tile keeps its count and link, and there are 8 tiles",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Count only the tile links, for example by limiting the query to the tile container, or reword the artifact to say 8 links.",
+      "text": "The artifact says there are 8 tiles, but the test counts every link on the page. Any other link on the page would make this check wrong."
+    }
+  ],
+  "package_sha256": "a41a60ac2e54f0796f0b71dc9ee143e6bb63172f0ef6d98880fdc0b14e27e37b",
+  "questions": [],
+  "recorded_at": "2026-11-17T10:53:35Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover every changed path: the awaitingOutcome count, the started=true list filter, the tile and link, and AppointmentsPage passing started through. One gap: no test proves the count ignores the 30-day bound (S-2).",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Most assertions check exact ids, totals, hrefs and 400 field errors. The 8-tiles check counts every link on the page, not the tiles.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers the start-exactly-at-now boundary, a count of 0, an empty started= value, the 400 for false/yes/1, and the next-day case. Not tested: an empty list behind a 0 count, and a count that drops after an appointment is completed.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Uses Vitest and Supertest with its own PostgreSQL and a fixed clock, and Vitest with jsdom on the web side. Every test name starts with HMS-21 and its REQ id, and files sit in the existing test folders.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "Pass/fail counts are left to checks.json and coverage is not claimed, which matches the skipped coverage step in the verifier. The per-file test counts match the files.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

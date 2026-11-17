@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "869cd948ae237cdd7dc6523c0169d39ab7ae1d31a568028ccb2d384640922937",
-  "attempt": 2,
+  "artifact_sha256": "61e779fa2f300cc71a1912b7777a400d4c69bb85fd68177952d66b27ec7de9c9",
+  "attempt": 3,
   "claims_checked": [
     {
       "cites": [
@@ -35,7 +35,7 @@
     {
       "cites": [
         {
-          "quote": "doctor 1: 15-minute slots",
+          "quote": "doctor 1: 15-minute slots, Mon–Fri 09:00–12:00",
           "ref": "sample-system:api/test/helpers.ts#L23"
         }
       ],
@@ -91,6 +91,46 @@
       ],
       "claim_id": "C9",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "one Scheduled appointment started on 1 August 2026 (outside Last 30 days)",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-2"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (startsAt.getTime() &lt;= this.clock().getTime()) throw fieldError('startsAt', 'must be in the future');",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L147"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return 'weekday must be 1 (Monday) to 7 (Sunday)';",
+          "ref": "sample-system:api/src/lib/slots.ts#L50"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "&lt;Link className=\"tile\" to={to}&gt;",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L76"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
     }
   ],
   "findings": [
@@ -98,57 +138,23 @@
       "category": "completeness",
       "cites": [
         {
-          "quote": "On Tuesday 09:00 it is 3 for every period (S-2)",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
+          "quote": "Given a counted appointment belongs to a patient with a phone number and email recorded",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-4"
         },
         {
-          "quote": "one Scheduled appointment started on 1 August 2026 (outside Last 30 days)",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-2"
+          "quote": "REQ-10, REQ-11: neither the dashboard nor the tile's list contains contact details or medical history (S-4).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Move the clock back to book a Scheduled appointment on 1 August 2026. Then assert the count and the started=true list include it for today, 7d and 30d.",
-      "text": "The REQ-5 test is mapped to S-2, but no Scheduled appointment starts outside Last 30 days. All counted appointments are within a day of now, so a count wrongly limited to 30 days would still pass. S-2 AC1 is not asserted."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "when staff mark one of the two appointments Completed and open the dashboard again, then the tile shows 1",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-1"
-        },
-        {
-          "quote": "Given the Awaiting outcome tile shows 0, when staff select it, then the appointment list shows no appointments.",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#item:S-3"
-        },
-        {
-          "quote": "REQ-7 edge: the count is 0 before any appointment has started.",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
-        }
-      ],
-      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "In the REQ-7 test, also call started=true and assert total 0. Add one test that completes an open appointment and checks the count drops by one.",
-      "text": "Some acceptance criteria have no test: S-1 AC5 (the count drops after one appointment is completed) and S-3 AC3 (a 0 count opens an empty list). The REQ-7 zero test never calls the list."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "the Upcoming tile keeps its count and link, and there are 8 tiles",
-          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md#tests"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Count only the tile links, for example by limiting the query to the tile container, or reword the artifact to say 8 links.",
-      "text": "The artifact says there are 8 tiles, but the test counts every link on the page. Any other link on the page would make this check wrong."
+      "suggested_fix": "Give a counted patient an email in the test setup, then assert that the phone and email values, as well as the key names, are absent from the dashboard and list JSON.",
+      "text": "S-4 AC5 needs a counted patient with a phone and an email recorded, but the fixture patients have no email. The REQ-11 check only searches the JSON for the key names phone/email, so an email value leaking under another key would go unnoticed."
     }
   ],
-  "package_sha256": "a41a60ac2e54f0796f0b71dc9ee143e6bb63172f0ef6d98880fdc0b14e27e37b",
+  "package_sha256": "a53c673e503d30531097029259574134b6ce8b85d40e10d928f49f4e0356c7db",
   "questions": [],
-  "recorded_at": "2026-11-17T10:53:35Z",
+  "recorded_at": "2026-11-17T11:00:06Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -159,31 +165,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Tests cover every changed path: the awaitingOutcome count, the started=true list filter, the tile and link, and AppointmentsPage passing started through. One gap: no test proves the count ignores the 30-day bound (S-2).",
-      "score": 4
+      "reason": "Every changed path has a test: the awaitingOutcome count, started=true on the list, the tile and its link, and AppointmentsPage passing started through. S-2 AC1 is now tested with the 1 August appointment, and S-1 AC5 and S-3 AC3 now have tests.",
+      "score": 5
     },
     {
       "id": "UT-R2",
-      "reason": "Most assertions check exact ids, totals, hrefs and 400 field errors. The 8-tiles check counts every link on the page, not the tiles.",
+      "reason": "Assertions check exact counts, ordered ids, totals, hrefs, 400 field errors and labels limited to .tiles a.tile. The privacy check is weaker: it matches key names with a regex, and no fixture patient has an email recorded.",
       "score": 4
     },
     {
       "id": "UT-R3",
-      "reason": "Covers the start-exactly-at-now boundary, a count of 0, an empty started= value, the 400 for false/yes/1, and the next-day case. Not tested: an empty list behind a 0 count, and a count that drops after an appointment is completed.",
-      "score": 4
+      "reason": "Edges covered: a start exactly at now, a 10:30 start not yet reached, the next day, a count of 0 with an empty list, an empty started= value, and dropping the count after completion. The error path covers started=false/yes/1 as a 400. The dashboard's 400 is already tested.",
+      "score": 5
     },
     {
       "id": "UT-R4",
-      "reason": "Uses Vitest and Supertest with its own PostgreSQL and a fixed clock, and Vitest with jsdom on the web side. Every test name starts with HMS-21 and its REQ id, and files sit in the existing test folders.",
+      "reason": "Uses Vitest and Supertest with its own PostgreSQL and a fixed clock, and Vitest with jsdom on the web side. Every new test name starts with HMS-21 and its REQ id, and the files sit in the existing test folders.",
       "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "Pass/fail counts are left to checks.json and coverage is not claimed, which matches the skipped coverage step in the verifier. The per-file test counts match the files.",
+      "reason": "Pass/fail is left to checks.json, which shows build and test passing. Coverage is not claimed, which matches the verifier skipping coverage (exit 78). The per-file test counts match the files (12, 4 added, 2).",
       "score": 5
     }
   ],
-  "rubric_score": 4.25,
+  "rubric_score": 4.75,
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "schema": "review.v1",
   "status": "ok",
