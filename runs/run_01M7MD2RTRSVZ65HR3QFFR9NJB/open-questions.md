@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M7MD2RTRSVZ65HR3QFFR9NJB
 ticket: HMS-21
 workflow: brownfield-change@1.4.0
-step: design@1.8.0
+step: threat@1.2.0
 created_at: '2026-11-17T09:55:21Z'
 status: open
 ---
@@ -41,6 +41,13 @@ decision:
 
 ## Q-04 · non-blocking · ask: product owner · round 3
 **Question:** Should the appointment list show a visible 'Started before now' indicator with a clear action when it is opened from the Awaiting outcome tile, or is a URL-only filter acceptable?
+**Proposed default:** none
+answer:
+answered_by:
+decision:
+
+## Q-05 · non-blocking · ask: tech lead · round 4
+**Question:** T-2 and T-8 accept unbounded count scans (awaitingOutcome has no lower bound, and the list total is unpaged) with no new control. Do you accept these performance risks for HMS-21, or should implement add a status/starts_at index?
 **Proposed default:** none
 answer:
 answered_by:

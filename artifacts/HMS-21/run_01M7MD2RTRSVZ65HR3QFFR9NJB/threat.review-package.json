@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md",
-  "artifact_sha256": "7c66902e53fae8c9e166970cedad2a010035d1cb289d520f36b43a1678653ac1",
-  "attempt": 1,
+  "artifact_sha256": "32bd3c766ff939c0e7dce1de9da94b4cac549ffc4d16cb03dfcd9e6c00f2c6cd",
+  "attempt": 2,
   "budget_tokens": 22500,
-  "checks_sha256": "69d894572acd11ff31d8a17e51f6dd970ee9b637fef30bb6e870640fbd3b3200",
+  "checks_sha256": "eef078a191addc8ae6821318a6d8cc93603cb4a5feb7b2c4b691eb92266cdb0d",
   "context_sections": [
     {
       "id": "architecture",
@@ -39,10 +39,39 @@
       "path": "context/generated/api-inventory.json"
     }
   ],
-  "package_sha256": "a074a459361ca5720fc469fb5be0c69d26441ef4601316731156d618712ad998",
-  "prepared_at": "2026-11-17T10:27:54Z",
+  "package_sha256": "65adf8203c504e1348dabf380e780df20a53d6f4a10b7c0698efc9bede1387d4",
+  "prepared_at": "2026-11-17T10:31:41Z",
   "prepared_by": "tsl@0.1.6",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    },
+    {
+      "id": "F-6",
+      "severity": "minor"
+    },
+    {
+      "id": "F-7",
+      "severity": "minor"
+    }
+  ],
   "rubric": {
     "items": [
       {
