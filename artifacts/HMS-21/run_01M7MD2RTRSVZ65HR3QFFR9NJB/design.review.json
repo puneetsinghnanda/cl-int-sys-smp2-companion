@@ -1,0 +1,397 @@
+{
+  "artifact_sha256": "7af71278d91675313b29a7418b6bbc21ac67eec00434e34a677eb231824f5a7d",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export class DashboardService {",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L29"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface Dashboard {",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L13"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "totals: { patients: number; doctors: number",
+          "ref": "sample-system:web/src/api/types.ts#L142"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED' AND starts_at &gt; $3",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L52"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "[todayBounds.start, todayBounds.end, now, periodStart]",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L56"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class AppointmentService {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L17"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "f.oneOf('status', APPOINTMENT_STATUSES)",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface AppointmentFilter {",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L40"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "add('a.starts_at &lt; ?', f.to)",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L72"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (!values.includes(v)) return this.fail(name",
+          "ref": "sample-system:api/src/lib/validate.ts#L65"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.body[name] === true;",
+          "ref": "sample-system:api/src/lib/validate.ts#L110"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "['doctorId', 'patientId', 'status', 'from', 'to', 'page']",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L14"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function DashboardPage() {",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L17"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "function Tile({ label, value, to }",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L69"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "query({ status: 'SCHEDULED', from: data.today })",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L44"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function AppointmentsPage() {",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L11"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const DATA: Dashboard = {",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: New filter on GET /api/appointments (proposed default)",
+          "ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: awaitingOutcome (proposed default)",
+          "ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: started=true, server now (proposed default)",
+          "ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "p.full_name AS patient_name",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Counts only: no contact details or medical history (DSH-9)",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L28"
+        }
+      ],
+      "claim_id": "C24",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "when absent, there is no filter; any other value gives a 400 field error",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#components"
+        },
+        {
+          "quote": "(typeof v === 'string' &amp;&amp; v.trim() === '')",
+          "ref": "sample-system:api/src/lib/validate.ts#L28"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State that an absent or empty started means no filter, and that any other value except \"true\" gives a 400 field error.",
+      "text": "EP-2 says any value other than \"true\" gives a 400 field error. Fields.oneOf treats an empty or whitespace string as absent, so ?started= gives no filter and no 400. The contract misstates this edge for tests."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "f.oneOf('with_today', ['true', 'false'] as const) === 'true'",
+          "ref": "sample-system:api/src/services/doctorService.ts#L36"
+        },
+        {
+          "quote": "The filter is validated with `Fields.oneOf('started', ['true'])` (C10)",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#overview"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Use oneOf('started', ['true','false']) like with_today, or add a trade-off line explaining why false is rejected.",
+      "text": "The existing boolean query flag with_today accepts ['true','false']. The design accepts only ['true'], so started=false gives a 400. It neither follows nor explains a break from this precedent."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "the count and the list use the same clock",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#overview"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a line saying the count and the list are each evaluated at their own request time and may differ by appointments that start in between.",
+      "text": "The trade-off says the count and the list use the same clock. They read now at different instants, so an appointment that starts between loading the dashboard and opening the list makes the list longer than the tile count."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "No new form control is added; changing any filter keeps `started`, as it keeps the others.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#components"
+        },
+        {
+          "quote": "{(filters.doctorId || filters.patientId) &amp;&amp; (",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L38"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Consider a visible 'Started before now' indicator with a clear action, or record the choice as a trade-off.",
+      "text": "AppointmentsPage gets no control or label for started, so staff cannot see that the list is limited to started appointments. Only the doctor/patient clear button, which shows only for those filters, removes it."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "name: \"Dashboard tests (api and web): add awaitingOutcome\", module: \"module:sample-system:api\"",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#item:CO-8"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Split CO-8 into an api test component and a web test component, each on its own module.",
+      "text": "CO-8 covers both the API and web dashboard tests but lists only module:sample-system:api, though the web test belongs to module:sample-system:web."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "New filter on GET /api/appointments",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C20"
+        },
+        {
+          "quote": "A-01 (from impact, this run) is reused",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#open-questions"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Cite artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#claim:C21 for the A-01 decision instead of ide-answers.md#a-01.",
+      "text": "C20, CO-3 and EP-2 cite ide-answers#a-01, an impact-step answer, but A-01 is missing from this artifact's answers list. The prior decision would be better cited as the upstream impact claim."
+    }
+  ],
+  "package_sha256": "5858af9858a7b4ecb2259aca89d290b54c334fb28cf6311a05b3948283172f50",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-4",
+      "id": "Q-1",
+      "text": "Should the appointment list show a visible 'Started before now' indicator with a clear action when it is opened from the Awaiting outcome tile, or is a URL-only filter acceptable?"
+    }
+  ],
+  "recorded_at": "2026-11-17T10:26:01Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Every change sits on an existing module and follows the layers: a sub-select in DashboardService, oneOf validation in the service, SQL bound in the repo, a whitelist on the page. No new infrastructure and no migration.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-4 are mapped to components. The strict &lt; now rule covers S-1 AC3, the missing period bound on the count and the link covers S-2 and S-3 AC2, and C23/C24 cover S-4 AC4/AC5.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Both fields give name, type, nullability, format and example. The EP-2 format says absent means no filter and any other value gives a 400, but oneOf treats an empty started= as absent, so this edge is stated wrongly.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "All 24 claims match product code, the module map or IDE answers. The naming and link-shape choices come from the cited A-02 and A-03. No unproven file or type is stated as fact.",
+      "score": 5
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Three trade-offs are explained: server now, the sub-select and oneOf vs bool. It does not mention the existing with_today ['true','false'] precedent, or that the count and the list read now at different instants.",
+      "score": 4
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, short and consistent. The body matches the front matter items, and the story map is easy to follow.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

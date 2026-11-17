@@ -3,7 +3,7 @@ schema: open-questions.v1
 run_id: run_01M7MD2RTRSVZ65HR3QFFR9NJB
 ticket: HMS-21
 workflow: brownfield-change@1.4.0
-step: split@1.3.0
+step: design@1.8.0
 created_at: '2026-11-17T09:55:21Z'
 status: open
 ---
@@ -35,6 +35,13 @@ decision:
   A. Tile and dashboard only, as REQ-11 states
   B. Also the appointment list the tile opens
 **Proposed default:** Tile and dashboard only, as REQ-11 states
+answer:
+answered_by:
+decision:
+
+## Q-04 · non-blocking · ask: product owner · round 3
+**Question:** Should the appointment list show a visible 'Started before now' indicator with a clear action when it is opened from the Awaiting outcome tile, or is a URL-only filter acceptable?
+**Proposed default:** none
 answer:
 answered_by:
 decision:

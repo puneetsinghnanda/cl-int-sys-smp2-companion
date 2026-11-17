@@ -1,0 +1,91 @@
+{
+  "accepted_default": true,
+  "artifact_path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md",
+  "artifact_sha256": "7af71278d91675313b29a7418b6bbc21ac67eec00434e34a677eb231824f5a7d",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "9aa1b844bce919cd5371a656d62c00c01327f6d2df75891076d3ceef1a62af28",
+  "claims": {
+    "total": 24,
+    "verified": 24
+  },
+  "decided_at": "2026-11-17T10:26:08Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [
+    {
+      "id": "F-5",
+      "reason": "quote not found"
+    }
+  ],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-6",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md",
+      "sha256": "8689e330e66d26acb467dc140698e854ec473b908b160da36b7fd6ca981c1a99",
+      "verification_sha256": "2d7919303e5e6a645e109276d02509aaede6416751f5e0181d079c65ea95492c"
+    },
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md",
+      "sha256": "dcc06d1291e79f057d47f662fdc9b9f93994a0b3c695173acb9df34f900df06e",
+      "verification_sha256": "bd8bc6d943771830a53a84a9500e6650e187d7c8934fa337a94b4ee918f50960"
+    },
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md",
+      "sha256": "cdf917be0f8dfa8f1b3a5b08603bd0a50957b5f840e47e335b5c6a52a24591fc",
+      "verification_sha256": "c6b6320d49171a067059dc3b33b3482ed580a87a9f4328c4ae3c2a4c1e1d37cd"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "dfbf082cf192169b71ba9ab0f0789f52d141eb1da615d91047bc3a70f1fb91c9",
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 0.9667,
+    "S2": 1.0,
+    "S3": 4.7,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "A7BaXPPmzngwqjchbUqL54AJpccCA8MumY2dPE6wDIK4fA7oh1siIJITm6JNuR8jOkXZErhuPnnUbElgEdtFCA",
+  "skill": "design@1.8.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
