@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md",
+  "artifact_sha256": "ab225f81cf0745abee32f33fff2b3da112c1ee68b29cd0d4454e886fa5350d34",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "b4b970706d9c0627e07cbd6c5b05a146a06c9c3be90d693cd331650d49993f91",
+  "claims": {
+    "total": 14,
+    "verified": 14
+  },
+  "decided_at": "2026-11-17T09:59:23Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md",
+      "sha256": "cdf917be0f8dfa8f1b3a5b08603bd0a50957b5f840e47e335b5c6a52a24591fc",
+      "verification_sha256": "c6b6320d49171a067059dc3b33b3482ed580a87a9f4328c4ae3c2a4c1e1d37cd"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "ec1d604e7710d4cfe0f83a88455ce69a097a16f20136e86df784edbcab0f0d5b",
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.45,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "IuUAQriqoyleTSxAr2WDf6zk5UdPzKuaL_UxZb4F0YICei4fg5wMoUHB5KKF9AxJYxZLtJ1Dnml9yqSTaxB7AA",
+  "skill": "story-split@1.3.0",
+  "step": "split",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
