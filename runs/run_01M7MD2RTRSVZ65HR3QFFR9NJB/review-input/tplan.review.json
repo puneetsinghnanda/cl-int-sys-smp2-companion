@@ -1,0 +1,73 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "step": "tplan",
+  "attempt": 1,
+  "artifact_sha256": "95d2f524a2b1864983d5347ea5fc560518cf8ccecdaa502d5d4865e916bc0fd3",
+  "package_sha256": "8335e1b07438e8a48aa1562a1ced7cf6b7f00d8f66ee57efee052f2a02b34a57",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "421bd9860aeef52302c4efd47d9902e7b382db9a20ea3ac0da47c5d3f5199559"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "TP-R1", "score": 5, "reason": "All 14 ACs (S-1 AC1-5, S-2 AC1, S-3 AC1-3, S-4 AC1-5) appear in at least one covers list, and each has a test that really asserts it."},
+    {"id": "TP-R2", "score": 5, "reason": "API rules are tested at integration level and web rendering at unit level. There is no e2e or manual level, which matches the strategy's gaps."},
+    {"id": "TP-R3", "score": 5, "reason": "The new started field has a negative test (TP-10) and edge tests for absent or empty values (TP-11). The count has a boundary test at exactly now (TP-3), and zero cases are covered (TP-4, TP-9)."},
+    {"id": "TP-R4", "score": 4, "reason": "Tools and folders match the strategy and layout. But the plan says each test name starts with HMS-21 and its REQ id, and its own test titles do not."},
+    {"id": "TP-R5", "score": 4, "reason": "Readable, runnable titles. But the Scope says there are 16 acceptance criteria when the stories have 14, and the titles leave out the REQ ids."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The Scope says there are 16 acceptance criteria in S-1 to S-4. The stories define 14 (5+1+3+5). The stated count does not match the input stories.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/tplan.md#scope", "quote": "Each of the 16 acceptance criteria of S-1 to S-4 is covered by at least one test."},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#stories", "quote": "AC5: Given a counted appointment belongs to a patient with a phone number and email recorded"}
+      ],
+      "suggested_fix": "Change 16 to 14 acceptance criteria."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "TP-10 (invalid started gives 400) and TP-11 (absent or empty started) are mapped to S-3/AC1. That AC only asks for exactly the 09:00 and 09:30 appointments, so neither test asserts it.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/tplan.md#item:TP-10", "quote": "API negative: started values other than true return 400 with a started field error"},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md#stories", "quote": "then the appointment list shows exactly the 09:00 and 09:30 appointments"}
+      ],
+      "suggested_fix": "Trace TP-10 and TP-11 to REQ-6 and design EP-2 (started field contract) instead of S-3/AC1. Or mark them as contract tests beyond the ACs."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "The plan says every test name starts with HMS-21 and its REQ id, as the strategy requires. But the tests[] titles start with 'API:' or 'Web:', and no test lists a REQ id.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/tplan.md#scope", "quote": "Every test name starts with HMS-21 and its REQ id (C4)."},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/tplan.md#item:TP-1", "quote": "API: counts Scheduled appointments started at 09:00 and 09:30 when it is 10:00"},
+        {"ref": "context/test-strategy.md#requirement-ids", "quote": "at least one test whose name starts with its ID"}
+      ],
+      "suggested_fix": "Start each test title with 'HMS-21 REQ-n', for example 'HMS-21 REQ-2: ...'."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "no page is tested end to end in a browser"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "at least one test whose name starts with its ID"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "Web tests cover the dashboard tiles and links"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#item:CO-1", "quote": "DashboardService.get: awaitingOutcome count"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#item:CO-3", "quote": "AppointmentService.list: started filter"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#item:CO-6", "quote": "DashboardPage: Awaiting outcome tile"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#item:CO-7", "quote": "AppointmentsPage: pass started through"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C22", "quote": "compared with the server clock"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/dashboard-no-shows.test.ts#L7", "quote": "Its own database, so no other"}]}
+  ],
+  "questions": []
+}
