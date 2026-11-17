@@ -1,0 +1,191 @@
+{
+  "artifact_sha256": "cdf917be0f8dfa8f1b3a5b08603bd0a50957b5f840e47e335b5c6a52a24591fc",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "stays Scheduled until staff mark it",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ticket.md#L14"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed and No-show are allowed only after the start time.",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "selecting it opens the list behind the count",
+          "ref": "context/glossary.md#tile"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The count does not change with the period selector (PRD DSH-7).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the list of the next 10 upcoming appointments are unchanged",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ticket.md#L23"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never in lists, the dashboard or logs",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No medical history and no contact details appear (PRD DSH-9).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ticket.md#L24"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`.",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "tiles and the doctor page's No-shows count use the same rule",
+          "ref": "context/glossary.md#period"
+        },
+        {
+          "quote": "The count does not change with the period selector (PRD DSH-7).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ticket.md#L20"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "In Known for REQ-5, note that it is an explicit exception (PRD DSH-7) to the glossary Period rule for dashboard tiles, and that the linked list (REQ-6) also applies no period.",
+      "text": "The glossary says dashboard tiles use the period rule, but REQ-5 makes the new tile ignore the period selector. The artifact does not record REQ-5 as a deliberate exception to the glossary Period rule."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "appears on the tile or the dashboard",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/req.md#item:REQ-10"
+        },
+        {
+          "quote": "No medical history and no contact details appear (PRD DSH-9).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ticket.md#L24"
+        },
+        {
+          "quote": "never in lists, the dashboard or logs",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Extend REQ-10 to cover the appointment list opened from the tile (per baseline data protection). State explicitly whether REQ-11 also covers that list.",
+      "text": "REQ-10 limits the no-medical-history rule to the tile and dashboard. The ticket line is unscoped, and the baseline also forbids medical history in lists, which includes the appointment list REQ-6 links to. REQ-11 has the same narrowing."
+    }
+  ],
+  "package_sha256": "2b3bf3b05b304bfb113989a6ae38e89b882e1c98eeb50a55743b38bd45b58e0b",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-1",
+      "text": "Does the 'no contact details' rule (ticket AC8, PRD DSH-9) also apply to the appointment list the Awaiting outcome tile opens, or only to the tile and dashboard?"
+    }
+  ],
+  "recorded_at": "2026-11-17T09:55:09Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Every ticket acceptance criterion (L16-L24) maps to a requirement. The story's marking flow and automatic closing are listed as out of scope, each with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "AC3 and AC7 were split into separate atomic requirements (REQ-3/REQ-4, REQ-8/REQ-9). Each requirement has one condition a tester can check, such as start time before now, 0 when empty, or independence from the period.",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "All 11 requirements are marked known and each cites a ticket line. Nothing is assumed or invented. All 9 claims check out against their cites.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No ticket-baseline contradiction. However, the glossary says dashboard tiles use the period rule, while REQ-5 makes this tile ignore it. The artifact does not note this exception against the glossary.",
+      "score": 4
+    },
+    {
+      "id": "RR-R5",
+      "reason": "No questions asked. The ticket fixes every value, so not blocking anything is appropriate.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and consistent wording, and the glossary gaps are explained. The period-rule exception and the exact scope of the data rule could be stated more precisely.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
