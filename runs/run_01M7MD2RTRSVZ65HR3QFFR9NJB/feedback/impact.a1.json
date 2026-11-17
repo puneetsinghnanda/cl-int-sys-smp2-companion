@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        },
+        {
+          "quote": "const DATA: Dashboard = {",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"
+        },
+        {
+          "quote": "The web `Dashboard` type gains the new count (C3).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Adding a required count to both Dashboard types breaks two existing tests. The API test compares totals with toEqual, and a web test fixture is typed Dashboard. The artifact names neither test."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "feedback.v1",
+  "step": "impact"
+}

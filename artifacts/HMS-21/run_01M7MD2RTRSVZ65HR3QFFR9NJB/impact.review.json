@@ -1,0 +1,302 @@
+{
+  "artifact_sha256": "afb915d20a97e75c965b36b526855804df66b232cea64dfb756067cef4be43e4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export class DashboardService {",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L29"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface Dashboard {",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L13"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "totals: { patients: number; doctors: number; appointmentsToday: number;",
+          "ref": "sample-system:web/src/api/types.ts#L142"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function DashboardPage() {",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L17"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "function Tile({ label, value, to }",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L69"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED' AND starts_at &gt; $3) AS upcoming",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L52"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'COMPLETED' AND starts_at &gt;= $4 AND starts_at &lt; $2",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L53"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY a.starts_at, a.id LIMIT 10",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L61"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Counts only: no contact details or medical history (DSH-9).",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L28"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "send&lt;Dashboard&gt;(`/api/dashboard${query({ period })}`)",
+          "ref": "sample-system:web/src/api/client.ts#L49"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "query({ status: 'SCHEDULED', from: data.today })",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L44"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "date range (hospital-local days) and status",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L24"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (f.to !== undefined) add('a.starts_at &lt; ?', f.to);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L72"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "import { Link, useSearchParams } from 'react-router-dom';",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L1"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "appointments: (params: Record&lt;string, string | number | undefined&gt;) =&gt;",
+          "ref": "sample-system:web/src/api/client.ts#L76"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "p.full_name AS patient_name",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"appointment_start_idx\"",
+          "ref": "context/generated/db-schema.json#index:appointment_start_idx"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services hold the rules and\ntransactions",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: New filter on GET /api/appointments (proposed default)",
+          "ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        },
+        {
+          "quote": "const DATA: Dashboard = {",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"
+        },
+        {
+          "quote": "The web `Dashboard` type gains the new count (C3).",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an indirect effect for api/test/dashboard.test.ts and web/src/__tests__/DashboardPage.test.tsx. Both must gain the new field.",
+      "text": "Adding a required count to both Dashboard types breaks two existing tests. The API test compares totals with toEqual, and a web test fixture is typed Dashboard. The artifact names neither test."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Patient and doctor pages also link to the appointment list.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impact.md#impacted-modules"
+        },
+        {
+          "quote": "to={`/appointments/new?patientId=${p.id}`}&gt;Book appointment&lt;/Link&gt;",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L42"
+        },
+        {
+          "quote": "&lt;Link to={`/appointments?doctorId=${d.id}&amp;status=SCHEDULED&amp;from=${todayIn(timeZone)}`}&gt;All upcoming appointments&lt;/Link&gt;",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L148"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Name the actual callers (DashboardPage, DoctorsPage, DoctorDetailPage) and cite their lines, or drop the patient-page statement.",
+      "text": "The artifact says patient pages link to the appointment list, with no citation. PatientDetailPage only links to /appointments/new for booking. The links to the list are on DoctorsPage and DoctorDetailPage."
+    }
+  ],
+  "package_sha256": "0a3d41d3c85ddb2f9ee4ce5dc3e1df2ec37e0bee0c3addb7caca025600ea3414",
+  "questions": [],
+  "recorded_at": "2026-11-17T10:10:07Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Lists the modules, endpoints and table that change: the api, the web, the dashboard and list endpoints, and appointment. It leaves out the existing tests that pin the shape of the dashboard totals.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API, table and index id is in the generated facts and is cited. Claims C6 to C16 match the cited source lines.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers the api client callers, background jobs and the close routes. It misses the test files that read the totals shape, and it wrongly says patient pages link to the appointment list.",
+      "score": 3
+    },
+    {
+      "id": "IA-R4",
+      "reason": "The new filter cites answer A-01, and the other statuses rest on facts. One uncited guess about patient-page links is stated as fact.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Readable and well structured, and the summary names the main risks. The impacted list follows module order, not risk order.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.05,
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}
