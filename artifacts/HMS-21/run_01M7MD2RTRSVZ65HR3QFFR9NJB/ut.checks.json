@@ -1,0 +1,149 @@
+{
+  "artifact_sha256": "05bfa5c9fd7e26e7160f545006afc4c4d7c4bf44a845d5d1ca5cfde28c1ff86d",
+  "attempt": 1,
+  "finished_at": "2026-11-17T10:45:38Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [
+        "E-H3-01"
+      ],
+      "detail": "build exit 2; log runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/verifier/ut/a1/build.log: src/__tests__/AppointmentsPage.test.tsx(32,44): error TS2493: Tuple type '[]' of length '0' has no element at index '0'. | npm error Lifecycle script `build` failed with error: | npm error code 2 | npm error path /cache/w/web | npm error workspace @hms/web@0.1.0 | npm error location /cache/w/web | npm error command failed | npm error command sh -c tsc -p tsconfig.json && vite build",
+      "id": "H3",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impl.md",
+      "sha256": "603d12bce385e4b5a6b74b10ce66a08c29fab4a69f57d6b55fba5d9ab524da1a",
+      "verification_sha256": "82b118ac04b6cd15a04cc50a61d87c9c5a0a8d1da86ab4aeec557376ddd793ea"
+    },
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md",
+      "sha256": "dcc06d1291e79f057d47f662fdc9b9f93994a0b3c695173acb9df34f900df06e",
+      "verification_sha256": "bd8bc6d943771830a53a84a9500e6650e187d7c8934fa337a94b4ee918f50960"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "2a3757c7624e675192e9278c0e8331cf32620430",
+      "diff_sha256": "a36ea24ea3aeb382d9045af5b5bec5e4b67e44c5c92aa87722fb0d73ebb6f467",
+      "files": [
+        "api/test/dashboard-awaiting-outcome.test.ts",
+        "web/src/__tests__/AppointmentsPage.test.tsx",
+        "web/src/__tests__/DashboardPage.test.tsx"
+      ],
+      "lines_added": 206,
+      "lines_deleted": 0,
+      "repo": "sample-system",
+      "tree_sha": "ceb4be7e3a52d89cc7989ee97e33e1e24dd25039"
+    }
+  ],
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-17T10:44:10Z",
+  "step": "ut",
+  "tool_log_sha256": "54b4343407124c681d98b6596b61e66ae31fe03d36abee882898090baec4d9b5",
+  "tsl_version": "0.1.6",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 8250,
+        "exit_code": 2,
+        "name": "build",
+        "report_sha256": null,
+        "status": "fail"
+      },
+      {
+        "duration_ms": 25265,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 4343,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "1b637a6400a4206dd65387aedd38f848644e180493212b471eee8f574ca86d67",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 32016,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "4fa1fb6fea5d63b49aefdcbc3897b44fdb9dca564b37796afe20074d76b0771b",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1062,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 906,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}
