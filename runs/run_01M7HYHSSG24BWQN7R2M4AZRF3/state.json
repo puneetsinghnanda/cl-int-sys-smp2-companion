@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-16T11:46:38Z",
+  "heartbeat_at": "2026-11-17T05:05:10Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -53,7 +53,7 @@
     "open_non_blocking": 1,
     "round": 1
   },
-  "rev": 20,
+  "rev": 24,
   "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -234,16 +234,44 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/ut.md",
+          "artifact_sha256": "a4d3b56de31e7041194ecbada5bffd7f35cb0a13a31dbfa36959515dbe42d92a",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-17T05:05:10Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "8d0cdda0228533bf20acfae2614ed1e7051e24f67db59538f0a060c00e87d78b",
+              "step": "impl"
+            },
+            {
+              "name": "stories",
+              "sha256": "37e1c1b4a8f6927e7237a6d3526934d298e5ce3a870e6da718f067bf13f3507d",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/ut.verification.json",
+          "skill": "unit-test@1.2.0",
+          "skill_started_at": "2026-11-16T11:50:11Z",
+          "started_at": "2026-11-16T11:47:00Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "ut",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -266,7 +294,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-15",
-  "updated_at": "2026-11-16T11:46:38Z",
+  "updated_at": "2026-11-17T05:05:10Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "d063d478f5afa0503111548d1014e84fccf604f5ef6476a9d1c9df20700ea806"
 }

@@ -1,0 +1,71 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "a4d3b56de31e7041194ecbada5bffd7f35cb0a13a31dbfa36959515dbe42d92a",
+  "package_sha256": "86b2302bb1a0a5526dbeb7f114dd12035277e120681ece06cd58eab053945c18",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.25,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 4, "reason": "Selection, boundary, closed statuses, list agreement, POST/PATCH, 404 and the web line, link, empty state and local date are tested. REQ-10 (one clock read per request, CO-2) has no test, although ut.md lists one."},
+    {"id": "UT-R2", "score": 4, "reason": "Most assertions check observable results (toEqual on {id, starts_at, doctor_name}, href, textContent). A few are weaker: toMatchObject on id only, and toContain for the doctor name with no check of order."},
+    {"id": "UT-R3", "score": 4, "reason": "The exactly-now boundary, already-started, all-started null, Cancelled/Completed/No-show, the local vs UTC date, no appointments and 404 are covered. The only-Cancelled-upcoming → null case (S-2 AC4) is not tested at the API."},
+    {"id": "UT-R4", "score": 5, "reason": "API tests use Vitest+Supertest on a fresh PG with a fixed clock in api/test. Web tests use jsdom and Testing Library in web/src/__tests__. Names start with HMS-15 REQ-n/EP-n, as existing repo tests do."},
+    {"id": "UT-R5", "score": 5, "reason": "No test counts or coverage numbers are given. The artifact defers to the verifier and says coverage is skipped, which matches checks.json (coverage exit 78, skip)."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "ut.md lists a REQ-10 test ('each request uses its own clock instant'), but the API test file has no REQ-10 test. Nothing checks that the service reads the clock once for both appointments and next_appointment (CO-2).",
+      "cites": [
+        {"ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/ut.md#L72", "quote": "REQ-10: each request uses its own clock instant (C5)."},
+        {"ref": "sample-system:api/test/patient-detail-next-appointment.test.ts#L44", "quote": "it('HMS-15 REQ-7: an appointment starting exactly at now is not next', async () =&gt; {"},
+        {"ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#L72", "quote": "reads `now = this.clock()` once and uses it for both `appointments` and `next_appointment`"},
+        {"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}
+      ],
+      "claim_ref": "C5",
+      "suggested_fix": "Add an 'HMS-15 REQ-10' API test. Use a clock that returns a different instant on each call, then assert that next_appointment matches the appointments the same response lists as upcoming. Otherwise remove the REQ-10 bullet from ut.md."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-2 AC4 (the only appointment after now is Cancelled → null) has no API test. After the cancel, the REQ-6 test still has a later Scheduled appointment, and the all-started null test runs before any cancel.",
+      "cites": [
+        {"ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/split.md#L98", "quote": "AC4: When the only appointment after now is Cancelled, the page shows \"No upcoming appointment\"."},
+        {"ref": "sample-system:api/test/patient-detail-next-appointment.test.ts#L62", "quote": "expect(await detailNext(app, 1)).toEqual({ id: laterId, starts_at: at(TUESDAY, '10:00'), doctor_name: 'Dr. Test Doctor One' });"}
+      ],
+      "suggested_fix": "Add an API test: cancel the patient's only upcoming Scheduled appointment and assert next_appointment is null."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The web REQ-3 check only asserts that the line contains the doctor name. It does not check that the name comes after the date/time. The fixture also uses the same doctor name in the table and in next_appointment, so the test cannot tell which source the line read.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L59", "quote": "expect(p.textContent).toContain('Test Doctor 001');"},
+        {"ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L35", "quote": "next_appointment: { id: 7, starts_at: NEXT_START, doctor_name: 'Test Doctor 001' },"}
+      ],
+      "suggested_fix": "Give next_appointment a doctor_name that differs from the table rows. Assert that the line text ends with that name after the link text."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/patient-detail-next-appointment.test.ts#L28", "quote": "it('HMS-15 REQ-5: next_appointment is null when the patient has no upcoming Scheduled appointment'"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L9", "quote": "Fixed \"now\" for every test: Monday 19 October 2026, 08:00 in Asia/Kolkata."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#claim:C1", "quote": "The repository gains `nextAppointment(id, now)`, which runs the shared next-appointment SQL for one patient."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#claim:C3", "quote": "The service reads `this.clock()` once and passes that instant to both appointments and nextAppointment."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "runs/run_01M7HYHSSG24BWQN7R2M4AZRF3/ide-answers.md#a-04", "quote": "answer: Date and time (proposed default)"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "REQ-10: each request uses its own clock instant (C5).",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/ut.md#L72"
+        },
+        {
+          "quote": "it('HMS-15 REQ-7: an appointment starting exactly at now is not next', async () =&gt; {",
+          "ref": "sample-system:api/test/patient-detail-next-appointment.test.ts#L44"
+        },
+        {
+          "quote": "reads `now = this.clock()` once and uses it for both `appointments` and `next_appointment`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#L72"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "ut.md lists a REQ-10 test ('each request uses its own clock instant'), but the API test file has no REQ-10 test. Nothing checks that the service reads the clock once for both appointments and next_appointment (CO-2)."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
