@@ -1,0 +1,124 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "step": "threat",
+  "attempt": 1,
+  "artifact_sha256": "7c66902e53fae8c9e166970cedad2a010035d1cb289d520f36b43a1678653ac1",
+  "package_sha256": "a074a459361ca5720fc469fb5be0c69d26441ef4601316731156d618712ad998",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "TM-R1", "score": 5, "reason": "All nine design components (CO-1 to CO-9) have at least one threat. EP-1 and EP-2 are covered through their components."},
+    {"id": "TM-R2", "score": 4, "reason": "Most threats fit their component: injection, client-supplied instant, data shape, unbounded scan. T-9 and T-13 are generic or in the wrong STRIDE category."},
+    {"id": "TM-R3", "score": 4, "reason": "Most mitigations cite code that checks out. T-2 and T-8 cite controls (starts_at index, paging) that do not limit the unbounded count scans they target."},
+    {"id": "TM-R4", "score": 4, "reason": "T-14 states the gap that reads are not audited. T-5 calls the grant-all MVP identity an existing control instead of stating it as an accepted risk."},
+    {"id": "TM-R5", "score": 4, "reason": "Short and readable. Threats are ordered by component, not by risk. The Known section mislabels which threats need new controls."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "traceability",
+      "text": "C14 cites ide-answers a-03, but this artifact has no answers list. a-03 was answered in the design step, so this cite crosses steps. Cite the upstream design claim instead.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#claim:C14", "quote": "The started filter compares with the server clock"},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C22", "quote": "The list filter is `started=true` compared with the server clock."}
+      ],
+      "claim_ref": "C14",
+      "suggested_fix": "Cite artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C22 for C14 instead of ide-answers.md#a-03."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-2's mitigation cites the starts_at index, but the new count has no lower bound (starts_at &lt; now). The index does not cap that scan, so the threat it names stays open while being listed as mitigated.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-2", "quote": "Existing controls: one query with count sub-selects (C15) and the starts_at index (C16). No new control."},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#components", "quote": "AND starts_at &lt; $3) AS awaiting_outcome"}
+      ],
+      "suggested_fix": "State it as an accepted risk, matching the existing unbounded Upcoming count, or name a control such as a status/starts_at index."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "T-8 cites paging at 20 rows, but the repository also runs an unpaged count(*) over the same filter. Paging limits the rows returned, not the scan.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-8", "quote": "Existing control: the list is paged with pageSize 20 (C8, C9)."},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L75", "quote": "SELECT count(*) AS n FROM appointment a ${clause}"}
+      ],
+      "suggested_fix": "Narrow T-8's mitigation to the size of the response and mention the total count scan, or accept it explicitly."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The Known section says T-6 and T-7 name controls implement must build. Their mitigations label them as existing controls.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#known", "quote": "names a control implement must build (T-3, T-6, T-7, T-9, T-13)"},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-7", "quote": "Existing control: the add helper binds the value as a numbered parameter (C4)."}
+      ],
+      "suggested_fix": "Make the Known list match the mitigation labels, or relabel T-6 and T-7 as existing controls with implement constraints."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "T-5 treats identify/requirePermission as a spoofing control. In the MVP every request is staff with every permission, so this is an accepted risk and should be labelled as one.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-5", "quote": "The MVP grants every permission to staff, unchanged here."},
+        {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+      ],
+      "suggested_fix": "Label T-5 'Accepted: pre-existing MVP identity, unchanged by HMS-21', as T-14 does."
+    },
+    {
+      "id": "F-6",
+      "severity": "minor",
+      "category": "style",
+      "text": "T-9 (web type rendering undefined data) is a correctness concern, not information disclosure. T-13 (weakened tests) is not repudiation. Both are in the wrong STRIDE category.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-9", "quote": "leading the page to render undefined data"},
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#item:T-13", "quote": "Weakening the tests could hide an unreviewed change to the dashboard shape."}
+      ],
+      "suggested_fix": "Recategorise T-9 and T-13 (for example as tampering with the contract), or replace them with threats specific to those components."
+    },
+    {
+      "id": "F-7",
+      "severity": "minor",
+      "category": "style",
+      "text": "Threats are listed in component order, not by risk, as the rubric's top clarity descriptor asks.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#threats", "quote": "T-1 DashboardService.get: awaitingOutcome count, information disclosure."}
+      ],
+      "suggested_fix": "Order the Threats section by risk, with the information disclosure and tampering threats first."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/dashboard.ts#L10", "quote": "requirePermission('dashboard:read')"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L12", "quote": "requirePermission('appointments:read')"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L65", "quote": "params.push(value);"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/validate.ts#L62", "quote": "oneOf&lt;T extends string | number&gt;(name: string, values: readonly T[], required = false)"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/validate.ts#L114", "quote": "throw new ValidationError({ ...this.errors })"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/app.ts#L46", "quote": "app.use(errorHandler);"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L41", "quote": "const size = this.config.pageSize;"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/config.ts#L41", "quote": "pageSize: 20,"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "Medical history leaves the database only for the"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22", "quote": "p.full_name AS patient_name"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L28", "quote": "Counts only: no contact details or medical history (DSH-9)."}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "runs/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ide-answers.md#a-03", "quote": "answer: started=true, server now (proposed default)"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L52", "quote": "(SELECT count(*) FROM appointment WHERE status = 'SCHEDULED' AND starts_at &gt; $3) AS upcoming"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#index:appointment_start_idx", "quote": "\"name\": \"appointment_start_idx\""}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Is an awaitingOutcome count with no lower bound acceptable as a performance risk, as the Upcoming count already is, or should implement add a status-aware index?", "ask_role": "tech_lead", "blocking": false, "finding_ref": "F-2"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The started filter compares with the server clock",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/threat.md#claim:C14"
+        },
+        {
+          "quote": "The list filter is `started=true` compared with the server clock.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C22"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "C14 cites ide-answers a-03, but this artifact has no answers list. a-03 was answered in the design step, so this cite crosses steps. Cite the upstream design claim instead."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "feedback.v1",
+  "step": "threat"
+}
