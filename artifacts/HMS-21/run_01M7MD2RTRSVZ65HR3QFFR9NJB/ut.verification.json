@@ -1,23 +1,32 @@
 {
   "artifact_path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/ut.md",
-  "artifact_sha256": "05bfa5c9fd7e26e7160f545006afc4c4d7c4bf44a845d5d1ca5cfde28c1ff86d",
-  "attempt": 1,
-  "band": null,
-  "caps": [
-    "reviewer-missing"
-  ],
-  "checks_sha256": "f3c458a7abf328065da0ad7f0d5b1a97d7d39ee38b1ff835975fca110b4e1594",
+  "artifact_sha256": "869cd948ae237cdd7dc6523c0169d39ab7ae1d31a568028ccb2d384640922937",
+  "attempt": 2,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "009e9b2fe0dc94486644a6af3f15d551ca717db0755c01d53f108c2ce118bbcc",
   "claims": {
     "total": 9,
     "verified": 9
   },
-  "decided_at": "2026-11-17T10:45:49Z",
+  "decided_at": "2026-11-17T10:53:43Z",
   "decided_by": "tsl@0.1.6",
   "findings_dropped": [],
-  "findings_kept": [],
-  "gate_failures": [
-    "H3"
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
   ],
+  "gate_failures": [],
   "inputs": [
     {
       "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impl.md",
@@ -39,31 +48,31 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "322f3f826402b9c36043e09e50fa6dfc9b3def8a6094069f1897f2113f310a50",
   "product_changes": [
     {
       "base_sha": "2a3757c7624e675192e9278c0e8331cf32620430",
-      "diff_sha256": "a36ea24ea3aeb382d9045af5b5bec5e4b67e44c5c92aa87722fb0d73ebb6f467",
+      "diff_sha256": "e1b2c5f2a0eeda7352038830aedc6d6e9337d284fa99363404b8bd6498aa85b4",
       "repo": "sample-system",
-      "tree_sha": "ceb4be7e3a52d89cc7989ee97e33e1e24dd25039"
+      "tree_sha": "f73ea95ff1df727046f6be3b30394389e0287459"
     }
   ],
-  "review_sha256": "56e6d668a747c3efcb77ddca78b3115fd118f7620f1f498c860cb887a8f6f10c",
+  "review_sha256": "a4ff9d43767e6aa37eb0579ef483af844d4f69903a21b75ac2199d7e151b5f15",
   "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": null,
+    "S3": 4.25,
     "S4": 0,
     "S5": "fresh",
     "S6": {
       "files": 3,
-      "lines": 206,
+      "lines": 211,
       "sensitive": false
     }
   },
-  "signature": "2BdeGGhp_gNz5RbnlUCuBLJ4WuNFXR-pxU4n2ooj8FEzs0Dv0OOf71drGlHx2IXVSaS_nAR-7ZlzgTTJwuAAAw",
+  "signature": "jMKi4hbObtkiTy0-19i-hZlCA84oxpLd195NZptwtkmGzn6_4kgckIWaRPyoGEn0VPPyGfHmtIMZ4cufhUGsBA",
   "skill": "unit-test@1.2.0",
   "step": "ut",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

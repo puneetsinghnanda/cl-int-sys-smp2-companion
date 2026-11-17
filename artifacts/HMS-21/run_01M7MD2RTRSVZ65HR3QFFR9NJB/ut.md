@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M7MD2RTRSVZ65HR3QFFR9NJB
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.2.0
 inputs:
   - {path: artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impl.md, sha256: 603d12bce385e4b5a6b74b10ce66a08c29fab4a69f57d6b55fba5d9ab524da1a}
@@ -13,8 +13,8 @@ pack_sha: {sample-system: 7681f87749883d71abb4011d118366ca1242e1cc}
 code:
   - repo: sample-system
     base_sha: 2a3757c7624e675192e9278c0e8331cf32620430
-    head_sha: ceb4be7e3a52d89cc7989ee97e33e1e24dd25039
-    diff_sha256: a36ea24ea3aeb382d9045af5b5bec5e4b67e44c5c92aa87722fb0d73ebb6f467
+    head_sha: f73ea95ff1df727046f6be3b30394389e0287459
+    diff_sha256: e1b2c5f2a0eeda7352038830aedc6d6e9337d284fa99363404b8bd6498aa85b4
     files: [api/test/dashboard-awaiting-outcome.test.ts, web/src/__tests__/AppointmentsPage.test.tsx, web/src/__tests__/DashboardPage.test.tsx]
 claims:
   - {id: C1, text: "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a `fixed clock`.", cites: ["context/test-strategy.md#layers"]}
@@ -71,6 +71,9 @@ Each test name starts with HMS-21 and its REQ id (C2). The test counts and pass/
 - `web/src/__tests__/AppointmentsPage.test.tsx` (new, 2 tests):
   - REQ-6: `started` from the URL reaches the API call.
   - REQ-6 edge: without it, no `started` is sent.
+
+Retry fixes:
+- H3 (attempt 1): the web build failed because `AppointmentsPage.test.tsx` read the first argument of a `fetch` mock declared with no parameters. The test was wrong, not the code. The mock now records each fetched URL in a typed list, and the tests assert on that list. No production code changed.
 
 ## Known
 - REQ-1 to REQ-11 and S-1 to S-4: each is covered by at least one named test above.
