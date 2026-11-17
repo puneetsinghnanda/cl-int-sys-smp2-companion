@@ -1,0 +1,155 @@
+{
+  "artifact_sha256": "95e46c99bd938b46498b71c4e6d688d50e2695911f0cf9e0fafe5a560cdc9816",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('patients:read'),",
+          "ref": "sample-system:api/src/routes/patients.ts#L28"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "nextAppointmentSql('$1', '$2'), [id, now])",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L157"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "LEFT JOIN LATERAL (${nextAppointmentSql('pg.id', p(now))}) n ON true",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L138"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "function nextAppointmentSql(patientId: string, now: string): string {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L83"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface NextAppointment {",
+          "ref": "sample-system:api/src/types.ts#L95"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "React renders the doctor name as escaped text inside a router `Link` to `/appointments/{id}`",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/secrev.md#L59"
+        },
+        {
+          "quote": "{' '}with {p.next_appointment.doctor_name}",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L83"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword: the Link text is the formatted date/time; the doctor name follows as escaped JSX text outside the Link.",
+      "text": "The summary says the doctor name renders inside the router Link. In the code, the Link text is the date/time and the doctor name comes after the Link as plain text. It is still escaped, so the security conclusion holds, but the description is wrong."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The API type PatientDetail gains `next_appointment: NextAppointment | null`.",
+          "ref": "artifacts/HMS-15/run_01M7HYHSSG24BWQN7R2M4AZRF3/impl.md#claim:C4"
+        },
+        {
+          "quote": "export interface NextAppointment {",
+          "ref": "sample-system:api/src/types.ts#L95"
+        }
+      ],
+      "claim_ref": "C7",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/src/types.ts#L95-L99 for the NextAppointment fields.",
+      "text": "C7 says the field shape is id, start time and doctor name, but its cite (impl.md claim C4) only gives the type name NextAppointment. The fields are defined in api/src/types.ts."
+    }
+  ],
+  "package_sha256": "e76c87eac09453a2b432c36cf76fd1d3dc9f0c6964c840a3e92afec98b4d5332",
+  "questions": [],
+  "recorded_at": "2026-11-17T05:18:12Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The change adds no route or logging. SQL values are bound (L138, L157) and the web renders data as escaped JSX. The only real weakness, the interpolating SQL fragment, is reported as SF-1.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 cites the exact interpolation line (L87). Code claims C2, C4, C5 and C6 hit the right lines. C7 cites an impl.md claim that names the type but not its fields.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Minor is right for SF-1: every current caller passes a column ref or a $n placeholder, so nothing can be exploited today.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "The fix direction is clear: restrict the arguments to placeholders or column refs. Part of the advice, keeping the function private, already holds, since nextAppointmentSql is not exported.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives. SF-1 is correctly framed as hardening, not as an exploitable flaw.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M7HYHSSG24BWQN7R2M4AZRF3",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
