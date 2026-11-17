@@ -1,0 +1,159 @@
+{
+  "artifact_sha256": "603d12bce385e4b5a6b74b10ce66a08c29fab4a69f57d6b55fba5d9ab524da1a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The new totals field is named `awaitingOutcome`.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C21"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The list filter is `started=true` compared with the server clock.",
+          "ref": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md#claim:C22"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED' AND starts_at &gt; $3",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L52"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "params.push(value);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L65"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "f.oneOf('status', APPOINTMENT_STATUSES)",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "'doctorId', 'patientId', 'status', 'from', 'to'",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L14"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const DATA: Dashboard = {",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "clock = new Date(at(MONDAY, '09:20'));",
+          "ref": "sample-system:api/test/dashboard.test.ts#L21"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Invalid input is 400 with one",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [],
+  "package_sha256": "22b2689768e3163ca2ab4a3432adc5809ce47981df954d7b02d096f71bb3f195",
+  "questions": [],
+  "recorded_at": "2026-11-17T10:41:06Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "Each of CO-1 to CO-8 is in the diff as designed: the awaiting_outcome sub-select on $3, both Dashboard types, the oneOf('started') check that passes startedBefore from this.clock(), the repo bound, the tile link and the whitelist. CO-9 needs no migration.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "Rules stay in the service and SQL in the repository. The value is bound through the existing add/params.push helper. An invalid value raises a ValidationError field error through Fields.oneOf. Nothing new is logged.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "8 files, +20/-4 lines, all of them in the design's component list. Existing tiles, the next query and the other totals are unchanged.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Any started value other than 'true' is a 400 field error. When started is absent, no filter applies. The bound is strict (&lt;), so an appointment at exactly now is not counted, which matches S-1 AC3. A zero count comes from count(*).",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The Summary and Changes sections match the diff file by file, including the test expectations (awaitingOutcome: 0 at 09:20 and fixture value 3).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 5.0,
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}

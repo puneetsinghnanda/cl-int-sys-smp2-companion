@@ -1,0 +1,66 @@
+{
+  "artifact_path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/impl.md",
+  "artifact_sha256": "603d12bce385e4b5a6b74b10ce66a08c29fab4a69f57d6b55fba5d9ab524da1a",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "519b50eba9715b3ae0e2100633e63db6a4cdce20e5824a4015b6f373a3f176e6",
+  "claims": {
+    "total": 11,
+    "verified": 11
+  },
+  "decided_at": "2026-11-17T10:41:12Z",
+  "decided_by": "tsl@0.1.6",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/design.md",
+      "sha256": "7af71278d91675313b29a7418b6bbc21ac67eec00434e34a677eb231824f5a7d",
+      "verification_sha256": "6f0c3417f898c08893cfafe068c4a284630d595eef4508add0b68e5f67cc9d53"
+    },
+    {
+      "path": "artifacts/HMS-21/run_01M7MD2RTRSVZ65HR3QFFR9NJB/split.md",
+      "sha256": "dcc06d1291e79f057d47f662fdc9b9f93994a0b3c695173acb9df34f900df06e",
+      "verification_sha256": "bd8bc6d943771830a53a84a9500e6650e187d7c8934fa337a94b4ee918f50960"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "8d283e2bdf2ecec0d669a9ce07d56cc0433fd23bc7c6ec90b5647e5487ca291d",
+      "repo": "sample-system",
+      "tree_sha": "118d6ca844070e96ca87772869b2160ed40c7cac"
+    }
+  ],
+  "review_sha256": "3425c679abe31cb1e93f7b6f523c5d99c1d6d4b261d8bf1fb7695ca418cadb8d",
+  "run_id": "run_01M7MD2RTRSVZ65HR3QFFR9NJB",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 5.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 8,
+      "lines": 24,
+      "sensitive": false
+    }
+  },
+  "signature": "13JOjvabVA9ejNZVOogTeK3Ehdq99AyKU99FpODr4QP-p_GS_nlKnIzIz8K3GfH19QphikOM9A5WPmhZVHohAg",
+  "skill": "implement@1.2.0",
+  "step": "impl",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
