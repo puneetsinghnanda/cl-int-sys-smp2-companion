@@ -1,0 +1,210 @@
+{
+  "artifact_sha256": "04302d18f1d436cfe32d683d1b0351e1a3860bf0b94b48bdb6696a98fc6fa661",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:patient.created_at\"",
+          "ref": "context/generated/db-schema.json#column:patient.created_at"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/dashboard.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/dashboard"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A run of whole hospital-local days ending today: Today, Last 7 days or Last 30 days.",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient row holds identity, contact details and the basic medical history",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, created_at (proposed default)",
+          "ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: All statuses from tile (proposed default)",
+          "ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "should a search already typed on the list be cleared so the list shows exactly the counted patients",
+          "ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/open-questions.md#q-01"
+        },
+        {
+          "quote": "The filtered patient list keeps its current `search`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-9"
+        },
+        {
+          "quote": "None open.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#open-questions"
+        }
+      ],
+      "id": "F-1",
+      "severity": "blocker",
+      "suggested_fix": "Carry ended-run Q-01 forward as an open blocking question (product owner), and set REQ-9 to unknown until it is answered.",
+      "text": "The ended run left blocking Q-01 (clear or keep a typed search when the list is opened from the tile) unanswered. The artifact reuses that run's answers, but it ignores this question, says 'None open' and marks REQ-9 known."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "so it holds exactly the patients the tile counts",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-7"
+        },
+        {
+          "quote": "The filtered patient list keeps its current `search`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-9"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Qualify REQ-7 ('when no search is active') or make it depend on the answer to ended-run Q-01.",
+      "text": "REQ-7 says the tile's list holds exactly the counted patients, but REQ-9 keeps the current search. A typed search can hide counted patients, so the two REQs conflict."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "answers: []",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#answers"
+        },
+        {
+          "quote": "Mismatch: ticket AC6 (L24) says the list keeps its current status filter.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#open-questions"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add the reused answers A-01 and A-02 to front-matter answers, with a mismatch on A-02 against ticket AC6 (L24).",
+      "text": "The mismatch between A-02 and ticket AC6 appears only in body prose. The front matter has an empty answers list, so it records no mismatch entry for A-02."
+    }
+  ],
+  "package_sha256": "a3e9ad7338befb10428ed7f6f6fe58d365df5f70e5f2c81f7c6add01fdb487f1",
+  "questions": [],
+  "recorded_at": "2026-11-18T08:47:39Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All nine acceptance criteria map to REQ-1..REQ-15; the AC6 status filter is overridden by answer A-02 and the override is stated.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Compound ACs are split (AC6, AC8, AC9). REQ-13 'rest of the dashboard is unchanged' is broad but still checkable by regression.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Most statuses cite ticket lines or answers, but REQ-9 (keep search) is marked known while the ended run's blocking Q-01 about clearing search is still unanswered.",
+      "score": 3
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The status-filter clash is raised and answered, but the parallel search-vs-count clash, already raised as Q-01 in the ended run, is not mentioned.",
+      "score": 2
+    },
+    {
+      "id": "RR-R5",
+      "reason": "No new questions, which is right for answered points, but the artifact neither cites nor carries forward the open blocking Q-01.",
+      "score": 3
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and consistent wording; glossary gaps for Registered and Contact details are named with reasons.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.6,
+  "run_id": "run_01M7PX5XB0C1P9DTAW82D9MDVX",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7PX5XB0C1P9DTAW82D9MDVX",
   "step": "req",
-  "attempt": 1,
-  "artifact_sha256": "04302d18f1d436cfe32d683d1b0351e1a3860bf0b94b48bdb6696a98fc6fa661",
-  "package_sha256": "a3e9ad7338befb10428ed7f6f6fe58d365df5f70e5f2c81f7c6add01fdb487f1",
+  "attempt": 2,
+  "artifact_sha256": "cce290751712fe7cab482e213a87e79b5617807ebafe66bc494ea520b72f724a",
+  "package_sha256": "e09dbbdbd700d212644682dc3f798835c6f48a3138e4f87f3448ff2e34de9146",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,49 +12,27 @@
     "version": "0.1.6",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 3.6,
+  "rubric_score": 4.7,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "All nine acceptance criteria map to REQ-1..REQ-15; the AC6 status filter is overridden by answer A-02 and the override is stated."},
-    {"id": "RR-R2", "score": 4, "reason": "Compound ACs are split (AC6, AC8, AC9). REQ-13 'rest of the dashboard is unchanged' is broad but still checkable by regression."},
-    {"id": "RR-R3", "score": 3, "reason": "Most statuses cite ticket lines or answers, but REQ-9 (keep search) is marked known while the ended run's blocking Q-01 about clearing search is still unanswered."},
-    {"id": "RR-R4", "score": 2, "reason": "The status-filter clash is raised and answered, but the parallel search-vs-count clash, already raised as Q-01 in the ended run, is not mentioned."},
-    {"id": "RR-R5", "score": 3, "reason": "No new questions, which is right for answered points, but the artifact neither cites nor carries forward the open blocking Q-01."},
-    {"id": "RR-R6", "score": 4, "reason": "Plain and consistent wording; glossary gaps for Registered and Contact details are named with reasons."}
+    {"id": "RR-R1", "score": 5, "reason": "All nine ACs map to REQ-1..REQ-15. The AC6 search and status-filter parts are overridden by cited answers, and the overrides are stated."},
+    {"id": "RR-R2", "score": 4, "reason": "Compound ACs are split (AC6, AC8, AC9). REQ-13 'rest of the dashboard is unchanged' is broad but can still be checked by regression."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites a ticket line, a context fact or an answer. REQ-9 is now decided by this run's answered Q-01 (prior F-1 resolved)."},
+    {"id": "RR-R4", "score": 5, "reason": "Both AC6 clashes (status filter, search) are recorded with the answer and the ticket line, each with a stated mismatch. REQ-7 is now qualified by REQ-9 (prior F-2 resolved)."},
+    {"id": "RR-R5", "score": 4, "reason": "No needless questions. The search question was answered after being routed to the tech lead, not to the product owner as in the ended run. The artifact does not note this."},
+    {"id": "RR-R6", "score": 5, "reason": "Plain and consistent wording. The missing glossary terms Registered and Contact details are named with reasons."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "blocker",
-      "category": "completeness",
-      "text": "The ended run left blocking Q-01 (clear or keep a typed search when the list is opened from the tile) unanswered. The artifact reuses that run's answers, but it ignores this question, says 'None open' and marks REQ-9 known.",
-      "cites": [
-        {"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/open-questions.md#q-01", "quote": "should a search already typed on the list be cleared so the list shows exactly the counted patients"},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-9", "quote": "The filtered patient list keeps its current `search`."},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#open-questions", "quote": "None open."}
-      ],
-      "suggested_fix": "Carry ended-run Q-01 forward as an open blocking question (product owner), and set REQ-9 to unknown until it is answered."
-    },
-    {
-      "id": "F-2",
-      "severity": "major",
-      "category": "consistency",
-      "text": "REQ-7 says the tile's list holds exactly the counted patients, but REQ-9 keeps the current search. A typed search can hide counted patients, so the two REQs conflict.",
-      "cites": [
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-7", "quote": "so it holds exactly the patients the tile counts"},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-9", "quote": "The filtered patient list keeps its current `search`."}
-      ],
-      "suggested_fix": "Qualify REQ-7 ('when no search is active') or make it depend on the answer to ended-run Q-01."
-    },
-    {
-      "id": "F-3",
       "severity": "minor",
       "category": "traceability",
-      "text": "The mismatch between A-02 and ticket AC6 appears only in body prose. The front matter has an empty answers list, so it records no mismatch entry for A-02.",
+      "text": "REQ-9 overrides ticket AC6 using an answer to a question that was routed to the tech lead. The ended run had routed the same UX question to the product owner. The artifact records who answered but not this change of role.",
       "cites": [
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#answers", "quote": "answers: []"},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#open-questions", "quote": "Mismatch: ticket AC6 (L24) says the list keeps its current status filter."}
+        {"ref": "runs/run_01M7PX5XB0C1P9DTAW82D9MDVX/open-questions.md#L16", "quote": "ask: tech lead"},
+        {"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/open-questions.md#L16", "quote": "ask: product owner"},
+        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#open-questions", "quote": "Answer: \"It should be cleared\", by eng-dbe4."}
       ],
-      "suggested_fix": "Add the reused answers A-01 and A-02 to front-matter answers, with a mismatch on A-02 against ticket AC6 (L24)."
+      "suggested_fix": "In the Q-01 note, state that it was answered by the tech lead rather than the product owner, so the stage approver can confirm the AC6 override."
     }
   ],
   "claims_checked": [
@@ -67,7 +45,8 @@
     {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/glossary.md#period", "quote": "A run of whole hospital-local days ending today: Today, Last 7 days or Last 30 days."}]},
     {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "A patient row holds identity, contact details and the basic medical history"}]},
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-01", "quote": "answer: Yes, created_at (proposed default)"}]},
-    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02", "quote": "answer: All statuses from tile (proposed default)"}]}
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02", "quote": "answer: All statuses from tile (proposed default)"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "runs/run_01M7PX5XB0C1P9DTAW82D9MDVX/open-questions.md#q-01", "quote": "answer: It should be cleared"}]}
   ],
   "questions": []
 }
