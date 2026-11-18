@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "54c52c71ac8f213d94ad2e67542b85c7895964857c5cb0412d0bc7fc575a8b84",
-  "attempt": 1,
+  "artifact_sha256": "1004315d2dc4c7d1d5ff4f6c4b79e5ff84b9d59b1e14e1e70412523034972878",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -63,14 +63,44 @@
       "verdict": "supported"
     },
     {
-      "cites": [],
+      "cites": [
+        {
+          "quote": "Monday 19 October 2026, 08:00 in Asia/Kolkata",
+          "ref": "sample-system:api/test/helpers.ts#L9"
+        }
+      ],
       "claim_id": "C7",
-      "verdict": "not-checked"
+      "verdict": "supported"
     },
     {
-      "cites": [],
+      "cites": [
+        {
+          "quote": "doctor 1: 15-minute slots, Mon–Fri 09:00–12:00",
+          "ref": "sample-system:api/test/helpers.ts#L23"
+        }
+      ],
       "claim_id": "C8",
-      "verdict": "not-checked"
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "allergies: ['Penicillin'], medicalNotes: 'Invented note'",
+          "ref": "sample-system:api/test/helpers.ts#L46"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "HMS-3 REQ-2/REQ-4: counts a No-show that starts in the selected period",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
     }
   ],
   "findings": [
@@ -78,78 +108,27 @@
       "category": "completeness",
       "cites": [
         {
-          "quote": "REQ-7: Today, Last 7 days and Last 30 days all give the same count.",
+          "quote": "must not contain the fixture patient's phone (`+91`), email, allergies (`Penicillin`)",
           "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
         },
         {
-          "quote": "a Scheduled appointment started on 10 October, before Last 30 days begins on 20 October",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-3"
+          "quote": "fullName: 'Test Patient One', dateOfBirth: '1990-05-01', gender: 'FEMALE', phone: '+91 00000 20001',",
+          "ref": "sample-system:api/test/helpers.ts#L45"
         },
         {
-          "quote": "Not covered at unit level:",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#summary"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Book an appointment, move the fixed clock forward more than 30 days, then check the count under every period and that the started list includes it. Otherwise list S-1 AC4, S-3 AC2 and S-4 AC2 under Not covered.",
-      "text": "No test uses a Scheduled appointment that started weeks earlier or before Last 30 days (S-3 AC2, S-1 AC4, S-4 AC2). All fixtures are Monday/Tuesday, so a fixed 30-day window would pass. These ACs are not listed under Not covered."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "REQ-10/REQ-11: `upcoming` and the next list hold only future appointments.",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
-        },
-        {
-          "quote": "Given a Scheduled appointment started before now exists, when staff open the dashboard",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-5"
-        }
-      ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "In the new API test, assert the full totals object (appointmentsToday, completed, cancelled, noShows, upcoming) with the awaiting appointment present.",
-      "text": "S-5 AC1 needs every other tile unchanged while an awaiting appointment exists. The new API test checks only upcoming and the next list. The web test pins tiles from a mocked fixture, not from computed totals."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "HMS-3 REQ-2/REQ-4: counts a No-show that starts in the selected period",
-          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts"
-        },
-        {
-          "quote": "REQ-1/REQ-2: the count is 1.",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Start test names with HMS-21 REQ-n, as the HMS-3 tests do, and show those names in the artifact.",
-      "text": "Earlier ticket tests put the ticket before the requirement id (HMS-3 REQ-2). This artifact shows bare REQ-n names, which repeat across tickets and make the IDs ambiguous."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "carry no phone, email, allergies, notes or other medical data",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
-        },
-        {
-          "quote": "has a blood group, allergies, chronic conditions, current medications, notes",
+          "quote": "has a blood group, allergies, chronic conditions, current medications, notes and every contact detail the patient record holds",
           "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-6"
         }
       ],
-      "id": "F-4",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Name every medical-history and contact field the test seeds and checks is absent.",
-      "text": "S-6 seeds blood group, chronic conditions and current medications. The artifact names only phone, email, allergies and notes, so it does not say whether those fields are seeded and checked as absent."
+      "suggested_fix": "Seed a patient in the test with email and every medical-history field and assert none appear. Otherwise drop the email wording and list the unseeded S-6 fields under Not covered.",
+      "text": "The artifact says the test checks that the fixture patient's email is absent, but patient 1 has no email seeded. S-6 also needs blood group, conditions and medications seeded. These seeding gaps are not listed under Not covered."
     }
   ],
-  "package_sha256": "b40c0598400667391bb3bb669092b0bc19ae53e08d9fe1a497c8143898c1924e",
+  "package_sha256": "7da4473f75a3d1e2f4cde33da0cff213267e6212092c9f44e6f81095fb884a7f",
   "questions": [],
-  "recorded_at": "2026-11-18T11:38:38Z",
+  "recorded_at": "2026-11-18T11:44:56Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -160,31 +139,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Tests cover the count, the started filter, the tile, the link and URL forwarding at both layers. They do not cover appointments that started weeks earlier or before Last 30 days (S-1 AC4, S-3 AC2, S-4 AC2).",
-      "score": 4
+      "reason": "Tests cover the count, the started filter, the 400 path, the tile, its link and URL forwarding. The weeks-later test now covers S-1 AC4, S-3 AC2 and S-4 AC2. The two gaps left (S-1 AC3, S-5 AC3) are listed with reasons.",
+      "score": 5
     },
     {
       "id": "UT-R2",
-      "reason": "Assertions check results you can observe: exact counts, list ids equal to the count, 400 field-error bodies and every tile's link. The API side checks other totals only through upcoming and the next list.",
-      "score": 4
+      "reason": "Assertions check exact counts, list ids against the count, 400 field-error bodies, the whole totals object with toEqual, and every tile's text and href in order.",
+      "score": 5
     },
     {
       "id": "UT-R3",
-      "reason": "Covers the exact-now boundary (10:14, 10:15, +1 ms), zero count, the previous day, closed statuses, and three bad started values returning 400. Old and local-midnight edges are missing.",
+      "reason": "Covers the strict boundary at now (10:14, 10:15, +1 ms), zero, the next day, weeks later, closed statuses and three bad started values. The local-midnight case is not tested, and S-6 fields are only partly seeded.",
       "score": 4
     },
     {
       "id": "UT-R4",
-      "reason": "Uses Vitest with Supertest and a throwaway database for the API, and jsdom tests for the web, where the layout says they go. Test names show bare REQ ids, not the ticket prefix earlier tickets use.",
-      "score": 4
+      "reason": "API tests use Vitest, Supertest and their own throwaway DB, skipped without PostgreSQL. Web tests use jsdom and sit where the layout puts them. Names start with HMS-21 REQ-n, like the HMS-3 tests.",
+      "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "No pass counts or coverage are invented. tests and coverage are left out until the verifier runs, and the coverage step is shown as skipped (exit 78) in checks.json.",
+      "reason": "No counts or coverage are invented. tests and coverage are left to the verifier, and checks.json shows coverage skipped with exit 78.",
       "score": 5
     }
   ],
-  "rubric_score": 4.1,
+  "rubric_score": 4.8,
   "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
   "schema": "review.v1",
   "status": "ok",
