@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7PX5XB0C1P9DTAW82D9MDVX",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "d182e60f3214d20d0154b39b06ff289ed5e07cb64dd82446cd7dcc814e926c73",
-  "package_sha256": "8493262b549b14396bc533ec5a4f0fc06cf81fed46d227979af95745622371a7",
+  "attempt": 2,
+  "artifact_sha256": "1d47a1673604661a2d1cf6ed798cd443c3ab8d62d018ab1b7b387806f1052cbf",
+  "package_sha256": "12a7a0868c38740b12727f0cdf239b79261cb5bb382dee992c3b218a83e89fcd",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,58 +12,35 @@
     "version": "0.1.6",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.3,
+  "rubric_score": 4.75,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All 15 known REQs are traced: S-1 REQ-1..4,11; S-2 REQ-5; S-3 REQ-6..10; S-4 REQ-12..15. None are assumed or unknown."},
-    {"id": "SS-R2", "score": 4, "reason": "S-1 to S-3 each deliver one outcome. S-4 bundles 'dashboard unchanged' with 'free of personal data'."},
-    {"id": "SS-R3", "score": 3, "reason": "The ACs are Given/When/Then and the S-1 time-zone AC discriminates. The S-2 period-edge cases and the time-zone boundary on the S-3 list filter are missing, and S-4 leaves out the doctor tiles partition."},
-    {"id": "SS-R4", "score": 5, "reason": "Values come from the intent or are derived inline (UTC+05:30 offset, 20 October start of Last 30 days, 21 patients vs 20 per page)."},
-    {"id": "SS-R5", "score": 5, "reason": "Terms match the glossary and the intent, and the body mirrors the front matter."}
+    {"id": "SS-R1", "score": 5, "reason": "All 15 known REQs are traced: S-1 REQ-1..4,11; S-2 REQ-5; S-3 REQ-6..10; S-4 REQ-12,13; S-5 REQ-14,15. None are assumed or unknown."},
+    {"id": "SS-R2", "score": 5, "reason": "Each story now delivers one outcome. Personal-data checks moved from S-4 to S-5 (prior F-4 resolved)."},
+    {"id": "SS-R3", "score": 4, "reason": "S-2 AC2/AC3 test the first local day on both sides of midnight, S-3 AC1 tests the list across the local boundary, S-4 AC4 covers doctor tiles. S-2 AC1 has a relative Then, and the existing tiles' links are not checked."},
+    {"id": "SS-R4", "score": 5, "reason": "Instants are derived inline with the UTC+05:30 offset; the 12 Nov and 20 Oct period starts follow from the glossary rule; 21 patients vs 20 per page comes from REQ-8."},
+    {"id": "SS-R5", "score": 5, "reason": "Terms match the glossary and intent; the body mirrors the front matter; titles are user-facing."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "S-2 tests no period edge. P3 (15 Nov, in Last 7 days) and P4 (10 Oct, outside Last 30 days) sit far from the first day, so a rolling now-minus-N-days window or an off-by-one start date (11 Nov, 19 Oct) still passes.",
+      "severity": "minor",
+      "category": "style",
+      "text": "S-2 AC1 has a relative Then ('updates the same way the Completed and Cancelled tiles do') and no observable expected value. AC2 to AC4 already test the switch concretely, so AC1 is weak or redundant.",
       "cites": [
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-2", "quote": "patient P3 was created on 15 November local and the period is Today"},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-2", "quote": "patient P4 was created on 10 October local (before the first day of Last 30 days, 20 October)"},
-        {"ref": "context/glossary.md#period", "quote": "A run of whole hospital-local days ending today: Today, Last 7 days or Last 30 days."}
+        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-2", "quote": "then the New patients count updates the same way the Completed and Cancelled tiles do"}
       ],
-      "suggested_fix": "Add ACs with patients at 00:30 local on the first day (12 Nov / 20 Oct, counted) and 23:30 local on the day before (11 Nov / 19 Oct, not counted)."
+      "suggested_fix": "State a concrete Then for S-2 AC1, for example the count changes from the Today value to the Last 7 days value, or drop it in favour of AC2."
     },
     {
       "id": "F-2",
-      "severity": "major",
-      "category": "completeness",
-      "text": "S-3 never checks the list filter against the Asia/Kolkata day boundary. A list that filters by UTC dates passes AC1, because its patients lie well outside the period, so the list total can differ from the tile count near local midnight.",
-      "cites": [
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-3", "quote": "patients exist that were created before that period"},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-3", "quote": "The period's days are whole hospital-local days in `Asia/Kolkata`."}
-      ],
-      "suggested_fix": "Add an S-3 AC that reuses P1/P2 from S-1 AC2: the list opened from the tile (Today) includes P1 and excludes P2."
-    },
-    {
-      "id": "F-3",
-      "severity": "major",
-      "category": "completeness",
-      "text": "REQ-13 (rest of dashboard unchanged) is checked only for the Completed/Cancelled tiles and upcoming appointments. The dashboard also has tiles that count doctors, and no AC covers that partition.",
-      "cites": [
-        {"ref": "context/glossary.md#dashboard", "quote": "tiles that count patients, doctors and appointments"},
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-4", "quote": "then the Completed and Cancelled tiles and the next upcoming appointments are the same as before this change."}
-      ],
-      "suggested_fix": "Extend S-4 AC3, or add an AC, so that the doctor tiles and each other existing tile show the same counts as before the change."
-    },
-    {
-      "id": "F-4",
       "severity": "minor",
-      "category": "style",
-      "text": "S-4 bundles two outcomes, regression of the existing dashboard and absence of personal data, as its title shows.",
+      "category": "completeness",
+      "text": "The glossary says each dashboard tile links to the list it counts. S-4 checks that existing tiles show the same counts, but no AC checks that their links are unchanged (REQ-13).",
       "cites": [
-        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-4", "quote": "The rest of the dashboard stays as it is and stays free of personal data"}
+        {"ref": "context/glossary.md#dashboard", "quote": "tiles that count patients, doctors and appointments, each linking to the list it"},
+        {"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-4", "quote": "then the tiles that count doctors show the same counts as before this change."}
       ],
-      "suggested_fix": "Split S-4 into one story for REQ-12/13 and one for REQ-14/15."
+      "suggested_fix": "Add an S-4 AC: selecting an existing tile (for example Total patients) opens the same list as before this change."
     }
   ],
   "claims_checked": [
@@ -74,7 +51,8 @@
     {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-7", "quote": "The list opened from the tile shows all statuses (`All statuses from tile`)"}]},
     {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-8", "quote": "The filtered patient list stays at `20 per page`."}]},
     {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-9", "quote": "When the list is opened from the tile, a search already typed on the list is `cleared`."}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]}
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/glossary.md#dashboard", "quote": "tiles that count patients, doctors and appointments"}]}
   ],
   "questions": []
 }
