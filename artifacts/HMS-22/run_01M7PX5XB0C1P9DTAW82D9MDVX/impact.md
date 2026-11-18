@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M7PX5XB0C1P9DTAW82D9MDVX
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.5.0
 inputs:
   - path: artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md
@@ -19,6 +19,9 @@ inputs:
     sha256: 2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "The dashboard test that asserts totals with toEqual and the typed web dashboard fixture are now listed as readers that must change."
 claims:
   - id: C1
     text: "The dashboard route is declared in `api/src/routes/dashboard.ts`."
@@ -77,6 +80,15 @@ claims:
   - id: C19
     text: "Registered in the period means the patient's `created_at` falls in the period."
     cites: ["artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-2"]
+  - id: C20
+    text: "The API dashboard test asserts the whole totals object with `expect(res.body.totals).toEqual({`."
+    cites: ["sample-system:api/test/dashboard.test.ts#L32"]
+  - id: C21
+    text: "The web dashboard test builds a typed totals fixture starting `totals: { patients: 200`."
+    cites: ["sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"]
+  - id: C22
+    text: "Other API dashboard tests check totals with `toMatchObject`, which tolerates an added field."
+    cites: ["sample-system:api/test/dashboard-no-shows.test.ts#L36"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 assumed: []
@@ -85,17 +97,17 @@ questions: []
 modules:
   - id: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "sample-system:api/src/services/patientService.ts#L24-L31"]
+    cites: ["context/generated/module-map.json#module:sample-system:api", "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "sample-system:api/src/services/patientService.ts#L24-L31", "sample-system:api/test/dashboard.test.ts#L32"]
   - id: module:sample-system:web
     change: changed
-    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage"]
+    cites: ["context/generated/module-map.json#module:sample-system:web", "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage", "sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"]
   - id: module:sample-system:db
     change: existing
     cites: ["context/generated/module-map.json#module:sample-system:db", "sample-system:db/migrations/20261016T090200__create_patients.sql#L25"]
 apis:
   - id: http:GET:/api/dashboard
     change: changed
-    cites: ["context/generated/api-inventory.json#http:GET:/api/dashboard"]
+    cites: ["context/generated/api-inventory.json#http:GET:/api/dashboard", "sample-system:api/test/dashboard.test.ts#L32"]
   - id: http:GET:/api/patients
     change: changed
     cites: ["context/generated/api-inventory.json#http:GET:/api/patients", "sample-system:api/src/services/patientService.ts#L24-L31"]
@@ -107,14 +119,17 @@ answers: []
 ---
 # Impact analysis: HMS-22
 
+## Resolves
+- F-1: The dashboard test that asserts totals with toEqual and the typed web dashboard fixture are now listed as readers that must change.
+
 ## Summary
-The change adds a New patients count to the dashboard API and tile, and a registration-period filter to the patient list API and page. The dashboard already computes a period window in the hospital time zone with `lastDays` (C3, C4), so the new count can reuse it. The patient list today filters only by text search and status (C11), so `GET /api/patients` must gain an optional filter on `created_at`. That filter must use the same local-day bounds as the tile, or the count and the list will disagree near local midnight. No migration is expected, because `patient.created_at` exists and is already indexed (C15, C16).
+The change adds a New patients count to the dashboard API and tile, and a registration-period filter to the patient list API and page. The dashboard already computes a period window in the hospital time zone with `lastDays` (C3, C4), so the new count can reuse it. The patient list today filters only by text search and status (C11), so `GET /api/patients` must gain an optional filter on `created_at` that uses the same local-day bounds as the tile. Two existing tests read the full dashboard totals shape and must change with it (C20, C21). No migration is expected, because `patient.created_at` exists and is already indexed (C15, C16).
 
 ## Impacted modules
-- module:sample-system:api — changed. `DashboardService` gains the new count (C2), and `PatientService.list` and its repository gain an optional registration-period filter (C11).
-- module:sample-system:web — changed. `DashboardPage` adds the New patients tile and its link (C7), the `Dashboard` type gains the count (C9), and the patients page must pass the new filter from the URL to the API (C13).
+- module:sample-system:api — changed. `DashboardService` gains the new count (C2), and `PatientService.list` and its repository gain an optional registration-period filter (C11). The API dashboard test asserts the whole totals object with `toEqual` (C20), so it fails once a field is added and must include the new count.
+- module:sample-system:web — changed. `DashboardPage` adds the New patients tile and its link (C7), the `Dashboard` type gains the count (C9), and the patients page must pass the new filter from the URL to the API (C13). The web dashboard test's typed totals fixture (C21) stops type-checking once the `Dashboard` type gains a required field, so it must add the count.
 - module:sample-system:db — existing. `patient_created_idx` already covers `created_at` (C15), so no migration is needed.
-- http:GET:/api/dashboard — changed. Its response gains a New patients count; the existing totals stay as they are (C5).
+- http:GET:/api/dashboard — changed. Its response gains a New patients count, and the existing totals keep their values (C5). Readers of the full totals shape: the API test (C20) and the web fixture (C21). The other API dashboard tests use `toMatchObject` (C22), which tolerates the added field.
 - http:GET:/api/patients — changed. It gains an optional registration-period filter. The existing `q`, `status` and page parameters keep their meaning (C11).
 - table:patient — existing. It is read by `created_at` (C16) and is not changed.
 
@@ -131,7 +146,7 @@ Default (no question): name the new list filter after the period tiles' existing
 - REQ-2, REQ-3, REQ-4: the count uses `created_at` (C19, C16) inside the local-day window from `lastDays` (C3, C4), with no status filter.
 - REQ-6, REQ-7, REQ-8, REQ-9: the tile link opens `/patients` (C14), which takes its filters from the URL (C13). The list API needs a new registration-period filter (C11).
 - REQ-10: the list order is fixed by the query (C12).
-- REQ-12, REQ-13: the existing totals, including `FROM patient WHERE status = 'ACTIVE'` (C5), stay unchanged.
+- REQ-12, REQ-13: the existing totals, including `FROM patient WHERE status = 'ACTIVE'` (C5), keep their values. The tests that read the full totals shape (C20, C21) change only to add the new field.
 - REQ-14, REQ-15: the dashboard returns counts only (C6). The new field is also a count.
 
 ## Assumed
