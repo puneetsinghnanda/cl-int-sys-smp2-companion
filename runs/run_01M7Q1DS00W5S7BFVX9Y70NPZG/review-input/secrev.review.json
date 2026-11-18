@@ -1,0 +1,52 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "d31b64fddfaf7e2b31843d6db7666a93fef12e344cc1b25f2f39c55459827a16",
+  "package_sha256": "09d4f4a55cb691a020bc2300c52bb8642f515dbca5b784e8a3c23368417593af",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 5.0,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "I checked the changed code for injection, validation, tampering with now, authorisation, data exposure and the web link. The review covers all of them, and I found no real weakness that it missed."},
+    {"id": "SC-R2", "score": 5, "reason": "All 12 claims point to the exact line or context section that proves them. I checked each one against the source."},
+    {"id": "SC-R3", "score": 5, "reason": "The review reports no findings and rates the overall risk as low. The code supports that: binding is parameterised, input is validated against an allow-list, and now comes from the server clock."},
+    {"id": "SC-R4", "score": 5, "reason": "No finding needs a fix. The checklist names the control behind each conclusion, so it is easy to act on."},
+    {"id": "SC-R5", "score": 5, "reason": "The review raises no false alarms. Existing MVP permission behaviour is correctly reported as unchanged by this ticket."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C10 says 'medical data', but the cited convention says 'medical history'. The meaning is close, but the claim does not match its source word for word.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/secrev.md#claim:C10", "quote": "Logs never carry request bodies, `contact details` or medical data."},
+        {"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}
+      ],
+      "claim_ref": "C10",
+      "suggested_fix": "Change 'medical data' to 'medical history' in C10 so it matches the convention."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L75", "quote": "if (f.startedBefore !== undefined) add('a.starts_at &lt; ?', f.startedBefore);"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L68", "quote": "where.push(sql.replace('?', `$${params.length}`));"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L40", "quote": "f.oneOf('started', ['true'] as const) === 'true'"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L50", "quote": "startedBefore: started ? this.clock() : undefined,"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L58", "quote": "status = 'SCHEDULED' AND starts_at &lt; $3) AS awaiting_outcome"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L12", "quote": "requirePermission('appointments:read')"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/dashboard.ts#L10", "quote": "requirePermission('dashboard:read')"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L28", "quote": "export function toSummary(r: SummaryRow): AppointmentSummary {"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "Invalid input is 400 with one"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "every permission is granted"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L64", "quote": "query({ status: 'SCHEDULED', started: 'true' })"}]}
+  ],
+  "questions": []
+}
