@@ -1,0 +1,291 @@
+{
+  "artifact_sha256": "2edf80d5045649f5774da5678e21471776aa3b95d276b35cba6723f68711e596",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/dashboard.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/dashboard"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class DashboardService {",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L31"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const window = lastDays(now, tz, PERIOD_DAYS[name]);",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L44"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "FROM patient WHERE status = 'ACTIVE'",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L51"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Counts only: no contact details or medical history (DSH-9).",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L30"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function DashboardPage() {",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L17"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "from: data.period.from, to: data.period.to",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L48"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface Dashboard {",
+          "ref": "sample-system:web/src/api/types.ts#L138"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/patients.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/patients"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', RECORD_STATUSES);",
+          "ref": "sample-system:api/src/services/patientService.ts#L24-L31"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY created_at DESC, id DESC",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L120"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "params.get('q')",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L24"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "web/src/App.tsx",
+          "ref": "context/generated/api-inventory.json#ui:/patients"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CREATE INDEX patient_created_idx ON patient (created_at DESC, id DESC);",
+          "ref": "sample-system:db/migrations/20261016T090200__create_patients.sql#L25"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"nullable\": false",
+          "ref": "context/generated/db-schema.json#column:patient.created_at"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The tile shows the number of patients whose `created_at` falls in the selected period.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        },
+        {
+          "quote": "Its response gains a New patients count; the existing totals stay as they are (C5).",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "List api/test/dashboard.test.ts (DSH-1..6 totals toEqual) as an indirect effect that must be updated, or place the new count outside totals.",
+      "text": "Adding a New patients count to the dashboard totals breaks the existing API test that asserts the totals object with toEqual; the artifact says the existing totals stay as they are but does not list this reader."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const filters = { q: params.get('q') ?? '', status: params.get('status') ?? '', page: params.get('page') ?? '1' };",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L24"
+        },
+        {
+          "quote": "the patients page must pass the new filter from the URL to the API (C13)",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an indirect effect: the patients page needs a visible, clearable indicator of the registration-period filter.",
+      "text": "PatientsPage builds its filters from q, status and page only and has no control for a registration period, so a period carried in the URL would be invisible to staff and could not be cleared; the artifact notes only passing it to the API."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Story S-3 AC5 in the split step assumes a user-chosen sort order, which the code does not offer.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/impact.md#impacted-modules"
+        },
+        {
+          "quote": "Given staff chose a sort order on the patient list other than its default",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-3"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Cite split.md#item:S-3 and the fixed ORDER BY line, and record the S-3 AC5 mismatch so design rewrites that AC explicitly.",
+      "text": "The artifact tells design to test the fixed list order instead of split story S-3 AC5, but cites neither the split story nor records the mismatch as a cross-step item; S-3 AC5 still requires a user-chosen sort the code lacks."
+    }
+  ],
+  "package_sha256": "8c617180eaf510a78e200fad1bff129fd4bcfa98b997094f766f096a2462b90c",
+  "questions": [],
+  "recorded_at": "2026-11-18T09:09:48Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "API, web and db modules, both endpoints and the patient table are listed with correct change status; the existing dashboard test that asserts the exact totals shape is not listed.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id exists in the generated facts and each is cited; claims point at fact ids or exact source lines that hold the quoted text.",
+      "score": 5
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Callers via client.ts, jobs and the /patients UI route are covered, but the dashboard test reading totals with toEqual and the patients page's lack of a visible period filter are missed.",
+      "score": 3
+    },
+    {
+      "id": "IA-R4",
+      "reason": "Statuses rest on facts and on req.md decisions; the no-call-edges limit is stated. The REQ-10 reading versus split S-3 AC5 is settled as known without a cited basis for the split story.",
+      "score": 4
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Readable and well structured with a clear summary and default; impacted items are listed by module rather than ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.05,
+  "run_id": "run_01M7PX5XB0C1P9DTAW82D9MDVX",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}

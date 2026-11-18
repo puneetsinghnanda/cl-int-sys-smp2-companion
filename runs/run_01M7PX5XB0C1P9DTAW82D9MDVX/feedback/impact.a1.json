@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        },
+        {
+          "quote": "Its response gains a New patients count; the existing totals stay as they are (C5).",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Adding a New patients count to the dashboard totals breaks the existing API test that asserts the totals object with toEqual; the artifact says the existing totals stay as they are but does not list this reader."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7PX5XB0C1P9DTAW82D9MDVX",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
