@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M7Q1DS00W5S7BFVX9Y70NPZG
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.9.0
 inputs:
   - path: artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md
@@ -21,6 +21,11 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "The routes stay existing because the code shows they forward the raw query and the service already validates list filters, and the deviation from architecture#components is stated."
+  - id: F-2
+    how: "CO-5 now cites the route lines that forward the query to the services."
 claims:
   - id: C1
     text: "Dashboard counts are computed in `DashboardService`."
@@ -82,6 +87,18 @@ claims:
   - id: C20
     text: "The web dashboard test builds a typed totals fixture starting `totals: { patients: 200`."
     cites: ["sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"]
+  - id: C21
+    text: "The appointments route forwards the raw query to the service: `services.appointments.list(req.query`."
+    cites: ["sample-system:api/src/routes/appointments.ts#L14"]
+  - id: C22
+    text: "The dashboard route forwards the raw query to the service: `services.dashboard.get(req.query)`."
+    cites: ["sample-system:api/src/routes/dashboard.ts#L12"]
+  - id: C23
+    text: "AppointmentService already validates the list's status filter with `f.oneOf('status', APPOINTMENT_STATUSES)`."
+    cites: ["sample-system:api/src/services/appointmentService.ts#L35"]
+  - id: C24
+    text: "A value outside the allowed set fails with the field message `must be one of`."
+    cites: ["sample-system:api/src/lib/validate.ts#L65"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
@@ -99,10 +116,10 @@ components:
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:Dashboard", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-02"]
   - id: CO-3
-    name: AppointmentService list (parses started, sets server now)
+    name: AppointmentService list (validates started, sets server now)
     module: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-03"]
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService", "sample-system:api/src/services/appointmentService.ts#L35", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-03"]
   - id: CO-4
     name: AppointmentFilter and AppointmentRepo list query (start-before condition)
     module: module:sample-system:api
@@ -112,7 +129,7 @@ components:
     name: Appointments and dashboard routes
     module: module:sample-system:api
     change: existing
-    cites: ["context/generated/api-inventory.json#http:GET:/api/appointments", "context/generated/api-inventory.json#http:GET:/api/dashboard"]
+    cites: ["context/generated/api-inventory.json#http:GET:/api/appointments", "context/generated/api-inventory.json#http:GET:/api/dashboard", "sample-system:api/src/routes/appointments.ts#L14", "sample-system:api/src/routes/dashboard.ts#L12"]
   - id: CO-6
     name: Dashboard type (web, totals.awaitingOutcome)
     module: module:sample-system:web
@@ -134,24 +151,29 @@ components:
     change: existing
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:query"]
   - id: CO-10
-    name: Dashboard tests (API totals toEqual, web typed fixture and tile assertions)
+    name: API dashboard test (totals toEqual)
     module: module:sample-system:api
     change: changed
-    cites: ["sample-system:api/test/dashboard.test.ts#L32", "sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"]
+    cites: ["sample-system:api/test/dashboard.test.ts#L32"]
+  - id: CO-11
+    name: Web DashboardPage test (typed fixture and tile assertions)
+    module: module:sample-system:web
+    change: changed
+    cites: ["sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"]
 endpoints:
   - id: EP-1
     method: GET
     path: /api/dashboard
     change: changed
     fields:
-      - {name: totals.awaitingOutcome, type: integer, nullable: false, format: "count of appointments, >= 0; not affected by the period parameter", example: 3, status: known}
+      - {name: totals.awaitingOutcome, type: integer, nullable: false, format: "count >= 0; ignores period", example: 3, status: known}
     cites: ["context/generated/api-inventory.json#http:GET:/api/dashboard", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-02"]
   - id: EP-2
     method: GET
     path: /api/appointments
     change: changed
     fields:
-      - {name: started (query parameter), type: string, nullable: true, format: "optional; only true; keeps starts_at < server now", example: "true", status: known}
+      - {name: started (optional query parameter), type: "enum [true]", nullable: false, format: "may be absent; else 400 must be one of true", example: "true", status: known}
     cites: ["context/generated/api-inventory.json#http:GET:/api/appointments", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01", "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-03"]
 answers:
   - id: A-02
@@ -167,45 +189,51 @@ answers:
 ---
 # Design: HMS-21
 
+## Resolves
+- F-1: The routes stay existing because the code shows they forward the raw query and the service already validates list filters, and the deviation from architecture#components is stated.
+- F-2: CO-5 now cites the route lines that forward the query to the services.
+
 ## Overview
-The dashboard API gains one more total, `awaitingOutcome` (A-02): the number of Scheduled appointments whose start instant is strictly before the server's current instant. It is computed in `DashboardService` (C1) with no `PERIODS` window (C3), so it ignores the period selector (S-3). The appointment list API gains an optional `started=true` filter (A-01, A-03). The service turns it into "start before the server's now" and the repository adds that condition to the list query (C7, C8, C9). The dashboard page adds an "Awaiting outcome" tile that links to `/appointments?status=SCHEDULED&started=true`, built with the existing `query` helper (C12). `AppointmentsPage` passes `started` from its URL to the API (C6).
+The dashboard API gains one more total, `awaitingOutcome` (A-02): the number of Scheduled appointments whose start instant is strictly before the server's current instant. It is computed in `DashboardService` (C1) with no `PERIODS` window (C3), so it ignores the period selector (S-3). The appointment list API gains an optional `started=true` filter (A-01, A-03). `AppointmentService` validates it and turns it into "start before the server's now", and the repository adds that condition to the list query (C7, C8, C9). The dashboard page adds an "Awaiting outcome" tile that links to `/appointments?status=SCHEDULED&started=true`, built with the existing `query` helper (C12). `AppointmentsPage` passes `started` from its URL to the API (C6).
 
 Trade-offs:
+- Validation in the service, not the route: architecture#components says routes parse input. In this code, though, the appointments route forwards the raw query unchanged (C21), and the service already validates the list's filters, for example `status` (C23). Putting `started` beside them keeps one place for list filters, at the cost of following the code rather than the written rule.
 - Server now, not a client instant: the list always agrees with the rule at the moment it is opened. A list opened later than the dashboard may differ from the tile by appointments that started in between, which is acceptable because both reflect the same rule.
 - Strict `<` against now: an appointment starting at exactly the current instant is not yet counted, so S-1's 09:59/10:01 cases at now 10:00 are unambiguous.
 - Comparing instants, not local dates: instants are stored in `UTC` (C15), so the count is the same on either side of local midnight (S-1's 00:30 local case).
-- `started` accepts only `true`: a boolean flag with a single value keeps the contract small. Any other value is a 400 `ValidationError` (C13), not silently ignored.
+- `started` accepts only `true`: a single-value flag keeps the contract small. Any other value is a 400 `ValidationError` (C13) with the field message "must be one of true" (C24), not silently ignored.
 - No new table, column, job or store: the count and filter read existing columns, so no migration is needed.
 
 ## Components
 - CO-1 DashboardService — changed. Adds the `awaitingOutcome` count: status SCHEDULED and start before now. The other totals and the `next` list are untouched (S-5).
 - CO-2 Dashboard type (API) — changed. `totals` gains `awaitingOutcome: number` (C2).
-- CO-3 AppointmentService list — changed. It reads the optional `started` query value. Only `true` is valid (C13). When present, it sets the filter's start-before bound to the server clock's now.
+- CO-3 AppointmentService list — changed. It validates the optional `started` value next to the existing `status` check (C23). Only `true` is accepted (C24). When present, it sets the filter's start-before bound to the server clock's now.
 - CO-4 AppointmentFilter and AppointmentRepo list query — changed. An optional start-before instant adds `starts_at < bound` to the list query, combined with the existing status and date filters. The selected columns do not change, so no contact details or medical history are added (S-6).
-- CO-5 Appointments and dashboard routes — existing. They already pass the query to the services (C10, C11).
+- CO-5 Appointments and dashboard routes — existing. Each forwards the raw query to its service (C21, C22), so `started` and the new total need no route change (C10, C11).
 - CO-6 Dashboard type (web) — changed. `totals` gains `awaitingOutcome: number` (C4).
 - CO-7 DashboardPage — changed. It adds the Awaiting outcome tile showing `totals.awaitingOutcome` (0 when none, S-1). It links to `/appointments?status=SCHEDULED&started=true`, which does not change with the period (S-3, S-4).
 - CO-8 AppointmentsPage — changed. It forwards `started` from its URL to `GET /api/appointments`, alongside the existing filters.
 - CO-9 API client `query` helper — existing (C12).
-- CO-10 Dashboard tests — changed. The API test asserts the whole totals object (C19), and the web test's typed totals fixture (C20) must add `awaitingOutcome`. Any web tile-count assertion must expect the new tile.
+- CO-10 API dashboard test — changed. It asserts the whole totals object (C19), so it must add `awaitingOutcome`.
+- CO-11 Web DashboardPage test — changed. Its typed totals fixture (C20) must add `awaitingOutcome`, and any tile-count assertion must expect the new tile.
 - EP-1 GET /api/dashboard — changed. New field `totals.awaitingOutcome`: integer, not null, a count of 0 or more, not affected by `period`, for example 3.
 - EP-2 GET /api/appointments — changed. New optional query parameter `started`:
-  - Only the value `true` is accepted; any other value is 400 on field `started`.
-  - When present, the list keeps appointments whose `starts_at` is strictly before the server's now, for example `started=true`.
+  - It may be absent. When present, its only valid value is `true`; any other value is 400 on field `started` with "must be one of true".
+  - When `true`, the list keeps appointments whose `starts_at` is strictly before the server's now.
   - Paging is unchanged at `20 per page` (C14), and `total` equals the tile count when combined with `status=SCHEDULED` (S-4).
 
 Story coverage:
 - S-1 (count, boundary at now, local midnight, zero): CO-1, CO-2, CO-6, CO-7, EP-1.
 - S-2 (Completed, Cancelled and No-show excluded): CO-1 (status SCHEDULED only).
 - S-3 (period ignored): CO-1 (no `PERIODS` window), CO-7 (link has no period).
-- S-4 (linked list matches exactly): CO-3, CO-4, CO-7, CO-8, EP-2.
-- S-5 (other tiles and next-10 list unchanged): CO-1, CO-10.
+- S-4 (linked list matches exactly): CO-3, CO-4, CO-5, CO-7, CO-8, EP-2.
+- S-5 (other tiles and next-10 list unchanged): CO-1, CO-10, CO-11.
 - S-6 (no medical history or contact details): CO-1 (counts only), CO-4 (no new columns).
 
 ## Known
 - S-1, S-2, S-3: the count lives in `DashboardService` (C1) and `Dashboard` (C2, C4), named by A-02 (C17).
-- S-4: the filter is decided by A-01 and A-03 (C16, C18), and served through `AppointmentService`, `AppointmentFilter` and `AppointmentRepo` (C7, C8, C9).
-- S-5: the other totals and the `next` list keep their queries. Only the tests that read the full shape change (C19, C20).
+- S-4: the filter is decided by A-01 and A-03 (C16, C18). The route forwards the query (C21), and the filter is served through `AppointmentService`, `AppointmentFilter` and `AppointmentRepo` (C7, C8, C9, C23).
+- S-5: the other totals and the `next` list keep their queries. Tests that read the full shape change (C19, C20).
 - S-6: the dashboard returns counts only, and the list's columns do not change.
 
 ## Assumed

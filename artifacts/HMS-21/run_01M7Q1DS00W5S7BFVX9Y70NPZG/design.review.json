@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "cdd48d7739b108e313c9d6c3a90ff4f9ad39d93c9697e4c5104367d5137a5a30",
-  "attempt": 1,
+  "artifact_sha256": "67fec0fca1d7cdefdee99ee1eeed978a3cefdfdb2b3ca102126f07401d052b77",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -201,77 +201,79 @@
       ],
       "claim_id": "C20",
       "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services.appointments.list(req.query",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#claim:C21"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services.dashboard.get(req.query)",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#claim:C22"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "f.oneOf('status', APPOINTMENT_STATUSES)",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#claim:C23"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A value outside the allowed set fails",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#claim:C24"
+        }
+      ],
+      "claim_id": "C24",
+      "verdict": "not-checked"
     }
   ],
   "findings": [
     {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "CO-5 Appointments and dashboard routes — existing. They already pass the query to the services (C10, C11).",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#components"
-        },
-        {
-          "quote": "routes parse input and declare a permission",
-          "ref": "context/architecture.md#components"
-        },
-        {
-          "quote": "parses the new query value",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#impacted-modules"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Mark the appointments route as changed. It parses and validates `started` (400 ValidationError). AppointmentService applies the server-now bound. Or justify the deviation from architecture#components.",
-      "text": "The design marks the routes as existing and moves parsing of `started` into AppointmentService. The architecture says routes parse input, and impact says the appointments route parses the new query value. So the route should be a changed component."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "context/generated/api-inventory.json#http:GET:/api/appointments",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#item:CO-5"
-        },
-        {
-          "quote": "assumed: []",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#assumed"
-        }
-      ],
-      "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Cite the route source lines that forward the query, or move this to Assumed with \"implement must confirm\".",
-      "text": "The statement that the routes \"already pass the query to the services\" is given as fact. Its only cites are api-inventory route locations, which do not prove that behaviour, and nothing is listed as Assumed with \"implement must confirm\"."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L10",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#item:CO-10"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Split CO-10 into an api test component and a web test component, each on its own module.",
-      "text": "CO-10 is placed on module:sample-system:api but also covers the web DashboardPage test, which belongs to module:sample-system:web."
-    },
-    {
       "category": "correctness",
       "cites": [
         {
-          "quote": "started (query parameter), type: string, nullable: true",
+          "quote": "type: \"enum [true]\", nullable: false",
           "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#item:EP-2"
         }
       ],
-      "id": "F-4",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Describe it as optional (may be absent), enum [\"true\"], and state the ValidationError message for field `started`.",
-      "text": "EP-2 types `started` as a nullable string. It is an optional query flag whose only valid value is `true`, so \"nullable\" mixes up absent with null, and the 400 error message for the field is not given."
+      "suggested_fix": "Write the type as string enum [\"true\"] so it matches the example and the oneOf check.",
+      "text": "EP-2 types `started` as enum [true] but gives the example as the string \"true\". A query value is always a string, so the type does not say whether the service compares it with the string 'true' or with a boolean."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "- EP-1 GET /api/dashboard — changed.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#components"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Move EP-1 and EP-2 under an Endpoints heading.",
+      "text": "The endpoint entries EP-1 and EP-2 are listed under the Components heading, not under a heading of their own."
     }
   ],
-  "package_sha256": "8bb2c9c7139a397d954d2479ce3ecbaf4a7db2c6d74427b961a27c7a68d139e1",
+  "package_sha256": "2f98bcc08a29f3c0e04cbf474071454d7e3de5bc4cfa5a0c7ecc6743efe450fb",
   "questions": [],
-  "recorded_at": "2026-11-18T11:06:43Z",
+  "recorded_at": "2026-11-18T11:11:50Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -282,36 +284,36 @@
   "rubric_items": [
     {
       "id": "DS-R1",
-      "reason": "Uses only existing modules, services, repos and the query helper, with no new infrastructure. But it puts parsing of `started` in AppointmentService and leaves the route unchanged, which goes against the rule that routes parse input.",
-      "score": 4
+      "reason": "Uses only existing modules, services, repos and the query helper. Prior F-1 is resolved: the trade-offs now explain why validation goes in the service rather than the route, citing route and service lines (C21, C23).",
+      "score": 5
     },
     {
       "id": "DS-R2",
-      "reason": "S-1 to S-6 each map to components and endpoints. This covers the boundary at now, local midnight, zero, excluded statuses, the period being ignored, the linked list matching, unchanged tiles and the next list, and no personal data.",
+      "reason": "S-1 to S-6 each map to components and endpoints. This covers the boundary at now, local midnight, zero, excluded statuses, the period being ignored, the list total matching the tile, unchanged tiles and next list, and no personal data.",
       "score": 5
     },
     {
       "id": "DS-R3",
-      "reason": "totals.awaitingOutcome is fully specified. The `started` parameter is typed as a nullable string rather than an optional flag, and the 400 error message for `started` is not given.",
+      "reason": "totals.awaitingOutcome is fully specified. `started` is now optional, not nullable, and has its 400 message (prior F-4 resolved). One gap: the type says enum [true] while the example is the string \"true\", so it is unclear whether the value is a boolean or a string.",
       "score": 4
     },
     {
       "id": "DS-R4",
-      "reason": "Most choices are cited or decided by A-01, A-02 or A-03. The claim that the routes already pass the query to the services is stated as fact without a cite that proves it, and assumed is empty.",
-      "score": 3
+      "reason": "Every choice is cited or decided by A-01, A-02 or A-03. The route behaviour is now cited to the route source lines (prior F-2 resolved), and tests are cited by line. Nothing is invented.",
+      "score": 5
     },
     {
       "id": "DS-R5",
-      "reason": "It explains server now vs a client instant, strict &lt; at now, instants vs local dates, why only `started=true` is allowed, and why no migration is needed.",
+      "reason": "It explains putting validation in the service rather than the route, server now vs a client instant, strict &lt; at now, instants vs local dates, the single allowed value, and why no migration is needed.",
       "score": 5
     },
     {
       "id": "DS-R6",
-      "reason": "Clear and consistent. Two small issues: the EP entries sit under Components, and CO-10 is filed under the api module although it also covers the web test.",
+      "reason": "Clear and consistent. CO-10 and CO-11 are now split by module (prior F-3 resolved). The EP entries still sit under the Components heading.",
       "score": 4
     }
   ],
-  "rubric_score": 4.2,
+  "rubric_score": 4.75,
   "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
   "schema": "review.v1",
   "status": "ok",
