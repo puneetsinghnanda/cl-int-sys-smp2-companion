@@ -1,0 +1,298 @@
+{
+  "artifact_sha256": "8c645c625b7cdf4a954113a9d3bffd6347aaf9f4cbab600cf957f198171d72d4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L12"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('dashboard:read'),",
+          "ref": "sample-system:api/src/routes/dashboard.ts#L10"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient row holds identity, contact details and the basic medical history",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history leaves the database only for the",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "p.full_name AS patient_name",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "message per field (`ValidationError`)",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "must be one of",
+          "ref": "sample-system:api/src/lib/validate.ts#L65"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Seed data is invented:",
+          "ref": "context/data-model.md#data-rules"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "unsupported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: New filter, server now (proposed default)",
+          "ref": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: started=true (proposed default)",
+          "ref": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services.appointments.list(req.query",
+          "ref": "sample-system:api/src/routes/appointments.ts#L14"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "f.oneOf('status', APPOINTMENT_STATUSES)",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Seed and test data use invented identities with `example.com` emails.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#claim:C13"
+        },
+        {
+          "quote": "Seed data is invented:",
+          "ref": "context/data-model.md#data-rules"
+        }
+      ],
+      "claim_ref": "C13",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Narrow C13 to seed data, and make 'test fixtures use invented identities only' a stated new control for T-15/T-16, or cite a source that covers test data.",
+      "text": "C13 says seed and test data use invented identities, but data-rules only says seed data is invented. The T-15/T-16 mitigations rest on a rule the context does not state for test data."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Unit tests assert no contact fields in the started list.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#item:T-7"
+        },
+        {
+          "quote": "New controls the implement step must build: T-4",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#threats"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Mark the started-list no-PII test as a new control for implement and add T-7 to the list of new controls.",
+      "text": "T-7 calls its control existing and relies on unit tests asserting no contact fields in the started list. The design defines no such test, and the closing list of new controls names only T-4 and T-6."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "cites: [\"context/conventions.md#logging-and-data\"]",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#claim:C8"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add context/conventions.md with its sha256 to inputs.",
+      "text": "C8, C9 and C11 cite context/conventions.md, but that file is not listed in the artifact's inputs, so its hash is not pinned."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Reads of the started list are not recorded, so who viewed which appointments cannot be shown later.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#item:T-10"
+        },
+        {
+          "quote": "Logs carry method, route and error message only",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "State that the actor is not logged and that the risk is accepted for the MVP, where every request is staff (C2).",
+      "text": "T-10 offers request logs carrying method and route as a partial control, but the logs carry no actor, so they cannot show who viewed the list. The risk is accepted, but the stated control does not answer the threat."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "T-3 Dashboard type (API) — information disclosure.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#threats"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Order threats by risk, or add a risk rating to each.",
+      "text": "Threats are listed in component order, not risk order. The PII threats (T-1, T-7) and the new controls (T-4, T-6) are not put first."
+    }
+  ],
+  "package_sha256": "4c4563fc2ba0eebd2cb8939d5288635fb7a2d1303473bc01881680620f91b5e9",
+  "questions": [],
+  "recorded_at": "2026-11-18T11:17:13Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "59993cb76e1a0c63189852973f866e1fa34bece3f5f760e7765f5110fc02f670",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "TM-R1",
+      "reason": "All 11 design components (CO-1 to CO-11) have at least one threat, and the component names match the design one for one.",
+      "score": 5
+    },
+    {
+      "id": "TM-R2",
+      "reason": "Most threats are specific to this change (unbounded count, started value tampering, list PII). T-3 and T-11 are generic or about reliability more than security.",
+      "score": 4
+    },
+    {
+      "id": "TM-R3",
+      "reason": "Most mitigations cite verified controls. T-15/T-16 rest on C13, which overstates the data rule. T-7 is labelled as an existing control but relies on a test that is not in the design.",
+      "score": 4
+    },
+    {
+      "id": "TM-R4",
+      "reason": "The MVP auth gap (T-5) and the accepted risks (T-2, T-10) are stated openly. No open questions were needed. The test-data rule gap is not stated.",
+      "score": 4
+    },
+    {
+      "id": "TM-R5",
+      "reason": "Clear and consistent between front matter and body, but threats are ordered by component rather than by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "threat"
+}

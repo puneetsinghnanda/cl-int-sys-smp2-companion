@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "8c645c625b7cdf4a954113a9d3bffd6347aaf9f4cbab600cf957f198171d72d4",
-  "attempt": 1,
+  "artifact_sha256": "071056ca7ab5076f12181e2ec3d42d491b172204c8a6c652d7a6af209351b181",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -130,7 +130,7 @@
         }
       ],
       "claim_id": "C13",
-      "verdict": "unsupported"
+      "verdict": "supported"
     },
     {
       "cites": [
@@ -171,91 +171,61 @@
       ],
       "claim_id": "C17",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DSH-9: carries no contact details or medical history",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
     }
   ],
   "findings": [
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "Seed and test data use invented identities with `example.com` emails.",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#claim:C13"
-        },
-        {
-          "quote": "Seed data is invented:",
-          "ref": "context/data-model.md#data-rules"
-        }
-      ],
-      "claim_ref": "C13",
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Narrow C13 to seed data, and make 'test fixtures use invented identities only' a stated new control for T-15/T-16, or cite a source that covers test data.",
-      "text": "C13 says seed and test data use invented identities, but data-rules only says seed data is invented. The T-15/T-16 mitigations rest on a rule the context does not state for test data."
-    },
-    {
-      "category": "traceability",
-      "cites": [
-        {
-          "quote": "Unit tests assert no contact fields in the started list.",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#item:T-7"
-        },
-        {
-          "quote": "New controls the implement step must build: T-4",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#threats"
-        }
-      ],
-      "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Mark the started-list no-PII test as a new control for implement and add T-7 to the list of new controls.",
-      "text": "T-7 calls its control existing and relies on unit tests asserting no contact fields in the started list. The design defines no such test, and the closing list of new controls names only T-4 and T-6."
-    },
     {
       "category": "traceability",
       "cites": [
         {
           "quote": "cites: [\"context/conventions.md#logging-and-data\"]",
           "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#claim:C8"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Add context/conventions.md with its sha256 to inputs.",
-      "text": "C8, C9 and C11 cite context/conventions.md, but that file is not listed in the artifact's inputs, so its hash is not pinned."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "Reads of the started list are not recorded, so who viewed which appointments cannot be shown later.",
-          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#item:T-10"
         },
         {
-          "quote": "Logs carry method, route and error message only",
-          "ref": "context/conventions.md#logging-and-data"
+          "quote": "cites: [\"context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts\"]",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#claim:C18"
         }
       ],
-      "id": "F-4",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "State that the actor is not logged and that the risk is accepted for the MVP, where every request is staff (C2).",
-      "text": "T-10 offers request logs carrying method and route as a partial control, but the logs carry no actor, so they cannot show who viewed the list. The risk is accepted, but the stated control does not answer the threat."
+      "suggested_fix": "Add context/conventions.md and context/generated/test-layout.json, each with its sha256, to inputs.",
+      "text": "Earlier finding F-3 is still open. C8, C9 and C11 cite context/conventions.md, and C18 cites context/generated/test-layout.json, but neither file is listed in inputs, so their hashes are not pinned."
     },
     {
-      "category": "style",
+      "category": "consistency",
       "cites": [
         {
-          "quote": "T-3 Dashboard type (API) — information disclosure.",
+          "quote": "Existing control: the service validates query fields with the same validator it uses for status (C17)",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#item:T-4"
+        },
+        {
+          "quote": "It validates the optional `started` value next to the existing `status` check (C23).",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#components"
+        },
+        {
+          "quote": "- T-4: the bound always comes from the server clock.",
           "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/threat.md#threats"
         }
       ],
-      "id": "F-5",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Order threats by risk, or add a risk rating to each.",
-      "text": "Threats are listed in component order, not risk order. The PII threats (T-1, T-7) and the new controls (T-4, T-6) are not put first."
+      "suggested_fix": "In T-4, call the existing control the validator, and add a new control for implement: validate started with oneOf ['true'] and return 400 for anything else. Add it to the list of new controls.",
+      "text": "T-4 calls the 400 for a bad started value an existing control. The design's CO-3 makes validating started a change, and the list of new controls names only the server-clock bound for T-4. T-13 relies on the same validation."
     }
   ],
-  "package_sha256": "4c4563fc2ba0eebd2cb8939d5288635fb7a2d1303473bc01881680620f91b5e9",
+  "package_sha256": "d82ddbac2ef8cc2e4285169b593c0f742ac2ee395883d616b68489587dbceff8",
   "questions": [],
-  "recorded_at": "2026-11-18T11:17:13Z",
+  "recorded_at": "2026-11-18T11:21:49Z",
   "recorded_by": "tsl@0.1.6",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -266,31 +236,31 @@
   "rubric_items": [
     {
       "id": "TM-R1",
-      "reason": "All 11 design components (CO-1 to CO-11) have at least one threat, and the component names match the design one for one.",
+      "reason": "All 11 design components (CO-1 to CO-11) have at least one threat, and the names match the design one for one.",
       "score": 5
     },
     {
       "id": "TM-R2",
-      "reason": "Most threats are specific to this change (unbounded count, started value tampering, list PII). T-3 and T-11 are generic or about reliability more than security.",
+      "reason": "Most threats are specific to this change: the unbounded count, tampering with the started value, and PII in the list. T-3 and T-11 are generic and are more about reliability than security.",
       "score": 4
     },
     {
       "id": "TM-R3",
-      "reason": "Most mitigations cite verified controls. T-15/T-16 rest on C13, which overstates the data rule. T-7 is labelled as an existing control but relies on a test that is not in the design.",
+      "reason": "The mitigations cite verified controls or are named as new controls, and F-1 and F-2 are fixed. But T-4 and T-13 call the validation of started an existing control, while the design makes it a change.",
       "score": 4
     },
     {
       "id": "TM-R4",
-      "reason": "The MVP auth gap (T-5) and the accepted risks (T-2, T-10) are stated openly. No open questions were needed. The test-data rule gap is not stated.",
-      "score": 4
+      "reason": "The MVP auth gap, the accepted risks (T-2, T-10) and the missing rule for test data are all stated openly. No questions were needed.",
+      "score": 5
     },
     {
       "id": "TM-R5",
-      "reason": "Clear and consistent between front matter and body, but threats are ordered by component rather than by risk.",
-      "score": 4
+      "reason": "Threats are now listed by risk, highest first, the new controls are listed up front, and the front matter matches the body.",
+      "score": 5
     }
   ],
-  "rubric_score": 4.3,
+  "rubric_score": 4.5,
   "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
   "schema": "review.v1",
   "status": "ok",

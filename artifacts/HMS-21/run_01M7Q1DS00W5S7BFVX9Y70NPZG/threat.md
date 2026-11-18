@@ -2,7 +2,7 @@
 schema: threat-model.v1
 run_id: run_01M7Q1DS00W5S7BFVX9Y70NPZG
 step: threat
-attempt: 1
+attempt: 2
 skill: threat-model@1.3.0
 inputs:
   - path: artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md
@@ -15,6 +15,11 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "C13 now covers seed data only, and invented test fixtures are a new control for implement in T-15 and T-16."
+  - id: F-2
+    how: "The started-list no-PII unit test is now a new control for implement in T-7 and is in the list of new controls."
 claims:
   - id: C1
     text: "Every API request passes through `identify`, which sets the actor; routes call requirePermission."
@@ -53,7 +58,7 @@ claims:
     text: "`appointment_event` records every change with time and actor."
     cites: ["context/data-model.md#appointments"]
   - id: C13
-    text: "Seed and test data use invented identities with `example.com` emails."
+    text: "`Seed data is invented`; the data rules say nothing about test fixtures."
     cites: ["context/data-model.md#data-rules"]
   - id: C14
     text: "The `started` filter compares with the server's now, decided as `New filter, server now`."
@@ -67,6 +72,9 @@ claims:
   - id: C17
     text: "AppointmentService validates the status filter with `f.oneOf('status', APPOINTMENT_STATUSES)`."
     cites: ["sample-system:api/src/services/appointmentService.ts#L35"]
+  - id: C18
+    text: "An existing API test checks `DSH-9: carries no contact details or medical history`."
+    cites: ["context/generated/test-layout.json#test:sample-system:api/test/dashboard.test.ts"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 assumed: []
@@ -77,7 +85,7 @@ threats:
     component: DashboardService (awaitingOutcome count)
     stride: information_disclosure
     threat: "The new count query could be written to return or join patient columns, putting contact details or medical history on the dashboard (REQ-12, REQ-13)."
-    mitigation: "The count is an aggregate over the appointment table only and returns a number; no patient columns are selected (C5, C6). Unit tests assert the dashboard carries no contact details or medical history (existing DSH-9 test)."
+    mitigation: "The count is an aggregate over the appointment table only and returns a number; no patient columns are selected (C5, C6). Existing control: the DSH-9 API test asserts the dashboard carries no contact details or medical history (C18)."
   - id: T-2
     component: DashboardService (awaitingOutcome count)
     stride: denial_of_service
@@ -107,7 +115,7 @@ threats:
     component: AppointmentFilter and AppointmentRepo list query (start-before condition)
     stride: information_disclosure
     threat: "The filtered list could expose patient contact details or medical history (REQ-12, REQ-13)."
-    mitigation: "Existing control: list rows carry the patient name only (C7); the change adds no columns. Unit tests assert no contact fields in the started list."
+    mitigation: "Existing control: list rows carry the patient name only (C7), and the change adds no columns. New control for implement: a unit test asserting that rows of the started list carry no contact details or medical history."
   - id: T-8
     component: AppointmentFilter and AppointmentRepo list query (start-before condition)
     stride: denial_of_service
@@ -122,7 +130,7 @@ threats:
     component: Appointments and dashboard routes
     stride: repudiation
     threat: "Reads of the started list are not recorded, so who viewed which appointments cannot be shown later."
-    mitigation: "Accepted: both endpoints are read-only; changes are recorded in appointment_event (C12) and request logs carry method and route (C8). No new control."
+    mitigation: "Accepted for the MVP: request logs carry method and route but no actor (C8), and every request is staff (C2), so no read audit is possible until sign-in exists. Changes are still recorded in appointment_event (C12). No new control."
   - id: T-11
     component: Dashboard type (web, totals.awaitingOutcome)
     stride: tampering
@@ -147,14 +155,18 @@ threats:
     component: API dashboard test (totals toEqual)
     stride: information_disclosure
     threat: "New test fixtures could include real patient data."
-    mitigation: "Existing rule: test and seed data use invented identities only (C13)."
+    mitigation: "New control for implement: new or changed fixtures use invented identities only, following the seed-data rule (C13); the totals fixture holds counts only."
   - id: T-16
     component: Web DashboardPage test (typed fixture and tile assertions)
     stride: information_disclosure
     threat: "New test fixtures could include real patient data."
-    mitigation: "Existing rule: test and seed data use invented identities only (C13); the fixture holds counts only."
+    mitigation: "New control for implement: new or changed fixtures use invented identities only, following the seed-data rule (C13); the fixture holds counts only."
 ---
 # Threat model: HMS-21
+
+## Resolves
+- F-1: C13 now covers seed data only, and invented test fixtures are a new control for implement in T-15 and T-16.
+- F-2: The started-list no-PII unit test is now a new control for implement in T-7 and is in the list of new controls.
 
 ## Components
 - DashboardService (awaitingOutcome count): it reads appointment status and start times and returns a count.
@@ -166,33 +178,38 @@ threats:
 - DashboardPage (Awaiting outcome tile and link): it shows the count and a fixed link.
 - AppointmentsPage (passes started from the URL): it forwards `started` from the URL.
 - API client query helper: it builds query strings and is unchanged.
-- API dashboard test (totals toEqual) and Web DashboardPage test (typed fixture and tile assertions): fixtures with invented data (C13).
+- API dashboard test (totals toEqual) and Web DashboardPage test (typed fixture and tile assertions): test fixtures. The data rules cover seed data only (C13).
 
 Patient rows hold `contact details` and medical history (C5). Medical history leaves the database only for the patient's own page (C6). The change does not read either.
 
 ## Threats
-- T-1 DashboardService — information disclosure. The count could expose patient columns. Mitigation: an aggregate over appointments only, plus the existing no-personal-data test.
-- T-2 DashboardService — denial of service. The count has no period window, so it covers the whole backlog. Accepted risk: it is one aggregate query.
-- T-3 Dashboard type (API) — information disclosure. Mitigation: the field is a non-null integer count.
+New controls the implement step must build:
+- T-4: the bound always comes from the server clock.
+- T-6: the start-before condition uses a bound parameter.
+- T-7: a unit test checks that the started list carries no contact details or medical history.
+- T-15 and T-16: test fixtures use invented identities only.
+
+By risk, the highest first:
+- T-7 AppointmentRepo list query — information disclosure. Mitigation: rows carry the patient name only (C7), and no columns are added. New: a unit test checks the started list has no contact details or medical history.
+- T-1 DashboardService — information disclosure. The count could expose patient columns. Mitigation: an aggregate over appointments only, plus the existing DSH-9 test (C18).
+- T-6 AppointmentRepo list query — tampering. SQL built by concatenation. New control for implement: use a bound parameter whose value is a server Date.
 - T-4 AppointmentService list — tampering. A caller sends an unexpected `started` value. Mitigation: the existing validator rejects anything other than `true` with a 400 (C9, C10, C17). New: the bound is always the server clock (C14).
 - T-5 AppointmentService list — spoofing. Mitigation: `identify` and `appointments:read` (C1, C3). The MVP grants every permission to `staff` (C2), a known gap that sign-in closes.
-- T-6 AppointmentRepo list query — tampering. SQL built by concatenation. New control for implement: use a bound parameter whose value is a server Date.
-- T-7 AppointmentRepo list query — information disclosure. Mitigation: rows carry the patient name only (C7), and no columns are added.
-- T-8 AppointmentRepo list query — denial of service. Mitigation: paging at `20 per page` (C11).
 - T-9 Routes — elevation of privilege. Mitigation: the routes are unchanged and keep their permissions (C3, C4, C16).
-- T-10 Routes — repudiation. Reads are not recorded. Accepted: the endpoints are read-only, changes go to `appointment_event` (C12), and logs carry method and route (C8).
-- T-11 Dashboard type (web) — tampering. A missing field would render wrongly. Mitigation: the field is a required number, and the typed test fixture enforces it.
-- T-12 DashboardPage — information disclosure. Mitigation: the tile shows the count only, with a fixed link (C15).
 - T-13 AppointmentsPage — tampering. A user edits `started` in the URL. Mitigation: the server returns a 400 for any value other than `true` (C9, C10).
+- T-12 DashboardPage — information disclosure. Mitigation: the tile shows the count only, with a fixed link (C15).
+- T-15 API dashboard test — information disclosure. New control: invented identities only, following the seed-data rule (C13).
+- T-16 Web DashboardPage test — information disclosure. New control: invented identities only, following the seed-data rule (C13).
+- T-10 Routes — repudiation. Reads are not recorded. Accepted for the MVP: logs carry no actor (C8), and every request is staff (C2). Changes go to `appointment_event` (C12).
+- T-2 DashboardService — denial of service. The count has no period window. Accepted risk: it is one aggregate query.
+- T-8 AppointmentRepo list query — denial of service. Mitigation: paging at `20 per page` (C11).
 - T-14 API client query helper — tampering. Mitigation: the helper is unchanged and carries only the fixed literal `true` (C15).
-- T-15 API dashboard test — information disclosure. Mitigation: invented identities only (C13).
-- T-16 Web DashboardPage test — information disclosure. Mitigation: invented identities only (C13), and the fixture holds counts only.
-
-New controls the implement step must build: T-4 (the bound comes from the server clock, never the request) and T-6 (the start-before condition uses a bound parameter).
+- T-11 Dashboard type (web) — tampering. A missing field would render wrongly. Mitigation: the field is a required number, and the typed test fixture enforces it.
+- T-3 Dashboard type (API) — information disclosure. Mitigation: the field is a non-null integer count.
 
 ## Known
 - REQ-1 to REQ-11: the threats to the count, the filter and the tile are covered by T-1 to T-14, using the cited controls.
-- REQ-12, REQ-13: no medical history or contact details. T-1, T-7 and T-12 cover them (C5, C6, C7, C8).
+- REQ-12, REQ-13: no medical history or contact details. T-1, T-7 and T-12 cover them (C5, C6, C7, C8, C18).
 
 ## Assumed
 None.
