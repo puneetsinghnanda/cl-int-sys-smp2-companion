@@ -7,9 +7,9 @@
   "branch": {},
   "created_at": "2026-11-18T07:13:31Z",
   "cursor": null,
-  "end_reason": null,
+  "end_reason": "cancelled",
   "gates": [],
-  "heartbeat_at": "2026-11-18T07:24:03Z",
+  "heartbeat_at": "2026-11-18T08:32:38Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -50,10 +50,10 @@
     "open_non_blocking": 0,
     "round": 1
   },
-  "rev": 10,
+  "rev": 11,
   "run_id": "run_01M7PR1TBRN7418PYZMJTX55D2",
   "schema": "run-state.v1",
-  "status": "PAUSED_INPUT",
+  "status": "COMPLETED",
   "steps": [
     {
       "attempts": [
@@ -222,7 +222,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-22",
-  "updated_at": "2026-11-18T07:24:03Z",
+  "updated_at": "2026-11-18T08:32:38Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "7e2d7f98dabf16d5c133ebd2df7dd1bf0e5c4cf587457159a55a971f9aba0e98"
 }
