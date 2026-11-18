@@ -1,0 +1,274 @@
+{
+  "artifact_sha256": "506f7e742eb0425eead53eebf87660e98bdf260de33c03cc2372e6a519f93e94",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/dashboard.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/dashboard"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"DashboardService\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"PERIODS\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:PERIODS"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"Dashboard\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:Dashboard"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"Dashboard\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:Dashboard"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"DashboardPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/appointments.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"AppointmentFilter\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentFilter"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"AppointmentsPage\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "p.full_name AS patient_name",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L22"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"starts_at\"",
+          "ref": "context/generated/db-schema.json#column:appointment.starts_at"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"status\"",
+          "ref": "context/generated/db-schema.json#column:appointment.status"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect(res.body.totals).toEqual({",
+          "ref": "sample-system:api/test/dashboard.test.ts#L32"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "totals: { patients: 200",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: New filter, server now (proposed default)",
+          "ref": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "only the tests that read the full shape change (C17, C18)",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#known"
+        },
+        {
+          "quote": "Any web assertion on the set of tiles must also expect the new tile.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Drop 'only', or move the test-impact statement to Assumed. Also list tile-count assertions as possibly affected.",
+      "text": "Known says only the two full-shape tests change. That exclusive claim has no proof and is not marked assumed, and it contradicts the artifact's own note that any web assertion on the set of tiles must also change."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules and",
+          "ref": "context/architecture.md#components"
+        },
+        {
+          "quote": "The appointment list's `AppointmentFilter` gains an optional filter for start before the server's now (C8, A-01).",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Name the appointment service (query parsing and server clock) and the repository list query as touched symbols under module:sample-system:api.",
+      "text": "The new list filter is described only as an AppointmentFilter change. In this layered API the route parses input, the service holds the rules (here, the server's now) and the repository holds the SQL, so the service and repository code paths are not named."
+    }
+  ],
+  "package_sha256": "cb56a3aceb16cb5ff41e590de66a475ce74466d15a82a944d95d25afa0d36d9f",
+  "questions": [],
+  "recorded_at": "2026-11-18T10:56:40Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "1c16cd27e7c3beacc436eae3ab37bc18685db04f8917a3a01a10df97fedb5457",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "IA-R1",
+      "reason": "Lists the api, web and db modules, both GET endpoints, the appointment table and both tests that break. It names AppointmentFilter but not the route, service and repository layers that parse and apply the new filter.",
+      "score": 4
+    },
+    {
+      "id": "IA-R2",
+      "reason": "Every module, API and table id is in the generated facts and cited. The claims resolve to symbols, columns and context sections. The checks gates all pass.",
+      "score": 4
+    },
+    {
+      "id": "IA-R3",
+      "reason": "Covers callers through client.ts, honestly noting the facts have no call edges. Also covers the lack of background jobs, the readers of the list rows, the UTC/local-midnight drift and both tests that read the full shape.",
+      "score": 4
+    },
+    {
+      "id": "IA-R4",
+      "reason": "The answer A-01 is cited correctly and decides the filter. But the Known section says 'only' the full-shape tests change, an exclusive claim with no proof that is not marked assumed.",
+      "score": 3
+    },
+    {
+      "id": "IA-R5",
+      "reason": "Readable and well organised. The summary leads with the main risk at the now boundary. The impacted list is not ordered by risk.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 3.85,
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impact"
+}

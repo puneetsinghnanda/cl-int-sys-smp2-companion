@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "only the tests that read the full shape change (C17, C18)",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#known"
+        },
+        {
+          "quote": "Any web assertion on the set of tiles must also expect the new tile.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#impacted-modules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Known says only the two full-shape tests change. That exclusive claim has no proof and is not marked assumed, and it contradicts the artifact's own note that any web assertion on the set of tiles must also change."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "feedback.v1",
+  "step": "impact"
+}
