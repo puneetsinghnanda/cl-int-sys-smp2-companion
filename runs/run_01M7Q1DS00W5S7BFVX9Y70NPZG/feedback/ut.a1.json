@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "REQ-7: Today, Last 7 days and Last 30 days all give the same count.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
+        },
+        {
+          "quote": "a Scheduled appointment started on 10 October, before Last 30 days begins on 20 October",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-3"
+        },
+        {
+          "quote": "Not covered at unit level:",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No test uses a Scheduled appointment that started weeks earlier or before Last 30 days (S-3 AC2, S-1 AC4, S-4 AC2). All fixtures are Monday/Tuesday, so a fixed 30-day window would pass. These ACs are not listed under Not covered."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

@@ -1,0 +1,192 @@
+{
+  "artifact_sha256": "54c52c71ac8f213d94ad2e67542b85c7895964857c5cb0412d0bc7fc575a8b84",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/dashboard-no-shows.test.ts\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [],
+      "claim_id": "C7",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [],
+      "claim_id": "C8",
+      "verdict": "not-checked"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "REQ-7: Today, Last 7 days and Last 30 days all give the same count.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
+        },
+        {
+          "quote": "a Scheduled appointment started on 10 October, before Last 30 days begins on 20 October",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-3"
+        },
+        {
+          "quote": "Not covered at unit level:",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Book an appointment, move the fixed clock forward more than 30 days, then check the count under every period and that the started list includes it. Otherwise list S-1 AC4, S-3 AC2 and S-4 AC2 under Not covered.",
+      "text": "No test uses a Scheduled appointment that started weeks earlier or before Last 30 days (S-3 AC2, S-1 AC4, S-4 AC2). All fixtures are Monday/Tuesday, so a fixed 30-day window would pass. These ACs are not listed under Not covered."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "REQ-10/REQ-11: `upcoming` and the next list hold only future appointments.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
+        },
+        {
+          "quote": "Given a Scheduled appointment started before now exists, when staff open the dashboard",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-5"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "In the new API test, assert the full totals object (appointmentsToday, completed, cancelled, noShows, upcoming) with the awaiting appointment present.",
+      "text": "S-5 AC1 needs every other tile unchanged while an awaiting appointment exists. The new API test checks only upcoming and the next list. The web test pins tiles from a mocked fixture, not from computed totals."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "HMS-3 REQ-2/REQ-4: counts a No-show that starts in the selected period",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts"
+        },
+        {
+          "quote": "REQ-1/REQ-2: the count is 1.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Start test names with HMS-21 REQ-n, as the HMS-3 tests do, and show those names in the artifact.",
+      "text": "Earlier ticket tests put the ticket before the requirement id (HMS-3 REQ-2). This artifact shows bare REQ-n names, which repeat across tickets and make the IDs ambiguous."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "carry no phone, email, allergies, notes or other medical data",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ut.md#tests"
+        },
+        {
+          "quote": "has a blood group, allergies, chronic conditions, current medications, notes",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-6"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Name every medical-history and contact field the test seeds and checks is absent.",
+      "text": "S-6 seeds blood group, chronic conditions and current medications. The artifact names only phone, email, allergies and notes, so it does not say whether those fields are seeded and checked as absent."
+    }
+  ],
+  "package_sha256": "b40c0598400667391bb3bb669092b0bc19ae53e08d9fe1a497c8143898c1924e",
+  "questions": [],
+  "recorded_at": "2026-11-18T11:38:38Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover the count, the started filter, the tile, the link and URL forwarding at both layers. They do not cover appointments that started weeks earlier or before Last 30 days (S-1 AC4, S-3 AC2, S-4 AC2).",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check results you can observe: exact counts, list ids equal to the count, 400 field-error bodies and every tile's link. The API side checks other totals only through upcoming and the next list.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers the exact-now boundary (10:14, 10:15, +1 ms), zero count, the previous day, closed statuses, and three bad started values returning 400. Old and local-midnight edges are missing.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Uses Vitest with Supertest and a throwaway database for the API, and jsdom tests for the web, where the layout says they go. Test names show bare REQ ids, not the ticket prefix earlier tickets use.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No pass counts or coverage are invented. tests and coverage are left out until the verifier runs, and the coverage step is shown as skipped (exit 78) in checks.json.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.1,
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
