@@ -1,0 +1,198 @@
+{
+  "artifact_sha256": "670fc50f90fcf3be62c7c38598d606009d545b084766e099238ef185cb742bac",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Completed and No-show are allowed only after the start time.",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open. Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "each linking to the list it",
+          "ref": "context/glossary.md#dashboard"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Today, Last 7 days or Last 30 days",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never in lists, the dashboard or logs",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/dashboard.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/dashboard"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "api/src/routes/appointments.ts",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "No medical history and no contact details appear (PRD DSH-9).",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ticket.md#L24"
+        },
+        {
+          "quote": "No `contact details` appear on the tile or the dashboard.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-13"
+        },
+        {
+          "quote": "No `medical history` appears on the tile, the dashboard or the linked list.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-12"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Either give REQ-13 the same scope as AC8 (tile, dashboard and linked list), or mark it assumed, state the reason for the narrower scope, and add a question for the product owner.",
+      "text": "Ticket AC8 says no contact details appear, with no limit on where. REQ-12 covers the tile, the dashboard and the linked list, but REQ-13 covers only the tile and the dashboard. This narrows the rule without a cite and is still marked known."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The local product checkout already appears to contain an HMS-21 implementation",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#summary"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Cite evidence for the claim, or remove it from the Summary and leave it to the impact step.",
+      "text": "The Summary says the local product checkout already contains an HMS-21 implementation that the pinned context pack does not show. The claim has no citation, and no input to this step supports it."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "tiles and the doctor page's No-shows count use the same rule.",
+          "ref": "context/glossary.md#period"
+        },
+        {
+          "quote": "The count does not change with the period selector (PRD DSH-7).",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ticket.md#L20"
+        },
+        {
+          "quote": "The other period tiles follow the period rule (C4); this one does not.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#known"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Record the clash with both cites, and note that the glossary 'Period' entry needs an exception for Awaiting outcome.",
+      "text": "The glossary says dashboard tiles follow the period rule, but AC4 says this tile ignores the period. The artifact notes the exception but does not raise it as a question citing both sides, and does not flag the glossary entry for an update."
+    }
+  ],
+  "package_sha256": "74f2c51448bb003212f514ccfb75372368262ff09db0c84d4a999f601af6c064",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "AC8 says no contact details appear. Does this also apply to the appointment list the Awaiting outcome tile links to, or only to the tile and the dashboard?"
+    }
+  ],
+  "recorded_at": "2026-11-18T10:07:31Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Every ticket ask (AC1-AC8) becomes a requirement. Undefined glossary terms and the PRD references are listed under Out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "AC3 is split into one requirement per excluded group and each one can be tested. REQ-12 and REQ-13 give different scopes for the single AC8 rule, and nothing explains why.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Each requirement cites its ticket line. REQ-13 narrows AC8's scope but is still marked known. The Summary claims there is an existing HMS-21 implementation and gives no citation.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The glossary period rule says dashboard tiles follow the period. The artifact notes that this tile does not, but it never raises the clash as a question with both cites.",
+      "score": 3
+    },
+    {
+      "id": "RR-R5",
+      "reason": "No questions are asked and most asks are stated directly. The scope of the AC8 'no contact details' rule for the linked list was decided without asking.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "The wording is plain and glossary terms are used consistently. One small inconsistency: the period glossary entry does not cover this tile.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.1,
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

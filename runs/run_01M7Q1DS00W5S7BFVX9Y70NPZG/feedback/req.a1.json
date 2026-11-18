@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "No medical history and no contact details appear (PRD DSH-9).",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ticket.md#L24"
+        },
+        {
+          "quote": "No `contact details` appear on the tile or the dashboard.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-13"
+        },
+        {
+          "quote": "No `medical history` appears on the tile, the dashboard or the linked list.",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-12"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Ticket AC8 says no contact details appear, with no limit on where. REQ-12 covers the tile, the dashboard and the linked list, but REQ-13 covers only the tile and the dashboard. This narrows the rule without a cite and is still marked known."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "feedback.v1",
+  "step": "req"
+}
