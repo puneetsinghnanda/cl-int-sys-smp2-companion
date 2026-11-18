@@ -1,0 +1,61 @@
+{
+  "artifact_path": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md",
+  "artifact_sha256": "95fdeb50c4f40db04b78306e4b86dd5f995f3a941c944b0578376429b1cc6230",
+  "attempt": 1,
+  "budget_tokens": 15000,
+  "checks_sha256": "4b72b1e10eb3acf839b6dedb9dfee556b93f3a2ff87a4ff2a287f4cbe410ccde",
+  "context_sections": [
+    {
+      "id": "glossary",
+      "included": true,
+      "path": "context/glossary.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "intent",
+      "path": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md"
+    },
+    {
+      "name": "glossary",
+      "path": "context/glossary.md"
+    }
+  ],
+  "package_sha256": "6e13da44b9d5795f33c111dba18c7657cf84ca1bce891ad4e4cd78d8ab1724ab",
+  "prepared_at": "2026-11-18T10:16:31Z",
+  "prepared_by": "tsl@0.1.6",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/review-input/split.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "SS-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "SS-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "SS-R3",
+        "weight": 0.25
+      },
+      {
+        "id": "SS-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "SS-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/story-split/rubric.md",
+    "sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "run_records": [],
+  "schema": "review-package.v1",
+  "skill": "story-split@1.4.0",
+  "step": "split",
+  "truncated": false
+}

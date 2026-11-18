@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7Q1DS00W5S7BFVX9Y70NPZG
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md
@@ -11,6 +11,9 @@ inputs:
     sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "S-3 AC1 now uses an appointment inside Last 7 days but not Today, so a period-filtered tile shows 0 under Today and fails."
 claims:
   - id: C1
     text: "The new tile is labelled `Awaiting outcome`."
@@ -73,7 +76,7 @@ stories:
     trace: [REQ-7]
     acceptance_criteria:
       - id: AC1
-        text: "Given today is 18 November local and a Scheduled appointment started on 1 November, before Last 7 days begins on 12 November, when staff change the period from Today to Last 7 days, then the Awaiting outcome count stays the same."
+        text: "Given now is 10:00 local on 18 November and the only Scheduled appointment started before now began at 09:00 local on 15 November, inside Last 7 days but not Today, when staff switch the period from Today to Last 7 days, then the tile shows 1 both times."
       - id: AC2
         text: "Given today is 18 November local and a Scheduled appointment started on 10 October, before Last 30 days begins on 20 October, when staff choose Last 30 days, then the Awaiting outcome tile still counts it."
   - id: S-4
@@ -103,11 +106,14 @@ stories:
     trace: [REQ-12, REQ-13]
     acceptance_criteria:
       - id: AC1
-        text: "Given the patient of a counted appointment has allergies and a phone number recorded, when staff open the dashboard, then neither the page nor its data response contains any medical history or contact details."
+        text: "Given the patient of a counted appointment has a blood group, allergies, chronic conditions, current medications, notes and every contact detail the patient record holds, when staff open the dashboard, then neither the page nor its data response contains any of them."
       - id: AC2
-        text: "Given the patient of a counted appointment has allergies and a phone number recorded, when staff select the Awaiting outcome tile, then neither the list nor its data response contains any medical history or contact details."
+        text: "Given the patient of a counted appointment has a blood group, allergies, chronic conditions, current medications, notes and every contact detail the patient record holds, when staff select the tile, then neither the list nor its data response contains any of them."
 ---
 # Stories: HMS-21
+
+## Resolves
+- F-1: S-3 AC1 now uses an appointment inside Last 7 days but not Today, so a period-filtered tile shows 0 under Today and fails.
 
 ## Stories
 
@@ -128,12 +134,12 @@ Traces: REQ-3, REQ-4, REQ-5.
 
 ### S-3 The count ignores the period selector
 Traces: REQ-7.
-- AC1: Given today is 18 November local and a Scheduled appointment started on 1 November, before Last 7 days begins on 12 November, when staff change the period from Today to Last 7 days, then the Awaiting outcome count stays the same.
+- AC1: Given now is 10:00 local on 18 November and the only Scheduled appointment started before now began at 09:00 local on 15 November, inside Last 7 days but not Today, when staff switch the period from Today to Last 7 days, then the tile shows 1 both times.
 - AC2: Given today is 18 November local and a Scheduled appointment started on 10 October, before Last 30 days begins on 20 October, when staff choose Last 30 days, then the Awaiting outcome tile still counts it.
 
 ### S-4 Open exactly the counted appointments from the tile
 Traces: REQ-8.
-- AC1: Given now is 10:00 local on 18 November, Scheduled A1 started at 09:59 local and Scheduled A2 starts at 10:01 local, when staff select the Awaiting outcome tile, then the list shows A1, not A2, and its total equals the tile's count. (The tile's own count for this data is covered by S-1 AC2.)
+- AC1: Given now is 10:00 local on 18 November, Scheduled A1 started at 09:59 local and Scheduled A2 starts at 10:01 local, when staff select the Awaiting outcome tile, then the list shows A1, not A2, and its total equals the tile's count.
 - AC2: Given Scheduled A3 started at 00:30 local on 18 November (19:00 UTC on 17 November) and Scheduled A5 started on 1 November, when staff select the Awaiting outcome tile, then the list shows both A3 and A5.
 - AC3: Given now is 10:00 local and an appointment at 09:30 local today is Completed, when staff select the Awaiting outcome tile, then the list does not show it.
 
@@ -146,16 +152,16 @@ Traces: REQ-10, REQ-11.
 
 ### S-6 No personal data on the dashboard or the linked list
 Traces: REQ-12, REQ-13.
-- AC1: Given the patient of a counted appointment has allergies and a phone number recorded, when staff open the dashboard, then neither the page nor its data response contains any medical history or contact details.
-- AC2: Given the patient of a counted appointment has allergies and a phone number recorded, when staff select the Awaiting outcome tile, then neither the list nor its data response contains any medical history or contact details.
+- AC1: Given the patient of a counted appointment has a blood group, allergies, chronic conditions, current medications, notes and every contact detail the patient record holds, when staff open the dashboard, then neither the page nor its data response contains any of them.
+- AC2: Given the patient of a counted appointment has a blood group, allergies, chronic conditions, current medications, notes and every contact detail the patient record holds, when staff select the tile, then neither the list nor its data response contains any of them.
 
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-6 and REQ-9. It tests the boundary at now on both sides (C2) and an instant whose local date differs from its UTC date in `Asia/Kolkata` (C6).
 - S-2: built from known REQ-3, REQ-4 and REQ-5. Each excluded status is the most recent or most tempting started appointment.
-- S-3: built from known REQ-7. Appointments started before the first day of Last 7 days and of `Last 30 days` (C7) stay counted (C3).
+- S-3: built from known REQ-7. One appointment sits inside Last 7 days but outside Today, and another before the first day of `Last 30 days` (C7). Both must stay counted (C3).
 - S-4: built from known REQ-8. The list must match the count at the now boundary and across local dates (C4).
 - S-5: built from known REQ-10 and REQ-11. The other tiles are checked with and without an awaiting appointment, and the `next 10 upcoming` list just over its limit (C5).
-- S-6: built from known REQ-12 and REQ-13. `Medical history` fields come from the glossary (C8).
+- S-6: built from known REQ-12 and REQ-13. Every `Medical history` field from the glossary (C8) and every contact detail the patient record holds are seeded.
 
 ## Assumed
 None.
