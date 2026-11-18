@@ -1,0 +1,92 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "cdd48d7739b108e313c9d6c3a90ff4f9ad39d93c9697e4c5104367d5137a5a30",
+  "package_sha256": "8bb2c9c7139a397d954d2479ce3ecbaf4a7db2c6d74427b961a27c7a68d139e1",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 4, "reason": "Uses only existing modules, services, repos and the query helper, with no new infrastructure. But it puts parsing of `started` in AppointmentService and leaves the route unchanged, which goes against the rule that routes parse input."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 to S-6 each map to components and endpoints. This covers the boundary at now, local midnight, zero, excluded statuses, the period being ignored, the linked list matching, unchanged tiles and the next list, and no personal data."},
+    {"id": "DS-R3", "score": 4, "reason": "totals.awaitingOutcome is fully specified. The `started` parameter is typed as a nullable string rather than an optional flag, and the 400 error message for `started` is not given."},
+    {"id": "DS-R4", "score": 3, "reason": "Most choices are cited or decided by A-01, A-02 or A-03. The claim that the routes already pass the query to the services is stated as fact without a cite that proves it, and assumed is empty."},
+    {"id": "DS-R5", "score": 5, "reason": "It explains server now vs a client instant, strict &lt; at now, instants vs local dates, why only `started=true` is allowed, and why no migration is needed."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear and consistent. Two small issues: the EP entries sit under Components, and CO-10 is filed under the api module although it also covers the web test."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "consistency",
+      "text": "The design marks the routes as existing and moves parsing of `started` into AppointmentService. The architecture says routes parse input, and impact says the appointments route parses the new query value. So the route should be a changed component.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#components", "quote": "CO-5 Appointments and dashboard routes — existing. They already pass the query to the services (C10, C11)."},
+        {"ref": "context/architecture.md#components", "quote": "routes parse input and declare a permission"},
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/impact.md#impacted-modules", "quote": "parses the new query value"}
+      ],
+      "suggested_fix": "Mark the appointments route as changed. It parses and validates `started` (400 ValidationError). AppointmentService applies the server-now bound. Or justify the deviation from architecture#components."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "traceability",
+      "text": "The statement that the routes \"already pass the query to the services\" is given as fact. Its only cites are api-inventory route locations, which do not prove that behaviour, and nothing is listed as Assumed with \"implement must confirm\".",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#item:CO-5", "quote": "context/generated/api-inventory.json#http:GET:/api/appointments"},
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#assumed", "quote": "assumed: []"}
+      ],
+      "suggested_fix": "Cite the route source lines that forward the query, or move this to Assumed with \"implement must confirm\"."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "CO-10 is placed on module:sample-system:api but also covers the web DashboardPage test, which belongs to module:sample-system:web.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#item:CO-10", "quote": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L10"}
+      ],
+      "suggested_fix": "Split CO-10 into an api test component and a web test component, each on its own module."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "EP-2 types `started` as a nullable string. It is an optional query flag whose only valid value is `true`, so \"nullable\" mixes up absent with null, and the 400 error message for the field is not given.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#item:EP-2", "quote": "started (query parameter), type: string, nullable: true"}
+      ],
+      "suggested_fix": "Describe it as optional (may be absent), enum [\"true\"], and state the ValidationError message for field `started`."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService", "quote": "api/src/services/dashboardService.ts:DashboardService"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:Dashboard", "quote": "api/src/services/dashboardService.ts:Dashboard"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:PERIODS", "quote": "api/src/services/dashboardService.ts:PERIODS"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:Dashboard", "quote": "web/src/api/types.ts:Dashboard"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage", "quote": "web/src/pages/DashboardPage.tsx:DashboardPage"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "quote": "web/src/pages/AppointmentsPage.tsx:AppointmentsPage"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService", "quote": "api/src/services/appointmentService.ts:AppointmentService"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentFilter", "quote": "api/src/repositories/appointmentRepo.ts:AppointmentFilter"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "api/src/repositories/appointmentRepo.ts:AppointmentRepo"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/appointments", "quote": "api/src/routes/appointments.ts"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/dashboard", "quote": "api/src/routes/dashboard.ts"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:query", "quote": "web/src/api/client.ts:query"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/conventions.md#errors", "quote": "Invalid input is 400 with one"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "{ items, page, page_size, total }`, 20 per page"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01", "quote": "answer: New filter, server now (proposed default)"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-02", "quote": "answer: awaitingOutcome (proposed default)"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-03", "quote": "answer: started=true (proposed default)"}]},
+    {"claim_id": "C19", "verdict": "not-checked", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#claim:C19", "quote": "expect(res.body.totals).toEqual({"}]},
+    {"claim_id": "C20", "verdict": "not-checked", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md#claim:C20", "quote": "totals: { patients: 200"}]}
+  ],
+  "questions": []
+}
