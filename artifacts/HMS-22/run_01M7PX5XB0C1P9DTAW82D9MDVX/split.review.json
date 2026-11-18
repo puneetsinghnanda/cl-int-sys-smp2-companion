@@ -1,0 +1,198 @@
+{
+  "artifact_sha256": "d182e60f3214d20d0154b39b06ff289ed5e07cb64dd82446cd7dcc814e926c73",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The dashboard has a tile labelled `New patients`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-1"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The tile shows the number of patients whose `created_at` falls in the selected period.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The period's days are whole hospital-local days in `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-3"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A run of whole hospital-local days ending today: Today, Last 7 days or Last 30 days.",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The list opened from the tile shows all statuses (`All statuses from tile`)",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-7"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The filtered patient list stays at `20 per page`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-8"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "When the list is opened from the tile, a search already typed on the list is `cleared`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-9"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "patient P3 was created on 15 November local and the period is Today",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-2"
+        },
+        {
+          "quote": "patient P4 was created on 10 October local (before the first day of Last 30 days, 20 October)",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-2"
+        },
+        {
+          "quote": "A run of whole hospital-local days ending today: Today, Last 7 days or Last 30 days.",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add ACs with patients at 00:30 local on the first day (12 Nov / 20 Oct, counted) and 23:30 local on the day before (11 Nov / 19 Oct, not counted).",
+      "text": "S-2 tests no period edge. P3 (15 Nov, in Last 7 days) and P4 (10 Oct, outside Last 30 days) sit far from the first day, so a rolling now-minus-N-days window or an off-by-one start date (11 Nov, 19 Oct) still passes."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "patients exist that were created before that period",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-3"
+        },
+        {
+          "quote": "The period's days are whole hospital-local days in `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/req.md#item:REQ-3"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Add an S-3 AC that reuses P1/P2 from S-1 AC2: the list opened from the tile (Today) includes P1 and excludes P2.",
+      "text": "S-3 never checks the list filter against the Asia/Kolkata day boundary. A list that filters by UTC dates passes AC1, because its patients lie well outside the period, so the list total can differ from the tile count near local midnight."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "tiles that count patients, doctors and appointments",
+          "ref": "context/glossary.md#dashboard"
+        },
+        {
+          "quote": "then the Completed and Cancelled tiles and the next upcoming appointments are the same as before this change.",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-4"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "suggested_fix": "Extend S-4 AC3, or add an AC, so that the doctor tiles and each other existing tile show the same counts as before the change.",
+      "text": "REQ-13 (rest of dashboard unchanged) is checked only for the Completed/Cancelled tiles and upcoming appointments. The dashboard also has tiles that count doctors, and no AC covers that partition."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "The rest of the dashboard stays as it is and stays free of personal data",
+          "ref": "artifacts/HMS-22/run_01M7PX5XB0C1P9DTAW82D9MDVX/split.md#item:S-4"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Split S-4 into one story for REQ-12/13 and one for REQ-14/15.",
+      "text": "S-4 bundles two outcomes, regression of the existing dashboard and absence of personal data, as its title shows."
+    }
+  ],
+  "package_sha256": "8493262b549b14396bc533ec5a4f0fc06cf81fed46d227979af95745622371a7",
+  "questions": [],
+  "recorded_at": "2026-11-18T08:59:46Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 15 known REQs are traced: S-1 REQ-1..4,11; S-2 REQ-5; S-3 REQ-6..10; S-4 REQ-12..15. None are assumed or unknown.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "S-1 to S-3 each deliver one outcome. S-4 bundles 'dashboard unchanged' with 'free of personal data'.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The ACs are Given/When/Then and the S-1 time-zone AC discriminates. The S-2 period-edge cases and the time-zone boundary on the S-3 list filter are missing, and S-4 leaves out the doctor tiles partition.",
+      "score": 3
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Values come from the intent or are derived inline (UTC+05:30 offset, 20 October start of Last 30 days, 21 patients vs 20 per page).",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms match the glossary and the intent, and the body mirrors the front matter.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M7PX5XB0C1P9DTAW82D9MDVX",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
