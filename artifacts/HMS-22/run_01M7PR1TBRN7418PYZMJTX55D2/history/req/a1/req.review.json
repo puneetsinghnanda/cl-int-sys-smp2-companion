@@ -1,0 +1,167 @@
+{
+  "artifact_sha256": "fe22f73d112319cd90d90c3cd1860641108f3a83e01c8c69d946636a2334e611",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A run of whole hospital-local days ending today",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "tiles and the doctor page's No-shows count use the same rule.",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "column:patient.created_at",
+          "ref": "context/generated/db-schema.json#column:patient.created_at"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never in lists, the dashboard or logs",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, created_at (proposed default)",
+          "ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Filtered list keeps search, status and sort",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-7"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Split REQ-7 into three REQs: filtered list keeps current search; keeps current status filter; keeps current sort order.",
+      "text": "REQ-7 is a compound requirement: it covers three separate behaviours (search kept, status filter kept, sort order kept) that a tester checks independently."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The main risk is that the tile's list must show exactly the counted patients, Inactive ones included, while keeping its page size, search, status filter and sort.",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#summary"
+        },
+        {
+          "quote": "Active and Inactive patients registered in the period are both counted.",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L20"
+        },
+        {
+          "quote": "keeps its current search, status filter and",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Add a question to the product owner on whether the tile link opens the list with status filter set to All, and record the answer on REQ-5 and REQ-7.",
+      "text": "The artifact names a risk that keeping the list's current status filter may hide the Inactive patients the tile counts (REQ-3, REQ-5), but raises no question on which wins; ask missing."
+    }
+  ],
+  "package_sha256": "b3d40d11f31f18314089ed78326cee532377f290028a6cff441a4198047ff809",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-2",
+      "id": "Q-1",
+      "text": "When a user opens the New patients tile link and the patient list's current status filter is Active, should the link override it to All so the list shows the counted Inactive patients too, or keep the current filter?"
+    }
+  ],
+  "recorded_at": "2026-11-18T07:18:39Z",
+  "recorded_by": "tsl@0.1.6",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.6"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All nine ticket acceptance criteria map to REQ-1..REQ-12, including the hospital time zone; API filter design is out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and checkable; REQ-7 bundles search, status filter and sort order into one requirement.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every REQ cites a ticket line; the meaning of registered is decided by the user's answer A-01 and cited; no invented values.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No clash between ticket and baseline; the undefined term registered was raised as Q-01 and answered.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Q-01 was precise with real options, but the tension between keeping the status filter and listing Inactive patients was noted as a risk without a question.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain words; glossary terms Period, Tile, Inactive used consistently; missing glossary term registered is noted.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M7PR1TBRN7418PYZMJTX55D2",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

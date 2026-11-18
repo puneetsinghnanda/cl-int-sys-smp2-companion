@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "a status filter staff then choose combines with the period",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-13"
+        },
+        {
+          "quote": "answer: All statuses from tile (proposed default)",
+          "ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-13 is compound: it states the list opens with no status filter from the tile, and separately that a status filter chosen later combines with the period. A-02 only decides the first; the second is a separate testable behaviour."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7PR1TBRN7418PYZMJTX55D2",
+  "schema": "feedback.v1",
+  "step": "req"
+}
