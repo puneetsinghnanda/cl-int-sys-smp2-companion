@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M7Q1DS00W5S7BFVX9Y70NPZG
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.4.0
 inputs:
   - path: artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ticket.md
@@ -13,6 +13,9 @@ inputs:
     sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "REQ-13 now has the same scope as AC8 and REQ-12: the tile, the dashboard and the linked list."
 claims:
   - id: C1
     text: "Completed and `No-show` are allowed only after the start time."
@@ -119,7 +122,7 @@ requirements:
     title: No contact details
     type: constraint
     status: known
-    statement: "No `contact details` appear on the tile or the dashboard."
+    statement: "No `contact details` appear on the tile, the dashboard or the linked list."
     cites: ["artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ticket.md#L24"]
 unknowns: []
 questions: []
@@ -139,8 +142,11 @@ glossary:
 ---
 # Requirements review: HMS-21
 
+## Resolves
+- F-1: REQ-13 now has the same scope as AC8 and REQ-12: the tile, the dashboard and the linked list.
+
 ## Summary
-HMS-21 adds an `Awaiting outcome` tile that counts Scheduled appointments whose start time has already passed, so staff can close them (ticket L12–L17). The count ignores the period selector and must link to a list holding exactly the counted appointments (L20–L21). The main risk is the boundary at "now": an appointment that has started but not ended is counted, while one starting later today is not. A list filtered by whole local days would therefore not match the count. The local product checkout already appears to contain an HMS-21 implementation that the pinned context pack (`7681f87`) does not show, so later steps must reconcile with that code.
+HMS-21 adds an `Awaiting outcome` tile that counts Scheduled appointments whose start time has already passed, so staff can close them (ticket L12–L17). The count ignores the period selector, unlike the other period tiles, and must link to a list holding exactly the counted appointments (L20–L21). The main risk is the boundary at "now": an appointment that has started but not ended is counted, while one starting later today is not. A list filtered by whole local days would therefore not match the count. The tile, the dashboard and the linked list must carry no medical history or contact details.
 
 ## Requirements
 - REQ-1 Awaiting outcome tile — known — The dashboard has a tile labelled `Awaiting outcome`.
@@ -155,17 +161,17 @@ HMS-21 adds an `Awaiting outcome` tile that counts Scheduled appointments whose 
 - REQ-10 Other tiles unchanged — known — The `other tiles` are unchanged.
 - REQ-11 Next upcoming list unchanged — known — The `next 10 upcoming` appointments list is unchanged.
 - REQ-12 No medical history — known — No `medical history` appears on the tile, the dashboard or the linked list.
-- REQ-13 No contact details — known — No `contact details` appear on the tile or the dashboard.
+- REQ-13 No contact details — known — No `contact details` appear on the tile, the dashboard or the linked list.
 
 ## Known
 - REQ-1, REQ-2: ticket AC1–AC2 (L16–L17). Scheduled means booked and still open (C2), and Completed and No-show are set only after the start time (C1), so started Scheduled appointments are the ones awaiting an outcome.
 - REQ-3, REQ-4, REQ-5, REQ-6: ticket AC3 (L18–L19), one requirement per excluded group.
-- REQ-7: ticket AC4 (L20). The other period tiles follow the period rule (C4); this one does not.
+- REQ-7: ticket AC4 (L20).
 - REQ-8: ticket AC5 (L21). Each tile links to the list it counts (C3). The appointment list is served from `api/src/routes/appointments.ts` (C7).
 - REQ-9: ticket AC6 (L22).
 - REQ-10, REQ-11: ticket AC7 (L23).
 - REQ-12: ticket AC8 (L24) and baseline data protection (C5).
-- REQ-13: ticket AC8 (L24).
+- REQ-13: ticket AC8 (L24), applied with the same scope as REQ-12. Whether the linked list needs a change to meet it is left to the impact step.
 
 ## Assumed
 None.
@@ -177,7 +183,8 @@ None.
 None open. No questions were asked in the IDE in this step: every ticket item is stated directly, and how the list expresses "started before now" is a contract choice for the impact and design steps.
 
 ## Out of scope
-- How the appointment list filters to "started before now" (a new filter or otherwise) is left to impact and design. Today the list is served from `api/src/routes/appointments.ts` (C7); its filters are not part of this step's inputs.
+- How the appointment list filters to "started before now" (a new filter or otherwise) is left to impact and design. The list is served from `api/src/routes/appointments.ts` (C7).
+- Glossary clash: the glossary's Period entry says the dashboard tiles use the period rule (context/glossary.md#period, C4), but ticket AC4 (L20) says this tile ignores the period selector. The ticket is explicit and cites PRD DSH-7, so REQ-7 follows the ticket. The glossary Period entry needs an exception for Awaiting outcome, to be updated by the glossary owner.
 - Glossary: "Awaiting outcome" is not defined. Ticket AC2 (L17) defines the count, which is enough for REQ-2.
 - Glossary: "Contact details" is not defined. AC8 needs only that none appear.
 - The PRD references (APT-7, DSH-7, DSH-8, DSH-9) are cited by the ticket. The PRD itself is not an input to this step and was not read.

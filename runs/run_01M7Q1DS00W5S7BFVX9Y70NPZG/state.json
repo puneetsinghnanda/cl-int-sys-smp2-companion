@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-18T10:07:56Z",
+  "heartbeat_at": "2026-11-18T10:13:55Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -50,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 3,
+  "rev": 7,
   "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -59,7 +59,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md",
+          "artifact": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/history/req/a1/req.md",
           "artifact_sha256": "670fc50f90fcf3be62c7c38598d606009d545b084766e099238ef185cb742bac",
           "band": "High",
           "cause": "first",
@@ -68,10 +68,27 @@
           "inputs": [],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.verification.json",
+          "record": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/history/req/a1/req.verification.json",
           "skill": "requirement-review@1.4.0",
           "skill_started_at": "2026-11-18T09:58:13Z",
           "started_at": "2026-11-18T09:58:02Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md",
+          "artifact_sha256": "c5c9d980373a9426a9af4c3b4d72cca66f0eb9f6023b195e786aa8d084ba20f0",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-18T10:13:55Z",
+          "feedback": "runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/feedback/req.a1.json",
+          "inputs": [],
+          "n": 2,
+          "outcome": "PASS",
+          "record": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.verification.json",
+          "skill": "requirement-review@1.4.0",
+          "skill_started_at": "2026-11-18T10:08:57Z",
+          "started_at": "2026-11-18T10:08:37Z",
+          "write_rejects": 1
         }
       ],
       "budget_used": {
@@ -82,7 +99,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -189,7 +206,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-21",
-  "updated_at": "2026-11-18T10:07:56Z",
+  "updated_at": "2026-11-18T10:13:55Z",
   "workflow": "brownfield-change@1.4.0",
   "workflow_sha256": "42b29e99c297072604d30206b7c13ef4a00080eff7c42fddecea06e1434e8dd4"
 }
