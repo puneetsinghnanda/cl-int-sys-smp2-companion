@@ -1,0 +1,145 @@
+{
+  "artifact_sha256": "51eee980084e44b77b1b62655028e5caf19eb3b25ffe99e828772b7c8a3082a5",
+  "attempt": 1,
+  "finished_at": "2026-11-18T11:29:17Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/design.md",
+      "sha256": "67fec0fca1d7cdefdee99ee1eeed978a3cefdfdb2b3ca102126f07401d052b77",
+      "verification_sha256": "511c67f6bf006d11f3debb2ce85b09b1cc6143d75051604b23eea508b38a1f3a"
+    },
+    {
+      "path": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md",
+      "sha256": "b54499b009a5c3dc2f2280aa5d7a1ddbb5c87d032fedcf19338b3faa1e0f64a1",
+      "verification_sha256": "c7b5dac2debf7b820b620e90f20f50db186c8835592426099c76193db785fddb"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "8a7e28c01968d7a3669357c951250635f3583a3a827b64c75433445116fead94",
+      "files": [
+        "api/src/repositories/appointmentRepo.ts",
+        "api/src/services/appointmentService.ts",
+        "api/src/services/dashboardService.ts",
+        "api/test/dashboard.test.ts",
+        "web/src/__tests__/DashboardPage.test.tsx",
+        "web/src/api/types.ts",
+        "web/src/pages/AppointmentsPage.tsx",
+        "web/src/pages/DashboardPage.tsx"
+      ],
+      "lines_added": 21,
+      "lines_deleted": 4,
+      "repo": "sample-system",
+      "tree_sha": "6898d50a8bd9a9518ae29c87cf12ceee37241edb"
+    }
+  ],
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-18T11:26:36Z",
+  "step": "impl",
+  "tool_log_sha256": "8f169aa08850f4e0dc7ddd29f3061983fba9953f291107a196e6cf732f841a4c",
+  "tsl_version": "0.1.6",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 13641,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 29078,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 4687,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "9300676fcee7fc85b159e9b355308d04d191436e7e96d8a93deec97410a6f27e",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 33437,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "3477f0046ed46ec999b4cb936de656653459c72682bea2c898dc48a701ac89a4",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1141,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      }
+    ]
+  }
+}
