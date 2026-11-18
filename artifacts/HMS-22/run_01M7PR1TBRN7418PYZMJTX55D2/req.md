@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M7PR1TBRN7418PYZMJTX55D2
 step: req
-attempt: 2
+attempt: 3
 skill: requirement-review@1.3.0
 inputs:
   - {path: artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md, sha256: 173c409c6b9744c3af6b4ca3e10ac9cb51725d151610e93ecc7caf1c2d0bd306}
@@ -18,8 +18,8 @@ claims:
   - {id: C6, text: "An `Inactive` patient is kept for history but not offered for new use.", cites: ["context/glossary.md#inactive"]}
   - {id: C8, text: "Registered means the patient record's creation time: `Yes, created_at (proposed default)`.", cites: ["runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-01"]}
   - {id: C9, text: "From the tile the list applies no status filter: `All statuses from tile (proposed default)`.", cites: ["runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02"]}
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 assumed: []
 unknown: []
 requirements:
@@ -29,14 +29,15 @@ requirements:
   - {id: REQ-4, title: "Count follows the period selector", type: functional, status: known, statement: "Changing the period updates the count, as it does for the `Completed and Cancelled tiles`.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L21"]}
   - {id: REQ-5, title: "Tile links to the registered patients", type: functional, status: known, statement: "The tile links to the `patient list filtered to the patients registered in that period`, showing exactly the patients it counts.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L22-L23"]}
   - {id: REQ-6, title: "Filtered list keeps its page size", type: constraint, status: known, statement: "The filtered patient list stays `20 per page`.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"]}
-  - {id: REQ-7, title: "Filtered list keeps its search", type: constraint, status: known, statement: "The filtered patient list keeps its `current search`, which combines with the period filter.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"]}
+  - {id: REQ-7, title: "Filtered list keeps its search", type: constraint, status: known, statement: "The filtered patient list keeps its `current search`.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"]}
   - {id: REQ-8, title: "Zero when none registered", type: functional, status: known, statement: "When no patient was registered in the period the tile `shows 0`.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L26"]}
   - {id: REQ-9, title: "Total patients tile unchanged", type: constraint, status: known, statement: "The `Total patients tile` is unchanged.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L27"]}
   - {id: REQ-10, title: "Rest of the dashboard unchanged", type: constraint, status: known, statement: "The `rest of the dashboard` is unchanged.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L27"]}
   - {id: REQ-11, title: "No medical history on the dashboard", type: constraint, status: known, statement: "`No medical history` appears on the dashboard.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L28", "context/intent-baseline.md#data-protection"]}
   - {id: REQ-12, title: "No contact details on the dashboard", type: constraint, status: known, statement: "No `contact details` appear on the dashboard.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L28"]}
-  - {id: REQ-13, title: "Status filter on the tile's list", type: functional, status: known, statement: "Opened from the tile, the list applies `no status filter` (Active and Inactive both shown); a status filter staff then choose combines with the period.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24", "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02"]}
+  - {id: REQ-13, title: "Tile opens the list with no status filter", type: functional, status: known, statement: "Opened from the tile, the list applies `no status filter`, so Active and Inactive patients are both shown.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24", "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02"]}
   - {id: REQ-14, title: "Filtered list keeps its sort order", type: constraint, status: known, statement: "The filtered patient list keeps its current `sort order`.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L25"]}
+  - {id: REQ-15, title: "Status filter still works on the filtered list", type: functional, status: known, statement: "On the filtered patient list, staff can still use the `status filter`; it narrows the patients registered in the period.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"]}
 unknowns: []
 questions: []
 answers:
@@ -46,7 +47,7 @@ answers:
     about: Q-02
     answer: "All statuses from tile (proposed default)"
     requirements: [REQ-13]
-    mismatch: {text: "The ticket says the filtered list keeps its current status filter; the user decided the tile link sets no status filter so the list matches the count, and a status filter chosen afterwards combines with the period.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"]}
+    mismatch: {text: "The ticket says the filtered list keeps its current status filter; the user decided the tile link sets no status filter, so the list opened from the tile shows Active and Inactive patients and matches the count.", cites: ["artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"]}
 glossary:
   - {term: Dashboard, found: true}
   - {term: Tile, found: true}
@@ -56,8 +57,7 @@ glossary:
   - {term: Medical history, found: true}
   - {term: registered, found: false}
 resolves:
-  - {id: F-1, how: "REQ-7 now covers search only; status filter and sort order are REQ-13 and REQ-14."}
-  - {id: F-2, how: "Q-02 asked which status filter wins; A-02 decided REQ-13."}
+  - {id: F-1, how: "REQ-13 now states only the tile's no-status-filter opening; the later status filter is REQ-15, from the ticket."}
 ---
 # Requirements review: HMS-22
 
@@ -71,21 +71,23 @@ HMS-22 adds a "New patients" tile to the dashboard. The tile counts patients reg
 - REQ-4, Count follows the period selector (known): changing the period updates the count, like the Completed and Cancelled tiles.
 - REQ-5, Tile links to the registered patients (known): the tile links to the patient list filtered to the patients registered in that period, exactly the ones counted.
 - REQ-6, Filtered list keeps its page size (known): 20 per page.
-- REQ-7, Filtered list keeps its search (known): the current search stays and combines with the period filter.
+- REQ-7, Filtered list keeps its search (known).
 - REQ-8, Zero when none registered (known): the tile shows 0.
 - REQ-9, Total patients tile unchanged (known).
 - REQ-10, Rest of the dashboard unchanged (known).
 - REQ-11, No medical history on the dashboard (known; C5).
 - REQ-12, No contact details on the dashboard (known).
-- REQ-13, Status filter on the tile's list (known): opened from the tile, the list applies no status filter, so Active and Inactive are both shown. A status filter staff choose afterwards combines with the period (A-02).
+- REQ-13, Tile opens the list with no status filter (known): Active and Inactive patients are both shown (A-02).
 - REQ-14, Filtered list keeps its sort order (known).
+- REQ-15, Status filter still works on the filtered list (known): staff can still use the status filter, and it narrows the patients registered in the period (ticket line 24).
 
 Retry fixes:
-- F-1: REQ-7 now covers search only; status filter and sort order are REQ-13 and REQ-14.
-- F-2: Q-02 asked which status filter wins; A-02 decided REQ-13.
+- F-1 (attempt 1): REQ-7 was split; the status filter and the sort order became REQ-13 and REQ-14.
+- F-2 (attempt 1): Q-02 asked which status filter wins, and A-02 decided REQ-13.
+- F-1 (attempt 2): REQ-13 now states only the tile's no-status-filter opening; the later status filter is REQ-15, from the ticket.
 
 ## Known
-- REQ-1, REQ-3 to REQ-12 and REQ-14: each is stated in the ticket's acceptance criteria (ticket lines 17 to 28).
+- REQ-1, REQ-3 to REQ-12, REQ-14 and REQ-15: each is stated in the ticket's acceptance criteria (ticket lines 17 to 28).
 - REQ-2: stated in the ticket. The meaning of "registered" was decided by A-01.
 - REQ-13: from ticket line 24, as decided by A-02.
 
@@ -101,7 +103,7 @@ None open.
 Answered in the IDE (both answered by the user):
 - A-01 (Q-01): does "registered in the period" mean the patient record's creation time (`created_at`) falls in the period's hospital-local days? Answer: "Yes, created_at (proposed default)". Decides REQ-2. No mismatch.
 - A-02 (Q-02): when staff open the list from the tile, which status filter applies? Answer: "All statuses from tile (proposed default)". Decides REQ-13.
-  - Mismatch: the ticket says the list keeps its current status filter. The user decided that the tile link sets none, so the list matches the count, and a status filter chosen afterwards combines with the period.
+  - Mismatch: the ticket says the list keeps its current status filter. The user decided that the tile link sets none, so the list opened from the tile shows Active and Inactive patients and matches the count.
 
 ## Out of scope
 - How the period filter is passed to the patient list, and whether a new API filter is needed. That belongs to impact and design.

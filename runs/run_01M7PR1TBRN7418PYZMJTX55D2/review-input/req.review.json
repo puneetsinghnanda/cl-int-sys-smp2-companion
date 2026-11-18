@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7PR1TBRN7418PYZMJTX55D2",
   "step": "req",
-  "attempt": 2,
-  "artifact_sha256": "d4a855f9124380708fc41660b33edfcfff84c81767eb9787bed18c8b5776008c",
-  "package_sha256": "42f57758fbbc09a65e54e5d0b69cdfcdea520f97ca0ee967c4cc32fc11ca3daf",
+  "attempt": 3,
+  "artifact_sha256": "c393f4c30313afd44b638777caefa745dbce9bd8e9d2ce5a0f187468b073dca3",
+  "package_sha256": "a0f7a16c45d2fa3c8071f8f294e5278d53e07a39a531e73551fb9246af17de11",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,26 +12,38 @@
     "version": "0.1.6",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 4.8,
+  "rubric_score": 4.3,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "All nine acceptance criteria map to REQ-1..REQ-14; AC6 is now split into REQ-6, REQ-7, REQ-13, REQ-14; API filter design is out of scope with a reason."},
-    {"id": "RR-R2", "score": 4, "reason": "F-1 fixed: REQ-7 covers search only. REQ-13 still bundles two behaviours: no status filter on opening from the tile, and a later status filter combining with the period."},
-    {"id": "RR-R3", "score": 5, "reason": "Every REQ cites a ticket line; REQ-2 and REQ-13 cite the user's answers A-01 and A-02; no assumed or invented values."},
-    {"id": "RR-R4", "score": 5, "reason": "The AC3/AC5 vs AC6 status-filter tension was asked as Q-02, answered in A-02, and recorded as a mismatch citing ticket L24."},
-    {"id": "RR-R5", "score": 5, "reason": "Q-01 and Q-02 were precise, with a proposed default and a real alternative; both answered; no needless open questions."},
-    {"id": "RR-R6", "score": 5, "reason": "Plain words; Period, Tile, Inactive used consistently; the undefined glossary term registered is noted in Out of scope."}
+    {"id": "RR-R1", "score": 5, "reason": "All nine acceptance criteria map to REQ-1..REQ-15; AC6 split into REQ-6, REQ-7, REQ-13, REQ-14, REQ-15; API filter design is out of scope with a reason."},
+    {"id": "RR-R2", "score": 5, "reason": "Previous F-1 resolved: REQ-13 now states only the no-status-filter opening and the later status filter is REQ-15. Each REQ holds one checkable behaviour."},
+    {"id": "RR-R3", "score": 4, "reason": "Every REQ cites the ticket or a user answer. REQ-15 reads 'keeps its current status filter' as 'can still use it and it narrows', an inference marked known on ticket L24 alone."},
+    {"id": "RR-R4", "score": 3, "reason": "The status-filter tension was asked (A-02) with a mismatch. The same tension for the kept current search (REQ-7) against 'exactly the patients it counts' (REQ-5, glossary Dashboard) was not raised."},
+    {"id": "RR-R5", "score": 4, "reason": "Q-01 and Q-02 were precise with a proposed default and a real alternative, both answered; the search-retention question is missing."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain words and consistent glossary terms; REQ-3 statement says 'whether they are now Active and Inactive' where 'or' is meant."}
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "major",
-      "category": "correctness",
-      "text": "REQ-13 is compound: it states the list opens with no status filter from the tile, and separately that a status filter chosen later combines with the period. A-02 only decides the first; the second is a separate testable behaviour.",
+      "category": "consistency",
+      "text": "REQ-7 keeps the list's current search, but REQ-5 requires the list to show exactly the patients counted, and the glossary says a tile links to the list it counts. A kept search would hide counted patients, the same clash A-02 settled for status; no question was asked for search.",
       "cites": [
-        {"ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-13", "quote": "a status filter staff then choose combines with the period"},
-        {"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02", "quote": "answer: All statuses from tile (proposed default)"}
+        {"ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-7", "quote": "keeps its `current search`"},
+        {"ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-5", "quote": "showing exactly the patients it counts"},
+        {"ref": "context/glossary.md#dashboard", "quote": "each linking to the list it"},
+        {"ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24", "quote": "keeps its current search, status filter and"}
       ],
-      "suggested_fix": "Split REQ-13 into: (a) opened from the tile, the list applies no status filter (A-02); (b) a status filter chosen afterwards combines with the period filter (ticket L24)."
+      "suggested_fix": "Ask whether opening the list from the tile clears the current search (as A-02 did for status) or keeps it, and record the answer and any mismatch on REQ-7."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-3 statement says patients are counted 'whether they are now Active and Inactive'; a patient is one or the other, so 'or' is meant (the body line already says 'Active or Inactive').",
+      "cites": [
+        {"ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-3", "quote": "whether they are now `Active and Inactive`"}
+      ],
+      "suggested_fix": "Reword to 'whether they are now Active or Inactive'."
     }
   ],
   "claims_checked": [
@@ -44,5 +56,7 @@
     {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-01", "quote": "answer: Yes, created_at (proposed default)"}]},
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "runs/run_01M7PR1TBRN7418PYZMJTX55D2/ide-answers.md#a-02", "quote": "answer: All statuses from tile (proposed default)"}]}
   ],
-  "questions": []
+  "questions": [
+    {"id": "Q-1", "text": "When staff open the patient list from the New patients tile, should a search already typed on the list be cleared so the list shows exactly the counted patients, or kept as ticket AC6 says?", "ask_role": "product_owner", "blocking": true, "finding_ref": "F-1"}
+  ]
 }
