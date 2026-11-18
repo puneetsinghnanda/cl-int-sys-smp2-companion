@@ -2,7 +2,7 @@
 schema: impact.v1
 run_id: run_01M7Q1DS00W5S7BFVX9Y70NPZG
 step: impact
-attempt: 1
+attempt: 2
 skill: impact-analysis@1.5.0
 inputs:
   - path: artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md
@@ -19,6 +19,9 @@ inputs:
     sha256: 2386ae151d54a73cdbe4fd9e0b69f8e8539c2870f5e52c12e5ed0191cfa95e55
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "Known no longer claims a complete set of affected tests, and tile-count assertions are listed as possibly affected."
 claims:
   - id: C1
     text: "The dashboard route is declared in `api/src/routes/dashboard.ts`."
@@ -77,6 +80,12 @@ claims:
   - id: C19
     text: "The list opened from the tile filters to appointments that start before the server's now (`New filter, server now`)."
     cites: ["runs/run_01M7Q1DS00W5S7BFVX9Y70NPZG/ide-answers.md#a-01"]
+  - id: C20
+    text: "The appointment list's rules live in `AppointmentService`."
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/appointmentService.ts:AppointmentService"]
+  - id: C21
+    text: "The appointment list query lives in `AppointmentRepo`."
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 assumed: []
@@ -112,12 +121,15 @@ answers:
 ---
 # Impact analysis: HMS-21
 
+## Resolves
+- F-1: Known no longer claims a complete set of affected tests, and tile-count assertions are listed as possibly affected.
+
 ## Summary
-The change adds an Awaiting outcome count to the dashboard API and tile. It also adds an optional "started before now" filter to the appointment list API and page, so the tile can link to exactly the counted appointments (A-01). The count reads only `starts_at` and `status` on the appointment table, which already exist (C12, C13), so no migration is expected. The main risk is the boundary at now: the count and the list must both compare instants with the server's current time, never local dates. Two existing tests read the full dashboard totals shape and must change with it (C17, C18).
+The change adds an Awaiting outcome count to the dashboard API and tile. It also adds an optional "started before now" filter to the appointment list API and page, so the tile can link to exactly the counted appointments (A-01). The count reads only `starts_at` and `status` on the appointment table, which already exist (C12, C13), so no migration is expected. The main risk is the boundary at now: the count and the list must both compare instants with the server's current time, never local dates. Existing tests that read the full dashboard totals shape (C17, C18) or the set of tiles must change with it.
 
 ## Impacted modules
-- module:sample-system:api — changed. `DashboardService` gains the new count, computed without the `PERIODS` window (C2, C3). The appointment list's `AppointmentFilter` gains an optional filter for start before the server's now (C8, A-01). The API dashboard test asserts the whole totals object with `toEqual` (C17), so it must add the new field.
-- module:sample-system:web — changed. `DashboardPage` adds the Awaiting outcome tile and its link (C6), the web `Dashboard` type gains the count (C5), and `AppointmentsPage` must pass the new filter from its URL to the API (C9, A-01). The web dashboard test's typed totals fixture (C18) stops type-checking once the type gains a required field, so it must add the count. Any web assertion on the set of tiles must also expect the new tile.
+- module:sample-system:api — changed. `DashboardService` gains the new count, computed without the `PERIODS` window (C2, C3). The appointment list's `AppointmentFilter` gains an optional filter for start before the server's now (C8, A-01). Following the layering in architecture#components, the route in `api/src/routes/appointments.ts` (C7) parses the new query value, `AppointmentService` (C20) applies the rule using the server's now, and the list query in `AppointmentRepo` (C21) adds the start-before condition. The API dashboard test asserts the whole totals object with `toEqual` (C17), so it must add the new field.
+- module:sample-system:web — changed. `DashboardPage` adds the Awaiting outcome tile and its link (C6), the web `Dashboard` type gains the count (C5), and `AppointmentsPage` must pass the new filter from its URL to the API (C9, A-01). The web dashboard test's typed totals fixture (C18) stops type-checking once the type gains a required field, so it must add the count. Tests that assert the number or set of dashboard tiles (for example a tile-count assertion in the web dashboard test) are possibly affected and must expect the new tile. This artifact does not claim the list of affected tests is complete; the unit-test step re-runs the full suites.
 - module:sample-system:db — existing. `starts_at` and `status` already exist (C12, C13), so no migration is needed.
 - http:GET:/api/dashboard — changed. Its totals gain the Awaiting outcome count, and the existing totals and the next upcoming list keep their values (REQ-10, REQ-11). Its shape is the `Dashboard` type (C4).
 - http:GET:/api/appointments — changed. It gains an optional filter that keeps appointments whose start is before the server's now (A-01). Without the filter, its behaviour is unchanged.
@@ -130,11 +142,11 @@ Indirect effects:
 - There are `No background jobs` (C16), so no job reads the changed data.
 
 ## Known
-- REQ-1, REQ-9, REQ-10, REQ-11: the tile and the other totals are in `DashboardPage` (C6) and `DashboardService` (C2). The existing totals keep their values, and only the tests that read the full shape change (C17, C18).
+- REQ-1, REQ-9, REQ-10, REQ-11: the tile and the other totals are in `DashboardPage` (C6) and `DashboardService` (C2). The existing totals keep their values. Tests known to read the full totals shape (C17, C18) must change, and tile-count assertions are possibly affected (see Impacted modules).
 - REQ-2, REQ-3, REQ-4, REQ-5, REQ-6: the count reads `status` (values in C14) and `starts_at` (C12, C13) against the server's now.
 - REQ-7: the count does not use the dashboard's `PERIODS` window (C3).
-- REQ-8: the tile links to the appointment list with the new filter (C19, A-01), served from `api/src/routes/appointments.ts` (C7).
-- REQ-12, REQ-13: the dashboard returns counts, and the list rows carry the patient name only (C10).
+- REQ-8: the tile links to the appointment list with the new filter (C19, A-01), served from `api/src/routes/appointments.ts` (C7) through `AppointmentService` (C20) and `AppointmentRepo` (C21).
+- REQ-12, REQ-13: the dashboard returns counts, and the list rows carry the patient name (C10); the new filter adds no columns.
 
 ## Assumed
 None.
