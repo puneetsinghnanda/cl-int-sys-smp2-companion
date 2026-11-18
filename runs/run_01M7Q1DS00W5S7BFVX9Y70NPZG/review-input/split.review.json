@@ -1,0 +1,70 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "95fdeb50c4f40db04b78306e4b86dd5f995f3a941c944b0578376429b1cc6230",
+  "package_sha256": "6e13da44b9d5795f33c111dba18c7657cf84ca1bce891ad4e4cd78d8ab1724ab",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.6",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.65,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All 13 known REQs (REQ-1 to REQ-13) are traced by at least one story. The intent has no assumed REQs."},
+    {"id": "SS-R2", "score": 5, "reason": "Each story delivers one outcome: tile count, exclusions, period independence, linked list, unchanged dashboard, no personal data."},
+    {"id": "SS-R3", "score": 4, "reason": "The ACs are Given/When/Then and cover the boundaries at now, local date vs UTC date and the limit of 10. S-3 AC1 still passes if the tile wrongly filters by the selected period."},
+    {"id": "SS-R4", "score": 5, "reason": "The values come from the intent or are worked out correctly from it: Asia/Kolkata gives UTC+05:30, 10 is the upcoming-list limit, and the Last 7 and Last 30 days start dates match the glossary period."},
+    {"id": "SS-R5", "score": 4, "reason": "Readable, with consistent terms. The S-4 AC1 body has a note that the front-matter AC does not have."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "S-3 AC1 cannot catch the likeliest wrong build, a tile that filters by period. An appointment from 1 November falls outside both Today and Last 7 days, so a wrong count stays 0 and the AC passes.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-3", "quote": "when staff change the period from Today to Last 7 days, then the Awaiting outcome count stays the same"},
+        {"ref": "context/glossary.md#period", "quote": "A run of whole hospital-local days ending today"}
+      ],
+      "claim_ref": "C3",
+      "suggested_fix": "Use an appointment inside Last 7 days but not Today, e.g. started 15 November, and require the same non-zero count that includes it under both Today and Last 7 days."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The S-6 ACs seed only allergies and a phone number. A leak of blood group, medications or other contact fields would still pass. 'Contact details' has no glossary definition, so the fields to check are left open.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-6", "quote": "has allergies and a phone number recorded"},
+        {"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."},
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#out-of-scope", "quote": "\"Contact details\" is not defined"}
+      ],
+      "suggested_fix": "Seed every medical history field from the glossary and each contact field the patient record holds, and assert that none of them appears."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The S-4 AC1 body has a note that the front-matter AC1 text does not have, so the two copies of the AC differ.",
+      "cites": [
+        {"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#s-4-open-exactly-the-counted-appointments-from-the-tile", "quote": "(The tile's own count for this data is covered by S-1 AC2.)"}
+      ],
+      "suggested_fix": "Remove the note from the body, or add it to the front matter, so the two copies match."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-1", "quote": "The dashboard has a tile labelled `Awaiting outcome`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-2", "quote": "whose `start time is before now`"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-7", "quote": "The count does not change with the `period selector`."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-8", "quote": "showing exactly the appointments it counts (`DSH-8`)"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#item:REQ-11", "quote": "The list of the `next 10 upcoming` appointments is unchanged."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/req.md#claim:C8", "quote": "The hospital time zone is `Asia/Kolkata`."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/glossary.md#period", "quote": "Today, Last 7 days or Last 30 days"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]}
+  ],
+  "questions": []
+}

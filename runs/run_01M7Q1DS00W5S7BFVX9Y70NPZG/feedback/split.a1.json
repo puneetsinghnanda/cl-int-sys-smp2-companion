@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "when staff change the period from Today to Last 7 days, then the Awaiting outcome count stays the same",
+          "ref": "artifacts/HMS-21/run_01M7Q1DS00W5S7BFVX9Y70NPZG/split.md#item:S-3"
+        },
+        {
+          "quote": "A run of whole hospital-local days ending today",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-3 AC1 cannot catch the likeliest wrong build, a tile that filters by period. An appointment from 1 November falls outside both Today and Last 7 days, so a wrong count stays 0 and the AC passes."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7Q1DS00W5S7BFVX9Y70NPZG",
+  "schema": "feedback.v1",
+  "step": "split"
+}
