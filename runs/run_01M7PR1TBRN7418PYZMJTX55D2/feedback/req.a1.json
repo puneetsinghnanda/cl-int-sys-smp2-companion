@@ -1,0 +1,45 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Filtered list keeps search, status and sort",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#item:REQ-7"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-7 is a compound requirement: it covers three separate behaviours (search kept, status filter kept, sort order kept) that a tester checks independently."
+    },
+    {
+      "cites": [
+        {
+          "quote": "The main risk is that the tile's list must show exactly the counted patients, Inactive ones included, while keeping its page size, search, status filter and sort.",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/req.md#summary"
+        },
+        {
+          "quote": "Active and Inactive patients registered in the period are both counted.",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L20"
+        },
+        {
+          "quote": "keeps its current search, status filter and",
+          "ref": "artifacts/HMS-22/run_01M7PR1TBRN7418PYZMJTX55D2/ticket.md#L24"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The artifact names a risk that keeping the list's current status filter may hide the Inactive patients the tile counts (REQ-3, REQ-5), but raises no question on which wins; ask missing."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M7PR1TBRN7418PYZMJTX55D2",
+  "schema": "feedback.v1",
+  "step": "req"
+}
