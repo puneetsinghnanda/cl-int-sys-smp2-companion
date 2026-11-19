@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7T1CAT0DDAGAWYAP7TPJ3YB
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md
@@ -30,11 +30,19 @@ claims:
   - id: C6
     text: "`Medical history` appears only on the patient's own page."
     cites: ["artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#claim:C4"]
+  - id: C7
+    text: "A Cancelled appointment is one `called off before it took place`, so its start time can still be after now."
+    cites: ["context/glossary.md#cancelled"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 known: [S-1, S-2, S-3, S-4, S-5]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - id: F-1
+    how: "S-1 AC5 adds a Cancelled appointment that starts after now and must not count as upcoming."
+  - id: F-2
+    how: "S-3 AC3 now has two Completed appointments, the older one booked later, and expects the more recent one."
 stories:
   - id: S-1
     title: See visit counts on the patient page
@@ -48,6 +56,8 @@ stories:
         text: "Given a patient with 1 Completed appointment and 1 Scheduled appointment whose start time has already passed and that staff have not closed yet, when staff open the patient page, then the Visit summary reads \"1 completed · 0 no-show · 0 cancelled · 0 upcoming\" (the past Scheduled appointment is not upcoming and is not counted as completed, no-show or cancelled)."
       - id: AC4
         text: "Given a patient with 1 Completed appointment and 1 Scheduled appointment that starts one minute after now, when staff open the patient page, then the Visit summary shows \"1 upcoming\"."
+      - id: AC5
+        text: "Given a patient with 1 Completed appointment, 1 No-show appointment and 1 Cancelled appointment whose start time is after now, and no Scheduled appointment, when staff open the patient page, then the Visit summary reads \"1 completed · 1 no-show · 1 cancelled · 0 upcoming\" (the future Cancelled appointment is counted as cancelled, not as upcoming)."
   - id: S-2
     title: Counts cover every appointment of the patient
     trace: [REQ-6]
@@ -65,7 +75,7 @@ stories:
       - id: AC2
         text: "Given a patient whose only Completed appointment starts at 19:30 UTC on 9 March 2026 (Asia/Kolkata = UTC+05:30, so 01:00 local on 10 March 2026, after local midnight), when staff open the patient page, then Last visit shows 10 Mar 2026, not 9 Mar 2026."
       - id: AC3
-        text: "Given a patient whose last Completed appointment is on 01 Nov 2026 and who has a later No-show on 10 Nov 2026, a later Cancelled appointment on 12 Nov 2026 and a Scheduled appointment that starts after now, when staff open the patient page, then Last visit shows 01 Nov 2026 and that appointment's doctor."
+        text: "Given a patient with two Completed appointments, one with Dr B on 01 Oct 2026 and one with Dr A on 01 Nov 2026, where the 01 Nov appointment was booked before the 01 Oct one, and who also has a later No-show on 10 Nov 2026, a later Cancelled appointment on 12 Nov 2026 and a Scheduled appointment that starts after now, when staff open the patient page, then Last visit shows 01 Nov 2026 and Dr A, not 01 Oct 2026 or Dr B."
       - id: AC4
         text: "Given a patient with a Completed appointment, when staff select the Last visit date, then the page of that appointment opens."
       - id: AC5
@@ -101,6 +111,7 @@ Traces: REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-7.
 - AC2: Given a patient with 3 Completed appointments, 1 Scheduled appointment that starts after now and no No-show or Cancelled appointments, when staff open the patient page, then the Visit summary reads "3 completed · 0 no-show · 0 cancelled · 1 upcoming", with every zero count shown.
 - AC3: Given a patient with 1 Completed appointment and 1 Scheduled appointment whose start time has already passed and that staff have not closed yet, when staff open the patient page, then the Visit summary reads "1 completed · 0 no-show · 0 cancelled · 0 upcoming". The past Scheduled appointment is not upcoming (C5) and is not counted as completed, no-show or cancelled.
 - AC4: Given a patient with 1 Completed appointment and 1 Scheduled appointment that starts one minute after now, when staff open the patient page, then the Visit summary shows "1 upcoming".
+- AC5: Given a patient with 1 Completed appointment, 1 No-show appointment and 1 Cancelled appointment whose start time is after now, and no Scheduled appointment, when staff open the patient page, then the Visit summary reads "1 completed · 1 no-show · 1 cancelled · 0 upcoming". The future Cancelled appointment is counted as cancelled, not as upcoming (C7).
 
 ### S-2 Counts cover every appointment of the patient
 Traces: REQ-6.
@@ -111,7 +122,7 @@ Traces: REQ-6.
 Traces: REQ-8, REQ-9, REQ-10, REQ-11.
 - AC1: Given a patient whose most recent Completed appointment is with Dr A and started on 05 Nov 2026 at 10:30 hospital time, when staff open the patient page, then below the counts the line reads "Last visit: 05 Nov 2026" followed by Dr A's name as plain text. No time is shown and the doctor's name has no link.
 - AC2: Given a patient whose only Completed appointment starts at 19:30 UTC on 9 March 2026 (Asia/Kolkata = UTC+05:30, so 01:00 local on 10 March 2026, after local midnight), when staff open the patient page, then Last visit shows 10 Mar 2026, not 9 Mar 2026 (C1).
-- AC3: Given a patient whose last Completed appointment is on 01 Nov 2026 and who has a later No-show on 10 Nov 2026, a later Cancelled appointment on 12 Nov 2026 and a Scheduled appointment that starts after now, when staff open the patient page, then Last visit shows 01 Nov 2026 and that appointment's doctor (C3, C4).
+- AC3: Given a patient with two Completed appointments, one with Dr B on 01 Oct 2026 and one with Dr A on 01 Nov 2026, where the 01 Nov appointment was booked before the 01 Oct one, and who also has a later No-show on 10 Nov 2026, a later Cancelled appointment on 12 Nov 2026 and a Scheduled appointment that starts after now, when staff open the patient page, then Last visit shows 01 Nov 2026 and Dr A, not 01 Oct 2026 or Dr B (C3, C4).
 - AC4: Given a patient with a Completed appointment, when staff select the Last visit date, then the page of that appointment opens.
 - AC5: Given a patient with 1 No-show and 1 Scheduled appointment that starts after now and no Completed appointment, when staff open the patient page, then the counts are shown and the line reads "Last visit: none yet".
 
@@ -142,3 +153,7 @@ None. Every requirement in the intent is known and covered.
 
 ## Open questions
 None.
+
+## Resolved review findings
+- F-1: S-1 AC5 adds a Cancelled appointment that starts after now and must not count as upcoming.
+- F-2: S-3 AC3 now has two Completed appointments, the older one booked later, and expects the more recent one.
