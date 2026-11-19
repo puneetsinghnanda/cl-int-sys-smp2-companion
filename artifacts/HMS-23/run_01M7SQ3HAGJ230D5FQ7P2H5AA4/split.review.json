@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "a142ac78dc0801ada8e4cef7ab7a7398e380a06e74ee4b9e29ae28c6a5814d5d",
-  "attempt": 2,
+  "artifact_sha256": "da8271707531844c5e53000e0ed06d5a8c0f9c7f3dcf626770f37cc163f6aae6",
+  "attempt": 3,
   "claims_checked": [
     {
       "cites": [
@@ -71,26 +71,19 @@
       ],
       "claim_id": "C7",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "completeness",
       "cites": [
-        {
-          "quote": "then the next free slot shows 11:30, because the 11:00 slot does not start after now",
-          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories"
-        },
         {
           "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled",
           "ref": "context/intent-baseline.md#booking-rules"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Extend S-2 AC4: the 11:00 slot is also not counted in Dr Rao's free slots (free count includes 11:30 but not 11:00).",
-      "text": "S-2 AC4 checks only the next free slot at exactly 11:00:00. It does not say whether the 11:00 slot counts as free, so a free count using >= now (while next-free uses > now) still passes. The baseline says a free slot must be in the future."
-    },
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
       "category": "style",
       "cites": [
@@ -99,15 +92,15 @@
           "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
       "suggested_fix": "State the observables: same tile counts and tile links, and the same next 10 appointments in the same order as on the baseline build.",
-      "text": "Previous F-3 is still open. The Then clauses of S-6 AC3 and AC4 say 'look and behave exactly as before the change' but do not name what to observe (tile counts, link targets, list rows and their order)."
+      "text": "Previous F-2 is still open. The Then clauses of S-6 AC3 and AC4 say 'look and behave exactly as before the change' but do not name what to observe (tile counts, link targets, list rows and their order)."
     }
   ],
-  "package_sha256": "b8828eb1b4aba09cf3980130b599dfaf57e69a19d21ce52376d4957bf997e5eb",
+  "package_sha256": "372be4980e56071cf36f2011e73dc31e263d8391870ff3f6d101b1be0d73b090",
   "questions": [],
-  "recorded_at": "2026-11-19T11:17:15Z",
+  "recorded_at": "2026-11-19T11:23:25Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -118,22 +111,22 @@
   "rubric_items": [
     {
       "id": "SS-R1",
-      "reason": "All 14 known REQs (REQ-1..REQ-14) are traced by at least one story; there are no assumed REQs.",
+      "reason": "All 14 known REQs (REQ-1..REQ-14) are traced by at least one story, and there are no assumed REQs.",
       "score": 5
     },
     {
       "id": "SS-R2",
-      "reason": "S-1..S-5 each carry one outcome; S-6 still bundles three outcomes (Period independence, no contact details, rest unchanged).",
+      "reason": "S-1..S-5 each carry one outcome. S-6 still bundles Period independence, no contact details and rest-of-dashboard unchanged.",
       "score": 4
     },
     {
       "id": "SS-R3",
-      "reason": "F-1 fixed: S-2 AC1 mixes statuses and checks equality with the day schedule. AC4 covers the next-free boundary at exactly now but not the free count. S-6 AC3/AC4 still say only 'exactly as before'.",
+      "reason": "Previous F-1 is fixed: S-2 AC4 now checks both the free count and the next free slot at exactly now. Time zone, exclusion, tie and empty boundaries are present. S-6 AC3/AC4 still say only 'exactly as before'.",
       "score": 4
     },
     {
       "id": "SS-R4",
-      "reason": "Values come from the intent (Asia/Kolkata, next 10, labels); 19:00 UTC is derived inline from UTC+05:30; the clock times are test fixtures.",
+      "reason": "Values come from the intent (Asia/Kolkata, next 10, labels). 19:00 UTC is derived inline from UTC+05:30, and the clock times are test fixtures.",
       "score": 5
     },
     {

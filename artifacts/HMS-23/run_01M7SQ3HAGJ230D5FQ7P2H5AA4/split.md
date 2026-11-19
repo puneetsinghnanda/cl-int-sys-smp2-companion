@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7SQ3HAGJ230D5FQ7P2H5AA4
 step: split
-attempt: 2
+attempt: 3
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md
@@ -33,6 +33,9 @@ claims:
   - id: C7
     text: "The next free slot is the earliest free slot that `starts after now`."
     cites: ["artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-6"]
+  - id: C8
+    text: "A slot is free only when it is `in the future`."
+    cites: ["context/intent-baseline.md#booking-rules"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
@@ -62,7 +65,7 @@ stories:
       - id: AC3
         text: "Given the time is 11:00 local and Dr Rao's 11:30 slot is booked while the 12:00 slot is unbooked, when staff open the dashboard, then the next free slot shows 12:00, not 11:30."
       - id: AC4
-        text: "Given the time is exactly 11:00:00 local and Dr Rao has unbooked slots starting at 11:00 and at 11:30, when staff open the dashboard, then the next free slot shows 11:30, because the 11:00 slot does not start after now."
+        text: "Given the time is exactly 11:00:00 local and Dr Rao's only unbooked slots left today start at 11:00 and at 11:30, when staff open the dashboard, then Dr Rao's free count includes the 11:30 slot but not the 11:00 slot (a free slot must be in the future, so a slot starting exactly now is not free) and the next free slot shows 11:30."
   - id: S-3
     title: Doctor with no free slots left shows Fully booked
     trace: [REQ-7]
@@ -112,7 +115,7 @@ stories:
 - AC1: Given Dr Rao is on duty and today has one Scheduled, one Completed, one No-show and one Cancelled appointment with Dr Rao, when staff open the dashboard, then Dr Rao's booked and free counts equal the booked and free counts shown on Dr Rao's day schedule for today (so a dashboard that counts only Scheduled appointments fails whenever the day schedule also counts Completed or No-show).
 - AC2: Given the time is 11:00 local and Dr Rao has an unbooked slot at 10:00 and an unbooked slot at 11:30, when staff open the dashboard, then the 10:00 slot is not counted as free and the next free slot shows 11:30.
 - AC3: Given the time is 11:00 local and Dr Rao's 11:30 slot is booked while the 12:00 slot is unbooked, when staff open the dashboard, then the next free slot shows 12:00, not 11:30.
-- AC4: Given the time is exactly 11:00:00 local and Dr Rao has unbooked slots starting at 11:00 and at 11:30, when staff open the dashboard, then the next free slot shows 11:30, because the 11:00 slot does not start after now.
+- AC4: Given the time is exactly 11:00:00 local and Dr Rao's only unbooked slots left today start at 11:00 and at 11:30, when staff open the dashboard, then Dr Rao's free count includes the 11:30 slot but not the 11:00 slot (a free slot must be in the future, so a slot starting exactly now is not free) and the next free slot shows 11:30.
 
 **S-3 Doctor with no free slots left shows Fully booked** (REQ-7)
 - AC1: Given Dr Rao is on duty and every slot of Dr Rao's that starts after now is booked, when staff open the dashboard, then Dr Rao is listed with 0 free slots and "Fully booked" instead of a time.
@@ -133,7 +136,7 @@ stories:
 
 ## Known
 - S-1: built from known REQ-1, REQ-2 (confirmed in A-01), REQ-3, REQ-10, REQ-11.
-- S-2: built from known REQ-4 (decided in A-02), REQ-5, REQ-6. AC1 now mixes appointment statuses (review F-1). AC4 covers a slot that starts exactly now (review F-2).
+- S-2: built from known REQ-4 (decided in A-02), REQ-5, REQ-6. AC1 mixes appointment statuses. AC4 checks both the free count and the next free slot for a slot that starts exactly now, as the baseline booking rule requires (C8).
 - S-3: built from known REQ-7 (confirmed in A-03).
 - S-4: built from known REQ-9.
 - S-5: built from known REQ-8 (confirmed in A-04).
