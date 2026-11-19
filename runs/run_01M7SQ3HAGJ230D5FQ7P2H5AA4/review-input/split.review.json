@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "c9bf8218e68a940a7ac4e3eac954dfc49463c625acaf70ffe9a6c6ffeef2f1cf",
-  "package_sha256": "be63055c173320e4553de43505ab0c1644e10790cee9e2944ed6584f09c98e91",
+  "attempt": 2,
+  "artifact_sha256": "a142ac78dc0801ada8e4cef7ab7a7398e380a06e74ee4b9e29ae28c6a5814d5d",
+  "package_sha256": "b8828eb1b4aba09cf3980130b599dfaf57e69a19d21ce52376d4957bf997e5eb",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,46 +12,35 @@
     "version": "0.1.7",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.3,
+  "rubric_score": 4.55,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All 14 known REQs (REQ-1..REQ-14) are traced by at least one story; no assumed REQs exist."},
-    {"id": "SS-R2", "score": 4, "reason": "S-1..S-5 each carry one outcome; S-6 bundles three separate outcomes (Period independence, no contact details, rest unchanged)."},
-    {"id": "SS-R3", "score": 3, "reason": "Time-zone and inactive ACs discriminate well, but S-2 AC1 would pass a Scheduled-only count, the slot-starting-exactly-now boundary of REQ-6 is missing, and S-6 AC3/AC4 lean on 'exactly as before'."},
-    {"id": "SS-R4", "score": 5, "reason": "Values come from the intent (Asia/Kolkata, next 10, labels); the 19:00 UTC instant is derived inline from UTC+05:30; times like 11:00 are test fixtures."},
-    {"id": "SS-R5", "score": 5, "reason": "Consistent terms (On duty today, day schedule, Fully booked), uniform Given/When/Then, readable fixtures."}
+    {"id": "SS-R1", "score": 5, "reason": "All 14 known REQs (REQ-1..REQ-14) are traced by at least one story; there are no assumed REQs."},
+    {"id": "SS-R2", "score": 4, "reason": "S-1..S-5 each carry one outcome; S-6 still bundles three outcomes (Period independence, no contact details, rest unchanged)."},
+    {"id": "SS-R3", "score": 4, "reason": "F-1 fixed: S-2 AC1 mixes statuses and checks equality with the day schedule. AC4 covers the next-free boundary at exactly now but not the free count. S-6 AC3/AC4 still say only 'exactly as before'."},
+    {"id": "SS-R4", "score": 5, "reason": "Values come from the intent (Asia/Kolkata, next 10, labels); 19:00 UTC is derived inline from UTC+05:30; the clock times are test fixtures."},
+    {"id": "SS-R5", "score": 5, "reason": "Terms are consistent (On duty today, day schedule, Fully booked), every AC uses Given/When/Then and the fixtures are easy to read."}
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "major",
-      "category": "correctness",
-      "text": "S-2 AC1 seeds only Scheduled appointments, so a dashboard that counts only Scheduled (a rejected A-02 option) passes even if the day schedule also counts Completed or No-show. The AC does not catch the likeliest wrong implementation of REQ-4.",
+      "category": "completeness",
+      "text": "S-2 AC4 checks only the next free slot at exactly 11:00:00. It does not say whether the 11:00 slot counts as free, so a free count using >= now (while next-free uses > now) still passes. The baseline says a free slot must be in the future.",
       "cites": [
-        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories", "quote": "Given Dr Rao is on duty and has Scheduled appointments today, when staff open the dashboard"},
-        {"ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-02", "quote": "Same as day schedule code (proposed default) | Scheduled only | Scheduled, Completed, No-show"}
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories", "quote": "then the next free slot shows 11:30, because the 11:00 slot does not start after now"},
+        {"ref": "context/intent-baseline.md#booking-rules", "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled"}
       ],
-      "suggested_fix": "Seed today's appointments with mixed statuses (Scheduled, Completed, No-show, Cancelled) and require the dashboard counts to equal the day schedule counts for that mix."
+      "suggested_fix": "Extend S-2 AC4: the 11:00 slot is also not counted in Dr Rao's free slots (free count includes 11:30 but not 11:00)."
     },
     {
       "id": "F-2",
-      "severity": "major",
-      "category": "completeness",
-      "text": "REQ-6 says the next free slot 'starts after now', but no AC covers a slot that starts exactly now. That is the limit boundary where an off-by-one (>= vs >) bug in the next-free and free-count logic would show.",
-      "cites": [
-        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-6", "quote": "The `next free slot` is the earliest free slot that starts after now."},
-        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories", "quote": "Given the time is 11:00 local and Dr Rao has an unbooked slot at 10:00 and an unbooked slot at 11:30"}
-      ],
-      "suggested_fix": "Add an S-2 AC: at 11:00 local with unbooked slots at 11:00 and 11:30, the next free slot shows 11:30 and the 11:00 slot is not counted as free (or state the rule the day schedule applies)."
-    },
-    {
-      "id": "F-3",
       "severity": "minor",
       "category": "style",
-      "text": "S-6 AC3 and AC4 Then clauses say 'look and behave exactly as before the change' without naming an observable (tile counts, link targets, list rows), so they are weak to check.",
+      "text": "Previous F-3 is still open. The Then clauses of S-6 AC3 and AC4 say 'look and behave exactly as before the change' but do not name what to observe (tile counts, link targets, list rows and their order).",
       "cites": [
         {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories", "quote": "then the tiles and the next 10 appointments look and behave exactly as before the change"}
       ],
-      "suggested_fix": "State the observable: the same tile counts and tile links, and the same next 10 appointments in the same order as on the baseline build."
+      "suggested_fix": "State the observables: same tile counts and tile links, and the same next 10 appointments in the same order as on the baseline build."
     }
   ],
   "claims_checked": [
@@ -60,7 +49,8 @@
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#availability-block", "quote": "A weekly window when a doctor sees patients: weekday, start time, end time, in hospital local time."}]},
     {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-02", "quote": "answer: Same as day schedule code (proposed default)"}]},
     {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-7", "quote": "is still listed, with 0 free slots and `Fully booked` instead of a time"}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-8", "quote": "The doctor's name links to the doctor page (/doctors/:id) showing that doctor's `day schedule` for today."}]}
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-8", "quote": "The doctor's name links to the doctor page (/doctors/:id) showing that doctor's `day schedule` for today."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-6", "quote": "The `next free slot` is the earliest free slot that starts after now."}]}
   ],
   "questions": []
 }

@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then the next free slot shows 11:30, because the 11:00 slot does not start after now",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories"
+        },
+        {
+          "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled",
+          "ref": "context/intent-baseline.md#booking-rules"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-2 AC4 checks only the next free slot at exactly 11:00:00. It does not say whether the 11:00 slot counts as free, so a free count using >= now (while next-free uses > now) still passes. The baseline says a free slot must be in the future."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "schema": "feedback.v1",
+  "step": "split"
+}

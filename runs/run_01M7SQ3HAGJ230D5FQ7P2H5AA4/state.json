@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-19T11:12:44Z",
+  "heartbeat_at": "2026-11-19T11:17:37Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -47,7 +47,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 6,
+  "rev": 9,
   "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -85,7 +85,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md",
+          "artifact": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/history/split/a1/split.md",
           "artifact_sha256": "c9bf8218e68a940a7ac4e3eac954dfc49463c625acaf70ffe9a6c6ffeef2f1cf",
           "band": "High",
           "cause": "first",
@@ -100,15 +100,37 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.verification.json",
+          "record": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/history/split/a1/split.verification.json",
           "skill": "story-split@1.4.0",
           "skill_started_at": "2026-11-19T11:09:20Z",
           "started_at": "2026-11-19T11:09:12Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md",
+          "artifact_sha256": "a142ac78dc0801ada8e4cef7ab7a7398e380a06e74ee4b9e29ae28c6a5814d5d",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-19T11:17:37Z",
+          "feedback": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/feedback/split.a1.json",
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "0fbd5a70a16b61c0acd828a804affa01fc7aa1b37e6ae354918b533638b9179a",
+              "step": "req"
+            }
+          ],
+          "n": 2,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.verification.json",
+          "skill": "story-split@1.4.0",
+          "skill_started_at": "2026-11-19T11:13:45Z",
+          "started_at": "2026-11-19T11:13:22Z"
         }
       ],
       "budget_used": {
         "checks": 0,
-        "review": 1,
+        "review": 2,
         "rework": 0,
         "verifier": 0
       },
@@ -173,7 +195,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-23",
-  "updated_at": "2026-11-19T11:12:44Z",
+  "updated_at": "2026-11-19T11:17:37Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
