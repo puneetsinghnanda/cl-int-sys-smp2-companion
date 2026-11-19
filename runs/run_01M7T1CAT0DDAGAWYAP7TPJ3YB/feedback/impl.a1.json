@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "build exit 2; log runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/verifier/impl/a1/build.log: ✓ built in 1.04s | npm error Lifecycle script `build` failed with error: | npm error code 2 | npm error path /cache/w/api | npm error workspace @hms/api@0.1.0 | npm error location /cache/w/api | npm error command failed | npm error command sh -c tsc -p tsconfig.build.json",
+      "id": "H3"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3"
+  ],
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
