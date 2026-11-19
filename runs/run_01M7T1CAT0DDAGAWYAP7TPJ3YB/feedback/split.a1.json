@@ -1,0 +1,53 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Given a patient with 4 Completed, 1 No-show, 2 Cancelled and 1 Scheduled appointment that starts after now",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-1"
+        },
+        {
+          "quote": "An appointment called off before it took place, with a reason",
+          "ref": "context/glossary.md#cancelled"
+        },
+        {
+          "quote": "Scheduled appointments that start after now",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#item:REQ-5"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No AC has a Cancelled appointment that starts after now. The likeliest wrong upcoming count (any appointment with start > now, whatever its status) passes every S-1 AC. Per the glossary, Cancelled appointments can lie in the future."
+    },
+    {
+      "cites": [
+        {
+          "quote": "Given a patient whose only Completed appointment starts at 19:30 UTC on 9 March 2026",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-3"
+        },
+        {
+          "quote": "Given a patient whose last Completed appointment is on 01 Nov 2026",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-3"
+        },
+        {
+          "quote": "start date of the patient's most recent Completed appointment in the hospital time zone",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#item:REQ-8"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "Every S-3 AC has a single Completed appointment, or leaves the older ones unspecified. Picking the earliest or first-loaded Completed row passes all of them, so no AC proves that the most recent Completed appointment is chosen (REQ-8, REQ-9)."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "feedback.v1",
+  "step": "split"
+}
