@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "926f5f36bae6f3b677935a1c4055f30e72c5ff2b8ccc8cbab833d04a34397277",
+  "package_sha256": "f4d402e26aa7fb97fa90fbac07c690e4272ad7b12847221a1cad04a5012554ba",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 5, "reason": "activeOnWeekday, onDutyToday, DashboardService.get and DashboardPage are all exercised; every REQ-1..REQ-14 has a named test at API or web level."},
+    {"id": "UT-R2", "score": 4, "reason": "Most assertions check exact response rows and rendered cells; the web order test uses data already sorted by free, so it cannot tell API order from a client re-sort."},
+    {"id": "UT-R3", "score": 4, "reason": "Strong edges: slot starting exactly now, local-midnight weekday, Saturday, all-zero ties, inactive, fully booked. No new error-path test; bad period 400 stays covered only by existing DSH-7."},
+    {"id": "UT-R4", "score": 5, "reason": "Vitest+Supertest on throwaway PostgreSQL with fixed clock, Vitest+Testing Library for web, test names start with requirement IDs, in the existing test folders."},
+    {"id": "UT-R5", "score": 5, "reason": "No pass counts or coverage invented; defers results to the verifier and states coverage is skipped, matching the verifier's coverage skip."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The REQ-6 test depends on bookings made by the earlier REQ-4 test in the same database (booked: 3 counts the REQ-4 appointments), so it fails if run alone or reordered. The artifact does not mention this coupling.",
+      "cites": [
+        {"ref": "sample-system:api/test/dashboard-on-duty.test.ts#L129-L131", "quote": "booked: 3, free: 9, nextFreeAt: at(MONDAY, '09:45'), nextFreeLabel: '09:45',"},
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ut.md#tests", "quote": "**REQ-6:** the next free slot skips a slot that is now booked."}
+      ],
+      "suggested_fix": "Make the REQ-6 test set up its own bookings (or a fresh database), or assert relative to the day schedule from /:id/slots instead of a hard-coded booked count."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The web order test feeds rows already sorted by free (5 then 2), so a page that re-sorted by free would pass too; it does not prove 'rows show in API order'.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L63", "quote": "{ doctorId: 7, fullName: 'Dr. Test Doctor Seven', department: 'Outpatient', booked: 1, free: 5,"},
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ut.md#tests", "quote": "the \"On duty today\" rows show in API order"}
+      ],
+      "suggested_fix": "Give the stub rows an order that differs from free-descending and name order, and assert the rendered order matches the stub."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "Duplicate setup code: each of the four new web tests repeats the fetch stub and MemoryRouter render block instead of a shared helper.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L84", "quote": "<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>"}
+      ],
+      "suggested_fix": "Extract a renderWith(data) helper that stubs fetch and renders DashboardPage in MemoryRouter."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script)"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L10", "quote": "export const NOW = new Date('2026-10-19T02:30:00Z');"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L13-L14", "quote": "Kolkata is UTC+05:30 all year, so local HH:MM on a day maps to a fixed UTC instant."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L23", "quote": "doctor 2: 30-minute slots, Mon 09:00–10:00"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/doctors.ts#L63", "quote": "'/:id/slots',"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/impl.md#claim:C1", "quote": "The design adds an `onDuty` array to GET /api/dashboard."}]}
+  ],
+  "questions": []
+}
