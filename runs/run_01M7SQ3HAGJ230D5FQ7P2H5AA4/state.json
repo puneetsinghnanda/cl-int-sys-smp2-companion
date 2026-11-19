@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-19T11:59:51Z",
+  "heartbeat_at": "2026-11-19T12:04:01Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -53,7 +53,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 27,
+  "rev": 30,
   "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -288,7 +288,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/secrev.md",
+          "artifact_sha256": "50c29922c4a10db87b7e4797b9474e1519faf61ab431128a301f2412962a07f1",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-19T12:04:01Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "20681f0cdaf8c6dd6aa3000da161829ff3d487cbb97cc36ed2a30942e76c25ae",
+              "step": "impl"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/secrev.verification.json",
+          "skill": "secure-code-review@1.3.0",
+          "skill_started_at": "2026-11-19T12:00:32Z",
+          "started_at": "2026-11-19T12:00:12Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -297,7 +320,7 @@
       },
       "id": "secrev",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -308,7 +331,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-23",
-  "updated_at": "2026-11-19T11:59:51Z",
+  "updated_at": "2026-11-19T12:04:01Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }

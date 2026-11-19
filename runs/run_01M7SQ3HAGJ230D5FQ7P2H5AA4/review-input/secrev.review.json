@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "50c29922c4a10db87b7e4797b9474e1519faf61ab431128a301f2412962a07f1",
+  "package_sha256": "9fc500361989df8623cbaf69a3c7e5692349196949af9d4d81f394238102ac1e",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "No new route, permission kept, bound SQL parameter, no contact fields, escaped React output and no new logging all checked against code; the per-doctor query cost (1 + 2N queries per load) is found. I found no missed weakness."},
+    {"id": "SC-R2", "score": 5, "reason": "Every claim and SF-1 cite the exact lines: doctorService.ts L177-L178, doctorRepo.ts L186/L191, dashboard.ts L10, types.ts L83, DashboardPage.tsx L92."},
+    {"id": "SC-R3", "score": 5, "reason": "SF-1 rated minor fits: an internal staff dashboard with a bounded doctor count, read-only queries, and no exposure or bypass."},
+    {"id": "SC-R4", "score": 4, "reason": "SF-1 gives a clear direction (one query each for blocks and appointments by an array of doctor ids). It does not name the repo methods to add."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives; the single finding is real in the code at doctorRepo.ts L190-L191 and doctorService.ts L177-L178."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Known REQ-13 says it is checked by the HMS-23 REQ-13 API test but cites only C5 (the type). The test exists at api/test/dashboard-on-duty.test.ts L50 and should be cited.",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/secrev.md#known", "quote": "checked by the HMS-23 REQ-13 API test"},
+        {"ref": "sample-system:api/test/dashboard-on-duty.test.ts#L50", "quote": "HMS-23 REQ-2, REQ-3, REQ-13: lists each doctor on duty with name, department, counts and next free slot, and nothing else"}
+      ],
+      "suggested_fix": "Add a claim citing sample-system:api/test/dashboard-on-duty.test.ts#L50 and reference it in the Known REQ-13 line."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [
+      {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/impl.md#claim:C1", "quote": "The design adds an `onDuty` array to GET /api/dashboard."},
+      {"ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-05", "quote": "answer: Add `onDuty` to dashboard (proposed default)"}
+    ]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/routes/dashboard.ts#L10", "quote": "requirePermission('dashboard:read')"}
+    ]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [
+      {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+    ]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L184", "quote": "b.doctor_id = d.id AND b.weekday = $1"},
+      {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L186", "quote": "[weekday],"}
+    ]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/types.ts#L82", "quote": "HMS-23: one doctor on duty today, counted as the day schedule counts. No contact details (DSH-9)."}
+    ]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [
+      {"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"},
+      {"ref": "sample-system:api/src/middleware/errorHandler.ts#L19", "quote": "log the route and the error message only, never request bodies or patient data."}
+    ]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [
+      {"ref": "sample-system:web/src/pages/DashboardPage.tsx#L92", "quote": "<Link to={`/doctors/${r.doctorId}`}>{r.fullName}</Link>"}
+    ]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/services/doctorService.ts#L178", "quote": "await appointmentRepo.occupyingBetween(d.id, start, end);"}
+    ]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [
+      {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L191", "quote": "blocks: await this.availability(d.id)"}
+    ]}
+  ],
+  "questions": []
+}
