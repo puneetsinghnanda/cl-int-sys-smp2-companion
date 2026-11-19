@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7T1CAT0DDAGAWYAP7TPJ3YB
 step: split
-attempt: 2
+attempt: 3
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md
@@ -40,9 +40,7 @@ unknown: []
 questions: []
 resolves:
   - id: F-1
-    how: "S-1 AC5 adds a Cancelled appointment that starts after now and must not count as upcoming."
-  - id: F-2
-    how: "S-3 AC3 now has two Completed appointments, the older one booked later, and expects the more recent one."
+    how: "S-3 AC4 now has an older Completed, a later No-show and an upcoming appointment, and expects the link to open the most recent Completed one."
 stories:
   - id: S-1
     title: See visit counts on the patient page
@@ -77,7 +75,7 @@ stories:
       - id: AC3
         text: "Given a patient with two Completed appointments, one with Dr B on 01 Oct 2026 and one with Dr A on 01 Nov 2026, where the 01 Nov appointment was booked before the 01 Oct one, and who also has a later No-show on 10 Nov 2026, a later Cancelled appointment on 12 Nov 2026 and a Scheduled appointment that starts after now, when staff open the patient page, then Last visit shows 01 Nov 2026 and Dr A, not 01 Oct 2026 or Dr B."
       - id: AC4
-        text: "Given a patient with a Completed appointment, when staff select the Last visit date, then the page of that appointment opens."
+        text: "Given a patient with a Completed appointment on 01 Oct 2026, a Completed appointment on 01 Nov 2026, a No-show on 10 Nov 2026 and a Scheduled appointment that starts after now (the first row of the Appointments table), when staff select the Last visit date, then the page of the 01 Nov 2026 Completed appointment opens, not the page of the 01 Oct Completed appointment, the No-show or the Scheduled appointment."
       - id: AC5
         text: "Given a patient with 1 No-show and 1 Scheduled appointment that starts after now and no Completed appointment, when staff open the patient page, then the counts are shown and the line reads \"Last visit: none yet\"."
   - id: S-4
@@ -123,7 +121,7 @@ Traces: REQ-8, REQ-9, REQ-10, REQ-11.
 - AC1: Given a patient whose most recent Completed appointment is with Dr A and started on 05 Nov 2026 at 10:30 hospital time, when staff open the patient page, then below the counts the line reads "Last visit: 05 Nov 2026" followed by Dr A's name as plain text. No time is shown and the doctor's name has no link.
 - AC2: Given a patient whose only Completed appointment starts at 19:30 UTC on 9 March 2026 (Asia/Kolkata = UTC+05:30, so 01:00 local on 10 March 2026, after local midnight), when staff open the patient page, then Last visit shows 10 Mar 2026, not 9 Mar 2026 (C1).
 - AC3: Given a patient with two Completed appointments, one with Dr B on 01 Oct 2026 and one with Dr A on 01 Nov 2026, where the 01 Nov appointment was booked before the 01 Oct one, and who also has a later No-show on 10 Nov 2026, a later Cancelled appointment on 12 Nov 2026 and a Scheduled appointment that starts after now, when staff open the patient page, then Last visit shows 01 Nov 2026 and Dr A, not 01 Oct 2026 or Dr B (C3, C4).
-- AC4: Given a patient with a Completed appointment, when staff select the Last visit date, then the page of that appointment opens.
+- AC4: Given a patient with a Completed appointment on 01 Oct 2026, a Completed appointment on 01 Nov 2026, a No-show on 10 Nov 2026 and a Scheduled appointment that starts after now (the first row of the Appointments table; C2), when staff select the Last visit date, then the page of the 01 Nov 2026 Completed appointment opens. It is not the page of the 01 Oct Completed appointment, the No-show or the Scheduled appointment.
 - AC5: Given a patient with 1 No-show and 1 Scheduled appointment that starts after now and no Completed appointment, when staff open the patient page, then the counts are shown and the line reads "Last visit: none yet".
 
 ### S-4 Empty state for a patient with no appointments
@@ -155,5 +153,4 @@ None. Every requirement in the intent is known and covered.
 None.
 
 ## Resolved review findings
-- F-1: S-1 AC5 adds a Cancelled appointment that starts after now and must not count as upcoming.
-- F-2: S-3 AC3 now has two Completed appointments, the older one booked later, and expects the more recent one.
+- F-1: S-3 AC4 now has an older Completed, a later No-show and an upcoming appointment, and expects the link to open the most recent Completed one.

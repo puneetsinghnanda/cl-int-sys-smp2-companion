@@ -1,0 +1,201 @@
+{
+  "artifact_sha256": "4d711784fe589a3d82b6116c1e41fc9cd32093d8ac3ce5334e205cb325bca6a8",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The hospital time zone is `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#claim:C3"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`lists the patient's appointments`, upcoming first, then past.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#claim:C1"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place, with a reason",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed and No-show are allowed only `after the start time`.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#claim:C8"
+        },
+        {
+          "quote": "closed instead of staying Scheduled",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`Medical history` appears only on the patient's own page",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#claim:C4"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Given a patient with a Completed appointment, when staff select the Last visit date, then the page of that appointment opens.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-3"
+        },
+        {
+          "quote": "links to that appointment",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#item:REQ-10"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Reuse the S-3 AC3 data: selecting the Last visit date opens the 01 Nov 2026 appointment with Dr A, not the 01 Oct one, the No-show, the Cancelled one or the Scheduled one.",
+      "text": "S-3 AC4 has a patient with one Completed appointment, so a link to any other appointment of the patient (for example the most recent one of any status, or the first table row) still passes. The AC does not prove REQ-10's 'that appointment'."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "title: Summary stays free of sensitive details and nothing else changes",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-5"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Split S-5 into a privacy story (AC1, AC2) and a no-regression story (AC3 to AC5).",
+      "text": "Previous F-3 is still open: S-5 bundles two independent outcomes, no sensitive details in the summary (REQ-13) and no change anywhere else (REQ-14). The resolves list does not mention it."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "more appointments than the patient page's Appointments table loads",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-2"
+        },
+        {
+          "quote": "the patient page's appointment list is loaded with a row limit",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#out-of-scope"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Cite the row limit from the product code and state the count inline, for example limit + 1 appointments.",
+      "text": "Previous F-4 is still open: S-2 AC2 depends on the Appointments table's row limit but does not name it, so a tester must look up the limit before building the test data."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "then each looks and behaves as before and shows no Visit summary",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-5"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "State the observable check, for example: no 'Visit summary' text appears and the existing regression tests for these pages still pass.",
+      "text": "Previous F-5 is still open: S-5 AC5 says 'looks and behaves as before' across five pages and names no check a tester can observe."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "1 Scheduled appointment whose start time has already passed and that staff have not closed yet",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-1"
+        },
+        {
+          "quote": "Scheduled appointments that start after now",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#item:REQ-5"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Have the past Scheduled appointment in S-1 AC3 start earlier today, for example one hour before now, so it is not counted as upcoming.",
+      "text": "S-1 AC3 does not say when the past Scheduled appointment started. If it is on an earlier day, an upcoming count that compares dates (start date >= today) still passes AC3 and AC4, even though REQ-5 compares against now."
+    }
+  ],
+  "package_sha256": "8f313a0684ad4daa31b3c04ec66ecd896bdc0cf7e26d54474b70a08c199e4481",
+  "questions": [],
+  "recorded_at": "2026-11-19T14:05:22Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 14 known REQs are traced: REQ-1..5,7 in S-1, REQ-6 in S-2, REQ-8..11 in S-3, REQ-12 in S-4, REQ-13..14 in S-5. The intent has no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "S-1 to S-4 each deliver one outcome. S-5 still bundles the privacy constraint (REQ-13) with the no-regression constraint (REQ-14). The previous F-3 is not addressed.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "Previous F-1 and F-2 are fixed: S-1 AC5 excludes a future Cancelled appointment, and S-3 AC3 proves the most recent Completed visit is chosen. S-3 AC4 still cannot catch a link to the wrong appointment.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Values come from the intent, A-01 and the glossary. The UTC+05:30 shift is derived inline from C1. Dates and counts are test data, not invented limits.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms are clear and match the glossary. S-5 AC5 still uses the loose 'looks and behaves as before', and S-2 AC2 leaves the table's row limit unnamed.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
