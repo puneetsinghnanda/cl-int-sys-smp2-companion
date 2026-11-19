@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The patient page has no web test harness today.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#summary"
+        },
+        {
+          "quote": "vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(",
+          "ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L18-L30"
+        },
+        {
+          "quote": "<VisitSummary summary={p.visitSummary} hasAppointments={p.appointments.length > 0} />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L77"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-1 placement and the CO-7 page wiring (hasAppointments from appointments.length) are untested, justified by 'no web test harness', yet DoctorDetailPage.test.tsx already stubs fetch and renders a routed page."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
