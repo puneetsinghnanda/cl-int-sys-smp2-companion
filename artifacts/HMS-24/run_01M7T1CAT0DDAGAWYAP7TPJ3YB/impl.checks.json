@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "82ace616ee0908ddf032dfd9e8a6a6015233f74078b07fcd80ddbab7d3bf8a37",
-  "attempt": 1,
-  "finished_at": "2026-11-19T14:27:46Z",
+  "artifact_sha256": "c9ae830fc32ea02998373070619455888e04b1ce4e45956966e15701d01cc409",
+  "attempt": 2,
+  "finished_at": "2026-11-19T14:29:29Z",
   "gates": [
     {
       "codes": [],
@@ -18,13 +18,11 @@
       "status": "pass"
     },
     {
-      "codes": [
-        "E-H3-01"
-      ],
-      "detail": "build exit 2; log runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/verifier/impl/a1/build.log: ✓ built in 1.04s | npm error Lifecycle script `build` failed with error: | npm error code 2 | npm error path /cache/w/api | npm error workspace @hms/api@0.1.0 | npm error location /cache/w/api | npm error command failed | npm error command sh -c tsc -p tsconfig.build.json",
+      "codes": [],
+      "detail": "",
       "id": "H3",
-      "pass": false,
-      "status": "fail"
+      "pass": true,
+      "status": "pass"
     },
     {
       "codes": [],
@@ -70,7 +68,7 @@
   "product_changes": [
     {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "diff_sha256": "c3193b4ea3f3ecf447b5dba9ce1e89921b611e7ece144caee45515b1c8adfca9",
+      "diff_sha256": "f367d2bae6d506eb6f7dbe311586042549e897bccd72b34d8282e4e7ea7c5e73",
       "files": [
         "api/src/repositories/patientRepo.ts",
         "api/src/services/patientService.ts",
@@ -80,10 +78,10 @@
         "web/src/lib/format.ts",
         "web/src/pages/PatientDetailPage.tsx"
       ],
-      "lines_added": 112,
-      "lines_deleted": 2,
+      "lines_added": 113,
+      "lines_deleted": 3,
       "repo": "sample-system",
-      "tree_sha": "af548711151fad0648e2a4358f180c5798dc71e6"
+      "tree_sha": "6a4caff08d7e807627b74c14083dfa068746e346"
     }
   ],
   "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
@@ -98,44 +96,44 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-19T14:26:15Z",
+  "started_at": "2026-11-19T14:28:42Z",
   "step": "impl",
-  "tool_log_sha256": "7dd450f787b38192b933dbb119da6ed2358eecaa9e82677ec1c514b635de763a",
+  "tool_log_sha256": "02afe029d049a158a3251fad4cda649339053713ed0f4f1e1b1699d7225d9dfd",
   "tsl_version": "0.1.7",
   "verifier": {
     "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
     "profile": "node-22@1",
     "steps": [
       {
-        "duration_ms": 6653,
-        "exit_code": 2,
+        "duration_ms": 5944,
+        "exit_code": 0,
         "name": "build",
         "report_sha256": null,
-        "status": "fail"
+        "status": "pass"
       },
       {
-        "duration_ms": 15820,
+        "duration_ms": 15202,
         "exit_code": 0,
         "name": "test",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 3421,
+        "duration_ms": 3411,
         "exit_code": 0,
         "name": "lint",
         "report_sha256": "ba47f49ecd11a2ab6e69799527e239794604a160da531a7d86ca0b2d5dbe9dc6",
         "status": "pass"
       },
       {
-        "duration_ms": 16971,
+        "duration_ms": 17011,
         "exit_code": 0,
         "name": "sast",
-        "report_sha256": "50a7b95336689c037809aad206b7f45da9e5e6225a4524c6ac018ae7042f90f7",
+        "report_sha256": "d2e90c4a830eb3c5acc584a732ae6cdea825628dc81313c1dfd75e3fbba69f85",
         "status": "pass"
       },
       {
-        "duration_ms": 314,
+        "duration_ms": 316,
         "exit_code": 0,
         "name": "secrets",
         "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",

@@ -1,0 +1,146 @@
+{
+  "artifact_sha256": "82ace616ee0908ddf032dfd9e8a6a6015233f74078b07fcd80ddbab7d3bf8a37",
+  "attempt": 1,
+  "finished_at": "2026-11-19T14:27:46Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [
+        "E-H3-01"
+      ],
+      "detail": "build exit 2; log runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/verifier/impl/a1/build.log: ✓ built in 1.04s | npm error Lifecycle script `build` failed with error: | npm error code 2 | npm error path /cache/w/api | npm error workspace @hms/api@0.1.0 | npm error location /cache/w/api | npm error command failed | npm error command sh -c tsc -p tsconfig.build.json",
+      "id": "H3",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md",
+      "sha256": "ece73c2b935e0fb3e3f720a1e0892a85d673b03ceb7e0251564784a28052be5a",
+      "verification_sha256": "37bc487a70a69e6e3b5e162289e615ce4e4c1bcf14a01f4c1b0ff07a6be22055"
+    },
+    {
+      "path": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md",
+      "sha256": "7d2c8670cb2f4c61269fc2b9aaf0af2b59ba9a8d61e0be58f13a334769407a85",
+      "verification_sha256": "f1ce7f73876ce714072c7ac5583598436151a46ad064ef9579e1646a5e54ca39"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "c3193b4ea3f3ecf447b5dba9ce1e89921b611e7ece144caee45515b1c8adfca9",
+      "files": [
+        "api/src/repositories/patientRepo.ts",
+        "api/src/services/patientService.ts",
+        "api/src/types.ts",
+        "web/src/api/types.ts",
+        "web/src/components/VisitSummary.tsx",
+        "web/src/lib/format.ts",
+        "web/src/pages/PatientDetailPage.tsx"
+      ],
+      "lines_added": 112,
+      "lines_deleted": 2,
+      "repo": "sample-system",
+      "tree_sha": "af548711151fad0648e2a4358f180c5798dc71e6"
+    }
+  ],
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-19T14:26:15Z",
+  "step": "impl",
+  "tool_log_sha256": "7dd450f787b38192b933dbb119da6ed2358eecaa9e82677ec1c514b635de763a",
+  "tsl_version": "0.1.7",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 6653,
+        "exit_code": 2,
+        "name": "build",
+        "report_sha256": null,
+        "status": "fail"
+      },
+      {
+        "duration_ms": 15820,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 3421,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "ba47f49ecd11a2ab6e69799527e239794604a160da531a7d86ca0b2d5dbe9dc6",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 16971,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "50a7b95336689c037809aad206b7f45da9e5e6225a4524c6ac018ae7042f90f7",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 314,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      }
+    ]
+  }
+}

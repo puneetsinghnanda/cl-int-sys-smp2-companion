@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M7T1CAT0DDAGAWYAP7TPJ3YB
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.3.0
 inputs:
   - path: artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 7681f87749883d71abb4011d118366ca1242e1cc
-    head_sha: af548711151fad0648e2a4358f180c5798dc71e6
-    diff_sha256: c3193b4ea3f3ecf447b5dba9ce1e89921b611e7ece144caee45515b1c8adfca9
+    head_sha: 6a4caff08d7e807627b74c14083dfa068746e346
+    diff_sha256: f367d2bae6d506eb6f7dbe311586042549e897bccd72b34d8282e4e7ea7c5e73
     files:
       - api/src/repositories/patientRepo.ts
       - api/src/services/patientService.ts
@@ -64,7 +64,7 @@ known: [CO-1, CO-2, CO-3, CO-4, CO-5, CO-6, CO-7]
 assumed: []
 unknown: []
 questions: []
-summary: "GET /api/patients/:id now returns visitSummary: completed, noShow, cancelled and upcoming counts over all of the patient's appointments, plus the most recent Completed appointment as a hospital-local YYYY-MM-DD day, id and doctor name. A new VisitSummary component shows it directly above the patient page's Appointments table, or No visits yet when the patient has no appointments."
+summary: "GET /api/patients/:id now returns visitSummary: completed, noShow, cancelled and upcoming counts over all of the patient's appointments, plus the most recent Completed appointment as a hospital-local YYYY-MM-DD day, id and doctor name. A new VisitSummary component shows it directly above the patient page's Appointments table, or No visits yet when the patient has no appointments. Attempt 2 fixes the API type error from attempt 1."
 ---
 # Change: HMS-24
 
@@ -88,10 +88,14 @@ This change builds the approved design for HMS-24 in 7 files, inside the change 
 - CO-7 `PatientDetailPage` (C6) renders the component after the Appointments heading and before the
   table. It passes `hasAppointments` from `appointments.length`. Nothing else on the page changes.
 
+Retry (H3): the attempt 1 API build failed with TS2741, because `PatientRepo.get` returns
+`Omit<PatientDetail, 'appointments'>` and that type now requires `visitSummary`. The fix leaves
+`visitSummary` out of that return type as well. The service still adds both fields (CO-1, CO-2).
+
 No tests are added: the design asks for no regression test. The unit-test step covers the stories.
 
 ## Changes
-- api/src/repositories/patientRepo.ts: CO-1, new `visitSummary(id, now, timeZone)` method and `localDay` import.
+- api/src/repositories/patientRepo.ts: CO-1, new `visitSummary(id, now, timeZone)` method and `localDay` import; `get` return type now leaves out `visitSummary`.
 - api/src/services/patientService.ts: CO-2, `get` returns `visitSummary`.
 - api/src/types.ts: CO-3, new `VisitSummary` interface; `PatientDetail.visitSummary`.
 - web/src/api/types.ts: CO-4, mirrors CO-3.

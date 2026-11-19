@@ -1,0 +1,61 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "step": "impl",
+  "attempt": 2,
+  "artifact_sha256": "c9ae830fc32ea02998373070619455888e04b1ce4e45956966e15701d01cc409",
+  "package_sha256": "3c47c9db6ad7a23dfbdb2f27bd8321e654fa5ac2d37a40bfd3fc45c442faac4a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.9,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "CO-1 to CO-7 are built as designed: count FILTER query with no limit, upcoming = SCHEDULED and starts_at > now, latest COMPLETED by starts_at DESC, id DESC, localDay day, date-only link, plain doctor name. CO-8 and CO-9 are left unchanged."},
+    {"id": "IM-R2", "score": 5, "reason": "SQL stays in the repository, rules in the service, camelCase response field (A-04), web types mirror the API types. No new routes, migrations or logging."},
+    {"id": "IM-R3", "score": 5, "reason": "7 files, all named by the design, 113 added and 3 deleted lines. The only change outside the design is narrowing the PatientRepo.get return type, which the build fix needs."},
+    {"id": "IM-R4", "score": 5, "reason": "Unknown id still throws notFound before the summary queries run. Null lastVisit, zero counts, no appointments, id tie-break and hospital-local day are all handled. No new endpoint."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary and Changes list match the diff file by file. Two small inaccuracies: the service reads the clock twice in get, and the design does not say it wants no regression test."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The summary says PatientService.get reads the clock once, but get calls this.today(), which reads the clock, and then this.clock() again for now. Only appointments and visitSummary share one reading.",
+      "cites": [
+        {"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/impl.md#summary", "quote": "`PatientService.get` (C2) reads the clock once"},
+        {"ref": "sample-system:api/src/services/patientService.ts#L40", "quote": "const patient = await repo.get(id, this.today());"},
+        {"ref": "sample-system:api/src/services/patientService.ts#L42", "quote": "const now = this.clock();"}
+      ],
+      "suggested_fix": "Reword: get reads `now` once and shares it between appointments and visitSummary."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The summary says the design asks for no regression test, but the design says nothing about tests. Its only mention is that the time-zone rule stays in one tested place and S-3 AC2 can be asserted on the API.",
+      "cites": [
+        {"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/impl.md#summary", "quote": "No tests are added: the design asks for no regression test."},
+        {"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md#overview", "quote": "can be asserted exactly on the API"}
+      ],
+      "suggested_fix": "State that the design does not ask for tests in this step and the unit-test step covers S-3 AC2, rather than saying the design asks for none."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L239", "quote": "async visitSummary(id: number, now: Date, timeZone: string): Promise<VisitSummary> {"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L46", "quote": "visitSummary: await repo.visitSummary(id, now, this.config.timeZone),"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L118", "quote": "visitSummary: VisitSummary;"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L113", "quote": "visitSummary: VisitSummary;"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/lib/format.ts#L28", "quote": "export function localDate(day: string): string {"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L77", "quote": "<VisitSummary summary={p.visitSummary}"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L267", "quote": "date: localDay(last.starts_at, timeZone)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/VisitSummary.tsx#L12", "quote": "export function VisitSummary({ summary, hasAppointments }: Props) {"}, {"ref": "runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ide-answers.md#a-06", "quote": "answer: Yes, confirm"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ide-answers.md#a-04", "quote": "answer: visitSummary camelCase (proposed default)"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ide-answers.md#a-05", "quote": "answer: Local YYYY-MM-DD (proposed default)"}, {"ref": "sample-system:api/src/lib/time.ts#L62", "quote": "export function localDay(instant: Date, tz: string): string {"}]}
+  ],
+  "questions": []
+}
