@@ -1,0 +1,193 @@
+{
+  "artifact_sha256": "0fbd5a70a16b61c0acd828a804affa01fc7aa1b37e6ae354918b533638b9179a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "shows count tiles and the next 10 appointments",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ticket.md#L16"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "day are shown only on the doctor page: the day schedule",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ticket.md#L17"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/dashboard.ts\"",
+          "ref": "context/generated/api-inventory.json#L88"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/api/doctors/:id/slots\"",
+          "ref": "context/generated/api-inventory.json#L133"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/App.tsx\"",
+          "ref": "context/generated/api-inventory.json#L441"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A slot is free only inside the doctor's availability, in the future",
+          "ref": "context/intent-baseline.md#booking-rules"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "weekday, start time, end time, in hospital local time",
+          "ref": "context/glossary.md#availability-block"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never in lists, the dashboard or logs",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Today, Last 7 days or Last 30 days",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "whatever appointment statuses it counts",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-4"
+        },
+        {
+          "quote": "not overlapping a Scheduled",
+          "ref": "context/intent-baseline.md#booking-rules"
+        },
+        {
+          "quote": "options: Same as day schedule code (proposed default) | Scheduled only | Scheduled, Completed, No-show",
+          "ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-02"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Check which statuses GET /api/doctors/:id/slots treats as booked and record a mismatch on A-02 if it differs from the baseline Scheduled-only rule.",
+      "text": "A-02 is recorded as 'No mismatch', but REQ-4 accepts whatever statuses the day schedule code counts, while the baseline says only Scheduled appointments block a slot. If the code counts Completed or No-show, the difference goes unrecorded."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "{term: Front-desk staff, found: true}",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#glossary"
+        },
+        {
+          "quote": "Each row shows the doctor's name, `department`, booked slots",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-3"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add 'Day schedule' and 'Department' to the glossary list with found: false.",
+      "text": "The glossary check lists only terms that were found. It leaves out 'day schedule' and 'department', which the REQs use but the glossary does not define."
+    }
+  ],
+  "package_sha256": "0daadab5a687418359d907933a2ecb60679948d08f987c356f02b2315e628484",
+  "questions": [],
+  "recorded_at": "2026-11-19T11:08:54Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All eight acceptance criteria map to REQ-1..REQ-14; out-of-scope items carry reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Compound ACs split well into atomic REQs; REQ-3 bundles five row fields and REQ-14 'unchanged' is broad but still checkable.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known REQ cites the ticket line or an IDE answer (A-01..A-04) that says what the artifact claims; nothing invented.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No silent ticket/baseline clash; the booked-status question was asked (A-02), but its possible gap with the baseline booking rule is marked 'No mismatch' unverified.",
+      "score": 4
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Four questions, each with real options, answered by the engineer; none left open or blocking needlessly.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and readable; glossary terms used consistently, though 'day schedule' and 'department' are used without a glossary entry or a found:false note.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.6,
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

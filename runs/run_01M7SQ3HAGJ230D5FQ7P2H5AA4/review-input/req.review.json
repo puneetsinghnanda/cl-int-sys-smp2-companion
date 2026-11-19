@@ -1,0 +1,62 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "0fbd5a70a16b61c0acd828a804affa01fc7aa1b37e6ae354918b533638b9179a",
+  "package_sha256": "0daadab5a687418359d907933a2ecb60679948d08f987c356f02b2315e628484",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All eight acceptance criteria map to REQ-1..REQ-14; out-of-scope items carry reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "Compound ACs split well into atomic REQs; REQ-3 bundles five row fields and REQ-14 'unchanged' is broad but still checkable."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites the ticket line or an IDE answer (A-01..A-04) that says what the artifact claims; nothing invented."},
+    {"id": "RR-R4", "score": 4, "reason": "No silent ticket/baseline clash; the booked-status question was asked (A-02), but its possible gap with the baseline booking rule is marked 'No mismatch' unverified."},
+    {"id": "RR-R5", "score": 5, "reason": "Four questions, each with real options, answered by the engineer; none left open or blocking needlessly."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable; glossary terms used consistently, though 'day schedule' and 'department' are used without a glossary entry or a found:false note."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "A-02 is recorded as 'No mismatch', but REQ-4 accepts whatever statuses the day schedule code counts, while the baseline says only Scheduled appointments block a slot. If the code counts Completed or No-show, the difference goes unrecorded.",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-4", "quote": "whatever appointment statuses it counts"},
+        {"ref": "context/intent-baseline.md#booking-rules", "quote": "not overlapping a Scheduled"},
+        {"ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-02", "quote": "options: Same as day schedule code (proposed default) | Scheduled only | Scheduled, Completed, No-show"}
+      ],
+      "suggested_fix": "Check which statuses GET /api/doctors/:id/slots treats as booked and record a mismatch on A-02 if it differs from the baseline Scheduled-only rule."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The glossary check lists only terms that were found. It leaves out 'day schedule' and 'department', which the REQs use but the glossary does not define.",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#glossary", "quote": "{term: Front-desk staff, found: true}"},
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-3", "quote": "Each row shows the doctor's name, `department`, booked slots"}
+      ],
+      "suggested_fix": "Add 'Day schedule' and 'Department' to the glossary list with found: false."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ticket.md#L16", "quote": "shows count tiles and the next 10 appointments"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ticket.md#L17", "quote": "day are shown only on the doctor page: the day schedule"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L88", "quote": "\"path\": \"api/src/routes/dashboard.ts\""}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L133", "quote": "\"path\": \"/api/doctors/:id/slots\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L441", "quote": "\"path\": \"web/src/App.tsx\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#booking-rules", "quote": "A slot is free only inside the doctor's availability, in the future"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#availability-block", "quote": "weekday, start time, end time, in hospital local time"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "never in lists, the dashboard or logs"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/glossary.md#period", "quote": "Today, Last 7 days or Last 30 days"}]}
+  ],
+  "questions": []
+}
