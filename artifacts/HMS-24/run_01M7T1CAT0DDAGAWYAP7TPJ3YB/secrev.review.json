@@ -1,0 +1,164 @@
+{
+  "artifact_sha256": "4cd5dd34703742bcc45c4eeab3554f56880c47eb2ded0be84668ad528303f287",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients/:id\",",
+          "ref": "context/generated/api-inventory.json#L166"
+        },
+        {
+          "quote": "requirePermission('patients:read'),",
+          "ref": "sample-system:api/src/routes/patients.ts#L28"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "routes call `requirePermission`",
+          "ref": "context/architecture.md#identity"
+        },
+        {
+          "quote": "requirePermission('patients:read'),",
+          "ref": "sample-system:api/src/routes/patients.ts#L28"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "FROM appointment WHERE patient_id = $1",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L246"
+        },
+        {
+          "quote": "[id, now],",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L247"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SELECT a.id, a.starts_at, d.full_name AS doctor_name",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L252"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ", {lastVisit.doctorName}",
+          "ref": "sample-system:web/src/components/VisitSummary.tsx#L28"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<Link to={`/appointments/${lastVisit.appointmentId}`}>",
+          "ref": "sample-system:web/src/components/VisitSummary.tsx#L28"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The change adds no route; it extends the existing patient detail route",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/secrev.md#claim:C1"
+        },
+        {
+          "quote": "POST and PATCH go through `get`, so they return it too",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/impl.md#summary"
+        },
+        {
+          "quote": "return this.get(await repo.insert(fields, actor));",
+          "ref": "sample-system:api/src/services/patientService.ts#L63"
+        }
+      ],
+      "claim_ref": "C1",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State that the POST and PATCH patient responses also carry visitSummary, and that they keep their patients:write guard.",
+      "text": "The review frames the change as extending only the GET patient detail route. Because create and update return get(), POST /api/patients and PATCH /api/patients/:id responses now also carry visitSummary. That added response surface is not named, even though both routes keep patients:write."
+    }
+  ],
+  "package_sha256": "748ddc6e9208e6e4636b0082403a260ca033fa6d95641599fe2f8e497ee1ea28",
+  "questions": [],
+  "recorded_at": "2026-11-19T14:45:08Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "No real weakness missed: both queries are parameterised, select no reasons or medical columns, and React escapes the output. However, the review only covers the GET detail route, not the POST and PATCH responses that now also carry visitSummary.",
+      "score": 4
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Claims cite exact lines (patientRepo.ts L246/L252, VisitSummary.tsx L28). C3's clock binding sits on L245/L247, not on the cited L246.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "No findings were raised in the changed code. The 4 SAST hits are in untouched files and are correctly treated as pre-existing. The secrets report has no results.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "With no findings there is nothing to fix. The pre-existing SAST hits are named by file but no follow-up is suggested.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false alarms. The SAST hit list matches the attached sast.sarif exactly (2 ci.yml, codes.ts, errorHandler.ts).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
