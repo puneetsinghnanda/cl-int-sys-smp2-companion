@@ -1,0 +1,273 @@
+{
+  "artifact_sha256": "ece73c2b935e0fb3e3f720a1e0892a85d673b03ceb7e0251564784a28052be5a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients/:id\"",
+          "ref": "context/generated/api-inventory.json#L166"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/types.ts:PatientDetail\"",
+          "ref": "context/generated/module-map.json#L1376"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/repositories/patientRepo.ts:PatientRepo\"",
+          "ref": "context/generated/module-map.json#L870"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\"",
+          "ref": "context/generated/module-map.json#L1199"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage\"",
+          "ref": "context/generated/module-map.json#L2647"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/api/types.ts:PatientDetail\"",
+          "ref": "context/generated/module-map.json#L1992"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<td>{dateTime(a.startsAt, timeZone)}</td>",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L34"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "/** The hospital-local date (YYYY-MM-DD) of an instant. */",
+          "ref": "sample-system:api/src/lib/time.ts#L61"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "I assumed the new summary UI lives in a new component file web/src/components/VisitSummary.tsx",
+          "ref": "runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ide-answers.md#a-06"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC. Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable\"",
+          "ref": "context/generated/module-map.json#L2087"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#L403"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: visitSummary camelCase (proposed default)",
+          "ref": "runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Local YYYY-MM-DD (proposed default)",
+          "ref": "runs/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ide-answers.md#a-05"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "new `localDate(day)` helper, date only.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md#L196"
+        },
+        {
+          "quote": "export function dateTime(iso: string, timeZone: string): string {",
+          "ref": "sample-system:web/src/lib/format.ts#L21"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State that localDate formats the YYYY-MM-DD string as a calendar day with no zone conversion (e.g. parse parts or format with timeZone 'UTC'), giving '10 Mar 2026' for '2026-03-10'.",
+      "text": "The new web localDate(day) helper reformats a server-computed YYYY-MM-DD day, but the design does not say it must avoid time-zone conversion. Copying dateTime's Date+timeZone pattern could shift the day and break S-3 AC2 for some zones."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "One extra small query per page view is cheap.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md#L181"
+        },
+        {
+          "quote": "A second query takes the latest COMPLETED appointment",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md#L163"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say 'two small extra queries per page view' (or merge them into one query) so the cost line matches CO-1.",
+      "text": "The trade-off line says the cost is one extra small query per page view, but CO-1 describes two new queries (a count query plus a latest-Completed query)."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "web API client (api.patient): unchanged; it already returns PatientDetail",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md#item:CO-9"
+        },
+        {
+          "quote": "patient: (id: number | string) => send<PatientDetail>",
+          "ref": "sample-system:web/src/api/client.ts#L71"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:api (or the client.ts line) to CO-9's cites.",
+      "text": "CO-9 says api.patient already returns PatientDetail but cites only architecture#components, which names client.ts and not api.patient or its type. The fact is true in the code, so it should cite the client symbol or line."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "counts line, Last visit line, empty states.",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/design.md#L197"
+        },
+        {
+          "quote": "the line reads \"Last visit: none yet\"",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#L125"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Add CO-6 render rules: label, the counts line template, 'Last visit: <date link> <doctor>' and 'Last visit: none yet' when lastVisit is null, and 'No visits yet' when appointments is empty.",
+      "text": "CO-6 lists only 'counts line, Last visit line, empty states'. The design never states the render strings the ACs test exactly, such as the 'Visit summary' label, the '·'-separated counts line and 'Last visit: none yet' when lastVisit is null."
+    }
+  ],
+  "package_sha256": "5bc53c9d79309a0581bd34989cac1517ceffee5a09e84c43a8b8937ee81c5f39",
+  "questions": [],
+  "recorded_at": "2026-11-19T14:24:15Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Extends the existing GET /api/patients/:id route, PatientRepo/PatientService, both PatientDetail types and PatientDetailPage, following the routes/services/repositories layering and the client-only rule. No new endpoint, table or infrastructure.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story and AC maps to components: server counts over all rows (S-2 AC2 vs the 100-row limit), strict-after-now upcoming, future Cancelled, tie-break, local day (S-3 AC2), date-only link, No visits yet, no sensitive columns.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Every EP-1 field has name, type, nullability, format and example. The web localDate(day) helper is not specified tightly enough to rule out a time-zone shift, and the display strings are left implicit.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices are cited to the module map, the architecture or IDE answers A-04 to A-06. CO-9's claim that api.patient returns PatientDetail cites only architecture#components, which does not show this.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Server vs browser counts, local day vs UTC instant, and extending the field vs a new endpoint (including the POST/PATCH side effect) are all explained. The cost line says one extra query, but the design uses two.",
+      "score": 4
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and well structured, and the front matter matches the body. There is one small inconsistency in how the extra queries are counted.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.5,
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
