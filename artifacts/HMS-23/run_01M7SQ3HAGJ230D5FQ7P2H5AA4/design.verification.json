@@ -1,0 +1,72 @@
+{
+  "artifact_path": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/design.md",
+  "artifact_sha256": "466f928df995abc802f05f4a71710ab63b92f816648fc0c08a05ebfccf172df1",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "d75be6cf67751e1d2cd816a2ee1812b7135132c73f8391c814d9f1426604eb3e",
+  "claims": {
+    "total": 20,
+    "verified": 20
+  },
+  "decided_at": "2026-11-19T11:34:17Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md",
+      "sha256": "da8271707531844c5e53000e0ed06d5a8c0f9c7f3dcf626770f37cc163f6aae6",
+      "verification_sha256": "495971f2ba4aef23e52c9253d090271e8f00388ffdd54deb39069c363ab7bb1a"
+    },
+    {
+      "path": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md",
+      "sha256": "0fbd5a70a16b61c0acd828a804affa01fc7aa1b37e6ae354918b533638b9179a",
+      "verification_sha256": "ca6873f96f84fbffad3aa4be4e9f888f2386018d801c5fa66c5fb39de27a3cd1"
+    }
+  ],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "86cea640622af54112967030cf7da39dee47cf8ee8b07c6c7199b3386692946a",
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.65,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "qG6wwddJCn0_ZsTCg5wyEyTLR4wqwUgLAgXupCwtTvy5_uHrqSIqYgxibs4Jtx-5Z-IbhllqNxfK3bi-aVxvCg",
+  "skill": "design@1.9.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

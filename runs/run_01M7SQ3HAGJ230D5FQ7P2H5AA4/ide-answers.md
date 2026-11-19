@@ -42,3 +42,23 @@ entries as the user's own answers.
 - question: REQ-8: I assumed the doctor's name links to the doctor page (/doctors/:id) with the day schedule set to today. Is that right?
 - options: Yes, confirm | Link with explicit date
 - answer: Yes, confirm
+
+## A-05
+- step: design
+- attempt: 1
+- asked_at: 2026-11-19T11:30:45Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_01Q2z9cHEy6jeX9WTrT4rAiS
+- question: Q-01: Where should the API return the 'On duty today' rows? The dashboard page already loads GET /api/dashboard (camelCase fields such as `appointmentsToday`).
+- options: Add `onDuty` to dashboard (proposed default) | New GET /api/dashboard/on-duty
+- answer: Add `onDuty` to dashboard (proposed default)
+
+## A-06
+- step: design
+- attempt: 1
+- asked_at: 2026-11-19T11:30:45Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_01Q2z9cHEy6jeX9WTrT4rAiS
+- question: Q-02: How should each on-duty row carry the doctor, department and next free slot? Day schedule slots already return both `start` (ISO UTC) and `label` (local HH:MM).
+- options: Mirror slot shape (proposed default) | Label only | Instant only
+- answer: Mirror slot shape (proposed default)

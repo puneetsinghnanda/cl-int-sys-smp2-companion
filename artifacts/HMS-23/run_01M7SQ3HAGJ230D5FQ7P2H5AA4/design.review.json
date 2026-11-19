@@ -1,0 +1,306 @@
+{
+  "artifact_sha256": "466f928df995abc802f05f4a71710ab63b92f816648fc0c08a05ebfccf172df1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "the one slot-state rule shared by the day schedule and the next 7 days",
+          "ref": "sample-system:api/src/services/doctorService.ts#L157-L158"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "taken ? 'BOOKED' : s.start.getTime() <= now ? 'PAST' : 'FREE'",
+          "ref": "sample-system:api/src/services/doctorService.ts#L161"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const appointments = await new AppointmentRepo(this.db).occupyingBetween(id, start, end);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L149"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/doctorService.ts:DoctorService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/doctorService.ts:DoctorService"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/dashboardService.ts:Dashboard",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:Dashboard"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/services/dashboardService.ts:DashboardService",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/services/dashboardService.ts:DashboardService"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/dashboard.ts\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/dashboard"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dashboard: new DashboardService(db, config, clock)",
+          "ref": "sample-system:api/src/services/index.ts#L37"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorRepo",
+          "ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/doctorRepo.ts:DoctorRepo"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dp.name AS department_name",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L24"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "FROM availability_block WHERE doctor_id = $1",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L135"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "String(Math.floor(m / 60)).padStart(2, '0')",
+          "ref": "sample-system:api/src/lib/slots.ts#L42"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/api/types.ts:Dashboard",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:Dashboard"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "useState(() => urlDate ?? todayIn(timeZone))",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L31"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Counts only: no contact details or medical history (DSH-9)",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L28"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Add `onDuty` to dashboard (proposed default)",
+          "ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-05"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Mirror slot shape (proposed default)",
+          "ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-06"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY lower(d.full_name), d.id",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L94"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "AppointmentRepo.occupyingBetween (reused unchanged)",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/design.md#item:CO-3"
+        },
+        {
+          "quote": "async occupyingBetween(doctorId: number, from: Date, to: Date)",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L114"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a cite to context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo or appointmentRepo.ts#L114.",
+      "text": "CO-3 AppointmentRepo.occupyingBetween is cited only by its call site in DoctorService, not by the AppointmentRepo symbol or method that defines it."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "HH:MM in the hospital time zone (Asia/Kolkata), the slot label",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/design.md#item:EP-1"
+        },
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say HH:MM in the hospital time zone (HOSPITAL_TZ, default Asia/Kolkata).",
+      "text": "nextFreeLabel format hard-codes Asia/Kolkata, but labels follow the configurable HOSPITAL_TZ, which only defaults to Asia/Kolkata."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "with department name and slot length, plus their blocks",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/design.md#components"
+        },
+        {
+          "quote": "weekday must be 1 (Monday) to 7 (Sunday)",
+          "ref": "sample-system:api/src/lib/slots.ts#L50"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Give the return type (id, fullName, departmentName, slotMinutes, blocks: AvailabilityBlock[]) and say weekday = isoWeekday(localDay(now, tz)).",
+      "text": "CO-2 DoctorRepo.activeOnWeekday has no return shape and does not state the weekday numbering (ISO 1=Monday..7=Sunday) or how today's weekday is derived in the hospital zone."
+    }
+  ],
+  "package_sha256": "01c293d72f0167fa2afe6d230752fb9547c9ae235564f4b9697bdc57fc3132c7",
+  "questions": [],
+  "recorded_at": "2026-11-19T11:34:10Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built on existing DoctorService.slotStates, DoctorRepo, AppointmentRepo.occupyingBetween, DashboardService and createContext; layering routes/services/repositories respected; no new infrastructure or migration.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Story map covers S-1..S-6; PAST rule (start <= now) serves S-2 AC4, occupyingBetween excludes only CANCELLED as the day schedule does, sort serves S-4, todayIn default serves S-5, no contact fields serve S-6.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Every onDuty field has name, type, nullability, format and example; nextFreeAt/label well specified. Some formats are generic (doctor id, doctor full name) and the internal activeOnWeekday shape is loose.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "All claims verified against code and IDE answers A-05/A-06. CO-3 is cited only by its call site in DoctorService rather than AppointmentRepo itself.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs cover DashboardService depending on DoctorService, N per-doctor queries, recompute on Period change, no contact data and no schema change.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, consistent between front matter and body; story-to-component map is easy to follow.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
