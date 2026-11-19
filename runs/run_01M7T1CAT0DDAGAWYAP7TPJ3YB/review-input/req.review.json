@@ -1,0 +1,57 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "13b81d643b95fe75f614a4a6b02720f9fa3b75987ebe1a8b922ae11f0929beec",
+  "package_sha256": "004b3e614f0f2fec62f9530ea8301914e9eb31de5cf576a5ce0c4e3b073847e8",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All 7 acceptance criteria map to REQ-1..REQ-14; the story's no-show goal and the design choice are under Out of scope with reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "REQs are split per count and per Last visit part and are checkable; REQ-1 leaves open whether the literal 'Visit summary' label is rendered."},
+    {"id": "RR-R3", "score": 5, "reason": "Every REQ cites the ticket line; REQ-7, REQ-8, REQ-9 also cite the user's IDE answers A-01..A-03, which match what the artifact says. Nothing invented."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash with baseline goals, constraints, closed-appointment or data-protection rules; the ticket-vs-code date format gap was asked (Q-01) and its mismatch recorded."},
+    {"id": "RR-R5", "score": 5, "reason": "Three precise questions with real options, each answered in the IDE; none remain open or block needlessly."},
+    {"id": "RR-R6", "score": 5, "reason": "Plain wording; Completed, No-show, Cancelled, Scheduled and Medical history used as in the glossary."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The Out-of-scope design note states the patient page's appointment list is loaded with a row limit, but cites no product code line for this fact.",
+      "cites": [
+        {"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#out-of-scope", "quote": "the patient page's appointment list is loaded with a row limit"}
+      ],
+      "suggested_fix": "Add a cite to the repository method that limits the patient's appointments, so design can verify the REQ-6 risk."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "REQ-1 does not say whether the text 'Visit summary' is itself displayed as a label or only names the line, so a tester cannot check it unambiguously.",
+      "cites": [
+        {"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/req.md#item:REQ-1", "quote": "a `Visit summary` line is shown directly above the Appointments table."}
+      ],
+      "suggested_fix": "State whether a 'Visit summary' label or heading is rendered, or that the name only identifies the line."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ticket.md#L17", "quote": "lists the patient's appointments, upcoming first, then past"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ticket.md#L18", "quote": "staff have to read every row"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "A past appointment the patient attended"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#scheduled", "quote": "An appointment that is booked and still open."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed and No-show are allowed only after the start time."}]}
+  ],
+  "questions": []
+}
