@@ -1,0 +1,84 @@
+{
+  "artifact_path": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/impl.md",
+  "artifact_sha256": "20681f0cdaf8c6dd6aa3000da161829ff3d487cbb97cc36ed2a30942e76c25ae",
+  "attempt": 1,
+  "budget_tokens": 45000,
+  "checks_sha256": "cae93666e3565bd505883c8add7732abebab8136209563833c2224406b9875f9",
+  "context_sections": [
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "design",
+      "path": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/design.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    }
+  ],
+  "package_sha256": "bc0fb2647ba093efbf2050cf556c09805130e3878f0d0c9002c34a1004a5c575",
+  "prepared_at": "2026-11-19T11:45:08Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/review-input/impl.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "IM-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "IM-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R4",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/implement/rubric.md",
+    "sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "implement@1.3.0",
+  "step": "impl",
+  "truncated": false
+}

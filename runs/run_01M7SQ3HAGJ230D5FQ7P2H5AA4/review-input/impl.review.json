@@ -1,0 +1,61 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "20681f0cdaf8c6dd6aa3000da161829ff3d487cbb97cc36ed2a30942e76c25ae",
+  "package_sha256": "bc0fb2647ba093efbf2050cf556c09805130e3878f0d0c9002c34a1004a5c575",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "CO-1..CO-7 and EP-1 are all in the diff as designed: activeOnWeekday, onDutyToday reusing slotStates/occupyingBetween, Dashboard.onDuty, shared DoctorService, web type and section."},
+    {"id": "IM-R2", "score": 5, "reason": "SQL stays in the repository, rules in the service, camelCase response fields, strict types; no contact data copied, matching DSH-9."},
+    {"id": "IM-R3", "score": 5, "reason": "8 files, all named by the design; the only test edit is the required onDuty field on the typed Dashboard fixture."},
+    {"id": "IM-R4", "score": 4, "reason": "Empty list, Fully booked, PAST-at-now and null next slot are handled; minor edge: the dashboard and onDutyToday read the clock separately, so today can differ at midnight."},
+    {"id": "IM-R5", "score": 5, "reason": "Summary and per-file Changes list match the diff file by file, including the stable-sort tie-break and the fixture edit."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "other",
+      "text": "activeOnWeekday loads blocks with one availability query per doctor, so a dashboard load costs 2N extra queries; the design trade-off only accepted N occupyingBetween queries.",
+      "cites": [
+        {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L191", "quote": "blocks: await this.availability(d.id)"},
+        {"ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/design.md#overview", "quote": "at the cost of N small queries per dashboard load"}
+      ],
+      "suggested_fix": "Load all blocks for the selected doctors in one query (doctor_id = ANY($1)) and group them, or note the extra N queries as a trade-off."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "DashboardService derives today from its own clock() call and onDutyToday calls clock() again, so a request straddling local midnight can return a today field and onDuty rows for different days.",
+      "cites": [
+        {"ref": "sample-system:api/src/services/dashboardService.ts#L82", "quote": "onDuty: await this.doctors.onDutyToday(),"},
+        {"ref": "sample-system:api/src/services/doctorService.ts#L177", "quote": "activeOnWeekday(isoWeekday(today))"}
+      ],
+      "suggested_fix": "Pass the already-read now (or today) from DashboardService.get() into onDutyToday(now)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-05", "quote": "answer: Add `onDuty` to dashboard (proposed default)"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L157", "quote": "the one slot-state rule shared by the day schedule and the next 7 days"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L113", "quote": "Appointments of one doctor that overlap [from, to), except cancelled ones."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L185", "quote": "ORDER BY lower(d.full_name), d.id`,"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L83", "quote": "ISO weekday of a calendar day: 1 = Monday .. 7 = Sunday."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/conventions.md#code-layout", "quote": "rules in `api/src/services`; SQL in `api/src/repositories`"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L31", "quote": "Counts only: no contact details or medical history (DSH-9)."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L31", "quote": "useState(() => urlDate ?? todayIn(timeZone))"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/index.ts#L38", "quote": "dashboard: new DashboardService(db, config, clock, doctors),"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7", "quote": "const DATA: Dashboard = {"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-06", "quote": "answer: Mirror slot shape (proposed default)"}]}
+  ],
+  "questions": []
+}
