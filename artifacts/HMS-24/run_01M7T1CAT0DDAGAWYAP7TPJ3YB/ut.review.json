@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "aefb727b8d11ffed170f2701e84838d33d474c3c7d9fb32682ab804ade081c47",
-  "attempt": 1,
+  "artifact_sha256": "a4a912c4a55b12c9327ecd20d0986317a7d6157f1b920fcf418aeaba4ed85950",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -45,8 +45,8 @@
     {
       "cites": [
         {
-          "quote": "shows times in the hospital time zone",
-          "ref": "context/generated/test-layout.json#L412-L423"
+          "quote": "formatting (INR, Asia/Kolkata)",
+          "ref": "context/generated/test-layout.json#L412-L421"
         }
       ],
       "claim_id": "C5",
@@ -71,55 +71,19 @@
       ],
       "claim_id": "C7",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DoctorDetailPage No-shows (HMS-7)",
+          "ref": "context/generated/test-layout.json#L335-L344"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
     }
   ],
   "findings": [
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "The patient page has no web test harness today.",
-          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#summary"
-        },
-        {
-          "quote": "vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(",
-          "ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L18-L30"
-        },
-        {
-          "quote": "<VisitSummary summary={p.visitSummary} hasAppointments={p.appointments.length > 0} />",
-          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L77"
-        },
-        {
-          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
-          "ref": "context/test-strategy.md#requirement-ids"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add a PatientDetailPage test following the DoctorDetailPage fetch-stub pattern: summary sits between the Appointments heading and the table, No visits yet with the table empty state, and table rows unchanged (S-5 AC3/AC4).",
-      "text": "REQ-1 placement and the CO-7 page wiring (hasAppointments from appointments.length) are untested, justified by 'no web test harness', yet DoctorDetailPage.test.tsx already stubs fetch and renders a routed page."
-    },
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "trace: [REQ-2, REQ-3, REQ-4",
-          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#L49"
-        },
-        {
-          "quote": "Not covered at unit level: REQ-1 (placement above the table on the full page) and REQ-14 for the",
-          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#summary"
-        },
-        {
-          "quote": "trace: [REQ-1, REQ-2, REQ-3",
-          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/impl.md#L62"
-        }
-      ],
-      "id": "F-2",
-      "severity": "minor",
-      "suggested_fix": "Either add the REQ-1 test (F-1) or record REQ-1 and the untested parts of REQ-14 under Unknown/gaps in front matter and body.",
-      "text": "trace/known drop REQ-1 without listing it as unknown or a gap, while the change traces REQ-1; REQ-14 is listed as known though the body says it is not covered beyond the 404."
-    },
     {
       "category": "completeness",
       "cites": [
@@ -132,10 +96,10 @@
           "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#tests"
         }
       ],
-      "id": "F-3",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Add one assertion that POST /api/patients returns a zero visitSummary and PATCH returns the current one.",
-      "text": "The change makes POST and PATCH patient responses carry visitSummary, but the tests only exercise GET /api/patients/:id."
+      "suggested_fix": "Add one assertion that POST /api/patients returns a zero visitSummary and that PATCH returns the current one.",
+      "text": "Prior F-3 still open: the change makes the POST and PATCH patient responses carry visitSummary, but the API tests only exercise GET /api/patients/:id."
     },
     {
       "category": "correctness",
@@ -146,17 +110,17 @@
         },
         {
           "quote": "ids.monDone = (await book(app, 2, 1, MONDAY, '09:30')).body.id;",
-          "ref": "sample-system:api/test/patients-visit-summary.test.ts#L36-L37"
+          "ref": "sample-system:api/test/patients-visit-summary.test.ts#L37"
         },
         {
           "quote": "REQ-6: counts across both fixture doctors and several days match the appointment list.",
           "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#known"
         }
       ],
-      "id": "F-4",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Add a Completed appointment more than a year earlier and assert the exact completed count.",
-      "text": "S-2 AC1 asks for Completed visits over a year apart; the REQ-6 test's Completed appointments are Monday and Tuesday of one week, yet Known says 'several days'."
+      "suggested_fix": "Add a Completed appointment more than a year earlier and assert the exact completed count, or reword Known.",
+      "text": "Prior F-4 still open: S-2 AC1 asks for Completed visits more than a year apart. The REQ-6 test's Completed visits are on Monday and Tuesday of one week, yet Known still says 'several days'."
     },
     {
       "category": "completeness",
@@ -170,10 +134,10 @@
           "ref": "sample-system:api/test/patients-visit-summary.test.ts#L59"
         }
       ],
-      "id": "F-5",
+      "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "Add a clock at THURSDAY 08:59 expecting upcoming 1, and optionally one at exactly 09:00 expecting 0.",
-      "text": "S-1 AC4 boundary (Scheduled starting one minute after now counts as upcoming) is not tested; the test checks 60 minutes ahead and one minute past."
+      "suggested_fix": "Add a clock at THURSDAY 08:59 that expects upcoming 1.",
+      "text": "Prior F-5 still open: the S-1 AC4 boundary (a Scheduled appointment starting one minute after now counts as upcoming) is not tested. The test only checks about an hour ahead and one minute past."
     },
     {
       "category": "other",
@@ -187,15 +151,53 @@
           "ref": "sample-system:api/test/patients-visit-summary.test.ts#L65"
         }
       ],
-      "id": "F-6",
+      "id": "F-4",
       "severity": "minor",
       "suggested_fix": "Move the bookings and status changes into beforeAll so each test reads prepared state.",
-      "text": "API tests depend on order: later it blocks read ids filled by the REQ-2..REQ-5 test, so running one alone or reordering breaks them."
+      "text": "Prior F-6 still open: the API tests depend on run order. Later it blocks read ids that the REQ-2..REQ-5 test fills, so running one test alone or reordering them breaks them."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "patient page relies on the existing tests of those pages",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md#summary"
+        },
+        {
+          "quote": "other pages have no web tests",
+          "ref": "context/test-strategy.md#gaps"
+        },
+        {
+          "quote": "the appointment list, an appointment's page, a doctor's page and the dashboard",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-5"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "State that the appointment list and appointment page have no web tests, so S-5 AC5 is uncovered there, and record it as a gap.",
+      "text": "The artifact says REQ-14 on other pages relies on those pages' existing tests. The test strategy says pages beyond the listed ones have no web tests, and S-5 AC5 names the appointment list and an appointment's page, which have none."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "expect(screen.getAllByRole('row')).toHaveLength(2);",
+          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L76"
+        },
+        {
+          "quote": "the Appointments table lists the same rows in the same order as before (upcoming first, then past)",
+          "ref": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/split.md#item:S-5"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Stub two appointments (one upcoming, one past) and assert the row order in the table.",
+      "text": "Known says the page test shows the table rows unchanged, but the fixture has one appointment and the test only counts 2 rows. The S-5 AC3 order (upcoming first, then past) is never checked."
     }
   ],
-  "package_sha256": "da173bedf6e9d54942e6f949da8b516cfcc06213c1cab78a039eaa1001ae581f",
+  "package_sha256": "3da0f5e8b954f49d67ddfd26d477391c6c39c13ccba7f3ffd294301216a7f41e",
   "questions": [],
-  "recorded_at": "2026-11-19T14:36:04Z",
+  "recorded_at": "2026-11-19T14:39:28Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -206,31 +208,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "API and component behaviour well covered; the PatientDetailPage wiring (CO-7, REQ-1 placement, hasAppointments) and the POST/PATCH responses that now carry visitSummary have no test.",
+      "reason": "Prior F-1 resolved: the new PatientDetailPage test covers REQ-1 placement and the hasAppointments wiring. Still untested: the POST/PATCH responses that now carry visitSummary, and S-2 AC1 (Completed visits a year apart).",
       "score": 4
     },
     {
       "id": "UT-R2",
-      "reason": "Assertions check exact counts, keys, link href/text and dates; the REQ-6 test compares the summary to the list endpoint over two adjacent days, a weak check of S-2 AC1.",
+      "reason": "Assertions check exact counts, keys, href, text and DOM siblings. Weak spots: REQ-6 compares against the list endpoint over two adjacent days, and the REQ-14 page test only counts rows (2), so order is never checked.",
       "score": 4
     },
     {
       "id": "UT-R3",
-      "reason": "Covers 404, zero counts, past unclosed Scheduled, future Cancelled, local-midnight day, No-show-only patient; misses the start-just-after-now upcoming boundary of S-1 AC4.",
+      "reason": "Covers 404, zero counts, past unclosed Scheduled, future Cancelled, the local-midnight day, No-show only, and the empty page with an unclosed row. Misses the S-1 AC4 one-minute-after-now upcoming boundary.",
       "score": 4
     },
     {
       "id": "UT-R4",
-      "reason": "Vitest/Supertest and jsdom/Testing Library in the right folders with ID-prefixed names; deviation: HMS-24 REQ-1 has no test although the strategy requires one per requirement.",
-      "score": 4
+      "reason": "Uses Vitest+Supertest on the API and jsdom+Testing Library on the web, in the layout's folders, with ID-prefixed names, and follows the existing DoctorDetailPage routed fetch-stub pattern. Only test files changed.",
+      "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "No counts or coverage invented; defers numbers to the verifier and states coverage is skipped, matching checks.json (coverage step skip).",
+      "reason": "Reports no test counts or coverage and defers them to the verifier. Says coverage is skipped, which matches checks.json (coverage status skip, exit 78).",
       "score": 5
     }
   ],
-  "rubric_score": 4.1,
+  "rubric_score": 4.25,
   "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
   "schema": "review.v1",
   "status": "ok",

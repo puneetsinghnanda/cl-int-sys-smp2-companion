@@ -1,21 +1,21 @@
 {
   "artifact_path": "artifacts/HMS-24/run_01M7T1CAT0DDAGAWYAP7TPJ3YB/ut.md",
-  "artifact_sha256": "aefb727b8d11ffed170f2701e84838d33d474c3c7d9fb32682ab804ade081c47",
-  "attempt": 1,
+  "artifact_sha256": "a4a912c4a55b12c9327ecd20d0986317a7d6157f1b920fcf418aeaba4ed85950",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "363d8e414e8d57dcd8f8f10de030ab5b1d11b0cffced7eee96f9e7b296d4697b",
+  "checks_sha256": "04b509bb20f229d7001802f250acf0069ac33e7046f062eeae07a5e2611996ad",
   "claims": {
-    "total": 7,
-    "verified": 7
+    "total": 8,
+    "verified": 8
   },
-  "decided_at": "2026-11-19T14:36:04Z",
+  "decided_at": "2026-11-19T14:39:28Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -52,7 +52,7 @@
     }
   ],
   "key_id": "key_01M4Z6BWJRTAMKZ8SPDF5JED04",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -60,31 +60,31 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "2110085e48d5c33229975b57cc06442405fcdae81e6f363c2721cc6bde97d1d3",
   "product_changes": [
     {
       "base_sha": "4101fc5e4230d56edbb1a97d6073daa139df922a",
-      "diff_sha256": "9423f9ef6b50a2f8f5ceb98e1f448302e1abcfce9e521a2e1970677005602991",
+      "diff_sha256": "f5bb734e23a2f16f569354db7e6a0537a760659d187cac1f38c3beb5830b521f",
       "repo": "sample-system",
-      "tree_sha": "35a8ebf10ddd0f32bf05d5c2a70d10975403296a"
+      "tree_sha": "3ffde4b95e9cc660c6277377d20a34d85d40a733"
     }
   ],
-  "review_sha256": "080b5b22f8c7232bc7652e5c56bd717ad1f3a75fb06737e1176e3d6b0718bcf8",
+  "review_sha256": "4d6bf9e518ec821b3053542d369f36d77d0a1ef9e20100e4cd39ebd48b56c515",
   "run_id": "run_01M7T1CAT0DDAGAWYAP7TPJ3YB",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.1,
+    "S3": 4.25,
     "S4": 0,
     "S5": "fresh",
     "S6": {
-      "files": 3,
-      "lines": 180,
+      "files": 4,
+      "lines": 258,
       "sensitive": false
     }
   },
-  "signature": "KXXK6cJ-y_XpJnBQV7q4FQ6K1KeJlq6mPzsXWyxfmkmEE6jLfaeDLC5R8WXOyTzzC0KZDf38DP9_VHYuLaK3Dw",
+  "signature": "f4mDq0iYoo80bXrjET2A0dN0JW_BgVknIVQh8pFEoGJrAPmjn78t9lqdEFfFCZQRaOkXWZuo1OezBCuc7ZXcAQ",
   "skill": "unit-test@1.3.0",
   "step": "ut",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
