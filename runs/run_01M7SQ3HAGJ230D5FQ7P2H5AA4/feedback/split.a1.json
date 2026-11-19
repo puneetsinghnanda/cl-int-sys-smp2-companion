@@ -1,0 +1,45 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Given Dr Rao is on duty and has Scheduled appointments today, when staff open the dashboard",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories"
+        },
+        {
+          "quote": "Same as day schedule code (proposed default) | Scheduled only | Scheduled, Completed, No-show",
+          "ref": "runs/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/ide-answers.md#a-02"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-2 AC1 seeds only Scheduled appointments, so a dashboard that counts only Scheduled (a rejected A-02 option) passes even if the day schedule also counts Completed or No-show. The AC does not catch the likeliest wrong implementation of REQ-4."
+    },
+    {
+      "cites": [
+        {
+          "quote": "The `next free slot` is the earliest free slot that starts after now.",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/req.md#item:REQ-6"
+        },
+        {
+          "quote": "Given the time is 11:00 local and Dr Rao has an unbooked slot at 10:00 and an unbooked slot at 11:30",
+          "ref": "artifacts/HMS-23/run_01M7SQ3HAGJ230D5FQ7P2H5AA4/split.md#stories"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "REQ-6 says the next free slot 'starts after now', but no AC covers a slot that starts exactly now. That is the limit boundary where an off-by-one (>= vs >) bug in the next-free and free-count logic would show."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M7SQ3HAGJ230D5FQ7P2H5AA4",
+  "schema": "feedback.v1",
+  "step": "split"
+}
