@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M7W20GEGAG07YJ0WPHSC463Z
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.3.0
 inputs:
   - path: artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/impl.md
@@ -42,8 +42,8 @@ questions: []
 code:
   - repo: sample-system
     base_sha: 09580b7da0e53573ff52d014ffcf6f99e8047e42
-    head_sha: 54f5e72828d77ac1877efab0474cb4055647a016
-    diff_sha256: df8d6fd10395825661605a10617406fb63432b5c65104f5f443e2d2a0dc2ccdb
+    head_sha: fc86addbe324c6139df4a93f643b64f650f96cb1
+    diff_sha256: 8f17118cfbac8a3b2178b72366199c5376aaca5c673648ed453d5079963d0a76
     files:
       - api/test/appointments.test.ts
       - web/src/__tests__/AppointmentsPage.test.tsx
@@ -51,6 +51,8 @@ code:
 # Unit tests: HMS-33
 
 ## Summary
+Attempt 2 fixes the H3 build failure of attempt 1: the web test's fetch mock had no parameters, so `mock.calls[0][0]` did not type-check; the mock now declares its request parameters. No test logic changed.
+
 Tests cover the new `cancellationReason` on list items (API) and the opt-in Cancellation reason column (web) (C6). Web tests use Vitest, jsdom and Testing Library with a stubbed fetch and invented data (C1); API tests extend the existing appointment suite with Supertest (C2, C4), which runs only when a test database is available (C3). Normal paths: a Cancelled row shows its reason; edge and error paths: exactly 60 characters, one past 60, 300 characters, characters outside the basic plane, a Cancelled row with no stored reason, other statuses, and tables without the prop. tsl records the test counts in checks.json when it runs the verifier (H3); coverage is not reported because the project has no coverage script (C5).
 
 ## Tests

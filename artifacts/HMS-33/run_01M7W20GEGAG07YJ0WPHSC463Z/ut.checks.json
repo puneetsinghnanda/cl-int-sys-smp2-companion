@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "e984e0b3af3d22f33ca23f6ca36e16b532ede90813bf170c860da34909571d36",
-  "attempt": 1,
-  "finished_at": "2026-11-20T09:09:51Z",
+  "artifact_sha256": "83770d66ee8f190c9b88270955c2e15311485701a30c634cf7263d33195ae41e",
+  "attempt": 2,
+  "finished_at": "2026-11-20T09:12:45Z",
   "gates": [
     {
       "codes": [],
@@ -19,9 +19,9 @@
     },
     {
       "codes": [
-        "E-H3-01"
+        "E-H3-03"
       ],
-      "detail": "build exit 2; log runs/run_01M7W20GEGAG07YJ0WPHSC463Z/verifier/ut/a1/build.log: src/__tests__/AppointmentsPage.test.tsx(112,44): error TS2493: Tuple type '[]' of length '0' has no element at index '0'. | npm error Lifecycle script `build` failed with error: | npm error code 2 | npm error path /cache/w/web | npm error workspace @hms/web@0.1.0 | npm error location /cache/w/web | npm error command failed | npm error command sh -c tsc -p tsconfig.json && vite build",
+      "detail": "lint exit 1; log runs/run_01M7W20GEGAG07YJ0WPHSC463Z/verifier/ut/a2/lint.log",
       "id": "H3",
       "pass": false,
       "status": "fail"
@@ -70,7 +70,7 @@
   "product_changes": [
     {
       "base_sha": "09580b7da0e53573ff52d014ffcf6f99e8047e42",
-      "diff_sha256": "df8d6fd10395825661605a10617406fb63432b5c65104f5f443e2d2a0dc2ccdb",
+      "diff_sha256": "8f17118cfbac8a3b2178b72366199c5376aaca5c673648ed453d5079963d0a76",
       "files": [
         "api/test/appointments.test.ts",
         "web/src/__tests__/AppointmentsPage.test.tsx"
@@ -78,7 +78,7 @@
       "lines_added": 161,
       "lines_deleted": 0,
       "repo": "sample-system",
-      "tree_sha": "54f5e72828d77ac1877efab0474cb4055647a016"
+      "tree_sha": "fc86addbe324c6139df4a93f643b64f650f96cb1"
     }
   ],
   "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
@@ -93,51 +93,51 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-20T09:08:36Z",
+  "started_at": "2026-11-20T09:11:28Z",
   "step": "ut",
-  "tool_log_sha256": "4302887b746a18d9dd3631ac3caaa1bc3f243d2f819ea2e493a18161a4c6632e",
+  "tool_log_sha256": "a2cdbec69608f256daeefe92582d3ffd87d6916988645c095c7ed0c0a1a0ba64",
   "tsl_version": "0.1.7",
   "verifier": {
     "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
     "profile": "node-22@1",
     "steps": [
       {
-        "duration_ms": 6672,
-        "exit_code": 2,
+        "duration_ms": 11000,
+        "exit_code": 0,
         "name": "build",
         "report_sha256": null,
-        "status": "fail"
+        "status": "pass"
       },
       {
-        "duration_ms": 18500,
+        "duration_ms": 19733,
         "exit_code": 0,
         "name": "test",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 3875,
-        "exit_code": 0,
+        "duration_ms": 3733,
+        "exit_code": 1,
         "name": "lint",
-        "report_sha256": "466d4d73167e53e25d34c9a0174d2f46d6a8533a6e57030ab0696f4f4d1898df",
-        "status": "pass"
+        "report_sha256": "7221db4ae4e9956829b6ce092ed1476e93e0a6abc8046fbfc770a7219227825e",
+        "status": "fail"
       },
       {
-        "duration_ms": 30202,
+        "duration_ms": 27547,
         "exit_code": 0,
         "name": "sast",
-        "report_sha256": "ec4ed62a988014f6d3be0a32ed5e0ce14df4685bb87feb3a7b87a847c12b8fea",
+        "report_sha256": "f48e0af83a17002134ca68ae1b1f82c651e5b514081fb6b8d3f7254c0893b068",
         "status": "pass"
       },
       {
-        "duration_ms": 922,
+        "duration_ms": 875,
         "exit_code": 0,
         "name": "secrets",
         "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
         "status": "pass"
       },
       {
-        "duration_ms": 827,
+        "duration_ms": 764,
         "exit_code": 78,
         "name": "coverage",
         "report_sha256": null,
