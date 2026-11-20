@@ -1,0 +1,202 @@
+{
+  "artifact_sha256": "b8571be7328f92bab36ac750d0239e386ae1fead0d6f3d638ed879b87ad36cc1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "const now = this.clock();",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a.status = 'SCHEDULED' AND a.starts_at > ${p(now)}",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L131"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface NextAppointment {",
+          "ref": "sample-system:api/src/types.ts#L95"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "id: number;",
+          "ref": "sample-system:web/src/api/types.ts#L91"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async appointments(id: number, now: Date, limit = 100)",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L223"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function dateTime(iso: string, timeZone: string): string {",
+          "ref": "sample-system:web/src/lib/format.ts#L21"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ".badge-warning { background: var(--warning-bg); color: #8a4b00; }",
+          "ref": "sample-system:web/src/styles.css#L81"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "timeZone: 'Asia/Kolkata'",
+          "ref": "sample-system:web/src/hooks/useSettings.tsx#L4"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<VisitsSummary visits={p.visits} timeZone={timeZone} />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L51"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "It is cheap and local, and it does not reuse a shared badge, so other pages do not change",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#overview"
+        },
+        {
+          "quote": "<span className=\"badge badge-warning\" role=\"status\">",
+          "ref": "sample-system:web/src/components/VisitsSummary.tsx#L32"
+        }
+      ],
+      "claim_ref": "C7",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Either use a local class as designed, or record the reuse of badge-warning under Defaults taken as a deliberate deviation.",
+      "text": "The design chose a local CSS class on the No-show count that does not reuse a shared badge. The code reuses the shared `badge badge-warning` and the artifact does not note this as a deviation."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Tests: none added. The design asks for no regression tests; the unit-test step covers them.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/impl.md#changes"
+        },
+        {
+          "quote": "Tests can fix \"now\" (S-1 AC1)",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#overview"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State only that tests are left to the unit-test step, without attributing it to the design.",
+      "text": "The summary says the design asks for no regression tests. The design says no such thing; it only says that tests can fix now."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "role=\"status\">{visits.no_show}</span>",
+          "ref": "sample-system:web/src/components/VisitsSummary.tsx#L32"
+        },
+        {
+          "quote": "<span className=\"badge badge-warning\">Outside availability</span>",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L32"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Drop role=\"status\" unless a test or a requirement needs it.",
+      "text": "role=\"status\" makes the No-show badge an ARIA live region. Neither the design nor the existing badge use (AppointmentTable) calls for it."
+    }
+  ],
+  "package_sha256": "59d6176c90334fbe1d2348d8272ebbedf17a0ba47b2ee2b60dc8ff78b3dcf82a",
+  "questions": [],
+  "recorded_at": "2026-11-20T07:01:11Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-8 and EP-1 are all implemented as designed. One small deviation: the No-show warning reuses the shared badge, though the design's trade-off says it should not.",
+      "score": 4
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL stays in patientRepo, the rules stay in PatientService, notFound is raised before visits, and no logging of contact details or medical history is added.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Only the seven listed files change, all needed. Small noise: role=\"status\" on the warning badge is not in the design.",
+      "score": 4
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Null next/last render the fallbacks, missing count rows default to 0, and an unknown patient still gets a 404 before the visit queries run. No tests cover these edges.",
+      "score": 4
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary matches the diff, but says the design asks for no regression tests, which the design does not say, and does not mention the badge deviation.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.2,
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
