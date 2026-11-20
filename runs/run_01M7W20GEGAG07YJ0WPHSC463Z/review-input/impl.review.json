@@ -1,0 +1,45 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "9a068691d7737d9adcc8c4515e667f65c6f20e24684d5b883e0c09c28c213df2",
+  "package_sha256": "10c17aa98dcc3b0db2741bae33204bf4dcc9f743b004a9c95f0562021e160e55",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "CO-1 to CO-6 and EP-1 are all present in the seven changed files: repo maps cancellation_reason, both AppointmentListItem types, service and client typed, opt-in table prop, list page sets it. CO-7/CO-8 untouched."},
+    {"id": "IM-R2", "score": 4, "reason": "Strict TS, layering and list shape kept; small deviation: AppointmentTable repeats an inline intersection type twice instead of reusing the new web AppointmentListItem type."},
+    {"id": "IM-R3", "score": 5, "reason": "Only the seven design files changed (34 added, 11 deleted); no SQL, migration or unrelated edits."},
+    {"id": "IM-R4", "score": 5, "reason": "Cell rule handles non-Cancelled, null or empty reason with \"-\", and counts code points with Array.from for the 60-char cut; endpoint validation and error path unchanged."},
+    {"id": "IM-R5", "score": 5, "reason": "Summary and Changes list match the files and code: Array.from counting, \"-\" fallback, only AppointmentsPage sets the prop, only the list route returns the field."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "style",
+      "text": "AppointmentTable declares the item shape inline twice (props and reasonCell) as AppointmentSummary & { cancellationReason?: string | null } rather than a named type, duplicating the new AppointmentListItem field.",
+      "cites": [
+        {"ref": "sample-system:web/src/components/AppointmentTable.tsx#L18", "quote": "function reasonCell(a: AppointmentSummary & { cancellationReason?: string | null }): string {"},
+        {"ref": "sample-system:web/src/api/types.ts#L59", "quote": "export interface AppointmentListItem extends AppointmentSummary {"}
+      ],
+      "suggested_fix": "Define one local alias (e.g. type TableItem = AppointmentSummary & Partial<Pick<AppointmentListItem, 'cancellationReason'>>) and use it in Props and reasonCell."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#item:CO-2", "quote": "API type AppointmentListItem (AppointmentSummary plus cancellationReason), in api/src/types.ts"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L23", "quote": "a.starts_at, a.ends_at, a.status, a.reason, a.cancellation_reason"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#item:CO-5", "quote": "AppointmentTable: optional showCancellationReason prop adding the Cancellation reason column after Status"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L3", "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L14", "quote": "res.json(await ctx(req).services.appointments.list(req.query, parsePage(req.query.page)));"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-02", "quote": "- answer: List endpoint only (proposed default)"}]}
+  ],
+  "questions": []
+}
