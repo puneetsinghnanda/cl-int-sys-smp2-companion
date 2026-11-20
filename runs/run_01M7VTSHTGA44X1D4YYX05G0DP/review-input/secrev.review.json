@@ -1,0 +1,49 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "8df4a3f6cbdf8ea0b691183c8343cc168897705776cf35a10260f26ae5369037",
+  "package_sha256": "9fcb37561d06a302570e4531d789c16efdaec3c504ec6af60786f8baf69f25fe",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.9,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "No new route; existing GET /:id keeps parseId and requirePermission. New SQL binds all values; only constant fragments interpolated (reported as SF-1). Component gets visits only. No missed weakness found."},
+    {"id": "SC-R2", "score": 5, "reason": "Every claim and SF-1 point at the exact product lines (patients.ts L28/L30, patientRepo.ts L241/L244/L252/L259, VisitsSummary.tsx L8); all verified."},
+    {"id": "SC-R3", "score": 5, "reason": "SF-1 is hardening of a private helper with constant-only callers; minor matches impact."},
+    {"id": "SC-R4", "score": 5, "reason": "SF-1 gives a clear fix: restrict where/order to an enum or inline the two queries."},
+    {"id": "SC-R5", "score": 4, "reason": "SF-1 is not an exploitable issue today, but the artifact labels it as hardening, not a vulnerability. Summary slightly overstates the permission guard given the MVP grants every permission."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The summary leans on the route declaring requirePermission as the access control, but the architecture says every permission is granted in the MVP, so the new visits data is as exposed as the existing patient detail. Worth stating so the risk is not overstated as guarded.",
+      "cites": [
+        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/secrev.md#summary", "quote": "That route still parses its id (C2) and declares its permission (C1, C3)."},
+        {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+      ],
+      "claim_ref": "C3",
+      "suggested_fix": "Add one sentence noting the MVP grants all permissions, so the new field inherits the existing exposure of GET /api/patients/:id and gains protection only when sign-in replaces identify/requirePermission."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/patients.ts#L28", "quote": "requirePermission('patients:read'),"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/patients.ts#L30", "quote": "services.patients.get(parseId(req.params.id, 'id'))"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L252", "quote": "a.status = 'SCHEDULED' AND a.starts_at > $2`, 'a.starts_at, a.id', [id, now]"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L259", "quote": "FROM appointment WHERE patient_id = $1"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L244", "quote": "WHERE a.patient_id = $1 AND ${where}"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L241", "quote": "SELECT a.id, a.starts_at, d.full_name AS doctor_name"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/VisitsSummary.tsx#L8", "quote": "Takes only the visits, never the patient (PAT-8)."}]}
+  ],
+  "questions": []
+}
