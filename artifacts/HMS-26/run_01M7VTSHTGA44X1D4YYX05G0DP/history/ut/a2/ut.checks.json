@@ -1,0 +1,149 @@
+{
+  "artifact_sha256": "8d025fd05e04d69f4baa0e22cb496818c25132c120e3354f9b622a7224fd4827",
+  "attempt": 2,
+  "finished_at": "2026-11-20T07:08:10Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [
+        "E-H3-02"
+      ],
+      "detail": "test exit 1; log runs/run_01M7VTSHTGA44X1D4YYX05G0DP/verifier/ut/a2/test.log: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯ | npm error Lifecycle script `test` failed with error: | npm error code 1 | npm error path /cache/w/api | npm error workspace @hms/api@0.1.0 | npm error location /cache/w/api | npm error command failed | npm error command sh -c vitest run",
+      "id": "H3",
+      "pass": false,
+      "status": "fail"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/impl.md",
+      "sha256": "b8571be7328f92bab36ac750d0239e386ae1fead0d6f3d638ed879b87ad36cc1",
+      "verification_sha256": "3b6d60832875345e5afbc60547730f7bbe8655600ce8164d097c1dca5fd0a3a8"
+    },
+    {
+      "path": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md",
+      "sha256": "0505e8c204b650fbd44f6f8a04dfa8da0e035fbf38d644498edb5957afb7a071",
+      "verification_sha256": "9ab736a6259662a89b45144e6c57bf2b96ce7eeac1b689b26b0371801eb7f73d"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "2209ab85950036e5b88b28b2ceac974246b13b7d",
+      "diff_sha256": "e45d4c07a5fe141bbdd86753155611b3c9ebfa449ad6572ff564f9db28d90b33",
+      "files": [
+        "api/test/patients-visits.test.ts",
+        "web/src/__tests__/PatientDetailPage.test.tsx",
+        "web/src/__tests__/format.test.ts"
+      ],
+      "lines_added": 239,
+      "lines_deleted": 1,
+      "repo": "sample-system",
+      "tree_sha": "0ddfdf1a065599644ad8e0b958322de1208dac34"
+    }
+  ],
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-20T07:07:28Z",
+  "step": "ut",
+  "tool_log_sha256": "88f955936e3eea72dee512141a10c91887aeb90658fed2f9a6ba22a5b668e981",
+  "tsl_version": "0.1.7",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 5373,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 13187,
+        "exit_code": 1,
+        "name": "test",
+        "report_sha256": null,
+        "status": "fail"
+      },
+      {
+        "duration_ms": 2900,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "4c77579fb17144303c2616d4be9ce8f6a381acb6bcbbe5db85b86787f184f5c6",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 15681,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "294b400cf39c0e63fb379a490d9466cba3d5fb5dacdb28a9acec5b8aa6155a17",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 188,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 227,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}
