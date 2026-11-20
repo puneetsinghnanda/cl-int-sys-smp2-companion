@@ -1,0 +1,68 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "62fc1974d8f68f4c81a6938937cc245dc47438367b99f34d1cc387204f64fec6",
+  "package_sha256": "fc37008ea7b8e2ae34cf3f0d36ca09377e390f3129d7309be0f216259d00330f",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All 14 known REQs in req.md are traced by S-1 to S-4; no assumed or unknown REQs exist."},
+    {"id": "SS-R2", "score": 4, "reason": "S-1 to S-3 each hold one outcome; S-4 bundles unchanged slot list, unchanged rest of page and two privacy constraints."},
+    {"id": "SS-R3", "score": 4, "reason": "ACs are Given/When/Then and mostly discriminating (lakh grouping, zero fee, stale fee on load failure), but REQ-11 covers only the overlap partition of the booking rules, and S-4 AC3 is broad."},
+    {"id": "SS-R4", "score": 5, "reason": "Fee values come from REQ-2/REQ-5 or are derived inline (divide by 100, Indian grouping) from the glossary Paise entry."},
+    {"id": "SS-R5", "score": 5, "reason": "Clear, consistent terms (paise, Consultation fee, Scheduled, free slot) matching the intent and glossary."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "REQ-11 (booking rules unchanged) is tested only for the overlap partition. The rule also requires a slot to be inside availability and in the future; no AC checks a past slot or a slot outside availability stays non-free, and C6 drops 'in the future'.",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#claim:C5", "quote": "in the future and not overlapping a Scheduled appointment"},
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#item:S-3", "quote": "then the taken slot is not offered as free, as before"},
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#claim:C6", "quote": "A slot is free only inside the doctor's `availability` and not overlapping a Scheduled appointment."}
+      ],
+      "claim_ref": "C6",
+      "suggested_fix": "Add S-3 ACs: a past slot on today's date and a time outside the doctor's availability are not offered as free with the fee shown; restore 'in the future' in C6."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "S-4 AC3 checks that 'every other field, label and button' works as before without naming them, so it is hard to check precisely and a missing element could slip by.",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#item:S-4", "quote": "every other field, label and button is present and works as before this change"}
+      ],
+      "suggested_fix": "Name the page's existing fields (Patient, Doctor, date, slot, reason, Book) in the AC."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "other",
+      "text": "S-4 bundles two different outcomes: regression of the slot list/page (REQ-8, REQ-12) and no private data shown (REQ-13, REQ-14).",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#item:S-4", "quote": "The rest of the page stays as it was and shows no private data"}
+      ],
+      "suggested_fix": "Split S-4 into a page-unchanged story and a no-private-data story."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#item:REQ-2", "quote": "150000 paise shows as ₹1,500.00"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#item:REQ-5", "quote": "A fee of 0 paise shows as ₹0.00."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#paise", "quote": "One hundredth of a rupee."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#item:REQ-10", "quote": "that doctor counts as chosen"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#item:REQ-9", "quote": "the page shows no fee and staff can still book"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#claim:C5", "quote": "A slot is free only inside the doctor's `availability`"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions"}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "in the future and not overlapping a Scheduled appointment",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#claim:C5"
+        },
+        {
+          "quote": "then the taken slot is not offered as free, as before",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#item:S-3"
+        },
+        {
+          "quote": "A slot is free only inside the doctor's `availability` and not overlapping a Scheduled appointment.",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#claim:C6"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-11 (booking rules unchanged) is tested only for the overlap partition. The rule also requires a slot to be inside availability and in the future; no AC checks a past slot or a slot outside availability stays non-free, and C6 drops 'in the future'."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "schema": "feedback.v1",
+  "step": "split"
+}
