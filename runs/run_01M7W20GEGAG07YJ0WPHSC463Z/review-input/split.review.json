@@ -1,0 +1,55 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "c05e9c99ae954bc1723d7c72ed43e179acd5ddc73fc04085968a1a344df9ef19",
+  "package_sha256": "3785e9d9c93b56f63b4062a597e233bf54c50681c3dd07eb9a680cd162af5686",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All 17 known REQs (REQ-1 to REQ-17) are traced by at least one story; no assumed REQs exist in the intent."},
+    {"id": "SS-R2", "score": 4, "reason": "Most stories carry one outcome; S-5 bundles the unchanged-tables constraint with the separate no-medical-history/no-contact-details outcome."},
+    {"id": "SS-R3", "score": 4, "reason": "ACs are Given/When/Then with 60/61/300-character boundaries and one case per status; S-1 AC1 over-specifies 'directly after' Status, which can fail a correct implementation."},
+    {"id": "SS-R4", "score": 5, "reason": "60 and 300 come from the intent; 61 is derived inline as one character over 60; example reason strings are test data, not limits."},
+    {"id": "SS-R5", "score": 5, "reason": "Clear, consistent terms matching the glossary statuses and the intent's wording."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "S-1 AC1 requires the column 'directly after' Status, but REQ-2 and the ticket only say 'after the Status column'; the AC adds a constraint not in the intent and could fail a correct implementation.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/split.md#item:S-1", "quote": "placed directly after the Status column"},
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-2", "quote": "comes after the Status column"}
+      ],
+      "suggested_fix": "Say 'placed after the Status column', or cite a source for 'directly after'."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "other",
+      "text": "S-5 bundles two outcomes: other tables stay unchanged (REQ-10 to REQ-12) and no medical history or contact details in the list (REQ-14, REQ-15). These would read better as separate stories.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/split.md#item:S-5", "quote": "trace: [REQ-10, REQ-11, REQ-12, REQ-14, REQ-15]"}
+      ],
+      "suggested_fix": "Move S-5 AC4 (REQ-14, REQ-15) into its own data-protection story."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-5", "quote": "A reason longer than 60 characters shows its first 60 characters"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [
+      {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-17", "quote": "The list shows the cancellation reason as staff entered it"},
+      {"ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-01", "quote": "answer: Show it as is (proposed default)"}
+    ]}
+  ],
+  "questions": []
+}
