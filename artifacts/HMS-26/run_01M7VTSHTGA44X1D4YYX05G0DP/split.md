@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7VTSHTGA44X1D4YYX05G0DP
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - {path: artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md, sha256: 9a1f1abb91af2282ee0e1cec2d11c2c78175ade5af0865cba4f1e1ec883e3ea7}
@@ -17,11 +17,14 @@ claims:
   - {id: C6, text: "Last visit is the `latest Completed` appointment.", cites: ["artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-7"]}
   - {id: C7, text: "A No-show is a past appointment the patient `did not attend`.", cites: ["context/glossary.md#no-show"]}
   - {id: C8, text: "Medical history is blood group, `allergies`, chronic conditions, current medications and notes.", cites: ["context/glossary.md#medical-history"]}
+  - {id: C9, text: "The display zone must not be hard-coded: `Do not hard-code Asia/Kolkata`.", cites: ["runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01"]}
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18]
-known: [S-1, S-2, S-3, S-4, S-5]
+known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "New story S-6 sets useSettings().timeZone to UTC, not the default, so a hard-coded Asia/Kolkata shows a different date."}
 stories:
   - id: S-1
     title: See the next appointment
@@ -64,6 +67,12 @@ stories:
       - {id: AC1, text: "Given a patient with both upcoming and past appointments, when staff open the patient page, then the details, the medical history and the appointment table (upcoming first, then past) show exactly as before the change."}
       - {id: AC2, text: "Given a patient with no appointments, when staff open the patient page, then the details, the medical history and the empty appointment table show exactly as before the change."}
       - {id: AC3, text: "Given any patient, when staff open the dashboard, the patient list and a doctor page, then each shows exactly as before the change."}
+  - id: S-6
+    title: Dates follow the hospital time zone setting
+    trace: [REQ-9]
+    acceptance_criteria:
+      - {id: AC1, text: "Given useSettings().timeZone is set to UTC instead of the default Asia/Kolkata and the next Scheduled appointment starts at 19:00 UTC on 9 March, when staff open the patient page, then Next appointment shows 9 March 19:00, not 10 March 00:30 (the Asia/Kolkata reading, UTC+05:30)."}
+      - {id: AC2, text: "Given useSettings().timeZone is set to UTC instead of the default Asia/Kolkata and the latest Completed appointment started at 20:00 UTC on 9 March, when staff open the patient page, then Last visit shows 9 March, not 10 March (the Asia/Kolkata reading, 01:30 local after midnight)."}
 ---
 # Stories: HMS-26
 
@@ -105,12 +114,20 @@ Traces: REQ-18.
 - AC2: with no appointments, details, medical history and the empty table are unchanged.
 - AC3: the dashboard, the patient list and a doctor page are unchanged.
 
+### S-6 Dates follow the hospital time zone setting
+Traces: REQ-9.
+- AC1: Given useSettings().timeZone is set to UTC instead of the default Asia/Kolkata and the next Scheduled appointment starts at 19:00 UTC on 9 March, then Next appointment shows 9 March 19:00, not 10 March 00:30 (the Asia/Kolkata reading).
+- AC2: Given useSettings().timeZone is set to UTC and the latest Completed appointment started at 20:00 UTC on 9 March, then Last visit shows 9 March, not 10 March (the Asia/Kolkata reading).
+
+Resolves F-1: New story S-6 sets useSettings().timeZone to UTC, not the default, so a hard-coded Asia/Kolkata shows a different date.
+
 ## Known
 - S-1: from known REQ-3 to REQ-6 and REQ-9 (time zone decided in runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01).
 - S-2: from known REQ-7, REQ-8, REQ-9, REQ-10.
 - S-3: from known REQ-2, REQ-11 to REQ-14.
 - S-4: from known REQ-1, REQ-15, REQ-16, REQ-17.
 - S-5: from known REQ-18.
+- S-6: from known REQ-9 (zone read from Settings, not hard-coded, per runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01).
 
 ## Assumed
 None.

@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "ab327c0705601dcfb06c0e9c9f8fa6c057b3bb16e7755f54a905168ac1ba2681",
-  "package_sha256": "5709195d36bb657bb35eac8e6edc4ab87da8cb803f53f5209197ec195e93329d",
+  "attempt": 2,
+  "artifact_sha256": "0505e8c204b650fbd44f6f8a04dfa8da0e035fbf38d644498edb5957afb7a071",
+  "package_sha256": "5b38f5044b9a45155a61b35d1cc5c55bfd862775b78a1588f12918640d6fac19",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,33 +12,20 @@
     "version": "0.1.7",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.2,
+  "rubric_score": 4.45,
   "rubric_items": [
     {"id": "SS-R1", "score": 5, "reason": "All 18 known REQs are traced by at least one story; no assumed or unknown REQs exist."},
-    {"id": "SS-R2", "score": 4, "reason": "Stories are mostly single-outcome; S-4 bundles placement, privacy and page exclusivity, and S-3 bundles counts with the warning."},
-    {"id": "SS-R3", "score": 3, "reason": "ACs are Given/When/Then and mostly discriminating (already-started, Cancelled, No-show, threshold 1 vs 2), but both time-zone ACs use the default zone, so a hard-coded Asia/Kolkata passes."},
-    {"id": "SS-R4", "score": 5, "reason": "Threshold 2, empty-state texts and UTC+05:30 come from the intent or are derived inline; other values are example data, not limits."},
-    {"id": "SS-R5", "score": 4, "reason": "Readable with consistent terms; body ACs for S-2 to S-5 are abbreviated and drop the Given/When/Then form used in the front matter."}
+    {"id": "SS-R2", "score": 4, "reason": "Stories are mostly single-outcome; S-4 still bundles placement, privacy and page exclusivity, and S-3 bundles counts with the warning."},
+    {"id": "SS-R3", "score": 4, "reason": "F-1 resolved: S-6 uses a non-default zone (UTC) so a hard-coded Asia/Kolkata fails. Remaining gaps: S-4 privacy ACs seed only part of the contact and medical history fields."},
+    {"id": "SS-R4", "score": 5, "reason": "Threshold 2, empty-state texts and UTC+05:30 come from the intent or are derived inline; S-6 expected values are derived inline from the UTC instants."},
+    {"id": "SS-R5", "score": 4, "reason": "Readable with consistent terms; body ACs for S-2 to S-5 remain abbreviated and drop the Given/When/Then form used in the front matter."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "S-1 AC5 and S-2 AC3 set useSettings().timeZone to Asia/Kolkata, the default. The likeliest wrong implementation, a hard-coded Asia/Kolkata, passes both, though REQ-9 and A-01 forbid hard-coding the zone.",
-      "cites": [
-        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-1", "quote": "Given useSettings().timeZone is Asia/Kolkata (UTC+05:30) and the next Scheduled appointment starts at 19:00 UTC on 9 March"},
-        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-2", "quote": "Given useSettings().timeZone is Asia/Kolkata (UTC+05:30) and the latest Completed appointment started at 20:00 UTC on 9 March"},
-        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-9", "quote": "the zone is not hard-coded"},
-        {"ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01", "quote": "Do not hard-code Asia/Kolkata."}
-      ],
-      "suggested_fix": "Add an AC per display where useSettings().timeZone is set to a non-default zone and the UTC instant falls on a different date or time there than in Asia/Kolkata, with the expected value derived inline."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
       "category": "completeness",
-      "text": "S-4 AC3 tests only phone and email for REQ-16, but the patient row also holds address and emergency_contact_phone; an implementation that leaks those would pass.",
+      "text": "Still open from attempt 1: S-4 AC3 tests only phone and email for REQ-16, but the patient row also holds address and emergency_contact_phone; an implementation that leaks those would pass.",
       "cites": [
         {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-4", "quote": "then the Visits summary shows neither the phone number nor the email"},
         {"ref": "context/generated/db-schema.json#L640", "quote": "column:patient.address"},
@@ -47,10 +34,10 @@
       "suggested_fix": "Extend S-4 AC3 to a patient with address and emergency contact phone recorded and assert none of the contact fields appear."
     },
     {
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
       "category": "completeness",
-      "text": "S-4 AC2 seeds only allergies and current medications; blood group, chronic conditions and notes, also medical history per the glossary, are not exercised.",
+      "text": "Still open from attempt 1: S-4 AC2 seeds only allergies and current medications; blood group, chronic conditions and notes, also medical history per the glossary, are not exercised.",
       "cites": [
         {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-4", "quote": "Given a patient with allergies and current medications recorded"},
         {"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}
@@ -58,13 +45,13 @@
       "suggested_fix": "Seed all five medical history fields in S-4 AC2."
     },
     {
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
       "category": "style",
-      "text": "Body ACs for S-2 to S-5 are shortened and drop the When step or the Given/When/Then form, so the body and front matter word the same ACs differently.",
+      "text": "Still open from attempt 1: body ACs for S-2 to S-5 are shortened and drop the When step or the Given/When/Then form, so body and front matter word the same ACs differently.",
       "cites": [
-        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L90", "quote": "- AC2: exactly one No-show → count 1, not highlighted."},
-        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L97", "quote": "- AC1: the Visits summary is below the patient's name and above the details."}
+        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L99", "quote": "- AC2: exactly one No-show → count 1, not highlighted."},
+        {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L106", "quote": "- AC1: the Visits summary is below the patient's name and above the details."}
       ],
       "suggested_fix": "Render the body ACs with the same Given/When/Then text as the front matter."
     }
@@ -77,7 +64,8 @@
     {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-3", "quote": "Next appointment is the `earliest Scheduled` appointment of the patient that starts after now"}]},
     {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-7", "quote": "Last visit is the `latest Completed` appointment of the patient."}]},
     {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/glossary.md#no-show", "quote": "A past appointment the patient did not attend"}]},
-    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]}
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01", "quote": "Do not hard-code Asia/Kolkata."}]}
   ],
   "questions": []
 }

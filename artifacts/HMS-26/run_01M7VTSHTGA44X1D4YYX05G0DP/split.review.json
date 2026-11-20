@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "ab327c0705601dcfb06c0e9c9f8fa6c057b3bb16e7755f54a905168ac1ba2681",
-  "attempt": 1,
+  "artifact_sha256": "0505e8c204b650fbd44f6f8a04dfa8da0e035fbf38d644498edb5957afb7a071",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -81,34 +81,19 @@
       ],
       "claim_id": "C8",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "correctness",
       "cites": [
-        {
-          "quote": "Given useSettings().timeZone is Asia/Kolkata (UTC+05:30) and the next Scheduled appointment starts at 19:00 UTC on 9 March",
-          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-1"
-        },
-        {
-          "quote": "Given useSettings().timeZone is Asia/Kolkata (UTC+05:30) and the latest Completed appointment started at 20:00 UTC on 9 March",
-          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-2"
-        },
-        {
-          "quote": "the zone is not hard-coded",
-          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-9"
-        },
         {
           "quote": "Do not hard-code Asia/Kolkata.",
           "ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an AC per display where useSettings().timeZone is set to a non-default zone and the UTC instant falls on a different date or time there than in Asia/Kolkata, with the expected value derived inline.",
-      "text": "S-1 AC5 and S-2 AC3 set useSettings().timeZone to Asia/Kolkata, the default. The likeliest wrong implementation, a hard-coded Asia/Kolkata, passes both, though REQ-9 and A-01 forbid hard-coding the zone."
-    },
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
       "category": "completeness",
       "cites": [
@@ -125,10 +110,10 @@
           "ref": "context/generated/db-schema.json#L780"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
       "suggested_fix": "Extend S-4 AC3 to a patient with address and emergency contact phone recorded and assert none of the contact fields appear.",
-      "text": "S-4 AC3 tests only phone and email for REQ-16, but the patient row also holds address and emergency_contact_phone; an implementation that leaks those would pass."
+      "text": "Still open from attempt 1: S-4 AC3 tests only phone and email for REQ-16, but the patient row also holds address and emergency_contact_phone; an implementation that leaks those would pass."
     },
     {
       "category": "completeness",
@@ -142,32 +127,32 @@
           "ref": "context/glossary.md#medical-history"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
       "suggested_fix": "Seed all five medical history fields in S-4 AC2.",
-      "text": "S-4 AC2 seeds only allergies and current medications; blood group, chronic conditions and notes, also medical history per the glossary, are not exercised."
+      "text": "Still open from attempt 1: S-4 AC2 seeds only allergies and current medications; blood group, chronic conditions and notes, also medical history per the glossary, are not exercised."
     },
     {
       "category": "style",
       "cites": [
         {
           "quote": "- AC2: exactly one No-show → count 1, not highlighted.",
-          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L90"
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L99"
         },
         {
           "quote": "- AC1: the Visits summary is below the patient's name and above the details.",
-          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L97"
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#L106"
         }
       ],
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
       "suggested_fix": "Render the body ACs with the same Given/When/Then text as the front matter.",
-      "text": "Body ACs for S-2 to S-5 are shortened and drop the When step or the Given/When/Then form, so the body and front matter word the same ACs differently."
+      "text": "Still open from attempt 1: body ACs for S-2 to S-5 are shortened and drop the When step or the Given/When/Then form, so body and front matter word the same ACs differently."
     }
   ],
-  "package_sha256": "5709195d36bb657bb35eac8e6edc4ab87da8cb803f53f5209197ec195e93329d",
+  "package_sha256": "5b38f5044b9a45155a61b35d1cc5c55bfd862775b78a1588f12918640d6fac19",
   "questions": [],
-  "recorded_at": "2026-11-20T06:44:39Z",
+  "recorded_at": "2026-11-20T06:47:05Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -183,26 +168,26 @@
     },
     {
       "id": "SS-R2",
-      "reason": "Stories are mostly single-outcome; S-4 bundles placement, privacy and page exclusivity, and S-3 bundles counts with the warning.",
+      "reason": "Stories are mostly single-outcome; S-4 still bundles placement, privacy and page exclusivity, and S-3 bundles counts with the warning.",
       "score": 4
     },
     {
       "id": "SS-R3",
-      "reason": "ACs are Given/When/Then and mostly discriminating (already-started, Cancelled, No-show, threshold 1 vs 2), but both time-zone ACs use the default zone, so a hard-coded Asia/Kolkata passes.",
-      "score": 3
+      "reason": "F-1 resolved: S-6 uses a non-default zone (UTC) so a hard-coded Asia/Kolkata fails. Remaining gaps: S-4 privacy ACs seed only part of the contact and medical history fields.",
+      "score": 4
     },
     {
       "id": "SS-R4",
-      "reason": "Threshold 2, empty-state texts and UTC+05:30 come from the intent or are derived inline; other values are example data, not limits.",
+      "reason": "Threshold 2, empty-state texts and UTC+05:30 come from the intent or are derived inline; S-6 expected values are derived inline from the UTC instants.",
       "score": 5
     },
     {
       "id": "SS-R5",
-      "reason": "Readable with consistent terms; body ACs for S-2 to S-5 are abbreviated and drop the Given/When/Then form used in the front matter.",
+      "reason": "Readable with consistent terms; body ACs for S-2 to S-5 remain abbreviated and drop the Given/When/Then form used in the front matter.",
       "score": 4
     }
   ],
-  "rubric_score": 4.2,
+  "rubric_score": 4.45,
   "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
   "schema": "review.v1",
   "status": "ok",
