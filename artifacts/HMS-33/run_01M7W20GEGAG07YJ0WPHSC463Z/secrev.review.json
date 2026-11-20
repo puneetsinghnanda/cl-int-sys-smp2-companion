@@ -1,0 +1,137 @@
+{
+  "artifact_sha256": "8fa15a868cf6ec7bcde42ac0fb4367565e3331d34c3c4f7bff5ecb65e06436be",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L12"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "cancellationReason: r.cancellation_reason",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L83"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{showCancellationReason && <td>{reasonCell(a)}</td>}",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L60"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Show it as is (proposed default)",
+          "ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: List endpoint only (proposed default)",
+          "ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Fix direction: a hint on the cancel form not to enter medical details",
+          "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/secrev.md#findings"
+        },
+        {
+          "quote": "Show it and add a hint",
+          "ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Note that the hint was offered and declined in A-01 and present it as a later option, or lead with the review of stored reasons.",
+      "text": "SF-1's fix direction leads with a hint about medical details, while A-01 offered 'Show it and add a hint' and the user picked 'Show it as is'. The artifact does not say this proposal reopens a declined option."
+    }
+  ],
+  "package_sha256": "ca646989fbdf02ee87ffcfb1db67fcfd3950f5b51e215419e26e33a6abe879a0",
+  "questions": [],
+  "recorded_at": "2026-11-20T09:26:44Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The only real exposure (free-text reason now on every list page) is found; no new route, the existing permission guard, parameterised SQL, escaped React text and no new logging all match the code.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 and every claim cite the exact line: repo L83 mapping, route L12 guard, table L60 cell, plus A-01/A-02 and the identity and logging context sections.",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Minor for SF-1 fits: the risk is real but the user explicitly accepted showing the reason as is in A-01, and the route is still guarded.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "Fix direction is concrete, but its first option (a hint on the cancel form) is close to the option the user declined in A-01.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives; the single finding is grounded in the changed line and the user's decision.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.85,
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}

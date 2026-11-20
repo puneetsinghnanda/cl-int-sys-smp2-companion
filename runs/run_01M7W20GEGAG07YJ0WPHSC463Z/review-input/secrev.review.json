@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "8fa15a868cf6ec7bcde42ac0fb4367565e3331d34c3c4f7bff5ecb65e06436be",
+  "package_sha256": "ca646989fbdf02ee87ffcfb1db67fcfd3950f5b51e215419e26e33a6abe879a0",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The only real exposure (free-text reason now on every list page) is found; no new route, the existing permission guard, parameterised SQL, escaped React text and no new logging all match the code."},
+    {"id": "SC-R2", "score": 5, "reason": "SF-1 and every claim cite the exact line: repo L83 mapping, route L12 guard, table L60 cell, plus A-01/A-02 and the identity and logging context sections."},
+    {"id": "SC-R3", "score": 5, "reason": "Minor for SF-1 fits: the risk is real but the user explicitly accepted showing the reason as is in A-01, and the route is still guarded."},
+    {"id": "SC-R4", "score": 4, "reason": "Fix direction is concrete, but its first option (a hint on the cancel form) is close to the option the user declined in A-01."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives; the single finding is grounded in the changed line and the user's decision."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "SF-1's fix direction leads with a hint about medical details, while A-01 offered 'Show it and add a hint' and the user picked 'Show it as is'. The artifact does not say this proposal reopens a declined option.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/secrev.md#findings", "quote": "Fix direction: a hint on the cancel form not to enter medical details"},
+        {"ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-01", "quote": "Show it and add a hint"}
+      ],
+      "suggested_fix": "Note that the hint was offered and declined in A-01 and present it as a later option, or lead with the review of stored reasons."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L12", "quote": "requirePermission('appointments:read'),"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L83", "quote": "cancellationReason: r.cancellation_reason"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/AppointmentTable.tsx#L60", "quote": "{showCancellationReason && <td>{reasonCell(a)}</td>}"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-01", "quote": "answer: Show it as is (proposed default)"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-02", "quote": "answer: List endpoint only (proposed default)"}]}
+  ],
+  "questions": []
+}
