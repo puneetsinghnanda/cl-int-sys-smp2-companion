@@ -1,0 +1,145 @@
+{
+  "artifact_sha256": "9121038b81183f9fae6920bdc58a10e449c32c44e5e71fdfba992d9de4406c5c",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Vitest with jsdom and Testing Library.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "other pages have no web tests",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The changed component is `BookAppointmentPage`.",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/impl.md#claim:C1"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(",
+          "ref": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L19"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The new file follows the page-test pattern of `DoctorDetailPage.test.tsx`: a stubbed fetch and a MemoryRouter.",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ut.md#claim:C6"
+        },
+        {
+          "quote": "sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L1",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_ref": "C6",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite the product test lines directly, e.g. sample-system:web/src/__tests__/DoctorDetailPage.test.tsx#L19 and #L24.",
+      "text": "C6 cites test-strategy#gaps for 'a stubbed fetch and a MemoryRouter', but that section only lists DoctorDetailPage.test.tsx as a source and does not describe the pattern. The claim is true in product code, but its cite does not show it."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "no longer shows ₹1,500.00, and the page did not reload",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md#item:S-2"
+        },
+        {
+          "quote": "switching from doctor A to doctor B shows ₹500.00 and drops ₹1,500.00, on the same page",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ut.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Choose a patient or type a reason before changing the doctor, then assert it is still there after doctor B's fee shows.",
+      "text": "S-2 AC1 requires that the page did not reload. The test names this ('without a reload') but asserts only the fee text. It never checks, for example, that form state such as a chosen patient survives the doctor change."
+    }
+  ],
+  "package_sha256": "c97bc0178fc352864f5ec38373fa6cb242cd7841d3faab20fb2064e186e712c3",
+  "questions": [],
+  "recorded_at": "2026-11-20T07:21:38Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "The only changed file, BookAppointmentPage, has its fee path, URL prefill, stale-data guard, error path and unchanged booking body tested; every AC of S-1 to S-4 maps to a named test.",
+      "score": 5
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Most assertions check exact rendered text, the exact POST body and disabled states. A few are weaker: S-2 AC1 'did not reload' is only in the test name, and REQ-12 checks only that fields exist, not that they still work.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers a 500 on the fee load with booking still working, a held-then-failing load for doctor B, 0 paise, lakh grouping, a day with no slots, and booked and past slots.",
+      "score": 5
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Uses Vitest, jsdom and Testing Library in web/src/__tests__ with a stubbed fetch and MemoryRouter, the same pattern as the existing page tests. Test names follow the HMS-n REQ-n prefix used in the repo.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "Reports no numbers of its own and leaves results to the verifier. The coverage skip matches checks.json (coverage status skip, exit 78).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.75,
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

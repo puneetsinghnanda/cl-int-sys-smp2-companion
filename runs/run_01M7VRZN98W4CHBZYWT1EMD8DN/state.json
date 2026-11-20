@@ -7,7 +7,7 @@
   "branch": {
     "sample-system": {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "head_sha": "ad2694b9ec6b5d7f580197ed8b812309b3875e0c",
+      "head_sha": "2d115498f4ee5d7b231123ae5fee80d71e427b7b",
       "name": "tsl/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN"
     }
   },
@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-20T07:14:14Z",
+  "heartbeat_at": "2026-11-20T07:21:49Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -53,7 +53,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 16,
+  "rev": 20,
   "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -225,7 +225,35 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ut.md",
+          "artifact_sha256": "9121038b81183f9fae6920bdc58a10e449c32c44e5e71fdfba992d9de4406c5c",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-20T07:21:49Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "bb9f8d189ea1429142ada5e724d9a917142133a58be8cab15a3a7df646ca9be3",
+              "step": "impl"
+            },
+            {
+              "name": "stories",
+              "sha256": "95071688965ea9fa4eec8630258d808558b92c00cf8f0e8944e5c930e60f1774",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ut.verification.json",
+          "skill": "unit-test@1.3.0",
+          "skill_started_at": "2026-11-20T07:16:43Z",
+          "started_at": "2026-11-20T07:14:39Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -234,7 +262,7 @@
       },
       "id": "ut",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -257,7 +285,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-32",
-  "updated_at": "2026-11-20T07:14:14Z",
+  "updated_at": "2026-11-20T07:21:49Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
