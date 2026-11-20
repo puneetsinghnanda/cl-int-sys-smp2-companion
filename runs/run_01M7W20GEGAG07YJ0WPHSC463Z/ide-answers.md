@@ -12,3 +12,13 @@ entries as the user's own answers.
 - question: Q-01: The cancellation reason is free text, so staff could type medical details into it, and HMS-33 would then show them in the appointment list. The baseline says medical history never appears in lists. How should the list treat the reason?
 - options: Show it as is (proposed default) | Show it and add a hint | Don't show it in the list
 - answer: Show it as is (proposed default)
+
+## A-02
+- step: design
+- attempt: 1
+- asked_at: 2026-11-20T08:56:41Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01PTqNimTp96rEJRLtdQTSTy
+- question: Q-01: The appointment list (`GET /api/appointments`) needs each appointment's cancellation reason, which the API reads from the database but drops before sending. Where should the new `cancellationReason` field (text or null) be added?
+- options: List endpoint only (proposed default) | Every appointment summary
+- answer: List endpoint only (proposed default)

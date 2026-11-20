@@ -1,0 +1,90 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "22c08a21691b01c96d632f5ec14f1a83fb7dc942ef0d08e5ad4dbd6e9bb90d49",
+  "package_sha256": "c40a9094c5657ece26045df088f6f7ea3af817da508ded3e09dff0bf561d6d1d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Built on existing repo/service/route layers and the shared AppointmentTable with an opt-in prop following hide?; no new infrastructure, no SQL change; web goes through client.ts as the architecture requires."},
+    {"id": "DS-R2", "score": 5, "reason": "Every story S-1 to S-6 is mapped to components; cell rule covers 60-char boundary, ellipsis, dash for other statuses, as-entered text; dashboard/doctor/patient use other endpoints so stay unchanged."},
+    {"id": "DS-R3", "score": 5, "reason": "EP-1 items[].cancellationReason has name, type, nullability, format and example; the new prop has type and default; column placement and cell rule are testable."},
+    {"id": "DS-R4", "score": 4, "reason": "Claims C1-C9, C11-C15 verified against code and A-02; C10's usage by four pages and CO-7 rest only on the component's declaration fact, not on the pages that use it."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-offs given for the separate list type, opt-in prop, code-point counting and client-side shortening."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear and compact; small inconsistency in change status between the API and web AppointmentListItem types, and CO-1's row type is not named."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The API AppointmentListItem type is marked new (CO-2) but its web twin, also a new type, is folded into CO-4 marked changed, so the new web type is not listed as new.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#components", "quote": "CO-2 (new) API type AppointmentListItem in api/src/types.ts"},
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#components", "quote": "CO-4 (changed) Web type AppointmentListItem in web/src/api/types.ts (C7)"}
+      ],
+      "suggested_fix": "Split CO-4 into a new web type component and a changed client.ts component, or state that CO-4 adds a new type."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C10 says AppointmentTable is used by the list, dashboard, doctor and patient pages but cites only the component's declaration fact; the claim is true in code but the cite does not prove usage.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#claim:C10", "quote": "`AppointmentTable` is one shared component used by the list, dashboard, doctor and patient pages."},
+        {"ref": "sample-system:web/src/pages/DashboardPage.tsx#L62", "quote": "<AppointmentTable items={data.next} />"},
+        {"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76", "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />"}
+      ],
+      "claim_ref": "C10",
+      "suggested_fix": "Cite the AppointmentTable usages in DashboardPage, DoctorDetailPage and PatientDetailPage for C10 and CO-7."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-6 AC3 (booking) relies on POST /api/appointments, which is not listed as an existing endpoint; the design only says 'other existing code'.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#overview", "quote": "Opening, cancelling and booking (S-6) use EP-2 and EP-3 and other existing code, all unchanged."},
+        {"ref": "context/generated/api-inventory.json#L250", "quote": "\"id\": \"http:POST:/api/appointments\","}
+      ],
+      "suggested_fix": "Add POST /api/appointments as an existing endpoint serving S-6 AC3."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "CO-1 says 'the list's row type gains cancellation_reason' without naming it; the list uses SummaryRow, which toSummary shares with doctorRepo, patientRepo and dashboardService, so implement cannot tell whether to widen it or add a list row type.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md#components", "quote": "the list's row type gains `cancellation_reason: string | null`"},
+        {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L3", "quote": "import { SUMMARY_SELECT, toSummary } from './appointmentRepo';"}
+      ],
+      "suggested_fix": "Name the row type (for example a ListRow extends SummaryRow) or state that SummaryRow itself is widened and why that is safe."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L23", "quote": "a.starts_at, a.ends_at, a.status, a.reason, a.cancellation_reason"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L28", "quote": "export function toSummary(r: SummaryRow): AppointmentSummary {"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L83", "quote": "return { items: rows.map(toSummary), total };"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L5", "quote": "interface SummaryRow {"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L116", "quote": "cancellationReason: string | null;"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L50", "quote": "export interface AppointmentSummary {"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L48", "quote": "export interface AppointmentSummary {"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L25", "quote": "Promise<Page<AppointmentSummary>>"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/client.ts#L77", "quote": "send<Page<AppointmentSummary>>(`/api/appointments${query(params)}`)"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L62", "quote": "<AppointmentTable items={data.next} />"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/AppointmentTable.tsx#L9", "quote": "hide?: 'doctor' | 'patient';"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L49", "quote": "<AppointmentTable items={list.data.items} />"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L58", "quote": "\"id\": \"http:GET:/api/appointments\","}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md#a-02", "quote": "answer: List endpoint only (proposed default)"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-17", "quote": "The list shows the cancellation reason as staff entered it, with no filtering of its text"}]}
+  ],
+  "questions": []
+}

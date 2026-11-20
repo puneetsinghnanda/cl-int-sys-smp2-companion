@@ -1,0 +1,76 @@
+{
+  "artifact_path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/design.md",
+  "artifact_sha256": "22c08a21691b01c96d632f5ec14f1a83fb7dc942ef0d08e5ad4dbd6e9bb90d49",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "7409bce9565f56b5ec6f0c07b4300ea3329c39a64186630152d2eea767927d24",
+  "claims": {
+    "total": 15,
+    "verified": 15
+  },
+  "decided_at": "2026-11-20T09:00:29Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/split.md",
+      "sha256": "c05e9c99ae954bc1723d7c72ed43e179acd5ddc73fc04085968a1a344df9ef19",
+      "verification_sha256": "62d8fb8c9b9ea3dd56c707b593f98af0fd02393ff78ba54968d77ee130f488d2"
+    },
+    {
+      "path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md",
+      "sha256": "8f8b87647a6a511b96c044fc3e961844c5b87b7ac9a1923914a691c76eba9969",
+      "verification_sha256": "6d2b58290d4e89733d8d840a8e241474a7789238caa64fca04b08a15365345a7"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "64c5209dcf301e5dc87214ec2157369cfbfcdc22fc67b6306e681e6c5fd3dcc0",
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.8,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "jMct6eP-7bUVAevTHZqJw32ab7NeNxxMrXsZA_qIqXW7gjuJnW-29kBu48OZRHqO-kWrW_lzGGpkUjVzJ1sMBg",
+  "skill": "design@1.9.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
