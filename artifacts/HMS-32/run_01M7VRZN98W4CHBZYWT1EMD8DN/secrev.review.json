@@ -1,0 +1,176 @@
+{
+  "artifact_sha256": "323c6fe655caf308af7d08ce6f77a37f4e798018daf041e016e6323f4ea26873",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<dd>{rupees(feePaise)}</dd>",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L95"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "!chosenDoctor.error",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L45"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "await api.book({ doctorId, patientId, startsAt: start, reason })",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L63"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(v ? Number(v) : undefined)",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L12"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "send<DoctorDetail>(`/api/doctors/${id}`)",
+          "ref": "sample-system:web/src/api/client.ts#L62"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "take the fee from the picker's search result row",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/secrev.md#findings"
+        },
+        {
+          "quote": "Should the consultation fee also show for that pre-filled doctor",
+          "ref": "runs/run_01M7VRZN98W4CHBZYWT1EMD8DN/ide-answers.md#a-01"
+        },
+        {
+          "quote": "onChange={(id, label) => {",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L86"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State the fix for both paths: pass the DoctorSummary row from the picker, and for a URL doctor fetch a summary (or api.doctors by id) instead of DoctorDetail; or reuse the existing label load.",
+      "text": "SF-1's fix (take the fee from the picker's search row) does not cover a doctor pre-filled from the URL, which A-01 requires to show the fee, and Picker onChange passes only id and label, so the row is not available."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "fetches the full doctor record (phone, email, upcoming appointments with patient names)",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/secrev.md#findings"
+        },
+        {
+          "quote": "phone: string;",
+          "ref": "sample-system:web/src/api/types.ts#L37"
+        },
+        {
+          "quote": "upcoming: AppointmentSummary[];",
+          "ref": "sample-system:web/src/api/types.ts#L60"
+        },
+        {
+          "quote": "doctorId && !labels.doctor ? api.doctor(doctorId) : undefined",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L32"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Narrow SF-1 to the `upcoming` patient names and note the duplicate api.doctor call for URL-prefilled doctors.",
+      "text": "SF-1 counts phone and email as extra exposure, but the picker search already loads DoctorSummary with both; only `upcoming` (patient names) is new. For a URL doctor, L32 already calls api.doctor, so the change duplicates that fetch."
+    }
+  ],
+  "package_sha256": "c5202f2d986ada248b4c910a30daeb82e2a6157c8dfb95a082a683aca4d75ded",
+  "questions": [],
+  "recorded_at": "2026-11-20T07:25:20Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "Display-only change with no new route, injection or logging; the one real weakness, extra personal data loaded via api.doctor, is found. Missed that the URL-prefill path already fetched api.doctor at L32.",
+      "score": 4
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 and every claim point at the exact changed or relevant line (L12, L43, L45, L63, L95).",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "Minor fits: data is not rendered or logged, and the same staff actor can already open the doctor record.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "Fix direction (picker row) does not cover the URL-prefilled doctor that A-01 requires, and Picker onChange passes only id and label; 'a narrower field' is vague.",
+      "score": 3
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false finding, but SF-1 lists phone and email as extra exposure although the picker search already loads them in DoctorSummary.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
