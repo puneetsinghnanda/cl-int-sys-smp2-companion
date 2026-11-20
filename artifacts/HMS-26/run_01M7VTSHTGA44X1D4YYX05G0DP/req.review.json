@@ -1,0 +1,179 @@
+{
+  "artifact_sha256": "9a1f1abb91af2282ee0e1cec2d11c2c78175ade5af0865cba4f1e1ec883e3ea7",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "for [starts_at, ends_at) in UTC",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient row holds identity, contact details and the basic medical history",
+          "ref": "context/data-model.md#patients"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended, closed by staff once its start time has passed.",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`.",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "read it from Settings (useSettings().timeZone, default Asia/Kolkata, PRD NFR-2)",
+          "ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "shown as its date and the doctor's name`, without a time.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-8"
+        },
+        {
+          "quote": "Last visit is the latest Completed appointment, shown as its date and the doctor's name.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ticket.md#L27"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Drop 'without a time' or note it as a reading of the ticket rather than a stated rule.",
+      "text": "REQ-8 adds 'without a time' and marks it known, but the ticket only says the last visit is shown as its date and the doctor's name; omitting the time is an inference."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "it is highlighted as a warning.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-13"
+        },
+        {
+          "quote": "The visual style of the No-show warning (REQ-13): a design choice for the design step.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#out-of-scope"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State the testable part: a warning indicator is present when No-show count >= 2 and absent when < 2.",
+      "text": "REQ-13 'highlighted as a warning' gives a tester no observable condition; the style is deferred to design, but the REQ could state what must be distinguishable (e.g. a warning indicator present only when count >= 2)."
+    }
+  ],
+  "package_sha256": "bd91fe880d084b318ade8610e78e6cf187133e7492614637406410fc6736f16b",
+  "questions": [],
+  "recorded_at": "2026-11-20T06:42:06Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All eight acceptance criteria map to REQ-1..REQ-18; out-of-scope items carry reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Mostly atomic and checkable; REQ-2 bundles the content list and REQ-13 'highlighted as a warning' has no checkable condition beyond deferral to design.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Statuses cite ticket lines or A-01; REQ-8 adds 'without a time', an inference beyond the ticket text, still marked known.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The only baseline clash (time zone hard-coded vs Settings) was asked, answered in A-01 and recorded as a mismatch citing the baseline.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "One question, routed to an engineer, with real options; no needless blocking.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording; Scheduled, Completed, Cancelled, No-show and Medical history used as in the glossary.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}
