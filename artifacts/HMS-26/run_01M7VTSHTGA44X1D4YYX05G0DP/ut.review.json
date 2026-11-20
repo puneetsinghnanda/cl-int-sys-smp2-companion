@@ -1,0 +1,253 @@
+{
+  "artifact_sha256": "c813d830cddcca6c0e0f2da2f145422531d483e40d529ac24a05e947a5052797",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Vitest with jsdom and Testing Library",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "HMS-1 REQ-2: shows the earliest Scheduled appointment with its start and doctor name",
+          "ref": "sample-system:api/test/patients-next-appointment.test.ts#L28"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "describe('formatting (INR, Asia/Kolkata)'",
+          "ref": "sample-system:web/src/__tests__/format.test.ts#L4"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Monday 19 October 2026, 08:00 in Asia/Kolkata",
+          "ref": "sample-system:api/test/helpers.ts#L9"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function testApp(pool: Pool, clock: () => Date = () => NOW): Express {",
+          "ref": "sample-system:api/test/helpers.ts#L16"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "not from the 100-row appointments list",
+          "ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02"
+        },
+        {
+          "quote": "It does not reuse the list capped by `limit = 100` (C5).",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/impl.md#summary"
+        },
+        {
+          "quote": "Counts: all dates, including a future Cancelled appointment",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an API test that inserts more than 100 appointments for one patient, with the earliest Scheduled and the latest Completed beyond the cap, and asserts next, last and the counts.",
+      "text": "No test guards the A-02 decision: next, last and counts come from their own queries over all appointments, not the 100-row list. A patient with more than 100 appointments is never set up, so going back to the capped list would still pass."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "expect((await visitsOf(afterTen, 1)).last).toEqual({ id: ids.b, starts_at: at(MONDAY, '09:30')",
+          "ref": "sample-system:api/test/patients-visits.test.ts#L59"
+        },
+        {
+          "quote": "a Completed appointment on 3 March with another doctor",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-2"
+        },
+        {
+          "quote": "S-1 AC1, AC2 and AC4, S-2 AC1",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Complete two appointments with different doctors (an earlier and a later one) and assert last is the later one.",
+      "text": "The REQ-7 test has only one Completed appointment, so 'latest Completed' ordering is never checked. Yet ut.md maps it to S-2 AC1, which has two Completed appointments with different doctors."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "ids.d = (await book(app, 1, 1, TUESDAY, '09:00')).body.id;",
+          "ref": "sample-system:api/test/patients-visits.test.ts#L38"
+        },
+        {
+          "quote": "has only Completed, Cancelled and No-show appointments and no Scheduled appointment after now",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-1"
+        },
+        {
+          "quote": "S-1 AC1, AC2 and AC4, S-2 AC1",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a patient whose appointments are all closed and assert visits.next is null, or drop the S-1 AC4 mapping.",
+      "text": "S-1 AC4 (only Completed, Cancelled or No-show appointments gives None booked) is claimed as covered at the API level. But patient 1 always keeps Scheduled appointment d, and patient 2 has no appointments at all."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "appointments: [],",
+          "ref": "sample-system:web/src/__tests__/PatientDetailPage.test.tsx#L15"
+        },
+        {
+          "quote": "expect.arrayContaining([ids.a, ids.b, ids.c, ids.d, ids.e])",
+          "ref": "sample-system:api/test/patients-visits.test.ts#L69"
+        },
+        {
+          "quote": "the appointment table (upcoming first, then past) show exactly as before the change",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-5"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Render the page with upcoming and past appointments and assert the row order. In the API test, assert the exact order of the ids.",
+      "text": "The REQ-18 tests are weak. The web fixture has no appointments, so the table order (upcoming first, then past) is never rendered. The API test uses arrayContaining, which ignores order."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The fixed test clock is Monday `2026-10-19` 08:00 in Asia/Kolkata.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#claim:C7"
+        },
+        {
+          "quote": "export const MONDAY = '2026-10-19';",
+          "ref": "sample-system:api/test/helpers.ts#L11"
+        },
+        {
+          "quote": "Monday 19 October 2026, 08:00 in Asia/Kolkata",
+          "ref": "sample-system:api/test/helpers.ts#L9"
+        }
+      ],
+      "claim_ref": "C7",
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/test/helpers.ts#L9-L10.",
+      "text": "Claim C7 cites helpers.ts#L11, which only defines MONDAY. The 08:00 Asia/Kolkata clock is stated at L9-L10."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "AC4 (no summary on other pages) is covered only by the summary being mounted solely in PatientDetailPage",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#known"
+        },
+        {
+          "quote": "none of them shows a Visits summary",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-4"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Add assertions to the existing Dashboard and DoctorDetailPage tests that no 'Visits' region renders, or mark S-4 as partly covered.",
+      "text": "S-4 AC4 (REQ-17: no summary on other pages) has no test. The gap is disclosed, but S-4 is still listed under known as covered."
+    }
+  ],
+  "package_sha256": "ef23e3dda3da62c0baf293b06cbedde74393bee4afe6433fe038b6cf528a9673",
+  "questions": [],
+  "recorded_at": "2026-11-20T07:05:55Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "The repo visits query, the date helper and VisitsSummary are tested. Untested: the uncapped-query decision (A-02), latest among several Completed, S-1 AC4 with closed-only appointments, and REQ-17.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Most assertions check exact payloads and rendered text. The REQ-18 checks are weak: the web check only tests presence with an empty appointment list, and the API check uses arrayContaining, which ignores order.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covered: the 404 error path, Cancelled and already-started skips, the warning at 1 vs 2, UTC midnight, the UTC settings zone and the empty patient. Missing: the 100-row cap edge and a patient with only closed appointments.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "API tests use Vitest, Supertest, the PG harness and the fixed clock. Web tests use Vitest, jsdom and Testing Library in __tests__. Names start with HMS-26 REQ-n, following the HMS-1 precedent.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "Says the tests were not run and leaves the counts to the verifier. Coverage is not claimed, matching the skipped coverage step in checks.json.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

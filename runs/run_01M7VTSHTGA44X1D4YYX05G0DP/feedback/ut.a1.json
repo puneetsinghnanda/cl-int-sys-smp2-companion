@@ -1,0 +1,53 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "not from the 100-row appointments list",
+          "ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02"
+        },
+        {
+          "quote": "It does not reuse the list capped by `limit = 100` (C5).",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/impl.md#summary"
+        },
+        {
+          "quote": "Counts: all dates, including a future Cancelled appointment",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "No test guards the A-02 decision: next, last and counts come from their own queries over all appointments, not the 100-row list. A patient with more than 100 appointments is never set up, so going back to the capped list would still pass."
+    },
+    {
+      "cites": [
+        {
+          "quote": "expect((await visitsOf(afterTen, 1)).last).toEqual({ id: ids.b, starts_at: at(MONDAY, '09:30')",
+          "ref": "sample-system:api/test/patients-visits.test.ts#L59"
+        },
+        {
+          "quote": "a Completed appointment on 3 March with another doctor",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-2"
+        },
+        {
+          "quote": "S-1 AC1, AC2 and AC4, S-2 AC1",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/ut.md#tests"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The REQ-7 test has only one Completed appointment, so 'latest Completed' ordering is never checked. Yet ut.md maps it to S-2 AC1, which has two Completed appointments with different doctors."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
