@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "bb9f8d189ea1429142ada5e724d9a917142133a58be8cab15a3a7df646ca9be3",
+  "package_sha256": "acc33a70a79de0a3d9255657a995ca78f318a99baf66f65a358f28f1c7c33079",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.9,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "CO-1 built as designed: useAsync keyed on doctorId calling api.doctor, fee shown only when loaded, no error and id matches, dl block below Doctor picker with rupees(feePaise); URL doctor covered (A-01)."},
+    {"id": "IM-R2", "score": 5, "reason": "Reuses existing rupees, useAsync, api client and the details dl pattern from DoctorDetailPage; no logging added, consistent with logging-and-data convention."},
+    {"id": "IM-R3", "score": 5, "reason": "One file changed, 14 lines added and 1 deleted (import line); slot list, pickers, submit and api.book untouched."},
+    {"id": "IM-R4", "score": 5, "reason": "Load error hides the fee and leaves the form usable per A-02; stale data from previous doctor suppressed by id check; fee 0 still shown because the guard is !== undefined; no doctor chosen loads nothing."},
+    {"id": "IM-R5", "score": 4, "reason": "Summary matches the diff, but the Changes section says the design asks for no regression test, which the design does not state."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Changes section attributes 'no regression test' to the design, but design.md says nothing about tests; the reason for adding no tests is not traced to the design.",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/impl.md#changes", "quote": "The design asks for no regression test"},
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#components", "quote": "CO-5 useAsync hook (existing): runs the fee load; unchanged."}
+      ],
+      "suggested_fix": "Say tests are deferred to the unit-test step, without claiming the design asks for none."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#claim:C1", "quote": "The book appointment page is the component `BookAppointmentPage`."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#claim:C3", "quote": "The web app already has the paise-to-rupees helper `rupees`."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#claim:C10", "quote": "The page loads data with the hook `useAsync`."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#claim:C11", "quote": "keeps the previous data until the new result arrives"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#claim:C5", "quote": "The client object `api` is declared in the web API client."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L79", "quote": "<dt>Consultation fee</dt>"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "never request bodies, contact details or medical"}]}
+  ],
+  "questions": []
+}
