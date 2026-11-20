@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "\"After now\" uses the database clock (`now()`) on UTC instants.",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#overview"
+        },
+        {
+          "quote": "appointments: await repo.appointments(id, this.clock())",
+          "ref": "sample-system:api/src/services/patientService.ts#L42"
+        },
+        {
+          "quote": "a.status = 'SCHEDULED' AND a.starts_at > ${p(now)}",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L129"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Design compares starts_at with the database now(), but the service passes an injected clock to the repo and the HMS-1 next-appointment query uses that parameter. Using now() breaks the convention and makes S-1 AC1 ('Given now is 10:00') hard to test."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "feedback.v1",
+  "step": "design"
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "538bc81dd07976f7a262d551e5a010ad754dd369f4a4010f0e028e2243566ca0",
+  "package_sha256": "7ba3f025d742cb79a895227855b8641ba90c8c462f6db5c38115faa88f43cacb",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 4, "reason": "Built on existing layers and modules, but uses the database now() instead of the injected service clock and does not reuse the existing NextAppointment type and HMS-1 next-appointment query."},
+    {"id": "DS-R2", "score": 5, "reason": "Every story S-1..S-6 is mapped to components, and the field rules (status filters, starts_at > now, counts over all dates, zone from useSettings) cover each AC."},
+    {"id": "DS-R3", "score": 4, "reason": "Every new field has name, type, nullability, format and example; the shape duplicates NextAppointment instead of naming it, and the tie-break for latest COMPLETED is not stated."},
+    {"id": "DS-R4", "score": 4, "reason": "Choices are cited or decided by A-01..A-03; the id field is marked Assumed when product types already prove it, and the cited basis (display codes) is indirect."},
+    {"id": "DS-R5", "score": 4, "reason": "Trade-offs cover server-side visits, clock, warning style and privacy; the database-clock trade-off misses its cost for testing a fixed 'now'."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear, consistent and easy to follow; front matter and body agree."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "consistency",
+     "text": "Design compares starts_at with the database now(), but the service passes an injected clock to the repo and the HMS-1 next-appointment query uses that parameter. Using now() breaks the convention and makes S-1 AC1 ('Given now is 10:00') hard to test.",
+     "cites": [
+       {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#overview", "quote": "\"After now\" uses the database clock (`now()`) on UTC instants."},
+       {"ref": "sample-system:api/src/services/patientService.ts#L42", "quote": "appointments: await repo.appointments(id, this.clock())"},
+       {"ref": "sample-system:api/src/repositories/patientRepo.ts#L129", "quote": "a.status = 'SCHEDULED' AND a.starts_at > ${p(now)}"}
+     ],
+     "suggested_fix": "Pass this.clock() from PatientService to the new patientRepo visit queries as a parameter, as list() and appointments() do, and update the trade-off line."},
+    {"id": "F-2", "severity": "minor", "category": "consistency",
+     "text": "visits.next and visits.last repeat the existing NextAppointment shape {id, starts_at, doctor_name} (API and web types) and the HMS-1 LATERAL query, but the design does not name them for reuse.",
+     "cites": [
+       {"ref": "sample-system:api/src/types.ts#L95-L99", "quote": "export interface NextAppointment {"},
+       {"ref": "sample-system:web/src/api/types.ts#L90", "quote": "export interface NextAppointment {"},
+       {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#components", "quote": "`visits.last` (object or null): the latest COMPLETED appointment, with the same three fields."}
+     ],
+     "suggested_fix": "Type visits.next and visits.last as NextAppointment | null in both type files and reuse the HMS-1 next-appointment query pattern."},
+    {"id": "F-3", "severity": "minor", "category": "traceability",
+     "text": "visits.next.id / visits.last.id are marked Assumed with display codes as the basis, yet the product types already prove an integer appointment id (NextAppointment.id: number, built from appointment a.id).",
+     "cites": [
+       {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#assumed", "quote": "Implement must confirm this against the existing appointment types."},
+       {"ref": "sample-system:api/src/repositories/patientRepo.ts#L142", "quote": "{ id: r.next_id, starts_at: r.next_starts_at.toISOString(), doctor_name: r.next_doctor_name }"}
+     ],
+     "suggested_fix": "Cite api/src/types.ts NextAppointment.id and mark the id fields known."},
+    {"id": "F-4", "severity": "minor", "category": "completeness",
+     "text": "Last visit is 'latest COMPLETED appointment by starts_at' with no tie-break, while the existing next-appointment query orders by starts_at, id. Two Completed rows at the same instant could show different doctors.",
+     "cites": [
+       {"ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/design.md#endpoints", "quote": "latest COMPLETED appointment by starts_at; null when none; same shape as visits.next"},
+       {"ref": "sample-system:api/src/repositories/patientRepo.ts#L130", "quote": "ORDER BY a.starts_at, a.id"}
+     ],
+     "suggested_fix": "State the order: starts_at DESC, id DESC for last; starts_at, id for next."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The API is layered: routes parse input and declare a permission, services hold the rules and"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#http:GET:/api/patients/:id", "quote": "\"id\": \"http:GET:/api/patients/:id\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/data-model.md#patients", "quote": "sample-system:api/src/repositories/patientRepo.ts#L29"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "quote": "\"id\": \"sym:sample-system:api/src/services/patientService.ts:PatientService\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail", "quote": "\"id\": \"sym:sample-system:api/src/types.ts:PatientDetail\""}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail", "quote": "\"id\": \"sym:sample-system:web/src/api/types.ts:PatientDetail\""}]},
+    {"claim_id": "C9", "verdict": "not-checked", "cites": []},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "quote": "\"id\": \"sym:sample-system:web/src/lib/format.ts:dateTime\""}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/hooks/useSettings.tsx:useSettings", "quote": "\"id\": \"sym:sample-system:web/src/hooks/useSettings.tsx:useSettings\""}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#ui:/appointments/:id", "quote": "\"id\": \"ui:/appointments/:id\""}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02", "quote": "not from the 100-row appointments list (patientRepo.appointments has limit = 100)"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-03", "quote": "answer: New `date` helper (proposed default)"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01", "quote": "read it from Settings (useSettings().timeZone, default Asia/Kolkata, PRD NFR-2)"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable", "quote": "\"id\": \"sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable\""}]}
+  ],
+  "questions": []
+}
