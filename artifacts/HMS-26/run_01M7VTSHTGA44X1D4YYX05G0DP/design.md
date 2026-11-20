@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M7VTSHTGA44X1D4YYX05G0DP
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.9.0
 inputs:
   - {path: artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md, sha256: 0505e8c204b650fbd44f6f8a04dfa8da0e035fbf38d644498edb5957afb7a071}
@@ -30,14 +30,18 @@ claims:
   - {id: C15, text: "The display zone comes from `useSettings().timeZone`.", cites: ["runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01"]}
   - {id: C16, text: "Medical history appears only on the patient's own page, never in lists, the `dashboard` or logs.", cites: ["context/intent-baseline.md#data-protection"]}
   - {id: C17, text: "The `AppointmentTable` component already renders appointment tables.", cites: ["context/generated/module-map.json#sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable"]}
+  - {id: C18, text: "PatientService passes its injected clock to the repo: `this.clock()`.", cites: ["sample-system:api/src/services/patientService.ts#L42"]}
+  - {id: C19, text: "The existing next-appointment SQL compares with the passed instant: `p(now)`.", cites: ["sample-system:api/src/repositories/patientRepo.ts#L129"]}
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18]
 known: [CO-1, CO-2, CO-3, CO-4, CO-5, CO-6, CO-7, CO-8]
 assumed: [EP-1]
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "The next-appointment query takes the service's injected clock as a now parameter instead of the database now()."}
 components:
-  - {id: CO-1, name: "patientRepo visit queries", module: "module:sample-system:api", change: changed, cites: ["context/data-model.md#patients", "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02"]}
-  - {id: CO-2, name: "PatientService detail adds visits", module: "module:sample-system:api", change: changed, cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02"]}
+  - {id: CO-1, name: "patientRepo visit queries", module: "module:sample-system:api", change: changed, cites: ["context/data-model.md#patients", "sample-system:api/src/repositories/patientRepo.ts#L129", "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02"]}
+  - {id: CO-2, name: "PatientService detail adds visits", module: "module:sample-system:api", change: changed, cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService", "sample-system:api/src/services/patientService.ts#L42", "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-02"]}
   - {id: CO-3, name: "API PatientDetail gains visits", module: "module:sample-system:api", change: changed, cites: ["context/generated/module-map.json#sym:sample-system:api/src/types.ts:PatientDetail"]}
   - {id: CO-4, name: "Web PatientDetail gains visits", module: "module:sample-system:web", change: changed, cites: ["context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:PatientDetail"]}
   - {id: CO-5, name: "format.ts date helper", module: "module:sample-system:web", change: changed, cites: ["context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime", "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-03"]}
@@ -51,7 +55,7 @@ endpoints:
     change: changed
     fields:
       - {name: visits, type: object, nullable: false, format: "PatientVisits object, always present", example: "{next: null, last: null, completed: 0, cancelled: 0, no_show: 0}", status: known}
-      - {name: visits.next, type: object, nullable: true, format: "earliest SCHEDULED appointment with starts_at > now(); null when none", example: "{id: 42, starts_at: \"2026-03-09T19:00:00.000Z\", doctor_name: \"<doctor name>\"}", status: known}
+      - {name: visits.next, type: object, nullable: true, format: "earliest SCHEDULED appointment with starts_at > now (the service clock); null when none", example: "{id: 42, starts_at: \"2026-03-09T19:00:00.000Z\", doctor_name: \"<doctor name>\"}", status: known}
       - {name: visits.next.id, type: integer, nullable: false, format: "appointment row id, used in the /appointments/:id link", example: "42", status: assumed}
       - {name: visits.next.starts_at, type: string, nullable: false, format: "ISO 8601 instant in UTC (YYYY-MM-DDTHH:mm:ss.sssZ)", example: "2026-03-09T19:00:00.000Z", status: known}
       - {name: visits.next.doctor_name, type: string, nullable: false, format: "doctor's display name", example: "<doctor name>", status: known}
@@ -72,54 +76,72 @@ answers:
 ## Overview
 The patient detail response (`GET /api/patients/:id`, EP-1) gains a `visits` object computed on the
 server, so the patient page needs no extra request (A-02). Following the layering (C1), patientRepo
-(CO-1) runs its own queries over all of the patient's appointments: the earliest SCHEDULED one with
-`starts_at > now()` joined to its doctor, the latest COMPLETED one, and a count per status for
-COMPLETED, CANCELLED and NO_SHOW. They do not reuse the capped appointment list (C13). PatientService
-(CO-2) adds the result to the detail. The API and web `PatientDetail` types (CO-3, CO-4) gain a
-`PatientVisits` type. In the web app a new VisitsSummary component (CO-6) renders the summary. The
-patient page (CO-7) mounts it between the name and the details.
+(CO-1) runs its own queries over all of the patient's appointments:
+- the earliest SCHEDULED appointment with `starts_at > now`, joined to its doctor;
+- the latest COMPLETED appointment;
+- a count per status for COMPLETED, CANCELLED and NO_SHOW.
+
+These queries do not reuse the capped appointment list (C13). PatientService (CO-2) adds the result
+to the detail. It passes its injected clock as `now`, the same way it already calls the repo with
+`this.clock()` (C18), and the existing SCHEDULED query compares with `p(now)` (C19). The API and web
+`PatientDetail` types (CO-3, CO-4) gain a `PatientVisits` type. In the web app, a new VisitsSummary
+component (CO-6) renders the summary, and the patient page (CO-7) mounts it between the name and the
+details.
 
 Instants travel as ISO 8601 UTC (C3). The web app formats them in `useSettings().timeZone` (CO-8,
-A-01): the next appointment uses the existing `dateTime`, and the last visit uses a new `date` helper
+A-01). The next appointment uses the existing `dateTime`. The last visit uses a new `date` helper
 (CO-5, A-03) that prints only the local date. The next appointment's date and time link to
 `/appointments/:id` (C12). When `no_show` is 2 or more, the No-show count gets a warning style.
 
+Resolves F-1: The next-appointment query takes the service's injected clock as a now parameter instead of the database now().
+
 Trade-offs:
-- Server-side visits instead of computing in the web app: one more query set on each patient detail
-  read, but the counts stay correct for any number of appointments (A-02).
-- "After now" uses the database clock (`now()`) on UTC instants. No time zone is involved in the
-  comparison, so the result is the same in any hospital zone.
-- The warning style is a CSS class on the No-show count inside VisitsSummary, chosen by default. It
-  is cheap and local, and it does not reuse a shared badge, so it does not change other pages
+- Server-side visits instead of computing them in the web app: each patient detail read runs one
+  more set of queries, but the counts stay correct for any number of appointments (A-02).
+- "After now" uses the service's injected clock (C18), passed to SQL as a parameter (C19), not the
+  database clock. Tests can fix "now" (S-1 AC1), and the comparison works on UTC instants in any
+  hospital zone.
+- The warning style is a CSS class on the No-show count inside VisitsSummary, chosen by default.
+  It is cheap and local, and it does not reuse a shared badge, so other pages do not change
   (REQ-18).
-- VisitsSummary is given only `visits` and the zone and never the patient object. Medical history
-  and contact details therefore cannot reach it (REQ-15, REQ-16, C16).
+- VisitsSummary receives only `visits` and the zone, never the patient object, so medical history
+  and contact details cannot reach it (REQ-15, REQ-16, C16).
 
 ## Components
-- CO-1 (changed): patientRepo visit queries in `api/src/repositories/patientRepo.ts`. These are the next Scheduled appointment after now, the latest Completed appointment and the counts by status, over all of the patient's appointments.
-- CO-2 (changed): the PatientService detail read adds `visits`.
+- CO-1 (changed): patientRepo visit queries in `api/src/repositories/patientRepo.ts`. They find the next Scheduled appointment after the passed `now`, the latest Completed appointment and the counts by status, over all of the patient's appointments.
+- CO-2 (changed): the PatientService detail read adds `visits` and passes `this.clock()` as `now`.
 - CO-3 (changed): the API type `PatientDetail` gains `visits: PatientVisits`.
 - CO-4 (changed): the web type `PatientDetail` gains `visits: PatientVisits`.
 - CO-5 (changed): `web/src/lib/format.ts` gains `date(iso, timeZone)`, which prints the local date only.
-- CO-6 (new): `web/src/components/VisitsSummary.tsx`. It shows the next appointment (or None booked), the last visit (or No visits yet), the three counts, and the warning when the No-show count is 2 or more.
+- CO-6 (new): `web/src/components/VisitsSummary.tsx` shows:
+  - the next appointment, or None booked;
+  - the last visit, or No visits yet;
+  - the three counts, with the warning when the No-show count is 2 or more.
 - CO-7 (changed): PatientDetailPage renders VisitsSummary below the name and above the details. The rest of the page is unchanged.
 - CO-8 (existing): `useSettings` supplies `timeZone`.
-- EP-1 (changed) `GET /api/patients/:id` adds these fields:
+- EP-1 (changed): `GET /api/patients/:id` adds these fields:
   - `visits` (object, not null).
-  - `visits.next` (object or null): the earliest SCHEDULED appointment with `starts_at > now()`.
-    - `visits.next.id` (integer, appointment id, assumed; see Assumed).
-    - `visits.next.starts_at` (ISO 8601 UTC string, for example `2026-03-09T19:00:00.000Z`).
-    - `visits.next.doctor_name` (string).
-  - `visits.last` (object or null): the latest COMPLETED appointment, with the same three fields.
-  - `visits.completed`, `visits.cancelled`, `visits.no_show` (integers, 0 or more, any date).
+  - `visits.next` (object or null): the earliest SCHEDULED appointment with `starts_at > now` (the service clock). Its fields:
+    - `id` (integer, appointment id, assumed; see Assumed);
+    - `starts_at` (ISO 8601 UTC string, for example `2026-03-09T19:00:00.000Z`);
+    - `doctor_name` (string).
+  - `visits.last` (object or null): the latest COMPLETED appointment, with the same fields.
+  - `visits.completed`, `visits.cancelled` and `visits.no_show` (integers, 0 or more, any date).
 
-Story mapping: S-1 → CO-1, CO-2, EP-1, CO-6, CO-8. S-2 → CO-1, CO-2, EP-1, CO-5, CO-6. S-3 → CO-1, CO-2, EP-1, CO-6. S-4 → CO-6, CO-7. S-5 → CO-7 (no other page or component changes). S-6 → CO-5, CO-6, CO-8.
+Story mapping:
+- S-1: CO-1, CO-2, EP-1, CO-6, CO-8.
+- S-2: CO-1, CO-2, EP-1, CO-5, CO-6.
+- S-3: CO-1, CO-2, EP-1, CO-6.
+- S-4: CO-6, CO-7.
+- S-5: CO-7. No other page or component changes.
+- S-6: CO-5, CO-6, CO-8.
 
 ## Known
-- CO-1: the patient SQL file is proven by C5, and the user decided the queries (A-02).
-- CO-2, CO-3, CO-4, CO-7, CO-8: each symbol is proven by a module-map fact (C6, C7, C8, C9, C11).
-- CO-5: the file is proven by `dateTime` (C10), and the user decided the helper (A-03).
+- CO-1: the patient SQL file is proven by C5 and C19. The user decided the queries (A-02).
+- CO-2, CO-3, CO-4, CO-7, CO-8: module-map facts prove each symbol (C6, C7, C8, C9, C11). The clock usage is proven by C18.
+- CO-5: `dateTime` proves the file exists (C10). The user decided the helper (A-03).
 - CO-6: a new file in the web module, next to the existing components (C17).
+
 ## Assumed
 - EP-1: the route exists (C4), and the user decided the field shape (A-02). One part is assumed: `visits.next.id` and `visits.last.id` are the appointment row id as an integer, the same id the existing `/appointments/:id` page uses (C12). The basis is that display codes are derived from row ids and are not stored (context/data-model.md#codes). Implement must confirm this against the existing appointment types.
 
@@ -130,5 +152,5 @@ None.
 None open.
 
 Answered in the IDE:
-- A-02 (eng-dffd), Q-01, how the API delivers the summary: a `visits` object on the patient detail response, computed by its own queries over all appointments and not taken from the 100-row list. It decides CO-1, CO-2, EP-1 and C13. No mismatch.
-- A-03 (eng-dffd), Q-02, how the last-visit date is formatted: a new `date` helper. It decides CO-5 and C14. No mismatch.
+- A-02 (eng-dffd), Q-01: how the API delivers the summary. Answer: a `visits` object on the patient detail, computed by its own queries over all appointments, not from the 100-row list. Decides CO-1, CO-2, EP-1 and C13. No mismatch.
+- A-03 (eng-dffd), Q-02: how the last-visit date is formatted. Answer: a new `date` helper. Decides CO-5 and C14. No mismatch.
