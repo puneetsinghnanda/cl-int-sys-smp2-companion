@@ -1,0 +1,70 @@
+{
+  "artifact_path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/ut.md",
+  "artifact_sha256": "83770d66ee8f190c9b88270955c2e15311485701a30c634cf7263d33195ae41e",
+  "attempt": 2,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "33965bbf108e76c70cc056ed02f62a719ddac949ec509845db1816afc6fdbf8e",
+  "claims": {
+    "total": 6,
+    "verified": 6
+  },
+  "decided_at": "2026-11-20T09:12:56Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H3"
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/impl.md",
+      "sha256": "9a068691d7737d9adcc8c4515e667f65c6f20e24684d5b883e0c09c28c213df2",
+      "verification_sha256": "29b82f5f644865926b33a6993cfd5d6ca5f468f1831133c6f6f11f7c6c13542c"
+    },
+    {
+      "path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/split.md",
+      "sha256": "c05e9c99ae954bc1723d7c72ed43e179acd5ddc73fc04085968a1a344df9ef19",
+      "verification_sha256": "62d8fb8c9b9ea3dd56c707b593f98af0fd02393ff78ba54968d77ee130f488d2"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": "f15bfaf518205294928bc3a6f00dc19c8c592ebcf39636fbfe654745f3453e8b",
+  "product_changes": [
+    {
+      "base_sha": "09580b7da0e53573ff52d014ffcf6f99e8047e42",
+      "diff_sha256": "8f17118cfbac8a3b2178b72366199c5376aaca5c673648ed453d5079963d0a76",
+      "repo": "sample-system",
+      "tree_sha": "fc86addbe324c6139df4a93f643b64f650f96cb1"
+    }
+  ],
+  "review_sha256": "1da540e997e640b0e8badf598e2cb8472588864dab6fba1018cb89110f5cc2d9",
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 2,
+      "lines": 161,
+      "sensitive": false
+    }
+  },
+  "signature": "qCfTMcswnQPJyrzUVqWoTCUkaTdEd0m-NS6w0uNRX6sUGhjgqHvNM0_V5KdqaizBAAZhUNQe0wwk0YoR76MfDw",
+  "skill": "unit-test@1.3.0",
+  "step": "ut",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

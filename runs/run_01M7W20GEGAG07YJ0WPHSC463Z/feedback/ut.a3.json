@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "S-2 AC3 (full reason on the appointment's page)",
+          "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/ut.md#known"
+        },
+        {
+          "quote": "send({ reason: 'Patient requested' })",
+          "ref": "sample-system:api/test/appointments.test.ts#L63"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Known says S-2 AC3 (a 300-char reason shown whole on the appointment's page) is covered by APT-6/APT-11/APT-1. Those tests only cancel with the short 'Patient requested', so no test checks that a long reason stays unshortened on the detail page."
+    }
+  ],
+  "from_attempt": 3,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
