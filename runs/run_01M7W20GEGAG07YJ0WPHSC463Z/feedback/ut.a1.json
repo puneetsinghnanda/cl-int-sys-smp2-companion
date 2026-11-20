@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "build exit 2; log runs/run_01M7W20GEGAG07YJ0WPHSC463Z/verifier/ut/a1/build.log: src/__tests__/AppointmentsPage.test.tsx(112,44): error TS2493: Tuple type '[]' of length '0' has no element at index '0'. | npm error Lifecycle script `build` failed with error: | npm error code 2 | npm error path /cache/w/web | npm error workspace @hms/web@0.1.0 | npm error location /cache/w/web | npm error command failed | npm error command sh -c tsc -p tsconfig.json && vite build",
+      "id": "H3"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3"
+  ],
+  "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
