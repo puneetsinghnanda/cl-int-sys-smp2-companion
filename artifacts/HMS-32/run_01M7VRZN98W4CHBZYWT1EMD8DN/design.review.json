@@ -1,0 +1,221 @@
+{
+  "artifact_sha256": "506181598019221de0b9e00d9e735b3e04e02bf02c2d84a761f52c306955b848",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export function BookAppointmentPage() {",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L15"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/appointments/new\",",
+          "ref": "context/generated/api-inventory.json#L416"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function rupees(paise: number): string {",
+          "ref": "sample-system:web/src/lib/format.ts#L10-L11"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctor: (id: number | string) => send<DoctorDetail>(`/api/doctors/${id}`),",
+          "ref": "sample-system:web/src/api/client.ts#L62"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/doctors/:id\",",
+          "ref": "context/generated/api-inventory.json#L118"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "send<DoctorDetail>(`/api/doctors/${id}`)",
+          "ref": "sample-system:web/src/api/client.ts#L62"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "feePaise: number;",
+          "ref": "sample-system:web/src/api/types.ts#L39"
+        },
+        {
+          "quote": "export interface DoctorDetail extends DoctorSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L58"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a fee in integer paise",
+          "ref": "context/data-model.md#doctors"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "import { useAsync } from '../hooks/useAsync';",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L8"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "setState((s) => ({ ...s, loading: true, error: undefined }));",
+          "ref": "sample-system:web/src/hooks/useAsync.ts#L15"
+        },
+        {
+          "quote": "current && setState({ data: undefined, error:",
+          "ref": "sample-system:web/src/hooks/useAsync.ts#L19"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctorId && !labels.doctor ? api.doctor(doctorId) : undefined,",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L32"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const appt = await api.book({ doctorId, patientId, startsAt: start, reason });",
+          "ref": "sample-system:web/src/pages/BookAppointmentPage.tsx#L56"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"module:sample-system:web\",",
+          "ref": "context/generated/module-map.json#L62"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "sample-system:web/src/api/types.ts#L30-L42",
+          "ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md#claim:C8"
+        },
+        {
+          "quote": "export interface DoctorDetail extends DoctorSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L58"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:web/src/api/types.ts#L30-L42 and #L58 (or L39 and L58) so both feePaise and the extends link are covered.",
+      "text": "C8 says the web doctor type DoctorDetail carries feePaise but cites types.ts L30-L42, which is DoctorSummary; the link (DoctorDetail extends DoctorSummary) is at L58, outside the cited span."
+    }
+  ],
+  "package_sha256": "82f8bc559f0e3d8fb13532d543655e3488a63b60905bb9b6a652c7a78eee040f",
+  "questions": [],
+  "recorded_at": "2026-11-20T07:07:30Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Web-only change on the existing page, reusing rupees, api.doctor, DoctorDetail, useAsync and the existing GET /api/doctors/:id; follows the client.ts-only rule. No new parts.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "All four stories mapped to components; the id-equality check plus useAsync behaviour covers S-2 AC1/AC3, URL doctor covers S-1 AC4, error path covers S-2 AC2, and untouched api.book/slots cover S-3/S-4.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "No new or changed fields; EP-1 field feePaise named as integer paise and display examples given (150000 -> ₹1,500.00, 0, 10000000). Exact markup/element for the fee block is not pinned down for tests.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices cited to module map, code lines and IDE answers A-01/A-02; no invented infrastructure. C8 cites the DoctorSummary lines, not the DoctorDetail extends line that links feePaise to DoctorDetail.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs for api.doctor vs picker results, double read of URL doctor, and fee placement are stated with reasons.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, concise, consistent ids and claim references.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

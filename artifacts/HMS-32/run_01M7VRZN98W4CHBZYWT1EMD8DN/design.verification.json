@@ -1,0 +1,64 @@
+{
+  "artifact_path": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/design.md",
+  "artifact_sha256": "506181598019221de0b9e00d9e735b3e04e02bf02c2d84a761f52c306955b848",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "b9d403565410e904c4929b0b2555db6b3082be6d32947e54b150019898bb7f42",
+  "claims": {
+    "total": 14,
+    "verified": 14
+  },
+  "decided_at": "2026-11-20T07:07:39Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md",
+      "sha256": "95071688965ea9fa4eec8630258d808558b92c00cf8f0e8944e5c930e60f1774",
+      "verification_sha256": "46ddfcb881a8ed9fb9471d7a893ab03f133998a81c5e870fc43bb78d19063fbf"
+    },
+    {
+      "path": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md",
+      "sha256": "090d7caec2892d7d704168997202146560d5e2a0ecf4bd50423664f4dcd23d2b",
+      "verification_sha256": "60493186420483386dec5482bf623d266087621299803ecb4ee6a4b8cdc48703"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "502c4b71733a0118b30c55ade7dd5b11fc578665338713b8beb47582634ff48f",
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.65,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "P29J-ZfyvtLCNbfUU465iGIniwpfPA2uFHKStbQjg0AHJLZdJioVuK90vJmlIS6j45Yo7v4oeyUbpaJETtUCAw",
+  "skill": "design@1.9.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
