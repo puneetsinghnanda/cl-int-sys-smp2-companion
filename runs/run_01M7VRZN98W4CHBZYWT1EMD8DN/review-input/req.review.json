@@ -1,0 +1,66 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "090d7caec2892d7d704168997202146560d5e2a0ecf4bd50423664f4dcd23d2b",
+  "package_sha256": "ca9b9dd5c897ee0d4b4f22ed78a361b7e96c4fe4404647f861ccd45725ae33ec",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All eight ticket acceptance criteria map to REQ-1..REQ-14; the URL pre-fill and fee-load-failure gaps were asked and answered (A-01, A-02); out-of-scope items carry reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic with checkable conditions (e.g. 150000 paise -> Rs 1,500.00, 0 -> 0.00). REQ-12 'rest of the page is unchanged' is a broad catch-all that overlaps REQ-8/REQ-11 and is hard to test precisely."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known status cites a ticket line, the baseline, or a user answer; REQ-9 assumption was confirmed in A-02 and REQ-10 decided by A-01. Nothing invented."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash between ticket and baseline found: display-only fee, INR currency and paise storage agree with baseline constraints and glossary; booking rules and data protection preserved."},
+    {"id": "RR-R5", "score": 5, "reason": "Two minimal, non-redundant questions with real options, answered by the user; neither is answered by the context pack."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and consistent glossary use; small traceability slip where the Summary cites C1/C2 for the user story motive, and a glossary note is filed under Out of scope."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The Summary cites C1 and C2 (paise storage, INR currency) as the basis for staff wanting to tell the patient the cost; those claims do not state that motive. The ticket story line does.",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#summary", "quote": "so they can tell the patient the cost before confirming (C1, C2)"},
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ticket.md#L12-L13", "quote": "so\nthat I can tell the patient what the visit will cost before I confirm it."}
+      ],
+      "suggested_fix": "Cite the ticket story (ticket.md#L12-L13) for the motive and keep C1/C2 for the paise/INR facts."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "REQ-12 is a catch-all ('rest of the page is unchanged') that overlaps REQ-8 and REQ-11 and gives a tester no concrete condition to check.",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#item:REQ-12", "quote": "Apart from the fee, the rest of the book appointment page is unchanged."},
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ticket.md#L25", "quote": "The slot list, booking rules and the rest of the page are unchanged."}
+      ],
+      "suggested_fix": "Name the existing fields/controls that must stay the same (Doctor, Patient, date, slot list, Book button) so the check is concrete."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "A glossary note ('Consultation fee' is not a glossary term) is listed under Out of scope; it is not a scope exclusion and belongs with the glossary entries.",
+      "cites": [
+        {"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#out-of-scope", "quote": "\"Consultation fee\" is not a glossary term; the Paise entry covers fees (C3), so no new term is needed."}
+      ],
+      "suggested_fix": "Move the note to a glossary remark or drop it from Out of scope."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/ticket.md#L14", "quote": "Each doctor already has a fee, stored and sent as integer paise"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#paise", "quote": "One hundredth of a rupee. Fees are stored and sent as integer paise."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#booking-rules", "quote": "A slot is free only inside the doctor's availability, in the future and not overlapping a Scheduled"}]}
+  ],
+  "questions": []
+}
