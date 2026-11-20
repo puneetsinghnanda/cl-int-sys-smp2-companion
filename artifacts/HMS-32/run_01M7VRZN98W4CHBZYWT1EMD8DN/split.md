@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M7VRZN98W4CHBZYWT1EMD8DN
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md
@@ -11,6 +11,9 @@ inputs:
     sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "S-3 adds AC4 for a slot that has already started and AC5 for a day outside availability, and C6 states the full rule."
 claims:
   - id: C1
     text: "150000 paise shows as `₹1,500.00`."
@@ -28,7 +31,7 @@ claims:
     text: "When the fee `cannot be loaded`, no fee is shown and staff can still book."
     cites: ["artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#item:REQ-9"]
   - id: C6
-    text: "A slot is free only inside the doctor's `availability` and not overlapping a Scheduled appointment."
+    text: "A slot is free only inside the doctor's `availability`, in the future and not overlapping a Scheduled appointment."
     cites: ["artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/req.md#claim:C5"]
   - id: C7
     text: "Medical history includes a patient's `allergies`."
@@ -73,6 +76,10 @@ stories:
         text: "Given a doctor, a patient, a free slot and a reason are chosen and the fee is shown, when staff press Book, then the booking request is the same as one sent before this change and carries no fee."
       - id: AC3
         text: "Given a chosen doctor's day where one slot is already taken by a Scheduled appointment, when staff look at that day's slots with the fee shown, then the taken slot is not offered as free, as before."
+      - id: AC4
+        text: "Given today is chosen and one of the chosen doctor's slots today has already started, when staff look at today's slots with the fee shown, then that started slot is not offered as free, as before."
+      - id: AC5
+        text: "Given a date on a weekday when the chosen doctor has no availability, when staff look at that day's slots with the fee shown, then no slot is offered as free, as before."
   - id: S-4
     title: The rest of the page stays as it was and shows no private data
     trace: [REQ-8, REQ-12, REQ-13, REQ-14]
@@ -89,6 +96,8 @@ stories:
         text: "Given a doctor and a patient who both have a phone number and an email recorded are chosen and the fee is shown, when staff look at the page, then no phone number or email of either appears."
 ---
 # Stories: HMS-32
+
+Resolves F-1: S-3 adds AC4 for a slot that has already started and AC5 for a day outside availability, and C6 states the full rule.
 
 ## Stories
 
@@ -111,6 +120,8 @@ Traces REQ-6, REQ-7, REQ-11.
 - AC1: Given a doctor is chosen and the fee is shown, when staff try to edit the fee, then the fee is plain text with no input, so it cannot be changed on this page.
 - AC2: Given a doctor, a patient, a free slot and a reason are chosen and the fee is shown, when staff press Book, then the booking request is the same as one sent before this change and carries no fee.
 - AC3: Given a chosen doctor's day where one slot is already taken by a Scheduled appointment, when staff look at that day's slots with the fee shown, then the taken slot is not offered as free, as before (C6).
+- AC4: Given today is chosen and one of the chosen doctor's slots today has already started, when staff look at today's slots with the fee shown, then that started slot is not offered as free, as before (C6).
+- AC5: Given a date on a weekday when the chosen doctor has no availability, when staff look at that day's slots with the fee shown, then no slot is offered as free, as before (C6).
 
 ### S-4 The rest of the page stays as it was and shows no private data
 Traces REQ-8, REQ-12, REQ-13, REQ-14.

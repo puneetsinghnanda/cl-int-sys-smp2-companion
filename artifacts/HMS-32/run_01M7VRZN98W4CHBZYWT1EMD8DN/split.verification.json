@@ -1,21 +1,21 @@
 {
   "artifact_path": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md",
-  "artifact_sha256": "62fc1974d8f68f4c81a6938937cc245dc47438367b99f34d1cc387204f64fec6",
-  "attempt": 1,
+  "artifact_sha256": "95071688965ea9fa4eec8630258d808558b92c00cf8f0e8944e5c930e60f1774",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "7489cd43e0f83539979f522321e8803aff93fa1ba36f9058d519f91dd77b2b5e",
+  "checks_sha256": "ca56b90900e715f9e36c3e7c9814f406854cf490ee482fe147b9478d2302dcdc",
   "claims": {
     "total": 7,
     "verified": 7
   },
-  "decided_at": "2026-11-20T06:59:47Z",
+  "decided_at": "2026-11-20T07:03:07Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -35,7 +35,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -43,9 +43,9 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "a8a5dd7201ec2dc01e76da74c3b6345e5acdb0a525c3ee519446a12d54209def",
   "product_changes": null,
-  "review_sha256": "45b6e3ab59249bd9780e32e3911a4eadb39da3ebd593ec15428e5c63c4ced2b7",
+  "review_sha256": "ce8f76b5a34f500a2180ce025104b052f233963e2354c87468c8e2e8b9a61076",
   "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
   "schema": "verification.v1",
   "signals": {
@@ -60,7 +60,7 @@
       "sensitive": false
     }
   },
-  "signature": "G_AgucdFpu3yuvEAYUjNDec-xuXjie4cSfEq2X7YM9enBZzDBrRSXqEP4Ea9xbNKgKNfOOD1XsM2HTaUpMizDg",
+  "signature": "euy6GdPc0NWbMqkHYT7T994JEymIHTDl3saMNYWMGWOW-Ov-w0elapHlZNwjZ74aYwYtIBP7txOsL4P3sfpbDw",
   "skill": "story-split@1.4.0",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

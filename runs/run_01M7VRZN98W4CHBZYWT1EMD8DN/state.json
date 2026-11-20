@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-20T06:59:47Z",
+  "heartbeat_at": "2026-11-20T07:03:07Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -47,7 +47,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 7,
+  "rev": 9,
   "run_id": "run_01M7VRZN98W4CHBZYWT1EMD8DN",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -86,7 +86,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md",
+          "artifact": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/history/split/a1/split.md",
           "artifact_sha256": "62fc1974d8f68f4c81a6938937cc245dc47438367b99f34d1cc387204f64fec6",
           "band": "High",
           "cause": "first",
@@ -101,10 +101,31 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.verification.json",
+          "record": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/history/split/a1/split.verification.json",
           "skill": "story-split@1.4.0",
           "skill_started_at": "2026-11-20T06:57:02Z",
           "started_at": "2026-11-20T06:56:19Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.md",
+          "artifact_sha256": "95071688965ea9fa4eec8630258d808558b92c00cf8f0e8944e5c930e60f1774",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-20T07:03:07Z",
+          "feedback": "runs/run_01M7VRZN98W4CHBZYWT1EMD8DN/feedback/split.a1.json",
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "090d7caec2892d7d704168997202146560d5e2a0ecf4bd50423664f4dcd23d2b",
+              "step": "req"
+            }
+          ],
+          "n": 2,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-32/run_01M7VRZN98W4CHBZYWT1EMD8DN/split.verification.json",
+          "skill": "story-split@1.4.0",
+          "started_at": "2026-11-20T07:00:38Z"
         }
       ],
       "budget_used": {
@@ -115,7 +136,7 @@
       },
       "id": "split",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -174,7 +195,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-32",
-  "updated_at": "2026-11-20T06:59:47Z",
+  "updated_at": "2026-11-20T07:03:07Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
