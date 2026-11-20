@@ -1,0 +1,66 @@
+{
+  "artifact_path": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md",
+  "artifact_sha256": "ab327c0705601dcfb06c0e9c9f8fa6c057b3bb16e7755f54a905168ac1ba2681",
+  "attempt": 1,
+  "budget_tokens": 15000,
+  "checks_sha256": "d86313f261e1cc5ae5c29c5c74234a65a47d2458a80e832febff0c42da5de972",
+  "context_sections": [
+    {
+      "id": "glossary",
+      "included": true,
+      "path": "context/glossary.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "intent",
+      "path": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md"
+    },
+    {
+      "name": "glossary",
+      "path": "context/glossary.md"
+    }
+  ],
+  "package_sha256": "5709195d36bb657bb35eac8e6edc4ab87da8cb803f53f5209197ec195e93329d",
+  "prepared_at": "2026-11-20T06:43:29Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/review-input/split.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "SS-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "SS-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "SS-R3",
+        "weight": 0.25
+      },
+      {
+        "id": "SS-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "SS-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/story-split/rubric.md",
+    "sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "story-split@1.4.0",
+  "step": "split",
+  "truncated": false
+}

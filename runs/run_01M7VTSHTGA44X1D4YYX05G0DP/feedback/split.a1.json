@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Given useSettings().timeZone is Asia/Kolkata (UTC+05:30) and the next Scheduled appointment starts at 19:00 UTC on 9 March",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-1"
+        },
+        {
+          "quote": "Given useSettings().timeZone is Asia/Kolkata (UTC+05:30) and the latest Completed appointment started at 20:00 UTC on 9 March",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/split.md#item:S-2"
+        },
+        {
+          "quote": "the zone is not hard-coded",
+          "ref": "artifacts/HMS-26/run_01M7VTSHTGA44X1D4YYX05G0DP/req.md#item:REQ-9"
+        },
+        {
+          "quote": "Do not hard-code Asia/Kolkata.",
+          "ref": "runs/run_01M7VTSHTGA44X1D4YYX05G0DP/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-1 AC5 and S-2 AC3 set useSettings().timeZone to Asia/Kolkata, the default. The likeliest wrong implementation, a hard-coded Asia/Kolkata, passes both, though REQ-9 and A-01 forbid hard-coding the zone."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M7VTSHTGA44X1D4YYX05G0DP",
+  "schema": "feedback.v1",
+  "step": "split"
+}
