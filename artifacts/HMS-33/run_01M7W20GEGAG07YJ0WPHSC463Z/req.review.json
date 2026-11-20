@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "e26b719dff931dce72ff5e95f31f8a92b16678c6ab667a3cc8570fe066811569",
-  "attempt": 1,
+  "artifact_sha256": "8f8b87647a6a511b96c044fc3e961844c5b87b7ac9a1923914a691c76eba9969",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -51,22 +51,19 @@
       ],
       "claim_id": "C5",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
     }
   ],
   "findings": [
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "A cancellation reason is at most 300 characters; the list must handle any reason up to that length.",
-          "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-16"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Keep 300 characters as context (C1) and restate REQ-16 as a checkable list behaviour, e.g. a 300-character reason shows the first 60 characters plus \"…\" without breaking the row; or drop it as covered by REQ-5.",
-      "text": "REQ-16 is compound and partly untestable: it states a data rule (at most 300 characters) and a vague list behaviour ('must handle any reason') with no condition a tester could check."
-    },
     {
       "category": "style",
       "cites": [
@@ -75,10 +72,10 @@
           "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-8"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
       "suggested_fix": "Split into one REQ per list control, or state one testable condition covering all three.",
-      "text": "REQ-8 bundles three behaviours (status filter, date range, paging) in one requirement."
+      "text": "Prior F-2 still open: REQ-8 bundles three behaviours (status filter, date range, paging) in one requirement."
     },
     {
       "category": "completeness",
@@ -92,10 +89,10 @@
           "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#out-of-scope"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
       "suggested_fix": "Add a reason to each, e.g. 'not asked by HMS-33'.",
-      "text": "Two Out-of-scope entries give no reason for exclusion."
+      "text": "Prior F-3 still open: two Out-of-scope entries give no reason for exclusion."
     },
     {
       "category": "traceability",
@@ -105,32 +102,28 @@
           "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#known"
         }
       ],
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
       "suggested_fix": "List which criterion each REQ comes from, and mark REQ-6 and REQ-9 as derived.",
-      "text": "The Known section says REQ-1 to REQ-15 map to criteria 1-8 'one behaviour each', but then lists REQ-6 and REQ-9 as derived, so the mapping is inconsistent."
+      "text": "Prior F-4 still open: Known says REQ-1 to REQ-15 map to criteria 1-8 'one behaviour each', yet REQ-6 and REQ-9 are then listed as derived, so the mapping is inexact."
     },
     {
-      "category": "security",
+      "category": "style",
       "cites": [
         {
-          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
-          "ref": "context/intent-baseline.md#data-protection"
-        },
-        {
-          "quote": "A cancelled appointment always has a reason of up to 300 characters, entered when it is cancelled;",
-          "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/ticket.md#L14"
+          "quote": "the reason is appointment data, not one of the patient's medical-history fields.",
+          "ref": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md#item:REQ-17"
         }
       ],
-      "id": "F-5",
+      "id": "F-4",
       "severity": "minor",
-      "suggested_fix": "Add a note or assumption that reasons are not medical history, citing both sides, so later steps can confirm it.",
-      "text": "The cancellation reason is free text, and REQ-14 only covers adding the medical history field. Staff could type medical details into a reason, which would then show in a list. The artifact does not mention this against the data-protection rule."
+      "suggested_fix": "Keep the display rule in REQ-17 and move the classification to the A-01 mismatch or a note.",
+      "text": "REQ-17 joins a testable display rule (shown as entered, no filtering) with a classification statement (appointment data, not medical history) that a tester cannot check as list behaviour."
     }
   ],
-  "package_sha256": "0871c0d5ef2cf0a5c20cf277992943e98207a9ac6845f075869f4724ec84cc8c",
+  "package_sha256": "75e80c4fecff952e70baaafdbdd99c1df1057495c18d0e9e20ecd852889ff9a5",
   "questions": [],
-  "recorded_at": "2026-11-20T08:46:22Z",
+  "recorded_at": "2026-11-20T08:50:56Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -141,36 +134,36 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "All 8 acceptance criteria and the 300-character fact map to REQ-1..REQ-16; out-of-scope items are listed.",
+      "reason": "All 8 acceptance criteria and the 300-character fact map to REQ-1..REQ-17; extra scope is listed under Out of scope.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs are atomic and checkable; REQ-16 mixes a data limit with a vague list-handling behaviour, and REQ-8 bundles three behaviours.",
+      "reason": "REQ-16 is now one checkable case (prior F-1 fixed). REQ-8 still bundles three list controls, and REQ-17 mixes a display rule with a classification statement.",
       "score": 4
     },
     {
       "id": "RR-R3",
-      "reason": "Every known REQ cites the ticket line or baseline/glossary it comes from; derived REQ-6 and REQ-9 explain their basis. Nothing invented.",
+      "reason": "Every known REQ cites its ticket line, baseline or glossary entry; REQ-17 cites A-01, which says 'Show it as is'. Nothing invented.",
       "score": 5
     },
     {
       "id": "RR-R4",
-      "reason": "No direct clash with the baseline; the free-text reason vs the no-medical-history-in-lists rule is not discussed.",
-      "score": 4
+      "reason": "The free-text reason vs no-medical-history-in-lists clash was put to the user as Q-01, answered in A-01, and recorded as a mismatch citing the baseline.",
+      "score": 5
     },
     {
       "id": "RR-R5",
-      "reason": "No questions asked; the ticket gives values for every criterion, so none were needed.",
+      "reason": "One question, with real options and a proposed default, put to the user; now answered. No open questions remain.",
       "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Plain wording; glossary status terms used consistently.",
+      "reason": "Plain wording; glossary status terms (Cancelled, Scheduled, Completed, No-show, Medical history) used consistently.",
       "score": 5
     }
   ],
-  "rubric_score": 4.65,
+  "rubric_score": 4.8,
   "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
   "schema": "review.v1",
   "status": "ok",

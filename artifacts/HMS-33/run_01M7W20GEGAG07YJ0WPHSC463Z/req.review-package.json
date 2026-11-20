@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-33/run_01M7W20GEGAG07YJ0WPHSC463Z/req.md",
-  "artifact_sha256": "e26b719dff931dce72ff5e95f31f8a92b16678c6ab667a3cc8570fe066811569",
-  "attempt": 1,
+  "artifact_sha256": "8f8b87647a6a511b96c044fc3e961844c5b87b7ac9a1923914a691c76eba9969",
+  "attempt": 2,
   "budget_tokens": 15000,
-  "checks_sha256": "99ef8ca9877f7eaa9b48b213f6c0150d27d7f28bc2fa1f1132c81bbe2d2ad25e",
+  "checks_sha256": "823f3320a2f5f0af48215bb84ca2a390f28a8f75ceadae874a913a734683624d",
   "context_sections": [
     {
       "id": "intent-baseline#goals",
@@ -35,10 +35,31 @@
       "path": "context/glossary.md"
     }
   ],
-  "package_sha256": "0871c0d5ef2cf0a5c20cf277992943e98207a9ac6845f075869f4724ec84cc8c",
-  "prepared_at": "2026-11-20T08:45:23Z",
+  "package_sha256": "75e80c4fecff952e70baaafdbdd99c1df1057495c18d0e9e20ecd852889ff9a5",
+  "prepared_at": "2026-11-20T08:50:05Z",
   "prepared_by": "tsl@0.1.7",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
   "review_input_path": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/review-input/req.review.json",
   "rubric": {
     "items": [
@@ -71,7 +92,12 @@
     "sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
   "run_id": "run_01M7W20GEGAG07YJ0WPHSC463Z",
-  "run_records": [],
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M7W20GEGAG07YJ0WPHSC463Z/ide-answers.md"
+    }
+  ],
   "schema": "review-package.v1",
   "skill": "requirement-review@1.4.0",
   "step": "req",
