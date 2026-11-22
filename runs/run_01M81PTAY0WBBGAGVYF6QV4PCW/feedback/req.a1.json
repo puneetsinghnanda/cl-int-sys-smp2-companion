@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "RR-C05: C3 cites db/migrations/20261016T090100__create_doctors.sql, not a declared input",
+      "id": "H5"
+    }
+  ],
+  "kind": "checks",
+  "must_resolve": [
+    "H5"
+  ],
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "feedback.v1",
+  "step": "req"
+}
