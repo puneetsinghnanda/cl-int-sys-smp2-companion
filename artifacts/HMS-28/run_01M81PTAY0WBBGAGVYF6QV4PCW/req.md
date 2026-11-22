@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M81PTAY0WBBGAGVYF6QV4PCW
 step: req
-attempt: 2
+attempt: 3
 skill: requirement-review@1.4.0
 inputs:
   - path: artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md
@@ -38,8 +38,8 @@ claims:
   - id: C8
     text: "Booking rules allow a slot only inside the doctor's `availability`; this ticket does not change them."
     cites: ["context/intent-baseline.md#booking-rules"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 assumed: []
 unknown: []
 requirements:
@@ -110,11 +110,11 @@ requirements:
     statement: "`Inactive doctors show their weekdays` in the Works on column, the same as active doctors."
     cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L35"]
   - id: REQ-12
-    title: Status filter and rest of list unchanged
+    title: Status filter works as before
     type: constraint
     status: known
-    statement: "The `status filter works as before` and the rest of the doctor list (columns, search, filters, Today count) is unchanged."
-    cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L35-L36"]
+    statement: "The `status filter works as before`; adding the Works on column and filter does not change which doctors it shows."
+    cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L35"]
   - id: REQ-13
     title: Works on column position
     type: functional
@@ -127,6 +127,12 @@ requirements:
     status: known
     statement: "The Works on filter options read \"Any day\" and the full weekday names `Monday` to Sunday."
     cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L27-L28", "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-02"]
+  - id: REQ-15
+    title: Rest of the doctor list unchanged
+    type: constraint
+    status: known
+    statement: "The `rest of the doctor list is unchanged`: its existing columns, including Today, stay as they are."
+    cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L36"]
 unknowns: []
 questions: []
 answers:
@@ -168,12 +174,13 @@ page count will be wrong.
 - REQ-9 Page count reflects the filter (known): total and pages count only matching doctors.
 - REQ-10 Chosen weekday kept in the page address (known): back navigation and copied links keep the filter.
 - REQ-11 Inactive doctors show their weekdays (known).
-- REQ-12 Status filter and rest of list unchanged (known): including the existing Today column (C7).
+- REQ-12 Status filter works as before (known).
 - REQ-13 Works on column position (known): after Status, before Today.
 - REQ-14 Filter options use full weekday names (known): "Any day", "Monday" … "Sunday".
+- REQ-15 Rest of the doctor list unchanged (known): existing columns, including Today (C7), stay as they are.
 
 ## Known
-- REQ-1 to REQ-12: stated in the ticket acceptance criteria (ticket.md#L23-L36).
+- REQ-1 to REQ-12 and REQ-15: stated in the ticket acceptance criteria (ticket.md#L23-L36).
 - REQ-13: decided by the user in the IDE (A-01).
 - REQ-14: assumption confirmed by the user in the IDE (A-02).
 - Default (not a question): the name and coding of the weekday in the page address follow the existing filter keys and the stored weekday coding; design picks them. Trade-off: consistent with neighbouring filters, but a coded value is less readable in a link than a day name.
