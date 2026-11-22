@@ -1,0 +1,90 @@
+{
+  "artifact_sha256": "780fcf8b1905e1bf5475a047c4e2e5cd45a0839d20cc21711c73e9c21fe49b2f",
+  "attempt": 1,
+  "finished_at": "2026-11-22T15:27:15Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md",
+      "sha256": "6b281327d9f889c19c469ea35fc7f1c182a3fdd5f01f45c22c6444f35aeade95",
+      "verification_sha256": "b62065e8f5835cfde0af458195e3fec227bc804c8049304f6f39ad502182ae0e"
+    },
+    {
+      "path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md",
+      "sha256": "52b4c52bad178b06dd5fc4346654ab569aa7276ac8daae7f6119485236c9cd18",
+      "verification_sha256": "1f144cf3ddaa6f10059504a2df6cc24b17bc8bd2aff4ff2576659ff22d848cb3"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "design.claims-cited",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-22T15:27:14Z",
+  "step": "design",
+  "tool_log_sha256": "ac6543a9c9792480b3c416b7d3104f894a6c88832f3c77e1bd20526d96c5d738",
+  "tsl_version": "0.1.7",
+  "verifier": null
+}

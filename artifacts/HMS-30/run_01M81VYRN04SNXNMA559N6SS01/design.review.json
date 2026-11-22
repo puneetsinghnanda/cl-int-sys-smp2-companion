@@ -1,0 +1,259 @@
+{
+  "artifact_sha256": "780fcf8b1905e1bf5475a047c4e2e5cd45a0839d20cc21711c73e9c21fe49b2f",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/appointments\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface AppointmentFilter {",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L40-L45"
+        },
+        {
+          "quote": "- answer: Yes, confirm",
+          "ref": "runs/run_01M81VYRN04SNXNMA559N6SS01/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const [params, setParams] = useSearchParams();",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L12-L14"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async list(f: AppointmentFilter)",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L61"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "APT-9: by doctor or patient, date range (hospital-local days) and status.",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L24"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AppointmentStatus, AppointmentSummary } from '../types';",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L3"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"Page\"",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:Page"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/appointments/:id\"",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/appointments/:id"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "because both queries share one filter builder",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#overview"
+        },
+        {
+          "quote": "const where: string[] = [];",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L61-L73"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State in CO-1 that the WHERE builder in list() is extracted into a private helper used by both list and countByStatus.",
+      "text": "Overview says both queries share one filter builder, but AppointmentRepo.list builds its WHERE clause inline; no shared builder exists yet, so CO-1 must extract one."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "plus `status_counts` on the appointments list response type.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#components"
+        },
+        {
+          "quote": "Promise<Page<AppointmentSummary>>",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L25"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Name the new type, e.g. Page<AppointmentSummary> & { status_counts: AppointmentStatusCounts }, for both API service and web client.",
+      "text": "The changed response types are not named: the service returns Page<AppointmentSummary> today, and CO-5 only says 'the appointments list response type' without its name or definition."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "`AppointmentRepo.countByStatus(filter)`",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#components"
+        },
+        {
+          "quote": "limit: number;",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L46-L47"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Give the signature, e.g. countByStatus(f: Omit<AppointmentFilter, 'status' | 'limit' | 'offset'>).",
+      "text": "countByStatus(filter) takes AppointmentFilter, which requires limit and offset; the design does not say how those are dropped for the count query."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "That is cheap next to the list query on the same indexes",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#overview"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "The performance trade-off claims the GROUP BY runs on the same indexes as the list query, with no citation to the schema or indexes."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "export const STATUS_LABEL: Record<AppointmentStatus, string> = {",
+          "ref": "sample-system:web/src/lib/format.ts#L36-L41"
+        },
+        {
+          "quote": "renders the four counts in the order Scheduled, Completed, Cancelled, No-show",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#components"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Have CO-7 render labels from STATUS_LABEL from web/src/lib/format.ts.",
+      "text": "CO-7 does not say to reuse the existing STATUS_LABEL map, which already holds the four labels in the required order, including 'No-show'."
+    }
+  ],
+  "package_sha256": "551c140465e4a560eb8a1495bc298b91e78b7fdb8fbff9c1fe81b23c956adbd6",
+  "questions": [],
+  "recorded_at": "2026-11-22T15:30:12Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Extends the existing route, service, repo, types, client and page along the routes/services/repositories layering; no new infrastructure or modules.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-4 and their ACs are all addressed: zero fill, status ignored, all pages, same TZ bounds, links with status and page=1, table/paging untouched.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "status_counts fields have name, type, nullability, format and example; the changed list response type names (service Page<AppointmentSummary>, web list type) and countByStatus signature are left vague.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices are cited or decided by A-03..A-05 with the conventions mismatch recorded; a shared filter builder and index cost are stated as fact without proof.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs cover inline vs new endpoint, extra query cost, inline vs shared component and the total/sum relation.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, consistent ids between front matter and body.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
