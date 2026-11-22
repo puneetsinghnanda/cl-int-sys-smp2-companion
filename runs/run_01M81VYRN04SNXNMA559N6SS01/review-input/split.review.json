@@ -1,0 +1,77 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "a228d945f92420148518c8c4f299028f0399568c17ad08843516215dd6eb0b18",
+  "package_sha256": "6d35a0515f768c554cf403e93251592704e2fcec4eebd77e992afc21b9d26cd3",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All eleven known REQs (REQ-1..REQ-11) are traced by at least one story; no assumed REQs exist."},
+    {"id": "SS-R2", "score": 4, "reason": "Stories are small and mostly single-outcome; S-1 bundles display, order, Status-filter independence and zero counts, which is acceptable but broad."},
+    {"id": "SS-R3", "score": 3, "reason": "ACs are Given/When/Then, but S-2 AC4 is a tautology, the date-range AC does not catch an exclusive-end bug, and REQ-4's patient-filter exclusion has no case."},
+    {"id": "SS-R4", "score": 5, "reason": "Counts 4/25/3/2 and total 34 come from the ticket example; 20 and 21 derive from the 20-per-page rule in REQ-10."},
+    {"id": "SS-R5", "score": 4, "reason": "Clear, consistent status terms; a few regression ACs rely on 'as before the change' rather than an observable expectation."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "S-2 AC4 asserts fixed arithmetic (4+25+3+2=34) instead of checking the displayed counts against the displayed total; it cannot fail if counts are computed differently from the list query, the risk req.md names.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2", "quote": "then 4 + 25 + 3 + 2 = 34, so the four counts add up to the total shown"},
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#summary", "quote": "counts drifting from the total if they are computed differently from the list query"}
+      ],
+      "suggested_fix": "Given the S-1 appointments (4/25/3/2) plus one outside the date range, with Any status, then the total reads \"34 appointment(s)\" and the four displayed counts sum to that displayed total."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "completeness",
+      "text": "REQ-4 date-range boundary only tests an appointment one day after the range; an implementation treating the end date as exclusive passes. No AC checks an appointment on the last day of the range is counted.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2", "quote": "Given a doctor who has a Completed appointment one day after the end of the selected date range"},
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-4", "quote": "The counts cover every appointment that matches the current doctor, patient and date range filters, not only the current page."}
+      ],
+      "suggested_fix": "Add an AC: a Completed appointment on the last day of the range is included in the Completed count, alongside the one-day-after exclusion."
+    },
+    {
+      "id": "F-3",
+      "severity": "major",
+      "category": "completeness",
+      "text": "REQ-4 names doctor and patient filters, but the exclusion case covers only another doctor's appointments; no AC shows a patient list's counts exclude other patients' appointments.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2", "quote": "then the Scheduled count includes only the first doctor's appointments"},
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-4", "quote": "The counts cover every appointment that matches the current doctor, patient and date range filters, not only the current page."}
+      ],
+      "suggested_fix": "Add an AC: given another patient has appointments in the same range, the first patient's list counts only that patient's appointments."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "style",
+      "text": "S-4 AC1 and AC3 state the expected result as 'exactly as before the change' / 'as before the change' rather than an observable outcome, which makes them harder to check.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-4", "quote": "then the table rows and the total change to the new range as before the change"}
+      ],
+      "suggested_fix": "State the observable result, e.g. rows only within the new range, ordered by start time ascending, and the total equal to that row count."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-2", "quote": "The counts appear in the order Scheduled, Completed, Cancelled, No-show."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-4", "quote": "filters, not only the current page."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-5", "quote": "The counts ignore the Status filter, so all four statuses are always shown."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "runs/run_01M81VYRN04SNXNMA559N6SS01/ide-answers.md#a-01", "quote": "- answer: Yes, confirm"}, {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-7", "quote": "keeping the doctor or patient and date range filters and showing page 1"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-8", "quote": "the four counts add up to the total shown"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-10", "quote": "The 20-per-page paging of the list is unchanged."}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,61 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "then 4 + 25 + 3 + 2 = 34, so the four counts add up to the total shown",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2"
+        },
+        {
+          "quote": "counts drifting from the total if they are computed differently from the list query",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#summary"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-2 AC4 asserts fixed arithmetic (4+25+3+2=34) instead of checking the displayed counts against the displayed total; it cannot fail if counts are computed differently from the list query, the risk req.md names."
+    },
+    {
+      "cites": [
+        {
+          "quote": "Given a doctor who has a Completed appointment one day after the end of the selected date range",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2"
+        },
+        {
+          "quote": "The counts cover every appointment that matches the current doctor, patient and date range filters, not only the current page.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-4"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "REQ-4 date-range boundary only tests an appointment one day after the range; an implementation treating the end date as exclusive passes. No AC checks an appointment on the last day of the range is counted."
+    },
+    {
+      "cites": [
+        {
+          "quote": "then the Scheduled count includes only the first doctor's appointments",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2"
+        },
+        {
+          "quote": "The counts cover every appointment that matches the current doctor, patient and date range filters, not only the current page.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-4"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "REQ-4 names doctor and patient filters, but the exclusion case covers only another doctor's appointments; no AC shows a patient list's counts exclude other patients' appointments."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-3"
+  ],
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "feedback.v1",
+  "step": "split"
+}
