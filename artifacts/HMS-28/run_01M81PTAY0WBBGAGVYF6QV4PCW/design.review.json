@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "193b38178793d3c5851da05b4b35749e7c589a98b54758202a5e9596b3eff3ae",
-  "attempt": 1,
+  "artifact_sha256": "6da6e924c4da45ca038fca32ca4d30d8ecf05f857d56510c1a5fb2e9789a0efc",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -161,34 +161,29 @@
       ],
       "claim_id": "C16",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "correctness",
       "cites": [
         {
-          "quote": "reads `weekday` with the existing Fields integer helper (min 1, max 7)",
-          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#components"
-        },
+          "quote": "const status = f.oneOf('status', RECORD_STATUSES);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L42"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
         {
           "quote": "if (typeof v !== 'number' || !Number.isInteger(v)) return this.fail(name, 'must be a whole number');",
           "ref": "sample-system:api/src/lib/validate.ts#L56"
-        },
-        {
-          "quote": "res.json(await ctx(req).services.doctors.list(req.query, parsePage(req.query.page)));",
-          "ref": "sample-system:api/src/routes/doctors.ts#L16"
-        },
-        {
-          "quote": "typeof query.departmentId === 'string' && query.departmentId ? Number(query.departmentId) : undefined",
-          "ref": "sample-system:api/src/services/doctorService.ts#L37"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Parse weekday like departmentId (string to Number, integer and 1..7 check, f.fail('weekday', ...)) or f.oneOf('weekday', ['1'..'7']) then Number; mark the parse as Known with the validate.ts citation.",
-      "text": "CO-3 reads weekday with Fields.int, but Fields.int rejects any non-number and req.query values are strings, so every valid weekday (e.g. \"6\") would fail 400 'must be a whole number'. The existing id filters parse with Number() instead."
-    },
+      "claim_id": "C18",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
       "category": "consistency",
       "cites": [
@@ -201,35 +196,32 @@
           "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#components"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Split CO-8 into a web client component and an api router component, or note both modules.",
-      "text": "CO-8 is filed under module sample-system:web, but it also covers doctorsRouter in api/src/routes/doctors.ts, which is in the api module."
+      "suggested_fix": "Split CO-8 into a web client component and an api router component, or record both modules.",
+      "text": "Previous F-2 is still open: CO-8 is filed under module sample-system:web but also covers doctorsRouter in api/src/routes/doctors.ts, which is in the api module. The resolves list does not address it."
     },
     {
-      "category": "other",
+      "category": "style",
       "cites": [
         {
-          "quote": "the name and coding of the weekday in the page address follow the existing filter keys and the stored weekday coding; design picks them",
-          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#known"
+          "quote": "type: \"integer (query parameter, sent as a string)\"",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#endpoints"
         },
         {
-          "quote": "weekday: 1 = Monday .. 7 = Sunday.",
-          "ref": "sample-system:db/migrations/20261016T090100__create_doctors.sql#L21"
-        },
-        {
-          "quote": "Q-03: Which query parameter (API and page address) should carry the chosen weekday?",
-          "ref": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-05"
+          "quote": "example: 6",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#endpoints"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "text": "Q-03 (A-05) asked which parameter carries the weekday, though req.md already left it to design with a default of the existing filter keys and the stored 1..7 coding, which the migration fixes."
+      "suggested_fix": "Give the example as the query form, e.g. \"weekday=6\".",
+      "text": "EP-1 weekday says it is sent as a string and is one of \"1\" to \"7\", but its example is the bare number 6 rather than \"6\" (or weekday=6), which leaves the wire form slightly unclear."
     }
   ],
-  "package_sha256": "5759592c13fdb2820b2f862dd9436e9637e1426b4e398968147ea4f4668d2acc",
+  "package_sha256": "8d8d80da63d519a407894aa717b9706c30f137757856b5b8ad30727f16727856",
   "questions": [],
-  "recorded_at": "2026-11-22T13:50:11Z",
+  "recorded_at": "2026-11-22T13:53:50Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -240,36 +232,36 @@
   "rubric_items": [
     {
       "id": "DS-R1",
-      "reason": "Built entirely on existing DoctorRepo, DoctorService, DoctorListRow types, DoctorsPage, WEEKDAYS and the existing GET /api/doctors; no new endpoint, table or migration; follows routes/services/repositories layering.",
+      "reason": "Built on the existing DoctorRepo, DoctorService, both DoctorListRow types, DoctorsPage, WEEKDAYS and GET /api/doctors. No new endpoint, table or migration. Keeps the routes/services/repositories layering and the client-only web access.",
       "score": 5
     },
     {
       "id": "DS-R2",
-      "reason": "Every story S-1..S-6 is mapped to components, but as written the weekday parse (Fields.int on a string query value) would reject every chosen weekday, breaking S-2, S-3, S-4 and S-6 until fixed.",
-      "score": 4
+      "reason": "S-1 to S-6 are each mapped to components. With the oneOf parse, every weekday filter AC now works: the EXISTS condition in the shared WHERE covers S-3 and S-6 AC3, and the set helper plus search params cover S-4.",
+      "score": 5
     },
     {
       "id": "DS-R3",
-      "reason": "weekday and items[].weekdays have name, type, nullability, format and example; the parsing rule for the string query value is wrong, so the 400 behaviour is not exactly testable as specified.",
-      "score": 4
+      "reason": "weekday and items[].weekdays each give name, type, nullability, format and example. The 400 rule is exact: oneOf over \"1\"..\"7\", with absent or empty meaning Any day. The CO-2 SQL and Map contract are concrete.",
+      "score": 5
     },
     {
       "id": "DS-R4",
-      "reason": "Most choices are cited or decided by A-01..A-05, but the claim that the existing Fields integer helper parses the query weekday is stated as Known without a citation and contradicts validate.ts.",
-      "score": 3
+      "reason": "Every component cites module-map symbols, product lines or IDE answers. The parse choice is now backed by validate.ts#L56 and doctorService.ts#L42. A-03 to A-05 match ide-answers.md. Nothing is invented.",
+      "score": 5
     },
     {
       "id": "DS-R5",
-      "reason": "EXISTS vs JOIN, separate per-page weekdays query, with_today coupling and 1..7 link coding are each explained with their cost.",
+      "reason": "Explains with costs: EXISTS vs JOIN, a separate per-page weekdays query, the with_today coupling, 1..7 link coding, and oneOf vs Fields.int.",
       "score": 5
     },
     {
       "id": "DS-R6",
-      "reason": "Clear story-to-component map, consistent ids and readable sections; only a small module label slip on CO-8.",
-      "score": 5
+      "reason": "Clear story-to-component map and consistent ids. CO-8 is still filed under the web module although it also covers the api router.",
+      "score": 4
     }
   ],
-  "rubric_score": 4.25,
+  "rubric_score": 4.95,
   "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
   "schema": "review.v1",
   "status": "ok",

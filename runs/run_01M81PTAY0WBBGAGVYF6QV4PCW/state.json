@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-22T13:50:18Z",
+  "heartbeat_at": "2026-11-22T13:53:57Z",
   "owner": "key_01M77FBDN0DQ96SZ33BBPACWN4",
   "owner_pseudonym": "eng-1df5",
   "pack": {
@@ -47,7 +47,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 24,
+  "rev": 27,
   "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -175,7 +175,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md",
+          "artifact": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/history/design/a1/design.md",
           "artifact_sha256": "193b38178793d3c5851da05b4b35749e7c589a98b54758202a5e9596b3eff3ae",
           "band": "High",
           "cause": "first",
@@ -195,11 +195,38 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.verification.json",
+          "record": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/history/design/a1/design.verification.json",
           "skill": "design@1.9.0",
           "skill_started_at": "2026-11-22T13:42:33Z",
           "started_at": "2026-11-22T13:42:22Z",
           "write_rejects": 1
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md",
+          "artifact_sha256": "6da6e924c4da45ca038fca32ca4d30d8ecf05f857d56510c1a5fb2e9789a0efc",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-22T13:53:57Z",
+          "feedback": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/feedback/design.a1.json",
+          "inputs": [
+            {
+              "name": "stories",
+              "sha256": "2a67d6bac48a0f331a38dd9686cc75735f7f339ab7c2b0be8ed789c19e99fa98",
+              "step": "split"
+            },
+            {
+              "name": "intent",
+              "sha256": "35b81b83af2e9a6dfa955d70288cccd1ced2f5904e2cd3b03a6218dd1e9703c7",
+              "step": "req"
+            }
+          ],
+          "n": 2,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.verification.json",
+          "skill": "design@1.9.0",
+          "skill_started_at": "2026-11-22T13:50:38Z",
+          "started_at": "2026-11-22T13:50:31Z"
         }
       ],
       "budget_used": {
@@ -210,7 +237,7 @@
       },
       "id": "design",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -257,7 +284,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-28",
-  "updated_at": "2026-11-22T13:50:18Z",
+  "updated_at": "2026-11-22T13:53:57Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }

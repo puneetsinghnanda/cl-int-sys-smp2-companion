@@ -1,0 +1,277 @@
+{
+  "artifact_sha256": "193b38178793d3c5851da05b4b35749e7c589a98b54758202a5e9596b3eff3ae",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export interface DoctorFilter {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L54"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class DoctorRepo {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L74"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class DoctorService {",
+          "ref": "sample-system:api/src/services/doctorService.ts#L26"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface DoctorListRow extends DoctorSummary {",
+          "ref": "sample-system:api/src/types.ts#L46"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface DoctorListRow extends DoctorSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L44"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function DoctorsPage() {",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L15"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];",
+          "ref": "sample-system:web/src/lib/format.ts#L3"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "res.json(await ctx(req).services.doctors.list(req.query, parsePage(req.query.page)));",
+          "ref": "sample-system:api/src/routes/doctors.ts#L16"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "query({ ...params, with_today: 'true' })",
+          "ref": "sample-system:web/src/api/client.ts#L61"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SELECT count(*) AS n FROM doctor d ${clause}",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L92"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY lower(d.full_name), d.id",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L94"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (!withToday) return { items, page, page_size: size, total };",
+          "ref": "sample-system:api/src/services/doctorService.ts#L54"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const [params, setParams] = useSearchParams();",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L16"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "weekday: 1 = Monday .. 7 = Sunday.",
+          "ref": "sample-system:db/migrations/20261016T090100__create_doctors.sql#L21"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Invalid input is 400 with one",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "reads `weekday` with the existing Fields integer helper (min 1, max 7)",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#components"
+        },
+        {
+          "quote": "if (typeof v !== 'number' || !Number.isInteger(v)) return this.fail(name, 'must be a whole number');",
+          "ref": "sample-system:api/src/lib/validate.ts#L56"
+        },
+        {
+          "quote": "res.json(await ctx(req).services.doctors.list(req.query, parsePage(req.query.page)));",
+          "ref": "sample-system:api/src/routes/doctors.ts#L16"
+        },
+        {
+          "quote": "typeof query.departmentId === 'string' && query.departmentId ? Number(query.departmentId) : undefined",
+          "ref": "sample-system:api/src/services/doctorService.ts#L37"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Parse weekday like departmentId (string to Number, integer and 1..7 check, f.fail('weekday', ...)) or f.oneOf('weekday', ['1'..'7']) then Number; mark the parse as Known with the validate.ts citation.",
+      "text": "CO-3 reads weekday with Fields.int, but Fields.int rejects any non-number and req.query values are strings, so every valid weekday (e.g. \"6\") would fail 400 'must be a whole number'. The existing id filters parse with Number() instead."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "api.doctorsWithToday and doctorsRouter (pass-through)",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-8"
+        },
+        {
+          "quote": "The router in api/src/routes/doctors.ts passes `req.query` to the service (C8).",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#components"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Split CO-8 into a web client component and an api router component, or note both modules.",
+      "text": "CO-8 is filed under module sample-system:web, but it also covers doctorsRouter in api/src/routes/doctors.ts, which is in the api module."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "the name and coding of the weekday in the page address follow the existing filter keys and the stored weekday coding; design picks them",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#known"
+        },
+        {
+          "quote": "weekday: 1 = Monday .. 7 = Sunday.",
+          "ref": "sample-system:db/migrations/20261016T090100__create_doctors.sql#L21"
+        },
+        {
+          "quote": "Q-03: Which query parameter (API and page address) should carry the chosen weekday?",
+          "ref": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-05"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "text": "Q-03 (A-05) asked which parameter carries the weekday, though req.md already left it to design with a default of the existing filter keys and the stored 1..7 coding, which the migration fixes."
+    }
+  ],
+  "package_sha256": "5759592c13fdb2820b2f862dd9436e9637e1426b4e398968147ea4f4668d2acc",
+  "questions": [],
+  "recorded_at": "2026-11-22T13:50:11Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built entirely on existing DoctorRepo, DoctorService, DoctorListRow types, DoctorsPage, WEEKDAYS and the existing GET /api/doctors; no new endpoint, table or migration; follows routes/services/repositories layering.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story S-1..S-6 is mapped to components, but as written the weekday parse (Fields.int on a string query value) would reject every chosen weekday, breaking S-2, S-3, S-4 and S-6 until fixed.",
+      "score": 4
+    },
+    {
+      "id": "DS-R3",
+      "reason": "weekday and items[].weekdays have name, type, nullability, format and example; the parsing rule for the string query value is wrong, so the 400 behaviour is not exactly testable as specified.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Most choices are cited or decided by A-01..A-05, but the claim that the existing Fields integer helper parses the query weekday is stated as Known without a citation and contradicts validate.ts.",
+      "score": 3
+    },
+    {
+      "id": "DS-R5",
+      "reason": "EXISTS vs JOIN, separate per-page weekdays query, with_today coupling and 1..7 link coding are each explained with their cost.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear story-to-component map, consistent ids and readable sections; only a small module label slip on CO-8.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
