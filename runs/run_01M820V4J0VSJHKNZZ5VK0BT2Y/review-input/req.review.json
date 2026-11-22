@@ -1,0 +1,70 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "d970576e048aa037a9ebd47efc879fe8e0b4bac02f0aa652abd98bc55edb9e2c",
+  "package_sha256": "9cf94234413bfa429f624124266a13744f6c070ffba866eb409bebc8a73ae6ea",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.5,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All six acceptance criteria map to REQ-1..REQ-11; AC5 split into REQ-9/REQ-10; out-of-scope items carry reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "REQs are checkable; REQ-7 bundles specialization and department while REQ-1/REQ-2 split them per field."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites the ticket, baseline or data model; REQ-7 cites the user's answer A-01 with a recorded mismatch."},
+    {"id": "RR-R4", "score": 4, "reason": "Inactive reference list case was asked (A-01). C7 (closed appointments never change) is claimed but its relation to REQ-5 current details is not discussed."},
+    {"id": "RR-R5", "score": 4, "reason": "Q-02 is non-blocking with real options, but is partly answered by the glossary (Paise, Inactive entries) and off the ticket's asks."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable; glossary table marks Consultation fee not found though Paise covers fee storage."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "U-1/Q-02 say the glossary does not cover fees or the reference lists, but the glossary has Paise (fees in integer paise) and Inactive (department or specialization). Q-02 is partly answered by the context pack.",
+      "cites": [
+        {"ref": "context/glossary.md#paise", "quote": "Fees are stored and sent as integer paise."},
+        {"ref": "context/glossary.md#inactive", "quote": "A doctor, patient, department or specialization kept for history but not offered for new use."},
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#L111", "quote": "The glossary has no entry for `Specialization`, Department or Consultation fee"}
+      ],
+      "suggested_fix": "Note the existing Paise and Inactive entries in U-1 and narrow Q-02 to the terms truly missing, or drop it as not needed for HMS-31."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-7 covers both specialization and department in one REQ, while REQ-1 and REQ-2 are split per field; splitting keeps one behaviour per REQ.",
+      "cites": [
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#L83", "quote": "When the doctor's specialization or department is Inactive, the appointment page shows its name followed by `(Inactive)`."}
+      ],
+      "suggested_fix": "Split REQ-7 into one REQ for an Inactive specialization and one for an Inactive department, both citing A-01."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C7 (closed appointments never change) is claimed but no REQ or note uses it; the artifact does not say why showing current doctor details on closed appointments (REQ-5) does not clash with it.",
+      "cites": [
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#claim:C7", "quote": "Completed, Cancelled and No-show appointments `never change`."},
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#L71", "quote": "The shown values are the doctor's current details, also for `Completed`, Cancelled and No-show appointments."}
+      ],
+      "claim_ref": "C7",
+      "suggested_fix": "Add a note that REQ-5 only reads doctor data for display and does not change the closed appointment, linking C7, or drop C7."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ticket.md#L17-L18", "quote": "The appointment page shows the appointment's time, doctor name, patient name, reason for visit,"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ticket.md#L19", "quote": "department and fee are shown only on the doctors list and the doctor page"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/data-model.md#doctors", "quote": "A doctor has one specialization, one department, a fee in integer paise"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/data-model.md#reference-lists", "quote": "An entry used by a doctor is set Inactive instead of deleted."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "appointments never change."}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_sha256": "d970576e048aa037a9ebd47efc879fe8e0b4bac02f0aa652abd98bc55edb9e2c",
+  "attempt": 1,
+  "finished_at": "2026-11-22T16:24:51Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [],
+  "product_changes": null,
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "RR-C10",
+      "pass": true
+    },
+    {
+      "id": "RR-C11",
+      "pass": true
+    },
+    {
+      "id": "RR-C12",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-22T16:24:51Z",
+  "step": "req",
+  "tool_log_sha256": "2914f86f5e19622909f70f7431169feae71210318c64d63d7c125633d2242bb5",
+  "tsl_version": "0.1.7",
+  "verifier": null
+}
