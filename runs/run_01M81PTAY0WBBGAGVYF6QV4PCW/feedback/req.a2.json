@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "and the rest of the doctor list (columns, search, filters, Today count) is unchanged",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#item:REQ-12"
+        },
+        {
+          "quote": "Inactive doctors show their weekdays too; the status filter works as before.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L35"
+        },
+        {
+          "quote": "7. The rest of the doctor list is unchanged.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L36"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-12 is compound: it merges 'status filter works as before' (AC6) with 'rest of the doctor list is unchanged' (AC7), two separately testable behaviours."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "feedback.v1",
+  "step": "req"
+}

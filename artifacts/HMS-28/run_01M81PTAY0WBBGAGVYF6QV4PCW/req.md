@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M81PTAY0WBBGAGVYF6QV4PCW
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.4.0
 inputs:
   - path: artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md
@@ -15,35 +15,29 @@ pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
 claims:
   - id: C1
-    text: "The doctor list screen is the `/doctors` route of the web app."
-    cites: ["context/generated/api-inventory.json#ui:/doctors"]
+    text: "The doctor list (`DOC-2`) shows code, name, specialization, department, fee and status."
+    cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L17"]
   - id: C2
-    text: "The doctor list is served by the list endpoint in `api/src/routes/doctors.ts`."
-    cites: ["context/generated/api-inventory.json#http:GET:/api/doctors"]
+    text: "Weekly availability is shown today only on the doctor's own page (`DOC-3`)."
+    cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L19"]
   - id: C3
-    text: "Availability blocks store the weekday as `1 = Monday .. 7 = Sunday`."
-    cites: ["sample-system:db/migrations/20261016T090100__create_doctors.sql#L21"]
-  - id: C4
-    text: "The `availability_block` table holds one row per block with doctor, weekday, start time and end time."
-    cites: ["context/generated/db-schema.json#table:availability_block"]
-  - id: C5
-    text: "Lists in the system answer `20 per page`."
-    cites: ["context/conventions.md#lists"]
-  - id: C6
-    text: "The doctor list already has a `Today` column (HMS-6) after Status."
-    cites: ["sample-system:web/src/pages/DoctorsPage.tsx#L74"]
-  - id: C7
-    text: "The doctor list keeps its filters in the page address through `useSearchParams`."
-    cites: ["sample-system:web/src/pages/DoctorsPage.tsx#L16"]
-  - id: C8
     text: "An availability block is a weekly window with a `weekday`, start time and end time."
     cites: ["context/glossary.md#availability-block"]
-  - id: C9
-    text: "An `Inactive` doctor is kept for history but not offered for new use."
+  - id: C4
+    text: "Availability blocks are in hospital local time; the hospital zone is `Asia/Kolkata`."
+    cites: ["context/intent-baseline.md#constraints"]
+  - id: C5
+    text: "An Inactive doctor is `kept for history` but not offered for new use."
     cites: ["context/glossary.md#inactive"]
-  - id: C10
+  - id: C6
     text: "In the MVP every front-desk user acts as `staff`."
     cites: ["context/glossary.md#front-desk-staff"]
+  - id: C7
+    text: "The doctor list already has a `Today` column after Status."
+    cites: ["runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-01"]
+  - id: C8
+    text: "Booking rules allow a slot only inside the doctor's `availability`; this ticket does not change them."
+    cites: ["context/intent-baseline.md#booking-rules"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 assumed: []
@@ -156,12 +150,11 @@ glossary:
 ## Summary
 HMS-28 asks for the doctor list (DOC-2) to show, per doctor, the weekdays on which they have at
 least one availability block, and to add a "Works on" filter that narrows the list to doctors who
-work on one chosen weekday. The filter must combine with the existing search and filters, keep the
-name order and 20-per-page paging with a correct page count, and live in the page address. The
-main risk is paging: the weekday filter has to be applied where the list is counted (the list
-endpoint in `api/src/routes/doctors.ts`, C2), not only in the screen, or the page count will be
-wrong. The stored weekday coding (`1 = Monday .. 7 = Sunday`, C3) matches the required display
-order Mon to Sun.
+work on one chosen weekday. Today, availability is visible only on each doctor's own page (DOC-3,
+C2). The filter must combine with the existing search and filters, keep the name order and
+20-per-page paging with a correct page count, and live in the page address. The main risk is
+paging: the weekday filter has to be applied where the list is counted, not only on screen, or the
+page count will be wrong.
 
 ## Requirements
 - REQ-1 Works on column lists working weekdays (known): column "Works on" shows weekdays with at least one availability block.
@@ -175,15 +168,15 @@ order Mon to Sun.
 - REQ-9 Page count reflects the filter (known): total and pages count only matching doctors.
 - REQ-10 Chosen weekday kept in the page address (known): back navigation and copied links keep the filter.
 - REQ-11 Inactive doctors show their weekdays (known).
-- REQ-12 Status filter and rest of list unchanged (known): including the existing Today column.
+- REQ-12 Status filter and rest of list unchanged (known): including the existing Today column (C7).
 - REQ-13 Works on column position (known): after Status, before Today.
 - REQ-14 Filter options use full weekday names (known): "Any day", "Monday" … "Sunday".
 
 ## Known
-- REQ-1 to REQ-12: stated in the ticket acceptance criteria (ticket.md#L23-L36); REQ-8 also matches the list convention of 20 per page (C5).
+- REQ-1 to REQ-12: stated in the ticket acceptance criteria (ticket.md#L23-L36).
 - REQ-13: decided by the user in the IDE (A-01).
 - REQ-14: assumption confirmed by the user in the IDE (A-02).
-- Default (not a question): the weekday in the page address uses the stored coding `1 = Monday .. 7 = Sunday` (C3). Trade-off: compact and matches the database, but less readable in a link than a day name; design may choose otherwise.
+- Default (not a question): the name and coding of the weekday in the page address follow the existing filter keys and the stored weekday coding; design picks them. Trade-off: consistent with neighbouring filters, but a coded value is less readable in a link than a day name.
 
 ## Assumed
 None
@@ -200,5 +193,5 @@ Answered in the IDE:
 
 ## Out of scope
 - The doctor's own page (DOC-3) and how availability is edited there: the ticket only reads availability on the list.
-- Filtering by time of day or by free slots: the ticket asks only for "at least one availability block" on a weekday; booking rules and slot calculation are unchanged.
+- Filtering by time of day or by free slots: the ticket asks only for "at least one availability block" on a weekday; booking rules and slot calculation are unchanged (C8).
 - No instruction-like text and no credentials or personal data were found in the inputs.

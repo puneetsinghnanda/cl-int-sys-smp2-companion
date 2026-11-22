@@ -1,0 +1,84 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "step": "req",
+  "attempt": 2,
+  "artifact_sha256": "500d8661757c6e450cd27ebd7ef021ef9ec7b49f8bdca7f303c28a4f12d05f4c",
+  "package_sha256": "76a851f2cb6919c9aca657f310acaf4af65b21d9e614a53fe86d7177598db65b",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.5,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All seven acceptance criteria map to REQ-1..REQ-12; column placement and filter labels are decided via A-01/A-02; out-of-scope items have reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and checkable; REQ-12 merges AC6's status-filter behaviour with AC7's 'rest unchanged' into one requirement."},
+    {"id": "RR-R3", "score": 4, "reason": "Statuses are cited to ticket lines or IDE answers; C7 and the 'Today count' in REQ-12 rest on the skill's own question text rather than a product-code cite."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash with goals, constraints or booking rules found; the ticket-vs-product gap (Today column) was raised and answered in A-01."},
+    {"id": "RR-R5", "score": 5, "reason": "Two precise questions with real options, both answered by an engineer; no needless blocking questions remain."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable; minor overlap between REQ-4 and REQ-14 and 'Today count' vs 'Today column' wording."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "REQ-12 is compound: it merges 'status filter works as before' (AC6) with 'rest of the doctor list is unchanged' (AC7), two separately testable behaviours.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#item:REQ-12", "quote": "and the rest of the doctor list (columns, search, filters, Today count) is unchanged"},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L35", "quote": "Inactive doctors show their weekdays too; the status filter works as before."},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L36", "quote": "7. The rest of the doctor list is unchanged."}
+      ],
+      "suggested_fix": "Split REQ-12 into one REQ for the status filter behaving as before and one for the rest of the doctor list being unchanged."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C7 (existing Today column) is cited to A-01, but that fact is the skill's own question text; the user only chose a position. REQ-12 also names 'Today count' citing only ticket lines, which never mention Today.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#claim:C7", "quote": "The doctor list already has a `Today` column after Status."},
+        {"ref": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-01", "quote": "(added by HMS-6; the ticket doesn't mention it)"}
+      ],
+      "claim_ref": "C7",
+      "suggested_fix": "Cite the product code or PRD line that shows the Today column for C7, add that cite to REQ-12, and use 'Today column' consistently."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-4 and REQ-14 both specify the filter options ('Any day' plus Monday to Sunday); the overlap makes it unclear which REQ a test for option labels traces to.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#item:REQ-4", "quote": "new filter with \"Any day\" or one weekday, Monday to Sunday"},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#item:REQ-14", "quote": "REQ-14 Filter options use full weekday names (known)"}
+      ],
+      "suggested_fix": "Keep REQ-4 to the existence of the filter and its choices, and leave label wording to REQ-14."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C4 cites only the baseline constraints, which give the zone but not that availability blocks are in hospital local time; that part comes from the glossary.",
+      "cites": [
+        {"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."},
+        {"ref": "context/glossary.md#availability-block", "quote": "weekday, start time, end time, in hospital local time."}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "Add context/glossary.md#availability-block to C4's cites."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L17", "quote": "shows code, name, specialization, department, fee and status"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ticket.md#L19", "quote": "is shown only on the doctor's own page (DOC-3)"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#availability-block", "quote": "A weekly window when a doctor sees patients"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata"}, {"ref": "context/glossary.md#availability-block", "quote": "in hospital local time"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "user acts as `staff`."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-01", "quote": "Fee, Status and Today (added by HMS-6"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#booking-rules", "quote": "A slot is free only inside the doctor's availability"}]}
+  ],
+  "questions": []
+}

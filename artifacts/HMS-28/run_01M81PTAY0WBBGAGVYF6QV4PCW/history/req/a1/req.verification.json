@@ -1,0 +1,52 @@
+{
+  "artifact_path": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md",
+  "artifact_sha256": "add9d0750228ccf0626d6d73a705873eb608004a4d0cfa8c5430d50ae2c5b5d8",
+  "attempt": 1,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "66563c05e919a574c786b81521f4e7b77ecc1eb47eb3b7ea4f47238e8569bb29",
+  "claims": {
+    "total": 10,
+    "verified": 10
+  },
+  "decided_at": "2026-11-22T13:28:42Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H5"
+  ],
+  "inputs": [],
+  "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "376501caa57000be6120f5e3a4a6767cab1a5e818e19375b86468c21bbb48309",
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "YZpHunJPJmP-1cACLRf5QHSa2RD3c5Oghym1d3NyUbVT4YjyQ3ykaPC-Q1OaVFXyY3KAPYOVFIr0As2ICFj1Dw",
+  "skill": "requirement-review@1.4.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
