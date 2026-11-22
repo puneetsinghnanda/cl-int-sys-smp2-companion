@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "REQ-9, REQ-10, REQ-11, REQ-14, REQ-15]",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ut.md#L45"
+        },
+        {
+          "quote": "when front-desk staff choose status Inactive, then exactly the Inactive doctors are listed",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L146"
+        },
+        {
+          "quote": "REQ-12 Status filter works as before (known).",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#L177"
+        },
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-12 (status filter works as before, S-5 AC1: Any day + status Inactive lists exactly the Inactive doctors) has no HMS-28 test and is dropped from trace, yet Known says S-5 is covered. The strategy requires a test named for every requirement."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
