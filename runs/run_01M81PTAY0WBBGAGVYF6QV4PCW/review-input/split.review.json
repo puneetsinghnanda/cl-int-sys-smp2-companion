@@ -1,0 +1,87 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "a0d1c9a5bcb20ff5b875763d24ebdf1ae3c0e31674d1cf4e33cbd13df83a9cf2",
+  "package_sha256": "771af224a8f16246f1597fd8618f3bb7c044c4fb943794cd3dbb4ae27cebc674",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 3.75,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 4, "reason": "All 15 known REQs are traced, but REQ-7's specialization partition has no acceptance criterion."},
+    {"id": "SS-R2", "score": 4, "reason": "Stories are small and mostly one outcome each; S-3 bundles search, filter combination and paging but stays cohesive."},
+    {"id": "SS-R3", "score": 3, "reason": "Mostly Given/When/Then and discriminating (no-block doctor, duplicate weekday, count), but filter ACs miss the Sunday coding partition and duplicate rows from multiple blocks on the chosen weekday."},
+    {"id": "SS-R4", "score": 4, "reason": "20 per page and 21st doctor are sourced or derived inline; the status option label \"Any status\" is not found in the intent."},
+    {"id": "SS-R5", "score": 4, "reason": "Clear, consistent terms (Works on, Any day, front-desk staff); S-3 AC4 Given is awkwardly worded."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "Weekday is stored as 1 = Monday. Filter ACs use only Saturday and Friday, which have the same number under ISO and 0 = Sunday coding, so a wrong mapping passes. No AC filters on Sunday, and none puts Sunday with other days in the column order.",
+      "cites": [
+        {"ref": "context/data-model.md#L19", "quote": "weekday 1 = Monday, local wall-clock times"},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L113", "quote": "doctor A has an availability block on Saturday and doctor B has blocks only on Friday"},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L106", "quote": "Given an Inactive doctor with an availability block on Sunday"}
+      ],
+      "suggested_fix": "Add an S-2 AC choosing \"Sunday\" (and one with \"Monday\") with a non-matching doctor, and an S-1 AC whose doctor works Sunday and Monday expecting \"Mon, Sun\"."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "completeness",
+      "text": "No filter AC has a doctor with two blocks on the chosen weekday. A join-based filter (the likeliest wrong implementation) lists that doctor twice and inflates the total, and every S-2/S-3 AC would still pass.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#L80", "quote": "lists only the doctors who have `at least one availability block on` that weekday"},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L104", "quote": "two availability blocks on Tuesday (one in the morning, one in the afternoon)"}
+      ],
+      "suggested_fix": "Add an AC: a doctor with two Saturday blocks, filter \"Saturday\", the doctor is listed once and the total counts them once."
+    },
+    {
+      "id": "F-3",
+      "severity": "major",
+      "category": "completeness",
+      "text": "REQ-7 says Works on combines with search, department, specialization and status. S-3 has ACs for search, department and status, but none for the specialization filter.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#L86", "quote": "combines with search and the department, specialization and status"},
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L119", "quote": "choose \"Saturday\" and department Cardiology"}
+      ],
+      "suggested_fix": "Add an S-3 AC combining \"Saturday\" with a specialization filter that excludes one Saturday doctor."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "S-1 AC4 and S-3 AC3 use the status option label \"Any status\", which is not in the intent or the ticket. The test could target a label that does not exist.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L106", "quote": "open the doctor list with status \"Any status\""}
+      ],
+      "suggested_fix": "Name the status option as the existing DOC-2 filter does, or word it as 'with the status filter not narrowing the list'."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "style",
+      "text": "The S-3 AC4 Given is unclear. 'A 21st doctor by name' does not say that 21 doctors work Saturday, or that doctors who don't work Saturday sit between them by name.",
+      "cites": [
+        {"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L122", "quote": "Given a 21st doctor by name has an availability block on Saturday"}
+      ],
+      "suggested_fix": "Reword: 'Given 21 doctors have a Saturday block, and other doctors without one sort between them by name, ...'."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#claim:C1", "quote": "The doctor list (`DOC-2`) shows code, name, specialization, department, fee and status."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#claim:C7", "quote": "The doctor list already has a `Today` column after Status."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#availability-block", "quote": "A weekly window when a doctor sees patients: weekday, start time, end time"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#inactive", "quote": "kept for history but not offered for new use"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "user acts as `staff`."}]}
+  ],
+  "questions": []
+}

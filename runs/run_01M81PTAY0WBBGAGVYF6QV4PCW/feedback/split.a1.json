@@ -1,0 +1,65 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "weekday 1 = Monday, local wall-clock times",
+          "ref": "context/data-model.md#L19"
+        },
+        {
+          "quote": "doctor A has an availability block on Saturday and doctor B has blocks only on Friday",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L113"
+        },
+        {
+          "quote": "Given an Inactive doctor with an availability block on Sunday",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L106"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Weekday is stored as 1 = Monday. Filter ACs use only Saturday and Friday, which have the same number under ISO and 0 = Sunday coding, so a wrong mapping passes. No AC filters on Sunday, and none puts Sunday with other days in the column order."
+    },
+    {
+      "cites": [
+        {
+          "quote": "lists only the doctors who have `at least one availability block on` that weekday",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#L80"
+        },
+        {
+          "quote": "two availability blocks on Tuesday (one in the morning, one in the afternoon)",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L104"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "No filter AC has a doctor with two blocks on the chosen weekday. A join-based filter (the likeliest wrong implementation) lists that doctor twice and inflates the total, and every S-2/S-3 AC would still pass."
+    },
+    {
+      "cites": [
+        {
+          "quote": "combines with search and the department, specialization and status",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#L86"
+        },
+        {
+          "quote": "choose \"Saturday\" and department Cardiology",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L119"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "REQ-7 says Works on combines with search, department, specialization and status. S-3 has ACs for search, department and status, but none for the specialization filter."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-3"
+  ],
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "feedback.v1",
+  "step": "split"
+}
