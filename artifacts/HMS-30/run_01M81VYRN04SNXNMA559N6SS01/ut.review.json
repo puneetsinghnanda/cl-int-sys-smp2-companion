@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "35accbb890a9575ebfd62060b2f18beb03d970dffb50a45293bd82a855de6dd8",
-  "attempt": 1,
+  "artifact_sha256": "233f40ac7a87a1a5d553009cb68a2f3f93694789e0b1d448d03bed777dd8773e",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -35,8 +35,8 @@
     {
       "cites": [
         {
-          "quote": "APT-9: lists by doctor or patient, with date range and status, ordered by start",
-          "ref": "context/generated/test-layout.json#L27"
+          "quote": "\"path\": \"api/test/appointments.test.ts\"",
+          "ref": "context/generated/test-layout.json#L15"
         }
       ],
       "claim_id": "C4",
@@ -78,39 +78,22 @@
       "category": "completeness",
       "cites": [
         {
-          "quote": "S-4: covered by the API order/envelope and invalid-status tests and the web table/filter test.",
-          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ut.md#known"
-        },
-        {
-          "quote": "Given a doctor's list with 21 matching appointments, when staff open page 1, then the table shows 20 rows and the 21st appointment appears on page 2.",
+          "quote": "Given a patient's list, when staff change the date range filter, then the table rows and the total change to the new range as before the change.",
           "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-4"
         },
         {
-          "quote": "expect(page2.body.items).toHaveLength(0);",
-          "ref": "sample-system:api/test/appointments-status-counts.test.ts#L70"
+          "quote": "S-4: covered by the API 20-row paging, order/envelope and invalid-status tests and the web table/filter test.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ut.md#known"
+        },
+        {
+          "quote": "const p1 = await list({ patientId: '1', from: MONDAY, to: TUESDAY });",
+          "ref": "sample-system:api/test/appointments-status-counts.test.ts#L89"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add a test with 21 matching appointments for one doctor (21st No-show): assert page 1 has 20 rows, page 2 has the 21st, and page 1 NO_SHOW count includes it; or narrow the Known claims.",
-      "text": "S-2 AC1 and S-4 AC2 need 21 matching appointments (20 rows on page 1, 21st on page 2). The fixture has 5 rows, so page 2 is empty and no test checks 20-row paging or a page-2 row in the counts, yet the artifact lists S-4 and S-2 AC1 as covered."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "when staff read the counts and then change the date range and read them again, then each time the four displayed counts add up to the displayed total",
-          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2"
-        },
-        {
-          "quote": "expect(sum).toBe(res.body.total);",
-          "ref": "sample-system:api/test/appointments-status-counts.test.ts#L53"
-        }
-      ],
-      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Repeat the sum-equals-total and total assertions for a second range (e.g. MONDAY..WEDNESDAY).",
-      "text": "S-2 AC4 asks that counts add up to the total before and after changing the date range; the sum-equals-total check runs for one range only, and S-4 AC3 (rows and total follow a new range) has no dedicated assertion."
+      "suggested_fix": "Add a patient-list test that lists two ranges (e.g. MONDAY..MONDAY then MONDAY..TUESDAY) and asserts total, row count and sum of counts each time; or narrow the S-4 Known line.",
+      "text": "S-4 is listed as covered, but S-4 AC3 (a patient list's rows and total follow a date-range change) has no test: the patient-list test uses one range and checks counts only, never total or rows after a range change."
     },
     {
       "category": "correctness",
@@ -124,15 +107,15 @@
           "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Insert a late-evening appointment on the last local day directly (as done for Wednesday 01:00) and assert it is counted.",
-      "text": "The local-day boundary test's inclusion case is a Tuesday 11:45 (midday) slot, not the late-evening 23:30 local case S-2 AC2 describes, so it is weaker than the story's edge on the inclusion side."
+      "suggested_fix": "Insert a 23:30 local appointment on the last day directly (as done for Wednesday 01:00) and assert it is counted.",
+      "text": "Prior F-3 unchanged: the local-day boundary inclusion case is a Tuesday 11:45 midday slot, not the late-evening 23:30 local case S-2 AC2 describes, so the inclusion side of the edge is weaker than the story."
     }
   ],
-  "package_sha256": "5503dd87c237ae5b83612cb8037dc751c7a86336e169b2f4d169bef9f45cd86a",
+  "package_sha256": "bec3a8593b8b365e69d8abf805f0449e5f7b7311a42dd97a498da628cf8b00ca",
   "questions": [],
-  "recorded_at": "2026-11-22T15:40:20Z",
+  "recorded_at": "2026-11-22T15:43:56Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -143,31 +126,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "countByStatus, service status_counts and the page counts line/links are all tested; the multi-page 21-row cases (S-2 AC1, S-4 AC2) and the range-change sum check (S-2 AC4) are not exercised despite being listed as covered.",
+      "reason": "countByStatus, service status_counts and the counts line/links are tested; the new 21-appointment test closes the paging gap (prior F-1). S-4 AC3 (patient list rows and total follow a date-range change) still has no dedicated assertion.",
       "score": 4
     },
     {
       "id": "UT-R2",
-      "reason": "Assertions check exact count objects, key order, sum vs total, exact rendered line and link query params; the page-2 test only compares counts against an empty page from a 5-row fixture.",
-      "score": 4
+      "reason": "Assertions check exact count objects, key order, sum vs total, 20/1 row split with the 21st id and status on page 2, exact rendered line and link query params.",
+      "score": 5
     },
     {
       "id": "UT-R3",
-      "reason": "Zero counts, no matches, other doctor/patient, local-day boundary, status replacement, 400 invalid status and failed fetch are covered; the inclusion side of the day boundary uses a midday slot, not a late-evening one.",
+      "reason": "Zero counts, no matches, other doctor/patient, local-day exclusion, status replacement, 400 invalid status and failed fetch are covered; the inclusion side of the day boundary still uses an 11:45 slot, not late evening.",
       "score": 4
     },
     {
       "id": "UT-R4",
-      "reason": "Vitest+Supertest with own fresh database and injected clock for API, Vitest+jsdom+Testing Library with stubbed fetch and MemoryRouter for web; test names start with HMS-30 REQ-n.",
+      "reason": "Vitest+Supertest with own fresh database and injected clock for API; Vitest+jsdom+Testing Library with stubbed fetch and MemoryRouter for web; names carry HMS-30 REQ-n.",
       "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "No pass counts or coverage numbers are stated; the artifact defers results to checks.json and notes the verifier skips coverage, matching checks.json (coverage status skip).",
+      "reason": "No pass or coverage numbers are stated; results are deferred to checks.json and the artifact notes the verifier skips coverage, matching the coverage step status skip.",
       "score": 5
     }
   ],
-  "rubric_score": 4.25,
+  "rubric_score": 4.5,
   "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
   "schema": "review.v1",
   "status": "ok",

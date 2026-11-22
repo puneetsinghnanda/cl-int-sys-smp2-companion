@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M81VYRN04SNXNMA559N6SS01
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.3.0
 inputs:
   - path: artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/impl.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 53bbc4b9f09bc993ae3e93d8692364db7cb9fc10
-    head_sha: f0767a53e24593cebea462c07b5643f39a2d0277
-    diff_sha256: 0492f20c2385a6e58a08ebc58780dd1d89e6ba062aa13f19a9635082d089c701
+    head_sha: 3fb9a0e45b705db03a5103bbf6f5d98e2741bc70
+    diff_sha256: 79ed188c009a5bebc0a65d4dd096da57baec73c1f58bcb3bdd85d84235c46b00
     files:
       - api/test/appointments-status-counts.test.ts
       - web/src/__tests__/AppointmentsPage.test.tsx
@@ -50,22 +50,28 @@ known: [S-1, S-2, S-3, S-4]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "A new API test books 21 appointments so page 1 has 20 rows, the 21st No-show is on page 2, and the counts include it."}
 ---
 # Unit tests: HMS-30
 
 ## Summary
 New API and web tests cover the change in impl.md. The API tests cover `AppointmentRepo.countByStatus` and `AppointmentService.list`'s new `status_counts` through `GET /api/appointments`. The web tests cover the counts line and links in `AppointmentsPage`. Each changed path has a normal case and an edge or error case. Test data is the invented fixture from api/test/helpers.ts, plus "Test Patient/Doctor 001" names in the web test. tsl records the tests and coverage in checks.json when it runs the verifier (H3). The strategy says the verifier skips coverage (C7).
 
+Resolved review findings:
+- F-1: A new API test books 21 appointments so page 1 has 20 rows, the 21st No-show is on page 2, and the counts include it.
+
 ## Tests
 - api/test/appointments-status-counts.test.ts (own database, fixed clock):
   - HMS-30 REQ-1/REQ-2/REQ-8: a doctor list returns exactly SCHEDULED, COMPLETED, CANCELLED, NO_SHOW (in that order), and their sum equals the total (S-1 AC1, S-2 AC4).
   - HMS-30 REQ-5: with Status = CANCELLED the rows and total follow the filter, but the counts do not (S-1 AC2).
-  - HMS-30 REQ-4: page 2 returns no rows but the same counts as page 1 (S-2 AC1).
+  - HMS-30 REQ-4: page 2 of a short list returns no rows but the same counts as page 1.
+  - HMS-30 REQ-4/REQ-10 (S-2 AC1, S-4 AC2): 21 matches on Thursday–Friday give 20 rows on page 1. The 21st (a No-show) is on page 2, and the No-show count on page 1 already includes it.
   - HMS-30 REQ-4 edge: an appointment at 11:45 on the last day is counted. One at Wednesday 01:00 local (19:30 UTC Tuesday) is not, so the bound follows the local day, not the UTC date (S-2 AC2).
   - HMS-30 REQ-4/REQ-6: another doctor's appointments are excluded, and empty statuses are 0 (S-2 AC3, S-1 AC3).
   - HMS-30 REQ-4: patient lists count only that patient (S-2 AC5).
   - HMS-30 REQ-6 edge: no matches gives all four statuses as 0.
-  - HMS-30 REQ-9/REQ-10: start-time order and the `page`/`page_size` envelope are unchanged (S-4 AC1/AC2).
+  - HMS-30 REQ-9/REQ-10: start-time order and the `page`/`page_size` envelope are unchanged (S-4 AC1).
   - HMS-30 REQ-11 error: an invalid status is still a 400 field error (S-4 AC4).
 - web/src/__tests__/AppointmentsPage.test.tsx (jsdom, stubbed fetch):
   - HMS-30 REQ-1/REQ-2/REQ-3: the line reads exactly "34 appointment(s) · Scheduled 4 · Completed 25 · Cancelled 3 · No-show 2" (S-1 AC1).
@@ -77,9 +83,9 @@ New API and web tests cover the change in impl.md. The API tests cover `Appointm
 
 ## Known
 - S-1: covered by the API count-shape, Status-filter and zero tests, and by the web line, zero and link tests.
-- S-2: covered by the API paging, local-day boundary, other-doctor, other-patient and sum-equals-total tests.
+- S-2: covered by the API 21-appointment paging, local-day boundary, other-doctor, other-patient and sum-equals-total tests.
 - S-3: covered by the web link tests for doctor and patient lists.
-- S-4: covered by the API order/envelope and invalid-status tests and the web table/filter test.
+- S-4: covered by the API 20-row paging, order/envelope and invalid-status tests and the web table/filter test.
 
 ## Assumed
 None

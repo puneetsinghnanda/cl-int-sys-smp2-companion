@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "35accbb890a9575ebfd62060b2f18beb03d970dffb50a45293bd82a855de6dd8",
-  "attempt": 1,
-  "finished_at": "2026-11-22T15:38:57Z",
+  "artifact_sha256": "233f40ac7a87a1a5d553009cb68a2f3f93694789e0b1d448d03bed777dd8773e",
+  "attempt": 2,
+  "finished_at": "2026-11-22T15:42:47Z",
   "gates": [
     {
       "codes": [],
@@ -68,15 +68,15 @@
   "product_changes": [
     {
       "base_sha": "53bbc4b9f09bc993ae3e93d8692364db7cb9fc10",
-      "diff_sha256": "0492f20c2385a6e58a08ebc58780dd1d89e6ba062aa13f19a9635082d089c701",
+      "diff_sha256": "79ed188c009a5bebc0a65d4dd096da57baec73c1f58bcb3bdd85d84235c46b00",
       "files": [
         "api/test/appointments-status-counts.test.ts",
         "web/src/__tests__/AppointmentsPage.test.tsx"
       ],
-      "lines_added": 208,
+      "lines_added": 244,
       "lines_deleted": 0,
       "repo": "sample-system",
-      "tree_sha": "f0767a53e24593cebea462c07b5643f39a2d0277"
+      "tree_sha": "3fb9a0e45b705db03a5103bbf6f5d98e2741bc70"
     }
   ],
   "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
@@ -91,51 +91,51 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-22T15:37:44Z",
+  "started_at": "2026-11-22T15:41:36Z",
   "step": "ut",
-  "tool_log_sha256": "ed5bc80ec38a6da5e70b492d761299a59799327a121b80b0c832e92f13ff7280",
+  "tool_log_sha256": "ebd46840973dfa76f1493f9a939c7287d7c0de0b517828cf55c2b2dd7c9f30b0",
   "tsl_version": "0.1.7",
   "verifier": {
     "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
     "profile": "node-22@1",
     "steps": [
       {
-        "duration_ms": 10292,
+        "duration_ms": 10682,
         "exit_code": 0,
         "name": "build",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 26343,
+        "duration_ms": 27198,
         "exit_code": 0,
         "name": "test",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 4641,
+        "duration_ms": 4931,
         "exit_code": 0,
         "name": "lint",
         "report_sha256": "ffb7d4f0c08be488cec7db9bd8c3c260797e9cac2a53bc32e76d669c9e794e41",
         "status": "pass"
       },
       {
-        "duration_ms": 20202,
+        "duration_ms": 20571,
         "exit_code": 0,
         "name": "sast",
-        "report_sha256": "bbe4c5ceffcc494a1dc7765b99c78a3cb893e82e1966c232a0bb1eb4169e8fc9",
+        "report_sha256": "ba022d11de41f25d3becb4b47315d83206a55599033210e265d72b2c06ad8037",
         "status": "pass"
       },
       {
-        "duration_ms": 454,
+        "duration_ms": 507,
         "exit_code": 0,
         "name": "secrets",
         "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
         "status": "pass"
       },
       {
-        "duration_ms": 352,
+        "duration_ms": 380,
         "exit_code": 78,
         "name": "coverage",
         "report_sha256": null,
