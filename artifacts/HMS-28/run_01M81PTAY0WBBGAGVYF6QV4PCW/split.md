@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M81PTAY0WBBGAGVYF6QV4PCW
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md
@@ -11,6 +11,13 @@ inputs:
     sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "S-1 AC1 now puts Sunday last among other days and S-2 AC3 to AC5 now filter on Sunday."
+  - id: F-2
+    how: "New S-6 AC3 filters on a weekday where one doctor has two blocks and checks that doctor appears once and is counted once."
+  - id: F-3
+    how: "New S-3 AC4 combines the weekday filter with the specialization filter."
 claims:
   - id: C1
     text: "The doctor list (`DOC-2`) shows code, name, specialization, department, fee and status."
@@ -28,7 +35,7 @@ claims:
     text: "In the MVP every front-desk user acts as `staff`."
     cites: ["context/glossary.md#front-desk-staff"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
-known: [S-1, S-2, S-3, S-4, S-5]
+known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
 unknown: []
 questions: []
@@ -38,7 +45,7 @@ stories:
     trace: [REQ-1, REQ-2, REQ-3, REQ-11, REQ-13]
     acceptance_criteria:
       - id: AC1
-        text: "Given a doctor whose availability blocks were entered for Saturday, then Monday, then Wednesday, when front-desk staff open the doctor list, then that doctor's Works on column shows \"Mon, Wed, Sat\" (days in the order Mon, Tue, Wed, Thu, Fri, Sat, Sun, not in entry order)."
+        text: "Given a doctor whose availability blocks were entered for Sunday, then Saturday, then Monday, then Wednesday, when front-desk staff open the doctor list, then that doctor's Works on column shows \"Mon, Wed, Sat, Sun\" (days in the order Mon, Tue, Wed, Thu, Fri, Sat, Sun, with Sunday last, not in entry order)."
       - id: AC2
         text: "Given a doctor with two availability blocks on Tuesday (one in the morning, one in the afternoon) and none on other days, when front-desk staff open the doctor list, then that doctor's Works on column shows \"Tue\" once."
       - id: AC3
@@ -56,14 +63,14 @@ stories:
       - id: AC2
         text: "Given the doctor list is open, when front-desk staff open the Works on filter, then its options read \"Any day\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"."
       - id: AC3
-        text: "Given doctor A has an availability block on Saturday and doctor B has blocks only on Friday, when front-desk staff choose \"Saturday\" in the Works on filter, then doctor A is listed and doctor B is not."
+        text: "Given doctor A has an availability block on Sunday and doctor B has blocks only on Monday, when front-desk staff choose \"Sunday\" in the Works on filter, then doctor A is listed and doctor B is not."
       - id: AC4
-        text: "Given doctor C has no availability blocks, when front-desk staff choose \"Saturday\" in the Works on filter, then doctor C is not listed."
+        text: "Given doctor C has no availability blocks, when front-desk staff choose \"Sunday\" in the Works on filter, then doctor C is not listed."
       - id: AC5
-        text: "Given front-desk staff chose \"Saturday\" in the Works on filter, when they choose \"Any day\" again, then doctor B (blocks only on Friday) and doctor C (no blocks) are listed again."
+        text: "Given front-desk staff chose \"Sunday\" in the Works on filter, when they choose \"Any day\" again, then doctor B (blocks only on Monday) and doctor C (no blocks) are listed again."
   - id: S-3
-    title: Combine the weekday filter with search, filters and paging
-    trace: [REQ-7, REQ-8, REQ-9, REQ-11, REQ-12]
+    title: Combine the weekday filter with search and the other filters
+    trace: [REQ-7, REQ-11, REQ-12]
     acceptance_criteria:
       - id: AC1
         text: "Given doctor D in Cardiology and doctor E in another department both have an availability block on Saturday, when front-desk staff choose \"Saturday\" and department Cardiology, then doctor D is listed and doctor E is not."
@@ -72,9 +79,7 @@ stories:
       - id: AC3
         text: "Given an Active doctor and an Inactive doctor both have an availability block on Saturday, when front-desk staff choose \"Saturday\" and status Active, then only the Active doctor is listed; with status \"Any status\" both are listed."
       - id: AC4
-        text: "Given a 21st doctor by name has an availability block on Saturday (one more than fit on a page at 20 per page), when front-desk staff choose \"Saturday\", then page 1 shows the first 20 such doctors sorted by name and page 2 shows the 21st."
-      - id: AC5
-        text: "Given the whole doctor list fills more than one page but only three doctors have an availability block on Saturday, when front-desk staff choose \"Saturday\", then the total shows three doctors and there is a single page."
+        text: "Given doctor F and doctor G both have an availability block on Saturday and have different specializations, when front-desk staff choose \"Saturday\" and doctor F's specialization, then doctor F is listed and doctor G is not."
   - id: S-4
     title: Keep the chosen weekday in the page address
     trace: [REQ-10]
@@ -93,6 +98,16 @@ stories:
         text: "Given a doctor with appointments today, when front-desk staff open the doctor list, then that doctor's Code, Name, Specialization, Department, Fee, Status and Today values are the same as before the change."
       - id: AC3
         text: "Given a doctor with no appointments today, when front-desk staff open the doctor list, then that doctor's Code, Name, Specialization, Department, Fee, Status and Today values are the same as before the change."
+  - id: S-6
+    title: Page through the weekday-filtered list with a correct count
+    trace: [REQ-6, REQ-8, REQ-9]
+    acceptance_criteria:
+      - id: AC1
+        text: "Given a 21st doctor by name has an availability block on Saturday (one more than fit on a page at 20 per page), when front-desk staff choose \"Saturday\", then page 1 shows the first 20 such doctors sorted by name and page 2 shows the 21st."
+      - id: AC2
+        text: "Given the whole doctor list fills more than one page but only three doctors have an availability block on Saturday, when front-desk staff choose \"Saturday\", then the total shows three doctors and there is a single page."
+      - id: AC3
+        text: "Given doctor H has two availability blocks on Saturday (one in the morning, one in the afternoon) and exactly two other doctors have a block on Saturday, when front-desk staff choose \"Saturday\", then doctor H appears once in the list and the total shows three doctors."
 ---
 # Stories: HMS-28
 
@@ -100,7 +115,7 @@ stories:
 
 ### S-1 See which weekdays each doctor works on the doctor list
 Traces REQ-1, REQ-2, REQ-3, REQ-11, REQ-13.
-- AC1: Given a doctor whose availability blocks were entered for Saturday, then Monday, then Wednesday, when front-desk staff open the doctor list, then that doctor's Works on column shows "Mon, Wed, Sat" (days in the order Mon, Tue, Wed, Thu, Fri, Sat, Sun, not in entry order).
+- AC1: Given a doctor whose availability blocks were entered for Sunday, then Saturday, then Monday, then Wednesday, when front-desk staff open the doctor list, then that doctor's Works on column shows "Mon, Wed, Sat, Sun" (days in the order Mon, Tue, Wed, Thu, Fri, Sat, Sun, with Sunday last, not in entry order).
 - AC2: Given a doctor with two availability blocks on Tuesday (one in the morning, one in the afternoon) and none on other days, when front-desk staff open the doctor list, then that doctor's Works on column shows "Tue" once.
 - AC3: Given a doctor with no availability blocks, when front-desk staff open the doctor list, then that doctor's Works on column shows "No availability".
 - AC4: Given an Inactive doctor with an availability block on Sunday, when front-desk staff open the doctor list with status "Any status", then that doctor's Works on column shows "Sun".
@@ -110,17 +125,16 @@ Traces REQ-1, REQ-2, REQ-3, REQ-11, REQ-13.
 Traces REQ-4, REQ-5, REQ-6, REQ-14.
 - AC1: Given front-desk staff open the doctor list without choosing a weekday, when they look at the Works on filter, then it shows "Any day" and the list includes a doctor with no availability blocks.
 - AC2: Given the doctor list is open, when front-desk staff open the Works on filter, then its options read "Any day", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday".
-- AC3: Given doctor A has an availability block on Saturday and doctor B has blocks only on Friday, when front-desk staff choose "Saturday" in the Works on filter, then doctor A is listed and doctor B is not.
-- AC4: Given doctor C has no availability blocks, when front-desk staff choose "Saturday" in the Works on filter, then doctor C is not listed.
-- AC5: Given front-desk staff chose "Saturday" in the Works on filter, when they choose "Any day" again, then doctor B (blocks only on Friday) and doctor C (no blocks) are listed again.
+- AC3: Given doctor A has an availability block on Sunday and doctor B has blocks only on Monday, when front-desk staff choose "Sunday" in the Works on filter, then doctor A is listed and doctor B is not.
+- AC4: Given doctor C has no availability blocks, when front-desk staff choose "Sunday" in the Works on filter, then doctor C is not listed.
+- AC5: Given front-desk staff chose "Sunday" in the Works on filter, when they choose "Any day" again, then doctor B (blocks only on Monday) and doctor C (no blocks) are listed again.
 
-### S-3 Combine the weekday filter with search, filters and paging
-Traces REQ-7, REQ-8, REQ-9, REQ-11, REQ-12.
+### S-3 Combine the weekday filter with search and the other filters
+Traces REQ-7, REQ-11, REQ-12.
 - AC1: Given doctor D in Cardiology and doctor E in another department both have an availability block on Saturday, when front-desk staff choose "Saturday" and department Cardiology, then doctor D is listed and doctor E is not.
 - AC2: Given two doctors with an availability block on Saturday, only one of whose names matches the search text, when front-desk staff search that text and choose "Saturday", then only the matching doctor is listed.
 - AC3: Given an Active doctor and an Inactive doctor both have an availability block on Saturday, when front-desk staff choose "Saturday" and status Active, then only the Active doctor is listed; with status "Any status" both are listed.
-- AC4: Given a 21st doctor by name has an availability block on Saturday (one more than fit on a page at 20 per page), when front-desk staff choose "Saturday", then page 1 shows the first 20 such doctors sorted by name and page 2 shows the 21st.
-- AC5: Given the whole doctor list fills more than one page but only three doctors have an availability block on Saturday, when front-desk staff choose "Saturday", then the total shows three doctors and there is a single page.
+- AC4: Given doctor F and doctor G both have an availability block on Saturday and have different specializations, when front-desk staff choose "Saturday" and doctor F's specialization, then doctor F is listed and doctor G is not.
 
 ### S-4 Keep the chosen weekday in the page address
 Traces REQ-10.
@@ -133,12 +147,24 @@ Traces REQ-12, REQ-15.
 - AC2: Given a doctor with appointments today, when front-desk staff open the doctor list, then that doctor's Code, Name, Specialization, Department, Fee, Status and Today values are the same as before the change.
 - AC3: Given a doctor with no appointments today, when front-desk staff open the doctor list, then that doctor's Code, Name, Specialization, Department, Fee, Status and Today values are the same as before the change.
 
+### S-6 Page through the weekday-filtered list with a correct count
+Traces REQ-6, REQ-8, REQ-9. (The paging criteria moved here from S-3 so that S-3 stays within five criteria.)
+- AC1: Given a 21st doctor by name has an availability block on Saturday (one more than fit on a page at 20 per page), when front-desk staff choose "Saturday", then page 1 shows the first 20 such doctors sorted by name and page 2 shows the 21st.
+- AC2: Given the whole doctor list fills more than one page but only three doctors have an availability block on Saturday, when front-desk staff choose "Saturday", then the total shows three doctors and there is a single page.
+- AC3: Given doctor H has two availability blocks on Saturday (one in the morning, one in the afternoon) and exactly two other doctors have a block on Saturday, when front-desk staff choose "Saturday", then doctor H appears once in the list and the total shows three doctors.
+
+Resolved review findings:
+- F-1: S-1 AC1 now puts Sunday last among other days and S-2 AC3 to AC5 now filter on Sunday.
+- F-2: New S-6 AC3 filters on a weekday where one doctor has two blocks and checks that doctor appears once and is counted once.
+- F-3: New S-3 AC4 combines the weekday filter with the specialization filter.
+
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-3, REQ-11 (ticket) and REQ-13 (decided in A-01).
 - S-2: built from known REQ-4, REQ-5, REQ-6 (ticket) and REQ-14 (confirmed in A-02).
-- S-3: built from known REQ-7, REQ-8, REQ-9, REQ-11 and REQ-12 (ticket).
+- S-3: built from known REQ-7, REQ-11 and REQ-12 (ticket).
 - S-4: built from known REQ-10 (ticket).
 - S-5: built from known REQ-12 and REQ-15 (ticket); the existing columns come from C1 and C2.
+- S-6: built from known REQ-6, REQ-8 and REQ-9 (ticket).
 
 ## Assumed
 None
