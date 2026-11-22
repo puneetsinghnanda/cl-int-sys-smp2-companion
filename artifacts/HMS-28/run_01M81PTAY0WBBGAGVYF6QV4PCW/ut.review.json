@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "392818fc5151830e8c4318470aebc2fb134e94a36f551b94ca62ccd88385658e",
-  "attempt": 1,
+  "artifact_sha256": "8ca21f62460fb166c2b9a6de61c8159c5bc579672a6c34ff08e10de6e41c6950",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -65,31 +65,6 @@
   ],
   "findings": [
     {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "REQ-9, REQ-10, REQ-11, REQ-14, REQ-15]",
-          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ut.md#L45"
-        },
-        {
-          "quote": "when front-desk staff choose status Inactive, then exactly the Inactive doctors are listed",
-          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L146"
-        },
-        {
-          "quote": "REQ-12 Status filter works as before (known).",
-          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#L177"
-        },
-        {
-          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
-          "ref": "context/test-strategy.md#requirement-ids"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an API test 'HMS-28 REQ-12: ...' that lists with status=INACTIVE and no weekday and expects exactly doctor 5; add REQ-12 (and REQ-13 from the header test) to trace.",
-      "text": "REQ-12 (status filter works as before, S-5 AC1: Any day + status Inactive lists exactly the Inactive doctors) has no HMS-28 test and is dropped from trace, yet Known says S-5 is covered. The strategy requires a test named for every requirement."
-    },
-    {
       "category": "consistency",
       "cites": [
         {
@@ -101,10 +76,10 @@
           "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L140"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Add specializationId to the web REQ-7 test entry and expected parts, or correct the Known line.",
-      "text": "Known says S-3 combination with specialization is tested in both files, but the web REQ-7 test sends only department, status and search; specialization is checked only in the API file."
+      "suggested_fix": "Add specializationId to the web REQ-7 test entry and expected parts, or correct the Known line to say specialization is tested in the API file only.",
+      "text": "Still open from attempt 1 (F-2): Known says S-3 combination with specialization is tested in both files, but the web REQ-7 test sends only weekday, department, status and search; specialization is checked only in the API file."
     },
     {
       "category": "correctness",
@@ -114,10 +89,10 @@
           "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L97"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Assert the exact text 'Mon, Sat, Sun' for the Inactive doctor.",
-      "text": "The web REQ-11 test asserts only that the Inactive doctor's cell is not 'No availability', a weak assertion that would pass for any wrong weekday text."
+      "suggested_fix": "Assert the exact text 'Mon, Sat, Sun' for the Inactive doctor in the REQ-11 test.",
+      "text": "Still open from attempt 1 (F-3): the web REQ-11 test asserts only that the Inactive doctor's cell is not 'No availability', a weak assertion that would pass for any wrong weekday text."
     },
     {
       "category": "completeness",
@@ -127,19 +102,23 @@
           "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/split.md#L153"
         },
         {
+          "quote": "const res = await list(app, '&weekday=6');",
+          "ref": "sample-system:api/test/doctors-works-on.test.ts#L84"
+        },
+        {
           "quote": "S-6: page boundary at the 21st doctor, total count and duplicate blocks counted once",
           "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/ut.md#known"
         }
       ],
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
-      "suggested_fix": "After adding the 20 extra doctors, also assert weekday=6 returns total 1 on a single page.",
-      "text": "S-6 AC2 (full list spans pages, filtered total is small with a single page) has no matching test; the REQ-9 count test runs on a 5-doctor list, yet Known lists S-6 total count as tested."
+      "suggested_fix": "In the page-boundary test, after adding the 20 extra doctors, also assert weekday=6 returns total 1 with a single page while the unfiltered total exceeds 20.",
+      "text": "Still open from attempt 1 (F-4): S-6 AC2 (full list spans pages, filtered total small on a single page) has no test; the REQ-9 count test runs on the 5-doctor fixture, yet Known lists S-6 total count as tested."
     }
   ],
-  "package_sha256": "00234db6870dccaa1dd12bebc20c7a68331d421d518ed02c01754764d6e79596",
+  "package_sha256": "c90ca2a2e030450555e13a9b5225ff3a78dbcf5aa2ac2e0e34e767e282ebb1b6",
   "questions": [],
-  "recorded_at": "2026-11-22T14:07:08Z",
+  "recorded_at": "2026-11-22T14:11:12Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -150,31 +129,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Repo filter, weekdaysByDoctor, service parsing and the page column/filter are all tested; REQ-12 (S-5 AC1) has no test and S-6 AC2 is only partly covered.",
+      "reason": "Repo filter, weekdaysByDoctor, service parsing, with_today partition and the page column/filter are tested; REQ-12 now has a test. S-6 AC2 (multi-page list, small filtered total on one page) still has no test.",
       "score": 4
     },
     {
       "id": "UT-R2",
-      "reason": "Most assertions check exact ids, weekdays, totals, field errors and request URLs; the web REQ-11 test only asserts the cell is not 'No availability'.",
+      "reason": "Most assertions check exact ids, weekdays, totals, field errors and request URLs; the web REQ-11 test still only asserts the cell is not 'No availability'.",
       "score": 4
     },
     {
       "id": "UT-R3",
-      "reason": "Invalid weekday values (0, 8, sat, 1.5, -1), empty weekday, no blocks, duplicate blocks, Sunday coding and the 21st-row page boundary are covered.",
-      "score": 4
+      "reason": "Invalid weekday values (0, 8, sat, 1.5, -1), empty weekday, no blocks, duplicate blocks, Sunday coding and the 21st-row page boundary are all covered.",
+      "score": 5
     },
     {
       "id": "UT-R4",
-      "reason": "Vitest+Supertest on a skippable PostgreSQL harness and jsdom+Testing Library, names start with IDs; but REQ-12 has no test named for it as the strategy requires.",
-      "score": 4
+      "reason": "Vitest+Supertest on the skippable PostgreSQL harness in api/test, jsdom+Testing Library in web/src/__tests__; every new test name starts with its ID and every traced REQ has a test.",
+      "score": 5
     },
     {
       "id": "UT-R5",
-      "reason": "No test counts or coverage stated; the artifact defers results to the verifier, which ran tests (pass) and skipped coverage.",
+      "reason": "No test counts or coverage numbers are stated; results are deferred to the verifier and coverage is noted as not measured.",
       "score": 5
     }
   ],
-  "rubric_score": 4.1,
+  "rubric_score": 4.45,
   "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
   "schema": "review.v1",
   "status": "ok",

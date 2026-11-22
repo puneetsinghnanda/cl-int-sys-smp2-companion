@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M81PTAY0WBBGAGVYF6QV4PCW
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.3.0
 inputs:
   - path: artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/impl.md
@@ -18,11 +18,14 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 1104d33e868767ac03d7fbb3d18a3c581851d2aa
-    head_sha: e98645f46321bd0f6fdd81955ad4fb9410bf8692
-    diff_sha256: 1d6034e08ced3a1d511eaea19dd989ae7dd699294f5305db3f00d44990212e46
+    head_sha: 452562d16d66ef3ac59cd557e7de59a85a178a70
+    diff_sha256: a3533baac81774cd051f9c8a5b6cc5740ebf91d5cbbb887d0112ce4b441c7132
     files:
       - api/test/doctors-works-on.test.ts
       - web/src/__tests__/DoctorsPage.test.tsx
+resolves:
+  - id: F-1
+    how: "A new API test, HMS-28 REQ-12, checks that with Any day the status filter lists exactly the Inactive doctors, and REQ-12 is now traced."
 claims:
   - id: C1
     text: "API tests use `Vitest and Supertest` against a throwaway PostgreSQL; web tests use jsdom and Testing Library."
@@ -42,7 +45,7 @@ claims:
   - id: C6
     text: "The change adds the Works on column and filter to `DoctorsPage`."
     cites: ["artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/impl.md#claim:C6"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-14, REQ-15]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
 unknown: []
@@ -51,11 +54,14 @@ questions: []
 # Unit tests: HMS-28
 
 ## Summary
-The tests cover the HMS-28 change (C5, C6) at both layers the strategy names (C1). Every test name starts with its HMS-28 requirement ID (C2).
-- The API tests cover the normal path and the edge and error paths of the weekday filter and the `weekdays` field: Sunday coding, duplicate blocks, the 21st-row page boundary, invalid values and the without-`with_today` partition.
+The tests cover the HMS-28 change (C5, C6) at both layers the strategy names (C1). Every new test name starts with its HMS-28 requirement ID (C2).
+- The API tests cover the normal path and the edge and error paths of the weekday filter and the `weekdays` field: Sunday coding, duplicate blocks, the 21st-row page boundary, invalid values, the status filter with Any day and the without-`with_today` partition.
 - The web tests cover the Works on column text, the filter options and default, the request the filter sends, the page reset and the page address.
 - The API tests need PostgreSQL and are skipped without it (C3).
 - I didn't run the tests, and no verifier result was given to this step, so tests and coverage are left out here. tsl records them in checks.json when it runs the verifier (H3). Coverage is not measured in this project (C4).
+
+Resolved review findings:
+- F-1: A new API test, HMS-28 REQ-12, checks that with Any day the status filter lists exactly the Inactive doctors, and REQ-12 is now traced.
 
 ## Tests
 - api/test/doctors-works-on.test.ts (new; serves S-1, S-2, S-3, S-5, S-6):
@@ -66,6 +72,7 @@ The tests cover the HMS-28 change (C5, C6) at both layers the strategy names (C1
   - weekday=7 and weekday=1 list only the matching doctors;
   - two Saturday blocks list and count a doctor once;
   - weekday combines with department, specialization, status and search;
+  - REQ-12: with Any day, status=INACTIVE lists exactly the Inactive doctor and status=ACTIVE exactly the active ones;
   - 0, 8, sat, 1.5 and -1 are 400 field errors on weekday;
   - without with_today, no weekdays appear on the list or the detail;
   - the filter works without with_today;
@@ -79,14 +86,15 @@ The tests cover the HMS-28 change (C5, C6) at both layers the strategy names (C1
   - choosing Sunday sends weekday=7 and drops page=2;
   - ?weekday=6 in the address selects Saturday and filters;
   - weekday is sent with the department, status and search filters.
+  - The header test from the implement step covers REQ-13 (Works on before Today).
   - The fixture gains a third, Inactive doctor; the HMS-6 tests are unchanged.
 
 ## Known
-- S-1: Works on column text, order, empty case and Inactive case, tested in both files.
+- S-1: Works on column text, order, empty case, Inactive case and column position (REQ-13), tested in both files.
 - S-2: filter options, default and the Sunday filter, tested in both files.
 - S-3: combination with search, department, specialization and status, tested in both files.
 - S-4: weekday kept in and read from the page address, tested in the web file.
-- S-5: without with_today the API response is unchanged; the HMS-6 web tests still pass unchanged apart from the header test updated in the implement step.
+- S-5: the status filter works as before with Any day (REQ-12, API test) and without with_today the response is unchanged (REQ-15); the HMS-6 web tests still pass unchanged apart from the header test updated in the implement step.
 - S-6: page boundary at the 21st doctor, total count and duplicate blocks counted once, tested in the API file.
 
 ## Assumed
