@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M820V4J0VSJHKNZZ5VK0BT2Y
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.3.0
 inputs:
   - path: artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/impl.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 0647279f5203c198dc770534c97b8d3ffdb9e99a
-    head_sha: c73bb3b5a6c41331f6c07df66882bc9f36e4c0cf
-    diff_sha256: 721757129ac1e4f99bae72288923a1334565804f98f5e4aeacaa8b1b4d31c946
+    head_sha: 100822eae8f6f341dbe5dbcae92491337cb183a1
+    diff_sha256: 58cbbd7cfa5057904e51139468a7051f3cabf05b5d7d71ce28376ba1fc698653
     files:
       - api/test/appointments-doctor-details.test.ts
       - web/src/__tests__/AppointmentDetailPage.test.tsx
@@ -48,6 +48,11 @@ claims:
   - id: C8
     text: "An Inactive specialization or department is shown with its name followed by `(Inactive)`."
     cites: ["runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md#a-01"]
+resolves:
+  - id: F-1
+    how: "The API REQ-5 test now also changes the doctor's specialization and checks the Completed, No-show and Cancelled appointments show the current one."
+  - id: F-2
+    how: "The web tests now also check that Completed and No-show appointment pages keep their rows, closed notice and history."
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
 known: [S-1, S-2, S-3, S-4]
 assumed: []
@@ -59,20 +64,25 @@ questions: []
 
 ## Summary
 Two new test files cover the change. The API test checks the appointment detail's new doctor fields
-from start to finish against the test database: values, current-ness after the doctor changes,
-Inactive entries, privacy, the unchanged list shape and the 404 error path. The web test checks the
-three new rows on the appointment page, the fee format, the "(Inactive)" marker, the doctor link and
-the unchanged actions, history and cancellation reason. tsl records the test counts in checks.json when
-it runs the verifier (H3). Coverage is not reported, because the project has no coverage script (C7).
+from start to finish against the test database: values, current-ness after the doctor's fee,
+department and specialization change, Inactive entries, privacy, the unchanged list shape and the 404
+error path. The web test checks the three new rows on the appointment page, the fee format, the
+"(Inactive)" marker, the doctor link, and the unchanged page for Scheduled, Completed, Cancelled and
+No-show appointments. tsl records the test counts in checks.json when it runs the verifier (H3).
+Coverage is not reported, because the project has no coverage script (C7).
+
+Resolved review findings:
+- F-1: The API REQ-5 test now also changes the doctor's specialization and checks the Completed, No-show and Cancelled appointments show the current one.
+- F-2: The web tests now also check that Completed and No-show appointment pages keep their rows, closed notice and history.
 
 ## Tests
-- api/test/appointments-doctor-details.test.ts. It is its own database, because the later tests change doctor 1 and specialization 1.
+- api/test/appointments-doctor-details.test.ts. It is its own database, because the later tests change doctor 1 and specialization 2.
   - HMS-31 REQ-1/REQ-2/REQ-3: the detail doctor is exactly {id, code, fullName, specialization, department, feePaise} with the fixture values (S-1 AC1–AC3).
   - HMS-31 (EP-2, EP-4): the booking and cancel responses carry the same doctor details.
   - HMS-31 REQ-9/REQ-10: the detail has no doctor phone or email and no patient allergies or notes, even for the patient with medical history (S-3 AC2, AC3).
   - HMS-31 REQ-11: the list items keep doctor {id, code, fullName}.
   - HMS-31 REQ-11 error: an unknown appointment is still 404.
-  - HMS-31 REQ-5: after the fee and department change, the Completed, No-show and Cancelled appointments show the current values (S-2 AC1, AC2).
+  - HMS-31 REQ-5: after the fee, department and specialization change, the Completed, No-show and Cancelled appointments show the current values (S-2 AC1, AC2).
   - HMS-31 REQ-7 edge: an Inactive specialization comes back with status INACTIVE while the department stays ACTIVE (S-2 AC4).
   - HMS-31 REQ-6: an Inactive doctor still has the current details (S-2 AC3).
 - web/src/__tests__/AppointmentDetailPage.test.tsx
@@ -80,13 +90,16 @@ it runs the verifier (H3). Coverage is not reported, because the project has no 
   - HMS-31 REQ-4 edge: 12345 paise is shown as ₹123.45 (S-1 AC4).
   - HMS-31 REQ-7: an Inactive specialization or an Inactive department shows "(Inactive)" and the other does not (S-2 AC4, AC5).
   - HMS-31 REQ-8: the doctor name still links to /doctors/1 (S-3 AC1).
-  - HMS-31 REQ-11: a Scheduled appointment keeps its four actions and its history; a Cancelled one keeps its reason and the closed notice (S-4 AC1, AC3).
+  - HMS-31 REQ-11: a Scheduled appointment keeps its four actions and its history (S-4 AC1).
+  - HMS-31 REQ-11: a Completed appointment keeps its rows, the closed notice, no actions and its history, including "Marked completed" (S-4 AC2).
+  - HMS-31 REQ-11: a Cancelled appointment keeps its reason and the closed notice (S-4 AC3).
+  - HMS-31 REQ-11: a No-show appointment keeps its rows, the closed notice, no actions and its history, including "Marked no-show" (S-4 AC4).
 
 ## Known
 - S-1: covered by the API values test and the web rows and fee tests.
-- S-2: covered by the API REQ-5, REQ-6 and REQ-7 tests and the web "(Inactive)" tests (A-01, C8).
+- S-2: covered by the API REQ-5 (fee, department and specialization), REQ-6 and REQ-7 tests and the web "(Inactive)" tests (A-01, C8).
 - S-3: covered by the web link test and the API privacy test.
-- S-4: covered by the web Scheduled and Cancelled regression tests and the API list-shape test.
+- S-4: covered by the web Scheduled, Completed, Cancelled and No-show regression tests and the API list-shape test.
 
 ## Assumed
 None.

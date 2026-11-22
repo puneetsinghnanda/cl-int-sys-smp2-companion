@@ -1,0 +1,146 @@
+{
+  "artifact_sha256": "df1181bacd336a165f4e52e32c4ad4b14563dbd51fa766591ac314920cfb2fba",
+  "attempt": 1,
+  "finished_at": "2026-11-22T16:46:06Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/impl.md",
+      "sha256": "51c1d75b880628f2f9a209c6df2fbc6b037b82aa389b6a1880dc9b76cd6b1bbe",
+      "verification_sha256": "d327e037907fa6a5d85410434b1cc45eccca37f32fa42f6ceb969a57c2c15fa3"
+    },
+    {
+      "path": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md",
+      "sha256": "bd26e52b86c31239358a3a893ff920c053cf6830e2406107bd5bda4c61c58536",
+      "verification_sha256": "f99c60cc90fe518175572d963f9cb48150319838c6e93415d65e20b1b3d59da1"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "0647279f5203c198dc770534c97b8d3ffdb9e99a",
+      "diff_sha256": "721757129ac1e4f99bae72288923a1334565804f98f5e4aeacaa8b1b4d31c946",
+      "files": [
+        "api/test/appointments-doctor-details.test.ts",
+        "web/src/__tests__/AppointmentDetailPage.test.tsx"
+      ],
+      "lines_added": 201,
+      "lines_deleted": 0,
+      "repo": "sample-system",
+      "tree_sha": "c73bb3b5a6c41331f6c07df66882bc9f36e4c0cf"
+    }
+  ],
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-22T16:44:59Z",
+  "step": "ut",
+  "tool_log_sha256": "9e58dc3d3c2896de371a6a4743e79411c6fe87a1583d0dd845de449138d637aa",
+  "tsl_version": "0.1.7",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 10235,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 24519,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 4693,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "998732b549d7657d4e033f9c94eb53567160c34faa635622e1c01490d00a119e",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 20447,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "04cc3724f69de869890bbdf63a6805492e4309ee21efe417e6f4bac4fc8bd27e",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 527,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 370,
+        "exit_code": 78,
+        "name": "coverage",
+        "report_sha256": null,
+        "status": "skip"
+      }
+    ]
+  }
+}
