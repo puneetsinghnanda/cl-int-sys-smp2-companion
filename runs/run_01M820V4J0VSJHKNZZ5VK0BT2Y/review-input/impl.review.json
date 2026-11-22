@@ -1,0 +1,36 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "51c1d75b880628f2f9a209c6df2fbc6b037b82aa389b6a1880dc9b76cd6b1bbe",
+  "package_sha256": "2d1ca7afe124fbe68740141be3863b5e23df860f00bbc53f71b351f086ad6465",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 5, "reason": "CO-1, CO-2, CO-5 and CO-6 are built as designed: detail-only join, AppointmentDetailDoctor picked from DoctorSummary, three rows below Doctor, rupees fee, (Inactive) marker; SUMMARY_SELECT, list and get untouched."},
+    {"id": "IM-R2", "score": 5, "reason": "SQL stays in the repository, TypeScript strict types, no logging added, no contact details or medical history selected; build, lint, test, sast and secrets all pass."},
+    {"id": "IM-R3", "score": 5, "reason": "Only the four files the design names changed (52 added, 4 deleted lines); no unrelated edits."},
+    {"id": "IM-R4", "score": 4, "reason": "No new endpoint; the missing-appointment path keeps returning null. The doctor query uses rows[0]! which is safe because doctor FKs are NOT NULL, but there is no test for the new fields or the Inactive marker."},
+    {"id": "IM-R5", "score": 5, "reason": "The summary and Changes list match the four changed files and what each change does."}
+  ],
+  "findings": [],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L110", "quote": "HMS-31: the doctor's current specialization, department and fee only; never phone or email."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L133", "quote": "doctor: AppointmentDetailDoctor;"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L130", "quote": "Pick<DoctorSummary, 'specialization' | 'department' | 'feePaise'>;"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L23", "quote": "a.starts_at, a.ends_at, a.status, a.reason, a.cancellation_reason"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L119", "quote": "doctor: AppointmentDetailDoctor;"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L65", "quote": "<dt>Specialization</dt>"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L70", "quote": "<dd>{rupees(a.doctor.feePaise)}</dd>"}, {"ref": "sample-system:web/src/pages/DoctorsPage.tsx#L84", "quote": "<td>{rupees(d.feePaise)}</td>"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L15", "quote": "ref.status === 'INACTIVE' ? `${ref.name} (Inactive)` : ref.name"}, {"ref": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md#a-01", "quote": "answer: Name plus '(Inactive)'"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"}]}
+  ],
+  "questions": []
+}
