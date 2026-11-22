@@ -1,0 +1,134 @@
+{
+  "artifact_sha256": "52b4c52bad178b06dd5fc4346654ab569aa7276ac8daae7f6119485236c9cd18",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "20 per page, ordered by start time",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ticket.md#L18"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Above the table it shows only the total",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ticket.md#L18-L19"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment that is booked and still open.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An appointment called off before it took place",
+          "ref": "context/glossary.md#cancelled"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient did not attend",
+          "ref": "context/glossary.md#no-show"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "user acts as `staff`.",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [],
+  "package_sha256": "52d1a260dd878a72c000959fc5a395a4dc6c0c3955019327e1d2a7711c2c7375",
+  "questions": [],
+  "recorded_at": "2026-11-22T15:12:23Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria (ticket L22-L31) map to REQ-1..REQ-11; AC1 split into placement, order and format; AC6 split into table/order, paging and filters.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Each REQ states one checkable behaviour; REQ-7 describes a single link target, confirmed by the user in A-01.",
+      "score": 5
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every REQ is known and cites the ticket line, conventions#lists or an IDE answer; no invented values.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No clash between the ticket and the baseline goals/constraints; the glossary gap for 'Appointment list' was asked (A-02) and answered.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Two questions asked, both with real options, both answered by the user in the IDE; no needless blocking questions remain.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording; status terms Scheduled, Completed, Cancelled, No-show match the glossary.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 5.0,
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

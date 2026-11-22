@@ -1,0 +1,48 @@
+{
+  "artifact_path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md",
+  "artifact_sha256": "52b4c52bad178b06dd5fc4346654ab569aa7276ac8daae7f6119485236c9cd18",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "e393f6103ed0a36d0dd234b5cfc6a05d2bfac0e88ed7ea52ed0e5a9a2a636ff7",
+  "claims": {
+    "total": 8,
+    "verified": 8
+  },
+  "decided_at": "2026-11-22T15:12:28Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M509NZNG1PKX6JV7SF0DFYHT",
+  "outcome": "PASS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "452d75c43a7c72b584361c9c201e5cd1b337d1e5d2e9f321b94e8d300d8c59d7",
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 5.0,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "VwFyR2k0wpOmOxH8MtbIFMUGZ2qXgWKKPw1sVjBw1CkCBLqlZkvkPk3zTFbCRpipEvehOcycagm0uwwsZKMtDw",
+  "skill": "requirement-review@1.4.0",
+  "step": "req",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
