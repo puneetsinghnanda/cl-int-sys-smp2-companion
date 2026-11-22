@@ -1,0 +1,80 @@
+{
+  "artifact_path": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.md",
+  "artifact_sha256": "3febb70080ff416b4e35fb00f72123a6c109924586d1006796d9d3572026caa5",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "f51c8ad5ee0877eb60c4720e29b15966445fe34b9c774492adff50b91d620ef5",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "dependency-graph",
+      "included": true,
+      "path": "context/dependency-graph.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "change",
+      "path": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/impl.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    }
+  ],
+  "package_sha256": "904a11a33efcb8a20260f897f4ca1971c5f9438c5b242ec2f051f7d966163645",
+  "prepared_at": "2026-11-22T14:15:33Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/review-input/secrev.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "SC-R1",
+        "weight": 0.35
+      },
+      {
+        "id": "SC-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "SC-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "SC-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "SC-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/secure-code-review/rubric.md",
+    "sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "secure-code-review@1.3.0",
+  "step": "secrev",
+  "truncated": false
+}

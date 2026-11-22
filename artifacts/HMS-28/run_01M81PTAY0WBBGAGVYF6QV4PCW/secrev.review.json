@@ -1,0 +1,192 @@
+{
+  "artifact_sha256": "3febb70080ff416b4e35fb00f72123a6c109924586d1006796d9d3572026caa5",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "ab.weekday = ${p(f.weekday)}",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L95"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const weekday = f.oneOf('weekday', WEEKDAY_VALUES);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L47"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE doctor_id = ANY($1) GROUP BY doctor_id",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L151-L152"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('doctors:read'),",
+          "ref": "sample-system:api/src/routes/doctors.ts#L14"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<td>{worksOn(d.weekdays)}</td>",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L98"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return this.fail(name, `must be one of ${values.join(', ')}`);",
+          "ref": "sample-system:api/src/lib/validate.ts#L65"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The design changes `DoctorFilter` and DoctorRepo.list to take a weekday filter.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/impl.md#claim:C1"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "unsupported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The change is limited to the doctor list code, starting with `DoctorFilter`, and adds no dependency.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.md#claim:C9"
+        },
+        {
+          "quote": "The design changes `DoctorFilter` and DoctorRepo.list to take a weekday filter.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/impl.md#claim:C1"
+        }
+      ],
+      "claim_ref": "C9",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite the impl.md code files list instead: six source and test files, no package.json or lockfile. Or cite the diff that shows no manifest change.",
+      "text": "C9 says the change is limited to doctor-list code and adds no dependency. Its only citation is impl claim C1, which says just that the design changes DoctorFilter. That citation does not show scope or that no dependency was added."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Because I attached the reports by hash and did not read them, this artifact does not restate what they found.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.md#summary"
+        },
+        {
+          "quote": "Overall risk is low, and there are no findings.",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.md#summary"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Read both scan reports and state that they show no new issue in the changed files, or list any issue they show as a finding.",
+      "text": "The review concludes 'no findings' and low risk, but it says it attached the SAST and secrets reports by hash without reading them. The conclusion therefore does not take account of what the scans found."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the weekday in the page address is rendered and sent as plain text and values (C7)",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.md#known"
+        },
+        {
+          "quote": "const q = new URLSearchParams();",
+          "ref": "sample-system:web/src/api/client.ts#L41"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a claim citing web/src/api/client.ts#L40-L44 (query encoding) and DoctorsPage.tsx#L67 (controlled select value) for the URL weekday.",
+      "text": "The REQ-10 line cites C7 for 'the weekday in the page address is rendered and sent as plain text'. C7 covers only the Works on cell. The URL weekday is sent through query(), which encodes it with URLSearchParams, and that is not cited."
+    }
+  ],
+  "package_sha256": "904a11a33efcb8a20260f897f4ca1971c5f9438c5b242ec2f051f7d966163645",
+  "questions": [],
+  "recorded_at": "2026-11-22T14:17:18Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "I read the diff myself and found no missed weakness: weekday is allow-listed and bound, the ids array is bound, the route keeps its permission, output is React text. The scan reports were not read, so the no-findings conclusion leaves them out.",
+      "score": 4
+    },
+    {
+      "id": "SC-R2",
+      "reason": "C1-C8 each point to the exact line in the product code or context. C9 cites an impl claim that does not show the no-dependency fact, and the REQ-10 line cites C7 for the URL weekday, which C7 does not cover.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "No findings were reported and none were warranted. Overall risk 'low' fits a read-only, allow-listed filter on an existing guarded route.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "No weakness needs a fix. The checks list maps each risk class to the claim that clears it, so the reasoning is easy to follow.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives: nothing is flagged that the code contradicts.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}

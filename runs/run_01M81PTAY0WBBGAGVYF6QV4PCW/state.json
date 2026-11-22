@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-22T14:11:19Z",
+  "heartbeat_at": "2026-11-22T14:17:28Z",
   "owner": "key_01M77FBDN0DQ96SZ33BBPACWN4",
   "owner_pseudonym": "eng-1df5",
   "pack": {
@@ -53,7 +53,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 39,
+  "rev": 44,
   "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -353,7 +353,32 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.md",
+          "artifact_sha256": "3febb70080ff416b4e35fb00f72123a6c109924586d1006796d9d3572026caa5",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-22T14:17:28Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "307cbd9b69244e89b5711f193ecc2892cec5e4ff5e2c48f7553f8625f7587629",
+              "step": "impl"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/secrev.verification.json",
+          "record_rejects": 1,
+          "skill": "secure-code-review@1.3.0",
+          "skill_started_at": "2026-11-22T14:11:42Z",
+          "started_at": "2026-11-22T14:11:32Z",
+          "write_rejects": 1
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -362,7 +387,7 @@
       },
       "id": "secrev",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -373,7 +398,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-28",
-  "updated_at": "2026-11-22T14:11:19Z",
+  "updated_at": "2026-11-22T14:17:28Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
