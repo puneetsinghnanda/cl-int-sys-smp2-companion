@@ -1,0 +1,185 @@
+{
+  "artifact_sha256": "307cbd9b69244e89b5711f193ecc2892cec5e4ff5e2c48f7553f8625f7587629",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "DoctorRepo.list and DoctorFilter: weekday filter",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-1"
+        },
+        {
+          "quote": "EXISTS (SELECT 1 FROM availability_block ab WHERE ab.doctor_id = d.id AND ab.weekday = ${p(f.weekday)})",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L95"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DoctorRepo.weekdaysByDoctor",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-2"
+        },
+        {
+          "quote": "async weekdaysByDoctor(ids: number[]): Promise<Map<number, number[]>> {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L148"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DoctorService.list: weekday parsing and weekdays on rows",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-3"
+        },
+        {
+          "quote": "const weekday = f.oneOf('weekday', WEEKDAY_VALUES);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L47"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "API type DoctorListRow: adds weekdays: number[]",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-4"
+        },
+        {
+          "quote": "weekdays: number[];",
+          "ref": "sample-system:api/src/types.ts#L49"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Web type DoctorListRow: adds weekdays: number[]",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-5"
+        },
+        {
+          "quote": "weekdays: number[];",
+          "ref": "sample-system:web/src/api/types.ts#L47"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "DoctorsPage: Works on column and filter",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-6"
+        },
+        {
+          "quote": "<select aria-label=\"Works on\" value={filters.weekday} onChange={(e) => set('weekday', e.target.value)}>",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L67"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WEEKDAYS in web/src/lib/format.ts: full names for the filter options",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#item:CO-7"
+        },
+        {
+          "quote": "{WEEKDAYS.map((name, i) => <option key={name} value={i + 1}>{name}</option>)}",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L69"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "'Fee', 'Status', 'Works on', 'Today'",
+          "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L47"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Invalid input is 400 with one",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "describe('DoctorsPage Today column (HMS-6)', () => {",
+          "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L42"
+        },
+        {
+          "quote": "HMS-6 REQ-1, REQ-11, HMS-28 REQ-13: Today stays last, after the Works on column",
+          "ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L43"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Leave as is, or let the unit-test step put HMS-28 column tests in their own describe block.",
+      "text": "The updated test now asserts the HMS-28 Works on header, but its describe block is still titled only for the HMS-6 Today column. This is naming only."
+    }
+  ],
+  "package_sha256": "916432d9384dcc33b949fddbcf97a36b22bba7405a8425050f91d699e2015a79",
+  "questions": [],
+  "recorded_at": "2026-11-22T14:00:46Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-6 are in the head tree as designed: EXISTS weekday filter in the shared WHERE, weekdaysByDoctor with array_agg DISTINCT, oneOf over '1'..'7' plus Number, weekdays only with with_today, both row types, column between Status and Today, filter from WEEKDAYS.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "SQL stays in the repository and rules in the service. The query parameter is bound with p(). Invalid weekday goes through Fields.oneOf and f.done() to a 400 ValidationError, as the conventions say. There is no migration and no logging change.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Six files, 55 added and 7 deleted lines. The only test edit is the HMS-6 header test, which pins the column list that CO-6 changes, plus the fixture fields the type change needs. The size check passed.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "An absent or empty weekday means Any day, and other values fail with 400. weekdaysByDoctor returns an empty Map for no ids, and the service defaults to []. The page shows No availability for []. The DB CHECK keeps weekday in 1..7, so WEEKDAYS[w - 1] cannot be undefined.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The Summary and Changes sections match the six files in code.files and the edits in each file, including WEEKDAY_VALUES, the worksOn helper, the renamed test and the fixture weekdays.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 5,
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
