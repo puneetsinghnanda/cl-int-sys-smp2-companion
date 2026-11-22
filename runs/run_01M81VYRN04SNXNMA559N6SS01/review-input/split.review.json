@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
   "step": "split",
-  "attempt": 2,
-  "artifact_sha256": "b9c8cd3368a2b3df89521b59c8600e000014a6cbfabc3ee5eb9d29b1283dc74f",
-  "package_sha256": "79b6a5e80564428ef62806187425e510d31719ec4c18ec1bb787d0aaefb3f314",
+  "attempt": 3,
+  "artifact_sha256": "6b281327d9f889c19c469ea35fc7f1c182a3fdd5f01f45c22c6444f35aeade95",
+  "package_sha256": "1840bd43d4941ff3140a29ac43f82272e58f612a93a08fb5e326e7ec7223a5ce",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,47 +12,47 @@
     "version": "0.1.7",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.45,
+  "rubric_score": 4.7,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All eleven known REQs (REQ-1..REQ-11) are traced by at least one story; no assumed REQs."},
+    {"id": "SS-R1", "score": 5, "reason": "All eleven known REQs (REQ-1..REQ-11) are traced by at least one story; there are no assumed REQs."},
     {"id": "SS-R2", "score": 4, "reason": "Stories are small; S-1 bundles display, order, Status-filter independence and zero counts, broad but coherent."},
-    {"id": "SS-R3", "score": 4, "reason": "F-1..F-3 fixed: AC4 compares displayed counts with displayed total, last-day inclusion and patient exclusion added. Date-range boundary still lacks a hospital-local time-zone case."},
-    {"id": "SS-R4", "score": 5, "reason": "Counts 4/25/3/2 come from REQ-3's example; 20 and 21 derive from the 20-per-page rule in REQ-10."},
-    {"id": "SS-R5", "score": 4, "reason": "Clear, consistent status terms; S-4 regression ACs still rely on 'as before the change' instead of an observable outcome."}
+    {"id": "SS-R3", "score": 5, "reason": "Previous F-1 resolved: S-2 AC2 puts 01:00 local on 11 March (19:30 UTC on 10 March) outside the range, so a UTC-date filter fails it. Other ACs are Given/When/Then and discriminating."},
+    {"id": "SS-R4", "score": 5, "reason": "Counts 4/25/3/2 come from REQ-3's example; 20/21 derive from REQ-10; the UTC+05:30 conversion is derived inline from Asia/Kolkata."},
+    {"id": "SS-R5", "score": 4, "reason": "Clear, consistent status terms; S-4 regression ACs still rely on 'as before the change' rather than an observable outcome."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "S-2 AC2 gives no times for the last-day and day-after appointments; times are hospital local, so an implementation comparing UTC dates passes unless the day-after appointment is early local morning (UTC previous day).",
-      "cites": [
-        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2", "quote": "another Completed appointment on the day after the range ends"},
-        {"ref": "context/glossary.md#availability-block", "quote": "in hospital local time"}
-      ],
-      "suggested_fix": "Pin the day-after appointment at an early hospital-local time whose UTC date falls inside the range (and the last-day one late local time), so a UTC-date filter fails the AC."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
       "category": "style",
-      "text": "Previous F-4 not addressed: S-4 AC1, AC3 and AC4 still state results as 'as before the change' rather than an observable outcome; resolves lists only F-1..F-3.",
+      "text": "Previous F-2 not addressed: S-4 AC1, AC3 and AC4 still state results as 'as before the change' instead of an observable outcome; resolves lists only F-1.",
       "cites": [
         {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-4", "quote": "then the table rows and the total change to the new range as before the change"}
       ],
       "suggested_fix": "State observable results, e.g. rows only within the new range, ordered by start time ascending, total equal to the matching count."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C8 says appointment times are kept in hospital local time but cites the Availability block entry, which speaks only of availability blocks; the Period entry (whole hospital-local days) better supports the local-day rule.",
+      "cites": [
+        {"ref": "context/glossary.md#availability-block", "quote": "A weekly window when a doctor sees patients: weekday, start time, end time, in hospital local time."},
+        {"ref": "context/glossary.md#period", "quote": "A run of whole hospital-local days ending today"}
+      ],
+      "claim_ref": "C8",
+      "suggested_fix": "Reword C8 to what the glossary states, or cite a source that defines how appointment times are kept."
     }
   ],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-2", "quote": "The counts appear in the order Scheduled, Completed, Cancelled, No-show."}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-4", "quote": "filters, not only the current page."}]},
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-5", "quote": "The counts ignore the Status filter, so all four statuses are always shown."}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [
-      {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-7", "quote": "keeping the doctor or patient and date range filters and showing page 1"},
-      {"ref": "runs/run_01M81VYRN04SNXNMA559N6SS01/ide-answers.md#a-01", "quote": "- answer: Yes, confirm"}
-    ]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-7", "quote": "keeping the doctor or patient and date range filters and showing page 1"}, {"ref": "runs/run_01M81VYRN04SNXNMA559N6SS01/ide-answers.md#a-01", "quote": "- answer: Yes, confirm"}]},
     {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-8", "quote": "the four counts add up to the total shown"}]},
-    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-10", "quote": "The 20-per-page paging of the list is unchanged."}]}
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-10", "quote": "The 20-per-page paging of the list is unchanged."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
+    {"claim_id": "C8", "verdict": "unsupported", "cites": [{"ref": "context/glossary.md#availability-block", "quote": "A weekly window when a doctor sees patients: weekday, start time, end time, in hospital local time."}]}
   ],
   "questions": []
 }

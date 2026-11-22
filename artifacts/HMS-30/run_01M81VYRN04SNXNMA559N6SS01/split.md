@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M81VYRN04SNXNMA559N6SS01
 step: split
-attempt: 2
+attempt: 3
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md
@@ -32,15 +32,19 @@ claims:
   - id: C6
     text: "The list keeps its `20-per-page` paging."
     cites: ["artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md#item:REQ-10"]
+  - id: C7
+    text: "The hospital time zone is `Asia/Kolkata`."
+    cites: ["context/intent-baseline.md#constraints"]
+  - id: C8
+    text: "Appointment times are kept `in hospital local time`."
+    cites: ["context/glossary.md#availability-block"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
 known: [S-1, S-2, S-3, S-4]
 assumed: []
 unknown: []
 questions: []
 resolves:
-  - {id: F-1, how: "S-2 AC4 now compares the displayed counts with the displayed total across two date ranges."}
-  - {id: F-2, how: "S-2 AC2 now checks that an appointment on the last day of the range is counted."}
-  - {id: F-3, how: "S-2 AC5 now checks that a patient list's counts exclude other patients' appointments."}
+  - {id: F-1, how: "S-2 AC2 now uses an early-morning local appointment whose UTC date is the last day of the range."}
 stories:
   - id: S-1
     title: See one count per status next to the total
@@ -59,7 +63,7 @@ stories:
       - id: AC1
         text: "Given a doctor's list with 21 matching appointments, where the 21st by start time is No-show and sits on page 2, when staff view page 1, then the No-show count includes that 21st appointment."
       - id: AC2
-        text: "Given a doctor who has one Completed appointment on the last day of the selected date range and another Completed appointment on the day after the range ends, when staff view the list for that range, then the Completed count includes the last-day appointment and leaves out the day-after one."
+        text: "Given a date range ending 10 March and a doctor with one Completed appointment at 23:30 local on 10 March and another at 01:00 local on 11 March (Asia/Kolkata = UTC+05:30, so 01:00 local on 11 March is 19:30 UTC on 10 March, the local side after midnight), when staff view the list for that range, then the Completed count includes the 23:30 appointment and leaves out the 01:00 one."
       - id: AC3
         text: "Given another doctor has Scheduled appointments in the same date range, when staff view the first doctor's list, then the Scheduled count includes only the first doctor's appointments."
       - id: AC4
@@ -98,15 +102,13 @@ stories:
 
 **S-2 Counts cover the whole filtered list**: traces REQ-4, REQ-8
 - AC1: Given 21 matching appointments with the 21st (No-show) on page 2, when page 1 is shown, then the No-show count includes it.
-- AC2: Given one Completed appointment on the last day of the range and one on the day after, when the list is viewed, then the Completed count includes the last-day one and excludes the day-after one.
+- AC2: Given a range ending 10 March, a Completed appointment at 23:30 local on 10 March and one at 01:00 local on 11 March (Asia/Kolkata = UTC+05:30, so 01:00 local on 11 March is 19:30 UTC on 10 March), when the list is viewed, then the Completed count includes the 23:30 one and leaves out the 01:00 one.
 - AC3: Given another doctor's Scheduled appointments in the same range, when the first doctor's list is viewed, then they are not counted.
 - AC4: Given Any status and matches spanning more than one page, when the counts are read before and after changing the date range, then each time the four displayed counts add up to the displayed total.
 - AC5: Given another patient's No-show appointments in the same range, when the first patient's list is viewed, then they are not counted.
 
 Resolved review findings:
-- F-1: S-2 AC4 now compares the displayed counts with the displayed total across two date ranges.
-- F-2: S-2 AC2 now checks that an appointment on the last day of the range is counted.
-- F-3: S-2 AC5 now checks that a patient list's counts exclude other patients' appointments.
+- F-1: S-2 AC2 now uses an early-morning local appointment whose UTC date is the last day of the range.
 
 **S-3 Open the list for one status from its count**: traces REQ-7
 - AC1: Given page 2 of a doctor's list with a date range and Any status, when the Completed count is selected, then the same doctor and date range open with Status Completed on page 1.
@@ -120,7 +122,7 @@ Resolved review findings:
 
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-3, REQ-5, REQ-6 (ticket acceptance criteria 1 and 3).
-- S-2: built from known REQ-4, REQ-8 (ticket acceptance criteria 2 and 4).
+- S-2: built from known REQ-4, REQ-8 (ticket acceptance criteria 2 and 4); dates are hospital local in `Asia/Kolkata` (context/intent-baseline.md#constraints).
 - S-3: built from known REQ-7, with kept filters and page 1 confirmed in runs/run_01M81VYRN04SNXNMA559N6SS01/ide-answers.md#a-01.
 - S-4: built from known REQ-9, REQ-10, REQ-11 (ticket acceptance criterion 6), one case each for doctor and patient lists.
 

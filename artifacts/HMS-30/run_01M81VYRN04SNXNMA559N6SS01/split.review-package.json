@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md",
-  "artifact_sha256": "b9c8cd3368a2b3df89521b59c8600e000014a6cbfabc3ee5eb9d29b1283dc74f",
-  "attempt": 2,
+  "artifact_sha256": "6b281327d9f889c19c469ea35fc7f1c182a3fdd5f01f45c22c6444f35aeade95",
+  "attempt": 3,
   "budget_tokens": 15000,
-  "checks_sha256": "81c6970c077237aa2c8df99da932bc9879d899df8834129932bc568c0b023df5",
+  "checks_sha256": "9ab145e4421f956c1ffaa4c78e04e123763e759066ba9180c805e39dd7c1b262",
   "context_sections": [
     {
       "id": "glossary",
@@ -21,8 +21,8 @@
       "path": "context/glossary.md"
     }
   ],
-  "package_sha256": "79b6a5e80564428ef62806187425e510d31719ec4c18ec1bb787d0aaefb3f314",
-  "prepared_at": "2026-11-22T15:16:07Z",
+  "package_sha256": "1840bd43d4941ff3140a29ac43f82272e58f612a93a08fb5e326e7ec7223a5ce",
+  "prepared_at": "2026-11-22T15:17:44Z",
   "prepared_by": "tsl@0.1.7",
   "previous_findings": [
     {
@@ -31,14 +31,6 @@
     },
     {
       "id": "F-2",
-      "severity": "major"
-    },
-    {
-      "id": "F-3",
-      "severity": "major"
-    },
-    {
-      "id": "F-4",
       "severity": "minor"
     }
   ],

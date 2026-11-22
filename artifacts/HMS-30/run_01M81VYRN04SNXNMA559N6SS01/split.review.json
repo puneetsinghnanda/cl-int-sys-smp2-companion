@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "b9c8cd3368a2b3df89521b59c8600e000014a6cbfabc3ee5eb9d29b1283dc74f",
-  "attempt": 2,
+  "artifact_sha256": "6b281327d9f889c19c469ea35fc7f1c182a3fdd5f01f45c22c6444f35aeade95",
+  "attempt": 3,
   "claims_checked": [
     {
       "cites": [
@@ -65,26 +65,29 @@
       ],
       "claim_id": "C6",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "completeness",
       "cites": [
         {
-          "quote": "another Completed appointment on the day after the range ends",
-          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2"
-        },
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
         {
-          "quote": "in hospital local time",
+          "quote": "A weekly window when a doctor sees patients: weekday, start time, end time, in hospital local time.",
           "ref": "context/glossary.md#availability-block"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Pin the day-after appointment at an early hospital-local time whose UTC date falls inside the range (and the last-day one late local time), so a UTC-date filter fails the AC.",
-      "text": "S-2 AC2 gives no times for the last-day and day-after appointments; times are hospital local, so an implementation comparing UTC dates passes unless the day-after appointment is early local morning (UTC previous day)."
-    },
+      "claim_id": "C8",
+      "verdict": "unsupported"
+    }
+  ],
+  "findings": [
     {
       "category": "style",
       "cites": [
@@ -93,15 +96,33 @@
           "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-4"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
       "suggested_fix": "State observable results, e.g. rows only within the new range, ordered by start time ascending, total equal to the matching count.",
-      "text": "Previous F-4 not addressed: S-4 AC1, AC3 and AC4 still state results as 'as before the change' rather than an observable outcome; resolves lists only F-1..F-3."
+      "text": "Previous F-2 not addressed: S-4 AC1, AC3 and AC4 still state results as 'as before the change' instead of an observable outcome; resolves lists only F-1."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "A weekly window when a doctor sees patients: weekday, start time, end time, in hospital local time.",
+          "ref": "context/glossary.md#availability-block"
+        },
+        {
+          "quote": "A run of whole hospital-local days ending today",
+          "ref": "context/glossary.md#period"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Reword C8 to what the glossary states, or cite a source that defines how appointment times are kept.",
+      "text": "C8 says appointment times are kept in hospital local time but cites the Availability block entry, which speaks only of availability blocks; the Period entry (whole hospital-local days) better supports the local-day rule."
     }
   ],
-  "package_sha256": "79b6a5e80564428ef62806187425e510d31719ec4c18ec1bb787d0aaefb3f314",
+  "package_sha256": "1840bd43d4941ff3140a29ac43f82272e58f612a93a08fb5e326e7ec7223a5ce",
   "questions": [],
-  "recorded_at": "2026-11-22T15:16:45Z",
+  "recorded_at": "2026-11-22T15:18:27Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -112,7 +133,7 @@
   "rubric_items": [
     {
       "id": "SS-R1",
-      "reason": "All eleven known REQs (REQ-1..REQ-11) are traced by at least one story; no assumed REQs.",
+      "reason": "All eleven known REQs (REQ-1..REQ-11) are traced by at least one story; there are no assumed REQs.",
       "score": 5
     },
     {
@@ -122,21 +143,21 @@
     },
     {
       "id": "SS-R3",
-      "reason": "F-1..F-3 fixed: AC4 compares displayed counts with displayed total, last-day inclusion and patient exclusion added. Date-range boundary still lacks a hospital-local time-zone case.",
-      "score": 4
+      "reason": "Previous F-1 resolved: S-2 AC2 puts 01:00 local on 11 March (19:30 UTC on 10 March) outside the range, so a UTC-date filter fails it. Other ACs are Given/When/Then and discriminating.",
+      "score": 5
     },
     {
       "id": "SS-R4",
-      "reason": "Counts 4/25/3/2 come from REQ-3's example; 20 and 21 derive from the 20-per-page rule in REQ-10.",
+      "reason": "Counts 4/25/3/2 come from REQ-3's example; 20/21 derive from REQ-10; the UTC+05:30 conversion is derived inline from Asia/Kolkata.",
       "score": 5
     },
     {
       "id": "SS-R5",
-      "reason": "Clear, consistent status terms; S-4 regression ACs still rely on 'as before the change' instead of an observable outcome.",
+      "reason": "Clear, consistent status terms; S-4 regression ACs still rely on 'as before the change' rather than an observable outcome.",
       "score": 4
     }
   ],
-  "rubric_score": 4.45,
+  "rubric_score": 4.7,
   "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
   "schema": "review.v1",
   "status": "ok",

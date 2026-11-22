@@ -1,21 +1,27 @@
 {
   "artifact_path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md",
-  "artifact_sha256": "b9c8cd3368a2b3df89521b59c8600e000014a6cbfabc3ee5eb9d29b1283dc74f",
-  "attempt": 2,
+  "artifact_sha256": "6b281327d9f889c19c469ea35fc7f1c182a3fdd5f01f45c22c6444f35aeade95",
+  "attempt": 3,
   "band": "High",
   "caps": [],
-  "checks_sha256": "81c6970c077237aa2c8df99da932bc9879d899df8834129932bc568c0b023df5",
+  "checks_sha256": "9ab145e4421f956c1ffaa4c78e04e123763e759066ba9180c805e39dd7c1b262",
   "claims": {
-    "total": 6,
-    "verified": 6
+    "total": 8,
+    "unverified": [
+      {
+        "id": "C8",
+        "reason": "reviewer: unsupported"
+      }
+    ],
+    "verified": 7
   },
-  "decided_at": "2026-11-22T15:16:48Z",
+  "decided_at": "2026-11-22T15:18:31Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -31,7 +37,7 @@
     }
   ],
   "key_id": "key_01M509NZNG1PKX6JV7SF0DFYHT",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -39,15 +45,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": "3ad0b006e45026a2f8938b55e3d640ed7883d5298ce6248217c4b5f74750336a",
+  "prev_attempt_sha256": "aa8c46a79fb69d9e340738f5773a92f9b922ce633ed9382883a7b06ccf8c47a2",
   "product_changes": null,
-  "review_sha256": "5a3748903a5e0210f8a152edb4801e8a72c1bca848db5c243abf088f406f0b46",
+  "review_sha256": "b782ba6a8a64b2552e41acda858d150414add5c48b8c6b5459d022e2e57b5646",
   "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
   "schema": "verification.v1",
   "signals": {
-    "S1": 1.0,
+    "S1": 0.9,
     "S2": 1.0,
-    "S3": 4.45,
+    "S3": 4.7,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -56,7 +62,7 @@
       "sensitive": false
     }
   },
-  "signature": "9QTe9_bpQ5AzGiYqqpNermSVynr4iaM-cNuaNDx_4Hdi2Yvi2M5Afz_RJ52ClGGboeL8piqqVQo6HTK0Onl2Dg",
+  "signature": "hFIl_9UwBq1pkQ9u1b9Fi6UC2JhlVXOb0puwJaklS2tHau5PDyak03WLC2ljRfPHkOuqAKppokp2eOaugEzIAA",
   "skill": "story-split@1.4.0",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
