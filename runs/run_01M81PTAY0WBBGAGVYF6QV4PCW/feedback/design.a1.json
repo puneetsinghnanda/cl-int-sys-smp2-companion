@@ -1,0 +1,57 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "reads `weekday` with the existing Fields integer helper (min 1, max 7)",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/design.md#components"
+        },
+        {
+          "quote": "if (typeof v !== 'number' || !Number.isInteger(v)) return this.fail(name, 'must be a whole number');",
+          "ref": "sample-system:api/src/lib/validate.ts#L56"
+        },
+        {
+          "quote": "res.json(await ctx(req).services.doctors.list(req.query, parsePage(req.query.page)));",
+          "ref": "sample-system:api/src/routes/doctors.ts#L16"
+        },
+        {
+          "quote": "typeof query.departmentId === 'string' && query.departmentId ? Number(query.departmentId) : undefined",
+          "ref": "sample-system:api/src/services/doctorService.ts#L37"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "CO-3 reads weekday with Fields.int, but Fields.int rejects any non-number and req.query values are strings, so every valid weekday (e.g. \"6\") would fail 400 'must be a whole number'. The existing id filters parse with Number() instead."
+    },
+    {
+      "cites": [
+        {
+          "quote": "the name and coding of the weekday in the page address follow the existing filter keys and the stored weekday coding; design picks them",
+          "ref": "artifacts/HMS-28/run_01M81PTAY0WBBGAGVYF6QV4PCW/req.md#known"
+        },
+        {
+          "quote": "weekday: 1 = Monday .. 7 = Sunday.",
+          "ref": "sample-system:db/migrations/20261016T090100__create_doctors.sql#L21"
+        },
+        {
+          "quote": "Q-03: Which query parameter (API and page address) should carry the chosen weekday?",
+          "ref": "runs/run_01M81PTAY0WBBGAGVYF6QV4PCW/ide-answers.md#a-05"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "Q-03 (A-05) asked which parameter carries the weekday, though req.md already left it to design with a default of the existing filter keys and the stored 1..7 coding, which the migration fixes."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-3"
+  ],
+  "run_id": "run_01M81PTAY0WBBGAGVYF6QV4PCW",
+  "schema": "feedback.v1",
+  "step": "design"
+}
