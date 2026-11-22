@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M81VYRN04SNXNMA559N6SS01
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/req.md
@@ -37,6 +37,10 @@ known: [S-1, S-2, S-3, S-4]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "S-2 AC4 now compares the displayed counts with the displayed total across two date ranges."}
+  - {id: F-2, how: "S-2 AC2 now checks that an appointment on the last day of the range is counted."}
+  - {id: F-3, how: "S-2 AC5 now checks that a patient list's counts exclude other patients' appointments."}
 stories:
   - id: S-1
     title: See one count per status next to the total
@@ -55,11 +59,13 @@ stories:
       - id: AC1
         text: "Given a doctor's list with 21 matching appointments, where the 21st by start time is No-show and sits on page 2, when staff view page 1, then the No-show count includes that 21st appointment."
       - id: AC2
-        text: "Given a doctor who has a Completed appointment one day after the end of the selected date range, when staff view the list for that range, then the Completed count does not include it."
+        text: "Given a doctor who has one Completed appointment on the last day of the selected date range and another Completed appointment on the day after the range ends, when staff view the list for that range, then the Completed count includes the last-day appointment and leaves out the day-after one."
       - id: AC3
         text: "Given another doctor has Scheduled appointments in the same date range, when staff view the first doctor's list, then the Scheduled count includes only the first doctor's appointments."
       - id: AC4
-        text: "Given the Status filter is Any status and the list shows a total of 34 appointment(s), when staff read the counts, then 4 + 25 + 3 + 2 = 34, so the four counts add up to the total shown."
+        text: "Given a list with the Status filter set to Any status whose matching appointments span more than one page, when staff read the counts and then change the date range and read them again, then each time the four displayed counts add up to the displayed total."
+      - id: AC5
+        text: "Given another patient has No-show appointments in the same date range, when staff view the first patient's list, then the No-show count includes only the first patient's appointments."
   - id: S-3
     title: Open the list for one status from its count
     trace: [REQ-7]
@@ -85,22 +91,28 @@ stories:
 
 ## Stories
 
-**S-1 See one count per status next to the total** — traces REQ-1, REQ-2, REQ-3, REQ-5, REQ-6
+**S-1 See one count per status next to the total**: traces REQ-1, REQ-2, REQ-3, REQ-5, REQ-6
 - AC1: Given a doctor's list with 4 Scheduled, 25 Completed, 3 Cancelled and 2 No-show matching appointments and Status Any status, when staff open it, then next to the total it shows "Scheduled 4 · Completed 25 · Cancelled 3 · No-show 2" in that order.
 - AC2: Given the same appointments, when Status is set to Cancelled, then the table shows only Cancelled rows while the counts still show all four statuses with the same values.
 - AC3: Given a patient's list with no Cancelled or No-show appointments, when opened, then "Cancelled 0" and "No-show 0" are shown in place.
 
-**S-2 Counts cover the whole filtered list** — traces REQ-4, REQ-8
+**S-2 Counts cover the whole filtered list**: traces REQ-4, REQ-8
 - AC1: Given 21 matching appointments with the 21st (No-show) on page 2, when page 1 is shown, then the No-show count includes it.
-- AC2: Given a Completed appointment one day after the date range ends, when the list is viewed, then the Completed count excludes it.
+- AC2: Given one Completed appointment on the last day of the range and one on the day after, when the list is viewed, then the Completed count includes the last-day one and excludes the day-after one.
 - AC3: Given another doctor's Scheduled appointments in the same range, when the first doctor's list is viewed, then they are not counted.
-- AC4: Given Any status and a total of 34 appointment(s), when the counts are read, then 4 + 25 + 3 + 2 = 34, so they add up to the total.
+- AC4: Given Any status and matches spanning more than one page, when the counts are read before and after changing the date range, then each time the four displayed counts add up to the displayed total.
+- AC5: Given another patient's No-show appointments in the same range, when the first patient's list is viewed, then they are not counted.
 
-**S-3 Open the list for one status from its count** — traces REQ-7
+Resolved review findings:
+- F-1: S-2 AC4 now compares the displayed counts with the displayed total across two date ranges.
+- F-2: S-2 AC2 now checks that an appointment on the last day of the range is counted.
+- F-3: S-2 AC5 now checks that a patient list's counts exclude other patients' appointments.
+
+**S-3 Open the list for one status from its count**: traces REQ-7
 - AC1: Given page 2 of a doctor's list with a date range and Any status, when the Completed count is selected, then the same doctor and date range open with Status Completed on page 1.
 - AC2: Given a patient's list with a date range and Status Scheduled, when the No-show count is selected, then the same patient and date range open with Status No-show on page 1.
 
-**S-4 Existing table, paging and filters keep working** — traces REQ-9, REQ-10, REQ-11
+**S-4 Existing table, paging and filters keep working**: traces REQ-9, REQ-10, REQ-11
 - AC1: Given appointments at several start times, when the list opens, then rows are ordered by start time as before.
 - AC2: Given 21 matching appointments, when page 1 opens, then it shows 20 rows and the 21st is on page 2.
 - AC3: Given a patient's list, when the date range changes, then rows and total follow the new range as before.
