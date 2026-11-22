@@ -1,0 +1,57 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "2d40859bb0e287375b22625bc412c937d117a5a3afc49042885f248892232fd3",
+  "package_sha256": "78ea9dea063a79844d6902eb3b811a776f84ac54415d95efded27668ef4ca26b",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.9,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The change adds no route, input or logging. The new query is bound with $1 and selects no contact data, and the page renders text nodes only. I found no missed weakness."},
+    {"id": "SC-R2", "score": 5, "reason": "SF-1 and every claim cite the exact product line: L121 for the bind, L116-L117 for the select, L124 for the assertion, L28 for the route guard."},
+    {"id": "SC-R3", "score": 5, "reason": "SF-1 is a robustness point covered by a foreign key, so minor matches its impact."},
+    {"id": "SC-R4", "score": 5, "reason": "SF-1 gives a clear direction: check the row and throw the existing notFound error."},
+    {"id": "SC-R5", "score": 4, "reason": "There are no false positives. SF-1 is a robustness note rather than a security weakness, but it is labelled minor and explained honestly."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The XSS-safety statement (React text nodes, no raw HTML) has no claim or product-line citation. Every other security statement in the summary is backed by a claim.",
+      "cites": [
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/secrev.md#summary", "quote": "page renders the new values as React text nodes and uses no raw HTML, so names are escaped"},
+        {"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L66", "quote": "<dd>{refName(a.doctor.specialization)}</dd>"}
+      ],
+      "suggested_fix": "Add a claim citing web/src/pages/AppointmentDetailPage.tsx#L65-L70, where the three new rows render as plain text."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The summary calls appointments:read a guard but does not say that in the MVP allows() grants every permission. The guard therefore restricts nothing until sign-in lands. The cited architecture section says so.",
+      "cites": [
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/secrev.md#summary", "quote": "The detail route keeps its existing `appointments:read` guard (C3, C4)"},
+        {"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}
+      ],
+      "suggested_fix": "Add one sentence saying the permission is declared but is allow-all in the MVP, so no new exposure comes from this change."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L121", "quote": "WHERE d.id = $1"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117", "quote": "d.department_id, dp.name AS department_name, dp.status AS department_status, d.fee_paise"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L28", "quote": "requirePermission('appointments:read'),"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L124", "quote": ").rows[0]!;"}]}
+  ],
+  "questions": []
+}

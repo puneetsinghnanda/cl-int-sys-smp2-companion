@@ -1,0 +1,154 @@
+{
+  "artifact_sha256": "2d40859bb0e287375b22625bc412c937d117a5a3afc49042885f248892232fd3",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "WHERE d.id = $1",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L121"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "d.department_id, dp.name AS department_name, dp.status AS department_status, d.fee_paise",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every API request passes through `identify`, which sets the actor; routes call `requirePermission`.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L28"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ").rows[0]!;",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L124"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "page renders the new values as React text nodes and uses no raw HTML, so names are escaped",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/secrev.md#summary"
+        },
+        {
+          "quote": "<dd>{refName(a.doctor.specialization)}</dd>",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L66"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a claim citing web/src/pages/AppointmentDetailPage.tsx#L65-L70, where the three new rows render as plain text.",
+      "text": "The XSS-safety statement (React text nodes, no raw HTML) has no claim or product-line citation. Every other security statement in the summary is backed by a claim."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The detail route keeps its existing `appointments:read` guard (C3, C4)",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/secrev.md#summary"
+        },
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add one sentence saying the permission is declared but is allow-all in the MVP, so no new exposure comes from this change.",
+      "text": "The summary calls appointments:read a guard but does not say that in the MVP allows() grants every permission. The guard therefore restricts nothing until sign-in lands. The cited architecture section says so."
+    }
+  ],
+  "package_sha256": "78ea9dea063a79844d6902eb3b811a776f84ac54415d95efded27668ef4ca26b",
+  "questions": [],
+  "recorded_at": "2026-11-22T16:52:59Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "The change adds no route, input or logging. The new query is bound with $1 and selects no contact data, and the page renders text nodes only. I found no missed weakness.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "SF-1 and every claim cite the exact product line: L121 for the bind, L116-L117 for the select, L124 for the assertion, L28 for the route guard.",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "SF-1 is a robustness point covered by a foreign key, so minor matches its impact.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "SF-1 gives a clear direction: check the row and throw the existing notFound error.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "There are no false positives. SF-1 is a robustness note rather than a security weakness, but it is labelled minor and explained honestly.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.9,
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
