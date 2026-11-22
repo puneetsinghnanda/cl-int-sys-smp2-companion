@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "900d7c7defee788cd16c3f2e0090abc37d03865982accdd45deb4df7aa3544d7",
+  "package_sha256": "565a7f30a0ae83bfc50fbd68f8a1fc400faac808827095bb47062db5244c380a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "No new route; authz, parameterised SQL via listWhere, enum validation, fixed-path links and logging all checked against head code; no real weakness missed."},
+    {"id": "SC-R2", "score": 5, "reason": "Every claim and SF-1 cite the exact line at head (routes L12, repo L78/L95, service L40, page L22)."},
+    {"id": "SC-R3", "score": 5, "reason": "SF-1 as minor matches impact: the extra GROUP BY mirrors the existing full-table count(*) for unfiltered lists."},
+    {"id": "SC-R4", "score": 4, "reason": "SF-1 gives direction (index or required filter if the table grows) but no concrete index or growth threshold."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives; the single finding is real and proportionate."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "style",
+      "text": "Wording: the summary says the response adds 'four integers per status'; the code adds one integer per status, four in total.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/secrev.md#summary", "quote": "The response adds only four integers per status and no contact details or medical history."},
+        {"ref": "sample-system:api/src/services/appointmentService.ts#L58", "quote": "APPOINTMENT_STATUSES.map((s) => [s, counts.get(s) ?? 0]),"}
+      ],
+      "suggested_fix": "Say 'one integer per status (four in total)'."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L12", "quote": "requirePermission('appointments:read'),"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L78", "quote": "const { clause, params } = listWhere(f);"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L95", "quote": "`SELECT a.status, count(*) AS n FROM appointment a ${clause} GROUP BY a.status`,"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L40", "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L22", "quote": "return `/appointments?${next.toString()}`;"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies"}]}
+  ],
+  "questions": []
+}

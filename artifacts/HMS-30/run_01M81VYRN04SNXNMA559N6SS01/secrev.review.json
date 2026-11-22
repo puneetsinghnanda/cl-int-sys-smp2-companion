@@ -1,0 +1,137 @@
+{
+  "artifact_sha256": "900d7c7defee788cd16c3f2e0090abc37d03865982accdd45deb4df7aa3544d7",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:read'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L12"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const { clause, params } = listWhere(f);",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L78"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`SELECT a.status, count(*) AS n FROM appointment a ${clause} GROUP BY a.status`,",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L95"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L40"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return `/appointments?${next.toString()}`;",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L22"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "The response adds only four integers per status and no contact details or medical history.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/secrev.md#summary"
+        },
+        {
+          "quote": "APPOINTMENT_STATUSES.map((s) => [s, counts.get(s) ?? 0]),",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L58"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Say 'one integer per status (four in total)'.",
+      "text": "Wording: the summary says the response adds 'four integers per status'; the code adds one integer per status, four in total."
+    }
+  ],
+  "package_sha256": "565a7f30a0ae83bfc50fbd68f8a1fc400faac808827095bb47062db5244c380a",
+  "questions": [],
+  "recorded_at": "2026-11-22T15:46:04Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "No new route; authz, parameterised SQL via listWhere, enum validation, fixed-path links and logging all checked against head code; no real weakness missed.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Every claim and SF-1 cite the exact line at head (routes L12, repo L78/L95, service L40, page L22).",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "SF-1 as minor matches impact: the extra GROUP BY mirrors the existing full-table count(*) for unfiltered lists.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "SF-1 gives direction (index or required filter if the table grows) but no concrete index or growth threshold.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives; the single finding is real and proportionate.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.85,
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
