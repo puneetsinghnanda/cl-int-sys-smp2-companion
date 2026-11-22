@@ -1,0 +1,249 @@
+{
+  "artifact_sha256": "57bbf0a2dd2e60cb54a59844370213fbf80c395641936daf17a0392744736cc6",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export interface AppointmentDetail extends AppointmentSummary {",
+          "ref": "sample-system:api/src/types.ts#L128"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface AppointmentDetail extends AppointmentSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L114"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async detail(id: number): Promise<AppointmentDetail | null> {",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L91"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "${SUMMARY_SELECT} WHERE a.id = $1${lock}",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L88"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "specialization: { id: number; name: string; status: RecordStatus };",
+          "ref": "sample-system:api/src/types.ts#L36"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<td>{rupees(d.feePaise)}</td>",
+          "ref": "sample-system:web/src/pages/DoctorsPage.tsx#L84"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function AppointmentDetailPage() {",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L22"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "services.appointments.get(parseId(req.params.id, 'id'))",
+          "ref": "sample-system:api/src/routes/appointments.ts#L30"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async get(id: number): Promise<AppointmentDetail> {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L54"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Extend detail doctor (proposed default)",
+          "ref": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Name plus '(Inactive)'",
+          "ref": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "CO-2 AppointmentDetail type (api) — changed — `doctor` becomes",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/design.md#components"
+        },
+        {
+          "quote": "export interface AppointmentDetail extends AppointmentSummary {",
+          "ref": "sample-system:api/src/types.ts#L128"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State that AppointmentDetail (api and web) redeclares doctor as the extended object, leaving AppointmentSummary.doctor as { id, code, fullName }.",
+      "text": "Both AppointmentDetail types extend AppointmentSummary and inherit its narrow doctor type; the design says doctor 'becomes' the wider shape but not that the detail type must override doctor while AppointmentSummary stays unchanged."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "only the web app uses them, through `web/src/api/client.ts`, C10",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/design.md#overview"
+        },
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Reword to say the change is additive and the web app is the only known client, or mark it as an assumption.",
+      "text": "The trade-off asserts only the web app consumes the action responses, citing C10; C10 only says the web app uses client.ts, not that no other client calls the API."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "format: current specialization name, example: \"<specialization name>\"",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/design.md#item:EP-1"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Use a concrete seed value as example (for example a real specialization and department name) and format 'free text, as stored'.",
+      "text": "The name fields give a placeholder example and a descriptive format instead of a concrete example value, so ACs cannot compare against an exact sample."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "CO-3, CO-4, CO-8: existing symbols from the module map (C9); no change needed.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/design.md#known"
+        },
+        {
+          "quote": "`AppointmentService` answers get, book, reschedule, cancel and close with the same appointment detail.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/design.md#claim:C9"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Point CO-4 and CO-8 to their own module-map citations (or C8/C10) in the Known section.",
+      "text": "Known attributes CO-3, CO-4 and CO-8 to C9, but C9 covers only AppointmentService; the router and api client symbols have no claim of their own."
+    }
+  ],
+  "package_sha256": "cc11ed86917caafc35473d97eaec9a2151aa53061cf5762eb6daea706ed604e9",
+  "questions": [],
+  "recorded_at": "2026-11-22T16:38:44Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built only on existing repo, service, router, types, page and rupees helper; no new endpoint, table or service; follows routes/services/repositories layering.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-4 are mapped to components; live read covers S-2 current values, (Inactive) marker covers S-2 AC4/AC5, column-limited join covers S-3 AC2/AC3, untouched SUMMARY_SELECT covers S-4.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Every new field has name, type, nullability and format, matching NOT NULL columns; name fields use placeholder examples and a vague format, and the doctor type override is not spelled out.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Claims check out against product code and A-01/A-02; one unproven statement (only the web app uses the action responses) is stated as fact, and CO-8 is attributed to an unrelated claim.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs given for the detail-only join, live values, not reusing DoctorSummary mapping, and action responses changing shape.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, consistent overview, component list and story mapping.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

@@ -1,0 +1,105 @@
+{
+  "artifact_path": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/design.md",
+  "artifact_sha256": "57bbf0a2dd2e60cb54a59844370213fbf80c395641936daf17a0392744736cc6",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "dcd0b02ba41bb817e2775991c880409dcaad4e2356bc6e10b5bcfa56a2162d73",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    },
+    {
+      "id": "api-inventory",
+      "included": true,
+      "path": "context/api-inventory.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md"
+    },
+    {
+      "name": "intent",
+      "path": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md"
+    },
+    {
+      "name": "intent_baseline",
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    },
+    {
+      "name": "api_inventory",
+      "path": "context/generated/api-inventory.json"
+    }
+  ],
+  "package_sha256": "cc11ed86917caafc35473d97eaec9a2151aa53061cf5762eb6daea706ed604e9",
+  "prepared_at": "2026-11-22T16:36:45Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/review-input/design.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "DS-R1",
+        "weight": 0.25
+      },
+      {
+        "id": "DS-R2",
+        "weight": 0.25
+      },
+      {
+        "id": "DS-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "DS-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "DS-R5",
+        "weight": 0.1
+      },
+      {
+        "id": "DS-R6",
+        "weight": 0.05
+      }
+    ],
+    "path": "skills/design/rubric.md",
+    "sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md"
+    },
+    {
+      "name": "open-questions",
+      "path": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/open-questions.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "design@1.9.0",
+  "step": "design",
+  "truncated": false
+}
