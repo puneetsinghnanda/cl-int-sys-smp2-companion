@@ -1,0 +1,40 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "b03701e7048b60a921f2709374b064311f7ced727534936ab87c31ece1c13f20",
+  "package_sha256": "df56eab1e6d9dfe21f3040b2cbcbd651ca3b87d618d91e37c3e0ce2665218286",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "CO-1..CO-7 and EP-1 are all in the code. Two small gaps: the links drop page instead of setting page=1, and the status_counts response type is inlined in client.ts, not added to web/src/api/types.ts as CO-5 says."},
+    {"id": "IM-R2", "score": 5, "reason": "SQL is in the repo and the rule is in the service, with strict types. The only break from the list shape is the one the user decided (A-03), and the design records it."},
+    {"id": "IM-R3", "score": 5, "reason": "Six files changed, all named by design components. The router is untouched. The listWhere extraction is the shared builder the design asks for."},
+    {"id": "IM-R4", "score": 5, "reason": "Input validation is unchanged. Statuses with no rows are filled with 0. Count query errors reach the existing asyncHandler. The web view renders only when data is present."},
+    {"id": "IM-R5", "score": 4, "reason": "The summary matches the diff. One statement is not backed: it says the design asks for no regression test, but the design says nothing about tests. One claim also cites the wrong line."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "minor", "category": "consistency", "text": "CO-7 says each count links with page=1. The code deletes the page param instead. That likely behaves the same if a missing page defaults to 1, but it is not the literal design.", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#components", "quote": "Each one links to the current query string with `status=<STATUS>` and `page=1`."}, {"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L21", "quote": "next.delete('page');"}], "suggested_fix": "Either set page=1 explicitly or note in the design/summary that an absent page means page 1."},
+    {"id": "F-2", "severity": "minor", "category": "consistency", "text": "CO-5 puts status_counts on the appointments list response type in web/src/api/types.ts. The code adds only AppointmentStatusCounts there and inlines the intersection type in client.ts.", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md#components", "quote": "plus `status_counts` on the appointments list response type"}, {"ref": "sample-system:web/src/api/client.ts#L77", "quote": "send<Page<AppointmentSummary> & { status_counts: AppointmentStatusCounts }>"}], "suggested_fix": "Add a named list response type in web/src/api/types.ts and use it in client.ts, or update the summary."},
+    {"id": "F-3", "severity": "minor", "category": "traceability", "text": "The summary says the design asks for no regression test. The design says nothing about tests either way, so this reason is not backed by the input.", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/impl.md#changes", "quote": "Tests: none added. The design asks for no regression test"}], "suggested_fix": "Say the design does not mention tests and they are left to the unit-test step."},
+    {"id": "F-4", "severity": "minor", "category": "traceability", "text": "C2 cites appointmentRepo.ts#L74, which in the head file is the class declaration. The WHERE builder is at L59 and the count that uses it is at L78-L80.", "cites": [{"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/impl.md#claim:C2", "quote": "sample-system:api/src/repositories/appointmentRepo.ts#L74"}, {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L74", "quote": "export class AppointmentRepo {"}], "claim_ref": "C2", "suggested_fix": "Cite appointmentRepo.ts#L59-L80."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L40", "quote": "export interface AppointmentFilter {"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L78", "quote": "const { clause, params } = listWhere(f);"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L51", "quote": "from: from ? dayBounds(from, tz).start : undefined,"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L14", "quote": "res.json(await ctx(req).services.appointments.list(req.query, parsePage(req.query.page)));"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L5", "quote": "['SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW']"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/lib/format.ts#L36", "quote": "export const STATUS_LABEL: Record<AppointmentStatus, string> = {"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L12", "quote": "const [params, setParams] = useSearchParams();"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M81VYRN04SNXNMA559N6SS01/ide-answers.md#a-03", "quote": "answer: status_counts on list"}]}
+  ],
+  "questions": []
+}

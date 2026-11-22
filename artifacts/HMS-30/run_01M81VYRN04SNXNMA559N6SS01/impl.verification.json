@@ -1,0 +1,83 @@
+{
+  "artifact_path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/impl.md",
+  "artifact_sha256": "b03701e7048b60a921f2709374b064311f7ced727534936ab87c31ece1c13f20",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "81dffa324f9844a7dc7c7abcead9c453f9deab746b96cdbf32deb956fe0f5202",
+  "claims": {
+    "total": 8,
+    "verified": 8
+  },
+  "decided_at": "2026-11-22T15:35:29Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/design.md",
+      "sha256": "780fcf8b1905e1bf5475a047c4e2e5cd45a0839d20cc21711c73e9c21fe49b2f",
+      "verification_sha256": "ce93c0380438f87f0248bb78ca7ff8bb8b08abbf59ff931a11ae2cf87f9d49a1"
+    },
+    {
+      "path": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md",
+      "sha256": "6b281327d9f889c19c469ea35fc7f1c182a3fdd5f01f45c22c6444f35aeade95",
+      "verification_sha256": "b62065e8f5835cfde0af458195e3fec227bc804c8049304f6f39ad502182ae0e"
+    }
+  ],
+  "key_id": "key_01M509NZNG1PKX6JV7SF0DFYHT",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "9360cbd37caee980ead125af37b11b22ba4115f233d50954d55cb97d62067b8f",
+      "repo": "sample-system",
+      "tree_sha": "e4585b0e3af6a59148b401829aea9db4f66237aa"
+    }
+  ],
+  "review_sha256": "76b8241b1d76faa5b54d66c32b2a2f6174a3f99079207b6f283040ac4bebb06f",
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.6,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 6,
+      "lines": 94,
+      "sensitive": false
+    }
+  },
+  "signature": "3J3C-oSrwo40hUX-oNi_M8DtLJOUSOakj0NBHEAfvbmYGQi30ME7fdYKRNCcF4RgVWsBbtuRrsRxWozfiPoJAA",
+  "skill": "implement@1.3.0",
+  "step": "impl",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
