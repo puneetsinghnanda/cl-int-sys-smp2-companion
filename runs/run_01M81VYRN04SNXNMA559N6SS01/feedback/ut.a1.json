@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "S-4: covered by the API order/envelope and invalid-status tests and the web table/filter test.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ut.md#known"
+        },
+        {
+          "quote": "Given a doctor's list with 21 matching appointments, when staff open page 1, then the table shows 20 rows and the 21st appointment appears on page 2.",
+          "ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-4"
+        },
+        {
+          "quote": "expect(page2.body.items).toHaveLength(0);",
+          "ref": "sample-system:api/test/appointments-status-counts.test.ts#L70"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-2 AC1 and S-4 AC2 need 21 matching appointments (20 rows on page 1, 21st on page 2). The fixture has 5 rows, so page 2 is empty and no test checks 20-row paging or a page-2 row in the counts, yet the artifact lists S-4 and S-2 AC1 as covered."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

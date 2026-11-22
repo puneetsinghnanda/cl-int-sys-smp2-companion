@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M81VYRN04SNXNMA559N6SS01",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "35accbb890a9575ebfd62060b2f18beb03d970dffb50a45293bd82a855de6dd8",
+  "package_sha256": "5503dd87c237ae5b83612cb8037dc751c7a86336e169b2f4d169bef9f45cd86a",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.25,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 4, "reason": "countByStatus, service status_counts and the page counts line/links are all tested; the multi-page 21-row cases (S-2 AC1, S-4 AC2) and the range-change sum check (S-2 AC4) are not exercised despite being listed as covered."},
+    {"id": "UT-R2", "score": 4, "reason": "Assertions check exact count objects, key order, sum vs total, exact rendered line and link query params; the page-2 test only compares counts against an empty page from a 5-row fixture."},
+    {"id": "UT-R3", "score": 4, "reason": "Zero counts, no matches, other doctor/patient, local-day boundary, status replacement, 400 invalid status and failed fetch are covered; the inclusion side of the day boundary uses a midday slot, not a late-evening one."},
+    {"id": "UT-R4", "score": 5, "reason": "Vitest+Supertest with own fresh database and injected clock for API, Vitest+jsdom+Testing Library with stubbed fetch and MemoryRouter for web; test names start with HMS-30 REQ-n."},
+    {"id": "UT-R5", "score": 5, "reason": "No pass counts or coverage numbers are stated; the artifact defers results to checks.json and notes the verifier skips coverage, matching checks.json (coverage status skip)."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "S-2 AC1 and S-4 AC2 need 21 matching appointments (20 rows on page 1, 21st on page 2). The fixture has 5 rows, so page 2 is empty and no test checks 20-row paging or a page-2 row in the counts, yet the artifact lists S-4 and S-2 AC1 as covered.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ut.md#known", "quote": "S-4: covered by the API order/envelope and invalid-status tests and the web table/filter test."},
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-4", "quote": "Given a doctor's list with 21 matching appointments, when staff open page 1, then the table shows 20 rows and the 21st appointment appears on page 2."},
+        {"ref": "sample-system:api/test/appointments-status-counts.test.ts#L70", "quote": "expect(page2.body.items).toHaveLength(0);"}
+      ],
+      "suggested_fix": "Add a test with 21 matching appointments for one doctor (21st No-show): assert page 1 has 20 rows, page 2 has the 21st, and page 1 NO_SHOW count includes it; or narrow the Known claims."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-2 AC4 asks that counts add up to the total before and after changing the date range; the sum-equals-total check runs for one range only, and S-4 AC3 (rows and total follow a new range) has no dedicated assertion.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2", "quote": "when staff read the counts and then change the date range and read them again, then each time the four displayed counts add up to the displayed total"},
+        {"ref": "sample-system:api/test/appointments-status-counts.test.ts#L53", "quote": "expect(sum).toBe(res.body.total);"}
+      ],
+      "suggested_fix": "Repeat the sum-equals-total and total assertions for a second range (e.g. MONDAY..WEDNESDAY)."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The local-day boundary test's inclusion case is a Tuesday 11:45 (midday) slot, not the late-evening 23:30 local case S-2 AC2 describes, so it is weaker than the story's edge on the inclusion side.",
+      "cites": [
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/ut.md#tests", "quote": "an appointment at 11:45 on the last day is counted"},
+        {"ref": "artifacts/HMS-30/run_01M81VYRN04SNXNMA559N6SS01/split.md#item:S-2", "quote": "one Completed appointment at 23:30 local on 10 March"}
+      ],
+      "suggested_fix": "Insert a late-evening appointment on the last local day directly (as done for Wednesday 01:00) and assert it is counted."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#L27", "quote": "APT-9: lists by doctor or patient, with date range and status, ordered by start"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/doctors-no-shows.test.ts#L15", "quote": "db = await freshDatabase();"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L27", "quote": "vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify(DATA), { status: 200 })));"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]}
+  ],
+  "questions": []
+}
