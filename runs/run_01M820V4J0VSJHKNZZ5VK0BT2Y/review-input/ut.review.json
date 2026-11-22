@@ -1,0 +1,80 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "df1181bacd336a165f4e52e32c4ad4b14563dbd51fa766591ac314920cfb2fba",
+  "package_sha256": "1c15359f2da34a26b4cd7eb981ea2d11e0011daba8264fdcf4abc02454b64d6f",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 3.8,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 3, "reason": "Most changed paths are tested, but S-2 AC2 (specialization changed after booking) and S-4 AC2/AC4 (Completed, No-show page unchanged) have no test, even though the artifact says they are covered."},
+    {"id": "UT-R2", "score": 4, "reason": "Assertions check exact response shapes and rendered text. The REQ-6 test never checks that the doctor PATCH worked, so it can pass without an Inactive doctor."},
+    {"id": "UT-R3", "score": 4, "reason": "Covers 404, Inactive specialization and department on the web, the paise edge and privacy. Inactive department is only tested on the web side."},
+    {"id": "UT-R4", "score": 4, "reason": "Uses Vitest+Supertest on the test DB and Testing Library with a MemoryRouter, in the existing places. One test name has no REQ id."},
+    {"id": "UT-R5", "score": 5, "reason": "No counts or coverage invented. The artifact defers counts to the verifier, and checks.json shows coverage skipped."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "The REQ-5 test is said to cover S-2 AC2, but it only changes fee and department. No test changes the specialization after booking and checks Cancelled and No-show appointments show the current one.",
+      "cites": [
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ut.md#tests", "quote": "the Completed, No-show and Cancelled appointments show the current values (S-2 AC1, AC2)"},
+        {"ref": "sample-system:api/test/appointments-doctor-details.test.ts#L78", "quote": "send({ feePaise: 60000, departmentId: 2 })"},
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-2", "quote": "whose doctor's specialization was changed after booking"}
+      ],
+      "suggested_fix": "Also change the doctor's specialization (or the specialization name) and assert the Cancelled and No-show details return the new specialization."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "completeness",
+      "text": "S-4 is listed as covered, but the web tests only check the Scheduled and Cancelled partitions. Nothing tests that Completed (AC2) and No-show (AC4) pages are unchanged.",
+      "cites": [
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ut.md#known", "quote": "S-4: covered by the web Scheduled and Cancelled regression tests and the API list-shape test."},
+        {"ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-4", "quote": "Given a No-show appointment with history entries"}
+      ],
+      "suggested_fix": "Add web tests for COMPLETED and NO_SHOW appointments that check the history, the closed notice, that no action buttons show, and that the new rows show."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The REQ-6 test does not check the doctor PATCH status or that the doctor is Inactive afterwards. If the PATCH fails, the test still passes and proves nothing about Inactive doctors.",
+      "cites": [
+        {"ref": "sample-system:api/test/appointments-doctor-details.test.ts#L95", "quote": "await request(app).patch('/api/doctors/1').send({ status: 'INACTIVE' });"}
+      ],
+      "suggested_fix": "Assert the PATCH returns 200 and the doctor status is INACTIVE before checking the detail."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "style",
+      "text": "Test naming: the EP-2/EP-4 test name gives no requirement id. The test strategy names tests after the requirement they cover.",
+      "cites": [
+        {"ref": "sample-system:api/test/appointments-doctor-details.test.ts#L48", "quote": "HMS-31 (EP-2, EP-4): booking and cancelling answer with the same doctor details"},
+        {"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}
+      ],
+      "suggested_fix": "Name it after the requirement it supports, for example HMS-31 REQ-1/REQ-3 (EP-2, EP-4)."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "New requirements get new IDs and tests."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts", "quote": "\"path\": \"api/test/appointments.test.ts\""}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx", "quote": "\"path\": \"web/src/__tests__/DoctorDetailPage.test.tsx\""}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "quote": "\"name\": \"AppointmentRepo\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage", "quote": "\"name\": \"AppointmentDetailPage\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md#a-01", "quote": "answer: Name plus '(Inactive)'"}]}
+  ],
+  "questions": []
+}

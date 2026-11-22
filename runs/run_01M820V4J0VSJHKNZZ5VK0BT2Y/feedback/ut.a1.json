@@ -1,0 +1,49 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "the Completed, No-show and Cancelled appointments show the current values (S-2 AC1, AC2)",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ut.md#tests"
+        },
+        {
+          "quote": "send({ feePaise: 60000, departmentId: 2 })",
+          "ref": "sample-system:api/test/appointments-doctor-details.test.ts#L78"
+        },
+        {
+          "quote": "whose doctor's specialization was changed after booking",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-2"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "The REQ-5 test is said to cover S-2 AC2, but it only changes fee and department. No test changes the specialization after booking and checks Cancelled and No-show appointments show the current one."
+    },
+    {
+      "cites": [
+        {
+          "quote": "S-4: covered by the web Scheduled and Cancelled regression tests and the API list-shape test.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ut.md#known"
+        },
+        {
+          "quote": "Given a No-show appointment with history entries",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-4"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "S-4 is listed as covered, but the web tests only check the Scheduled and Cancelled partitions. Nothing tests that Completed (AC2) and No-show (AC4) pages are unchanged."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "schema": "feedback.v1",
+  "step": "ut"
+}
