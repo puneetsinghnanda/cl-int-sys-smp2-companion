@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M820V4J0VSJHKNZZ5VK0BT2Y
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.4.0
 inputs:
   - path: artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md
@@ -27,8 +27,16 @@ claims:
   - id: C5
     text: "An `Inactive` doctor, department or specialization is kept for history but not offered for new use."
     cites: ["context/glossary.md#inactive"]
+  - id: C6
+    text: "Only `Scheduled` appointments can change."
+    cites: ["context/glossary.md#scheduled"]
+resolves:
+  - id: F-1
+    how: "S-4 checks that the rest of the page is unchanged for Scheduled, Completed, Cancelled and No-show appointments."
+  - id: F-3
+    how: "S-3 AC2 and AC3 also check that the appointment data the page receives holds no doctor contact details or patient medical history."
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11]
-known: [S-1, S-2, S-3]
+known: [S-1, S-2, S-3, S-4]
 assumed: []
 unknown:
   - {id: U-1, blocking: false}
@@ -61,19 +69,27 @@ stories:
       - id: AC5
         text: "Given an appointment whose doctor's department is Inactive and specialization is active, when front-desk staff open the appointment page, then \"Department\" shows the name followed by \"(Inactive)\" and \"Specialization\" shows the name without \"(Inactive)\"."
   - id: S-3
-    title: The rest of the appointment page stays as it is, with no extra personal data
-    trace: [REQ-8, REQ-9, REQ-10, REQ-11]
+    title: The doctor link stays and no extra personal data reaches the appointment page
+    trace: [REQ-8, REQ-9, REQ-10]
     acceptance_criteria:
       - id: AC1
         text: "Given an appointment, when front-desk staff select the doctor's name on the appointment page, then the doctor page of that doctor opens."
       - id: AC2
-        text: "Given an appointment whose doctor has contact details recorded, when front-desk staff open the appointment page, then none of the doctor's contact details are shown."
+        text: "Given an appointment whose doctor has contact details recorded, when front-desk staff open the appointment page, then none of the doctor's contact details are shown and the appointment data the page receives holds none of them."
       - id: AC3
-        text: "Given an appointment whose patient has allergies and current medications recorded, when front-desk staff open the appointment page, then no part of the patient's medical history is shown."
-      - id: AC4
+        text: "Given an appointment whose patient has allergies and current medications recorded, when front-desk staff open the appointment page, then no part of the patient's medical history is shown and the appointment data the page receives holds none of it."
+  - id: S-4
+    title: The rest of the appointment page is unchanged for every appointment status
+    trace: [REQ-11]
+    acceptance_criteria:
+      - id: AC1
         text: "Given a Scheduled appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change."
-      - id: AC5
+      - id: AC2
+        text: "Given a Completed appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change."
+      - id: AC3
         text: "Given a Cancelled appointment with a cancellation reason, when front-desk staff open the appointment page, then the cancellation reason, actions and history are the same as before this change."
+      - id: AC4
+        text: "Given a No-show appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change."
 ---
 # Stories: HMS-31
 
@@ -94,18 +110,28 @@ Traces REQ-5, REQ-6, REQ-7.
 - AC4: Given an appointment whose doctor's specialization is Inactive and department is active, when front-desk staff open the appointment page, then "Specialization" shows the name followed by "(Inactive)" and "Department" shows the name without "(Inactive)".
 - AC5: Given an appointment whose doctor's department is Inactive and specialization is active, when front-desk staff open the appointment page, then "Department" shows the name followed by "(Inactive)" and "Specialization" shows the name without "(Inactive)".
 
-### S-3 The rest of the appointment page stays as it is, with no extra personal data
-Traces REQ-8, REQ-9, REQ-10, REQ-11.
+### S-3 The doctor link stays and no extra personal data reaches the appointment page
+Traces REQ-8, REQ-9, REQ-10.
 - AC1: Given an appointment, when front-desk staff select the doctor's name on the appointment page, then the doctor page of that doctor opens.
-- AC2: Given an appointment whose doctor has contact details recorded, when front-desk staff open the appointment page, then none of the doctor's contact details are shown.
-- AC3: Given an appointment whose patient has allergies and current medications recorded, when front-desk staff open the appointment page, then no part of the patient's medical history is shown.
-- AC4: Given a Scheduled appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change.
-- AC5: Given a Cancelled appointment with a cancellation reason, when front-desk staff open the appointment page, then the cancellation reason, actions and history are the same as before this change.
+- AC2: Given an appointment whose doctor has contact details recorded, when front-desk staff open the appointment page, then none of the doctor's contact details are shown and the appointment data the page receives holds none of them.
+- AC3: Given an appointment whose patient has allergies and current medications recorded, when front-desk staff open the appointment page, then no part of the patient's medical history is shown and the appointment data the page receives holds none of it.
+
+### S-4 The rest of the appointment page is unchanged for every appointment status
+Traces REQ-11. Each appointment status is a separate partition, because only Scheduled appointments can change and so the page offers different actions per status.
+- AC1: Given a Scheduled appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change.
+- AC2: Given a Completed appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change.
+- AC3: Given a Cancelled appointment with a cancellation reason, when front-desk staff open the appointment page, then the cancellation reason, actions and history are the same as before this change.
+- AC4: Given a No-show appointment with history entries, when front-desk staff open the appointment page, then its time, doctor name, patient name, reason for visit, actions and history are the same as before this change.
+
+### Resolved review findings
+- F-1: S-4 checks that the rest of the page is unchanged for Scheduled, Completed, Cancelled and No-show appointments.
+- F-3: S-3 AC2 and AC3 also check that the appointment data the page receives holds no doctor contact details or patient medical history.
 
 ## Known
 - S-1: built from known REQ-1 to REQ-4 (ticket acceptance criteria 1 and 2).
 - S-2: built from known REQ-5, REQ-6 and REQ-7 (ticket acceptance criterion 3 and answer A-01).
-- S-3: built from known REQ-8 to REQ-11 (ticket acceptance criteria 4 to 6).
+- S-3: built from known REQ-8, REQ-9 and REQ-10 (ticket acceptance criteria 4 and 5).
+- S-4: built from known REQ-11 (ticket acceptance criterion 6).
 
 ## Assumed
 None.

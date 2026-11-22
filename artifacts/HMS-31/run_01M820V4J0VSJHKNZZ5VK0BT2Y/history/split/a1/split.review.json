@@ -1,0 +1,167 @@
+{
+  "artifact_sha256": "4f6c6b221880128b9977ded1d6581d7a0e4f4a443a9aa9099ab25b1ac021c69b",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The fee is shown the same way as on the doctors list: `₹` with two decimals.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#item:REQ-4"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Fees are stored and sent as integer paise.",
+          "ref": "context/glossary.md#paise"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Name plus '(Inactive)'",
+          "ref": "runs/run_01M820V4J0VSJHKNZZ5VK0BT2Y/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A doctor, patient, department or specialization kept for history but not offered for new use.",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a Scheduled appointment with history entries",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-3"
+        },
+        {
+          "quote": "The rest of the appointment page, including its `actions` and history, is unchanged.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#item:REQ-11"
+        },
+        {
+          "quote": "Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add S-3 ACs, or extend AC4/AC5, so that Completed and No-show appointments also show the same actions, history and other fields as before the change.",
+      "text": "REQ-11 (rest of the page unchanged, including actions) is checked only for Scheduled and Cancelled appointments. Completed and No-show are separate partitions with different actions, and neither has an unchanged check."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "then both show the fee as ₹123.45, with ₹ and two decimals",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-1"
+        },
+        {
+          "quote": "The fee is shown the same way as on the doctors list",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#item:REQ-4"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Change S-1 AC4 to use a fee of 1,000 rupees or more (for example 150000 paise, which is 1500 rupees), compared against the doctors list.",
+      "text": "Both fee ACs use fees under 1,000 rupees (₹500.00, ₹123.45). If the doctors list groups thousands, an appointment page that skips grouping still passes, which weakens the REQ-4 'same way as the doctors list' check."
+    },
+    {
+      "category": "security",
+      "cites": [
+        {
+          "quote": "then none of the doctor's contact details are shown",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-3"
+        },
+        {
+          "quote": "Medical history appears only on the `patient's own page`, never in lists, the dashboard or logs.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#claim:C5"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Have AC2 and AC3 also check that the data loaded for the appointment page has no doctor contact details and no patient medical history.",
+      "text": "S-3 AC2 and AC3 only check what the page renders. A likely wrong implementation loads the whole doctor or patient record into the appointment response and hides fields in the UI; that would still pass."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "trace: [REQ-8, REQ-9, REQ-10, REQ-11]",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-3"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "text": "S-3 bundles four separate constraints (doctor link, no contact details, no medical history, rest unchanged) into one story, so it does not deliver a single outcome."
+    }
+  ],
+  "package_sha256": "6f82991b717415ac47e40416e4ef4d11975d69d835ce4a7ca845c73281ea6309",
+  "questions": [],
+  "recorded_at": "2026-11-22T16:28:30Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All eleven known REQs (REQ-1 to REQ-11) are traced by S-1, S-2 or S-3; there are no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "S-1 and S-2 each deliver one outcome. S-3 bundles four different constraints (link, no contact details, no medical history, page unchanged).",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The ACs are Given/When/Then with concrete values and good partitions for the Inactive and closed-status cases. The REQ-11 unchanged check skips the Completed and No-show partitions, and the fee ACs do not test a fee of 1,000 rupees or more.",
+      "score": 3
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The fee values 50000 and 12345 paise are converted to rupees inline using the glossary's paise definition. No other numeric values appear.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms are clear and match the intent and glossary (front-desk staff, Inactive, Completed, Cancelled, No-show). The body matches the front matter.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.3,
+  "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

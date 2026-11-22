@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "4f6c6b221880128b9977ded1d6581d7a0e4f4a443a9aa9099ab25b1ac021c69b",
-  "attempt": 1,
+  "artifact_sha256": "bd26e52b86c31239358a3a893ff920c053cf6830e2406107bd5bda4c61c58536",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -15,7 +15,7 @@
     {
       "cites": [
         {
-          "quote": "Fees are stored and sent as integer paise.",
+          "quote": "One hundredth of a rupee. Fees are stored and sent as integer paise.",
           "ref": "context/glossary.md#paise"
         }
       ],
@@ -51,6 +51,16 @@
       ],
       "claim_id": "C5",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
     }
   ],
   "findings": [
@@ -58,22 +68,18 @@
       "category": "completeness",
       "cites": [
         {
-          "quote": "Given a Scheduled appointment with history entries",
-          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-3"
+          "quote": "then the cancellation reason, actions and history are the same as before this change",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-4"
         },
         {
-          "quote": "The rest of the appointment page, including its `actions` and history, is unchanged.",
-          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#item:REQ-11"
-        },
-        {
-          "quote": "Only Scheduled appointments can change.",
-          "ref": "context/glossary.md#scheduled"
+          "quote": "The appointment page today shows the appointment's time, doctor name, patient name, reason for visit, `cancellation reason` and history.",
+          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#claim:C1"
         }
       ],
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add S-3 ACs, or extend AC4/AC5, so that Completed and No-show appointments also show the same actions, history and other fields as before the change.",
-      "text": "REQ-11 (rest of the page unchanged, including actions) is checked only for Scheduled and Cancelled appointments. Completed and No-show are separate partitions with different actions, and neither has an unchanged check."
+      "severity": "minor",
+      "suggested_fix": "Extend S-4 AC3 so time, doctor name, patient name and reason for visit are also unchanged for a Cancelled appointment.",
+      "text": "S-4 AC3 (Cancelled) checks only cancellation reason, actions and history, while the other status ACs also check time, doctor name, patient name and reason for visit. A change that breaks those fields only on Cancelled pages would pass."
     },
     {
       "category": "correctness",
@@ -89,42 +95,13 @@
       ],
       "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Change S-1 AC4 to use a fee of 1,000 rupees or more (for example 150000 paise, which is 1500 rupees), compared against the doctors list.",
-      "text": "Both fee ACs use fees under 1,000 rupees (₹500.00, ₹123.45). If the doctors list groups thousands, an appointment page that skips grouping still passes, which weakens the REQ-4 'same way as the doctors list' check."
-    },
-    {
-      "category": "security",
-      "cites": [
-        {
-          "quote": "then none of the doctor's contact details are shown",
-          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-3"
-        },
-        {
-          "quote": "Medical history appears only on the `patient's own page`, never in lists, the dashboard or logs.",
-          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/req.md#claim:C5"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Have AC2 and AC3 also check that the data loaded for the appointment page has no doctor contact details and no patient medical history.",
-      "text": "S-3 AC2 and AC3 only check what the page renders. A likely wrong implementation loads the whole doctor or patient record into the appointment response and hides fields in the UI; that would still pass."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "trace: [REQ-8, REQ-9, REQ-10, REQ-11]",
-          "ref": "artifacts/HMS-31/run_01M820V4J0VSJHKNZZ5VK0BT2Y/split.md#item:S-3"
-        }
-      ],
-      "id": "F-4",
-      "severity": "minor",
-      "text": "S-3 bundles four separate constraints (doctor link, no contact details, no medical history, rest unchanged) into one story, so it does not deliver a single outcome."
+      "suggested_fix": "Make S-1 AC4 use a fee of 1,000 rupees or more (for example 150000 paise, 1500 rupees) and compare it with the doctors list.",
+      "text": "Prior F-2 is still open and not listed under resolves: both fee ACs use fees under 1,000 rupees, so a page that formats the fee differently from the doctors list for larger amounts (e.g. thousands grouping) would still pass REQ-4."
     }
   ],
-  "package_sha256": "6f82991b717415ac47e40416e4ef4d11975d69d835ce4a7ca845c73281ea6309",
+  "package_sha256": "92f9381d042d40c12b0ae06aac9c4e7d6dbd2c2e040808358c2695a50e0d7fbb",
   "questions": [],
-  "recorded_at": "2026-11-22T16:28:30Z",
+  "recorded_at": "2026-11-22T16:30:58Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -135,31 +112,31 @@
   "rubric_items": [
     {
       "id": "SS-R1",
-      "reason": "All eleven known REQs (REQ-1 to REQ-11) are traced by S-1, S-2 or S-3; there are no assumed REQs.",
+      "reason": "All eleven known REQs are traced: REQ-1..4 by S-1, REQ-5..7 by S-2, REQ-8..10 by S-3, REQ-11 by S-4. No assumed REQs.",
       "score": 5
     },
     {
       "id": "SS-R2",
-      "reason": "S-1 and S-2 each deliver one outcome. S-3 bundles four different constraints (link, no contact details, no medical history, page unchanged).",
+      "reason": "REQ-11 moved to its own story S-4 (prior F-4 addressed). S-3 still groups the doctor link with the two data-exclusion constraints, but they are small and closely related.",
       "score": 4
     },
     {
       "id": "SS-R3",
-      "reason": "The ACs are Given/When/Then with concrete values and good partitions for the Inactive and closed-status cases. The REQ-11 unchanged check skips the Completed and No-show partitions, and the fee ACs do not test a fee of 1,000 rupees or more.",
-      "score": 3
+      "reason": "ACs are Given/When/Then and discriminating: S-2 covers changed-after-booking and each Inactive partition, S-3 now checks the received data, S-4 covers every status. Cancelled partition checks fewer fields; fee grouping still untested.",
+      "score": 4
     },
     {
       "id": "SS-R4",
-      "reason": "The fee values 50000 and 12345 paise are converted to rupees inline using the glossary's paise definition. No other numeric values appear.",
+      "reason": "The only values (50000 and 12345 paise) are converted to rupees inline using the glossary paise definition; (Inactive) marker comes from A-01.",
       "score": 5
     },
     {
       "id": "SS-R5",
-      "reason": "Terms are clear and match the intent and glossary (front-desk staff, Inactive, Completed, Cancelled, No-show). The body matches the front matter.",
+      "reason": "Terms match the intent and glossary; body matches front matter; resolved findings and the open Q-02 are stated clearly.",
       "score": 5
     }
   ],
-  "rubric_score": 4.3,
+  "rubric_score": 4.55,
   "run_id": "run_01M820V4J0VSJHKNZZ5VK0BT2Y",
   "schema": "review.v1",
   "status": "ok",
