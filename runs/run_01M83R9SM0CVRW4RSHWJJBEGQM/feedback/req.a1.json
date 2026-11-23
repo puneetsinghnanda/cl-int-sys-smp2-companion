@@ -1,0 +1,45 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "When the list is filtered by Cancelled, every row shows a reason",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-9"
+        },
+        {
+          "quote": "For a Cancelled appointment whose `cancellation_reason` is empty (NULL), the column shows \"-\".",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-4"
+        },
+        {
+          "quote": "answer: Show \"-\" (proposed default)",
+          "ref": "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-9 says every row under the Cancelled filter shows a reason, but REQ-4 (from A-01) says a Cancelled row with a NULL reason shows \"-\". The two REQs contradict; a tester cannot satisfy both."
+    },
+    {
+      "cites": [
+        {
+          "quote": "The column follows the list's `status filter`, date range and paging",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-8"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "REQ-8 is compound: it bundles three separate behaviours (status filter, date range, paging) in one requirement."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M83R9SM0CVRW4RSHWJJBEGQM",
+  "schema": "feedback.v1",
+  "step": "req"
+}

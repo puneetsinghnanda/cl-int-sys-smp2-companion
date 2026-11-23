@@ -1,0 +1,58 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M83R9SM0CVRW4RSHWJJBEGQM",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "6b7e2fbc0f08f5b8f26bc848fe125e1ab77421ea586addcdc0f16145b43bb5cc",
+  "package_sha256": "bee493858b16f0853db16d574f8055f1a7cbd0ec3c47c069f23dfc35debc337d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All eight acceptance criteria and the story intent map to REQ-1..REQ-13; sorting/searching and reason entry are out of scope with reasons."},
+    {"id": "RR-R2", "score": 3, "reason": "Most REQs atomic and checkable, but REQ-8 bundles filter, date range and paging, and REQ-9 cannot be met alongside REQ-4 for a Cancelled row with a NULL reason."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known status cites the ticket line, the baseline or an IDE answer; REQ-4 and REQ-7 correctly cite A-01 and A-02; all claims check out against generated context."},
+    {"id": "RR-R4", "score": 5, "reason": "The ticket-vs-schema clash (always a reason vs nullable column) was asked as Q-01, answered in A-01 and recorded as a mismatch; no baseline clash found."},
+    {"id": "RR-R5", "score": 5, "reason": "Two precise questions with real options and proposed defaults, both answered; no needless blocking."},
+    {"id": "RR-R6", "score": 5, "reason": "Plain wording; glossary terms Cancelled, Scheduled, Completed, No-show, Dashboard, Medical history used consistently."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "consistency",
+      "text": "REQ-9 says every row under the Cancelled filter shows a reason, but REQ-4 (from A-01) says a Cancelled row with a NULL reason shows \"-\". The two REQs contradict; a tester cannot satisfy both.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-9", "quote": "When the list is filtered by Cancelled, every row shows a reason"},
+        {"ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-4", "quote": "For a Cancelled appointment whose `cancellation_reason` is empty (NULL), the column shows \"-\"."},
+        {"ref": "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-01", "quote": "answer: Show \"-\" (proposed default)"}
+      ],
+      "suggested_fix": "Reword REQ-9: filtering by Cancelled shows each row's stored reason, or \"-\" where none is stored (per REQ-4/A-01); cite A-01."
+    },
+    {
+      "id": "F-2",
+      "severity": "major",
+      "category": "correctness",
+      "text": "REQ-8 is compound: it bundles three separate behaviours (status filter, date range, paging) in one requirement.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-8", "quote": "The column follows the list's `status filter`, date range and paging"}
+      ],
+      "suggested_fix": "Split REQ-8 into one REQ each for status filter, date range and paging, each with its own checkable condition."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L14", "quote": "A cancelled appointment always has a reason of up to 300 characters, entered when it is cancelled;"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#L10-L20", "quote": "\"nullable\": true,"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L392", "quote": "\"id\": \"ui:/appointments\","}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L58-L64", "quote": "\"path\": \"api/src/routes/appointments.ts\","}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed, Cancelled and No-show"}]}
+  ],
+  "questions": []
+}
