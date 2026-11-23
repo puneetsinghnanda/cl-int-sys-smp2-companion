@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M83R9SM0CVRW4RSHWJJBEGQM
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.4.0
 inputs:
   - path: artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md
@@ -35,8 +35,8 @@ claims:
   - id: C7
     text: "Completed, Cancelled and No-show appointments `never change`, so the list shows a closed appointment's reason as stored."
     cites: ["context/intent-baseline.md#closed-appointments"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 assumed: []
 unknown: []
 requirements:
@@ -83,17 +83,17 @@ requirements:
     statement: "The list shows no tooltip or hover text with the full reason; a cut reason is read in full only on the appointment's own page (`No tooltip`)."
     cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L21", "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-02"]
   - id: REQ-8
-    title: Column follows filter, date range and paging
+    title: Column follows the status filter
     type: functional
     status: known
-    statement: "The column follows the list's `status filter`, date range and paging: each shown row carries its own reason or \"-\"."
+    statement: "With any `status filter` applied, each shown row carries its own reason or \"-\"."
     cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L22"]
   - id: REQ-9
-    title: Cancelled filter shows a reason on every row
+    title: Cancelled filter shows each row's reason
     type: functional
     status: known
-    statement: "When the list is filtered by Cancelled, every row shows a reason (`filtering by Cancelled`)."
-    cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L22-L23"]
+    statement: "When `filtering by Cancelled`, every row shows its stored reason; a row with no stored reason shows \"-\" as in REQ-4."
+    cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L22-L23", "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-01"]
   - id: REQ-10
     title: Other appointment tables unchanged
     type: constraint
@@ -118,6 +118,18 @@ requirements:
     status: known
     statement: "No `contact details` are added to the appointment list."
     cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L27"]
+  - id: REQ-14
+    title: Column follows the date range
+    type: functional
+    status: known
+    statement: "With any `date range` applied, each shown row carries its own reason or \"-\"."
+    cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L22"]
+  - id: REQ-15
+    title: Column follows paging
+    type: functional
+    status: known
+    statement: "On every page of the list (`paging`), each shown row carries its own reason or \"-\"."
+    cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L22"]
 unknowns: []
 questions: []
 answers:
@@ -125,10 +137,10 @@ answers:
     kind: question
     about: Q-01
     answer: "Show \"-\" (proposed default)"
-    requirements: [REQ-4]
+    requirements: [REQ-4, REQ-9]
     mismatch:
-      text: "The ticket says a cancelled appointment always has a reason, but the column is nullable; the user decided a Cancelled row with no stored reason shows \"-\"."
-      cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L14"]
+      text: "The ticket says a cancelled appointment always has a reason and the Cancelled filter shows a reason on every row, but the column is nullable; the user decided a Cancelled row with no stored reason shows \"-\"."
+      cites: ["artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L14", "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/ticket.md#L22-L23"]
   - id: A-02
     kind: question
     about: Q-02
@@ -156,17 +168,19 @@ HMS-33 adds a `Cancellation reason` column after Status on the appointment list 
 - REQ-5 Long reasons are cut at 60 characters (known): over 60 characters shows the first 60 + "…".
 - REQ-6 Full reason stays on the appointment page (known).
 - REQ-7 No tooltip in the list (known).
-- REQ-8 Column follows filter, date range and paging (known).
-- REQ-9 Cancelled filter shows a reason on every row (known).
+- REQ-8 Column follows the status filter (known).
+- REQ-9 Cancelled filter shows each row's reason (known): every row shows its stored reason, or "-" when none is stored (REQ-4).
 - REQ-10 Other appointment tables unchanged (known): dashboard, doctor page and patient page get no new column.
 - REQ-11 Existing appointment actions unchanged (known): opening, cancelling and booking work as before.
 - REQ-12 No medical history in the list (known).
 - REQ-13 No contact details in the list (known).
+- REQ-14 Column follows the date range (known).
+- REQ-15 Column follows paging (known).
 
 ## Known
-- REQ-1, REQ-2, REQ-3, REQ-5, REQ-6, REQ-8, REQ-9, REQ-10, REQ-11, REQ-13: stated in the ticket's acceptance criteria (lines 17 to 27).
+- REQ-1, REQ-2, REQ-3, REQ-5, REQ-6, REQ-8, REQ-10, REQ-11, REQ-13, REQ-14, REQ-15: stated in the ticket's acceptance criteria (lines 17 to 27).
 - REQ-12: stated in the ticket (line 27) and in the baseline's data-protection rule.
-- REQ-4: decided by the user in A-01.
+- REQ-4, REQ-9: decided by the user in A-01.
 - REQ-7: decided by the user in A-02.
 
 ## Assumed
@@ -179,7 +193,7 @@ None
 None open.
 
 Answered in the IDE:
-- A-01 (Q-01): what a Cancelled row with no stored reason shows. Answer: Show "-" (proposed default), answered by eng-dbe4. Decides REQ-4. Mismatch: the ticket (line 14) says a cancelled appointment always has a reason, but the column `cancellation_reason` is nullable. The user decided that a missing reason shows "-".
+- A-01 (Q-01): what a Cancelled row with no stored reason shows. Answer: Show "-" (proposed default), answered by eng-dbe4. Decides REQ-4 and REQ-9. Mismatch: the ticket (lines 14 and 22 to 23) says a cancelled appointment always has a reason and every Cancelled-filter row shows one, but the column `cancellation_reason` is nullable. The user decided that a missing reason shows "-".
 - A-02 (Q-02): whether a cut reason shows the full text on hover. Answer: No tooltip (proposed default), answered by eng-dbe4. Decides REQ-7. Matches the ticket.
 
 ## Out of scope

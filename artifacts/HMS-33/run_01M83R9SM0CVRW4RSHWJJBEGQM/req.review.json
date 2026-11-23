@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "6b7e2fbc0f08f5b8f26bc848fe125e1ab77421ea586addcdc0f16145b43bb5cc",
-  "attempt": 1,
+  "artifact_sha256": "e9dd632615c723b4de366bffe1da1e75d2fc4833df8ec163ed535ecc8a733fb0",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -35,8 +35,8 @@
     {
       "cites": [
         {
-          "quote": "\"path\": \"api/src/routes/appointments.ts\",",
-          "ref": "context/generated/api-inventory.json#L58-L64"
+          "quote": "\"id\": \"http:GET:/api/appointments\",",
+          "ref": "context/generated/api-inventory.json#L58"
         }
       ],
       "claim_id": "C4",
@@ -73,45 +73,10 @@
       "verdict": "supported"
     }
   ],
-  "findings": [
-    {
-      "category": "consistency",
-      "cites": [
-        {
-          "quote": "When the list is filtered by Cancelled, every row shows a reason",
-          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-9"
-        },
-        {
-          "quote": "For a Cancelled appointment whose `cancellation_reason` is empty (NULL), the column shows \"-\".",
-          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-4"
-        },
-        {
-          "quote": "answer: Show \"-\" (proposed default)",
-          "ref": "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-01"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Reword REQ-9: filtering by Cancelled shows each row's stored reason, or \"-\" where none is stored (per REQ-4/A-01); cite A-01.",
-      "text": "REQ-9 says every row under the Cancelled filter shows a reason, but REQ-4 (from A-01) says a Cancelled row with a NULL reason shows \"-\". The two REQs contradict; a tester cannot satisfy both."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "The column follows the list's `status filter`, date range and paging",
-          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-8"
-        }
-      ],
-      "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Split REQ-8 into one REQ each for status filter, date range and paging, each with its own checkable condition.",
-      "text": "REQ-8 is compound: it bundles three separate behaviours (status filter, date range, paging) in one requirement."
-    }
-  ],
-  "package_sha256": "bee493858b16f0853db16d574f8055f1a7cbd0ec3c47c069f23dfc35debc337d",
+  "findings": [],
+  "package_sha256": "15bbd95030c47aef746759144c11407a1b7fbcf5e9e49379823b4c26243910b2",
   "questions": [],
-  "recorded_at": "2026-11-23T08:31:39Z",
+  "recorded_at": "2026-11-23T08:37:16Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -122,36 +87,36 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "All eight acceptance criteria and the story intent map to REQ-1..REQ-13; sorting/searching and reason entry are out of scope with reasons.",
+      "reason": "All eight acceptance criteria map to REQ-1..REQ-15; sorting/searching, reason entry and the API fact are out of scope with reasons.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs atomic and checkable, but REQ-8 bundles filter, date range and paging, and REQ-9 cannot be met alongside REQ-4 for a Cancelled row with a NULL reason.",
-      "score": 3
+      "reason": "Prior F-2 fixed: status filter, date range and paging are now REQ-8, REQ-14, REQ-15. Prior F-1 fixed: REQ-9 now shows stored reason or \"-\" per REQ-4. Each REQ is one checkable behaviour.",
+      "score": 5
     },
     {
       "id": "RR-R3",
-      "reason": "Every known status cites the ticket line, the baseline or an IDE answer; REQ-4 and REQ-7 correctly cite A-01 and A-02; all claims check out against generated context.",
+      "reason": "Every known REQ cites a ticket line, the baseline or an IDE answer (A-01, A-02); all seven claims check out against ticket, baseline, glossary and generated context.",
       "score": 5
     },
     {
       "id": "RR-R4",
-      "reason": "The ticket-vs-schema clash (always a reason vs nullable column) was asked as Q-01, answered in A-01 and recorded as a mismatch; no baseline clash found.",
+      "reason": "The ticket-vs-schema clash (always a reason vs nullable column) was asked, answered in A-01 and recorded as a mismatch citing both ticket lines; no baseline conflict found.",
       "score": 5
     },
     {
       "id": "RR-R5",
-      "reason": "Two precise questions with real options and proposed defaults, both answered; no needless blocking.",
+      "reason": "Two precise questions with real options and defaults, both answered by an engineer; none open, none blocking needlessly.",
       "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Plain wording; glossary terms Cancelled, Scheduled, Completed, No-show, Dashboard, Medical history used consistently.",
+      "reason": "Plain wording; glossary terms Cancelled, Scheduled, Completed, No-show, Dashboard, Medical history, Front-desk staff used consistently.",
       "score": 5
     }
   ],
-  "rubric_score": 4.6,
+  "rubric_score": 5.0,
   "run_id": "run_01M83R9SM0CVRW4RSHWJJBEGQM",
   "schema": "review.v1",
   "status": "ok",
