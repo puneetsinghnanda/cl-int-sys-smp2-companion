@@ -1,0 +1,155 @@
+{
+  "artifact_sha256": "7a26f92047da77ef881ee183086682bff053d6b9cc86401cdc2a1d93bc330bcc",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "placed directly after the Status column",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-1"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"nullable\": true,",
+          "ref": "context/generated/db-schema.json#column:appointment.cancellation_reason"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Show \"-\" (proposed default)",
+          "ref": "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: No tooltip (proposed default)",
+          "ref": "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "shows its first 60 characters followed by",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-5"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "keep their appointment tables unchanged and get no new column",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/req.md#item:REQ-10"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "The list shows `No tooltip` with the full reason.",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/split.md#claim:C4"
+        },
+        {
+          "quote": "answer: No tooltip (proposed default)",
+          "ref": "runs/run_01M83R9SM0CVRW4RSHWJJBEGQM/ide-answers.md#a-02"
+        }
+      ],
+      "claim_ref": "C4",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Reword C4 to: \"The list shows no tooltip or hover text with the full reason.\"",
+      "text": "Claim C4 reads as if the list shows the full reason, the opposite of A-02 and REQ-7 (no tooltip or hover text with the full reason)."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "then no medical history value of that patient appears in any column",
+          "ref": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/split.md#item:S-6"
+        },
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add a check that the appointment list response carries no medical history fields for the patient, not only that no column shows them.",
+      "text": "S-6 AC1 checks only the visible columns. An implementation that sends the patient's medical history in the list response but does not render it would still pass."
+    }
+  ],
+  "package_sha256": "f5ee9f86baa6da8dd895b114a695e3c5495eda2d50700e8d5f094de41ea68176",
+  "questions": [],
+  "recorded_at": "2026-11-23T08:40:12Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 15 known REQs (REQ-1 to REQ-15) are traced by S-1 to S-6; no assumed REQs exist in the intent.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are small; S-3 groups three list behaviours (status filter, date range, paging) and S-1 four REQs, but each still delivers one user outcome.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then with good 60/61-character and NULL boundaries; S-6 AC1 only checks visible columns, so a payload leak of medical history would pass.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The 60-character limit, \"-\" placeholder and no-tooltip rule all come from the intent; reason strings are example test data, not limits.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable and consistent terms; claim C4 is worded so it reads as if the list shows the full reason.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M83R9SM0CVRW4RSHWJJBEGQM",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

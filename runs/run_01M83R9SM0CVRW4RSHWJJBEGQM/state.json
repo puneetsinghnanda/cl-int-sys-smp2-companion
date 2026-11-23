@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-23T08:37:24Z",
+  "heartbeat_at": "2026-11-23T08:40:20Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -47,7 +47,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 6,
+  "rev": 9,
   "run_id": "run_01M83R9SM0CVRW4RSHWJJBEGQM",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -98,7 +98,30 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/split.md",
+          "artifact_sha256": "7a26f92047da77ef881ee183086682bff053d6b9cc86401cdc2a1d93bc330bcc",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-23T08:40:20Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "e9dd632615c723b4de366bffe1da1e75d2fc4833df8ec163ed535ecc8a733fb0",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-33/run_01M83R9SM0CVRW4RSHWJJBEGQM/split.verification.json",
+          "skill": "story-split@1.4.0",
+          "skill_started_at": "2026-11-23T08:37:50Z",
+          "started_at": "2026-11-23T08:37:41Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -107,7 +130,7 @@
       },
       "id": "split",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -166,7 +189,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-33",
-  "updated_at": "2026-11-23T08:37:24Z",
+  "updated_at": "2026-11-23T08:40:20Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
