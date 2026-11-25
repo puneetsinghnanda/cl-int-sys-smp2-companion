@@ -2,12 +2,12 @@
   "active_session": {
     "host_hash": "h_c14537ff",
     "session_id": "c441e434-c904-4af2-8623-650b71631899",
-    "since": "2026-11-25T10:28:44Z"
+    "since": "2026-11-25T11:08:37Z"
   },
   "branch": {
     "sample-system": {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "head_sha": null,
+      "head_sha": "5c75aad92008432fe2b1015de9d0afad8a90948b",
       "name": "tsl/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF"
     }
   },
@@ -16,22 +16,22 @@
   "end_reason": null,
   "gates": [
     {
-      "approver_key": null,
+      "approver_key": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
       "artifacts": [
         {
           "sha256": "fbf0c4c88fe15ebf38cffe9d865138ebcca27be34da2894740e6333efe700a43",
           "step": "impl"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-11-25T11:08:36Z",
+      "decision": "approve",
       "id": "G-escalate-impl-a1",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "APPROVED",
       "step": "impl"
     }
   ],
-  "heartbeat_at": "2026-11-25T11:06:41Z",
+  "heartbeat_at": "2026-11-25T11:08:37Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -71,10 +71,10 @@
     "open_non_blocking": 0,
     "round": 1
   },
-  "rev": 29,
+  "rev": 31,
   "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -307,7 +307,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "ACCEPTED"
     },
     {
       "attempts": [],
@@ -342,7 +342,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T11:06:41Z",
+  "updated_at": "2026-11-25T11:08:37Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }
