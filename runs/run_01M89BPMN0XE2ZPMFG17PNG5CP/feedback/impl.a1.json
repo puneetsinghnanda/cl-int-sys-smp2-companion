@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "test exit 1; log runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/verifier/impl/a1/test.log: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯ | npm error Lifecycle script `test` failed with error: | npm error code 1 | npm error path /cache/w/api | npm error workspace @hms/api@0.1.0 | npm error location /cache/w/api | npm error command failed | npm error command sh -c vitest run",
+      "id": "H3"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3"
+  ],
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
