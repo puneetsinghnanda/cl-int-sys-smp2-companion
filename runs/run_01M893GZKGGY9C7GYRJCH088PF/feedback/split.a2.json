@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "when staff open that doctor's page, then the appointments table shows Stale for the Stale one",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-7"
+        },
+        {
+          "quote": "AND a.status = 'SCHEDULED' AND a.starts_at >= $2",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
+        },
+        {
+          "quote": "<h2>Upcoming appointments</h2>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L132"
+        },
+        {
+          "quote": "wherever an appointment status is shown today",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-11"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-7 AC1 expects the doctor page to list a Stale appointment, but that table shows only upcoming Scheduled appointments (status SCHEDULED, starts_at >= now). A Stale one is past and not Scheduled, so it never appears; the AC silently widens REQ-11 ('shown today')."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "feedback.v1",
+  "step": "split"
+}

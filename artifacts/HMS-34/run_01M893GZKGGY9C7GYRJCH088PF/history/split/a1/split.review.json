@@ -1,0 +1,127 @@
+{
+  "artifact_sha256": "8721ae216085bf2a6ca3687e67a86640ce2895c91f0561c799f6dfeb9e4cc40b",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "has not been marked Completed or `rescheduled` by 24h after its start time is marked Stale",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<StatusBadge status={a.status} />",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L46"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/appointments\",",
+          "ref": "context/generated/api-inventory.json#L392"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/appointments/:id\",",
+          "ref": "context/generated/api-inventory.json#L403"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "wherever an appointment status is shown today",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-11"
+        },
+        {
+          "quote": "Given a Stale appointment, when staff open that appointment's own page, then its status shows Stale.",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-5"
+        },
+        {
+          "quote": "<StatusBadge status={a.status} />",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L46"
+        },
+        {
+          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add S-5 ACs checking that a Stale appointment shows Stale in the appointments section of the patient page and the doctor page.",
+      "text": "REQ-11 says Stale shows wherever an appointment status shows today. Appointment status also shows in AppointmentTable on the patient and doctor detail pages, but S-5 only checks the list and the appointment's own page."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "title: The glossary defines Stale",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-6"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "text": "S-6's title describes a documentation change, not an outcome a user sees."
+    }
+  ],
+  "package_sha256": "9dea6014a3a0a4f410ada653363aa6398eab5b048ceb8420c7324e8d1d563826",
+  "questions": [],
+  "recorded_at": "2026-11-25T10:36:38Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 15 known REQs (REQ-1 to REQ-15) are traced by at least one story; nothing is assumed or unknown.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories carry one outcome. S-5 bundles the status label, the list filter and the dashboard constraint, but it is still small.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "The ACs are Given/When/Then, and the 24h bracketing at 09:59/10:01 rules out end-time and end-of-day variants. REQ-11 is only checked on the list and the appointment page, not on the patient or doctor pages.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The 24h value comes from REQ-2/A-02, and the one-minute offsets are derived inline. Dates and times are example data, not limits.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Terms (Scheduled, Stale, Completed, No-show, Cancelled) match the glossary and intent and are used consistently.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

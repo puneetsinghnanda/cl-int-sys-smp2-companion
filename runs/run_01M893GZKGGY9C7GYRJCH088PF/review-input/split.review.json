@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "8721ae216085bf2a6ca3687e67a86640ce2895c91f0561c799f6dfeb9e4cc40b",
-  "package_sha256": "9dea6014a3a0a4f410ada653363aa6398eab5b048ceb8420c7324e8d1d563826",
+  "attempt": 2,
+  "artifact_sha256": "a91b3df0d881254e57b267caf8293879677291d48477a8f0cc9769f78f232f02",
+  "package_sha256": "511f754a408d4386b6033bf6b539a8a2063b175a792153986f86c5ee31ff4262",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,43 +12,49 @@
     "version": "0.1.7",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.55,
+  "rubric_score": 4.2,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All 15 known REQs (REQ-1 to REQ-15) are traced by at least one story; nothing is assumed or unknown."},
-    {"id": "SS-R2", "score": 4, "reason": "Most stories carry one outcome. S-5 bundles the status label, the list filter and the dashboard constraint, but it is still small."},
-    {"id": "SS-R3", "score": 4, "reason": "The ACs are Given/When/Then, and the 24h bracketing at 09:59/10:01 rules out end-time and end-of-day variants. REQ-11 is only checked on the list and the appointment page, not on the patient or doctor pages."},
-    {"id": "SS-R4", "score": 5, "reason": "The 24h value comes from REQ-2/A-02, and the one-minute offsets are derived inline. Dates and times are example data, not limits."},
-    {"id": "SS-R5", "score": 5, "reason": "Terms (Scheduled, Stale, Completed, No-show, Cancelled) match the glossary and intent and are used consistently."}
+    {"id": "SS-R1", "score": 5, "reason": "All 15 known REQs are traced; REQ-11 now also covers the patient page via S-7 (previous F-1 addressed for the patient page)."},
+    {"id": "SS-R2", "score": 4, "reason": "Stories mostly carry one outcome; S-5 still bundles label, filter and dashboard constraint but stays small."},
+    {"id": "SS-R3", "score": 3, "reason": "S-1/S-2/S-4 bracket 24h at 09:59/10:01 and discriminate well, but S-7 AC1 expects a Stale (past, non-Scheduled) appointment in the doctor page table, which lists only upcoming Scheduled ones."},
+    {"id": "SS-R4", "score": 5, "reason": "24h comes from REQ-2/A-02 and the one-minute offsets are derived inline; dates are example data, not limits."},
+    {"id": "SS-R5", "score": 4, "reason": "Terms are consistent with the glossary and intent; S-6 title is still a documentation task rather than a user-facing outcome."}
   ],
   "findings": [
     {
       "id": "F-1",
       "severity": "major",
-      "category": "completeness",
-      "text": "REQ-11 says Stale shows wherever an appointment status shows today. Appointment status also shows in AppointmentTable on the patient and doctor detail pages, but S-5 only checks the list and the appointment's own page.",
+      "category": "correctness",
+      "text": "S-7 AC1 expects the doctor page to list a Stale appointment, but that table shows only upcoming Scheduled appointments (status SCHEDULED, starts_at >= now). A Stale one is past and not Scheduled, so it never appears; the AC silently widens REQ-11 ('shown today').",
       "cites": [
-        {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-11", "quote": "wherever an appointment status is shown today"},
-        {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-5", "quote": "Given a Stale appointment, when staff open that appointment's own page, then its status shows Stale."},
-        {"ref": "sample-system:web/src/components/AppointmentTable.tsx#L46", "quote": "<StatusBadge status={a.status} />"},
-        {"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76", "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />"}
+        {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-7", "quote": "when staff open that doctor's page, then the appointments table shows Stale for the Stale one"},
+        {"ref": "sample-system:api/src/repositories/doctorRepo.ts#L160", "quote": "AND a.status = 'SCHEDULED' AND a.starts_at >= $2"},
+        {"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L132", "quote": "<h2>Upcoming appointments</h2>"},
+        {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-11", "quote": "wherever an appointment status is shown today"}
       ],
-      "suggested_fix": "Add S-5 ACs checking that a Stale appointment shows Stale in the appointments section of the patient page and the doctor page."
+      "claim_ref": "C6",
+      "suggested_fix": "Drop S-7 AC1 and note, as done for the dashboard (C8), that the doctor page lists only upcoming Scheduled appointments, so a Stale one never appears there; keep the patient-page AC2."
     },
     {
       "id": "F-2",
       "severity": "minor",
       "category": "style",
-      "text": "S-6's title describes a documentation change, not an outcome a user sees.",
+      "text": "Previous F-2 still open: S-6's title describes a documentation change, not an outcome a user sees.",
       "cites": [
         {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-6", "quote": "title: The glossary defines Stale"}
-      ]
+      ],
+      "suggested_fix": "Retitle as a reader outcome, for example 'Staff can look up what Stale means in the glossary'."
     }
   ],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-2", "quote": "has not been marked Completed or `rescheduled` by 24h after its start time is marked Stale"}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/AppointmentTable.tsx#L46", "quote": "<StatusBadge status={a.status} />"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2304", "quote": "\"id\": \"sym:sample-system:web/src/components/StatusBadge.tsx:StatusBadge\","}]},
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L392", "quote": "\"id\": \"ui:/appointments\","}]},
-    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L403", "quote": "\"id\": \"ui:/appointments/:id\","}]}
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L403", "quote": "\"id\": \"ui:/appointments/:id\","}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/AppointmentTable.tsx#L46", "quote": "<StatusBadge status={a.status} />"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L4", "quote": "import { AppointmentTable } from '../components/AppointmentTable';"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76", "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#dashboard", "quote": "plus the next upcoming appointments"}]}
   ],
   "questions": []
 }
