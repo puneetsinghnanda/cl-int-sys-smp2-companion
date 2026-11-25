@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "a91b3df0d881254e57b267caf8293879677291d48477a8f0cc9769f78f232f02",
-  "attempt": 2,
+  "artifact_sha256": "a7155fb4e16dcf12bf1ec55dc77f49a05fccbeef9c9084fb822e43d519892151",
+  "attempt": 3,
   "claims_checked": [
     {
       "cites": [
@@ -55,8 +55,8 @@
     {
       "cites": [
         {
-          "quote": "import { AppointmentTable } from '../components/AppointmentTable';",
-          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L4"
+          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
         }
       ],
       "claim_id": "C6",
@@ -65,11 +65,21 @@
     {
       "cites": [
         {
-          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
-          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+          "quote": "upcoming first (soonest first), then past (most recent first)",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L220"
         }
       ],
       "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AND a.status = 'SCHEDULED' AND a.starts_at >= $2",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
+        }
+      ],
+      "claim_id": "C8",
       "verdict": "supported"
     },
     {
@@ -79,7 +89,7 @@
           "ref": "context/glossary.md#dashboard"
         }
       ],
-      "claim_id": "C8",
+      "claim_id": "C9",
       "verdict": "supported"
     }
   ],
@@ -88,45 +98,23 @@
       "category": "correctness",
       "cites": [
         {
-          "quote": "when staff open that doctor's page, then the appointments table shows Stale for the Stale one",
+          "quote": "Given a Stale appointment and a Scheduled appointment of the same doctor, when staff open that doctor's page",
           "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-7"
         },
         {
           "quote": "AND a.status = 'SCHEDULED' AND a.starts_at >= $2",
           "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
-        },
-        {
-          "quote": "<h2>Upcoming appointments</h2>",
-          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L132"
-        },
-        {
-          "quote": "wherever an appointment status is shown today",
-          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-11"
         }
       ],
-      "claim_ref": "C6",
       "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Drop S-7 AC1 and note, as done for the dashboard (C8), that the doctor page lists only upcoming Scheduled appointments, so a Stale one never appears there; keep the patient-page AC2.",
-      "text": "S-7 AC1 expects the doctor page to list a Stale appointment, but that table shows only upcoming Scheduled appointments (status SCHEDULED, starts_at >= now). A Stale one is past and not Scheduled, so it never appears; the AC silently widens REQ-11 ('shown today')."
-    },
-    {
-      "category": "style",
-      "cites": [
-        {
-          "quote": "title: The glossary defines Stale",
-          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-6"
-        }
-      ],
-      "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Retitle as a reader outcome, for example 'Staff can look up what Stale means in the glossary'.",
-      "text": "Previous F-2 still open: S-6's title describes a documentation change, not an outcome a user sees."
+      "suggested_fix": "Give the Scheduled appointment a future start time, for example 'a Scheduled appointment starting at 10:00 on 6 December, opened on 4 December'.",
+      "text": "S-7 AC2 does not say the doctor's Scheduled appointment is upcoming. The doctor page lists only Scheduled appointments with starts_at >= now, so a past Scheduled one would not be listed and the AC could fail against a correct build."
     }
   ],
-  "package_sha256": "511f754a408d4386b6033bf6b539a8a2063b175a792153986f86c5ee31ff4262",
+  "package_sha256": "bc3f30ff2433d71e1cbb44c5eda91fa315b14ea2d7136d7f730addf008b5eb83",
   "questions": [],
-  "recorded_at": "2026-11-25T10:39:59Z",
+  "recorded_at": "2026-11-25T10:42:55Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -137,31 +125,31 @@
   "rubric_items": [
     {
       "id": "SS-R1",
-      "reason": "All 15 known REQs are traced; REQ-11 now also covers the patient page via S-7 (previous F-1 addressed for the patient page).",
+      "reason": "All 15 known REQs are traced; REQ-11 covers the list, appointment page and patient page, the only places an appointment status shows (AppointmentTable and AppointmentDetailPage).",
       "score": 5
     },
     {
       "id": "SS-R2",
-      "reason": "Stories mostly carry one outcome; S-5 still bundles label, filter and dashboard constraint but stays small.",
+      "reason": "Stories mostly carry one outcome; S-5 still bundles label, filter and the dashboard constraint but stays small.",
       "score": 4
     },
     {
       "id": "SS-R3",
-      "reason": "S-1/S-2/S-4 bracket 24h at 09:59/10:01 and discriminate well, but S-7 AC1 expects a Stale (past, non-Scheduled) appointment in the doctor page table, which lists only upcoming Scheduled ones.",
-      "score": 3
+      "reason": "S-1/S-2/S-4 bracket 24h at 09:59/10:01 and S-4 AC2 catches measuring from the original start; previous F-1 fixed. S-7 AC2 leaves the Scheduled appointment's start time open, which the doctor query needs.",
+      "score": 4
     },
     {
       "id": "SS-R4",
-      "reason": "24h comes from REQ-2/A-02 and the one-minute offsets are derived inline; dates are example data, not limits.",
+      "reason": "24h comes from REQ-2/A-02; the one-minute offsets are derived inline; dates are example data, not limits.",
       "score": 5
     },
     {
       "id": "SS-R5",
-      "reason": "Terms are consistent with the glossary and intent; S-6 title is still a documentation task rather than a user-facing outcome.",
-      "score": 4
+      "reason": "Consistent terms with glossary and intent; S-6 now has a user-facing title (previous F-2 resolved).",
+      "score": 5
     }
   ],
-  "rubric_score": 4.2,
+  "rubric_score": 4.55,
   "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
   "schema": "review.v1",
   "status": "ok",

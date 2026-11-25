@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md",
-  "artifact_sha256": "a91b3df0d881254e57b267caf8293879677291d48477a8f0cc9769f78f232f02",
-  "attempt": 2,
+  "artifact_sha256": "a7155fb4e16dcf12bf1ec55dc77f49a05fccbeef9c9084fb822e43d519892151",
+  "attempt": 3,
   "budget_tokens": 15000,
-  "checks_sha256": "84ca6405a73dc7d23bd875ca57804b59e7293fae02c16bb0ee5eccb1645d8779",
+  "checks_sha256": "c206349faa50553725df89dea114ffd4cef03450abd5427344dd923022c766d6",
   "context_sections": [
     {
       "id": "glossary",
@@ -21,8 +21,8 @@
       "path": "context/glossary.md"
     }
   ],
-  "package_sha256": "511f754a408d4386b6033bf6b539a8a2063b175a792153986f86c5ee31ff4262",
-  "prepared_at": "2026-11-25T10:38:38Z",
+  "package_sha256": "bc3f30ff2433d71e1cbb44c5eda91fa315b14ea2d7136d7f730addf008b5eb83",
+  "prepared_at": "2026-11-25T10:41:51Z",
   "prepared_by": "tsl@0.1.7",
   "previous_findings": [
     {

@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M893GZKGGY9C7GYRJCH088PF
 step: split
-attempt: 2
+attempt: 3
 skill: story-split@1.5.0
 inputs:
   - path: artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md
@@ -13,7 +13,7 @@ pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
 resolves:
   - id: F-1
-    how: "Added S-7 so the doctor and patient pages also show Stale."
+    how: "S-7 now checks only the patient page; the doctor page lists only upcoming Scheduled appointments, so it stays unchanged."
 claims:
   - id: C1
     text: "A Stale appointment is one not marked Completed or rescheduled by `24h` after its start time."
@@ -31,12 +31,15 @@ claims:
     text: "The shared appointment table shows each row's status with `StatusBadge`."
     cites: ["sample-system:web/src/components/AppointmentTable.tsx#L46"]
   - id: C6
-    text: "The doctor page uses the shared `AppointmentTable`."
-    cites: ["sample-system:web/src/pages/DoctorDetailPage.tsx#L4"]
-  - id: C7
     text: "The patient page uses the shared `AppointmentTable`."
     cites: ["sample-system:web/src/pages/PatientDetailPage.tsx#L76"]
+  - id: C7
+    text: "The patient page lists the patient's appointments of every status, `upcoming first (soonest first), then past (most recent first)`."
+    cites: ["sample-system:api/src/repositories/patientRepo.ts#L220"]
   - id: C8
+    text: "The doctor page lists only appointments where `a.status = 'SCHEDULED'` that have not started."
+    cites: ["sample-system:api/src/repositories/doctorRepo.ts#L160"]
+  - id: C9
     text: "The dashboard lists only the `next upcoming appointments`, so a Stale appointment never appears there."
     cites: ["context/glossary.md#dashboard"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
@@ -98,23 +101,23 @@ stories:
       - id: AC4
         text: "Given one Stale appointment, when staff open the dashboard, then it shows the same tiles as before and no tile for Stale appointments."
   - id: S-6
-    title: The glossary defines Stale
+    title: Staff can look up what Stale means in the glossary
     trace: [REQ-14]
     acceptance_criteria:
       - id: AC1
         text: "Given the glossary, when a reader looks up Stale, then its entry says a Scheduled appointment not marked Completed or rescheduled by 24h after its start time is marked Stale."
   - id: S-7
-    title: Staff see Stale on the doctor and patient pages
+    title: Staff see Stale on the patient page
     trace: [REQ-11]
     acceptance_criteria:
       - id: AC1
-        text: "Given a Stale appointment and a Scheduled appointment of the same doctor, when staff open that doctor's page, then the appointments table shows Stale for the Stale one and Scheduled for the other."
-      - id: AC2
         text: "Given a Stale appointment and a Scheduled appointment of the same patient, when staff open that patient's page, then the appointments table shows Stale for the Stale one and Scheduled for the other."
+      - id: AC2
+        text: "Given a Stale appointment and a Scheduled appointment of the same doctor, when staff open that doctor's page, then its upcoming appointments table lists the Scheduled one and not the Stale one, as before."
 ---
 # Stories: HMS-34
 
-Resolves F-1: Added S-7 so the doctor and patient pages also show Stale.
+Resolves F-1: S-7 now checks only the patient page; the doctor page lists only upcoming Scheduled appointments, so it stays unchanged.
 
 ## Stories
 
@@ -143,20 +146,20 @@ Traces REQ-10, REQ-15.
 - AC2: Given that appointment rescheduled to 10:00 on 6 December, when the background job runs at 10:01 on 5 December, then the appointment is still Scheduled.
 
 ### S-5 Staff see Stale on the appointment list and page
-Traces REQ-11, REQ-12, REQ-13. A status is shown with the `StatusBadge` component (C2), on the list `/appointments` (C3) and on the appointment's own page `/appointments/:id` (C4). The dashboard lists only the next upcoming appointments (C8), so a Stale appointment never appears in its table; AC4 covers its tiles.
+Traces REQ-11, REQ-12, REQ-13. A status is shown with the `StatusBadge` component (C2), on the list `/appointments` (C3) and on the appointment's own page `/appointments/:id` (C4). The dashboard lists only the next upcoming appointments (C9), so a Stale appointment never appears in its table; AC4 covers its tiles.
 - AC1: Given a Stale appointment, when staff open the appointment list, then its status shows Stale.
 - AC2: Given a Stale appointment, when staff open that appointment's own page, then its status shows Stale.
 - AC3: Given one Stale and one Scheduled appointment, when staff filter the appointment list by status Stale, then only the Stale appointment is listed.
 - AC4: Given one Stale appointment, when staff open the dashboard, then it shows the same tiles as before and no tile for Stale appointments.
 
-### S-6 The glossary defines Stale
+### S-6 Staff can look up what Stale means in the glossary
 Traces REQ-14.
 - AC1: Given the glossary, when a reader looks up Stale, then its entry says a Scheduled appointment not marked Completed or rescheduled by 24h after its start time is marked Stale.
 
-### S-7 Staff see Stale on the doctor and patient pages
-Traces REQ-11. The doctor page (C6) and the patient page (C7) use the shared appointment table, which shows each row's status with `StatusBadge` (C5).
-- AC1: Given a Stale appointment and a Scheduled appointment of the same doctor, when staff open that doctor's page, then the appointments table shows Stale for the Stale one and Scheduled for the other.
-- AC2: Given a Stale appointment and a Scheduled appointment of the same patient, when staff open that patient's page, then the appointments table shows Stale for the Stale one and Scheduled for the other.
+### S-7 Staff see Stale on the patient page
+Traces REQ-11. The patient page (C6) lists the patient's appointments of every status (C7) in the shared table, which shows each row's status with `StatusBadge` (C5). The doctor page lists only upcoming Scheduled appointments (C8), so a Stale appointment does not show there today or after this change; AC2 checks it stays that way.
+- AC1: Given a Stale appointment and a Scheduled appointment of the same patient, when staff open that patient's page, then the appointments table shows Stale for the Stale one and Scheduled for the other.
+- AC2: Given a Stale appointment and a Scheduled appointment of the same doctor, when staff open that doctor's page, then its upcoming appointments table lists the Scheduled one and not the Stale one, as before.
 
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-3.
