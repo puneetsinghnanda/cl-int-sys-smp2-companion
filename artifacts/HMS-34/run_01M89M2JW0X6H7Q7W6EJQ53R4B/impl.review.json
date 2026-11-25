@@ -1,0 +1,250 @@
+{
+  "artifact_sha256": "2d835da3fbc0460fe9ad19bb5c4326b5b6575c1874e8b329d650af3e92a390ae",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW', 'STALE'));",
+          "ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L5"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW' | 'STALE';",
+          "ref": "sample-system:api/src/types.ts#L4"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async markStale(cutoff: Date, actor: string): Promise<number[]>",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L164"
+        },
+        {
+          "quote": "status = 'SCHEDULED', updated_at = now(), updated_by = $4 WHERE id = $1",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L158"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async markStale(actor: string): Promise<number>",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L133"
+        },
+        {
+          "quote": "current.status !== 'SCHEDULED' && current.status !== 'STALE'",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L147"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STALE_JOB_INTERVAL_MS = 60 * MINUTE;",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L5"
+        },
+        {
+          "quote": "export const STALE_JOB_ACTOR = 'system';",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L6"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "stopStaleJob = startStaleJob((app.locals.ctx as AppContext).services.appointments);",
+          "ref": "sample-system:api/src/server.ts#L14"
+        },
+        {
+          "quote": "stopStaleJob?.();",
+          "ref": "sample-system:api/src/server.ts#L18"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW' | 'STALE';",
+          "ref": "sample-system:web/src/api/types.ts#L3"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STALE: 'Stale',",
+          "ref": "sample-system:web/src/lib/format.ts#L41"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED' || a.status === 'STALE';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L45"
+        },
+        {
+          "quote": "STALE: 'Marked stale',",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L19"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ".badge-stale { background: var(--warning-bg); color: #8a4b00; }",
+          "ref": "sample-system:web/src/styles.css#L81"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Context pack, glossary owner (proposed default)",
+          "ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-11"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const DAY_MS = 24 * 60 * MINUTE;",
+          "ref": "sample-system:api/src/lib/time.ts#L9"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW')),",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ALTER TABLE appointment DROP CONSTRAINT appointment_status_check;",
+          "ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L3"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED' || a.status === 'STALE';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L45"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Rename it to something like `open` or `changeable`.",
+      "text": "The web page flag `scheduled` is now also true for STALE. The name no longer matches what it means, which can confuse later readers."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "APT-8: only Scheduled appointments change.",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L143"
+        },
+        {
+          "quote": "current.status !== 'SCHEDULED' && current.status !== 'STALE'",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L147"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Update the comment to say Scheduled or Stale appointments change (HMS-34).",
+      "text": "The doc comment on the guard scheduled() still says only Scheduled appointments change, but the guard now also accepts STALE."
+    }
+  ],
+  "package_sha256": "a61a26cbc3208a1364dbdaa389afaa9b3a743b3d18d8dcb2d7d0c2c471771bca",
+  "questions": [],
+  "recorded_at": "2026-11-25T15:30:29Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-10 are each present in the product code as designed: migration, types, repo markStale/move, service markStale/guard, hourly job with actor system, server wiring, web label, page actions and picker, badge rule.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "New timestamped migration file, SQL kept in the repo, rules in the service, and the job logs only the error message. Two minor naming/comment leftovers: the guard and the page flag are still named and documented as Scheduled-only.",
+      "score": 4
+    },
+    {
+      "id": "IM-R3",
+      "reason": "10 files, +69/-8 lines, each one tied to a design component. No unrelated edits were found.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Job errors are caught and logged by message only. The UPDATE only touches rows still SCHEDULED, staff actions lock the row FOR UPDATE, and reschedule from STALE keeps the slot and overlap checks.",
+      "score": 5
+    },
+    {
+      "id": "IM-R5",
+      "reason": "Summary and Changes list match the 10 files and what each one does, including the run at startup and the picker starting on today.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}

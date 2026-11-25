@@ -1,0 +1,147 @@
+{
+  "artifact_sha256": "2d835da3fbc0460fe9ad19bb5c4326b5b6575c1874e8b329d650af3e92a390ae",
+  "attempt": 1,
+  "finished_at": "2026-11-25T15:28:14Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/design.md",
+      "sha256": "a59526ca2cc3b301ca9003ed980419374e57a89a462f280a68e7bfaa649c7960",
+      "verification_sha256": "b3b3748846afdb04f529be91b9cae817d37de01aeec78ac22c5efbe3958a92e1"
+    },
+    {
+      "path": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md",
+      "sha256": "ffdc205028446dc36d5b0a750fdfe01f2de2f7347891a727faae856bcb6899c4",
+      "verification_sha256": "848d63c6e8c2ec298be74b3229aa051e36c2818da5a30dd4cae0a305244b09d2"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "186c32f02e537ac0c0f4722be856c950e9f1b11c0a51e181f4d109fc1236f6eb",
+      "files": [
+        "api/src/jobs/staleJob.ts",
+        "api/src/repositories/appointmentRepo.ts",
+        "api/src/server.ts",
+        "api/src/services/appointmentService.ts",
+        "api/src/types.ts",
+        "db/migrations/20261125T120000__add_stale_status.sql",
+        "web/src/api/types.ts",
+        "web/src/lib/format.ts",
+        "web/src/pages/AppointmentDetailPage.tsx",
+        "web/src/styles.css"
+      ],
+      "lines_added": 69,
+      "lines_deleted": 8,
+      "repo": "sample-system",
+      "tree_sha": "1552e170b5788809a98b32ff3b5d5e0d838fdb39"
+    }
+  ],
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-25T15:26:49Z",
+  "step": "impl",
+  "tool_log_sha256": "3894c273981648ad4c15266cbf1c521070314fb74be9c42b81cda898e48cf28c",
+  "tsl_version": "0.1.7",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 10187,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 20890,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 4827,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "c3457e6686276737b6c1909f56f1c2998040497f7efbf98242226af7fb9e0148",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 33157,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "fba1c107ab1fae098c5abdebe37b5c387042030f2b63526a4a73d48a27b5e0e7",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1094,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
+        "status": "pass"
+      }
+    ]
+  }
+}
