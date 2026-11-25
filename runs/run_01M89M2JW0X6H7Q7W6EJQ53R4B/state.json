@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-25T15:09:36Z",
+  "heartbeat_at": "2026-11-25T15:12:20Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -47,22 +47,39 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 0,
+  "rev": 3,
   "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
   "schema": "run-state.v1",
   "status": "RUNNING",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/req.md",
+          "artifact_sha256": "8e1c9de8fef3dcee138e432ceff8d07861d099ba6d0e707b90ba4a65e374cfae",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-25T15:12:20Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/req.verification.json",
+          "skill": "requirement-review@1.5.0",
+          "skill_started_at": "2026-11-25T15:10:06Z",
+          "started_at": "2026-11-25T15:10:01Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "req",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -133,7 +150,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T15:09:36Z",
+  "updated_at": "2026-11-25T15:12:20Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }
