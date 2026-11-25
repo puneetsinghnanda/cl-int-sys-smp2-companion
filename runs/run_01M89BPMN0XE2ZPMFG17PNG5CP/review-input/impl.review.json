@@ -1,0 +1,75 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "step": "impl",
+  "attempt": 2,
+  "artifact_sha256": "2dabf579260515e7dff6115264f838e92ca1bcda9b1771e2d43e7a9436256b19",
+  "package_sha256": "f68c7b616b85c2943e461c30e32245977c8fa95db9f4e0b4e985768036adfef7",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.6,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "All of CO-1..CO-8 and EP-1 are delivered. Two small drifts: the not_seen filter is a separate max() subquery, not the designed filter on the lateral join, and CO-6 (client) stays unedited because existing code already covers it."},
+    {"id": "IM-R2", "score": 5, "reason": "SQL stays in PatientRepo and rules in PatientService. not_seen is parsed with Fields oneOf like with_today, so bad values give a 400 ValidationError. The list keeps { items, page, page_size, total }."},
+    {"id": "IM-R3", "score": 5, "reason": "8 files, +97/-14, all needed by the design. The two test edits are forced by the new key and column. The retry adds only the PAT-8 test change (+3/-1 compared with a1)."},
+    {"id": "IM-R4", "score": 5, "reason": "Invalid not_seen gives a 400. Never-visited patients (NULL) are excluded and shown as Never. The 29 Feb clamp is handled. The cutoff is local midnight converted with zonedToUtc. The page sends only 'true' or nothing."},
+    {"id": "IM-R5", "score": 4, "reason": "Summary and change list match the diff and the file list. It does not say the filter uses its own subquery rather than the lateral join, and the retry line repeats 'H3:'."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The design filters not_seen on the lateral join (lv.starts_at < cutoff). The repo instead filters with a separate correlated max() subquery, so it looks up appointments twice per row. Results are the same, but the artifact does not record the drift.",
+      "cites": [
+        {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#overview", "quote": "The not-seen filter is a `WHERE lv.starts_at < $cutoff` on that join"},
+        {"ref": "sample-system:api/src/repositories/patientRepo.ts#L30", "quote": "(SELECT max(a.starts_at) FROM appointment a WHERE a.patient_id = patient.id AND a.status = 'COMPLETED')"},
+        {"ref": "sample-system:api/src/repositories/patientRepo.ts#L132", "quote": "if (f.lastVisitBefore) where.push(`${LAST_VISIT_AT} < ${p(f.lastVisitBefore)}`);"}
+      ],
+      "suggested_fix": "State in the CO-1 summary that the filter is its own correlated subquery and explain why (the WHERE runs before the page subquery), or move the filter onto the lateral join as designed."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The design marks CO-6 (client.ts) as changed, but the change leaves it unedited because api.patients already forwards every param through query. The artifact discloses this under Assumed. It is correct, but it differs from the design's component list.",
+      "cites": [
+        {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#components", "quote": "CO-6 api client patient list call in web/src/api/client.ts — changed."},
+        {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md#assumed", "quote": "so the page passes `not_seen` in its filters and web/src/api/client.ts needs no edit"},
+        {"ref": "sample-system:web/src/api/client.ts#L70", "quote": "send<Page<PatientListItem>>(`/api/patients${query(params)}`)"}
+      ]
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "The retry line in the summary repeats the gate label: 'Retry (H3): H3: ...'.",
+      "cites": [
+        {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md#summary", "quote": "Retry (H3): H3: The PAT-8 test now expects the designed last_visit key"}
+      ],
+      "suggested_fix": "Write 'Retry (H3): The PAT-8 test now expects ...'."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L93", "quote": "export class PatientRepo {"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/patientRepo.ts#L20", "quote": "last_starts_at: Date | null;"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L35", "quote": "const notSeen = f.oneOf('not_seen', ['true', 'false'] as const) === 'true';"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L36", "quote": "const withToday = f.oneOf('with_today', ['true', 'false'] as const) === 'true';"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L41", "quote": "zonedToUtc(yearBefore(today), 0, tz)"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L50", "quote": "date: localDay(last_visit.starts_at, tz)"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L109", "quote": "last_visit: LastVisit | null;"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/types.ts#L104", "quote": "last_visit: LastVisit | null;"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/PatientsPage.tsx#L77", "quote": "<th scope=\"col\">Last visit</th>"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/lib/format.ts#L23", "quote": "timeZone, day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit'"}, {"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-07", "quote": "answer: New date-only helper (proposed default)"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/client.ts#L70", "quote": "send<Page<PatientListItem>>(`/api/patients${query(params)}`)"}, {"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-08", "quote": "options: Yes, confirm | PatientsPage calls it"}]},
+    {"claim_id": "C12", "verdict": "not-checked", "cites": [{"ref": "sample-system:web/src/__tests__/PatientsPage.test.tsx#L22", "quote": "\"Last visit\" now follows \"Next appointment\", so find the column by its header."}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/conventions.md#lists", "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page."}, {"ref": "sample-system:api/src/repositories/patientRepo.ts#L134", "quote": "SELECT count(*) AS n FROM patient ${clause}"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/verifier/impl/a1/test.log#L86", "quote": "\"last_visit\","}]}
+  ],
+  "questions": []
+}

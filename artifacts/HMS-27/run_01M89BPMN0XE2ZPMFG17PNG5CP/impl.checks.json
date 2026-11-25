@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "3220a127253698fecde67386678869f39fb1eb9ab038c3c5bfd491e80f0b01ba",
-  "attempt": 1,
-  "finished_at": "2026-11-25T13:23:40Z",
+  "artifact_sha256": "2dabf579260515e7dff6115264f838e92ca1bcda9b1771e2d43e7a9436256b19",
+  "attempt": 2,
+  "finished_at": "2026-11-25T13:25:47Z",
   "gates": [
     {
       "codes": [],
@@ -18,13 +18,11 @@
       "status": "pass"
     },
     {
-      "codes": [
-        "E-H3-02"
-      ],
-      "detail": "test exit 1; log runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/verifier/impl/a1/test.log: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯ | npm error Lifecycle script `test` failed with error: | npm error code 1 | npm error path /cache/w/api | npm error workspace @hms/api@0.1.0 | npm error location /cache/w/api | npm error command failed | npm error command sh -c vitest run",
+      "codes": [],
+      "detail": "",
       "id": "H3",
-      "pass": false,
-      "status": "fail"
+      "pass": true,
+      "status": "pass"
     },
     {
       "codes": [],
@@ -70,20 +68,21 @@
   "product_changes": [
     {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "diff_sha256": "928aa3d67824df71619e2793f19510df916c2d278dc9096e68fc1184581c6ca7",
+      "diff_sha256": "96268bb1cbb21c30e8aa9730e09686357fc44e46c505ce4900a8df7cc0aecae4",
       "files": [
         "api/src/repositories/patientRepo.ts",
         "api/src/services/patientService.ts",
         "api/src/types.ts",
+        "api/test/patients.test.ts",
         "web/src/__tests__/PatientsPage.test.tsx",
         "web/src/api/types.ts",
         "web/src/lib/format.ts",
         "web/src/pages/PatientsPage.tsx"
       ],
-      "lines_added": 94,
-      "lines_deleted": 13,
+      "lines_added": 97,
+      "lines_deleted": 14,
       "repo": "sample-system",
-      "tree_sha": "def6d7b001b94328f2354ce2a6e7572fdc4d1e68"
+      "tree_sha": "8b2fdea35ef633ec96055e55583407cf1a9e2a75"
     }
   ],
   "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
@@ -98,44 +97,44 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-25T13:22:26Z",
+  "started_at": "2026-11-25T13:25:06Z",
   "step": "impl",
-  "tool_log_sha256": "6ea8a706e2681bf8ce8621cbe8c145362b85fbe47a691a04d16836ce29dbe42e",
+  "tool_log_sha256": "39b0bdc6ed54df5796c4992ec95ef6e20fe5f5e20dcb53f6e70b18b78aa7154a",
   "tsl_version": "0.1.7",
   "verifier": {
     "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
     "profile": "node-22@1",
     "steps": [
       {
-        "duration_ms": 5490,
+        "duration_ms": 5297,
         "exit_code": 0,
         "name": "build",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 12928,
-        "exit_code": 1,
+        "duration_ms": 12907,
+        "exit_code": 0,
         "name": "test",
         "report_sha256": null,
-        "status": "fail"
+        "status": "pass"
       },
       {
-        "duration_ms": 2902,
+        "duration_ms": 2667,
         "exit_code": 0,
         "name": "lint",
         "report_sha256": "9300676fcee7fc85b159e9b355308d04d191436e7e96d8a93deec97410a6f27e",
         "status": "pass"
       },
       {
-        "duration_ms": 16563,
+        "duration_ms": 15776,
         "exit_code": 0,
         "name": "sast",
-        "report_sha256": "03e26e9f22f5a51a709e9c70ded793df2b6ac71ec7599e278373220c40111315",
+        "report_sha256": "15f1785901442339b2e9295dbed7ce1c7d146ffde2341501ea9f6eada41e022f",
         "status": "pass"
       },
       {
-        "duration_ms": 207,
+        "duration_ms": 192,
         "exit_code": 0,
         "name": "secrets",
         "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",

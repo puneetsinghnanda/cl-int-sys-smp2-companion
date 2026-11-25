@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M89BPMN0XE2ZPMFG17PNG5CP
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.3.0
 inputs:
   - path: artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md
@@ -18,12 +18,13 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: 7681f87749883d71abb4011d118366ca1242e1cc
-    head_sha: def6d7b001b94328f2354ce2a6e7572fdc4d1e68
-    diff_sha256: 928aa3d67824df71619e2793f19510df916c2d278dc9096e68fc1184581c6ca7
+    head_sha: 8b2fdea35ef633ec96055e55583407cf1a9e2a75
+    diff_sha256: 96268bb1cbb21c30e8aa9730e09686357fc44e46c505ce4900a8df7cc0aecae4
     files:
       - api/src/repositories/patientRepo.ts
       - api/src/services/patientService.ts
       - api/src/types.ts
+      - api/test/patients.test.ts
       - web/src/__tests__/PatientsPage.test.tsx
       - web/src/api/types.ts
       - web/src/lib/format.ts
@@ -68,11 +69,17 @@ claims:
   - id: C13
     text: "Lists answer `{ items, page, page_size, total }`; total now counts the filtered patients."
     cites: ["context/conventions.md#lists"]
+  - id: C14
+    text: "The PAT-8 test pinned the exact list item keys and failed on the new `last_visit` key."
+    cites: ["runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/verifier/impl/a1/test.log#L86"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 known: [CO-1, CO-2, CO-3, CO-4, CO-5, CO-7, CO-8, EP-1]
 assumed: [CO-6]
 unknown: []
 questions: []
+resolves:
+  - id: H3
+    how: "The PAT-8 test now expects the designed last_visit key and checks it carries only date and doctor_name."
 summary: "GET /api/patients now returns last_visit (latest COMPLETED appointment: hospital-local date and doctor) and accepts not_seen=true, which keeps only patients whose last visit is before the same local date 12 months ago. The patient list shows a Last visit column and a Not seen for a year checkbox."
 ---
 # Change: HMS-27
@@ -86,6 +93,8 @@ The change follows the approved design:
 - CO-7 (PatientsPage): adds a "Last visit" header after "Next appointment". Cells show "10 Mar 2026 · Dr A", or "Never" when there is no visit. A "Not seen for a year" checkbox sits next to the status select and goes through the existing `set` helper, so toggling it resets to page 1 (C9).
 - CO-8: a new `dateOnly` helper in web/src/lib/format.ts formats the API's local day with no time-zone shift (C10).
 
+Retry (H3): H3: The PAT-8 test now expects the designed last_visit key and checks it carries only date and doctor_name. The verifier showed that PAT-8 in api/test/patients.test.ts pins the exact key set of a list item (C14). The design adds `last_visit` to that response, so rule 10 allows updating the test. No product code changed in this retry.
+
 Trade-off: `yearBefore` lives next to its only caller in patientService.ts rather than in lib/time.ts. That keeps the edit inside the design's components; the cost is that it is not shared with other time helpers.
 
 ## Changes
@@ -95,6 +104,7 @@ Trade-off: `yearBefore` lives next to its only caller in patientService.ts rathe
 - web/src/api/types.ts — CO-5: the same types for the web app.
 - web/src/lib/format.ts — CO-8: the new `dateOnly` helper.
 - web/src/pages/PatientsPage.tsx — CO-7: the Last visit column and the Not seen for a year checkbox, with `not_seen` passed in the list filters.
+- api/test/patients.test.ts — test updated under rule 10 (REQ-12): the PAT-8 key list now includes `last_visit`, and it checks that `last_visit` holds only `date` and `doctor_name`.
 - web/src/__tests__/PatientsPage.test.tsx — test updated under rule 10 (REQ-1): the HMS-2 `nextCell` helper took the row's last cell, which is now Last visit (C12). It now finds the "Next appointment" column by its header, and the fixtures carry `last_visit: null`. No new tests: the unit-test step writes them.
 
 ## Known

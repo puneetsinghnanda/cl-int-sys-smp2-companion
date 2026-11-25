@@ -7,7 +7,7 @@
   "branch": {
     "sample-system": {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "head_sha": null,
+      "head_sha": "a003fb3b8593ef6537cf59d5abda205f1d02fe62",
       "name": "tsl/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP"
     }
   },
@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-25T13:23:48Z",
+  "heartbeat_at": "2026-11-25T13:28:30Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -53,7 +53,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 23,
+  "rev": 27,
   "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -231,7 +231,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md",
+          "artifact": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/history/impl/a1/impl.md",
           "artifact_sha256": "3220a127253698fecde67386678869f39fb1eb9ab038c3c5bfd491e80f0b01ba",
           "band": null,
           "cause": "first",
@@ -251,10 +251,37 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.verification.json",
+          "record": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/history/impl/a1/impl.verification.json",
           "skill": "implement@1.3.0",
           "skill_started_at": "2026-11-25T13:21:34Z",
           "started_at": "2026-11-25T13:19:07Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md",
+          "artifact_sha256": "2dabf579260515e7dff6115264f838e92ca1bcda9b1771e2d43e7a9436256b19",
+          "band": "High",
+          "cause": "retry_verifier",
+          "decided_at": "2026-11-25T13:28:30Z",
+          "feedback": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/feedback/impl.a1.json",
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "9ec492060a643e697a01e4ddc48ebc0977bfdbd2103b3852f0d3eeeef01f6a1d",
+              "step": "design"
+            },
+            {
+              "name": "stories",
+              "sha256": "3f92b6f319ce0bc8d22bd48258fa93ea3a73480096486aaa8646237ad43331b4",
+              "step": "split"
+            }
+          ],
+          "n": 2,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.verification.json",
+          "skill": "implement@1.3.0",
+          "skill_started_at": "2026-11-25T13:24:18Z",
+          "started_at": "2026-11-25T13:23:57Z"
         }
       ],
       "budget_used": {
@@ -265,7 +292,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -300,7 +327,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-27",
-  "updated_at": "2026-11-25T13:23:48Z",
+  "updated_at": "2026-11-25T13:28:30Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
