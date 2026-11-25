@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "name: styles.css .badge-stale rule",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#item:CO-10"
+        },
+        {
+          "quote": "assumed: [CO-1]",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#assumed"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "CO-10 changes styles.css but gives no path and cites only StatusBadge.tsx#L6, a sibling file; the stylesheet's existence and location are unproven and it is not listed as Assumed with implement must confirm."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "schema": "feedback.v1",
+  "step": "design"
+}

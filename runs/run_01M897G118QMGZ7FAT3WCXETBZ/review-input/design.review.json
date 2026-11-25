@@ -1,0 +1,76 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "e024d5081a0f482db71404e783fed1c717e9e2aa7b16711c29dd48123ec33668",
+  "package_sha256": "c224dd6ae224476245d5e250aea6f344b312c44bead52f98b8fa97ab08eea1d2",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.5,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Builds on the existing db, api and web modules and layering (repo/service/route); the job is an in-process timer with no new infrastructure, matching architecture#open-points."},
+    {"id": "DS-R2", "score": 5, "reason": "Story map covers S-1 to S-7 with components and endpoints; guard, reschedule-to-SCHEDULED, list filter, badge and glossary (via A-11) serve every AC."},
+    {"id": "DS-R3", "score": 4, "reason": "Every changed field has name, type, nullability, format and example; EP-3 to EP-6 mix a request precondition into the response status format and leave the rejection case implicit."},
+    {"id": "DS-R4", "score": 4, "reason": "Most choices cited or decided by A-08..A-11 and C7 is Assumed with implement must confirm; CO-10 changes styles.css with no path and cites only StatusBadge, and the startup run is undecided."},
+    {"id": "DS-R5", "score": 4, "reason": "Trade-offs for in-process timer, hourly cadence and slot release are explained; running the job once at startup has no reason given."},
+    {"id": "DS-R6", "score": 4, "reason": "Clear and consistent overview, component list and story map; minor inconsistency in CO-12 module/change labels."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "traceability",
+     "text": "CO-10 changes styles.css but gives no path and cites only StatusBadge.tsx#L6, a sibling file; the stylesheet's existence and location are unproven and it is not listed as Assumed with implement must confirm.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#item:CO-10", "quote": "name: styles.css .badge-stale rule"},
+       {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#assumed", "quote": "assumed: [CO-1]"}
+     ],
+     "suggested_fix": "Give the full path (web/src/styles.css) and cite a line that proves it exists, or list CO-10 under Assumed with implement must confirm."},
+    {"id": "F-2", "severity": "minor", "category": "traceability",
+     "text": "C11 cites context/generated/db-schema.json, which is not among the design's declared inputs, so its sha is not pinned.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#claim:C11", "quote": "context/generated/db-schema.json#column:appointment.updated_by"}
+     ],
+     "claim_ref": "C11",
+     "suggested_fix": "Add context/generated/db-schema.json with its sha256 to inputs."},
+    {"id": "F-3", "severity": "minor", "category": "consistency",
+     "text": "CO-12 is labelled change existing on module sample-system:. although the work is a new glossary entry in the companion context pack, outside the product repo, as A-11 decided.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#item:CO-12", "quote": "module: module:sample-system:."},
+       {"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-11", "quote": "answer: Context pack, glossary owner (proposed default)"}
+     ],
+     "suggested_fix": "Mark CO-12 as an out-of-diff context-pack task rather than an existing product-module component."},
+    {"id": "F-4", "severity": "minor", "category": "style",
+     "text": "EP-3 to EP-6 put the request precondition into the response status field's format, and leave the rejection for other statuses implicit, so ACs cannot test the error case exactly.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#item:EP-3", "quote": "request accepted when the current status is SCHEDULED or STALE; response status COMPLETED"}
+     ],
+     "suggested_fix": "Give the response status format as the fixed value and state the precondition and its existing 409 response separately."},
+    {"id": "F-5", "severity": "minor", "category": "completeness",
+     "text": "The job runs once at startup as well as hourly; A-08 only decided the cadence and the design gives no reason for the startup run.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#components", "quote": "runs once at startup and every hour (C12)"},
+       {"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-08", "quote": "How often should it run?"}
+     ],
+     "suggested_fix": "Add a trade-off line explaining the startup run (catch-up after a restart)."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10", "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35", "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/app.ts#L20", "quote": "app.locals.ctx = createContext(db, config, clock);"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/StatusBadge.tsx#L2", "quote": "import { STATUS_LABEL } from '../lib/format';"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/StatusBadge.tsx#L6", "quote": "badge-${status.toLowerCase()}"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-10", "quote": "I assumed those are `appointment_status_check` and `appointment_event_event_check` (implement must confirm)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34", "quote": "Object.entries(STATUS_LABEL)"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:DAY_MS", "quote": "\"id\": \"sym:sample-system:api/src/lib/time.ts:DAY_MS\","}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L21", "quote": "WHERE (status = 'SCHEDULED')"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#column:appointment.updated_by", "quote": "\"id\": \"column:appointment.updated_by\","}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-08", "quote": "- answer: Every hour"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-09", "quote": "- answer: system (proposed default)"}]}
+  ],
+  "questions": []
+}
