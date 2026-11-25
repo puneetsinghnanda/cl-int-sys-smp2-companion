@@ -57,6 +57,63 @@
       "status": "answered",
       "step": "req",
       "tool_use_id": "toolu_018zQj9U7nbYFiz6qzaDXm4h"
+    },
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-25T13:10:56Z",
+      "answers": [
+        "A-05",
+        "A-06",
+        "A-07",
+        "A-08"
+      ],
+      "ask_id": "ASK-02",
+      "asked_at": "2026-11-25T13:03:12Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Nested object (proposed default)",
+            "Two flat fields"
+          ],
+          "text": "Q-01: The stories test the last-visit date and doctor on each patient row. What shape should GET /api/patients return for it?"
+        },
+        {
+          "blocking": true,
+          "id": "Q-02",
+          "options": [
+            "not_seen=true (proposed default)",
+            "last_visit_before=YYYY-MM-DD"
+          ],
+          "text": "Q-02: What query parameter should turn on the \"Not seen for a year\" filter on GET /api/patients?"
+        },
+        {
+          "blocking": true,
+          "id": "Q-03",
+          "options": [
+            "New date-only helper (proposed default)",
+            "Show YYYY-MM-DD as is"
+          ],
+          "text": "Q-03: How should the web page display the last-visit date? Note that the existing dateTime helper prints a time as well, so it doesn't fit a date-only value."
+        },
+        {
+          "blocking": true,
+          "id": "C14",
+          "options": [
+            "Yes, confirm",
+            "PatientsPage calls it"
+          ],
+          "text": "C14: I assumed the web patient list request goes through `api` in web/src/api/client.ts, which builds query strings with `query`, so the new filter flag is added there. Is that right? (implement must confirm the exact method)"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "design",
+      "tool_use_id": "toolu_018r9sbvHT9tvxopaYC7KBsP"
     }
   ],
   "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",

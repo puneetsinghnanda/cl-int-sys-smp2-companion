@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "returns 400 ValidationError for any other value, and passes it on",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#components"
+        },
+        {
+          "quote": "Reads `not_seen`, computes the cutoff",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#components"
+        },
+        {
+          "quote": "res.json(await ctx(req).services.patients.list(req.query, parsePage(req.query.page)));",
+          "ref": "sample-system:api/src/routes/patients.ts#L14"
+        },
+        {
+          "quote": "const withToday = f.oneOf('with_today', ['true', 'false'] as const) === 'true';",
+          "ref": "sample-system:api/src/services/doctorService.ts#L36"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "CO-3 has the route parse not_seen and return 400, and CO-2 also says the service reads it. In the code, the route passes req.query through and the service validates it with Fields. with_today, a similar boolean flag, is parsed in the service with oneOf."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "feedback.v1",
+  "step": "design"
+}

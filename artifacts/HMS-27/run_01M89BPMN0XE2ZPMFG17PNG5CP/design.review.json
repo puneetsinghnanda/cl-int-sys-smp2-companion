@@ -1,0 +1,360 @@
+{
+  "artifact_sha256": "1431d2b13ebcb2ec008e76975e27b0b2cef14a7f211fd0977d32586a2385caf9",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export class PatientRepo {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L83"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "interface ListRow extends Row {",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L16"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class PatientService {",
+          "ref": "sample-system:api/src/services/patientService.ts#L13"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "patientsRouter.get(",
+          "ref": "sample-system:api/src/routes/patients.ts#L10"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientListItem extends PatientSummary {",
+          "ref": "sample-system:api/src/types.ts#L101"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface PatientListItem extends PatientSummary {",
+          "ref": "sample-system:web/src/api/types.ts#L96"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function PatientsPage() {",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L21"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function localParts(instant: Date, tz: string): LocalParts {",
+          "ref": "sample-system:api/src/lib/time.ts#L44"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The UTC instant of a hospital-local wall-clock time on a hospital-local day.",
+          "ref": "sample-system:api/src/lib/time.ts#L74"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function dateTime(iso: string, timeZone: string): string {",
+          "ref": "sample-system:web/src/lib/format.ts#L21"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "patients: (params: Record<string, string | number | undefined>)",
+          "ref": "sample-system:web/src/api/client.ts#L70"
+        },
+        {
+          "quote": "const list = useAsync(() => api.patients(filters), params.toString());",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L25"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "unsupported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A patient's last visit is their latest appointment with status `COMPLETED`",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Invalid input is 400 with one",
+          "ref": "context/conventions.md#errors"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface NextAppointment {",
+          "ref": "sample-system:api/src/types.ts#L95"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "routes parse input and declare a permission, services hold the rules",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "returns 400 ValidationError for any other value, and passes it on",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#components"
+        },
+        {
+          "quote": "Reads `not_seen`, computes the cutoff",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#components"
+        },
+        {
+          "quote": "res.json(await ctx(req).services.patients.list(req.query, parsePage(req.query.page)));",
+          "ref": "sample-system:api/src/routes/patients.ts#L14"
+        },
+        {
+          "quote": "const withToday = f.oneOf('with_today', ['true', 'false'] as const) === 'true';",
+          "ref": "sample-system:api/src/services/doctorService.ts#L36"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Validate not_seen in PatientService.list with f.oneOf('not_seen', ['true','false']), as with_today does. Mark the route unchanged or drop CO-3, and give the 400 to CO-2.",
+      "text": "CO-3 has the route parse not_seen and return 400, and CO-2 also says the service reads it. In the code, the route passes req.query through and the service validates it with Fields. with_today, a similar boolean flag, is parsed in the service with oneOf."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "C14: I assumed the web patient list request goes through `api` in web/src/api/client.ts",
+          "ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-08"
+        },
+        {
+          "quote": "send<Page<PatientListItem>>(`/api/patients${query(params)}`)",
+          "ref": "sample-system:web/src/api/client.ts#L70"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "text": "A-08 asked whether the patient list request goes through `api` in client.ts. The product code already answers this: api.patients forwards its params through query()."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Sends `not_seen=true` through `query` when the filter is on (C14).",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#components"
+        },
+        {
+          "quote": "const filters = { q: params.get('q') ?? '', status: params.get('status') ?? '', page: params.get('page') ?? '1' };",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L24"
+        },
+        {
+          "quote": "implement still names the exact client method when it edits the file",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#assumed"
+        }
+      ],
+      "claim_ref": "C14",
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Mark CO-6 unchanged or drop it. In CO-7, add not_seen to the filters object passed to api.patients.",
+      "text": "CO-6 marks client.ts changed, but api.patients already takes arbitrary params, so client.ts needs no edit. The flag belongs in the PatientsPage filters object, which CO-7 does not name. The exact method is visible in the code, so 'implement still names the exact client method' is not needed."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "SELECT count(*) AS n FROM patient ${clause}",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L119"
+        },
+        {
+          "quote": "FROM (${page}) pg",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L124"
+        },
+        {
+          "quote": "The same WHERE feeds both the page query and the count query",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#overview"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "In CO-1, say the last-visit lateral join and its cutoff predicate go inside the paged subquery and the count query, not on the outer next-appointment join.",
+      "text": "The existing list query counts from the bare patient table and runs its lateral join outside the paged subquery. The design does not say the last-visit join and cutoff must go inside the inner page query, before LIMIT/OFFSET, and inside the count query. S-3 AC3 depends on this."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "return localDay(this.clock(), this.config.timeZone);",
+          "ref": "sample-system:api/src/services/patientService.ts#L21"
+        },
+        {
+          "quote": "The service takes today's local date in HOSPITAL_TZ from the request clock (`localParts`, C8).",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md#overview"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Base the cutoff on PatientService.today() (localDay), and use localDay for last_visit.date.",
+      "text": "The service already works out local today with its private today() (localDay over the clock and config.timeZone). The design names localParts for this instead of reusing the existing helper."
+    }
+  ],
+  "package_sha256": "267f9bcc088603f08de56928128111ee4f604f445fb55139f7b927135f7ac4f3",
+  "questions": [],
+  "recorded_at": "2026-11-25T13:15:17Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built on the existing repo, service, route, types, page and format.ts, adds no infrastructure. But it puts not_seen parsing in the route and the flag in client.ts, while the code parses list queries in the service and the page builds the params.",
+      "score": 4
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story S-1 to S-6 maps to components, and the time rules cover S-2 AC2-AC4 (local today, calendar months, clamping). Never-visited exclusion, paging and total are served.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Each EP-1 field has a name, type, nullability, format and example. Where the code changes is less exact: CO-2 and CO-3 both claim not_seen, CO-6 needs no edit, and the PatientsPage filters object is not named.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Every choice is cited or decided by A-05 to A-08. A-08 asked something client.ts already answers, and C14's 'flag is added there' does not match the generic params passthrough.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Explains the trade-offs of the lateral join, the service-side cutoff, clamping, strict not_seen and the page reset. It gives no reason for moving query parsing into the route, which breaks the existing service-side Fields pattern.",
+      "score": 4
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and well ordered. CO-2 and CO-3 overlap on who reads and validates not_seen.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

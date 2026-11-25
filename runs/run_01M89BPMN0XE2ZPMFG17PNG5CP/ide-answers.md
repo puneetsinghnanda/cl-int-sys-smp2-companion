@@ -46,3 +46,47 @@ entries as the user's own answers.
 - question: REQ-3: I assumed the "Last visit" column shows only the date (no time), as a hospital-local date in Asia/Kolkata, because the baseline sets the hospital time zone to Asia/Kolkata. Is that right?
 - options: Yes, confirm | Date and time
 - answer: Yes, confirm
+
+## A-05
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T13:03:12Z
+- answered_at: 2026-11-25T13:10:56Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_018r9sbvHT9tvxopaYC7KBsP
+- question: Q-01: The stories test the last-visit date and doctor on each patient row. What shape should GET /api/patients return for it?
+- options: Nested object (proposed default) | Two flat fields
+- answer: Nested object (proposed default)
+
+## A-06
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T13:03:12Z
+- answered_at: 2026-11-25T13:10:56Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_018r9sbvHT9tvxopaYC7KBsP
+- question: Q-02: What query parameter should turn on the "Not seen for a year" filter on GET /api/patients?
+- options: not_seen=true (proposed default) | last_visit_before=YYYY-MM-DD
+- answer: not_seen=true (proposed default)
+
+## A-07
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T13:03:12Z
+- answered_at: 2026-11-25T13:10:56Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_018r9sbvHT9tvxopaYC7KBsP
+- question: Q-03: How should the web page display the last-visit date? Note that the existing dateTime helper prints a time as well, so it doesn't fit a date-only value.
+- options: New date-only helper (proposed default) | Show YYYY-MM-DD as is
+- answer: New date-only helper (proposed default)
+
+## A-08
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T13:03:12Z
+- answered_at: 2026-11-25T13:10:56Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_018r9sbvHT9tvxopaYC7KBsP
+- question: C14: I assumed the web patient list request goes through `api` in web/src/api/client.ts, which builds query strings with `query`, so the new filter flag is added there. Is that right? (implement must confirm the exact method)
+- options: Yes, confirm | PatientsPage calls it
+- answer: Yes, confirm
