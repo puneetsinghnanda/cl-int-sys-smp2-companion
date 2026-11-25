@@ -1,0 +1,96 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "a59526ca2cc3b301ca9003ed980419374e57a89a462f280a68e7bfaa649c7960",
+  "package_sha256": "b7217d78f4b39d8f6d7174dff0937fe09ae7b43637e3c39291681bd9643c3229",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.3,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Built on the existing layers: migration in db, repo/service/server changes in api, label/badge/page changes in web; the in-process job adds no infrastructure, as asked in A-08."},
+    {"id": "DS-R2", "score": 4, "reason": "S-1 to S-5 and S-7 are fully mapped to components and endpoints; S-6 is served only by a component outside the diff (CO-12), left to the glossary owner per A-11."},
+    {"id": "DS-R3", "score": 4, "reason": "Every changed field has name, type, nullability, format and example; EP-3..EP-6 mix the request precondition into a response 'status' field and history[].actor names only 'system'."},
+    {"id": "DS-R4", "score": 4, "reason": "Choices are cited or decided by IDE answers and CO-1 is Assumed with implement must confirm; CO-12 is labelled existing on the product root module though the glossary entry is new and lives in the context pack."},
+    {"id": "DS-R5", "score": 4, "reason": "Trade-offs given for the in-process timer with several instances and for Stale rows freeing their slot; no reason given for job failure handling or a run at startup."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear overview, consistent ids between front matter and body, and an explicit story-to-component map."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "CO-12 sits on module:sample-system:. with change existing, but A-11 says the glossary is in the context pack and the product repo has no glossary, and the Stale entry does not exist yet.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/design.md#item:CO-12", "quote": "module: module:sample-system:."},
+        {"ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-11", "quote": "the product repo has no glossary"}
+      ],
+      "suggested_fix": "Mark CO-12 as new and outside the product repo (context pack, context/glossary.md), so S-6 is clearly a follow-up owned by the glossary owner."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The in-process hourly job does not say how a failed run is handled (caught and logged vs unhandled rejection in the API process) or whether it runs once at startup.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/design.md#overview", "quote": "runs inside the API process on a timer every hour"}
+      ],
+      "suggested_fix": "State in CO-5 that each run catches and logs errors so the API keeps serving, and whether a first run happens at startup."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "EP-3 to EP-6 list a single 'status' field whose format mixes the request precondition with the response value; the routes take no status in the request.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/design.md#item:EP-3", "quote": "request accepted when the current status is SCHEDULED or STALE; response status COMPLETED"}
+      ],
+      "suggested_fix": "Describe the response status field alone and state the precondition (409 otherwise) as a rule of the endpoint."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "history[].actor format names only 'system' for job events; it does not state the existing value 'staff' for staff actions, so the field's full value set is not given.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/design.md#item:EP-2", "quote": "'system' for an event the job writes"},
+        {"ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-09", "quote": "today it is always `staff`"}
+      ],
+      "suggested_fix": "Format: 'staff' for staff actions, 'system' for the Stale job."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C10 and EP-1/EP-2 cite context/generated/db-schema.json, which is not listed among the artifact's inputs.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/design.md#claim:C10", "quote": "context/generated/db-schema.json#column:appointment.updated_by"}
+      ],
+      "claim_ref": "C10",
+      "suggested_fix": "Add context/generated/db-schema.json with its sha256 to inputs."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10", "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L21", "quote": "WHERE (status = 'SCHEDULED')"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35", "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/app.ts#L20", "quote": "app.locals.ctx = createContext(db, config, clock);"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/components/StatusBadge.tsx#L6", "quote": "badge badge-${status.toLowerCase()}"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-10", "quote": "I assumed those are `appointment_status_check` and `appointment_event_event_check`"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34", "quote": "Object.entries(STATUS_LABEL).map"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#sym:sample-system:api/src/lib/time.ts:DAY_MS", "quote": "\"name\": \"DAY_MS\""}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L15", "quote": "updated_by           text NOT NULL,"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L144", "quote": "private async scheduled(repo: AppointmentRepo, id: number)"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/lib/format.ts#L36", "quote": "export const STATUS_LABEL: Record<AppointmentStatus, string> = {"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L13", "quote": "const EVENT_LABEL: Record<string, string> = {"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/styles.css#L76", "quote": ".badge-active, .badge-scheduled"}]}
+  ],
+  "questions": []
+}

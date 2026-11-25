@@ -72,3 +72,43 @@ entries as the user's own answers.
 - question: Q-05: "Stale" is not in the glossary (context/glossary.md). Should the glossary get an entry for it? (Non-blocking; the req step only records your choice, it does not edit the glossary.)
 - options: Add entry from REQ-2 (proposed default) | No glossary entry
 - answer: Add entry from REQ-2 (proposed default)
+
+## A-08
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T15:17:58Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_015bfk7qEefVfKDSonLaZd88
+- question: Q-01: The Stale job runs inside the API process on a timer (no new infrastructure; architecture says no background jobs exist yet). How often should it run? This sets how soon after the 24h an appointment shows as Stale.
+- options: Every hour | Every 15 minutes | Once a day
+- answer: Every hour
+
+## A-09
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T15:17:58Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_015bfk7qEefVfKDSonLaZd88
+- question: Q-02: Every appointment change records an actor (updated_by and the history event's actor); today it is always `staff`. What actor should the automatic Stale job record?
+- options: system (proposed default) | stale-job
+- answer: system (proposed default)
+
+## A-10
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T15:17:58Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_015bfk7qEefVfKDSonLaZd88
+- question: C7: The status and event CHECK constraints in the appointments migration have no names, so the new migration must drop them by Postgres's default names. I assumed those are `appointment_status_check` and `appointment_event_event_check` (implement must confirm). Is that right?
+- options: Yes, confirm | Look up the names at runtime
+- answer: Yes, confirm
+
+## A-11
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T15:17:58Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_015bfk7qEefVfKDSonLaZd88
+- question: Q-03: S-6 needs a glossary entry for Stale. The glossary is context/glossary.md in the context pack (this companion repo); the product repo has no glossary. Where should the entry be made, and by whom?
+- options: Context pack, glossary owner (proposed default) | Product repo docs
+- answer: Context pack, glossary owner (proposed default)
