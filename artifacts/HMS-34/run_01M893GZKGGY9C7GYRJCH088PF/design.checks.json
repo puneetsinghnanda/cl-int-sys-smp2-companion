@@ -1,0 +1,90 @@
+{
+  "artifact_sha256": "40c0157518d10ab7553efb8ea0d99bfff49118c5c43642fd0548903cb82552d1",
+  "attempt": 1,
+  "finished_at": "2026-11-25T10:49:08Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "skip"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md",
+      "sha256": "a7155fb4e16dcf12bf1ec55dc77f49a05fccbeef9c9084fb822e43d519892151",
+      "verification_sha256": "f238f65d2bba438da81b0c48feb0926cc05094cdbbe2f5362832648ddb41cf55"
+    },
+    {
+      "path": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md",
+      "sha256": "36441e0509699b22a67bdb9f3ca7a1f511be79db2162ba7c24652d3871e33a4f",
+      "verification_sha256": "410715d0971698ac24903e90755f3237cc5dfe470cb2a299086a9f38cf7b41db"
+    }
+  ],
+  "product_changes": null,
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    },
+    {
+      "id": "design.claims-cited",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-25T10:49:08Z",
+  "step": "design",
+  "tool_log_sha256": "fe881960b556cfd9aa961820c26b365c6240b4bcb322f7bd3e377b94c682d53d",
+  "tsl_version": "0.1.7",
+  "verifier": null
+}

@@ -1,0 +1,367 @@
+{
+  "artifact_sha256": "40c0157518d10ab7553efb8ea0d99bfff49118c5c43642fd0548903cb82552d1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';",
+          "ref": "sample-system:api/src/types.ts#L4"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (current.status !== 'SCHEDULED') {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L136"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "UPDATE appointment SET starts_at = $2, ends_at = $3, updated_at = now(), updated_by = $4 WHERE id = $1",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L157"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async close(id: number, status: Exclude<AppointmentStatus, 'SCHEDULED'>",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L162"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ") WHERE (status = 'SCHEDULED'),",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L21"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "I assumed those are `appointment_status_check` and `appointment_event_event_check` (implement must confirm)",
+          "ref": "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-10"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STATUS_LABEL: Record<AppointmentStatus, string> = {",
+          "ref": "sample-system:web/src/lib/format.ts#L36"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Object.entries(STATUS_LABEL).map(([v, l])",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L44"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const EVENT_LABEL: Record<string, string> = {",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L13"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "function shutdown(): void {",
+          "ref": "sample-system:api/src/server.ts#L13"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "clock: () => Date = () => new Date()",
+          "ref": "sample-system:api/src/services/index.ts#L26"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';",
+          "ref": "sample-system:web/src/api/types.ts#L3"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "badge-${status.toLowerCase()}",
+          "ref": "sample-system:web/src/components/StatusBadge.tsx#L6"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class AppointmentRepo {",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L58"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export class AppointmentService {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L17"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "by 24h after its start time is marked Stale",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const app = createApp(pool, config);",
+          "ref": "sample-system:api/src/server.ts#L7"
+        },
+        {
+          "quote": "app.locals.ctx = createContext(db, config, clock);",
+          "ref": "sample-system:api/src/app.ts#L20"
+        },
+        {
+          "quote": "startStaleJob(services, clock) calls markStale once at startup and then every hour",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#components"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "State the source in CO-6. Either server.ts reads services and clock from app.locals.ctx, or it calls createContext itself and passes it into createApp. Cite app.ts#L20.",
+      "text": "CO-5/CO-6 have server.ts call startStaleJob(services, clock), but server.ts only gets back an Express app from createApp(pool, config). Services and clock are built inside createApp into app.locals.ctx. The design never says how server.ts gets them."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "S-6 is a glossary edit outside the product repo",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#components"
+        },
+        {
+          "quote": "The glossary has an entry for `Stale` that matches REQ-2.",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-14"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Add a component (for example context/glossary.md: new Stale entry from REQ-2), or name the step that owns the edit so S-6 is traceably served.",
+      "text": "S-6 (REQ-14, glossary entry for Stale) is served by no component. The story map just calls it 'a glossary edit outside the product repo' and names no file, owner or step for it."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "the `AppointmentService` guard accepts SCHEDULED or STALE",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#components"
+        },
+        {
+          "quote": "private async guard<T>(work: () => Promise<T>): Promise<T> {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L153"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Name the method: the private scheduled(repo, id) check accepts SCHEDULED or STALE; guard() is unchanged.",
+      "text": "CO-4 and the trade-offs call the SCHEDULED check 'the guard'. AppointmentService already has a private method named guard that maps overlap errors to 409, so 'widen the guard' is ambiguous for implement."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const [date, setDate] = useState(todayIn(timeZone, new Date(appointment.startsAt)));",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L106"
+        },
+        {
+          "quote": "AppointmentDetailPage shows its actions for STALE as well as SCHEDULED",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#components"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "In CO-9, start the Reschedule date at the later of today and the appointment's start day.",
+      "text": "For a Stale appointment, the reschedule picker opens on the original past date: its initial date is the appointment's start day, below the input's min of today. CO-9 only widens which statuses show actions."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The service runs as one Render instance",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#overview"
+        },
+        {
+          "quote": "One free web service serves the API and the web app from the same origin",
+          "ref": "sample-system:render.yaml#L2"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Cite render.yaml#L2 and #L9 (plan: free), and add one line noting that the startup run covers time when the instance was down.",
+      "text": "The trade-off rests on 'one Render instance' but cites nothing. render.yaml supports it as one free web service. The design also does not say the timer only runs while that process is up, so the startup run is what catches up after idle."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "format: \"adds STALE\"",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#item:EP-2"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Use format: \"one of BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE\".",
+      "text": "EP-2 history[].event has the format 'adds STALE' rather than the full value set, so an AC cannot check the allowed values exactly."
+    }
+  ],
+  "package_sha256": "ed97e2bdf3fc9be59c217a1085ff44a779dede9be144f1467ec1f5d77fdf35a7",
+  "questions": [],
+  "recorded_at": "2026-11-25T10:52:10Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built on existing layers (migration, types, repo, service, web labels). The new job's wiring into server.ts skips over how it gets services and clock, which createApp builds internally.",
+      "score": 4
+    },
+    {
+      "id": "DS-R2",
+      "reason": "S-1 to S-5 and S-7 are mapped to components. S-6 (glossary, REQ-14) is only called 'outside the product repo', with no component or owner.",
+      "score": 4
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Endpoint fields have type, nullability, format and example. EP-2 history[].event format is just 'adds STALE', not the full value set, and the startStaleJob inputs are not pinned to a source.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Claims are cited and C9 is Assumed with 'implement must confirm'. The single-instance deployment fact in the trade-offs has no citation.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "The timer, hourly cadence, single guard widening and overlap-constraint effects each come with a reason.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Readable, but it calls the scheduled() check 'the guard' when AppointmentService already has a different method named guard.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.1,
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

@@ -72,3 +72,33 @@ entries as the user's own answers.
 - question: REQ-10: I assumed a Stale appointment that staff reschedule becomes Scheduled again at its new time, because you said Stale is only a state to flag that the appointment needs attention (open-questions Q-01). Is that right?
 - options: Yes, confirm | Stays Stale until closed
 - answer: Yes, confirm
+
+## A-08
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T10:46:16Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01EDsFtZ9m8Hxrf9XF17ythW
+- question: Q-01: The Stale job runs inside the API process on a timer (no new infrastructure; architecture says no background jobs exist yet). How often should it run? This sets how soon after the 24h an appointment shows as Stale.
+- options: Every 15 minutes (proposed default) | Every hour | Every 5 minutes
+- answer: Every hour
+
+## A-09
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T10:46:16Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01EDsFtZ9m8Hxrf9XF17ythW
+- question: Q-02: Every appointment change records an actor (updated_by and the history event's actor); today it is always `staff`. What actor should the automatic Stale job record?
+- options: system (proposed default) | staff
+- answer: system (proposed default)
+
+## A-10
+- step: design
+- attempt: 1
+- asked_at: 2026-11-25T10:46:16Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01EDsFtZ9m8Hxrf9XF17ythW
+- question: C9: The status and event CHECK constraints in the appointments migration have no names, so the new migration must drop them by Postgres's default names. I assumed those are `appointment_status_check` and `appointment_event_event_check` (implement must confirm). Is that right?
+- options: Yes, confirm | Look them up at migrate time
+- answer: Yes, confirm
