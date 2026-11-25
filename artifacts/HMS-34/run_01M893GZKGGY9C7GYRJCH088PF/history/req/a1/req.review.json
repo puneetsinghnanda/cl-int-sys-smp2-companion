@@ -1,0 +1,194 @@
+{
+  "artifact_sha256": "8afeaa9996aa0cea4fdccbfbe0a71072c44498c431c169f42ec55eeae3f17f32",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Appointments have a new state \"Stale\".",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ticket.md#L16"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show",
+          "ref": "context/intent-baseline.md#closed-appointments"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "book, move and close appointments",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "closed by staff once its start time has passed",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Staff can still reschedule (`move`) a Stale appointment.",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-10"
+        },
+        {
+          "quote": "answer: Staff can still close it (proposed default)",
+          "ref": "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-03"
+        },
+        {
+          "quote": "book, move and close appointments",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Mark REQ-10 as assumed and confirm it with the user, or drop it.",
+      "text": "REQ-10 (staff can reschedule a Stale appointment) is marked known on A-03, but A-03's answer only says staff can 'close' it. The glossary treats move and close as separate actions, so reschedule goes beyond the user's answer."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "title: Staff can reschedule a Stale appointment",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-10"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State the resulting state, for example 'becomes Scheduled with the new start time'.",
+      "text": "REQ-10 does not say which state a rescheduled Stale appointment takes (Scheduled again?), so a tester cannot check the result."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "this is the product's first background job",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#summary"
+        },
+        {
+          "quote": "The system has no background jobs yet (architecture#open-points)",
+          "ref": "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add a claim citing the architecture open-points section.",
+      "text": "The summary says this is the product's first background job, but no claim or cite backs it. The only evidence is the architecture#open-points reference inside the A-01 question."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "The glossary owner adds an entry for `Stale` defined as in REQ-2.",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-14"
+        },
+        {
+          "quote": "Editing context/glossary.md itself",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#out-of-scope"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Record the glossary entry as a follow-up action, not as a REQ.",
+      "text": "REQ-14 is a task for the glossary owner, not a system behaviour a tester can check, and it overlaps the Out of scope line on editing the glossary."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "not marked Completed or rescheduled `within one day`, is marked Stale.",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-2"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Use the 24h-after-start-time window only.",
+      "text": "REQ-2 states the window twice: '24h after its start time' and the quoted 'within one day'. This is redundant and could be read as two windows."
+    }
+  ],
+  "package_sha256": "94968d2bafacffd14ad7584d8b2281a0f3cc9bbe05c16201c871b3f652abb04f",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": true,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "A-03 said staff can still 'close' a Stale appointment. Can staff also reschedule (move) one, and if so, does it go back to Scheduled?"
+    }
+  ],
+  "recorded_at": "2026-11-25T10:25:17Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All four acceptance criteria (ticket L16-L20) map to REQ-1, REQ-2, REQ-4, REQ-5; the open timing value is listed under Out of scope with a reason.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic. REQ-2 says the same condition twice (24h and 'within one day'), REQ-10 leaves the state after rescheduling open, and REQ-14 is a process action, not system behaviour.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Most known items cite IDE answers correctly, but REQ-10 (reschedule) is marked known on A-03, which only says staff can 'close' a Stale appointment. The summary's 'first background job' claim has no cite.",
+      "score": 3
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The clash with glossary#scheduled and intent-baseline#closed-appointments was asked as Q-03 citing both, answered in A-03, and recorded as a mismatch.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "The questions are precise, offer real options and a proposed default, and the glossary question was marked non-blocking.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain and consistent glossary terms. Backtick quoting in statements is uneven, for example 'within one day' inside REQ-2.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.25,
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

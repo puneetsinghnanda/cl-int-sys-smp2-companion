@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M893GZKGGY9C7GYRJCH088PF
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ticket.md
@@ -29,8 +29,8 @@ claims:
   - id: C5
     text: "A Completed appointment is closed by staff once its `start time` has passed."
     cites: ["context/glossary.md#completed"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
 assumed: []
 unknown: []
 requirements:
@@ -41,10 +41,10 @@ requirements:
     statement: "Appointments have a new state `Stale`."
     cites: ["artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ticket.md#L16"]
   - id: REQ-2
-    title: Past Scheduled appointment becomes Stale after the one day
+    title: Past Scheduled appointment becomes Stale after 24h
     type: functional
     status: known
-    statement: "An appointment that is still Scheduled 24h after its start time, not marked Completed or rescheduled `within one day`, is marked Stale."
+    statement: "A Scheduled appointment that has not been marked Completed or `rescheduled` by 24h after its start time is marked Stale."
     cites: ["artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ticket.md#L17-L18", "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-02"]
   - id: REQ-3
     title: An automatic job marks Stale
@@ -92,8 +92,8 @@ requirements:
     title: Staff can reschedule a Stale appointment
     type: functional
     status: known
-    statement: "Staff can still reschedule (`move`) a Stale appointment."
-    cites: ["context/glossary.md#front-desk-staff", "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-03"]
+    statement: "Staff can also `reschedule` a Stale appointment."
+    cites: ["runs/run_01M893GZKGGY9C7GYRJCH088PF/open-questions.md#q-01", "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-07"]
   - id: REQ-11
     title: Stale shows wherever a status shows
     type: functional
@@ -113,11 +113,17 @@ requirements:
     statement: "The `Dashboard` gets no new tile for Stale appointments."
     cites: ["context/glossary.md#dashboard", "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-04"]
   - id: REQ-14
-    title: Glossary entry for Stale
+    title: Glossary defines Stale
     type: constraint
     status: known
-    statement: "The glossary owner adds an entry for `Stale` defined as in REQ-2."
+    statement: "The glossary has an entry for `Stale` that matches REQ-2."
     cites: ["artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ticket.md#L16", "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-06"]
+  - id: REQ-15
+    title: A rescheduled Stale appointment is Scheduled again
+    type: functional
+    status: known
+    statement: "A Stale appointment that staff reschedule becomes `Scheduled` at its new time."
+    cites: ["context/glossary.md#scheduled", "runs/run_01M893GZKGGY9C7GYRJCH088PF/open-questions.md#q-01", "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-07"]
 unknowns: []
 questions: []
 answers:
@@ -135,9 +141,9 @@ answers:
     kind: question
     about: Q-03
     answer: "Staff can still close it (proposed default)"
-    requirements: [REQ-7, REQ-8, REQ-9, REQ-10]
+    requirements: [REQ-7, REQ-8, REQ-9]
     mismatch:
-      text: "The glossary says only Scheduled appointments can change; the user decided staff can still close or reschedule a Stale appointment."
+      text: "The glossary says only Scheduled appointments can change; the user decided staff can still close a Stale appointment."
       cites: ["context/glossary.md#scheduled"]
   - id: A-04
     kind: question
@@ -154,6 +160,11 @@ answers:
     about: Q-05
     answer: "Add entry from REQ-2 (proposed default)"
     requirements: [REQ-14]
+  - id: A-07
+    kind: assumption
+    about: REQ-10
+    answer: "Yes, confirm"
+    requirements: [REQ-10, REQ-15]
 glossary:
   - {term: Stale, found: false}
   - {term: Scheduled, found: true}
@@ -168,14 +179,14 @@ glossary:
 ## Summary
 HMS-34 adds an appointment state Stale for Scheduled appointments whose time is past and that were
 neither marked Completed nor rescheduled within one day. The user decided an automatic background job
-marks them, 24h after the start time, and that staff can still close or reschedule a Stale
-appointment. The main risks: this is the product's first background job, and Stale is a state that can
-still change, unlike the existing closed states (`Completed, Cancelled and No-show` never change,
-C3), which departs from the glossary rule that only Scheduled appointments can change (C2).
+marks them, 24h after the start time. Stale only flags that the appointment needs attention: staff can
+still close it or reschedule it, and a rescheduled one is Scheduled again. The main risk is that Stale
+is a state that can still change, unlike the existing closed states (C3), which departs from the
+glossary rule that only Scheduled appointments can change (C2).
 
 ## Requirements
 - REQ-1 New appointment state Stale (known): appointments have a new state Stale.
-- REQ-2 Past Scheduled appointment becomes Stale after the one day (known): still Scheduled 24h after its start time, not Completed or rescheduled, means Stale.
+- REQ-2 Past Scheduled appointment becomes Stale after 24h (known): not Completed or rescheduled by 24h after its start time means Stale.
 - REQ-3 An automatic job marks Stale (known): an automatic background job, not staff, marks them.
 - REQ-4 Completed within the day is not Stale (known).
 - REQ-5 Rescheduled within the day is not Stale (known).
@@ -187,16 +198,19 @@ C3), which departs from the glossary rule that only Scheduled appointments can c
 - REQ-11 Stale shows as the status label wherever a status shows (known).
 - REQ-12 The appointment list's status filter offers Stale (known).
 - REQ-13 No new dashboard tile (known).
-- REQ-14 Glossary entry for Stale, defined as in REQ-2 (known).
+- REQ-14 The glossary has an entry for Stale that matches REQ-2 (known).
+- REQ-15 A rescheduled Stale appointment becomes Scheduled at its new time (known).
 
 ## Known
 - REQ-1, REQ-4, REQ-5: stated in the ticket (#L16, #L19, #L20); A-02 fixes "one day" as 24h after the start time.
 - REQ-2: ticket #L17-L18 with A-02.
 - REQ-3: A-01.
 - REQ-6: assumption confirmed in A-05; follows from glossary#scheduled.
-- REQ-7 to REQ-10: A-03.
+- REQ-7 to REQ-9: A-03.
+- REQ-10: answer to runs/run_01M893GZKGGY9C7GYRJCH088PF/open-questions.md#q-01, confirmed in A-07.
 - REQ-11 to REQ-13: A-04.
 - REQ-14: A-06.
+- REQ-15: assumption confirmed in A-07, based on the answer to runs/run_01M893GZKGGY9C7GYRJCH088PF/open-questions.md#q-01.
 
 ## Assumed
 None.
@@ -207,14 +221,16 @@ None.
 ## Open questions
 None open.
 
+Answered in open-questions.md: runs/run_01M893GZKGGY9C7GYRJCH088PF/open-questions.md#q-01 (can staff also reschedule a Stale appointment): "Yes, they can reschedule as well, its only a state change to let them know that this appointment needs attention.", answered by the product owner; decides REQ-10 and is the basis for REQ-15.
+
 Answered in the IDE:
 - A-01 (Q-01, who or what marks Stale): "Automatic job (proposed default)", answered by eng-dbe4; decides REQ-3.
 - A-02 (Q-02, when the one day is counted from): "24h after start time (proposed default)", answered by eng-dbe4; decides REQ-2, REQ-4, REQ-5.
-- A-03 (Q-03, can Stale change afterwards): "Staff can still close it (proposed default)", answered by eng-dbe4; decides REQ-7 to REQ-10. Mismatch: the glossary says only Scheduled appointments can change; the user decided staff can still close or reschedule a Stale appointment.
+- A-03 (Q-03, can Stale change afterwards): "Staff can still close it (proposed default)", answered by eng-dbe4; decides REQ-7 to REQ-9. Mismatch: the glossary says only Scheduled appointments can change; the user decided staff can still close a Stale appointment.
 - A-04 (Q-04, where Stale shows): "Wherever status shows (proposed default)", answered by eng-dbe4; decides REQ-11, REQ-12, REQ-13.
 - A-05 (REQ-6 assumption): "Yes, confirm", answered by eng-dbe4; decides REQ-6.
 - A-06 (Q-05, glossary entry): "Add entry from REQ-2 (proposed default)", answered by eng-dbe4; decides REQ-14.
+- A-07 (REQ-10 assumption that a rescheduled Stale appointment is Scheduled again): "Yes, confirm", answered by eng-dbe4; decides REQ-10 and REQ-15.
 
 ## Out of scope
 - How often the background job runs, and how soon after the 24h an appointment must show as Stale: neither the ticket nor the answers give a value, so this is left to design.
-- Editing context/glossary.md itself: REQ-14 records the decision; the glossary owner makes the change.

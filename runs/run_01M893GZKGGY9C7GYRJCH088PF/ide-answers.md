@@ -62,3 +62,13 @@ entries as the user's own answers.
 - question: Q-05: "Stale" is not in the glossary (context/glossary.md). Should the glossary get an entry for it? (Non-blocking; the req step only records your choice, it does not edit the glossary.)
 - options: Add entry from REQ-2 (proposed default) | No glossary entry
 - answer: Add entry from REQ-2 (proposed default)
+
+## A-07
+- step: req
+- attempt: 2
+- asked_at: 2026-11-25T10:29:39Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01GdTwX77C8zi2TCiVbSsN86
+- question: REQ-10: I assumed a Stale appointment that staff reschedule becomes Scheduled again at its new time, because you said Stale is only a state to flag that the appointment needs attention (open-questions Q-01). Is that right?
+- options: Yes, confirm | Stays Stale until closed
+- answer: Yes, confirm
