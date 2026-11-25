@@ -1,0 +1,139 @@
+{
+  "active_session": {
+    "host_hash": "h_c14537ff",
+    "session_id": "c441e434-c904-4af2-8623-650b71631899",
+    "since": "2026-11-25T15:09:36Z"
+  },
+  "branch": {},
+  "created_at": "2026-11-25T15:09:36Z",
+  "cursor": null,
+  "end_reason": null,
+  "gates": [],
+  "heartbeat_at": "2026-11-25T15:09:36Z",
+  "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "owner_pseudonym": "eng-dbe4",
+  "pack": {
+    "checked_offline": false,
+    "commits_behind": {
+      "sample-system": 0
+    },
+    "drift_files": {
+      "sample-system": 0
+    },
+    "fresh": true,
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "reasons": [],
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "pinned": {
+    "plugin": "0.1.7",
+    "skills": {
+      "design": "1.10.0",
+      "implement": "1.4.0",
+      "requirement-review": "1.5.0",
+      "secure-code-review": "1.4.0",
+      "story-split": "1.5.0",
+      "unit-test": "1.4.0"
+    },
+    "tsl": "0.1.7"
+  },
+  "prs": [],
+  "questions": {
+    "answered_sha256": {},
+    "open_blocking": 0,
+    "open_non_blocking": 0,
+    "round": 0
+  },
+  "rev": 0,
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "run-state.v1",
+  "status": "RUNNING",
+  "steps": [
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "req",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "split",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "design",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "impl",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "ut",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "budget_used": {
+        "checks": 0,
+        "review": 0,
+        "rework": 0,
+        "verifier": 0
+      },
+      "id": "secrev",
+      "kind": "skill",
+      "status": "PENDING"
+    },
+    {
+      "attempts": [],
+      "id": "pr",
+      "kind": "pr",
+      "status": "PENDING"
+    }
+  ],
+  "system": "SYS-SMP2",
+  "ticket": "HMS-34",
+  "updated_at": "2026-11-25T15:09:36Z",
+  "workflow": "brownfield-small@1.0.0",
+  "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
+}
