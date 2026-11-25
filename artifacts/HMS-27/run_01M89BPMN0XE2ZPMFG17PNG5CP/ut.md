@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M89BPMN0XE2ZPMFG17PNG5CP
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.3.0
 inputs:
   - path: artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md
@@ -18,8 +18,8 @@ pack_sha:
 code:
   - repo: sample-system
     base_sha: a003fb3b8593ef6537cf59d5abda205f1d02fe62
-    head_sha: cf7780e354e64c2a1eb303263006c8b2bc37a7a3
-    diff_sha256: de6f99a6a6df42dd0948a02f2a7a97d21125b3f230474d60d9bf26127db5ac85
+    head_sha: e39050d2454d812b670b5fbede2645c353848392
+    diff_sha256: 88425e07545c5549bf77b0d61f27b802c91c87c91b980afa6c2b4a78b0754c66
     files:
       - api/test/patients-last-visit.test.ts
       - web/src/__tests__/PatientsPage.test.tsx
@@ -48,12 +48,15 @@ claims:
     cites: ["context/test-strategy.md#database-for-tests"]
   - id: C8
     text: "The change has `PatientService` parse not_seen and map each last visit to a local date."
-    cites: ["artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md#claim:C3"]
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/services/patientService.ts:PatientService"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - id: H3
+    how: "The web fetch mock is typed through vi.fn's generic instead of an unused _url parameter, which the lint rule rejected."
 ---
 # Unit tests: HMS-27
 
@@ -63,6 +66,8 @@ These tests cover the HMS-27 change at both layers the strategy names (C1): API 
 The API tests insert appointment rows directly, so that past and off-hours instants (for example 00:30 local) can be set up exactly. They pin the clock with `testApp` (C4) to 01:30 local on 25 November 2026, which is still 24 November in UTC. That makes a UTC-today or UTC-visit-date implementation fail, and a leap-year clock separates 12 calendar months from a fixed 365-day count.
 
 Each changed function or endpoint has a normal-path test and an error or edge test: the `yearBefore` 29 February clamp, `not_seen=yes` returning 400, never-visited patients, a No-show after a visit, and filtering before paging.
+
+Retry (H3): H3: The web fetch mock is typed through vi.fn's generic instead of an unused _url parameter, which the lint rule rejected. The verifier's lint log was empty. The only new construct the repo's typescript-eslint recommended rules reject is that unused `_url` parameter; no test logic changed.
 
 Tests run and coverage are not reported here. tsl records them in checks.json when it runs the verifier (H3), and the verifier skips coverage because the project has no coverage script (C3).
 

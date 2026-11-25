@@ -1,11 +1,131 @@
 {
-  "artifact_sha256": "e7f7515ac53f41e9ef69e4c294686fa7914ae67af4584f2d13688cf511887f7f",
-  "attempt": 1,
-  "claims_checked": [],
-  "findings": [],
-  "package_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "artifact_sha256": "1fdb70c136eb4ba306be492bbb7ddb1c30593bbf5645814c0a0bf5e36632861a",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage.",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function testApp(pool: Pool, clock: () => Date = () => NOW): Express {",
+          "ref": "sample-system:api/test/helpers.ts#L16"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": " *  - patients 1 and 2",
+          "ref": "sample-system:api/test/helpers.ts#L24"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Kolkata is UTC+05:30 all year, so local HH:MM on a day maps to a fixed UTC instant.",
+          "ref": "sample-system:api/test/helpers.ts#L13"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const notSeen = f.oneOf('not_seen', ['true', 'false'] as const) === 'true';",
+          "ref": "sample-system:api/src/services/patientService.ts#L35"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "expect(JSON.stringify(res.body)).not.toMatch(/Penicillin|allerg|medical|Invented note/i);",
+          "ref": "sample-system:api/test/patients-last-visit.test.ts#L215"
+        },
+        {
+          "quote": "allergies: ['Penicillin'], medicalNotes: 'Invented note',",
+          "ref": "sample-system:api/test/helpers.ts#L46"
+        },
+        {
+          "quote": "Given a patient with a blood group, allergies and current medications recorded",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#item:S-4"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Give the filtered patient a blood group and current medications, then assert that each item's keys exactly match the list-item key set (as PAT-8 does) with not_seen=true.",
+      "text": "The REQ-12 test's regex only catches allergies, notes and the word 'medical'. A leaked blood group or current-medications field would pass, and the fixture patient has neither, though S-4 AC1 names them."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "The first of a month stays on that day (a UTC-to-local shift could move it).",
+          "ref": "sample-system:web/src/__tests__/format.test.ts#L21"
+        },
+        {
+          "quote": "Kolkata is UTC+05:30 all year",
+          "ref": "sample-system:api/test/helpers.ts#L13"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Run the case under a zone behind UTC (for example, stub TZ to America/New_York) so a shifting implementation fails.",
+      "text": "The first-of-month dateOnly case says a zone shift could move the day. A shift only moves it when the runner's zone is behind UTC, and Kolkata and UTC are not, so a shifting implementation would still pass there."
+    }
+  ],
+  "package_sha256": "f983db4d4b92128aee0d78b2240907cdc6000e12912af3bb13be0e13e9a4fcc4",
   "questions": [],
-  "recorded_at": "2026-11-25T13:32:44Z",
+  "recorded_at": "2026-11-25T13:37:09Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -13,11 +133,36 @@
     "skill": "review",
     "version": "0.1.7"
   },
-  "rubric_items": [],
-  "rubric_score": null,
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Every changed path has a test: the last-visit join, not_seen parsing and filter, yearBefore, the filter applied before paging and in total, the web column and checkbox, and dateOnly.",
+      "score": 5
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Most assertions check exact observable results (dates, doctor names, name lists, totals, URLs). The medical-history regex and the first-of-month dateOnly case are weak.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Covers the not_seen=yes 400 field error, the 29 Feb clamp, the leap-year cutoff, local vs UTC midnight both ways, never-visited, a No-show after a visit, and filter-before-paging.",
+      "score": 5
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest+Supertest with a throwaway DB and a pinned clock in api/test, Testing Library in web/src/__tests__. Names start with HMS-27 REQ-n and all data is invented. Only test files changed.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No counts or coverage stated. It defers to checks.json and says coverage is skipped, which matches the verifier's coverage step (exit 78, skip).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.75,
   "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
   "schema": "review.v1",
-  "status": "could_not_review",
-  "status_reason": "not reviewed: gate H3 failed",
+  "status": "ok",
   "step": "ut"
 }

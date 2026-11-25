@@ -1,0 +1,59 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "step": "ut",
+  "attempt": 2,
+  "artifact_sha256": "1fdb70c136eb4ba306be492bbb7ddb1c30593bbf5645814c0a0bf5e36632861a",
+  "package_sha256": "f983db4d4b92128aee0d78b2240907cdc6000e12912af3bb13be0e13e9a4fcc4",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 5, "reason": "Every changed path has a test: the last-visit join, not_seen parsing and filter, yearBefore, the filter applied before paging and in total, the web column and checkbox, and dateOnly."},
+    {"id": "UT-R2", "score": 4, "reason": "Most assertions check exact observable results (dates, doctor names, name lists, totals, URLs). The medical-history regex and the first-of-month dateOnly case are weak."},
+    {"id": "UT-R3", "score": 5, "reason": "Covers the not_seen=yes 400 field error, the 29 Feb clamp, the leap-year cutoff, local vs UTC midnight both ways, never-visited, a No-show after a visit, and filter-before-paging."},
+    {"id": "UT-R4", "score": 5, "reason": "Vitest+Supertest with a throwaway DB and a pinned clock in api/test, Testing Library in web/src/__tests__. Names start with HMS-27 REQ-n and all data is invented. Only test files changed."},
+    {"id": "UT-R5", "score": 5, "reason": "No counts or coverage stated. It defers to checks.json and says coverage is skipped, which matches the verifier's coverage step (exit 78, skip)."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The REQ-12 test's regex only catches allergies, notes and the word 'medical'. A leaked blood group or current-medications field would pass, and the fixture patient has neither, though S-4 AC1 names them.",
+      "cites": [
+        {"ref": "sample-system:api/test/patients-last-visit.test.ts#L215", "quote": "expect(JSON.stringify(res.body)).not.toMatch(/Penicillin|allerg|medical|Invented note/i);"},
+        {"ref": "sample-system:api/test/helpers.ts#L46", "quote": "allergies: ['Penicillin'], medicalNotes: 'Invented note',"},
+        {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#item:S-4", "quote": "Given a patient with a blood group, allergies and current medications recorded"}
+      ],
+      "suggested_fix": "Give the filtered patient a blood group and current medications, then assert that each item's keys exactly match the list-item key set (as PAT-8 does) with not_seen=true."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The first-of-month dateOnly case says a zone shift could move the day. A shift only moves it when the runner's zone is behind UTC, and Kolkata and UTC are not, so a shifting implementation would still pass there.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/format.test.ts#L21", "quote": "The first of a month stays on that day (a UTC-to-local shift could move it)."},
+        {"ref": "sample-system:api/test/helpers.ts#L13", "quote": "Kolkata is UTC+05:30 all year"}
+      ],
+      "suggested_fix": "Run the case under a zone behind UTC (for example, stub TZ to America/New_York) so a shifting implementation fails."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L16", "quote": "export function testApp(pool: Pool, clock: () => Date = () => NOW): Express {"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L24", "quote": " *  - patients 1 and 2"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L13", "quote": "Kolkata is UTC+05:30 all year, so local HH:MM on a day maps to a fixed UTC instant."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/patientService.ts#L35", "quote": "const notSeen = f.oneOf('not_seen', ['true', 'false'] as const) === 'true';"}]}
+  ],
+  "questions": []
+}
