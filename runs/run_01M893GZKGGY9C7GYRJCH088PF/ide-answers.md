@@ -102,3 +102,13 @@ entries as the user's own answers.
 - question: C9: The status and event CHECK constraints in the appointments migration have no names, so the new migration must drop them by Postgres's default names. I assumed those are `appointment_status_check` and `appointment_event_event_check` (implement must confirm). Is that right?
 - options: Yes, confirm | Look them up at migrate time
 - answer: Yes, confirm
+
+## A-11
+- step: design
+- attempt: 2
+- asked_at: 2026-11-25T10:53:27Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_018Eernb5wWYyygDuzPt44v2
+- question: Q-03: S-6 needs a glossary entry for Stale. The glossary is context/glossary.md in the context pack (this companion repo, owner eng-db6b); the product repo has no glossary. Where should the entry be made, and by whom?
+- options: Context pack, glossary owner (proposed default) | Product docs in the impl diff
+- answer: Context pack, glossary owner (proposed default)
