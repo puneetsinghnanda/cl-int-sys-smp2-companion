@@ -1,0 +1,219 @@
+{
+  "artifact_sha256": "fbf0c4c88fe15ebf38cffe9d865138ebcca27be34da2894740e6333efe700a43",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW', 'STALE'));",
+          "ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L4"
+        },
+        {
+          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW', 'STALE'));",
+          "ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L8"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW' | 'STALE';",
+          "ref": "sample-system:api/src/types.ts#L4"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED', updated_at = now(), updated_by = $4",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L157"
+        },
+        {
+          "quote": "async markStale(cutoff: Date, actor: string): Promise<number[]>",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L164"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (current.status !== 'SCHEDULED' && current.status !== 'STALE') {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L147"
+        },
+        {
+          "quote": "async markStale(actor: string): Promise<number> {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L133"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STALE_JOB_INTERVAL_MS = 60 * MINUTE;",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L5"
+        },
+        {
+          "quote": "export const STALE_JOB_ACTOR = 'system';",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L7"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "stopStaleJob = startStaleJob((app.locals.ctx as AppContext).services.appointments);",
+          "ref": "sample-system:api/src/server.ts#L14"
+        },
+        {
+          "quote": "stopStaleJob?.();",
+          "ref": "sample-system:api/src/server.ts#L18"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW' | 'STALE';",
+          "ref": "sample-system:web/src/api/types.ts#L3"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STALE: 'Stale',",
+          "ref": "sample-system:web/src/lib/format.ts#L41"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED' || a.status === 'STALE';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L45"
+        },
+        {
+          "quote": "const [date, setDate] = useState(ownDay < today ? today : ownDay);",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L110"
+        },
+        {
+          "quote": "STALE: 'Marked stale',",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L19"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ".badge-stale { background: var(--warning-bg); color: #8a4b00; }",
+          "ref": "sample-system:web/src/styles.css#L81"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "name: \"context/glossary.md: Stale entry, by the glossary owner\"",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#item:CO-12"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const DAY_MS = 24 * 60 * MINUTE;",
+          "ref": "sample-system:api/src/lib/time.ts#L9"
+        },
+        {
+          "quote": "const cutoff = new Date(this.clock().getTime() - DAY_MS);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L134"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "the verifier's migrate run will prove or refute it",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#assumed"
+        },
+        {
+          "quote": "implement must confirm against the database",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/design.md#assumed"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Run the migration against a database built from the existing migrations (or query pg_constraint) and record the result, or state plainly that confirmation is still pending and who does it.",
+      "text": "The design told implement to confirm the default CHECK names against the database. The artifact defers this to a 'verifier migrate run', but the verifier profile ran only build, test, lint, sast and secrets, so nothing confirms CO-1's DROP CONSTRAINT names."
+    }
+  ],
+  "package_sha256": "4cc89f49841a05447917147bacff41fb6283781501cf5a7e99c31d5df8191a31",
+  "questions": [],
+  "recorded_at": "2026-11-25T11:06:39Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-10 are each present in the diff as designed: migration, API/web types, repo markStale and move() SCHEDULED, service scheduled()/markStale, hourly system job, server start/stop, labels, picker, badge CSS. CO-12 correctly left out.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "New timestamped migration file, SQL in the repo, rules in the service, shared DAY_MS/MINUTE from lib/time, job logs only the error message, as the conventions ask.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "Ten files, all named by the design components; no unrelated edits seen in the changed files.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Job catches and logs rejections; the UPDATE is idempotent and touches only SCHEDULED rows; existing 404/409 paths reused. The constraint-name assumption the design told implement to confirm is deferred, not confirmed.",
+      "score": 4
+    },
+    {
+      "id": "IM-R5",
+      "reason": "Summary and per-file list match the diff, but the Assumed section says a verifier migrate run will settle CO-1, and the verifier ran no migrate step.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
