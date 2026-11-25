@@ -1,0 +1,54 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
+  "step": "req",
+  "attempt": 2,
+  "artifact_sha256": "00c111d6b4e4d1017e070335b38c683423ab386a723ef107b9dfe3c547cc83fe",
+  "package_sha256": "fa5b694d07737d368b19bac6c8a6fe7f25e1764b709efb84ec8f65ecd523956f",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All 8 acceptance criteria map to REQ-1..REQ-15; the 300-char limit and own-page changes are out of scope with reasons; the IDE answer is REQ-16."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and checkable, but REQ-6 bundles status filter, date range and paging, while AC6 and AC7 were split per item."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites the ticket line or the A-01 IDE answer; nothing invented, no assumed items."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash between ticket and baseline; REQ-14 aligns with the data-protection rule and cites both."},
+    {"id": "RR-R5", "score": 5, "reason": "The only question (Q-01) was answered in the IDE with real options; no needless open questions."},
+    {"id": "RR-R6", "score": 4, "reason": "Readable, but backtick marking of terms is inconsistent and several backticked terms are not glossary terms."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "correctness",
+      "text": "REQ-6 is compound: it bundles three behaviours (status filter, date range, paging) in one REQ, while AC6 and AC7 were split into one REQ per page and per action.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-6", "quote": "The column follows the list's `status filter`, date range and paging."},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#known", "quote": "REQ-8 to REQ-10: acceptance criterion 6, split per page."}
+      ],
+      "suggested_fix": "Split REQ-6 into three REQs: the column follows the status filter, follows the date range, and follows paging."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "style",
+      "text": "Glossary term marking is inconsistent: No-show is backticked but Scheduled and Completed are not, while non-glossary phrases such as `own page` are backticked as if defined terms.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-3", "quote": "For Scheduled, Completed and `No-show` appointments"},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-5", "quote": "The full reason is still shown on the appointment's `own page`."}
+      ],
+      "suggested_fix": "Mark only glossary terms consistently (Cancelled, Scheduled, Completed, No-show, Dashboard, Medical history) and drop backticks from ordinary phrases."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md#L14", "quote": "A cancelled appointment always has a reason of up to 300 characters"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#data-protection", "quote": "Medical history appears only on the patient's own page, never in lists"}]}
+  ],
+  "questions": []
+}

@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M8903DR0M5JPW9H38SM1P5JE
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md
@@ -17,12 +17,6 @@ claims:
   - id: C1
     text: "A cancelled appointment's reason is limited to `300` characters by the ticket."
     cites: ["artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md#L14"]
-  - id: C7
-    text: "The dashboard renders the shared table as `<AppointmentTable items={data.next} />` without the column."
-    cites: ["sample-system:web/src/pages/DashboardPage.tsx#L62"]
-  - id: C8
-    text: "The patient page renders the shared table with `hide=\"patient\"` and without the column."
-    cites: ["sample-system:web/src/pages/PatientDetailPage.tsx#L76"]
   - id: C9
     text: "A `Cancelled` appointment is called off with a reason."
     cites: ["context/glossary.md#cancelled"]
@@ -150,7 +144,7 @@ glossary:
 # Requirements review: HMS-33
 
 ## Summary
-HMS-33 asks for a "Cancellation reason" column on the appointment list only. Cancelled rows show the reason, shortened past 60 characters; every other status shows "-". The dashboard, doctor page and patient page must stay unchanged, and no medical history or contact details may be added. The dashboard and patient page already use the same shared table without such a column (C7, C8), so the column must stay opt-in. A local checkout appeared to contain an implementation, and the user chose to verify existing code and change only what is missing (A-01); that code is not at the pinned SHA, so the later steps decide what is actually missing. The main risk is the column leaking into the other pages that share the table.
+HMS-33 asks for a "Cancellation reason" column on the appointment list only. Cancelled rows show the reason, shortened past 60 characters; every other status shows "-". The dashboard, doctor page and patient page show appointments in the same kind of table and must stay unchanged, and no medical history or contact details may be added (C10). A local checkout appeared to contain an implementation, and the user chose to verify existing code and change only what is missing (A-01); later steps decide what is actually missing at the pinned SHA. The main risk is the column leaking into the other pages that share the table.
 
 ## Requirements
 - REQ-1 Cancellation reason column — known — The appointment list has a column `Cancellation reason` after Status.
@@ -188,7 +182,7 @@ None.
 None open.
 
 Answered in the IDE:
-- A-01 (Q-01): HMS-33 looks already implemented at the pinned SHA; how should the run treat it? Answer: "Verify existing (proposed default)", from the user in the IDE. Decides REQ-16. No mismatch with the ticket or baseline.
+- A-01 (Q-01): HMS-33 looked already implemented in a local checkout; how should the run treat it? Answer: "Verify existing (proposed default)", from the user in the IDE. Decides REQ-16. No mismatch with the ticket or baseline.
 
 ## Out of scope
 - The reason's `300`-character limit (C1) is set when cancelling; the ticket asks for no change to it.

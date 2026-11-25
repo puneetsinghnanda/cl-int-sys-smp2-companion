@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The column follows the list's `status filter`, date range and paging.",
+          "ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-6"
+        },
+        {
+          "quote": "REQ-8 to REQ-10: acceptance criterion 6, split per page.",
+          "ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#known"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-6 is compound: it bundles three behaviours (status filter, date range, paging) in one REQ, while AC6 and AC7 were split into one REQ per page and per action."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
+  "schema": "feedback.v1",
+  "step": "req"
+}
