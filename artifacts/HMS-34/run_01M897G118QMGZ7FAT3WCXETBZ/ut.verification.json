@@ -1,0 +1,79 @@
+{
+  "artifact_path": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ut.md",
+  "artifact_sha256": "840af8ac8f8de4da64c279f173d9b739fb1706b3273ba18df901c0e5910d25c1",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "9fdaa456e6f5c2c0b081bada8eceb5d3a2adc9c9dfaa30f5fbd331e50a4d9333",
+  "claims": {
+    "total": 25,
+    "verified": 25
+  },
+  "decided_at": "2026-11-25T12:20:39Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md",
+      "sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+      "verification_sha256": "b53259c6d8e78ce18d2981a62e9377d77abd7fd07f7b15363b09dad58f544fc9"
+    },
+    {
+      "path": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/split.md",
+      "sha256": "cb0b1c68ceef02d6fb6550506b35cd99814cb26aded4e14a0ff8670de9a0a06a",
+      "verification_sha256": "b2c3c15c4cf2609c1a62cf82677262cc09df26cb365874bb84b735bc7eb549f8"
+    }
+  ],
+  "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "b84fa8f4589c1f8384f7d6f68cea7a09a88c1940",
+      "diff_sha256": "da7c1f2fcc63b07ae1c64193d63125e7a6d20a3b1e0539910044f0aeb713825e",
+      "repo": "sample-system",
+      "tree_sha": "4dc17c613f6fbf8859491cc340c01fcc77dffcf2"
+    }
+  ],
+  "review_sha256": "c5a075ea206dfec0c5435f51a9dfcaf770e07f88466a1e5d81c52f35f5191b9f",
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.5,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 4,
+      "lines": 301,
+      "sensitive": false
+    }
+  },
+  "signature": "eRy-RB1kL2K5Sl1UJUrckERopCZ1dsaVrb2z8Y0XBsAlz-TZCBgi-akMthGln7E8ylokO2dlCQPBNiVC5NvKCA",
+  "skill": "unit-test@1.4.0",
+  "step": "ut",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

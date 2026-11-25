@@ -7,7 +7,7 @@
   "branch": {
     "sample-system": {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "head_sha": "b84fa8f4589c1f8384f7d6f68cea7a09a88c1940",
+      "head_sha": "af1d0b6892ab313a4a49006573505e2a213f6385",
       "name": "tsl/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ"
     }
   },
@@ -31,7 +31,7 @@
       "step": "impl"
     }
   ],
-  "heartbeat_at": "2026-11-25T12:10:54Z",
+  "heartbeat_at": "2026-11-25T12:20:39Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -69,7 +69,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 27,
+  "rev": 32,
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -290,7 +290,39 @@
       "status": "ACCEPTED"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ut.md",
+          "artifact_sha256": "840af8ac8f8de4da64c279f173d9b739fb1706b3273ba18df901c0e5910d25c1",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-25T12:20:39Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "change",
+              "sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+              "step": "impl"
+            },
+            {
+              "name": "stories",
+              "sha256": "cb0b1c68ceef02d6fb6550506b35cd99814cb26aded4e14a0ff8670de9a0a06a",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ut.verification.json",
+          "runner": {
+            "context": "artifacts",
+            "mode": "fork"
+          },
+          "skill": "unit-test@1.4.0",
+          "skill_started_at": "2026-11-25T12:15:34Z",
+          "started_at": "2026-11-25T12:11:11Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -299,7 +331,7 @@
       },
       "id": "ut",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -322,7 +354,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T12:10:54Z",
+  "updated_at": "2026-11-25T12:20:39Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }

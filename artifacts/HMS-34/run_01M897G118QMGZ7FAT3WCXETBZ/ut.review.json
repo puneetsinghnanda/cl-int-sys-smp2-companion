@@ -1,0 +1,347 @@
+{
+  "artifact_sha256": "840af8ac8f8de4da64c279f173d9b739fb1706b3273ba18df901c0e5910d25c1",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Vitest with jsdom and Testing Library",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/appointments.test.ts\"",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "test:sample-system:web/src/__tests__/format.test.ts",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/format.test.ts"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "other pages have no web tests",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const NOW = new Date('2026-10-19T02:30:00Z');",
+          "ref": "sample-system:api/test/helpers.ts#L10"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctor 1: 15-minute slots",
+          "ref": "sample-system:api/test/helpers.ts#L23"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "app.locals.ctx = createContext(db, config, clock);",
+          "ref": "sample-system:api/src/app.ts#L20"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STALE_JOB_INTERVAL_MS = 60 * MINUTE;",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L5"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STALE_JOB_ACTOR = 'system';",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L6"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: Every hour",
+          "ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-08"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: system (proposed default)",
+          "ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-09"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const cutoff = new Date(this.clock().getTime() - DAY_MS);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L134"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L168"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED', updated_at = now()",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L158"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "current.status !== 'STALE'",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L147"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "- answer: Staff can still close or reschedule it (proposed default)",
+          "ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STALE: 'Stale',",
+          "ref": "sample-system:web/src/lib/format.ts#L41"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STALE: 'Marked stale',",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L19"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "useState(ownDay < today ? today : ownDay)",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L110"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a.status = 'SCHEDULED'",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The glossary entry is made in the `context pack` by its owner and is not part of this diff (CO-12).",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md#claim:C11"
+        }
+      ],
+      "claim_id": "C24",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C25",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "api/src/server.ts: CO-6, starts the job after listen from app.locals.ctx and stops it in shutdown.",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md#changes"
+        },
+        {
+          "quote": "stopStaleJob = startStaleJob((app.locals.ctx as AppContext).services.appointments);",
+          "ref": "sample-system:api/src/server.ts#L15"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a small test that the server starts the job and calls its stop function on shutdown, or state in the artifact why server.ts is left to integration.",
+      "text": "The changed server.ts wiring (start the job after listen, stop it on shutdown) has no test; staleJob.test.ts only calls startStaleJob directly with a stub."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L168"
+        },
+        {
+          "quote": "S-1: covered by the API tests at 09:59, 10:01 and on a future day",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ut.md#known"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add a case at exactly start + 24h asserting the intended outcome.",
+      "text": "The repo marks rows with starts_at <= cutoff, so exactly 24h counts as Stale, but the tests only probe 09:59 and 10:01; the inclusive boundary is untested."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "await markStale();",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L159"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Assert expect(await markStale()).toBe(0) as the rerun test does.",
+      "text": "The S-4 AC2 test discards the job's return count, so it would not notice the job marking some other appointment Stale at that run."
+    }
+  ],
+  "package_sha256": "f5aa6b343d5901ecae3ba0de54dd896654b8de74736cf144973f6fc978ec4591",
+  "questions": [],
+  "recorded_at": "2026-11-25T12:20:37Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Job, service, repo, migration (via DB), list/patient/doctor/dashboard, label and page are tested for all of S-1 to S-5 and S-7; only the server.ts start/stop wiring has no test.",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check observable results: statuses, history event and actor, list ids, HTTP 400/409 and field errors, badge text and class, button states, picker date.",
+      "score": 5
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Error paths (unknown filter, missing reason, closed 409, past move, job failure) and edges (09:59/10:01, future, rerun, stop) are covered; the exact 24h boundary is not.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest+Supertest with own DB and pgAvailable skip, Vitest+Testing Library for web, files beside existing tests, names follow the HMS-3 precedent.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No invented numbers; results deferred to checks.json, where tests pass and coverage is skipped (exit 78) as the artifact states.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.5,
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
