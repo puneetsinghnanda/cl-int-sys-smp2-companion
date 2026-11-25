@@ -1,0 +1,95 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "step": "split",
+  "attempt": 1,
+  "artifact_sha256": "efa0eb86240f1efdbc73ab8018bf51afffea9ba0a5df3508bba8b0920360543b",
+  "package_sha256": "a490432f1dcefb152c859aca0cb25e1ce0b8d335c3e06bed4d436c15d4503b17",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "SS-R1", "score": 5, "reason": "All 14 known REQs are traced by a story (S-1 REQ-1..5, S-2 REQ-6..8, S-3 REQ-9..11 and REQ-14, S-4 REQ-12..13); no assumed REQs exist."},
+    {"id": "SS-R2", "score": 4, "reason": "S-1 to S-3 each deliver one outcome; S-4 bundles two unrelated constraints (no medical history, everything else unchanged) into one story."},
+    {"id": "SS-R3", "score": 3, "reason": "ACs are Given/When/Then and the local-midnight UTC case is good, but several would pass under likely wrong implementations: 365 days vs calendar months, any-old-Completed vs latest, UTC today, filter dropped under search/status, filter after paging."},
+    {"id": "SS-R4", "score": 5, "reason": "20 per page, Asia/Kolkata, UTC+05:30 and the 12-month cutoff date are sourced or derived inline; other dates and counts are test fixtures."},
+    {"id": "SS-R5", "score": 4, "reason": "Readable and consistent terms; a few Then clauses lean on 'as before the change' or a vague 'June 2026 date' instead of a concrete expected value."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "major", "category": "correctness",
+     "text": "No S-2 AC tells 12 calendar months from 365 days, the option the user rejected in A-03: 25 Nov 2025 to 25 Nov 2026 is exactly 365 days, so a 365-day implementation passes every AC.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L127", "quote": "Given today is 25 November 2026 in Asia/Kolkata (12 calendar months earlier is 25 November 2025)"},
+       {"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-03", "quote": "options: 12 calendar months, IST (proposed default) | 365 days"}
+     ],
+     "suggested_fix": "Add an AC whose window spans 29 Feb, e.g. today 1 March 2028 (12 calendar months earlier is 1 March 2027; 365 days earlier is 2 March 2027) and a last visit on 1 March 2027 local that must not be listed."},
+    {"id": "F-2", "severity": "major", "category": "correctness",
+     "text": "The filter keys on the latest Completed visit, but no S-2 AC has a patient with an old Completed and a recent Completed appointment who must be excluded; an 'any Completed older than 12 months' query passes all ACs.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L129", "quote": "patient P3 has a COMPLETED appointment on 1 January 2025 and a later NO_SHOW appointment on 1 October 2026"},
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-7", "quote": "only patients whose last visit was `more than 12 months ago`"}
+     ],
+     "suggested_fix": "Add an S-2 AC: patient with a COMPLETED appointment on 1 January 2025 and a later COMPLETED on 1 October 2026; with the filter on, the patient is not listed."},
+    {"id": "F-3", "severity": "major", "category": "correctness",
+     "text": "S-2 ACs set 'today' as a date with no instant; computing today from the UTC clock only differs between 00:00 and 05:30 IST, so a UTC-today implementation passes unless the clock instant is pinned.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L127", "quote": "Given today is 25 November 2026 in Asia/Kolkata"},
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-7", "quote": "is before the same calendar date 12 months before today"}
+     ],
+     "suggested_fix": "Pin now to an instant like 02:00 IST on 25 November 2026 (20:30 UTC on 24 November 2026) so a UTC-derived today (cutoff 24 Nov 2025) drops P1 and fails AC2."},
+    {"id": "F-4", "severity": "major", "category": "correctness",
+     "text": "S-3 AC1 and AC2 seed only not-seen patients, so an implementation where search or the status filter replaces the not-seen filter still passes; nothing shows the filter also narrows the search/status result.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L134", "quote": "Given two patients not seen for a year, only one of whose name matches the search text"},
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L135", "quote": "Given two patients not seen for a year, one of them Inactive"},
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-9", "quote": "both narrow the same result"}
+     ],
+     "suggested_fix": "Add to each fixture a patient seen recently who also matches the search text (AC1) or is Inactive (AC2), and assert that patient is not listed."},
+    {"id": "F-5", "severity": "major", "category": "correctness",
+     "text": "S-3 AC3 seeds only the 21 matching patients, so filtering after the page is fetched (in app code) passes; the AC cannot fail under that likely wrong implementation.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L136", "quote": "Given 21 patients not seen for a year, when staff turn the filter on, then page 1 lists 20 of them"}
+     ],
+     "suggested_fix": "Interleave recently seen patients by registration date (e.g. 21 not-seen among 30) and assert page 1 holds 20 not-seen patients and page 2 the 21st."},
+    {"id": "F-6", "severity": "major", "category": "completeness",
+     "text": "REQ-13 keeps the rest of the list unchanged, but no S-4 AC covers the existing search and status filter with the new filter off, though they share the changed list query.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-13", "quote": "The rest of the patient list, and every other page, is `unchanged`."},
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#claim:C1", "quote": "newest registration first, with search and a status filter"},
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L144", "quote": "then all patients are listed newest registration first at 20 per page, as before the change"}
+     ],
+     "suggested_fix": "Add S-4 ACs: with the not-seen filter off, search alone and the status filter alone return the same patients, including recently seen and never-visited ones, as before."},
+    {"id": "F-7", "severity": "minor", "category": "style",
+     "text": "S-4 AC2 and AC3 state the Then as 'as before the change' without naming the expected value, so the tester needs a baseline run to check them.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L143", "quote": "shows the same empty value as before the change"}
+     ],
+     "suggested_fix": "Name the current empty value and the current appointment format shown in the Next appointment column."},
+    {"id": "F-8", "severity": "minor", "category": "style",
+     "text": "S-1 AC4 gives months, not dates, so the expected Last visit date is not exact.",
+     "cites": [
+       {"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md#L121", "quote": "then the Last visit shows Dr B's name next to the June 2026 date"}
+     ],
+     "suggested_fix": "Use exact dates, e.g. 15 January 2026 and 10 June 2026, and assert 10 June 2026 with Dr B."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-2", "quote": "their latest appointment with status `COMPLETED`"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-01", "quote": "answer: Latest Completed (proposed default)"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "A past appointment the patient attended"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-3", "quote": "as the hospital-local date in `Asia/Kolkata`"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#claim:C5", "quote": "stored as [starts_at, ends_at) in `UTC`"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-03", "quote": "answer: 12 calendar months, IST (proposed default)"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/ide-answers.md#a-02", "quote": "answer: No, exclude (proposed default)"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-11", "quote": "the list still pages at `20 per page`"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#claim:C1", "quote": "newest registration first, with search and a status filter"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-14", "quote": "the list's `total` counts only the patients the filter keeps"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient."}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#claim:C9", "quote": "served by GET /api/patients in `api/src/routes/patients.ts`"}]}
+  ],
+  "questions": []
+}

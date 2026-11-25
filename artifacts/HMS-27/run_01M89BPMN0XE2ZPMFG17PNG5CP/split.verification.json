@@ -1,0 +1,87 @@
+{
+  "artifact_path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md",
+  "artifact_sha256": "efa0eb86240f1efdbc73ab8018bf51afffea9ba0a5df3508bba8b0920360543b",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "ec19965cd9cad864bdd35f79a0c53223f6b1545eded8080d547e59311e1f4ad3",
+  "claims": {
+    "total": 12,
+    "verified": 12
+  },
+  "decided_at": "2026-11-25T12:59:17Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "major"
+    },
+    {
+      "id": "F-4",
+      "severity": "major"
+    },
+    {
+      "id": "F-5",
+      "severity": "major"
+    },
+    {
+      "id": "F-6",
+      "severity": "major"
+    },
+    {
+      "id": "F-7",
+      "severity": "minor"
+    },
+    {
+      "id": "F-8",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md",
+      "sha256": "447d72cf313d2a06ab87a4c709878bfd9f923c28907519db3dd6997a343ec267",
+      "verification_sha256": "a769e823bbc6634a3aff5ec424dab6ba51f8ee697c47452de8b64fac15ae2b29"
+    }
+  ],
+  "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "d7a7885cdcce68d554fd27c18cba7fcd9e1c154b259c8a25a346f45b21af0680",
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.2,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "ciNUISCbBTrdLa9SsTounPGhSpJvGcs3CYY-T_8tkHYSi0HvrwCColUrJo60F5hS9OhsJrw4UokskRvm44RvCg",
+  "skill": "story-split@1.4.0",
+  "step": "split",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
