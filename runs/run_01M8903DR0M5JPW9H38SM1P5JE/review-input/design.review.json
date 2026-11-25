@@ -1,0 +1,82 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "eeb0b3c1c6b4fb9c71ccc4dea8418cd7c6a8a000c4bc1be6e3d2f30e60be062d",
+  "package_sha256": "454033bcea3b54a47206d7dd2a4632b7ddb0fa4b70e81478bc13944aa99a1546",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Built on existing AppointmentRepo, SUMMARY_SELECT, shared AppointmentTable and the client.ts boundary; all symbols exist in module-map; no new infrastructure."},
+    {"id": "DS-R2", "score": 5, "reason": "Every story S-1 to S-6 and its ACs are served by the components; opt-in prop keeps dashboard, doctor and patient tables unchanged. Story map slightly under-lists S-5 (minor)."},
+    {"id": "DS-R3", "score": 5, "reason": "EP-1 items[].cancellationReason has name, type, nullability, format and example; CO-2/CO-3 shapes and CO-5 prop, header, cut and dash rules are exact and testable."},
+    {"id": "DS-R4", "score": 4, "reason": "Choices cited or decided by A-02; but method names AppointmentRepo.list and api appointments() are stated as known while only their parent symbols are proven, and assumed is empty."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-offs given for separate list type, full reason in API, opt-in prop and code-point shortening."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear, consistent ids and story map."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Changed members AppointmentRepo.list and api.appointments() are only proven by their parent symbols (class AppointmentRepo, object api); the member names are stated as known with nothing Assumed.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/design.md#item:CO-4", "quote": "api client appointments() returns a page of AppointmentListItem"},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/design.md#item:CO-1", "quote": "AppointmentRepo.list returns the cancellation reason"},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/design.md#assumed", "quote": "assumed: []"}
+      ],
+      "suggested_fix": "Mark the list() and appointments() member names as Assumed with \"implement must confirm\", or cite a line fact that proves them."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "A-01 says the list API already returns cancellationReason, yet the design marks EP-1 changed and CO-2/CO-3 new without stating why the pinned-SHA facts contradict A-01's observation.",
+      "cites": [
+        {"ref": "runs/run_01M8903DR0M5JPW9H38SM1P5JE/ide-answers.md#a-01", "quote": "the list API already returns `cancellationReason`"},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/design.md#item:CO-2", "quote": "change: new"}
+      ],
+      "suggested_fix": "Add one line noting that module-map at the pinned SHA has no AppointmentListItem, so the A-01 observation came from a different checkout."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Story map lists S-5 only against CO-10 and EP-2 to EP-4, but S-5 AC2/AC3 also check the list's Cancellation reason cell, which needs EP-1 and CO-5.",
+      "cites": [
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/design.md#components", "quote": "S-5: CO-10, EP-2, EP-3, EP-4."},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#item:S-5", "quote": "the list then shows that reason in its Cancellation reason cell"}
+      ],
+      "suggested_fix": "Add EP-1 and CO-5 to the S-5 line of the story map."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/generated/api-inventory.json#L64", "quote": "\"path\": \"api/src/routes/appointments.ts\""}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L718", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L753", "quote": "sym:sample-system:api/src/repositories/appointmentRepo.ts:SUMMARY_SELECT"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L1258", "quote": "sym:sample-system:api/src/types.ts:AppointmentSummary"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L1872", "quote": "sym:sample-system:web/src/api/types.ts:AppointmentSummary"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L1814", "quote": "sym:sample-system:web/src/api/client.ts:api"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2087", "quote": "sym:sample-system:web/src/components/AppointmentTable.tsx:AppointmentTable"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2099", "quote": "sym:sample-system:web/src/components/AppointmentTable.tsx:Props"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2481", "quote": "sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2514", "quote": "sym:sample-system:web/src/pages/DashboardPage.tsx:DashboardPage"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2536", "quote": "sym:sample-system:web/src/pages/DoctorDetailPage.tsx:DoctorDetailPage"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2647", "quote": "sym:sample-system:web/src/pages/PatientDetailPage.tsx:PatientDetailPage"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L2437", "quote": "sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "context/generated/module-map.json#L1848", "quote": "sym:sample-system:web/src/api/types.ts:AppointmentDetail"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "context/generated/db-schema.json#L10", "quote": "column:appointment.cancellation_reason"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "runs/run_01M8903DR0M5JPW9H38SM1P5JE/ide-answers.md#a-02", "quote": "answer: cancellationReason, full (proposed default)"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-4", "quote": "A reason longer than `60` characters shows its first 60 characters"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-16", "quote": "`Verify existing` code against the other requirements and change only what is missing."}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]}
+  ],
+  "questions": []
+}
