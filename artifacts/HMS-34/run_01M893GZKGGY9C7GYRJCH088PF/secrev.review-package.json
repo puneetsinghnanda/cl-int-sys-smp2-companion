@@ -1,0 +1,84 @@
+{
+  "artifact_path": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/secrev.md",
+  "artifact_sha256": "6d7e1b36c7677817f61489b79cab2956a24c5761373bb2cb237e17b127940356",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "fb184d7c0bfca34264aff9ade6b4088a87b6440caf572f74dae2f62e58125df7",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "dependency-graph",
+      "included": true,
+      "path": "context/dependency-graph.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "change",
+      "path": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    }
+  ],
+  "package_sha256": "ae74f679b9963401c5d84810798bac16bbdcaad1187741969c8cac7ee9a503e3",
+  "prepared_at": "2026-11-25T11:25:50Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M893GZKGGY9C7GYRJCH088PF/review-input/secrev.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "SC-R1",
+        "weight": 0.35
+      },
+      {
+        "id": "SC-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "SC-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "SC-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "SC-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/secure-code-review/rubric.md",
+    "sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md"
+    },
+    {
+      "name": "open-questions",
+      "path": "runs/run_01M893GZKGGY9C7GYRJCH088PF/open-questions.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "secure-code-review@1.4.0",
+  "step": "secrev",
+  "truncated": false
+}

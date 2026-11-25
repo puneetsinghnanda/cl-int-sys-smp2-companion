@@ -1,0 +1,48 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "6d7e1b36c7677817f61489b79cab2956a24c5761373bb2cb237e17b127940356",
+  "package_sha256": "ae74f679b9963401c5d84810798bac16bbdcaad1187741969c8cac7ee9a503e3",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "No real weakness missed: no new route, all SQL in the diff parameterised, write routes keep requirePermission, guard still rejects closed statuses, job logs only an error string."},
+    {"id": "SC-R2", "score": 4, "reason": "Claims cite the exact product lines; C3 describes L16 as logging only err.message while the line also logs String(err) for non-Error values."},
+    {"id": "SC-R3", "score": 5, "reason": "No findings raised and none warranted; overall low risk rating matches the diff."},
+    {"id": "SC-R4", "score": 5, "reason": "Nothing to fix was found, so no fix direction is owed; the summary states the basis for each conclusion."},
+    {"id": "SC-R5", "score": 5, "reason": "No false alarms: the artifact reports no spurious issues."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "C3 says the job logs only err.message, but staleJob.ts L16 falls back to String(err) for non-Error throws, which can log an arbitrary value. Low impact here (pg errors are Error), but the claim overstates the code.",
+      "cites": [
+        {"ref": "sample-system:api/src/jobs/staleJob.ts#L16", "quote": "err instanceof Error ? err.message : String(err)"},
+        {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/secrev.md#claim:C3", "quote": "The job logs only the error message, `err.message`, with no request body or personal data"}
+      ],
+      "claim_ref": "C3",
+      "suggested_fix": "Reword C3 to note the String(err) fallback, or recommend logging a fixed text for non-Error values."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L167", "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L157", "quote": "status = 'SCHEDULED', updated_at = now(), updated_by = $4"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/jobs/staleJob.ts#L16", "quote": "console.error(`[stale-job] ${err instanceof Error ? err.message : String(err)}`);"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L36", "quote": "requirePermission('appointments:write'),"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "every permission is granted"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L147", "quote": "current.status !== 'SCHEDULED' && current.status !== 'STALE'"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M893GZKGGY9C7GYRJCH088PF/ide-answers.md#a-09", "quote": "answer: system (proposed default)"}]}
+  ],
+  "questions": []
+}
