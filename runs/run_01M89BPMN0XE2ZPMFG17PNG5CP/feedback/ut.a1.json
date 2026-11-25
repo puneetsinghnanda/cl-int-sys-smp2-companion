@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "lint exit 1; log runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/verifier/ut/a1/lint.log",
+      "id": "H3"
+    }
+  ],
+  "kind": "verifier",
+  "must_resolve": [
+    "H3"
+  ],
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

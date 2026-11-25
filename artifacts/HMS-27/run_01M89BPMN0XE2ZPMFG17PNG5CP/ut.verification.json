@@ -1,0 +1,70 @@
+{
+  "artifact_path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ut.md",
+  "artifact_sha256": "e7f7515ac53f41e9ef69e4c294686fa7914ae67af4584f2d13688cf511887f7f",
+  "attempt": 1,
+  "band": null,
+  "caps": [
+    "reviewer-missing"
+  ],
+  "checks_sha256": "86b4af208488018ad9cbfdf5c67fa5d6b497cd178db7a2ae0917ce9a98bd03b1",
+  "claims": {
+    "total": 8,
+    "verified": 8
+  },
+  "decided_at": "2026-11-25T13:32:44Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [],
+  "gate_failures": [
+    "H3"
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/impl.md",
+      "sha256": "2dabf579260515e7dff6115264f838e92ca1bcda9b1771e2d43e7a9436256b19",
+      "verification_sha256": "c40ce1d277a3332972c2f352860eab0f57bd93b4c0cca3283a7690a29e3b691c"
+    },
+    {
+      "path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md",
+      "sha256": "3f92b6f319ce0bc8d22bd48258fa93ea3a73480096486aaa8646237ad43331b4",
+      "verification_sha256": "dd73c7f8e49e9a2338b0a2e565262f24c24b898646111b401693f2a6e6beffeb"
+    }
+  ],
+  "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "a003fb3b8593ef6537cf59d5abda205f1d02fe62",
+      "diff_sha256": "de6f99a6a6df42dd0948a02f2a7a97d21125b3f230474d60d9bf26127db5ac85",
+      "repo": "sample-system",
+      "tree_sha": "cf7780e354e64c2a1eb303263006c8b2bc37a7a3"
+    }
+  ],
+  "review_sha256": "fb34ca891c704cfaaa6478cb3a19bf2fbaa2953a5db5fee19749cea1da059b37",
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": null,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 3,
+      "lines": 320,
+      "sensitive": false
+    }
+  },
+  "signature": "xLRkvKsRPadOpvIRvx_RhEIIZ9OyhFzjOTY30B4NjZ5vuVwCcjMNNhEJWODR37jNKQAtQteVRU2LZoe7HRjdDQ",
+  "skill": "unit-test@1.3.0",
+  "step": "ut",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
