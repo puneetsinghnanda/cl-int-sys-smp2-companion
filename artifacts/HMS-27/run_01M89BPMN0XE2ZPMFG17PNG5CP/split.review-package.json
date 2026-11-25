@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/split.md",
-  "artifact_sha256": "efa0eb86240f1efdbc73ab8018bf51afffea9ba0a5df3508bba8b0920360543b",
-  "attempt": 1,
+  "artifact_sha256": "3f92b6f319ce0bc8d22bd48258fa93ea3a73480096486aaa8646237ad43331b4",
+  "attempt": 2,
   "budget_tokens": 15000,
-  "checks_sha256": "ec19965cd9cad864bdd35f79a0c53223f6b1545eded8080d547e59311e1f4ad3",
+  "checks_sha256": "378aa9aefff8d9bc170607b8d3b632100fb829a6a6a4b6a67b27e6f36c9acccd",
   "context_sections": [
     {
       "id": "glossary",
@@ -21,10 +21,43 @@
       "path": "context/glossary.md"
     }
   ],
-  "package_sha256": "a490432f1dcefb152c859aca0cb25e1ce0b8d335c3e06bed4d436c15d4503b17",
-  "prepared_at": "2026-11-25T12:57:16Z",
+  "package_sha256": "7b5f71b0a690fd28ed505ddb6dd4f4eb4ebf9e7a981cfb77ab6c773e346b7dca",
+  "prepared_at": "2026-11-25T13:00:59Z",
   "prepared_by": "tsl@0.1.7",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "major"
+    },
+    {
+      "id": "F-4",
+      "severity": "major"
+    },
+    {
+      "id": "F-5",
+      "severity": "major"
+    },
+    {
+      "id": "F-6",
+      "severity": "major"
+    },
+    {
+      "id": "F-7",
+      "severity": "minor"
+    },
+    {
+      "id": "F-8",
+      "severity": "minor"
+    }
+  ],
   "review_input_path": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/review-input/split.review.json",
   "rubric": {
     "items": [
