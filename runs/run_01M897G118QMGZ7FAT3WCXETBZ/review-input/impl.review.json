@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "step": "impl",
-  "attempt": 1,
-  "artifact_sha256": "d287533b430f0cac344f5992b96231833bdf3a9ff159152a69adc984adfc31c5",
-  "package_sha256": "013abf2f3f3f33134afee1161d8a1745e874676f536061645cfda08a969385a9",
+  "attempt": 2,
+  "artifact_sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+  "package_sha256": "fb1ea171bd6dda23e0571f68b71ef37b4ef587ea7683a90deb59b3509cc4411e",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -14,26 +14,13 @@
   },
   "rubric_score": 4.8,
   "rubric_items": [
-    {"id": "IM-R1", "score": 5, "reason": "CO-1 to CO-10 are each present in the product files as designed; CO-11 and CO-12 correctly need no product change. The CO-1 default-name assumption is left to the verifier, not confirmed (minor F-1)."},
-    {"id": "IM-R2", "score": 5, "reason": "New timestamped migration, no edit to the merged one; SQL stays in the repo, rules in the service; the job logs only the error message, per the logging convention."},
-    {"id": "IM-R3", "score": 5, "reason": "Ten files, all named by design components; no unrelated edits found."},
-    {"id": "IM-R4", "score": 4, "reason": "Job errors are caught and logged by message; markStale is one transaction and only touches SCHEDULED rows. The interval has no in-flight guard against overlapping runs, which is harmless given the WHERE clause."},
-    {"id": "IM-R5", "score": 5, "reason": "The Changes list matches the files in code.files and what each file now contains."}
+    {"id": "IM-R1", "score": 5, "reason": "CO-1 to CO-10 are each present in the product files as designed; CO-11 and CO-12 correctly need no product change. CO-1's default CHECK names are now confirmed from the unnamed column constraints, as the design asked."},
+    {"id": "IM-R2", "score": 5, "reason": "New timestamped migration, merged one untouched; SQL in the repo, rules in the service, helper DAY_MS from lib/time; the job logs only the error message, per the logging convention."},
+    {"id": "IM-R3", "score": 5, "reason": "Ten files, all named by design components; head_sha unchanged from attempt 1, only the artifact text changed. No unrelated edits."},
+    {"id": "IM-R4", "score": 4, "reason": "Job errors are caught and logged by message; markStale is one transaction and only touches SCHEDULED rows; scheduled() keeps its 404/409 guards. No in-flight guard against overlapping hourly runs, harmless given the WHERE clause."},
+    {"id": "IM-R5", "score": 5, "reason": "Changes list matches code.files and what each file contains; F-1 resolution is stated and backed by C13 to C15."}
   ],
-  "findings": [
-    {
-      "id": "F-1",
-      "severity": "minor",
-      "category": "traceability",
-      "text": "Design asks implement to confirm the default CHECK names for CO-1, but the artifact keeps it assumed and defers to the verifier's migrate run. The names follow Postgres's <table>_<column>_check rule for the unnamed column CHECKs, so they could be marked known.",
-      "cites": [
-        {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#assumed", "quote": "implement must confirm, and the verifier's migrate run proves it"},
-        {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md#assumed", "quote": "the verifier's migrate run will prove or refute it"},
-        {"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10", "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))"}
-      ],
-      "suggested_fix": "State that the column CHECKs are unnamed, so Postgres names them appointment_status_check and appointment_event_event_check, and move CO-1 to known; or keep it assumed but explicitly say implement checked the naming rule."
-    }
-  ],
+  "findings": [],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L5", "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW', 'STALE'));"}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L4", "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW' | 'STALE';"}]},
@@ -46,7 +33,10 @@
     {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L45", "quote": "const scheduled = a.status === 'SCHEDULED' || a.status === 'STALE';"}, {"ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L19", "quote": "STALE: 'Marked stale',"}]},
     {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/styles.css#L81", "quote": ".badge-stale { background: var(--warning-bg); color: #8a4b00; }"}]},
     {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-11", "quote": "answer: Context pack, glossary owner (proposed default)"}]},
-    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L9", "quote": "export const DAY_MS = 24 * 60 * MINUTE;"}]}
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L9", "quote": "export const DAY_MS = 24 * 60 * MINUTE;"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10", "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW')),"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35", "quote": "event            text NOT NULL CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW')),"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L3", "quote": "ALTER TABLE appointment DROP CONSTRAINT appointment_status_check;"}]}
   ],
   "questions": []
 }

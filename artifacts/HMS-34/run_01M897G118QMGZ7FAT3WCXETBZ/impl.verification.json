@@ -1,24 +1,18 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md",
-  "artifact_sha256": "d287533b430f0cac344f5992b96231833bdf3a9ff159152a69adc984adfc31c5",
-  "attempt": 1,
+  "artifact_sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+  "attempt": 2,
   "band": "Low",
   "caps": [],
-  "checks_sha256": "79698b020c2e41e64a8437c0f5cf647e2752979eb9ab00022f984b5bffd76fd6",
+  "checks_sha256": "82af1e1f60581cb4f98a7effa0612f7fd5f0b8ba56682d155a39acaf355ae30c",
   "claims": {
-    "total": 12,
-    "verified": 12
+    "total": 15,
+    "verified": 15
   },
-  "decided_at": "2026-11-25T12:00:30Z",
+  "decided_at": "2026-11-25T12:06:21Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
-  "findings_kept": [
-    {
-      "id": "F-1",
-      "raised_from": "minor",
-      "severity": "major"
-    }
-  ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [
     {
@@ -33,7 +27,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "ESCALATE",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -41,7 +35,7 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "cd548c8db3a94b84b7c12141a99c1137a8b2db4b8883bb17eaf18b7419b70d5c",
   "product_changes": [
     {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
@@ -50,7 +44,7 @@
       "tree_sha": "30e1ae83cc2e977edaf388a90520ee465086e671"
     }
   ],
-  "review_sha256": "f163f4eef92767251565023c3eb761456885770d26bc41ddc8f2790a73b37b0c",
+  "review_sha256": "cdb2412c4d9cf1fefc5fd307f28603cce3250ba5ff826ae5cf6497c1ba90d494",
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "schema": "verification.v1",
   "signals": {
@@ -65,7 +59,7 @@
       "sensitive": true
     }
   },
-  "signature": "t_sYs70VQDajwbB8eAOu7YR0-lGVzkcAJ-FVS1x18FXCjYhF8ygZZrPlUcgARZj3xFQNFR1jOmVWbv8afa0mAQ",
+  "signature": "kO2H12N5bFMz6pn7gLtb4ElcW_tsAuXC0C2d0Mj7IaBBSFNul9l_jbEIIxSQFQC9ON0BDvtlr_wRr5_qtd4iBg",
   "skill": "implement@1.4.0",
   "step": "impl",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

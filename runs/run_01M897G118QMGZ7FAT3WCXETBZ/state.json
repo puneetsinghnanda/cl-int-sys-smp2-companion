@@ -14,8 +14,24 @@
   "created_at": "2026-11-25T11:29:45Z",
   "cursor": null,
   "end_reason": null,
-  "gates": [],
-  "heartbeat_at": "2026-11-25T12:00:30Z",
+  "gates": [
+    {
+      "approver_key": null,
+      "artifacts": [
+        {
+          "sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+          "step": "impl"
+        }
+      ],
+      "decided_at": null,
+      "decision": null,
+      "id": "G-escalate-impl-a2",
+      "kind": "escalate",
+      "status": "WAITING_APPROVAL",
+      "step": "impl"
+    }
+  ],
+  "heartbeat_at": "2026-11-25T12:06:21Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -53,10 +69,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 22,
+  "rev": 25,
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "PAUSED_APPROVAL",
   "steps": [
     {
       "attempts": [
@@ -210,7 +226,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md",
+          "artifact": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/history/impl/a1/impl.md",
           "artifact_sha256": "d287533b430f0cac344f5992b96231833bdf3a9ff159152a69adc984adfc31c5",
           "band": "Low",
           "cause": "first",
@@ -230,10 +246,37 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.verification.json",
+          "record": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/history/impl/a1/impl.verification.json",
           "skill": "implement@1.4.0",
           "skill_started_at": "2026-11-25T11:55:48Z",
           "started_at": "2026-11-25T11:53:18Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md",
+          "artifact_sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+          "band": "Low",
+          "cause": "retry_review",
+          "decided_at": "2026-11-25T12:06:21Z",
+          "feedback": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/feedback/impl.a1.json",
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "2d5f15910d589f957c292a1b33bfdf53a18216ca5a639a9e05cacd5da8a6e4a8",
+              "step": "design"
+            },
+            {
+              "name": "stories",
+              "sha256": "cb0b1c68ceef02d6fb6550506b35cd99814cb26aded4e14a0ff8670de9a0a06a",
+              "step": "split"
+            }
+          ],
+          "n": 2,
+          "outcome": "ESCALATE",
+          "record": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.verification.json",
+          "skill": "implement@1.4.0",
+          "skill_started_at": "2026-11-25T12:00:55Z",
+          "started_at": "2026-11-25T12:00:44Z"
         }
       ],
       "budget_used": {
@@ -244,7 +287,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "WAITING_APPROVAL"
     },
     {
       "attempts": [],
@@ -279,7 +322,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T12:00:30Z",
+  "updated_at": "2026-11-25T12:06:21Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }

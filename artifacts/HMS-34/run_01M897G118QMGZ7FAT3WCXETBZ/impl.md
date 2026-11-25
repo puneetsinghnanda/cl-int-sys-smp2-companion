@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M897G118QMGZ7FAT3WCXETBZ
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.4.0
 inputs:
   - path: artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md
@@ -15,6 +15,9 @@ inputs:
     sha256: 4158c8fcd239c22cb8f1029dd11f61d8839867ff8088bd9ab76197e2db96db4b
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "CO-1 is now known: the unnamed column CHECKs take the Postgres name table_column_check, which the migration uses."
 claims:
   - id: C1
     text: "The new `Migration adding STALE to both status CHECKs` is built as CO-1 asks."
@@ -52,9 +55,18 @@ claims:
   - id: C12
     text: "The cutoff uses the existing constant `DAY_MS = 24 * 60 * MINUTE` from lib/time."
     cites: ["sample-system:api/src/lib/time.ts#L9"]
+  - id: C13
+    text: "The status CHECK is an unnamed column constraint, `CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))`, so Postgres names it appointment_status_check."
+    cites: ["sample-system:db/migrations/20261016T090300__create_appointments.sql#L10"]
+  - id: C14
+    text: "The event CHECK is an unnamed column constraint, `CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))`, so Postgres names it appointment_event_event_check."
+    cites: ["sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"]
+  - id: C15
+    text: "The new migration drops `appointment_status_check` by that name."
+    cites: ["sample-system:db/migrations/20261125T120000__add_stale_status.sql#L3"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-16]
-known: [S-1, S-2, S-3, S-4, S-5, S-7]
-assumed: [CO-1]
+known: [S-1, S-2, S-3, S-4, S-5, S-7, CO-1]
+assumed: []
 unknown: []
 questions: []
 code:
@@ -87,6 +99,9 @@ The change builds design CO-1 to CO-10 (C1 to C10) and nothing more.
 
 CO-11 needs no change. CO-12, the glossary entry for S-6/REQ-15, is made in the context pack and is outside this diff (C11). No tests were added: the design names no regression tests, and broad tests are the unit-test step's job.
 
+Resolved from review:
+- F-1: CO-1 is now known: the unnamed column CHECKs take the Postgres name table_column_check, which the migration uses.
+
 ## Changes
 - db/migrations/20261125T120000__add_stale_status.sql (new): CO-1, adds STALE to the appointment status CHECK and the appointment_event event CHECK.
 - api/src/types.ts: CO-2, adds STALE to AppointmentStatus and APPOINTMENT_STATUSES.
@@ -106,9 +121,10 @@ CO-11 needs no change. CO-12, the glossary entry for S-6/REQ-15, is made in the 
 - S-4: reschedule from STALE sets SCHEDULED (CO-3, CO-4, CO-9).
 - S-5: the STATUS_LABEL entry feeds the badge and the list filter; the dashboard is unchanged (CO-7, CO-8, CO-10).
 - S-7: the patient page table shows the new label through STATUS_LABEL; the doctor page query is unchanged (CO-8).
+- CO-1: confirmed. Both CHECKs are unnamed column constraints (C13, C14), which Postgres names table_column_check, and the migration drops them by those names (C15).
 
 ## Assumed
-- CO-1: the migration drops the CHECKs by the Postgres default names appointment_status_check and appointment_event_event_check. The design took this from the user's confirmation; the verifier's migrate run will prove or refute it.
+None.
 
 ## Unknown
 None.

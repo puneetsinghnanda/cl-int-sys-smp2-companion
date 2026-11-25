@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "d287533b430f0cac344f5992b96231833bdf3a9ff159152a69adc984adfc31c5",
-  "attempt": 1,
+  "artifact_sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -141,34 +141,42 @@
       ],
       "claim_id": "C12",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "traceability",
       "cites": [
         {
-          "quote": "implement must confirm, and the verifier's migrate run proves it",
-          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#assumed"
-        },
-        {
-          "quote": "the verifier's migrate run will prove or refute it",
-          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md#assumed"
-        },
-        {
-          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))",
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW')),",
           "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10"
         }
       ],
-      "id": "F-1",
-      "severity": "minor",
-      "suggested_fix": "State that the column CHECKs are unnamed, so Postgres names them appointment_status_check and appointment_event_event_check, and move CO-1 to known; or keep it assumed but explicitly say implement checked the naming rule.",
-      "text": "Design asks implement to confirm the default CHECK names for CO-1, but the artifact keeps it assumed and defers to the verifier's migrate run. The names follow Postgres's <table>_<column>_check rule for the unnamed column CHECKs, so they could be marked known."
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "event            text NOT NULL CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW')),",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ALTER TABLE appointment DROP CONSTRAINT appointment_status_check;",
+          "ref": "sample-system:db/migrations/20261125T120000__add_stale_status.sql#L3"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
     }
   ],
-  "package_sha256": "013abf2f3f3f33134afee1161d8a1745e874676f536061645cfda08a969385a9",
+  "findings": [],
+  "package_sha256": "fb1ea171bd6dda23e0571f68b71ef37b4ef587ea7683a90deb59b3509cc4411e",
   "questions": [],
-  "recorded_at": "2026-11-25T12:00:27Z",
+  "recorded_at": "2026-11-25T12:06:19Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -179,27 +187,27 @@
   "rubric_items": [
     {
       "id": "IM-R1",
-      "reason": "CO-1 to CO-10 are each present in the product files as designed; CO-11 and CO-12 correctly need no product change. The CO-1 default-name assumption is left to the verifier, not confirmed (minor F-1).",
+      "reason": "CO-1 to CO-10 are each present in the product files as designed; CO-11 and CO-12 correctly need no product change. CO-1's default CHECK names are now confirmed from the unnamed column constraints, as the design asked.",
       "score": 5
     },
     {
       "id": "IM-R2",
-      "reason": "New timestamped migration, no edit to the merged one; SQL stays in the repo, rules in the service; the job logs only the error message, per the logging convention.",
+      "reason": "New timestamped migration, merged one untouched; SQL in the repo, rules in the service, helper DAY_MS from lib/time; the job logs only the error message, per the logging convention.",
       "score": 5
     },
     {
       "id": "IM-R3",
-      "reason": "Ten files, all named by design components; no unrelated edits found.",
+      "reason": "Ten files, all named by design components; head_sha unchanged from attempt 1, only the artifact text changed. No unrelated edits.",
       "score": 5
     },
     {
       "id": "IM-R4",
-      "reason": "Job errors are caught and logged by message; markStale is one transaction and only touches SCHEDULED rows. The interval has no in-flight guard against overlapping runs, which is harmless given the WHERE clause.",
+      "reason": "Job errors are caught and logged by message; markStale is one transaction and only touches SCHEDULED rows; scheduled() keeps its 404/409 guards. No in-flight guard against overlapping hourly runs, harmless given the WHERE clause.",
       "score": 4
     },
     {
       "id": "IM-R5",
-      "reason": "The Changes list matches the files in code.files and what each file now contains.",
+      "reason": "Changes list matches code.files and what each file contains; F-1 resolution is stated and backed by C13 to C15.",
       "score": 5
     }
   ],

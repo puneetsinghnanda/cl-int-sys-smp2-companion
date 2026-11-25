@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "d287533b430f0cac344f5992b96231833bdf3a9ff159152a69adc984adfc31c5",
-  "attempt": 1,
-  "finished_at": "2026-11-25T11:58:27Z",
+  "artifact_sha256": "cb0d95bc7f6acc19c5972731cefe7bd1eeddb4d512ad74a15273a44f7ba4ec27",
+  "attempt": 2,
+  "finished_at": "2026-11-25T12:03:59Z",
   "gates": [
     {
       "codes": [],
@@ -99,44 +99,44 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-25T11:56:43Z",
+  "started_at": "2026-11-25T12:01:42Z",
   "step": "impl",
-  "tool_log_sha256": "0d5f9cf10a87e01cb84b5f8bf64e1b3d087193b218aa30d7f324637c028a8eea",
+  "tool_log_sha256": "56a09d361cfb03a702d01c4789489eeb8ce9db82b895977d3a5bede9c3c4eb1f",
   "tsl_version": "0.1.7",
   "verifier": {
     "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
     "profile": "node-22@1",
     "steps": [
       {
-        "duration_ms": 12170,
+        "duration_ms": 11077,
         "exit_code": 0,
         "name": "build",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 21438,
+        "duration_ms": 22468,
         "exit_code": 0,
         "name": "test",
         "report_sha256": null,
         "status": "pass"
       },
       {
-        "duration_ms": 4921,
+        "duration_ms": 7047,
         "exit_code": 0,
         "name": "lint",
         "report_sha256": "c3457e6686276737b6c1909f56f1c2998040497f7efbf98242226af7fb9e0148",
         "status": "pass"
       },
       {
-        "duration_ms": 33844,
+        "duration_ms": 66500,
         "exit_code": 0,
         "name": "sast",
-        "report_sha256": "05bf1556c0e5224b7053abd60ef5ae01f5ff5c96df8845721e7b28b18ace9376",
+        "report_sha256": "56307c55cdd702b9ca48d1116ddb8b41322d8a3fb3ff3d7672e8ab8edf57e8dc",
         "status": "pass"
       },
       {
-        "duration_ms": 1156,
+        "duration_ms": 3046,
         "exit_code": 0,
         "name": "secrets",
         "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
