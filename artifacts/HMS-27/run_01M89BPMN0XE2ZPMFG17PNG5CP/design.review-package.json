@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/design.md",
-  "artifact_sha256": "1431d2b13ebcb2ec008e76975e27b0b2cef14a7f211fd0977d32586a2385caf9",
-  "attempt": 1,
+  "artifact_sha256": "9ec492060a643e697a01e4ddc48ebc0977bfdbd2103b3852f0d3eeeef01f6a1d",
+  "attempt": 2,
   "budget_tokens": 30000,
-  "checks_sha256": "bb5344009cc7902dd4e760810ef8737e024c8cb04193fa836ee95ca80be41d06",
+  "checks_sha256": "7b4fc09b69f084772cd141e105ab507ca5d4ed70494bacf5611620ffe41bfe73",
   "context_sections": [
     {
       "id": "architecture",
@@ -52,10 +52,31 @@
       "path": "context/generated/api-inventory.json"
     }
   ],
-  "package_sha256": "267f9bcc088603f08de56928128111ee4f604f445fb55139f7b927135f7ac4f3",
-  "prepared_at": "2026-11-25T13:12:43Z",
+  "package_sha256": "c28961275489e5f10c27d6d7a2e0152de64081e43e62d887b4f4a188fe755ccc",
+  "prepared_at": "2026-11-25T13:16:56Z",
   "prepared_by": "tsl@0.1.7",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
   "review_input_path": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/review-input/design.review.json",
   "rubric": {
     "items": [
