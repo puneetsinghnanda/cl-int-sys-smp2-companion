@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M89M2JW0X6H7Q7W6EJQ53R4B
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ticket.md
@@ -29,6 +29,9 @@ claims:
   - id: C5
     text: "A Completed appointment is closed by staff once its `start time` has passed."
     cites: ["context/glossary.md#completed"]
+  - id: C6
+    text: "The glossary defines Cancelled as `called off before it took place`."
+    cites: ["context/glossary.md#cancelled"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
 assumed: []
@@ -86,7 +89,7 @@ requirements:
     title: Staff can cancel a Stale appointment
     type: functional
     status: known
-    statement: "Staff can still cancel a Stale appointment `with a reason`."
+    statement: "Staff can still cancel a Stale appointment `with a reason`, although its start time has passed."
     cites: ["context/glossary.md#cancelled", "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-03"]
   - id: REQ-10
     title: Staff can reschedule a Stale appointment
@@ -149,8 +152,8 @@ answers:
     answer: "Staff can still close or reschedule it (proposed default)"
     requirements: [REQ-7, REQ-8, REQ-9, REQ-10]
     mismatch:
-      text: "The glossary says only Scheduled appointments can change; the user decided staff can still close or reschedule a Stale appointment."
-      cites: ["context/glossary.md#scheduled"]
+      text: "The glossary says only Scheduled appointments can change and defines Cancelled as called off before it took place; the user decided staff can still close (including cancel) or reschedule a Stale appointment, whose start time has passed."
+      cites: ["context/glossary.md#scheduled", "context/glossary.md#cancelled"]
   - id: A-04
     kind: question
     about: Q-04
@@ -161,6 +164,9 @@ answers:
     about: REQ-6
     answer: "Yes, confirm"
     requirements: [REQ-6, REQ-16]
+    mismatch:
+      text: "The glossary defines Cancelled as called off before it took place; the user confirmed that an appointment cancelled within the one day after its start time is not marked Stale, so such a cancellation happens after the start time."
+      cites: ["context/glossary.md#cancelled"]
   - id: A-06
     kind: assumption
     about: REQ-11
@@ -186,9 +192,10 @@ glossary:
 HMS-34 adds an appointment state Stale for Scheduled appointments whose time is past and that were
 neither marked Completed nor rescheduled within one day. The user decided an automatic background job
 marks them, 24h after the start time. Stale only flags that the appointment needs attention: staff can
-still close it or reschedule it, and a rescheduled one is Scheduled again. The main risk is that Stale
+still close it or reschedule it, and a rescheduled one is Scheduled again. The main risks are that Stale
 is a state that can still change, unlike the existing closed states (C3), which departs from the
-glossary rule that only Scheduled appointments can change (C2).
+glossary rule that only Scheduled appointments can change (C2), and that cancelling after the start
+time departs from the glossary's definition of Cancelled (C6); both are recorded as mismatches.
 
 ## Requirements
 - REQ-1 New appointment state Stale (known): appointments have a new state Stale.
@@ -199,7 +206,7 @@ glossary rule that only Scheduled appointments can change (C2).
 - REQ-6 Cancelled within the day is not Stale (known): no longer Scheduled.
 - REQ-7 Staff can mark a Stale appointment Completed (known).
 - REQ-8 Staff can mark a Stale appointment No-show (known).
-- REQ-9 Staff can cancel a Stale appointment with a reason (known).
+- REQ-9 Staff can cancel a Stale appointment with a reason, although its start time has passed (known).
 - REQ-10 Staff can reschedule a Stale appointment (known).
 - REQ-11 A rescheduled Stale appointment becomes Scheduled at its new time (known).
 - REQ-12 Stale shows as the status label wherever a status shows (known).
@@ -230,9 +237,9 @@ None open.
 Answered in the IDE:
 - A-01 (Q-01, who or what marks Stale): "Automatic job (proposed default)", answered by eng-dbe4; decides REQ-3.
 - A-02 (Q-02, when the one day is counted from): "24h after start time (proposed default)", answered by eng-dbe4; decides REQ-2, REQ-4, REQ-5.
-- A-03 (Q-03, can Stale change afterwards): "Staff can still close or reschedule it (proposed default)", answered by eng-dbe4; decides REQ-7 to REQ-10. Mismatch: the glossary says only Scheduled appointments can change; the user decided staff can still close or reschedule a Stale appointment.
+- A-03 (Q-03, can Stale change afterwards): "Staff can still close or reschedule it (proposed default)", answered by eng-dbe4; decides REQ-7 to REQ-10. Mismatch: the glossary says only Scheduled appointments can change and defines Cancelled as called off before it took place; the user decided staff can still close (including cancel) or reschedule a Stale appointment, whose start time has passed.
 - A-04 (Q-04, where Stale shows): "Wherever status shows (proposed default)", answered by eng-dbe4; decides REQ-12, REQ-13, REQ-14.
-- A-05 (REQ-6 assumption, cancelled or No-show within the day is not Stale): "Yes, confirm", answered by eng-dbe4; decides REQ-6 and REQ-16.
+- A-05 (REQ-6 assumption, cancelled or No-show within the day is not Stale): "Yes, confirm", answered by eng-dbe4; decides REQ-6 and REQ-16. Mismatch: the glossary defines Cancelled as called off before it took place; the user confirmed that an appointment cancelled within the one day after its start time is not marked Stale, so such a cancellation happens after the start time.
 - A-06 (REQ-11 assumption that a rescheduled Stale appointment is Scheduled again): "Yes, confirm", answered by eng-dbe4; decides REQ-11.
 - A-07 (Q-05, glossary entry): "Add entry from REQ-2 (proposed default)", answered by eng-dbe4; decides REQ-15.
 

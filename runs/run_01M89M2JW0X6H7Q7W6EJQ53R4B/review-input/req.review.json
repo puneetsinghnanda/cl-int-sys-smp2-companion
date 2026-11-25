@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
   "step": "req",
-  "attempt": 1,
-  "artifact_sha256": "8e1c9de8fef3dcee138e432ceff8d07861d099ba6d0e707b90ba4a65e374cfae",
-  "package_sha256": "0201a0d6bbb57ed3ffc06fcf419e05a5a2d0d8b0e1e3f3a55269aad892400070",
+  "attempt": 2,
+  "artifact_sha256": "a8bbff4d030d3399dda032db1075102c75ad2b3cc130090a3aa204af163da300",
+  "package_sha256": "cf2f529e4f3ea28a485555a51bd4a98079e1f52dc61b00d3ff9e7e580da46c56",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,35 +12,24 @@
     "version": "0.1.7",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 4.2,
+  "rubric_score": 4.75,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "All four ticket acceptance criteria map to REQ-1, REQ-2, REQ-4, REQ-5; job cadence is listed under Out of scope with a reason."},
-    {"id": "RR-R2", "score": 4, "reason": "REQs are atomic; REQ-6 and REQ-16 use the vague 'within the one day' instead of the 24h-after-start rule fixed by A-02."},
-    {"id": "RR-R3", "score": 4, "reason": "Every REQ cites the ticket or an IDE answer; REQ-9 (cancel a Stale appointment) reads 'cancel' into A-03's 'close', which is a stretch given the Cancelled definition."},
-    {"id": "RR-R4", "score": 3, "reason": "The Scheduled-only-can-change clash was asked (A-03) with a mismatch; the clash with the glossary Cancelled definition (before it took place) was not raised."},
-    {"id": "RR-R5", "score": 5, "reason": "Questions had real options and defaults, were answered in the IDE, and Q-05 was correctly non-blocking."},
-    {"id": "RR-R6", "score": 4, "reason": "Plain and readable; glossary terms used consistently, with 'reschedule (move)' bridged to the glossary wording."}
+    {"id": "RR-R1", "score": 5, "reason": "All four ticket acceptance criteria map to REQ-1, REQ-2, REQ-4, REQ-5; job cadence is under Out of scope with a reason."},
+    {"id": "RR-R2", "score": 4, "reason": "REQs are atomic and checkable; REQ-6 and REQ-16 still say 'within the one day' instead of the 24h-after-start window fixed by A-02 (prior F-2 not fixed)."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites the ticket or an IDE answer that says what the REQ states; nothing invented."},
+    {"id": "RR-R4", "score": 5, "reason": "Prior F-1 resolved: the Cancelled-before-it-took-place clash is now recorded as a mismatch on A-03 and A-05 citing the glossary, and REQ-9 states the start time has passed."},
+    {"id": "RR-R5", "score": 5, "reason": "Questions were answered in the IDE with real options and defaults; Q-05 was non-blocking; nothing left open needlessly."},
+    {"id": "RR-R6", "score": 4, "reason": "Plain and readable; glossary terms used consistently; minor wording drift on the one-day window in REQ-6/REQ-16."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "consistency",
-      "text": "REQ-9 lets staff cancel a Stale appointment (at least 24h past start) and REQ-6 cancels past appointments, but the glossary defines Cancelled as called off before it took place. This clash is not asked or recorded as a mismatch.",
-      "cites": [
-        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/req.md#item:REQ-9", "quote": "Staff can still cancel a Stale appointment `with a reason`."},
-        {"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"},
-        {"ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-03", "quote": "answer: Staff can still close or reschedule it (proposed default)"}
-      ],
-      "suggested_fix": "Ask whether cancelling a past/Stale appointment is allowed despite glossary#cancelled, citing both sides; or record it in A-03's mismatch if the user confirms."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
       "category": "style",
-      "text": "REQ-6 and REQ-16 say 'within the one day' while A-02 fixed the window as 24h after the start time, as REQ-4 and REQ-5 state.",
+      "text": "Carried from attempt 1 (F-2), not fixed: REQ-6 and REQ-16 say 'within the one day' while A-02 fixed the window as 24h after the start time, as REQ-4 and REQ-5 state.",
       "cites": [
         {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/req.md#item:REQ-6", "quote": "An appointment cancelled within the one day is no longer `Scheduled` and is not marked Stale."},
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/req.md#item:REQ-16", "quote": "An appointment marked No-show within the one day is no longer `Scheduled` and is not marked Stale."},
         {"ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-02", "quote": "answer: 24h after start time (proposed default)"}
       ],
       "suggested_fix": "Word REQ-6 and REQ-16 as 'within 24h after its start time'."
@@ -51,7 +40,8 @@
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/glossary.md#scheduled", "quote": "Only Scheduled appointments can change."}]},
     {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed, Cancelled and No-show"}]},
     {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/glossary.md#front-desk-staff", "quote": "book, move and close appointments"}]},
-    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "closed by staff once its start time has passed"}]}
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#completed", "quote": "closed by staff once its start time has passed"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place"}]}
   ],
   "questions": []
 }
