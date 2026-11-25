@@ -1,0 +1,161 @@
+{
+  "artifact_sha256": "2049a7a96e5eda492266815d4b0ebc0bd34a23a0de1df16060cfe0bfddf757fa",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('patients:read'),",
+          "ref": "sample-system:api/src/routes/patients.ts#L12"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "f.oneOf('not_seen', ['true', 'false'] as const) === 'true'",
+          "ref": "sample-system:api/src/services/patientService.ts#L35"
+        },
+        {
+          "quote": "if (!values.includes(v)) return this.fail(name",
+          "ref": "sample-system:api/src/lib/validate.ts#L65"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "where.push(`${LAST_VISIT_AT} < ${p(f.lastVisitBefore)}`)",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L132"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const LAST_VISIT_AT = `(SELECT max(a.starts_at) FROM appointment a",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L30"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "SELECT a.starts_at, d.full_name AS doctor_name",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L150"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "// PAT-8: the list query never selects medical history columns.",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L44"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only, never request bodies",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "p.last_visit.doctor_name}` : 'Never'",
+          "ref": "sample-system:web/src/pages/PatientsPage.tsx#L96"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Both verifier scans are attached by hash, unchanged",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/secrev.md#summary"
+        },
+        {
+          "quote": "Ran 261 rules on 110 files: 4 findings.",
+          "ref": "runs/run_01M89BPMN0XE2ZPMFG17PNG5CP/verifier/impl/a2/sast.log#L32"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State the scan results: secrets 0 findings; SAST 4 findings, all in files this change does not touch (ci.yml, codes.ts, errorHandler.ts), so none comes from HMS-27. Say what 'unchanged' is compared against.",
+      "text": "The scans line only says the reports are attached by hash and 'unchanged'. It does not say that SAST reported 4 results (CI action tags, codes.ts regexp, errorHandler format string), all pre-existing and none in the changed files, so readers cannot tell the scan outcome."
+    }
+  ],
+  "package_sha256": "d0e0d5d83b69f459a925ed0fb279fa5eebf1e6042612fd99015edabc1ab3a3fc",
+  "questions": [],
+  "recorded_at": "2026-11-25T13:41:47Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "Route auth, input allow-list, SQL binding, PAT-8 columns, logging and XSS all checked against the changed code; no missed weakness found. It does not say what the SAST scan reported (4 pre-existing results) or that none touch changed files.",
+      "score": 4
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Every claim and SF-1 cite the exact product line (patients.ts#L12, patientService.ts#L35, patientRepo.ts#L30/L44/L132/L150, PatientsPage.tsx#L96), and each line says what the claim states.",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "SF-1 is a query-cost note rated minor, which fits its impact. Open MVP permissions are rightly treated as existing state rather than raised as a new finding.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "SF-1 gives a concrete fix direction: rely on the existing (patient_id, starts_at) index, or add a partial index on COMPLETED rows. That index exists in the appointments migration.",
+      "score": 5
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives. SF-1 is openly labelled a cost note, not a vulnerability, and the correlated max() it describes really is in the shared WHERE clause.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
