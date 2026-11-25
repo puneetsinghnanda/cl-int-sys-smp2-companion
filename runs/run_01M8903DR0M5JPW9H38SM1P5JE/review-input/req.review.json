@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
   "step": "req",
-  "attempt": 2,
-  "artifact_sha256": "00c111d6b4e4d1017e070335b38c683423ab386a723ef107b9dfe3c547cc83fe",
-  "package_sha256": "fa5b694d07737d368b19bac6c8a6fe7f25e1764b709efb84ec8f65ecd523956f",
+  "attempt": 3,
+  "artifact_sha256": "be606b63b4e120ec769701f53e8d5a8a4fc7eafc2f0faf17caffd96007153b30",
+  "package_sha256": "1e84faa08bee9db84896782c5b8e764694f90d33d97ca66448ef4489bb35ffb8",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,37 +12,36 @@
     "version": "0.1.7",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 4.75,
+  "rubric_score": 4.95,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "All 8 acceptance criteria map to REQ-1..REQ-15; the 300-char limit and own-page changes are out of scope with reasons; the IDE answer is REQ-16."},
-    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and checkable, but REQ-6 bundles status filter, date range and paging, while AC6 and AC7 were split per item."},
-    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites the ticket line or the A-01 IDE answer; nothing invented, no assumed items."},
-    {"id": "RR-R4", "score": 5, "reason": "No clash between ticket and baseline; REQ-14 aligns with the data-protection rule and cites both."},
+    {"id": "RR-R1", "score": 5, "reason": "All 8 acceptance criteria map to REQ-1..REQ-15, REQ-17, REQ-18; the 300-char limit and own-page changes are out of scope with reasons; the IDE answer becomes REQ-16."},
+    {"id": "RR-R2", "score": 5, "reason": "Previous F-1 fixed: AC5 is now split into REQ-6 (status filter), REQ-17 (date range) and REQ-18 (paging). Every REQ holds one checkable behaviour."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites a ticket line or the A-01 IDE answer; nothing invented, nothing assumed."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash between ticket and baseline; REQ-14 agrees with the data-protection rule and cites both."},
     {"id": "RR-R5", "score": 5, "reason": "The only question (Q-01) was answered in the IDE with real options; no needless open questions."},
-    {"id": "RR-R6", "score": 4, "reason": "Readable, but backtick marking of terms is inconsistent and several backticked terms are not glossary terms."}
+    {"id": "RR-R6", "score": 4, "reason": "Readable, but previous F-2 remains: backtick marking of glossary terms is still inconsistent."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "REQ-6 is compound: it bundles three behaviours (status filter, date range, paging) in one REQ, while AC6 and AC7 were split into one REQ per page and per action.",
+      "severity": "minor",
+      "category": "style",
+      "text": "Previous F-2 not fixed: No-show is backticked but Scheduled and Completed are not, and non-glossary phrases such as `own page`, `Opening` and `booking` are backticked as if they were defined terms.",
       "cites": [
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-6", "quote": "The column follows the list's `status filter`, date range and paging."},
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#known", "quote": "REQ-8 to REQ-10: acceptance criterion 6, split per page."}
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-3", "quote": "For Scheduled, Completed and `No-show` appointments"},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-5", "quote": "The full reason is still shown on the appointment's `own page`."}
       ],
-      "suggested_fix": "Split REQ-6 into three REQs: the column follows the status filter, follows the date range, and follows paging."
+      "suggested_fix": "Mark only glossary terms (Cancelled, Scheduled, Completed, No-show, Dashboard, Medical history) and mark them the same way everywhere; drop backticks from ordinary phrases."
     },
     {
       "id": "F-2",
       "severity": "minor",
       "category": "style",
-      "text": "Glossary term marking is inconsistent: No-show is backticked but Scheduled and Completed are not, while non-glossary phrases such as `own page` are backticked as if defined terms.",
+      "text": "Ordering: REQ-17 and REQ-18, split out of acceptance criterion 5, are listed after REQ-16 rather than next to REQ-6, so the list no longer follows the ticket's order.",
       "cites": [
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-3", "quote": "For Scheduled, Completed and `No-show` appointments"},
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-5", "quote": "The full reason is still shown on the appointment's `own page`."}
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#known", "quote": "REQ-6, REQ-17, REQ-18: acceptance criterion 5, split per behaviour (status filter, date range, paging)."}
       ],
-      "suggested_fix": "Mark only glossary terms consistently (Cancelled, Scheduled, Completed, No-show, Dashboard, Medical history) and drop backticks from ordinary phrases."
+      "suggested_fix": "Renumber so the date-range and paging REQs follow REQ-6 directly, or list them next to REQ-6 in the body."
     }
   ],
   "claims_checked": [

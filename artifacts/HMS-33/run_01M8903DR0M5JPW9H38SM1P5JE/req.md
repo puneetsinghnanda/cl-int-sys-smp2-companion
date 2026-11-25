@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M8903DR0M5JPW9H38SM1P5JE
 step: req
-attempt: 2
+attempt: 3
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md
@@ -23,8 +23,8 @@ claims:
   - id: C10
     text: "`Medical history` never appears in lists."
     cites: ["context/intent-baseline.md#data-protection"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18]
 assumed: []
 unknown: []
 requirements:
@@ -59,10 +59,10 @@ requirements:
     statement: "The full reason is still shown on the appointment's `own page`."
     cites: ["artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md#L20-L21"]
   - id: REQ-6
-    title: Column follows filters and paging
+    title: Column follows the status filter
     type: functional
     status: known
-    statement: "The column follows the list's `status filter`, date range and paging."
+    statement: "The column follows the list's `status filter`."
     cites: ["artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md#L22"]
   - id: REQ-7
     title: Cancelled filter shows reasons
@@ -124,6 +124,18 @@ requirements:
     status: known
     statement: "`Verify existing` code against the other requirements and change only what is missing."
     cites: ["runs/run_01M8903DR0M5JPW9H38SM1P5JE/ide-answers.md#a-01"]
+  - id: REQ-17
+    title: Column follows the date range
+    type: functional
+    status: known
+    statement: "The column follows the list's `date range`."
+    cites: ["artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md#L22"]
+  - id: REQ-18
+    title: Column follows paging
+    type: functional
+    status: known
+    statement: "The column follows the list's `paging`."
+    cites: ["artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/ticket.md#L22"]
 unknowns: []
 questions: []
 answers:
@@ -152,7 +164,7 @@ HMS-33 asks for a "Cancellation reason" column on the appointment list only. Can
 - REQ-3 Dash for other statuses — known — Scheduled, Completed and `No-show` show "-".
 - REQ-4 Long reasons shortened — known — Over `60` characters: first 60 characters plus "…".
 - REQ-5 Full reason on the appointment page — known — The full reason stays on the appointment's `own page`.
-- REQ-6 Column follows filters and paging — known — It follows the `status filter`, date range and paging.
+- REQ-6 Column follows the status filter — known — The column follows the list's `status filter`.
 - REQ-7 Cancelled filter shows reasons — known — Filtering by `Cancelled` shows a reason on every row.
 - REQ-8 Dashboard unchanged — known — The `dashboard` table gets no new column.
 - REQ-9 Doctor page unchanged — known — The `doctor page` table gets no new column.
@@ -163,9 +175,13 @@ HMS-33 asks for a "Cancellation reason" column on the appointment list only. Can
 - REQ-14 No medical history in the list — known — No `medical history` is added.
 - REQ-15 No contact details in the list — known — No `contact details` are added.
 - REQ-16 Verify the existing implementation — known — `Verify existing` code against the other requirements and change only what is missing.
+- REQ-17 Column follows the date range — known — The column follows the list's `date range`.
+- REQ-18 Column follows paging — known — The column follows the list's `paging`.
 
 ## Known
-- REQ-1 to REQ-7: acceptance criteria 1 to 5 of the ticket.
+- REQ-1 to REQ-5: acceptance criteria 1 to 4 of the ticket.
+- REQ-6, REQ-17, REQ-18: acceptance criterion 5, split per behaviour (status filter, date range, paging).
+- REQ-7: acceptance criterion 5, Cancelled filter case.
 - REQ-8 to REQ-10: acceptance criterion 6, split per page.
 - REQ-11 to REQ-13: acceptance criterion 7, split per action.
 - REQ-14: acceptance criterion 8, backed by the baseline's data protection rule (C10).
