@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M897G118QMGZ7FAT3WCXETBZ
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.10.0
 inputs:
   - path: artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/split.md
@@ -19,6 +19,9 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "CO-10 names web/src/styles.css and cites its existing badge rules at line 76 as proof."
 claims:
   - id: C1
     text: "`No background jobs exist yet`, so the Stale job is the first one and runs in the API process."
@@ -59,6 +62,9 @@ claims:
   - id: C13
     text: "The Stale job records the actor `system`."
     cites: ["runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-09"]
+  - id: C14
+    text: "The status badge rules live in web/src/styles.css, for example `.badge-scheduled`."
+    cites: ["sample-system:web/src/styles.css#L76"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
 known: [S-1, S-2, S-3, S-4, S-5, S-6, S-7]
 assumed: [CO-1]
@@ -111,10 +117,10 @@ components:
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage"]
   - id: CO-10
-    name: styles.css .badge-stale rule
+    name: web/src/styles.css gains a .badge-stale rule
     module: module:sample-system:web
     change: changed
-    cites: ["sample-system:web/src/components/StatusBadge.tsx#L6"]
+    cites: ["sample-system:web/src/styles.css#L76", "sample-system:web/src/components/StatusBadge.tsx#L6"]
   - id: CO-11
     name: StatusBadge, AppointmentTable and patient and doctor pages
     module: module:sample-system:web
@@ -202,7 +208,7 @@ the actor system (C11, C13), all in one transaction. server.ts starts the job af
 services from app.locals.ctx (C4), and stops it on shutdown. The service's "must be Scheduled" guard for
 complete, no-show, cancel and reschedule also accepts STALE, and a reschedule sets the status back to
 SCHEDULED. In the web app the new STATUS_LABEL entry feeds the badge (C5) and the list's status filter (C8);
-a .badge-stale rule styles it (C6).
+a .badge-stale rule in web/src/styles.css, next to the existing badge rules (C14), styles it (C6).
 
 Trade-offs:
 - Timer in the API process rather than a separate worker: no new infrastructure (C1); with several API
@@ -221,7 +227,7 @@ Trade-offs:
 - CO-7 Web AppointmentStatus gains STALE (changed, web/src/api/types.ts).
 - CO-8 STATUS_LABEL gains STALE 'Stale' (changed, web/src/lib/format.ts): feeds the badge (C5) and the status filter (C8).
 - CO-9 AppointmentDetailPage actions and history label for STALE (changed): shows the actions for STALE, starts the reschedule picker on today for a past appointment, labels the event "Marked stale".
-- CO-10 styles.css .badge-stale rule (changed, C6).
+- CO-10 web/src/styles.css gains a .badge-stale rule (changed): the file already holds the badge rules (C14), and the badge class comes from the status (C6).
 - CO-11 StatusBadge, AppointmentTable and patient and doctor pages (existing): show the label with no change; the doctor page keeps listing only upcoming Scheduled appointments.
 - CO-12 Glossary entry for Stale in the context pack, outside the product diff (existing in the product repo): the glossary owner adds the entry to context/glossary.md; no product file changes.
 - EP-1 GET /api/appointments (changed): status may be STALE; the status filter accepts STALE. Field status: string, not null, one of SCHEDULED, COMPLETED, CANCELLED, NO_SHOW, STALE, example "STALE", known.
@@ -232,6 +238,9 @@ Trade-offs:
 - EP-6 POST /api/appointments/:id/reschedule (changed): status: string, not null, accepted when the current status is SCHEDULED or STALE; response status SCHEDULED, example "SCHEDULED", known.
 
 Story map: S-1 by CO-1 to CO-6; S-2 by CO-3 and CO-4 (only SCHEDULED rows are updated); S-3 by CO-4, CO-9, EP-3 to EP-5; S-4 by CO-3, CO-4, CO-9, EP-6; S-5 by CO-7, CO-8, CO-10, EP-1, EP-2 (dashboard unchanged); S-6 by CO-12; S-7 by CO-8 and CO-11.
+
+Resolved from review:
+- F-1: CO-10 names web/src/styles.css and cites its existing badge rules at line 76 as proof.
 
 ## Known
 - S-1 to S-7: every story is served by the components in the story map above.
