@@ -1,0 +1,66 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "d7dc0ed38d09c5ae83a1a2bb6c27c7f3e0923c5f7f0c49478e4492e4599dea95",
+  "package_sha256": "300c324cfd7025083f0b4d950929e8cd9d9628ccc82c4fb42a52635e2133ebd6",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 4, "reason": "Every story AC (S-1..S-5, S-7) has an API test, and the job, page and list changes are tested. The server.ts start/stop wiring (CO-6) has no test, and the patient page is checked only through the API."},
+    {"id": "UT-R2", "score": 5, "reason": "The assertions check observable results: status, startsAt, history events and actor, HTTP codes, field errors, filter totals, badge class and the exact fetch URLs."},
+    {"id": "UT-R3", "score": 5, "reason": "Covers the 24h boundary at -1 min, exactly 24h and +1 min, plus re-staling after a reschedule and an idempotent second run. Error paths: 400/404/409 on close and reschedule, job failure logging, a failed list fetch and a refused close in the UI."},
+    {"id": "UT-R4", "score": 4, "reason": "API tests use Vitest+Supertest on a fresh DB with a fixed clock and skipIf(!pgAvailable()). Web tests use jsdom and Testing Library, in the layout's folders. One test name lacks its REQ id."},
+    {"id": "UT-R5", "score": 5, "reason": "The artifact reports no test counts or coverage and defers to the verifier. checks.json shows test passed and coverage skipped (exit 78)."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "minor", "category": "style",
+     "text": "One test name has no REQ id. The artifact says every test name starts with HMS-34 and its REQ id, and the strategy asks for names that start with the requirement ID.",
+     "cites": [
+       {"ref": "sample-system:web/src/__tests__/AppointmentDetailPage.test.tsx#L116", "quote": "it('HMS-34 edge: a Completed appointment is still closed, with no actions'"},
+       {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ut.md#summary", "quote": "Every test name starts with HMS-34 and its REQ id (C4)."}
+     ],
+     "claim_ref": "C4",
+     "suggested_fix": "Rename it to 'HMS-34 REQ-7 edge: ...', or drop the claim that every name carries a REQ id."},
+    {"id": "F-2", "severity": "minor", "category": "completeness",
+     "text": "impl changed server.ts to start the job after listen and stop it on shutdown (CO-6). No test covers that wiring. The timer tests call startStaleJob directly.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#changes", "quote": "api/src/server.ts: CO-6, starts the job after listen from app.locals.ctx and stops it in shutdown."},
+       {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ut.md#tests", "quote": "REQ-1: startStaleJob runs at start and then every hour, as actor system (C7), and the stop function ends the runs."}
+     ],
+     "suggested_fix": "Add a test that the server start path calls startStaleJob and that shutdown calls the returned stop function, or state in the artifact why this is left untested."},
+    {"id": "F-3", "severity": "minor", "category": "traceability",
+     "text": "The ut diff's base_sha is not the head_sha impl recorded. The tests were written against a commit that impl.md does not describe, and the artifact does not explain the gap.",
+     "cites": [
+       {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/ut.md#L74", "quote": "base_sha: 5c75aad92008432fe2b1015de9d0afad8a90948b"},
+       {"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#L63", "quote": "head_sha: b3fff0d505369e548320938c3f4e2697298b0be2"}
+     ],
+     "suggested_fix": "Say what changed between b3fff0d and 5c75aad, or confirm it holds no production change outside impl.md."}
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Web tests use Vitest with jsdom and Testing Library."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts", "quote": "\"path\": \"api/test/appointments.test.ts\""}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DoctorDetailPage.test.tsx", "quote": "\"path\": \"web/src/__tests__/DoctorDetailPage.test.tsx\""}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#claim:C5", "quote": "The new Stale job runs `hourly, actor system`, as CO-5 asks."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#claim:C3", "quote": "AppointmentRepo gains `markStale` and move() sets SCHEDULED, as CO-3 asks."}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#claim:C4", "quote": "AppointmentService's `scheduled() accepts STALE`, and it gains markStale, as CO-4 asks."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#claim:C9", "quote": "`AppointmentDetailPage` shows actions for STALE, starts the picker on today and labels the event, as CO-9 asks."}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/impl.md#claim:C8", "quote": "`STATUS_LABEL` gains STALE 'Stale', as CO-8 asks."}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L9", "quote": "export const DAY_MS = 24 * 60 * MINUTE;"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L160", "quote": "a.status = 'SCHEDULED' AND a.starts_at >= $2"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-1", "quote": "when the background job runs at 10:01 on 4 December (one minute past 24h after its start time)"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-4", "quote": "when staff reschedule it to a free slot at 10:00 on 6 December"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script), so no run reports coverage."}]}
+  ],
+  "questions": []
+}
