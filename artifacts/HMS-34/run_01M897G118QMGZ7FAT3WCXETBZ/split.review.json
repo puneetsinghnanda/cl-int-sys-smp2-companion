@@ -1,0 +1,174 @@
+{
+  "artifact_sha256": "cb0b1c68ceef02d6fb6550506b35cd99814cb26aded4e14a0ff8670de9a0a06a",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A Scheduled appointment that has not been marked Completed or `rescheduled` by 24h after its start time is marked Stale.",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function StatusBadge({ status }: { status: AppointmentStatus | RecordStatus })",
+          "ref": "sample-system:web/src/components/StatusBadge.tsx#L4"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/appointments\",",
+          "ref": "context/generated/api-inventory.json#L394"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/appointments/:id\",",
+          "ref": "context/generated/api-inventory.json#L405"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<StatusBadge status={a.status} />",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L46"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "upcoming first (soonest first), then past (most recent first)",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L220"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a.status = 'SCHEDULED' AND a.starts_at >= $2",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "plus the next upcoming appointments",
+          "ref": "context/glossary.md#dashboard"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a Scheduled appointment that starts at 10:00 on 3 December and is not marked Completed or rescheduled",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/split.md#item:S-1"
+        },
+        {
+          "quote": "const { timeZone } = useSettings();",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L14"
+        },
+        {
+          "quote": "in hospital local time",
+          "ref": "context/glossary.md#availability-block"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State once that all AC times are hospital local time (and that the 24h is elapsed time from the stored start instant).",
+      "text": "S-1, S-2 and S-4 ACs give clock times (10:00 on 3 December, 10:01 on 4 December) without saying they are hospital local time, while the app stores instants and renders them in a configured time zone; a local-vs-UTC mix-up could pass or fail depending on how a tester reads them."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "when staff filter the appointment list by status Stale, then only the Stale appointment is listed",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/split.md#item:S-5"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Split S-5 into label display (REQ-12), status filter (REQ-13) and dashboard unchanged (REQ-14).",
+      "text": "S-5 bundles four outcomes (list label, appointment-page label, status filter, dashboard tiles) across REQ-12, REQ-13, REQ-14; the filter and dashboard checks could stand as separate small stories."
+    }
+  ],
+  "package_sha256": "708d6b2a8aca45bf078d7ccb7be1a0bb6ab180f3b9bf2bb7557d80dc1ab000c1",
+  "questions": [],
+  "recorded_at": "2026-11-25T11:42:07Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 16 known REQs (REQ-1 to REQ-16) are traced by at least one story; no assumed or unknown REQs exist in the intent.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories carry one outcome; S-5 bundles list label, detail-page label, status filter and dashboard tiles in one story.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then and bracket the 24h boundary at 09:59/10:01, catching end-time or next-local-day variants; times carry no time zone although the app renders in a configured zone.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The only rule value is 24h from REQ-2; dates and clock times are example instants with the 24h offset derived inline.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Clear, consistent use of Scheduled, Stale, Completed, No-show, Cancelled matching the glossary and intent.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
