@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "An appointment cancelled or marked No-show within the one day is no longer `Scheduled` and is not marked Stale.",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/req.md#item:REQ-6"
+        },
+        {
+          "quote": "- options: Yes, confirm | No-show still becomes Stale",
+          "ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-05"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "REQ-6 is compound: it covers two behaviours (Cancelled is not Stale; No-show is not Stale). A-05's options also treated them separately. REQ-4 and REQ-5 split the analogous Completed and rescheduled cases."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-2"
+  ],
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "schema": "feedback.v1",
+  "step": "req"
+}
