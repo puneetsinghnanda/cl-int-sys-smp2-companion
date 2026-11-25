@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "84a5025776b7d82949c2dc33f15f3988f457fc78f0af369f0b403486a6e1b5d9",
-  "attempt": 1,
+  "artifact_sha256": "f961428452c46b09a4d423a90e9dbdaea0571b036cd7e36f169c73ceccd5fca5",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -31,43 +31,40 @@
       ],
       "claim_id": "C3",
       "verdict": "supported"
-    }
-  ],
-  "findings": [
+    },
     {
-      "category": "correctness",
       "cites": [
-        {
-          "quote": "code that already meets S-1 to S-6 is kept and only missing behaviour is added",
-          "ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#item:S-1"
-        },
         {
           "quote": "change only what is missing",
           "ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-16"
         }
       ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Drop AC4 as an acceptance criterion and record REQ-16 as a delivery constraint traced in the story notes, or rephrase as a checkable outcome (e.g. existing AppointmentTable column logic is reused, no duplicate column added).",
-      "text": "S-1 AC4 is not testable: it describes how the change is made (keep existing code, add only missing behaviour) rather than an observable outcome, and its Then is self-referential to S-1 to S-6."
-    },
+      "claim_id": "C4",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
     {
-      "category": "style",
+      "category": "completeness",
       "cites": [
         {
           "quote": "The column follows the list's filter, date range and paging",
           "ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#item:S-3"
+        },
+        {
+          "quote": "Removed S-1 AC4; REQ-16 stays traced in S-1 as a delivery note",
+          "ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#resolves"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Split S-3 into filter, date range and paging stories, or note why they are kept together.",
-      "text": "S-3 bundles three separate outcomes (status filter, date range, paging); each could be its own small story."
+      "suggested_fix": "Split S-3 into filter, date range and paging stories, or add a note explaining why they are kept together.",
+      "text": "Previous F-2 still open: S-3 bundles three outcomes (status filter, date range, paging) in one story, and resolves lists only F-1 with no note on why they stay together."
     }
   ],
-  "package_sha256": "c39d43cd0a5f72cbfa3a0bad9d732e0762122c0fcde00e3837f54bcfde1402ca",
+  "package_sha256": "cc3de1098f6dd588acfa817bfd6e6ff9fc5b7e3b1ed287cbf1ee7e10058a1350",
   "questions": [],
-  "recorded_at": "2026-11-25T09:32:36Z",
+  "recorded_at": "2026-11-25T09:34:56Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -78,18 +75,18 @@
   "rubric_items": [
     {
       "id": "SS-R1",
-      "reason": "All 18 known REQs (REQ-1 to REQ-18) are traced by at least one story; no assumed REQs exist.",
+      "reason": "All 18 known REQs (REQ-1 to REQ-18) are traced by a story; REQ-16 is traced in S-1 as a delivery note; no assumed REQs.",
       "score": 5
     },
     {
       "id": "SS-R2",
-      "reason": "Most stories carry one outcome, but S-3 bundles status filter, date range and paging, and S-1 mixes the UI column with the REQ-16 verify-existing process constraint.",
+      "reason": "Most stories carry one outcome; S-3 still bundles status filter, date range and paging (previous F-2 not addressed).",
       "score": 4
     },
     {
       "id": "SS-R3",
-      "reason": "ACs are Given/When/Then and discriminating (60 vs 61 char boundary, each non-Cancelled status, other pages); S-1 AC4 is a process statement with no observable outcome.",
-      "score": 4
+      "reason": "Former untestable S-1 AC4 removed (F-1 resolved). ACs are Given/When/Then with boundaries: 60 vs 61 chars, each non-Cancelled status, each other page, empty dashboard, second page.",
+      "score": 5
     },
     {
       "id": "SS-R4",
@@ -102,7 +99,7 @@
       "score": 5
     }
   ],
-  "rubric_score": 4.55,
+  "rubric_score": 4.8,
   "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
   "schema": "review.v1",
   "status": "ok",

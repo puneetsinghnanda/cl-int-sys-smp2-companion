@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "84a5025776b7d82949c2dc33f15f3988f457fc78f0af369f0b403486a6e1b5d9",
-  "package_sha256": "c39d43cd0a5f72cbfa3a0bad9d732e0762122c0fcde00e3837f54bcfde1402ca",
+  "attempt": 2,
+  "artifact_sha256": "f961428452c46b09a4d423a90e9dbdaea0571b036cd7e36f169c73ceccd5fca5",
+  "package_sha256": "cc3de1098f6dd588acfa817bfd6e6ff9fc5b7e3b1ed287cbf1ee7e10058a1350",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,41 +12,32 @@
     "version": "0.1.7",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.55,
+  "rubric_score": 4.8,
   "rubric_items": [
-    {"id": "SS-R1", "score": 5, "reason": "All 18 known REQs (REQ-1 to REQ-18) are traced by at least one story; no assumed REQs exist."},
-    {"id": "SS-R2", "score": 4, "reason": "Most stories carry one outcome, but S-3 bundles status filter, date range and paging, and S-1 mixes the UI column with the REQ-16 verify-existing process constraint."},
-    {"id": "SS-R3", "score": 4, "reason": "ACs are Given/When/Then and discriminating (60 vs 61 char boundary, each non-Cancelled status, other pages); S-1 AC4 is a process statement with no observable outcome."},
+    {"id": "SS-R1", "score": 5, "reason": "All 18 known REQs (REQ-1 to REQ-18) are traced by a story; REQ-16 is traced in S-1 as a delivery note; no assumed REQs."},
+    {"id": "SS-R2", "score": 4, "reason": "Most stories carry one outcome; S-3 still bundles status filter, date range and paging (previous F-2 not addressed)."},
+    {"id": "SS-R3", "score": 5, "reason": "Former untestable S-1 AC4 removed (F-1 resolved). ACs are Given/When/Then with boundaries: 60 vs 61 chars, each non-Cancelled status, each other page, empty dashboard, second page."},
     {"id": "SS-R4", "score": 5, "reason": "60 and the ellipsis come from REQ-4; 'one character longer than 60' is derived inline; example reason text is test data, not a limit."},
     {"id": "SS-R5", "score": 5, "reason": "Clear, consistent terms matching the intent and glossary (Cancelled, own page, Cancellation reason cell)."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "S-1 AC4 is not testable: it describes how the change is made (keep existing code, add only missing behaviour) rather than an observable outcome, and its Then is self-referential to S-1 to S-6.",
-      "cites": [
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#item:S-1", "quote": "code that already meets S-1 to S-6 is kept and only missing behaviour is added"},
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-16", "quote": "change only what is missing"}
-      ],
-      "suggested_fix": "Drop AC4 as an acceptance criterion and record REQ-16 as a delivery constraint traced in the story notes, or rephrase as a checkable outcome (e.g. existing AppointmentTable column logic is reused, no duplicate column added)."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
-      "category": "style",
-      "text": "S-3 bundles three separate outcomes (status filter, date range, paging); each could be its own small story.",
+      "category": "completeness",
+      "text": "Previous F-2 still open: S-3 bundles three outcomes (status filter, date range, paging) in one story, and resolves lists only F-1 with no note on why they stay together.",
       "cites": [
-        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#item:S-3", "quote": "The column follows the list's filter, date range and paging"}
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#item:S-3", "quote": "The column follows the list's filter, date range and paging"},
+        {"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/split.md#resolves", "quote": "Removed S-1 AC4; REQ-16 stays traced in S-1 as a delivery note"}
       ],
-      "suggested_fix": "Split S-3 into filter, date range and paging stories, or note why they are kept together."
+      "suggested_fix": "Split S-3 into filter, date range and paging stories, or add a note explaining why they are kept together."
     }
   ],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-4", "quote": "A reason longer than `60` characters shows its first 60 characters"}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/glossary.md#medical-history", "quote": "Blood group, allergies, chronic conditions"}]},
-    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]}
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-16", "quote": "change only what is missing"}]}
   ],
   "questions": []
 }

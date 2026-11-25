@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M8903DR0M5JPW9H38SM1P5JE
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.5.0
 inputs:
   - path: artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md
@@ -11,6 +11,9 @@ inputs:
     sha256: 430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "Removed S-1 AC4; REQ-16 stays traced in S-1 as a delivery note, verified through the observable ACs of S-1 to S-6."
 claims:
   - id: C1
     text: "Long reasons are cut at `60` characters on the list."
@@ -21,6 +24,9 @@ claims:
   - id: C3
     text: "A `Cancelled` appointment always carries a reason."
     cites: ["context/glossary.md#cancelled"]
+  - id: C4
+    text: "The user chose to `Verify existing` code and change only what is missing."
+    cites: ["artifacts/HMS-33/run_01M8903DR0M5JPW9H38SM1P5JE/req.md#item:REQ-16"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16, REQ-17, REQ-18]
 known: [S-1, S-2, S-3, S-4, S-5, S-6]
 assumed: []
@@ -37,8 +43,6 @@ stories:
         text: "Given a Cancelled appointment whose reason is \"Doctor on leave\", when the list shows it, then its Cancellation reason cell shows \"Doctor on leave\"."
       - id: AC3
         text: "Given one Scheduled, one Completed and one No-show appointment on the list, when the list shows them, then the Cancellation reason cell of each of the three shows \"-\"."
-      - id: AC4
-        text: "Given the product code at the pinned SHA, when the change is made, then code that already meets S-1 to S-6 is kept and only missing behaviour is added."
   - id: S-2
     title: Long reasons are shortened on the list only
     trace: [REQ-4, REQ-5]
@@ -94,6 +98,8 @@ stories:
 ---
 # Stories: HMS-33
 
+Resolves F-1: Removed S-1 AC4; REQ-16 stays traced in S-1 as a delivery note, verified through the observable ACs of S-1 to S-6.
+
 ## Stories
 
 ### S-1 See the cancellation reason on the appointment list
@@ -101,7 +107,8 @@ Traces: REQ-1, REQ-2, REQ-3, REQ-16.
 - AC1: Given the appointment list with at least one appointment, when staff open it, then a column headed "Cancellation reason" appears directly after the Status column.
 - AC2: Given a Cancelled appointment whose reason is "Doctor on leave", when the list shows it, then its Cancellation reason cell shows "Doctor on leave".
 - AC3: Given one Scheduled, one Completed and one No-show appointment on the list, when the list shows them, then the Cancellation reason cell of each of the three shows "-".
-- AC4: Given the product code at the pinned SHA, when the change is made, then code that already meets S-1 to S-6 is kept and only missing behaviour is added.
+
+Delivery note (REQ-16): the user chose to `Verify existing` code and change only what is missing (C4). This is how the change is delivered, not a user-visible outcome, so it has no acceptance criterion of its own; existing code counts as done when it passes the ACs of S-1 to S-6.
 
 ### S-2 Long reasons are shortened on the list only
 Traces: REQ-4, REQ-5. The cut is at `60` characters (C1).
