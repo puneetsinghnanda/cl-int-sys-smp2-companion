@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "wherever an appointment status is shown today",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/req.md#item:REQ-11"
+        },
+        {
+          "quote": "Given a Stale appointment, when staff open that appointment's own page, then its status shows Stale.",
+          "ref": "artifacts/HMS-34/run_01M893GZKGGY9C7GYRJCH088PF/split.md#item:S-5"
+        },
+        {
+          "quote": "<StatusBadge status={a.status} />",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L46"
+        },
+        {
+          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-11 says Stale shows wherever an appointment status shows today. Appointment status also shows in AppointmentTable on the patient and doctor detail pages, but S-5 only checks the list and the appointment's own page."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
+  "schema": "feedback.v1",
+  "step": "split"
+}
