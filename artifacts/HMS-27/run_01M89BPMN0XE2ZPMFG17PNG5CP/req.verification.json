@@ -1,21 +1,21 @@
 {
   "artifact_path": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md",
-  "artifact_sha256": "90e103bba7e6d6a253bf5d2b2e409025606fc51615d3b99d5d6be6ff25b47e7c",
-  "attempt": 1,
+  "artifact_sha256": "447d72cf313d2a06ab87a4c709878bfd9f923c28907519db3dd6997a343ec267",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "85b5a7088cb23be63f7d478e89d151fc0086dba9c6210a0c4c67827d94e3d515",
+  "checks_sha256": "8593652fd2ac745cdf32f595b5d9a86b137476fa0c389c34c976d529ec93a711",
   "claims": {
     "total": 11,
     "verified": 11
   },
-  "decided_at": "2026-11-25T12:53:21Z",
+  "decided_at": "2026-11-25T12:55:54Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
@@ -25,7 +25,7 @@
   "gate_failures": [],
   "inputs": [],
   "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -33,9 +33,9 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "3709c38370fa82c33f25a7fac110e4d9b33e61ef33fd519b4998f057f449ba78",
   "product_changes": null,
-  "review_sha256": "be8597fef095c34060b022a831981b66288d0cf3f6d41dbff428c71d0f3f7251",
+  "review_sha256": "7a758d7668084c451a5b338a713bd5728fe751fabb48c62e8f2d4d74e4ca71ae",
   "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
   "schema": "verification.v1",
   "signals": {
@@ -50,7 +50,7 @@
       "sensitive": false
     }
   },
-  "signature": "HhVItQ99lDfoqWw5GYUo24Bha7wpDgllWrONf_RWclu0s9qTk9KmYw0WIbb-hmKriq0Nm4Hsbn2_xxltdhQ_BQ",
+  "signature": "mMhwnhAlgDtf4S2_wC0oL0pad5K20l5V2e22v84NkdIdahieJiTkVksdkWNkxDhDgIUKaKsAyliOkeW0WnLiCg",
   "skill": "requirement-review@1.4.0",
   "step": "req",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

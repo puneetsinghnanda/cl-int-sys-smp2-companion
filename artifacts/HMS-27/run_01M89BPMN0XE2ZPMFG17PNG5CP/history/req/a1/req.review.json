@@ -1,0 +1,195 @@
+{
+  "artifact_sha256": "90e103bba7e6d6a253bf5d2b2e409025606fc51615d3b99d5d6be6ff25b47e7c",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "20 per page, newest registration first, with search and a status filter",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md#L19"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Lists answer `{ items, page, page_size, total }`, 20 per page.",
+          "ref": "context/conventions.md#lists"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "COMPLETED, CANCELLED or NO_SHOW",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "A past appointment the patient attended",
+          "ref": "context/glossary.md#completed"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "for [starts_at, ends_at) in UTC",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Medical history appears only on the patient's own page, never in lists, the dashboard or logs.",
+          "ref": "context/intent-baseline.md#data-protection"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Blood group, allergies, chronic conditions, current medications and notes of one patient.",
+          "ref": "context/glossary.md#medical-history"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"http:GET:/api/patients\"",
+          "ref": "context/generated/api-inventory.json#L154"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"ui:/patients\"",
+          "ref": "context/generated/api-inventory.json#L480"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "open the patient's page and read the appointment table",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md#L20"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "still pages at `20 per page` and its total counts only the filtered patients",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-11"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Split into one REQ for page size 20 under the filter and one REQ for total reflecting only filtered patients, both citing ticket L28 and context/conventions.md#lists.",
+      "text": "REQ-11 is compound: it combines two checkable behaviours, the page size staying 20 with the filter on and the total counting only filtered patients, in one requirement."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "before the same calendar date 12 months before today",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-7"
+        },
+        {
+          "quote": "Availability, slots and \"today\" use the hospital time zone",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say 'today in Asia/Kolkata' in REQ-7 and state how a non-existent same date (29 February) maps, e.g. to 28 February.",
+      "text": "REQ-7 states the last-visit date is hospital-local but not that 'today' is the hospital-local date, which the architecture fixes; the boundary for a 29 February today is also undefined."
+    }
+  ],
+  "package_sha256": "ac7e12c565884fea8fd7e6c67dabec78dac3c0f279d73b588e0d2b881a7d6b4e",
+  "questions": [],
+  "recorded_at": "2026-11-25T12:53:17Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria and the column content (date, doctor) map to REQ-1..REQ-13; non-asks (calling patients, sorting, patient page table) are listed under Out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and checkable (search and status combination split into REQ-9/REQ-10), but REQ-11 bundles page size and filtered total; REQ-7 leaves 'today' time zone implicit.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known status cites the ticket, baseline, data model or an IDE answer; the one assumption (REQ-3) was confirmed in A-04; no invented values.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No ticket/baseline clash found; the glossary gap on 'visit' and the 12-month measure were raised as questions and answered (A-01..A-03); data-protection baseline carried into REQ-12.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Three questions plus one assumption check, each with real options and a proposed default, all answered in the IDE; none asks something the context pack already answers.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording; glossary terms Completed, Medical history and Front-desk staff used consistently; missing 'Last visit' term flagged.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

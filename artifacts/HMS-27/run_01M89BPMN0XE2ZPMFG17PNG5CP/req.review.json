@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "90e103bba7e6d6a253bf5d2b2e409025606fc51615d3b99d5d6be6ff25b47e7c",
-  "attempt": 1,
+  "artifact_sha256": "447d72cf313d2a06ab87a4c709878bfd9f923c28907519db3dd6997a343ec267",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -85,8 +85,8 @@
     {
       "cites": [
         {
-          "quote": "\"id\": \"http:GET:/api/patients\"",
-          "ref": "context/generated/api-inventory.json#L154"
+          "quote": "\"path\": \"api/src/routes/patients.ts\"",
+          "ref": "context/generated/api-inventory.json#L160"
         }
       ],
       "claim_id": "C9",
@@ -115,19 +115,6 @@
   ],
   "findings": [
     {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "still pages at `20 per page` and its total counts only the filtered patients",
-          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-11"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Split into one REQ for page size 20 under the filter and one REQ for total reflecting only filtered patients, both citing ticket L28 and context/conventions.md#lists.",
-      "text": "REQ-11 is compound: it combines two checkable behaviours, the page size staying 20 with the filter on and the total counting only filtered patients, in one requirement."
-    },
-    {
       "category": "completeness",
       "cites": [
         {
@@ -139,15 +126,28 @@
           "ref": "context/architecture.md#time-and-slots"
         }
       ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "In REQ-7 say 'today in Asia/Kolkata' and state how a non-existent same date maps (for example 29 February to 28 February).",
+      "text": "Re-check of previous F-2, still open: REQ-7 makes the last-visit date hospital-local but not 'today', which the architecture fixes to the hospital time zone; the boundary when today is 29 February is also undefined."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "title: List total counts only filtered patients",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-14"
+        }
+      ],
       "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Say 'today in Asia/Kolkata' in REQ-7 and state how a non-existent same date (29 February) maps, e.g. to 28 February.",
-      "text": "REQ-7 states the last-visit date is hospital-local but not that 'today' is the hospital-local date, which the architecture fixes; the boundary for a 29 February today is also undefined."
+      "suggested_fix": "Place the filtered-total requirement directly after REQ-11 and renumber, or note why it follows REQ-13.",
+      "text": "Ordering: REQ-14 (filtered total), split from REQ-11 paging, is appended after the catch-all REQ-13 instead of sitting next to REQ-11."
     }
   ],
-  "package_sha256": "ac7e12c565884fea8fd7e6c67dabec78dac3c0f279d73b588e0d2b881a7d6b4e",
+  "package_sha256": "58b80ca62ce62993615afdd1dc80a95081794ed84b14993f448a6e2b32194867",
   "questions": [],
-  "recorded_at": "2026-11-25T12:53:17Z",
+  "recorded_at": "2026-11-25T12:55:49Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -158,32 +158,32 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "All six acceptance criteria and the column content (date, doctor) map to REQ-1..REQ-13; non-asks (calling patients, sorting, patient page table) are listed under Out of scope with reasons.",
+      "reason": "All six acceptance criteria (column, date, doctor, Never, filter, combination with search/status/paging, no medical history, unchanged rest) map to REQ-1..REQ-14; non-asks listed under Out of scope with reasons.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs are atomic and checkable (search and status combination split into REQ-9/REQ-10), but REQ-11 bundles page size and filtered total; REQ-7 leaves 'today' time zone implicit.",
+      "reason": "Previous F-1 fixed: page size (REQ-11) and filtered total (REQ-14) are now separate. REQ-7 still leaves the time zone of 'today' and the 29 February boundary implicit.",
       "score": 4
     },
     {
       "id": "RR-R3",
-      "reason": "Every known status cites the ticket, baseline, data model or an IDE answer; the one assumption (REQ-3) was confirmed in A-04; no invented values.",
+      "reason": "Every known status cites the ticket, baseline, data model, conventions or an IDE answer; the one assumption (REQ-3) was confirmed in A-04; no invented values.",
       "score": 5
     },
     {
       "id": "RR-R4",
-      "reason": "No ticket/baseline clash found; the glossary gap on 'visit' and the 12-month measure were raised as questions and answered (A-01..A-03); data-protection baseline carried into REQ-12.",
+      "reason": "No ticket/baseline clash found; the undefined 'visit' and the 12-month measure were raised as questions and answered (A-01..A-03); the data-protection baseline is carried into REQ-12.",
       "score": 5
     },
     {
       "id": "RR-R5",
-      "reason": "Three questions plus one assumption check, each with real options and a proposed default, all answered in the IDE; none asks something the context pack already answers.",
+      "reason": "Three questions and one assumption check, each with real options and a proposed default, all answered in the IDE; none asks something the context pack already answers.",
       "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Plain wording; glossary terms Completed, Medical history and Front-desk staff used consistently; missing 'Last visit' term flagged.",
+      "reason": "Plain wording; glossary terms Completed, Medical history and Front-desk staff used consistently; the missing 'Last visit' term is flagged.",
       "score": 5
     }
   ],

@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M89BPMN0XE2ZPMFG17PNG5CP
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.4.0
 inputs:
   - path: artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md
@@ -47,8 +47,8 @@ claims:
   - id: C11
     text: "Today staff find a patient's last visit by opening the patient's page and reading the `appointment table`."
     cites: ["artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md#L20"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14]
 assumed: []
 unknown: []
 requirements:
@@ -116,7 +116,7 @@ requirements:
     title: Filter works with paging
     type: functional
     status: known
-    statement: "With the filter on, the list still pages at `20 per page` and its total counts only the filtered patients."
+    statement: "With the filter on, the list still pages at `20 per page`."
     cites: ["artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md#L28", "context/conventions.md#lists"]
   - id: REQ-12
     title: No medical history in the column or the filter
@@ -130,6 +130,12 @@ requirements:
     status: known
     statement: "The rest of the patient list, and every other page, is `unchanged`."
     cites: ["artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md#L30"]
+  - id: REQ-14
+    title: List total counts only filtered patients
+    type: functional
+    status: known
+    statement: "With the filter on, the list's `total` counts only the patients the filter keeps."
+    cites: ["context/conventions.md#lists", "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/ticket.md#L28"]
 unknowns: []
 questions: []
 answers:
@@ -175,9 +181,10 @@ HMS-27 adds a "Last visit" column (date and doctor) to the patient list and a "N
 - REQ-8 Filter excludes never-visited patients — known — With the filter on, patients who show `Never` are not listed.
 - REQ-9 Filter combines with search — known — The filter and `search` narrow the same result.
 - REQ-10 Filter combines with the status filter — known — The filter and the `status filter` narrow the same result.
-- REQ-11 Filter works with paging — known — With the filter on, the list still pages at `20 per page`, and the total counts only filtered patients.
+- REQ-11 Filter works with paging — known — With the filter on, the list still pages at `20 per page`.
 - REQ-12 No medical history in the column or the filter — known — The column and the filter show no `medical history` (PAT-8).
 - REQ-13 Everything else unchanged — known — The rest of the patient list, and every other page, is `unchanged`.
+- REQ-14 List total counts only filtered patients — known — With the filter on, the list's `total` counts only the patients the filter keeps.
 
 ## Known
 - REQ-1: ticket acceptance criterion 1 (L23).
@@ -191,6 +198,7 @@ HMS-27 adds a "Last visit" column (date and doctor) to the patient list and a "N
 - REQ-9, REQ-10, REQ-11: ticket acceptance criterion 4 (L28) and the lists convention (C2).
 - REQ-12: ticket acceptance criterion 5 (L29) and the data-protection baseline (C7, C8).
 - REQ-13: ticket acceptance criterion 6 (L30).
+- REQ-14: paging in ticket acceptance criterion 4 (L28) and the list response's total field in the lists convention (C2).
 
 ## Assumed
 None. The user confirmed the one assumption (REQ-3, A-04).
