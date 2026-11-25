@@ -1,0 +1,170 @@
+{
+  "artifact_sha256": "ffdc205028446dc36d5b0a750fdfe01f2de2f7347891a727faae856bcb6899c4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "A Scheduled appointment that has not been marked Completed or `rescheduled` by 24h after its start time is marked Stale.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "import { StatusBadge } from './StatusBadge';",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L5"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The appointment list is the page `/appointments`.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#claim:C3"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<Link to={`/appointments/${a.id}`}>{a.code}</Link>",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L31"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<StatusBadge status={a.status} />",
+          "ref": "sample-system:web/src/components/AppointmentTable.tsx#L46"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "upcoming first (soonest first), then past (most recent first)",
+          "ref": "sample-system:api/src/repositories/patientRepo.ts#L220"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a.status = 'SCHEDULED' AND a.starts_at >= $2",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L160"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "plus the next upcoming appointments",
+          "ref": "context/glossary.md#dashboard"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "### S-7 Staff see Stale on the patient page",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L154"
+        },
+        {
+          "quote": "when staff open that doctor's page, then its upcoming appointments table lists the Scheduled one and not the Stale one, as before.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L157"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Retitle S-7 to cover patient and doctor pages, or move the doctor-page AC to its own story.",
+      "text": "S-7 is titled for the patient page only, but its AC2 checks the doctor page; the title does not describe the story's full scope."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Each case acts at 09:59 on 4 December, the latest moment inside the day.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L126"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Say 'one minute before 24h after its start time', matching S-1 AC2 wording.",
+      "text": "S-2 says 09:59 on 4 December is the latest moment inside the day, but the day runs to 10:00 (24h after a 10:00 start); 09:59 is one minute before the limit, not its latest moment."
+    }
+  ],
+  "package_sha256": "6e49713f0a034b39b5cc94a9e7c659425f249cc1fe84f3f5aad607cb67945328",
+  "questions": [],
+  "recorded_at": "2026-11-25T15:16:57Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 16 known REQs (REQ-1..REQ-16) are traced by at least one story; no assumed or unknown REQs exist in the intent.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Most stories carry one outcome; S-5 bundles list label, detail label, list filter and the dashboard no-tile constraint, and S-7 mixes patient and doctor pages.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then with a +/-1 minute pair around the 24h limit that fails start-of-day, end-time or next-local-day implementations; the exact 24h instant is untested and S-3 ACs are generic.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "The only limit is 24h after start time from REQ-2/A-02; dates and times are example instants with the 24h derivation stated inline.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable and consistent state names; S-7 title omits the doctor page its AC2 covers, and S-2 calls 09:59 the latest moment inside the day.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
