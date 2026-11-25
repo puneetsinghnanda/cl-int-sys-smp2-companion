@@ -1,0 +1,48 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "804f54da43948529eba7ae1ca8d1bec0d0c0d17a4f03d23f587486998d2b3c87",
+  "package_sha256": "e561a222ab339a22758c37ba048f5ea4519cf5a1408f4c8d1cce20430fc7b813",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "I read the changed repo, service, job, server and migration files. Every SQL value is bound, no route is added, the guard still refuses closed states and the job logs only err.message. I found no weakness that the review missed."},
+    {"id": "SC-R2", "score": 4, "reason": "Every claim points to the exact product line. The one gap: C1 says the actor is bound, but it cites only L168, and the actor parameter $2 is on L167."},
+    {"id": "SC-R3", "score": 5, "reason": "The review rates the overall risk as low and reports no findings. That matches a change with no new route, no injection path and no logging of personal data."},
+    {"id": "SC-R4", "score": 5, "reason": "The code needs no fix. The review says so plainly and does not invent remediation."},
+    {"id": "SC-R5", "score": 5, "reason": "There are no false positives: the review raises no spurious findings or questions."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C1 says both the cutoff and the actor are bound as parameters, but it cites only L168, which shows $1 (the cutoff). The actor binding, updated_by = $2, is on L167.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/secrev.md#claim:C1", "quote": "binds the cutoff and actor as parameters"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L167", "quote": "UPDATE appointment SET status = 'STALE', updated_at = now(), updated_by = $2"}
+      ],
+      "claim_ref": "C1",
+      "suggested_fix": "Cite appointmentRepo.ts#L167-L168 for C1."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L168", "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L158", "quote": "status = 'SCHEDULED', updated_at = now(), updated_by = $4"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/jobs/staleJob.ts#L12", "quote": "console.error(`[stale-job] ${err instanceof Error ? err.message : String(err)}`);"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L36", "quote": "requirePermission('appointments:write'),"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "every permission is granted"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L147", "quote": "current.status !== 'SCHEDULED' && current.status !== 'STALE'"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-09", "quote": "answer: system (proposed default)"}, {"ref": "sample-system:api/src/jobs/staleJob.ts#L6", "quote": "export const STALE_JOB_ACTOR = 'system';"}]}
+  ],
+  "questions": []
+}
