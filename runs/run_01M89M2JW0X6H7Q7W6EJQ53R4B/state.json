@@ -2,12 +2,12 @@
   "active_session": {
     "host_hash": "h_c14537ff",
     "session_id": "c441e434-c904-4af2-8623-650b71631899",
-    "since": "2026-11-25T15:09:36Z"
+    "since": "2026-11-25T15:31:17Z"
   },
   "branch": {
     "sample-system": {
       "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
-      "head_sha": null,
+      "head_sha": "303a76d72faecd80a0a849d2fb943b70d26129ea",
       "name": "tsl/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B"
     }
   },
@@ -16,22 +16,22 @@
   "end_reason": null,
   "gates": [
     {
-      "approver_key": null,
+      "approver_key": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
       "artifacts": [
         {
           "sha256": "2d835da3fbc0460fe9ad19bb5c4326b5b6575c1874e8b329d650af3e92a390ae",
           "step": "impl"
         }
       ],
-      "decided_at": null,
-      "decision": null,
+      "decided_at": "2026-11-25T15:31:15Z",
+      "decision": "approve",
       "id": "G-escalate-impl-a1",
       "kind": "escalate",
-      "status": "WAITING_APPROVAL",
+      "status": "APPROVED",
       "step": "impl"
     }
   ],
-  "heartbeat_at": "2026-11-25T15:30:31Z",
+  "heartbeat_at": "2026-11-25T15:31:17Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -69,10 +69,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 16,
+  "rev": 18,
   "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
   "schema": "run-state.v1",
-  "status": "PAUSED_APPROVAL",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -232,7 +232,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "WAITING_APPROVAL"
+      "status": "ACCEPTED"
     },
     {
       "attempts": [],
@@ -267,7 +267,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T15:30:31Z",
+  "updated_at": "2026-11-25T15:31:17Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }
