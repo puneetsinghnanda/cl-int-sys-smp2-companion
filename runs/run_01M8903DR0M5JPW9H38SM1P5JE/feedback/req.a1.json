@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "RR-C05: C7 cites web/src/pages/DashboardPage.tsx, not a declared input",
+      "id": "H5"
+    }
+  ],
+  "kind": "checks",
+  "must_resolve": [
+    "H5"
+  ],
+  "run_id": "run_01M8903DR0M5JPW9H38SM1P5JE",
+  "schema": "feedback.v1",
+  "step": "req"
+}
