@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "implement must confirm, and the verifier's migrate run proves it",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/design.md#assumed"
+        },
+        {
+          "quote": "the verifier's migrate run will prove or refute it",
+          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md#assumed"
+        },
+        {
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "Design asks implement to confirm the default CHECK names for CO-1, but the artifact keeps it assumed and defers to the verifier's migrate run. The names follow Postgres's <table>_<column>_check rule for the unnamed column CHECKs, so they could be marked known."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
+  "schema": "feedback.v1",
+  "step": "impl"
+}

@@ -4,12 +4,18 @@
     "session_id": "c441e434-c904-4af2-8623-650b71631899",
     "since": "2026-11-25T11:29:45Z"
   },
-  "branch": {},
+  "branch": {
+    "sample-system": {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "head_sha": null,
+      "name": "tsl/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ"
+    }
+  },
   "created_at": "2026-11-25T11:29:45Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-25T11:53:10Z",
+  "heartbeat_at": "2026-11-25T12:00:30Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -47,7 +53,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 17,
+  "rev": 22,
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -201,16 +207,44 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.md",
+          "artifact_sha256": "d287533b430f0cac344f5992b96231833bdf3a9ff159152a69adc984adfc31c5",
+          "band": "Low",
+          "cause": "first",
+          "decided_at": "2026-11-25T12:00:30Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "2d5f15910d589f957c292a1b33bfdf53a18216ca5a639a9e05cacd5da8a6e4a8",
+              "step": "design"
+            },
+            {
+              "name": "stories",
+              "sha256": "cb0b1c68ceef02d6fb6550506b35cd99814cb26aded4e14a0ff8670de9a0a06a",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/impl.verification.json",
+          "skill": "implement@1.4.0",
+          "skill_started_at": "2026-11-25T11:55:48Z",
+          "started_at": "2026-11-25T11:53:18Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "impl",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -245,7 +279,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T11:53:10Z",
+  "updated_at": "2026-11-25T12:00:30Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }
