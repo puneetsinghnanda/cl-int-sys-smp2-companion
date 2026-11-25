@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M897G118QMGZ7FAT3WCXETBZ
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ticket.md
@@ -29,8 +29,8 @@ claims:
   - id: C5
     text: "A Completed appointment is closed by staff once its `start time` has passed."
     cites: ["context/glossary.md#completed"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-15, REQ-16]
 assumed: []
 unknown: []
 requirements:
@@ -65,10 +65,10 @@ requirements:
     statement: "A past Scheduled appointment rescheduled within 24h after its start time is not marked `Stale`."
     cites: ["artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ticket.md#L20", "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-02"]
   - id: REQ-6
-    title: Cancelled or No-show within the day is not Stale
+    title: Cancelled within the day is not Stale
     type: functional
     status: known
-    statement: "An appointment cancelled or marked No-show within the one day is no longer `Scheduled` and is not marked Stale."
+    statement: "An appointment cancelled within the one day is no longer `Scheduled` and is not marked Stale."
     cites: ["context/glossary.md#scheduled", "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ticket.md#L17-L18", "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-05"]
   - id: REQ-7
     title: Staff can mark a Stale appointment Completed
@@ -124,6 +124,12 @@ requirements:
     status: known
     statement: "The glossary has an entry for `Stale` that matches REQ-2."
     cites: ["artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ticket.md#L16", "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-07"]
+  - id: REQ-16
+    title: No-show within the day is not Stale
+    type: functional
+    status: known
+    statement: "An appointment marked No-show within the one day is no longer `Scheduled` and is not marked Stale."
+    cites: ["context/glossary.md#scheduled", "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/ticket.md#L17-L18", "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-05"]
 unknowns: []
 questions: []
 answers:
@@ -154,7 +160,7 @@ answers:
     kind: assumption
     about: REQ-6
     answer: "Yes, confirm"
-    requirements: [REQ-6]
+    requirements: [REQ-6, REQ-16]
   - id: A-06
     kind: assumption
     about: REQ-11
@@ -190,7 +196,7 @@ glossary rule that only Scheduled appointments can change (C2).
 - REQ-3 An automatic job marks Stale (known): an automatic background job, not staff, marks them.
 - REQ-4 Completed within the day is not Stale (known).
 - REQ-5 Rescheduled within the day is not Stale (known).
-- REQ-6 Cancelled or No-show within the day is not Stale (known): no longer Scheduled.
+- REQ-6 Cancelled within the day is not Stale (known): no longer Scheduled.
 - REQ-7 Staff can mark a Stale appointment Completed (known).
 - REQ-8 Staff can mark a Stale appointment No-show (known).
 - REQ-9 Staff can cancel a Stale appointment with a reason (known).
@@ -200,12 +206,13 @@ glossary rule that only Scheduled appointments can change (C2).
 - REQ-13 The appointment list's status filter offers Stale (known).
 - REQ-14 No new dashboard tile (known).
 - REQ-15 The glossary has an entry for Stale that matches REQ-2 (known).
+- REQ-16 No-show within the day is not Stale (known): no longer Scheduled.
 
 ## Known
 - REQ-1, REQ-4, REQ-5: stated in the ticket (#L16, #L19, #L20); A-02 fixes "one day" as 24h after the start time.
 - REQ-2: ticket #L17-L18 with A-02.
 - REQ-3: A-01.
-- REQ-6: assumption confirmed in A-05; follows from glossary#scheduled.
+- REQ-6, REQ-16: assumption confirmed in A-05, which covered both cancelled and No-show; follows from glossary#scheduled.
 - REQ-7 to REQ-10: A-03.
 - REQ-11: assumption confirmed in A-06.
 - REQ-12 to REQ-14: A-04.
@@ -225,7 +232,7 @@ Answered in the IDE:
 - A-02 (Q-02, when the one day is counted from): "24h after start time (proposed default)", answered by eng-dbe4; decides REQ-2, REQ-4, REQ-5.
 - A-03 (Q-03, can Stale change afterwards): "Staff can still close or reschedule it (proposed default)", answered by eng-dbe4; decides REQ-7 to REQ-10. Mismatch: the glossary says only Scheduled appointments can change; the user decided staff can still close or reschedule a Stale appointment.
 - A-04 (Q-04, where Stale shows): "Wherever status shows (proposed default)", answered by eng-dbe4; decides REQ-12, REQ-13, REQ-14.
-- A-05 (REQ-6 assumption): "Yes, confirm", answered by eng-dbe4; decides REQ-6.
+- A-05 (REQ-6 assumption, cancelled or No-show within the day is not Stale): "Yes, confirm", answered by eng-dbe4; decides REQ-6 and REQ-16.
 - A-06 (REQ-11 assumption that a rescheduled Stale appointment is Scheduled again): "Yes, confirm", answered by eng-dbe4; decides REQ-11.
 - A-07 (Q-05, glossary entry): "Add entry from REQ-2 (proposed default)", answered by eng-dbe4; decides REQ-15.
 

@@ -1,31 +1,27 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/req.md",
-  "artifact_sha256": "76ec469a85266743b8aed17cfd6a0dc9919d67f9c252503e61e1d2305fedb3bd",
-  "attempt": 1,
+  "artifact_sha256": "ffba5da30ea3e68697ff8bc3701d510d9c7482c75dc4f24d256402210175ae13",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "6d63779eaebb41a50b88ce182a3ff33003c77b66f4fd2ebe70bb567f6dd27cb1",
+  "checks_sha256": "df80e9550b0f664ef78e39d2fab2fa321e911d4f1b71377364fb17652bd63423",
   "claims": {
     "total": 5,
     "verified": 5
   },
-  "decided_at": "2026-11-25T11:35:39Z",
+  "decided_at": "2026-11-25T11:38:25Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
       "severity": "minor"
-    },
-    {
-      "id": "F-2",
-      "severity": "major"
     }
   ],
   "gate_failures": [],
   "inputs": [],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -33,15 +29,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "e5a766c52278c540a7d26335c9c7d8acea9e6df3923bbd74f72f15f910a7414c",
   "product_changes": null,
-  "review_sha256": "934874e724750864e31684c7bbfa0d5351105aa271c3589f2e8896d9440db7ea",
+  "review_sha256": "25ee8b6c5c1b2a30971b831d853a6b1196a510445fd075c15fb5314c440a81a2",
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.65,
+    "S3": 4.85,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -50,7 +46,7 @@
       "sensitive": false
     }
   },
-  "signature": "x906AUsM3lydyQKauPosiRTUeRvlmQZm2r7VFA7LOF_-tM5xaU-6e0R3F94y2lIf0bfq4DCIarPKOHyklksyCQ",
+  "signature": "tsijqvMAJ2H62Vo9HEIu65HTHFYJsCaYVvVULGZwSVQy7eYGOprtQw40Cq7HP1mdr_bT0g_fWdp4xK8TiR8XBw",
   "skill": "requirement-review@1.5.0",
   "step": "req",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

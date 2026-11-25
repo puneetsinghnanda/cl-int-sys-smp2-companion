@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "76ec469a85266743b8aed17cfd6a0dc9919d67f9c252503e61e1d2305fedb3bd",
-  "attempt": 1,
+  "artifact_sha256": "ffba5da30ea3e68697ff8bc3701d510d9c7482c75dc4f24d256402210175ae13",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -73,29 +73,12 @@
       "id": "F-1",
       "severity": "minor",
       "suggested_fix": "Extend A-03's mismatch to cite glossary#cancelled and note that cancelling a past (Stale) appointment departs from the Cancelled definition.",
-      "text": "REQ-9 and REQ-6 let staff cancel an appointment after its start time, but the glossary defines Cancelled as called off before it took place. A-03's mismatch records only the glossary#scheduled clash, not this one."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "An appointment cancelled or marked No-show within the one day is no longer `Scheduled` and is not marked Stale.",
-          "ref": "artifacts/HMS-34/run_01M897G118QMGZ7FAT3WCXETBZ/req.md#item:REQ-6"
-        },
-        {
-          "quote": "- options: Yes, confirm | No-show still becomes Stale",
-          "ref": "runs/run_01M897G118QMGZ7FAT3WCXETBZ/ide-answers.md#a-05"
-        }
-      ],
-      "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Split REQ-6 into one REQ for Cancelled and one for No-show, each citing A-05.",
-      "text": "REQ-6 is compound: it covers two behaviours (Cancelled is not Stale; No-show is not Stale). A-05's options also treated them separately. REQ-4 and REQ-5 split the analogous Completed and rescheduled cases."
+      "text": "Still open from attempt 1: REQ-9 and REQ-6 let staff cancel an appointment after its start time, but the glossary defines Cancelled as called off before it took place. A-03's mismatch records only the glossary#scheduled clash, not this one."
     }
   ],
-  "package_sha256": "bbd5654edc4838a855233a869d74abfc4cc35ab584608fd1fbac90989a5a4ff9",
+  "package_sha256": "6f28fe71b7eec7529c853789a75d442e7373f5bc09be8d0386b17deaccd4fd44",
   "questions": [],
-  "recorded_at": "2026-11-25T11:35:28Z",
+  "recorded_at": "2026-11-25T11:38:23Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -106,13 +89,13 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "All four ticket acceptance criteria map to REQ-1, REQ-2, REQ-4 and REQ-5; job timing is listed under Out of scope with a reason.",
+      "reason": "All four ticket acceptance criteria map to REQ-1, REQ-2, REQ-4 and REQ-5; job frequency is listed under Out of scope with a reason.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs are atomic and checkable; REQ-6 merges the Cancelled and No-show cases, while REQ-4 and REQ-5 split the analogous cases.",
-      "score": 4
+      "reason": "Previous F-2 fixed: Cancelled (REQ-6) and No-show (REQ-16) are now separate REQs; each REQ states one checkable behaviour.",
+      "score": 5
     },
     {
       "id": "RR-R3",
@@ -121,21 +104,21 @@
     },
     {
       "id": "RR-R4",
-      "reason": "The Scheduled-only-can-change clash was asked (Q-03) and recorded as a mismatch, but the clash with glossary Cancelled ('before it took place') for past or Stale appointments is not recorded.",
+      "reason": "The Scheduled-only-can-change clash was asked (Q-03) and recorded as a mismatch, but the clash with glossary Cancelled ('before it took place') for cancelling a past or Stale appointment is still not recorded.",
       "score": 4
     },
     {
       "id": "RR-R5",
-      "reason": "Questions Q-01 to Q-05 offered real options with defaults and were answered; none remain open needlessly.",
+      "reason": "Q-01 to Q-05 offered real options with defaults and were answered; none remain open needlessly.",
       "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Plain wording; glossary terms are used consistently, and 'reschedule' is tied to the glossary term 'move'.",
+      "reason": "Plain wording; glossary terms used consistently, and 'reschedule' is tied to the glossary term 'move'.",
       "score": 5
     }
   ],
-  "rubric_score": 4.65,
+  "rubric_score": 4.85,
   "run_id": "run_01M897G118QMGZ7FAT3WCXETBZ",
   "schema": "review.v1",
   "status": "ok",
