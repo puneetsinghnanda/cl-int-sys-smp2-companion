@@ -1,0 +1,25 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "still pages at `20 per page` and its total counts only the filtered patients",
+          "ref": "artifacts/HMS-27/run_01M89BPMN0XE2ZPMFG17PNG5CP/req.md#item:REQ-11"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-11 is compound: it combines two checkable behaviours, the page size staying 20 with the filter on and the total counting only filtered patients, in one requirement."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M89BPMN0XE2ZPMFG17PNG5CP",
+  "schema": "feedback.v1",
+  "step": "req"
+}
