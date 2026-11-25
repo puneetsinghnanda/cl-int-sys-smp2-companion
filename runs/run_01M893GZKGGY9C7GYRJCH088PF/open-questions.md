@@ -5,7 +5,7 @@ ticket: HMS-34
 workflow: brownfield-small@1.0.0
 step: req@1.5.0
 created_at: '2026-11-25T10:25:24Z'
-status: open
+status: answered
 ---
 
 # Open questions — HMS-34 (req step)
@@ -16,6 +16,6 @@ Answer each question below the line `answer:`. Keep the ids. Then run:
 ## Q-01 · blocking · ask: product owner
 **Question:** A-03 said staff can still 'close' a Stale appointment. Can staff also reschedule (move) one, and if so, does it go back to Scheduled?
 **Proposed default:** none
-answer:
-answered_by:
-decision:
+answer: Yes, they can reschedule as well, its only a state change to let them know that this appointment needs attention.
+answered_by: Gaurav
+decision: approve

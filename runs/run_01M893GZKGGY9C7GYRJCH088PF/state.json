@@ -2,14 +2,14 @@
   "active_session": {
     "host_hash": "h_c14537ff",
     "session_id": "c441e434-c904-4af2-8623-650b71631899",
-    "since": "2026-11-25T10:20:22Z"
+    "since": "2026-11-25T10:28:44Z"
   },
   "branch": {},
   "created_at": "2026-11-25T10:20:22Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-25T10:25:24Z",
+  "heartbeat_at": "2026-11-25T10:28:44Z",
   "owner": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
   "owner_pseudonym": "eng-dbe4",
   "pack": {
@@ -42,15 +42,17 @@
   },
   "prs": [],
   "questions": {
-    "answered_sha256": {},
-    "open_blocking": 1,
+    "answered_sha256": {
+      "Q-01": "0f4068dce7b6d3f7f0d3c86a42e31f5b25e61612d026f02367ef855f5cd7f74b"
+    },
+    "open_blocking": 0,
     "open_non_blocking": 0,
     "round": 1
   },
-  "rev": 3,
+  "rev": 5,
   "run_id": "run_01M893GZKGGY9C7GYRJCH088PF",
   "schema": "run-state.v1",
-  "status": "PAUSED_INPUT",
+  "status": "RUNNING",
   "steps": [
     {
       "attempts": [
@@ -79,7 +81,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "WAITING_INPUT"
+      "status": "READY"
     },
     {
       "attempts": [],
@@ -150,7 +152,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-25T10:25:24Z",
+  "updated_at": "2026-11-25T10:28:44Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }
