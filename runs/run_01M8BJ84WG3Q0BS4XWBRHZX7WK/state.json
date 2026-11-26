@@ -4,12 +4,18 @@
     "session_id": "c8587b52-2710-4a38-b195-bf622305adad",
     "since": "2026-11-26T09:16:10Z"
   },
-  "branch": {},
+  "branch": {
+    "sample-system": {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "head_sha": null,
+      "name": "tsl/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK"
+    }
+  },
   "created_at": "2026-11-26T09:16:10Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-26T09:21:45Z",
+  "heartbeat_at": "2026-11-26T09:51:11Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -44,7 +50,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 3,
+  "rev": 12,
   "run_id": "run_01M8BJ84WG3Q0BS4XWBRHZX7WK",
   "schema": "run-state.v1",
   "status": "RUNNING",
@@ -79,16 +85,40 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/impl.md",
+          "artifact_sha256": "c25c4890b33b48116bca63b32b25ee3a871466f19a893b66d86f7b4ba8a61bb9",
+          "band": null,
+          "cause": "first",
+          "decided_at": "2026-11-26T09:51:11Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "triage",
+              "sha256": "7c81d414265f679723c175c00feb5fcdfd139a35f4cab38eb1d4702f2a0fa6f2",
+              "step": "triage"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/impl.verification.json",
+          "skill": "implement@1.4.0",
+          "skill_started_at": "2026-11-26T09:26:29Z",
+          "started_at": "2026-11-26T09:22:13Z",
+          "write_rejects": 5
+        }
+      ],
       "budget_used": {
-        "checks": 0,
+        "checks": 1,
         "review": 0,
         "rework": 0,
         "verifier": 0
       },
       "id": "impl",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -111,7 +141,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "ABC-191",
-  "updated_at": "2026-11-26T09:21:45Z",
+  "updated_at": "2026-11-26T09:51:11Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "2d21ee56df66f48e66b718e07fc2d6d6ff8ab033d72b2e8bbf011ea18d072f23"
 }

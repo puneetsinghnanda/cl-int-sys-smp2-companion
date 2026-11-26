@@ -1,0 +1,18 @@
+{
+  "dropped": [],
+  "findings": [],
+  "from_attempt": 1,
+  "gate_failures": [
+    {
+      "detail": "trace id U-0 not found",
+      "id": "H5"
+    }
+  ],
+  "kind": "checks",
+  "must_resolve": [
+    "H5"
+  ],
+  "run_id": "run_01M8BJ84WG3Q0BS4XWBRHZX7WK",
+  "schema": "feedback.v1",
+  "step": "impl"
+}
