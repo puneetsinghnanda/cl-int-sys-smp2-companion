@@ -1,0 +1,56 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8BJ84WG3Q0BS4XWBRHZX7WK",
+  "step": "triage",
+  "attempt": 1,
+  "artifact_sha256": "7c81d414265f679723c175c00feb5fcdfd139a35f4cab38eb1d4702f2a0fa6f2",
+  "package_sha256": "eb804b6fce3c69c25711b7cf51e48c32a19c0abc8cd2bd8baa3152e143ee35f1",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "1ee9f75f31d3691a87f69440b3c071234dda729d5b439818ef2b13f6af69332e"
+  },
+  "rubric_score": 3.8,
+  "rubric_items": [
+    {"id": "DT-R1", "score": 4, "reason": "Observed, expected and caller context are restated with ticket line cites. 'start is after end' is repeated for days = 0, where the code gives start equal to end."},
+    {"id": "DT-R2", "score": 4, "reason": "The single candidate is in the module map and cites the ticket and the lastDays symbol. No logs exist to cite."},
+    {"id": "DT-R3", "score": 4, "reason": "One candidate rated high; the symbol location and ticket scope support it, though the reasoning is brief."},
+    {"id": "DT-R4", "score": 3, "reason": "Names the missing validation and the inputs 0, negative and fraction, but gives no expected result per check, no caller check and no existing test file."},
+    {"id": "DT-R5", "score": 4, "reason": "No material open question is evident. The inverted start/end statement is taken from the ticket as fact without being flagged as unverified."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "Symptom C2 says start is after end for days = 0. In the code, start is the start of from (to + 1) and end is the start of the day after to, so they are equal. Only negative counts invert them. A test expecting start > end at 0 would be wrong.",
+      "cites": [
+        {"ref": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/triage.md#L41", "quote": "With `days = 0` or a negative number, the `from` day is after the `to` day and `start` is after `end`"},
+        {"ref": "sample-system:api/src/lib/periods.ts#L17-L18", "quote": "const from = addDays(to, 1 - days);"},
+        {"ref": "sample-system:api/src/lib/time.ts#L96", "quote": "end: zonedToUtc(addDays(day, 1), 0, tz) };"}
+      ],
+      "claim_ref": "C2",
+      "suggested_fix": "State that days = 0 gives an empty window (start equals end) and a negative count gives start after end."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Next checks do not point to the existing lastDays test file, which covers only counts 30 and 1, as where to add the rejection cases and keep valid-count behaviour pinned.",
+      "cites": [
+        {"ref": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/triage.md#L46", "quote": "add tests for 0, a negative number and a fraction"},
+        {"ref": "sample-system:api/test/periods.test.ts#L9", "quote": "describe('lastDays (HMS-7)', () => {"}
+      ],
+      "suggested_fix": "Name api/test/periods.test.ts, expect a RangeError naming the value for each bad input, and run the existing cases unchanged."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/ticket.md#L13", "quote": "is the shared period rule for the dashboard and the doctor page."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/periods.ts#L17", "quote": "const from = addDays(to, 1 - days);"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/ticket.md#L17", "quote": "is rejected with a `RangeError` that names the value"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/periods.ts#L15", "quote": "export function lastDays(now: Date, tz: string, days: number): DayWindow {"}]}
+  ],
+  "questions": []
+}

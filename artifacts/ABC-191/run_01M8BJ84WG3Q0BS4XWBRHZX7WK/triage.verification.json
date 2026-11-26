@@ -1,0 +1,57 @@
+{
+  "artifact_path": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/triage.md",
+  "artifact_sha256": "7c81d414265f679723c175c00feb5fcdfd139a35f4cab38eb1d4702f2a0fa6f2",
+  "attempt": 1,
+  "band": "Medium",
+  "caps": [],
+  "checks_sha256": "487ab8d8a1b782edbef6d06c29dee7d2c65a597c4a6adbad416ed5c8e47b44a2",
+  "claims": {
+    "total": 4,
+    "verified": 4
+  },
+  "decided_at": "2026-11-26T09:21:45Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [],
+  "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "f94e83bf06c5a495939ecbda729ed16ea6355284284674972eb5347e38bcecde",
+  "run_id": "run_01M8BJ84WG3Q0BS4XWBRHZX7WK",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 3.8,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "ztoLpE_KkD0r2MECJCAq6U_yWkLjRMHAEDG04-KTLS7goQd1UGrnACOqVePb4_l5iwRb69QtwL3-uDbcc40RBA",
+  "skill": "defect-triage@1.2.0",
+  "step": "triage",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

@@ -9,7 +9,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-26T09:16:10Z",
+  "heartbeat_at": "2026-11-26T09:21:45Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -44,13 +44,30 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 0,
+  "rev": 3,
   "run_id": "run_01M8BJ84WG3Q0BS4XWBRHZX7WK",
   "schema": "run-state.v1",
   "status": "RUNNING",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/triage.md",
+          "artifact_sha256": "7c81d414265f679723c175c00feb5fcdfd139a35f4cab38eb1d4702f2a0fa6f2",
+          "band": "Medium",
+          "cause": "first",
+          "decided_at": "2026-11-26T09:21:45Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/triage.verification.json",
+          "skill": "defect-triage@1.2.0",
+          "skill_started_at": "2026-11-26T09:17:15Z",
+          "started_at": "2026-11-26T09:17:00Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -59,7 +76,7 @@
       },
       "id": "triage",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -94,7 +111,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "ABC-191",
-  "updated_at": "2026-11-26T09:16:10Z",
+  "updated_at": "2026-11-26T09:21:45Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "2d21ee56df66f48e66b718e07fc2d6d6ff8ab033d72b2e8bbf011ea18d072f23"
 }
