@@ -1,0 +1,114 @@
+{
+  "asks": [
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-26T08:41:45Z",
+      "answers": [
+        "A-01",
+        "A-02"
+      ],
+      "ask_id": "ASK-01",
+      "asked_at": "2026-11-26T08:40:09Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Config",
+            "Hard-coded"
+          ],
+          "text": "Q-01: Hours from config or hard-coded?"
+        },
+        {
+          "blocking": true,
+          "id": "REQ-9",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "text": "REQ-9: Show on mobile?"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "req",
+      "tool_use_id": "toolu_01VJme8peoSnHLgmgPk3VLeJ"
+    },
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-26T08:43:34Z",
+      "answers": [
+        "A-03",
+        "A-04"
+      ],
+      "ask_id": "ASK-02",
+      "asked_at": "2026-11-26T08:43:23Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Config",
+            "Hard-coded"
+          ],
+          "text": "Q-01: Hours from config or hard-coded?"
+        },
+        {
+          "blocking": true,
+          "id": "REQ-9",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "text": "REQ-9: Show on mobile?"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "req",
+      "tool_use_id": "toolu_01LvDS6uxunphwsYkvq4QfRf"
+    },
+    {
+      "agent_id": null,
+      "answered_at": null,
+      "answers": [],
+      "ask_id": "ASK-03",
+      "asked_at": "2026-11-26T08:46:25Z",
+      "attempt": 1,
+      "close_reason": "dismissed",
+      "closed_at": "2026-11-26T08:47:08Z",
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Config",
+            "Hard-coded"
+          ],
+          "text": "Q-01: Hours from config or hard-coded?"
+        },
+        {
+          "blocking": true,
+          "id": "REQ-9",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "text": "REQ-9: Show on mobile?"
+        }
+      ],
+      "source": "hook",
+      "status": "closed",
+      "step": "req",
+      "tool_use_id": "toolu_01MkorV8rXSxg9GBpZroxo8Q"
+    }
+  ],
+  "run_id": "run_01M8BG2S58X8MRM6W35Y641NQ3",
+  "schema": "ide-questions.v1"
+}
