@@ -12,14 +12,14 @@
     "attempt": 1,
     "driver": "skill",
     "session_id": "2ca6530f-2464-4a00-aeab-bfbb68978a9f",
-    "started_at": "2026-11-26T11:14:48Z",
-    "step": "req"
+    "started_at": "2026-11-26T11:17:09Z",
+    "step": "split"
   },
   "cursor": null,
   "driver": "skill",
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-26T11:15:56Z",
+  "heartbeat_at": "2026-11-26T11:18:13Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -57,7 +57,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 6,
+  "rev": 11,
   "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
   "run_loop": "code",
   "schema": "run-state.v1",
@@ -94,16 +94,39 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md",
+          "artifact_sha256": "f9e8a8b058af26a44646f2d00180a1e1311030ffd95ad0c3c9993c267bd11662",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-26T11:18:13Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "47ca1b8e9da969fec60ebc20f1098937b1760993517868ad4317e127dc147e4a",
+              "step": "req"
+            }
+          ],
+          "n": 1,
+          "outcome": "RETRY",
+          "record": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.verification.json",
+          "skill": "story-split@1.4.0",
+          "skill_started_at": "2026-11-26T11:16:25Z",
+          "started_at": "2026-11-26T11:16:04Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
-        "review": 0,
+        "review": 1,
         "rework": 0,
         "verifier": 0
       },
       "id": "split",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     {
       "attempts": [],
@@ -162,7 +185,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-40",
-  "updated_at": "2026-11-26T11:15:56Z",
+  "updated_at": "2026-11-26T11:18:13Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
