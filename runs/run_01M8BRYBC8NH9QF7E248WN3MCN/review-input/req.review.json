@@ -1,0 +1,45 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "47ca1b8e9da969fec60ebc20f1098937b1760993517868ad4317e127dc147e4a",
+  "package_sha256": "92ae24d648fad00313b1bd482325598ad27f60d6baf3396c34e3dd553297c198",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All three acceptance criteria and the endpoint ask map to REQ-1 to REQ-4; web page changes are listed out of scope with a reason."},
+    {"id": "RR-R2", "score": 4, "reason": "REQs are checkable. REQ-3 does not say a non-default zone is needed to test one direction; REQ-4 groups two no-change checks under one regression constraint."},
+    {"id": "RR-R3", "score": 5, "reason": "All four known REQs match the cited ticket lines; nothing is invented and nothing is assumed."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash found between the ticket and the cited baseline goals and constraints."},
+    {"id": "RR-R5", "score": 5, "reason": "No questions raised, and none found that needs a human to answer."},
+    {"id": "RR-R6", "score": 5, "reason": "Plain, short and consistent wording."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "REQ-3 requires both directions but omits the test condition: under the default Asia/Kolkata (UTC+05:30) the UTC day is never ahead, so the reverse case needs HOSPITAL_TZ set to a zone west of UTC.",
+      "cites": [
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md#item:REQ-3", "quote": "When the hospital day and the UTC day differ, in either direction"},
+        {"ref": "sample-system:api/src/config.ts#L33", "quote": "const timeZone = env.HOSPITAL_TZ || 'Asia/Kolkata';"},
+        {"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata"}
+      ],
+      "suggested_fix": "State in REQ-3 that the UTC-ahead case is checked with HOSPITAL_TZ set to a zone behind UTC."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/health.ts#L20", "quote": "healthRouter.get('/settings', (req, res) => {"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/health.ts#L22", "quote": "res.json({ timeZone, currency, pageSize });"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L62", "quote": "export function localDay(instant: Date, tz: string): string {"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]}
+  ],
+  "questions": []
+}

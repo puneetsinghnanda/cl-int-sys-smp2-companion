@@ -1,0 +1,61 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "intent-baseline#goals",
+      "intent-baseline#constraints",
+      "glossary"
+    ],
+    "inputs": [
+      {
+        "name": "ticket",
+        "path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/ticket.md",
+        "schema": "ticket-snapshot.v1",
+        "sha256": "1f1df232c2d426563c8caab6de588a04b5f1206f275885e69a107f1405231a55"
+      },
+      {
+        "name": "intent_baseline",
+        "path": "context/intent-baseline.md",
+        "schema": null,
+        "sha256": "9bfd821aeb2fb9524863e346707e049e4fcfb949a6e55b90223a79194946a215"
+      },
+      {
+        "name": "glossary",
+        "path": "context/glossary.md",
+        "schema": null,
+        "sha256": "430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff"
+      }
+    ],
+    "open_questions": []
+  },
+  "instruction_path": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/instructions/req.a1.json",
+  "progress": {
+    "index": 1,
+    "total": 7
+  },
+  "retry": null,
+  "review": {
+    "package_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.review-package.json",
+    "write_to": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/req.review.json"
+  },
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "say": "req: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "requirement-review@1.4.0",
+  "step": "req"
+}

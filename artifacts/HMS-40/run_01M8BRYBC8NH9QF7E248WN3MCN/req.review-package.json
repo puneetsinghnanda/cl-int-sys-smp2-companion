@@ -1,0 +1,79 @@
+{
+  "artifact_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md",
+  "artifact_sha256": "47ca1b8e9da969fec60ebc20f1098937b1760993517868ad4317e127dc147e4a",
+  "attempt": 1,
+  "budget_tokens": 15000,
+  "checks_sha256": "a61d327c70fd4fd9d44fcf03419f6d8cfd8ffb8ea1ea94d2c586d643163360cd",
+  "context_sections": [
+    {
+      "id": "intent-baseline#goals",
+      "included": true,
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "id": "intent-baseline#constraints",
+      "included": true,
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "id": "glossary",
+      "included": true,
+      "path": "context/glossary.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ticket",
+      "path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/ticket.md"
+    },
+    {
+      "name": "intent_baseline",
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "name": "glossary",
+      "path": "context/glossary.md"
+    }
+  ],
+  "package_sha256": "92ae24d648fad00313b1bd482325598ad27f60d6baf3396c34e3dd553297c198",
+  "prepared_at": "2026-11-26T11:14:54Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/req.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "RR-R1",
+        "weight": 0.25
+      },
+      {
+        "id": "RR-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "RR-R3",
+        "weight": 0.25
+      },
+      {
+        "id": "RR-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "RR-R5",
+        "weight": 0.1
+      },
+      {
+        "id": "RR-R6",
+        "weight": 0.05
+      }
+    ],
+    "path": "skills/requirement-review/rubric.md",
+    "sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "run_records": [],
+  "schema": "review-package.v1",
+  "skill": "requirement-review@1.4.0",
+  "step": "req",
+  "truncated": false
+}

@@ -6,11 +6,20 @@
   },
   "branch": {},
   "created_at": "2026-11-26T11:13:09Z",
+  "current_action": {
+    "action": "run_reviewer",
+    "agent_id": null,
+    "attempt": 1,
+    "driver": "skill",
+    "session_id": "2ca6530f-2464-4a00-aeab-bfbb68978a9f",
+    "started_at": "2026-11-26T11:14:48Z",
+    "step": "req"
+  },
   "cursor": null,
   "driver": "skill",
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-26T11:13:09Z",
+  "heartbeat_at": "2026-11-26T11:15:56Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -48,14 +57,32 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 0,
+  "rev": 6,
   "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
   "run_loop": "code",
   "schema": "run-state.v1",
   "status": "RUNNING",
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md",
+          "artifact_sha256": "47ca1b8e9da969fec60ebc20f1098937b1760993517868ad4317e127dc147e4a",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-26T11:15:56Z",
+          "feedback": null,
+          "inputs": [],
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.verification.json",
+          "skill": "requirement-review@1.4.0",
+          "skill_started_at": "2026-11-26T11:13:31Z",
+          "started_at": "2026-11-26T11:13:25Z",
+          "write_rejects": 1
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -64,7 +91,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -135,7 +162,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-40",
-  "updated_at": "2026-11-26T11:13:09Z",
+  "updated_at": "2026-11-26T11:15:56Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "522e8c1c1cc23189e0d8085a0dfa3d797adaae2e5c405611764e096b5f78f232"
 }
