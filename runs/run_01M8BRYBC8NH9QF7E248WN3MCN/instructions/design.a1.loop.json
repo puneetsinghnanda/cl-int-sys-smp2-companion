@@ -1,0 +1,6 @@
+{
+  "package_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/design.review-package.json",
+  "prepared_sha": "cc65e58d2ae1457c7f968da424df2b1a24ea711b674db0b9cee0a2e61f5b66eb",
+  "verified_sha": "cc65e58d2ae1457c7f968da424df2b1a24ea711b674db0b9cee0a2e61f5b66eb",
+  "write_to": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/design.review.json"
+}

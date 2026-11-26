@@ -1,0 +1,46 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "step": "design",
+  "attempt": 1,
+  "artifact_sha256": "cc65e58d2ae1457c7f968da424df2b1a24ea711b674db0b9cee0a2e61f5b66eb",
+  "package_sha256": "632600e76f685fc5a1d32c5761a93b14eef9d3c37a689d0d0074ea20a8e72ceb",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
+  },
+  "rubric_score": 4.85,
+  "rubric_items": [
+    {"id": "DS-R1", "score": 5, "reason": "Changes the existing settings handler and reuses localDay and the injectable context clock; no new parts."},
+    {"id": "DS-R2", "score": 5, "reason": "S-1 AC1-AC4 are met by adding today from localDay(clock(), timeZone) while other fields and /health stay as they are."},
+    {"id": "DS-R3", "score": 5, "reason": "The one new field, today, has name, type, nullability, format and example on an endpoint correctly marked changed."},
+    {"id": "DS-R4", "score": 4, "reason": "Claims check out against the code, but the effect on an existing exact-body test of /api/settings is not mentioned."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-offs are given for the context clock, per-request computation and leaving the web type unchanged."},
+    {"id": "DS-R6", "score": 5, "reason": "Short, clear and consistent between front matter and body."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The design omits that an existing test asserts the exact /api/settings body with three fields. Adding today will fail it, so implement must update that assertion while keeping the old values.",
+      "cites": [
+        {"ref": "sample-system:api/test/auth.test.ts#L32", "quote": "toEqual({ timeZone: 'Asia/Kolkata', currency: 'INR', pageSize: 20 });"},
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/design.md#components", "quote": "The other response fields and the health handler stay as they are."}
+      ],
+      "suggested_fix": "Note that api/test/auth.test.ts must expect the added today field, with the three existing values unchanged."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/health.ts#L20", "quote": "healthRouter.get('/settings', (req, res) => {"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/health.ts#L5", "quote": "export const healthRouter = Router();"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L62", "quote": "export function localDay(instant: Date, tz: string): string {"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/lib/time.ts#L61-L64", "quote": "The hospital-local date (YYYY-MM-DD) of an instant."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/health.ts#L21", "quote": "const { timeZone, currency, pageSize } = ctx(req).config;"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/index.ts#L21", "quote": "clock: () => Date;"}]}
+  ],
+  "questions": []
+}
