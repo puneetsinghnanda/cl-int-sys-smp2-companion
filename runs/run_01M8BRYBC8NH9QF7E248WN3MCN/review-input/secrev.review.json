@@ -1,0 +1,56 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "c2f4324126a2b4e83f5070ddc44e688c3ef5fca2f882802e5e5f8e9c031b285f",
+  "package_sha256": "5acee1cb8348570d040b8fa1b9e68f570dbd6a320e89ad2a5487e28d190c72d5",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "The handler takes no request input, runs no query and adds no route. I found no weakness in it that the artifact missed."},
+    {"id": "SC-R2", "score": 4, "reason": "There are no findings to locate. The summary counts a test file from outside its listed input and does not name or cite the changed test files."},
+    {"id": "SC-R3", "score": 5, "reason": "The low-risk verdict with no findings matches the impact of adding one server-derived date."},
+    {"id": "SC-R4", "score": 5, "reason": "No weakness was found, so no fix direction is needed."},
+    {"id": "SC-R5", "score": 5, "reason": "No findings are reported, so there are no false alarms."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "Summary counts two changed test files, but the input impl.md lists one. The second comes from the later unit-test step, which is not an input or cited, and the attached implement-step scans are not the scans run for that step.",
+      "cites": [
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/secrev.md#summary", "quote": "The other two changed files are tests with invented data."},
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/impl.md#L14", "quote": "files: [api/src/routes/health.ts, api/test/auth.test.ts]"},
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/ut.md#L14", "quote": "files: [api/test/settings-today.test.ts]"},
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/ut.checks.json#L126", "quote": "6c2fb09e87b4b30480c58fca70729c18b149e4b220a17e3b8414a97965c58f42"}
+      ],
+      "suggested_fix": "Either limit the summary to the files in impl.md, or add ut.md as an input, name settings-today.test.ts and attach the unit-test step's scan hashes."
+    }
+  ],
+  "claims_checked": [
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [
+        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/impl.md#L14", "quote": "files: [api/src/routes/health.ts, api/test/auth.test.ts]"}
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [
+        {"ref": "context/architecture.md#identity", "quote": "Every API request passes through `identify`, which sets the actor"},
+        {"ref": "sample-system:api/src/app.ts#L24", "quote": "app.use('/api', identify);"}
+      ]
+    }
+  ],
+  "questions": []
+}

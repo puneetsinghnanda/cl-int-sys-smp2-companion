@@ -1,0 +1,61 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/secrev.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "architecture",
+      "conventions",
+      "dependency-graph"
+    ],
+    "inputs": [
+      {
+        "name": "change",
+        "path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/impl.md",
+        "schema": "change.v1",
+        "sha256": "f32f7a3f9020c0ef937f0f4dc6bbb6cf3af5b9d3f0707c61d3590b2c59b1a133"
+      },
+      {
+        "name": "conventions",
+        "path": "context/conventions.md",
+        "schema": null,
+        "sha256": "dc53d94ec34eb193eeb06fdd0db19eb86a24c29f7d3c434e7c212d61038ca852"
+      },
+      {
+        "name": "architecture",
+        "path": "context/architecture.md",
+        "schema": null,
+        "sha256": "9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a"
+      }
+    ],
+    "open_questions": []
+  },
+  "instruction_path": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/instructions/secrev.a1.json",
+  "progress": {
+    "index": 6,
+    "total": 7
+  },
+  "retry": null,
+  "review": {
+    "package_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/secrev.review-package.json",
+    "write_to": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/secrev.review.json"
+  },
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "say": "secrev: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "secure-code-review@1.3.0",
+  "step": "secrev"
+}

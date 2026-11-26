@@ -1,0 +1,75 @@
+{
+  "artifact_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/secrev.md",
+  "artifact_sha256": "c2f4324126a2b4e83f5070ddc44e688c3ef5fca2f882802e5e5f8e9c031b285f",
+  "attempt": 1,
+  "budget_tokens": 30000,
+  "checks_sha256": "40f8d61077d6ea63d7c8a7e06deb4a665c718ba7fc504770dca82bfdbbc79382",
+  "context_sections": [
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "dependency-graph",
+      "included": true,
+      "path": "context/dependency-graph.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "change",
+      "path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/impl.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "architecture",
+      "path": "context/architecture.md"
+    }
+  ],
+  "package_sha256": "5acee1cb8348570d040b8fa1b9e68f570dbd6a320e89ad2a5487e28d190c72d5",
+  "prepared_at": "2026-11-26T12:23:57Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/secrev.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "SC-R1",
+        "weight": 0.35
+      },
+      {
+        "id": "SC-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "SC-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "SC-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "SC-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/secure-code-review/rubric.md",
+    "sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "run_records": [],
+  "schema": "review-package.v1",
+  "skill": "secure-code-review@1.3.0",
+  "step": "secrev",
+  "truncated": false
+}
