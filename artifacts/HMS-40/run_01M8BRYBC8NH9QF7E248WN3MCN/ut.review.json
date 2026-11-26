@@ -1,0 +1,104 @@
+{
+  "artifact_sha256": "0614d95f1b23fda28a0e063a63327405cf3a39348b9313a2776f419ccd135b08",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "The design changes the settings handler in `api/src/routes/health.ts`.",
+          "ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/impl.md#claim:C1"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "toEqual({ status: 'ok', db: 'up' });",
+          "ref": "sample-system:api/test/auth.test.ts#L32"
+        },
+        {
+          "quote": "res.status(503).json({ status: 'degraded', db: 'down' });",
+          "ref": "sample-system:api/src/routes/health.ts#L15"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a health test with a pool whose query rejects and expect 503 with the degraded body.",
+      "text": "S-1 AC4 says GET /health responds as before, but the cited test asserts only the healthy response; no API test asserts the 503 degraded response. The health handler is unchanged."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "REQ-3: today changes at hospital midnight, while the UTC day does not",
+          "ref": "sample-system:api/test/settings-today.test.ts#L17"
+        },
+        {
+          "quote": "HMS-9 REQ-2 (T-7): days follow the hospital zone across UTC midnight",
+          "ref": "context/generated/test-layout.json#L121"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Prefix the three test names with HMS-40.",
+      "text": "The new test names start with bare REQ-n and omit the ticket key, unlike other ticket tests such as 'HMS-9 REQ-2 ...', so the IDs do not say which ticket's requirements they mean."
+    }
+  ],
+  "package_sha256": "87092edf428e1d3b943b32515bfbd29990ccb2ad20a4376aed3f4808fc970507",
+  "questions": [],
+  "recorded_at": "2026-11-26T12:22:11Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "The changed settings response is tested on both sides of hospital midnight, in a zone behind UTC and for its full shape.",
+      "score": 5
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check exact `today` values and the exact response body through the HTTP endpoint.",
+      "score": 5
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Boundary instants are covered and the settings handler returns no error response. The health degraded path, relevant to 'same as before', is not asserted.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest and Supertest with a fixed clock, in api/test. New test names omit the ticket key that other ticket tests carry.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No counts or coverage figures are stated; results are left to the verifier record.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
