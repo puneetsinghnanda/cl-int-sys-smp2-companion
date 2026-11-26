@@ -1,0 +1,91 @@
+{
+  "artifact_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/impl.md",
+  "artifact_sha256": "f32f7a3f9020c0ef937f0f4dc6bbb6cf3af5b9d3f0707c61d3590b2c59b1a133",
+  "attempt": 1,
+  "budget_tokens": 45000,
+  "checks_sha256": "75d05b575b1c5d2bc18ba647397805da2b96736a7db2aff6cade7f16715ec892",
+  "context_sections": [
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "design",
+      "path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/design.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    }
+  ],
+  "package_sha256": "6c961860479b2b757f4d9a1cd490e6d3d9df15904e2b7c485328ddb56d7f3c6b",
+  "prepared_at": "2026-11-26T12:08:25Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "record_error": {
+    "citations": [
+      {
+        "item": "finding F-1",
+        "reason": "item AC2 not found",
+        "ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md#item:AC2"
+      }
+    ],
+    "code": "E-REV-05",
+    "message": "1 reviewer citation(s) do not verify: finding F-1 artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md#item:AC2: item AC2 not found",
+    "refused_review": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/impl.refused-review.json"
+  },
+  "review_input_path": "runs/run_01M8BRYBC8NH9QF7E248WN3MCN/review-input/impl.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "IM-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "IM-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R4",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/implement/rubric.md",
+    "sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
+  "run_records": [],
+  "schema": "review-package.v1",
+  "skill": "implement@1.3.0",
+  "step": "impl",
+  "truncated": false
+}
