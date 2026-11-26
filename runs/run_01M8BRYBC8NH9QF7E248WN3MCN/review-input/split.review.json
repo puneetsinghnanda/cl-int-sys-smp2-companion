@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
   "step": "split",
-  "attempt": 1,
-  "artifact_sha256": "f9e8a8b058af26a44646f2d00180a1e1311030ffd95ad0c3c9993c267bd11662",
-  "package_sha256": "4ec4aa91f263ed30e64a5af55f9cd45c249a90422d283280baaeec41169b890e",
+  "attempt": 2,
+  "artifact_sha256": "7ce601066fce0ccfb2969ed8f41153375268416bfc548e75869166c890cafee0",
+  "package_sha256": "b92eafaf3df41187e19fdac8e9909acdfbda16cb40173ea02d054b8d6d95f5a9",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,32 +12,20 @@
     "version": "0.1.7",
     "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01"
   },
-  "rubric_score": 4.45,
+  "rubric_score": 4.75,
   "rubric_items": [
     {"id": "SS-R1", "score": 5, "reason": "REQ-1 to REQ-4 are all traced by S-1; REQ-2 is noted as a build constraint, and both day-boundary directions and both unchanged targets have criteria."},
-    {"id": "SS-R2", "score": 5, "reason": "One story delivering one user-visible outcome, with four criteria."},
-    {"id": "SS-R3", "score": 4, "reason": "AC1 and AC2 would fail a UTC-date implementation and AC3 and AC4 cover regression; AC2 gives no concrete zone, instant or date."},
-    {"id": "SS-R4", "score": 3, "reason": "AC3 names `timeZone` and `currency`, which the intent does not contain; they come from the ticket, which the artifact does not cite."},
+    {"id": "SS-R2", "score": 5, "reason": "One story delivering one outcome, with four focused criteria."},
+    {"id": "SS-R3", "score": 4, "reason": "AC1 and AC2 would fail a UTC-date implementation and AC3 and AC4 cover regression; AC2 still gives no concrete zone, instant or date."},
+    {"id": "SS-R4", "score": 5, "reason": "The earlier unsourced field names are gone (prior F-1 resolved). The zone comes from the intent and AC1's local time and date follow inline from the stated offset and instant."},
     {"id": "SS-R5", "score": 5, "reason": "Short, clear criteria with consistent terms; the body matches the front matter in substance."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "traceability",
-      "text": "AC3 uses field names `timeZone` and `currency` that the intent never states (REQ-4 says only \"existing settings fields\"). The names match the ticket, but the artifact neither cites it nor derives them.",
-      "cites": [
-        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md#item:S-1", "quote": "`timeZone`, `currency` and `pageSize` are returned as before"},
-        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md#item:REQ-4", "quote": "The existing settings fields and `GET /health` are unchanged."},
-        {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/ticket.md#L16", "quote": "returns `timeZone`, `currency` and `pageSize`"}
-      ],
-      "suggested_fix": "Add a claim naming these fields that cites ticket.md#L16 or the product code at the pinned SHA, or word AC3 as the intent does (existing settings fields)."
-    },
-    {
-      "id": "F-2",
       "severity": "minor",
       "category": "completeness",
-      "text": "AC2 gives no concrete zone, instant or expected date (only \"behind UTC\" and \"previous day\"), unlike AC1, so each tester must choose the boundary values.",
+      "text": "AC2 still gives no concrete zone, instant or expected date (only \"behind UTC\" and \"previous day\"), unlike AC1, so each tester must choose the boundary values. This repeats attempt 1's F-2.",
       "cites": [
         {"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md#item:S-1", "quote": "Given a configured hospital time zone behind UTC and an instant just after midnight in UTC"}
       ],
@@ -45,8 +33,16 @@
     }
   ],
   "claims_checked": [
-    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md#item:REQ-1", "quote": "GET /settings also returns `today`"}]},
-    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md#item:REQ-2", "quote": "computed with the existing day helper in `api/src/lib/time.ts`"}]}
+    {
+      "claim_id": "C1",
+      "verdict": "supported",
+      "cites": [{"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md#item:REQ-1", "quote": "GET /settings also returns `today`"}]
+    },
+    {
+      "claim_id": "C2",
+      "verdict": "supported",
+      "cites": [{"ref": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/req.md#item:REQ-2", "quote": "computed with the existing day helper in `api/src/lib/time.ts`"}]
+    }
   ],
   "questions": []
 }

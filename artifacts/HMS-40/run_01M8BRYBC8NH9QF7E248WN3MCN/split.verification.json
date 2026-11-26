@@ -1,24 +1,20 @@
 {
   "artifact_path": "artifacts/HMS-40/run_01M8BRYBC8NH9QF7E248WN3MCN/split.md",
-  "artifact_sha256": "f9e8a8b058af26a44646f2d00180a1e1311030ffd95ad0c3c9993c267bd11662",
-  "attempt": 1,
+  "artifact_sha256": "7ce601066fce0ccfb2969ed8f41153375268416bfc548e75869166c890cafee0",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "747ff442473711e97d490533832066078a5521b6b8d8f390807341258d57aa1d",
+  "checks_sha256": "5bb9067c4b679c3c23b9e5d6766f82fdf497bcc5a3c65ef016d60f1e0c029bca",
   "claims": {
     "total": 2,
     "verified": 2
   },
-  "decided_at": "2026-11-26T11:18:13Z",
+  "decided_at": "2026-11-26T11:19:58Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
       "severity": "minor"
     }
   ],
@@ -31,7 +27,7 @@
     }
   ],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -39,15 +35,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "ecb4450c1d3ea05729b7338bce28268d67e35d4da74ad3487e37472b53ceaaf3",
   "product_changes": null,
-  "review_sha256": "fb8d133da0246501517028726c7948470d218c06dd0b279f0603b035573a6779",
+  "review_sha256": "30e881225eb00c78e941e888337d80f34f9812cb0a27729248314c7c223c9784",
   "run_id": "run_01M8BRYBC8NH9QF7E248WN3MCN",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.45,
+    "S3": 4.75,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -56,7 +52,7 @@
       "sensitive": false
     }
   },
-  "signature": "hi1Cex9siZWDuLnnSaSUbSNtVnrkPPXZO-ocsB6NVUsa7R_X3uUNxHIcw6OY5PzVGomcWHWSNP8bmjFhkrkhCQ",
+  "signature": "PLmEW6K-XwfNIAAnM4MgnX2ZDDIFlQr1JPO-S8OtRT6n0K4DaQWhMimAgsgug9Rlcbwz8Tyl0rtHM6v-FT36CA",
   "skill": "story-split@1.4.0",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
