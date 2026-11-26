@@ -13,9 +13,9 @@
   },
   "created_at": "2026-11-26T09:16:10Z",
   "cursor": null,
-  "end_reason": null,
+  "end_reason": "cancelled",
   "gates": [],
-  "heartbeat_at": "2026-11-26T09:51:11Z",
+  "heartbeat_at": "2026-11-26T10:02:35Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -50,10 +50,10 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 12,
+  "rev": 15,
   "run_id": "run_01M8BJ84WG3Q0BS4XWBRHZX7WK",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "COMPLETED",
   "steps": [
     {
       "attempts": [
@@ -88,7 +88,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/impl.md",
+          "artifact": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/history/impl/a1/impl.md",
           "artifact_sha256": "c25c4890b33b48116bca63b32b25ee3a871466f19a893b66d86f7b4ba8a61bb9",
           "band": null,
           "cause": "first",
@@ -103,11 +103,33 @@
           ],
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/impl.verification.json",
+          "record": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/history/impl/a1/impl.verification.json",
           "skill": "implement@1.4.0",
           "skill_started_at": "2026-11-26T09:26:29Z",
           "started_at": "2026-11-26T09:22:13Z",
           "write_rejects": 5
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/impl.md",
+          "artifact_sha256": null,
+          "band": null,
+          "cause": "retry_checks",
+          "decided_at": null,
+          "feedback": "runs/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/feedback/impl.a1.json",
+          "inputs": [
+            {
+              "name": "triage",
+              "sha256": "7c81d414265f679723c175c00feb5fcdfd139a35f4cab38eb1d4702f2a0fa6f2",
+              "step": "triage"
+            }
+          ],
+          "n": 2,
+          "outcome": null,
+          "record": null,
+          "skill": "implement@1.4.0",
+          "skill_started_at": "2026-11-26T09:52:41Z",
+          "started_at": "2026-11-26T09:52:15Z"
         }
       ],
       "budget_used": {
@@ -141,7 +163,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "ABC-191",
-  "updated_at": "2026-11-26T09:51:11Z",
+  "updated_at": "2026-11-26T10:02:35Z",
   "workflow": "defect-fix@1.0.0",
   "workflow_sha256": "2d21ee56df66f48e66b718e07fc2d6d6ff8ab033d72b2e8bbf011ea18d072f23"
 }

@@ -1,7 +1,7 @@
 {
-  "artifact_sha256": "c25c4890b33b48116bca63b32b25ee3a871466f19a893b66d86f7b4ba8a61bb9",
-  "attempt": 1,
-  "finished_at": "2026-11-26T09:50:45Z",
+  "artifact_sha256": "9a6d24e6ecd835192a6738405da1d15a744120a6f318e0d0f8b1e9bde7a6c99e",
+  "attempt": 2,
+  "finished_at": "2026-11-26T09:54:25Z",
   "gates": [
     {
       "codes": [],
@@ -19,10 +19,10 @@
     },
     {
       "codes": [],
-      "detail": "",
+      "detail": "verifier not run yet",
       "id": "H3",
-      "pass": true,
-      "status": "pass"
+      "pass": false,
+      "status": "pending"
     },
     {
       "codes": [],
@@ -32,16 +32,11 @@
       "status": "pass"
     },
     {
-      "check_ids": [
-        "GEN-TRACE-01"
-      ],
-      "codes": [
-        "E-H5-02"
-      ],
-      "detail": "trace id U-0 not found",
+      "codes": [],
+      "detail": "",
       "id": "H5",
-      "pass": false,
-      "status": "fail"
+      "pass": true,
+      "status": "pass"
     },
     {
       "codes": [],
@@ -90,49 +85,9 @@
       "pass": true
     }
   ],
-  "started_at": "2026-11-26T09:43:07Z",
+  "started_at": "2026-11-26T09:54:08Z",
   "step": "impl",
-  "tool_log_sha256": "f701768465d5c7d8334df7e8f83d3d42cd71d7c207023e62444cafa081e6437f",
+  "tool_log_sha256": "3f0d2cb7476c2ed970d7725dc4c60c656f779ffe58d40e67eb0f179b3172d9a3",
   "tsl_version": "0.1.7",
-  "verifier": {
-    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
-    "profile": "node-22@1",
-    "steps": [
-      {
-        "duration_ms": 154375,
-        "exit_code": 0,
-        "name": "build",
-        "report_sha256": null,
-        "status": "pass"
-      },
-      {
-        "duration_ms": 96875,
-        "exit_code": 0,
-        "name": "test",
-        "report_sha256": null,
-        "status": "pass"
-      },
-      {
-        "duration_ms": 29467,
-        "exit_code": 0,
-        "name": "lint",
-        "report_sha256": "9300676fcee7fc85b159e9b355308d04d191436e7e96d8a93deec97410a6f27e",
-        "status": "pass"
-      },
-      {
-        "duration_ms": 64108,
-        "exit_code": 0,
-        "name": "sast",
-        "report_sha256": "0ba6878516eeac9a5a9ee0f627d0ca5c3bed3ad12f0514112088b2d39df4ba0e",
-        "status": "pass"
-      },
-      {
-        "duration_ms": 2906,
-        "exit_code": 0,
-        "name": "secrets",
-        "report_sha256": "5a1cea4400bf5f18180b6d2eff35db1be83f6e03aa19603fd628c0484b8d90a3",
-        "status": "pass"
-      }
-    ]
-  }
+  "verifier": null
 }

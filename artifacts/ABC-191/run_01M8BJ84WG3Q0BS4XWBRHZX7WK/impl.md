@@ -2,7 +2,7 @@
 schema: change.v1
 run_id: run_01M8BJ84WG3Q0BS4XWBRHZX7WK
 step: impl
-attempt: 1
+attempt: 2
 skill: implement@1.4.0
 inputs:
   - {path: artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/triage.md, sha256: 7c81d414265f679723c175c00feb5fcdfd139a35f4cab38eb1d4702f2a0fa6f2}
@@ -25,7 +25,7 @@ claims:
   - id: C3
     text: "The ticket expects a `RangeError` that names the value."
     cites: ["artifacts/ABC-191/run_01M8BJ84WG3Q0BS4XWBRHZX7WK/ticket.md#L17"]
-trace: [U-0]
+trace: [ABC-191]
 known: [U-0]
 assumed: []
 unknown: []
