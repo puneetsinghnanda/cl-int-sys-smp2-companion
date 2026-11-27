@@ -1,0 +1,358 @@
+{
+  "artifact_sha256": "97103949e791548113bc29ebb1cfc52564971d46ccdd89ae6baecb63442778cd",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED'",
+          "ref": "sample-system:api/src/types.ts#L4"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "UPDATE appointment SET starts_at = $2, ends_at = $3",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L157"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "private async scheduled(repo: AppointmentRepo, id: number)",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L133"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "function shutdown(): void {",
+          "ref": "sample-system:api/src/server.ts#L13"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED'",
+          "ref": "sample-system:web/src/api/types.ts#L3"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L44"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "import { STATUS_LABEL } from '../lib/format';",
+          "ref": "sample-system:web/src/components/StatusBadge.tsx#L2"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CREATE TABLE appointment (",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L2"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STATUS_LABEL: Record<AppointmentStatus, string>",
+          "ref": "sample-system:web/src/lib/format.ts#L42"
+        },
+        {
+          "quote": "answer: Yes, confirm",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-10"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CREATE TABLE appointment_event (",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L32"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`YYYYMMDDTHHMMSS__what.sql`)",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The service turns those violations into 409 responses.",
+          "ref": "context/architecture.md#double-booking"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`clock` is injectable so tests can fix \"now\"",
+          "ref": "sample-system:api/src/services/index.ts#L25"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "app.use('/api/appointments', appointmentsRouter);",
+          "ref": "sample-system:api/src/app.ts#L31"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const DAY_MS = 24 * 60 * MINUTE;",
+          "ref": "sample-system:api/src/lib/time.ts#L9"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: STALE for both (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-07"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Every hour",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-08"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Timer inside the API process (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-09"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, but actor `system`",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "context/generated/module-map.json#sym:sample-system:web/src/lib/format.ts:dateTime",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#claim:C9"
+        },
+        {
+          "quote": "the generated module map does not list that symbol",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-10"
+        }
+      ],
+      "claim_ref": "C9",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Drop the dateTime cite from C9 and keep A-10 (optionally add sample-system:web/src/lib/format.ts#L42).",
+      "text": "C9 cites the sibling symbol format.ts:dateTime as module-map evidence for STATUS_LABEL; the module map does not list STATUS_LABEL, so the only real basis is A-10."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Object.entries(STATUS_LABEL).map(([v, l])",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34"
+        },
+        {
+          "quote": "How Stale appointments are shown in lists, filters or dashboard tiles",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#out-of-scope"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State in CO-7 or EP-1 that the list filter gains a Stale option as a consequence, and that this is accepted.",
+      "text": "The appointments list page builds its status filter from STATUS_LABEL, so CO-7 also adds a Stale filter option; the design does not mention this side effect, and req put list/filter display out of scope."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "format: \"adds STALE\"",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#item:EP-2"
+        },
+        {
+          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Use format \"one of BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE\".",
+      "text": "EP-2 history[].event format is only 'adds STALE' instead of the full value set, unlike the status fields which list every value."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "the status list used by the list filter gains it too",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#components"
+        },
+        {
+          "quote": "export const APPOINTMENT_STATUSES: readonly AppointmentStatus[]",
+          "ref": "sample-system:api/src/types.ts#L5"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Name APPOINTMENT_STATUSES in CO-1.",
+      "text": "CO-1 says 'the status list used by the list filter gains it too' without naming APPOINTMENT_STATUSES in api/src/types.ts, the constant that must change."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const app = createApp(pool, config);",
+          "ref": "sample-system:api/src/server.ts#L7"
+        },
+        {
+          "quote": "app.locals.ctx = createContext(db, config, clock);",
+          "ref": "sample-system:api/src/app.ts#L20"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "State in CO-5 which context instance the timer uses to call markStale().",
+      "text": "CO-5 has server.ts call markStale(), but server.ts only holds the app and pool; the design does not say how it reaches the AppointmentService instance (app.locals.ctx or its own createContext)."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "Glossary entry Stale in the companion's context/glossary.md",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#item:CO-9"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Mark CO-9 as a companion context change outside the product modules.",
+      "text": "CO-9 is assigned to module:sample-system:. although its file is the companion's context/glossary.md, not a product module."
+    }
+  ],
+  "package_sha256": "b29ccaba4a1124600d0a781490d50589da8bfdc42ebd7e60a50b03a05f4195e0",
+  "questions": [],
+  "recorded_at": "2026-11-27T08:46:38Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built on the existing AppointmentRepo, AppointmentService guard, injected clock, DAY_MS, migration convention and server shutdown; the in-process timer was asked (A-09) and adds no infrastructure.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Story map covers S-1 to S-5; the cutoff starts_at <= now - DAY_MS satisfies the S-1 AC1-AC3 boundaries, S-2 by the SCHEDULED-only UPDATE, S-3/S-4 by the widened guard and move() resetting status.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Endpoints and fields have type, nullability, format and example, but history[].event format is only 'adds STALE' and CO-1 does not name the APPOINTMENT_STATUSES list it changes.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Choices are cited or decided by A-01..A-10; C9 relies on A-10 but also cites the sibling symbol format.ts:dateTime as module-map evidence for STATUS_LABEL.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs cover in-process timer with multiple instances, hourly lag, bulk UPDATE vs loop and concurrency, overlap re-entry on reschedule, and constant vs env interval.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent; CO-9 is placed on a product module although its file lives in the companion repo.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.6,
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

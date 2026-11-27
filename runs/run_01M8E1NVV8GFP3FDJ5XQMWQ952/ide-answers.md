@@ -62,3 +62,43 @@ entries as the user's own answers.
 - question: Q-05: When staff reschedule a Stale appointment to a new future time, what state does it end in?
 - options: Scheduled again (proposed default) | Stays Stale
 - answer: Scheduled again (proposed default)
+
+## A-07
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T08:42:20Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01G9gdmG5W11iBdjX5nTXc8R
+- question: Q-01: The API's appointment status values are upper case (SCHEDULED, COMPLETED, CANCELLED, NO_SHOW). What value should the new state and its history event use?
+- options: STALE for both (proposed default) | STALE status, MARKED_STALE event
+- answer: STALE for both (proposed default)
+
+## A-08
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T08:42:20Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01G9gdmG5W11iBdjX5nTXc8R
+- question: Q-02: How often should the background job that marks appointments Stale run?
+- options: Every 15 minutes (proposed default) | Every 5 minutes | Every hour
+- answer: Every hour
+
+## A-09
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T08:42:20Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01G9gdmG5W11iBdjX5nTXc8R
+- question: Q-03: Where should the job run? The system has one Render web service and no worker or cron service today.
+- options: Timer inside the API process (proposed default) | Separate Render cron job
+- answer: Timer inside the API process (proposed default)
+
+## A-10
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T08:42:20Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01G9gdmG5W11iBdjX5nTXc8R
+- question: C9: I assumed the web status labels (STATUS_LABEL) are in web/src/lib/format.ts, because StatusBadge imports them from there in the local checkout; the generated module map does not list that symbol. Is that right?
+- options: Yes, confirm | Not sure; implement must confirm
+- answer: Yes, confirm
