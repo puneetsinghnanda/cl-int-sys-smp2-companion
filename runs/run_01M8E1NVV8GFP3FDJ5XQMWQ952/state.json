@@ -4,12 +4,18 @@
     "session_id": "6ff6ca68-436f-4292-9313-708a6dabb095",
     "since": "2026-11-27T08:24:17Z"
   },
-  "branch": {},
+  "branch": {
+    "sample-system": {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "head_sha": null,
+      "name": "tsl/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952"
+    }
+  },
   "created_at": "2026-11-27T08:24:17Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T08:49:28Z",
+  "heartbeat_at": "2026-11-27T08:52:51Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -43,14 +49,14 @@
   "prs": [],
   "questions": {
     "answered_sha256": {},
-    "open_blocking": 0,
+    "open_blocking": 2,
     "open_non_blocking": 0,
-    "round": 0
+    "round": 1
   },
-  "rev": 19,
+  "rev": 27,
   "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "PAUSED_INPUT",
   "step_runners": {
     "ut": {
       "context": "full",
@@ -208,7 +214,36 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/impl.md",
+          "artifact_sha256": "ba9496dd8a660f87c9d37a88252508840df18131a52a829a03fe19701b115ee8",
+          "band": "Low",
+          "cause": "first",
+          "decided_at": "2026-11-27T08:52:51Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "49e40dd8e05c2f3d0fe0da3f188d2de68b5fc4abce7931c55896c0850ac3d324",
+              "step": "design"
+            },
+            {
+              "name": "stories",
+              "sha256": "75a7d123b0e9c6c2abede2df9d1cedfa4c8cb1c4885b7f3d7d41dbe935908603",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "NEEDS-INPUT",
+          "record": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/impl.verification.json",
+          "skill": "implement@1.4.0",
+          "skill_started_at": "2026-11-27T08:49:57Z",
+          "started_at": "2026-11-27T08:49:36Z",
+          "write_rejects": 4
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -217,7 +252,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "WAITING_INPUT"
     },
     {
       "attempts": [],
@@ -252,7 +287,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-27T08:49:28Z",
+  "updated_at": "2026-11-27T08:52:51Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }

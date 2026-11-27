@@ -1,0 +1,97 @@
+{
+  "artifact_sha256": "ba9496dd8a660f87c9d37a88252508840df18131a52a829a03fe19701b115ee8",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "replace the `appointment.status` CHECK and the `appointment_event.event` CHECK so both allow `STALE`",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#components"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "sensitive_paths: [\"**/auth/**\", \"**/migrations/**\", \".github/**\"]",
+          "ref": "tsl.yaml#L37"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New SQL files only, never edits to merged ones.",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "tests call `markStale()` with a fixed clock, so the interval does not affect the ACs",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#overview"
+        },
+        {
+          "quote": "- web/src/pages/AppointmentDetailPage.tsx: CO-8.",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/impl.md#changes"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add the planned API test files for markStale (fixed clock) and for the STALE transitions to the next attempt's change list.",
+      "text": "The planned change list has no test files. The design relies on tests that call markStale() with a fixed clock to cover the ACs (S-1 AC1-AC4, S-2, S-4 AC2-AC3)."
+    }
+  ],
+  "package_sha256": "7dac617280dc9712287da09041e6b08f315b4a8e90db131a532e264c70867bc7",
+  "questions": [],
+  "recorded_at": "2026-11-27T08:52:51Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "No design component is built yet. The pause is justified because CO-2 touches a sensitive path, and the plan maps every product component (CO-1 to CO-8) to a file.",
+      "score": 3
+    },
+    {
+      "id": "IM-R2",
+      "reason": "The planned migration follows the new-file, UTC-timestamp naming convention, and the sensitive-path rule is followed by asking before editing.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "The diff is empty (0 files, 0 lines), so nothing unrelated changed and the change limits hold.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "There is no code to judge. The plan does not say how the new markStale path or the timer failure logging will handle errors.",
+      "score": 3
+    },
+    {
+      "id": "IM-R5",
+      "reason": "The summary says no product code changed, which matches files: [] and the empty diff hash in the checks.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.0,
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}
