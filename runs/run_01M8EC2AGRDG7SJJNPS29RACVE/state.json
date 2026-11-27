@@ -15,14 +15,11 @@
     "started_at": "2026-11-27T11:32:29Z",
     "step": "split"
   },
-  "cursor": {
-    "attempt": 1,
-    "step": "split"
-  },
+  "cursor": null,
   "driver": "skill",
-  "end_reason": null,
+  "end_reason": "cancelled",
   "gates": [],
-  "heartbeat_at": "2026-11-27T11:33:14Z",
+  "heartbeat_at": "2026-11-27T11:33:25Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -60,11 +57,11 @@
     "open_non_blocking": 2,
     "round": 1
   },
-  "rev": 13,
+  "rev": 14,
   "run_id": "run_01M8EC2AGRDG7SJJNPS29RACVE",
   "run_loop": "code",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "COMPLETED",
   "step_runners": {
     "ut": {
       "context": "artifacts",
@@ -211,7 +208,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-27T11:33:14Z",
+  "updated_at": "2026-11-27T11:33:25Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "7aaa0d7d7375f9a64a0eebe5d8173b8d1e4d63214d650a446e61fdc1b7828c97"
 }
