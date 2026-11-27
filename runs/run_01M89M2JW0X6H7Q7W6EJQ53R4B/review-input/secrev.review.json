@@ -1,0 +1,59 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "ec75633f2c778129945bd84fa411d96c92e8a88dd13ab182d8e0e267d4a2bc4c",
+  "package_sha256": "7c35f03dd3d3a5cdae8b6990bf68135cb36b53a894e9516d2ccf3c36969c3bdf",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.5,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 4, "reason": "Covers injection, logging, authorisation, status guard and actor correctly; no new route; misses only the low-impact availability note on the job's unbounded first run."},
+    {"id": "SC-R2", "score": 5, "reason": "Every product cite lands on the exact line (repo L158, L167; job L12; routes L36; service L147)."},
+    {"id": "SC-R3", "score": 5, "reason": "No findings raised and none of blocker or major weight exists in the diff; overall low risk matches the change."},
+    {"id": "SC-R4", "score": 4, "reason": "Nothing to fix was reported, so no fix direction is needed; the summary states clearly why each area is safe."},
+    {"id": "SC-R5", "score": 5, "reason": "No false alarms; every claim checks out against the code and context."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C8 proves the actor only by the user's design answer; the code fact that the job actually uses the fixed actor is staleJob.ts L6, which the claim does not cite.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/secrev.md#claim:C8", "quote": "The job writes as the fixed actor `system`, not as a request actor."},
+        {"ref": "sample-system:api/src/jobs/staleJob.ts#L6", "quote": "export const STALE_JOB_ACTOR = 'system';"}
+      ],
+      "claim_ref": "C8",
+      "suggested_fix": "Add sample-system:api/src/jobs/staleJob.ts#L6 to C8's cites next to the A-09 answer."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Not noted: the first job run after deploy marks every past Scheduled row in one transaction and inserts one event per row in a loop, an unbounded write at startup (availability, low impact).",
+      "cites": [
+        {"ref": "sample-system:api/src/services/appointmentService.ts#L138", "quote": "for (const id of ids) await repo.event(id, 'STALE', actor);"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L167", "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id"}
+      ],
+      "suggested_fix": "Record it as a minor note (or Known) in the review; a batch limit or a single INSERT ... SELECT for the events would bound it."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L167", "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L158", "quote": "status = 'SCHEDULED', updated_at = now(), updated_by = $4 WHERE id = $1"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/jobs/staleJob.ts#L12", "quote": "err instanceof Error ? err.message : String(err)"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/routes/appointments.ts#L36", "quote": "requirePermission('appointments:write'),"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "every permission is granted"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L147", "quote": "current.status !== 'SCHEDULED' && current.status !== 'STALE'"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-09", "quote": "answer: system (proposed default)"}, {"ref": "sample-system:api/src/jobs/staleJob.ts#L6", "quote": "export const STALE_JOB_ACTOR = 'system';"}]}
+  ],
+  "questions": []
+}

@@ -1,0 +1,169 @@
+{
+  "artifact_sha256": "ec75633f2c778129945bd84fa411d96c92e8a88dd13ab182d8e0e267d4a2bc4c",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L167"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED', updated_at = now(), updated_by = $4 WHERE id = $1",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L158"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "err instanceof Error ? err.message : String(err)",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L12"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Logs carry method, route and error message only",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('appointments:write'),",
+          "ref": "sample-system:api/src/routes/appointments.ts#L36"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "every permission is granted",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "current.status !== 'SCHEDULED' && current.status !== 'STALE'",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L147"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: system (proposed default)",
+          "ref": "runs/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ide-answers.md#a-09"
+        },
+        {
+          "quote": "export const STALE_JOB_ACTOR = 'system';",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L6"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The job writes as the fixed actor `system`, not as a request actor.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/secrev.md#claim:C8"
+        },
+        {
+          "quote": "export const STALE_JOB_ACTOR = 'system';",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L6"
+        }
+      ],
+      "claim_ref": "C8",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add sample-system:api/src/jobs/staleJob.ts#L6 to C8's cites next to the A-09 answer.",
+      "text": "C8 proves the actor only by the user's design answer; the code fact that the job actually uses the fixed actor is staleJob.ts L6, which the claim does not cite."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "for (const id of ids) await repo.event(id, 'STALE', actor);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L138"
+        },
+        {
+          "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1 RETURNING id",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L167"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Record it as a minor note (or Known) in the review; a batch limit or a single INSERT ... SELECT for the events would bound it.",
+      "text": "Not noted: the first job run after deploy marks every past Scheduled row in one transaction and inserts one event per row in a loop, an unbounded write at startup (availability, low impact)."
+    }
+  ],
+  "package_sha256": "7c35f03dd3d3a5cdae8b6990bf68135cb36b53a894e9516d2ccf3c36969c3bdf",
+  "questions": [],
+  "recorded_at": "2026-11-27T04:51:14Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "Covers injection, logging, authorisation, status guard and actor correctly; no new route; misses only the low-impact availability note on the job's unbounded first run.",
+      "score": 4
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Every product cite lands on the exact line (repo L158, L167; job L12; routes L36; service L147).",
+      "score": 5
+    },
+    {
+      "id": "SC-R3",
+      "reason": "No findings raised and none of blocker or major weight exists in the diff; overall low risk matches the change.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "Nothing to fix was reported, so no fix direction is needed; the summary states clearly why each area is safe.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false alarms; every claim checks out against the code and context.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.5,
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}
