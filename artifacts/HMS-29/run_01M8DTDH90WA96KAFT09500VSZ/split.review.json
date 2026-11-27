@@ -1,0 +1,197 @@
+{
+  "artifact_sha256": "e3d898f637b4c06aca5f52dd5b2aa2e8805aa36cce0d6c292f70756d736be215",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "Department count links to the filtered doctor list",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-1"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Specialization count links to the filtered doctor list",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Linked list includes doctors of any status",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-3"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Zero count is plain text",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-4"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Link works for Active and Inactive entries",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-5"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Same pattern (proposed default)",
+          "ref": "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Rest of the Settings page unchanged",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-7"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Doctor list unchanged",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-8"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An entry used by any doctor",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#claim:C2"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "kept for history but not offered for new use",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Rename and Deactivate actions",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-4"
+        },
+        {
+          "quote": "Rest of the Settings page unchanged",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-7"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add a claim that cites the Settings page and doctor list source lines for these labels, or phrase the ACs without naming labels the intent does not give.",
+      "text": "S-4 ACs name UI labels (Rename, Deactivate, Activate, Delete, add form, \"All departments\", \"All specializations\") that the intent does not contain, and S-4 cites no product-code line for them. REQ-7 says only that the rest is unchanged."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Given a department used by exactly 1 doctor",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-3"
+        },
+        {
+          "quote": "for both departments and specializations",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-6"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add an S-3 AC: Given a specialization used by exactly 1 doctor, then the accessible name is \"1 doctor in <the specialization's name>\".",
+      "text": "REQ-6 requires the singular \"1 doctor in <name>\" for both kinds, but only a department with count 1 is tested. No AC checks a specialization with exactly 1 doctor."
+    },
+    {
+      "category": "other",
+      "cites": [
+        {
+          "quote": "The rest of the Settings page and the doctor list stay as they are",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-4"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Split S-4 into one story per constraint, or say why they belong together.",
+      "text": "S-4 combines two separate constraints, Settings page unchanged (REQ-7) and doctor list unchanged (REQ-8), into one story with two outcomes."
+    }
+  ],
+  "package_sha256": "cd15068108d20c498b32b1ae0bae22e025766d44e684b146da15c42688cecd1b",
+  "questions": [],
+  "recorded_at": "2026-11-27T06:28:58Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All eight known REQs (REQ-1..REQ-8) are traced by at least one story; no assumed REQs exist.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "S-1, S-2 and S-3 each have one outcome; S-4 bundles two separate constraints (Settings page unchanged and doctor list unchanged).",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then and discriminate (other department's doctors, an Inactive doctor, Inactive entry, 0 count). The singular name boundary is tested only for departments, not specializations.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Counts and names come from the intent, but S-4 uses UI labels (Rename, Deactivate, Activate, Delete, All departments, All specializations) not in the intent and with no cited source.",
+      "score": 4
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Clear, consistent terms; front matter and body match; titles are user-facing.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
