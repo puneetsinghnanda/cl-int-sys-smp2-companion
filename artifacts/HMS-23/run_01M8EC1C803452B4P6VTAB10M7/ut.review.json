@@ -1,0 +1,360 @@
+{
+  "artifact_sha256": "64b30155398cc04835b867470f9d290b3d9b000eef144cac1ce483605e1c4c9f",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export async function freshDatabase(): Promise<TestDb> {",
+          "ref": "sample-system:db/testing/test-db.ts#L18"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Monday 19 October 2026, 08:00 in Asia/Kolkata",
+          "ref": "sample-system:api/test/helpers.ts#L9"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const at = (day: string, hhmm: string): string =>",
+          "ref": "sample-system:api/test/helpers.ts#L14"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async onDutyToday(): Promise<OnDutyRow[]> {",
+          "ref": "sample-system:api/src/services/doctorService.ts#L162"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (states.length === 0) continue;",
+          "ref": "sample-system:api/src/services/doctorService.ts#L174"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "return rows.sort((a, b) => b.free - a.free);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L187"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async onDutyOn(weekday: number): Promise<DoctorSummary[]> {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L142"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "s.start.getTime() <= now ? 'PAST' : 'FREE'",
+          "ref": "sample-system:api/src/services/doctorService.ts#L194"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "onDuty: await this.doctors.onDutyToday(),",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L92"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "throw fieldError('startsAt', 'must be in the future');",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L144"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "r.nextFree ? r.nextFree.label : 'Fully booked'",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L94"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "r.department.status === 'INACTIVE' && ' (Inactive)'",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L91"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<Link to={`/doctors/${r.doctorId}?date=${today}`}>{r.fullName}</Link>",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L89"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No doctors on duty today",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L73"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\",",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/dashboard-no-shows.test.ts\",",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Keep, show Fully booked (proposed default)",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Append \" (Inactive)\" (proposed default)",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-02"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Add onDuty to GET /api/dashboard (proposed default)",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: nextFree as { start, label }",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C23",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "24 tests in a new file, `api/test/dashboard-on-duty.test.ts`",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#summary"
+        },
+        {
+          "quote": "HMS-23 REQ-16 error: an unknown period is still rejected with a field error",
+          "ref": "sample-system:api/test/dashboard-on-duty.test.ts#L330"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "State 25 API tests, or drop the hand count and leave totals to the verifier.",
+      "text": "The summary says the API file holds 24 tests, but the file and the artifact's own list contain 25 (the REQ-16 error test is the extra one)."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the tiles, their links and the Next appointments heading are unchanged. Covers S-7 AC2 and S-7 AC3.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#tests"
+        },
+        {
+          "quote": "next: [],",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L11"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add a next appointment to the web fixture for this test, or claim only S-7 AC3 for it.",
+      "text": "The web REQ-18 test claims S-7 AC2 (upcoming Scheduled appointments exist), but its fixture has an empty next list, so only AC3 is exercised on the page; AC2 is covered only by the API test."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Question for whoever reads the results: did the verifier (H3) run them, or skip them?",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#unknown"
+        },
+        {
+          "quote": "describe.skipIf(!pgAvailable())('dashboard on duty today (HMS-23)'",
+          "ref": "sample-system:api/test/dashboard-on-duty.test.ts#L94"
+        },
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Record the verifier's test report (counts run vs skipped) or confirm the node-22@1 profile provides PostgreSQL 16.",
+      "text": "U-2 leaves open whether the verifier ran the 25 DB-backed API tests or skipped them via skipIf(!pgAvailable()); the verifier's test step has no report, so a pass cannot show they ran."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "base_sha: 9621453acbf4c539216b3584a4222dd98fa14aa6",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#code"
+        },
+        {
+          "quote": "head_sha: 870965ee81e165d3649fad34a0e4d7764bda5f85",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md#code"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Note why the base moved, or rebase the test change on the impl head.",
+      "text": "The unit-test base_sha differs from the impl step's head_sha, and the artifact does not say what commit sits between them."
+    }
+  ],
+  "package_sha256": "6dd7710df985186a14d3da247e2ac983e1077a07cb3099f1c87c56b8d0e474e5",
+  "questions": [
+    {
+      "ask_role": "engineer",
+      "blocking": false,
+      "finding_ref": "F-3",
+      "id": "Q-1",
+      "text": "Does the verifier profile node-22@1 provide PostgreSQL 16 or HMS_TEST_DATABASE_URL, so the DB-backed API tests in dashboard-on-duty.test.ts actually ran rather than being skipped?"
+    }
+  ],
+  "recorded_at": "2026-11-27T12:16:41Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Every AC of S-1 to S-7 has an API and/or web test; onDutyToday, onDutyOn, dashboard onDuty and OnDutyTable paths are all exercised, including the UTC-midnight cases.",
+      "score": 5
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check exact rows, counts, nextFree {start,label}, ordering, response keys and hrefs, and cross-check against the day schedule endpoint.",
+      "score": 5
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Error path (bad period 400), passed slots, exact-now slot, Inactive doctor/department, empty list and ties covered; the too-short-block edge is left open pending Q-01.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest+Supertest with fresh DB and fixed clock for API, Testing Library for web, names start with requirement IDs, files placed like existing ones.",
+      "score": 5
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No coverage claimed and verifier results deferred to checks.json, but the stated API test count (24) does not match the 25 tests written and listed.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

@@ -1,0 +1,75 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "test-strategy",
+      "conventions",
+      "test-layout"
+    ],
+    "inputs": [
+      {
+        "name": "change",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md",
+        "schema": "change.v1",
+        "sha256": "5f1a08cc4132d0ed0cd78adf43f0da120afc8fc78663562f2bfafcff1252965f"
+      },
+      {
+        "name": "stories",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+        "schema": "stories.v1",
+        "sha256": "aff52115f9fdfadc010120f5dca462e696245658dd4c590d83c5ab683356b584"
+      },
+      {
+        "name": "test_strategy",
+        "path": "context/test-strategy.md",
+        "schema": null,
+        "sha256": "f4bbc9d5d63dfc433c9fe466a7aa71a4fad0147baafe1f47db0c06e117ce6cba"
+      },
+      {
+        "name": "test_layout",
+        "path": "context/generated/test-layout.json",
+        "schema": null,
+        "sha256": "c0752ab8543e23547679dbe34f6381f656d36b0eb5506efb2a56f94dcb729cd6"
+      }
+    ],
+    "open_questions": [
+      {
+        "ask": "product owner",
+        "blocking": false,
+        "cite": "runs/run_01M8EC1C803452B4P6VTAB10M7/open-questions.md#q-01",
+        "id": "Q-01",
+        "question": "Should an Active doctor whose availability block today is too short to hold one slot be hidden from On duty today, or listed as Fully booked?"
+      }
+    ]
+  },
+  "instruction_path": "runs/run_01M8EC1C803452B4P6VTAB10M7/instructions/ut.a1.json",
+  "progress": {
+    "index": 5,
+    "total": 7
+  },
+  "retry": null,
+  "review": {
+    "package_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.review-package.json",
+    "write_to": "runs/run_01M8EC1C803452B4P6VTAB10M7/review-input/ut.review.json"
+  },
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "say": "ut: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "unit-test@1.5.0",
+  "step": "ut"
+}

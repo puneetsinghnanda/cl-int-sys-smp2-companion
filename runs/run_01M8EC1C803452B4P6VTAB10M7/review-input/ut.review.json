@@ -1,0 +1,98 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "64b30155398cc04835b867470f9d290b3d9b000eef144cac1ce483605e1c4c9f",
+  "package_sha256": "6dd7710df985186a14d3da247e2ac983e1077a07cb3099f1c87c56b8d0e474e5",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.7,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 5, "reason": "Every AC of S-1 to S-7 has an API and/or web test; onDutyToday, onDutyOn, dashboard onDuty and OnDutyTable paths are all exercised, including the UTC-midnight cases."},
+    {"id": "UT-R2", "score": 5, "reason": "Assertions check exact rows, counts, nextFree {start,label}, ordering, response keys and hrefs, and cross-check against the day schedule endpoint."},
+    {"id": "UT-R3", "score": 4, "reason": "Error path (bad period 400), passed slots, exact-now slot, Inactive doctor/department, empty list and ties covered; the too-short-block edge is left open pending Q-01."},
+    {"id": "UT-R4", "score": 5, "reason": "Vitest+Supertest with fresh DB and fixed clock for API, Testing Library for web, names start with requirement IDs, files placed like existing ones."},
+    {"id": "UT-R5", "score": 4, "reason": "No coverage claimed and verifier results deferred to checks.json, but the stated API test count (24) does not match the 25 tests written and listed."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The summary says the API file holds 24 tests, but the file and the artifact's own list contain 25 (the REQ-16 error test is the extra one).",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#summary", "quote": "24 tests in a new file, `api/test/dashboard-on-duty.test.ts`"},
+        {"ref": "sample-system:api/test/dashboard-on-duty.test.ts#L330", "quote": "HMS-23 REQ-16 error: an unknown period is still rejected with a field error"}
+      ],
+      "suggested_fix": "State 25 API tests, or drop the hand count and leave totals to the verifier."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "The web REQ-18 test claims S-7 AC2 (upcoming Scheduled appointments exist), but its fixture has an empty next list, so only AC3 is exercised on the page; AC2 is covered only by the API test.",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#tests", "quote": "the tiles, their links and the Next appointments heading are unchanged. Covers S-7 AC2 and S-7 AC3."},
+        {"ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L11", "quote": "next: [],"}
+      ],
+      "suggested_fix": "Add a next appointment to the web fixture for this test, or claim only S-7 AC3 for it."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "U-2 leaves open whether the verifier ran the 25 DB-backed API tests or skipped them via skipIf(!pgAvailable()); the verifier's test step has no report, so a pass cannot show they ran.",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#unknown", "quote": "Question for whoever reads the results: did the verifier (H3) run them, or skip them?"},
+        {"ref": "sample-system:api/test/dashboard-on-duty.test.ts#L94", "quote": "describe.skipIf(!pgAvailable())('dashboard on duty today (HMS-23)'"},
+        {"ref": "context/test-strategy.md#database-for-tests", "quote": "Without either, database tests are skipped."}
+      ],
+      "suggested_fix": "Record the verifier's test report (counts run vs skipped) or confirm the node-22@1 profile provides PostgreSQL 16."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The unit-test base_sha differs from the impl step's head_sha, and the artifact does not say what commit sits between them.",
+      "cites": [
+        {"ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/ut.md#code", "quote": "base_sha: 9621453acbf4c539216b3584a4222dd98fa14aa6"},
+        {"ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md#code", "quote": "head_sha: 870965ee81e165d3649fad34a0e4d7764bda5f85"}
+      ],
+      "suggested_fix": "Note why the base moved, or rebase the test change on the impl head."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script)"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:db/testing/test-db.ts#L18", "quote": "export async function freshDatabase(): Promise<TestDb> {"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L9", "quote": "Monday 19 October 2026, 08:00 in Asia/Kolkata"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "sample-system:api/test/helpers.ts#L14", "quote": "export const at = (day: string, hhmm: string): string =>"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L162", "quote": "async onDutyToday(): Promise<OnDutyRow[]> {"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L174", "quote": "if (states.length === 0) continue;"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L187", "quote": "return rows.sort((a, b) => b.free - a.free);"}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/doctorRepo.ts#L142", "quote": "async onDutyOn(weekday: number): Promise<DoctorSummary[]> {"}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L194", "quote": "s.start.getTime() <= now ? 'PAST' : 'FREE'"}]},
+    {"claim_id": "C12", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/dashboardService.ts#L92", "quote": "onDuty: await this.doctors.onDutyToday(),"}]},
+    {"claim_id": "C13", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/appointmentService.ts#L144", "quote": "throw fieldError('startsAt', 'must be in the future');"}]},
+    {"claim_id": "C14", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L94", "quote": "r.nextFree ? r.nextFree.label : 'Fully booked'"}]},
+    {"claim_id": "C15", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L91", "quote": "r.department.status === 'INACTIVE' && ' (Inactive)'"}]},
+    {"claim_id": "C16", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L89", "quote": "<Link to={`/doctors/${r.doctorId}?date=${today}`}>{r.fullName}</Link>"}]},
+    {"claim_id": "C17", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L73", "quote": "No doctors on duty today"}]},
+    {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/DashboardPage.test.tsx", "quote": "\"path\": \"web/src/__tests__/DashboardPage.test.tsx\","}]},
+    {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "context/generated/test-layout.json#test:sample-system:api/test/dashboard-no-shows.test.ts", "quote": "\"path\": \"api/test/dashboard-no-shows.test.ts\","}]},
+    {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01", "quote": "answer: Keep, show Fully booked (proposed default)"}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-02", "quote": "answer: Append \" (Inactive)\" (proposed default)"}]},
+    {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-03", "quote": "answer: Add onDuty to GET /api/dashboard (proposed default)"}]},
+    {"claim_id": "C23", "verdict": "supported", "cites": [{"ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-04", "quote": "answer: nextFree as { start, label }"}]}
+  ],
+  "questions": [
+    {"id": "Q-1", "text": "Does the verifier profile node-22@1 provide PostgreSQL 16 or HMS_TEST_DATABASE_URL, so the DB-backed API tests in dashboard-on-duty.test.ts actually ran rather than being skipped?", "ask_role": "engineer", "blocking": false, "finding_ref": "F-3"}
+  ]
+}
