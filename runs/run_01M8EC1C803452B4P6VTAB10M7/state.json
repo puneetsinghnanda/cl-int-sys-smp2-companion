@@ -9,17 +9,17 @@
   "current_action": {
     "action": "run_reviewer",
     "agent_id": null,
-    "attempt": 1,
+    "attempt": 2,
     "driver": "skill",
     "session_id": "04e08068-e2f8-489c-8b33-d7adace33ac6",
-    "started_at": "2026-11-27T11:30:08Z",
+    "started_at": "2026-11-27T11:35:04Z",
     "step": "req"
   },
   "cursor": null,
   "driver": "skill",
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T11:32:22Z",
+  "heartbeat_at": "2026-11-27T11:36:38Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -57,7 +57,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 5,
+  "rev": 15,
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "run_loop": "code",
   "schema": "run-state.v1",
@@ -73,7 +73,7 @@
       "attempts": [
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md",
+          "artifact": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/history/req/a1/req.md",
           "artifact_sha256": "83422fcfe2dcb3cd14f6000085bc9f1f8dc43cc1c10f1f67488d17e3b115e2fa",
           "band": "High",
           "cause": "first",
@@ -98,10 +98,43 @@
           },
           "n": 1,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.verification.json",
+          "record": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/history/req/a1/req.verification.json",
           "skill": "requirement-review@1.6.0",
           "skill_started_at": "2026-11-27T11:26:11Z",
           "started_at": "2026-11-27T11:25:55Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md",
+          "artifact_sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-27T11:36:38Z",
+          "feedback": "runs/run_01M8EC1C803452B4P6VTAB10M7/feedback/req.a1.json",
+          "inputs": [],
+          "metrics": {
+            "active_ms": 220000,
+            "models": [
+              "claude-opus-5-5"
+            ],
+            "source": "transcript",
+            "tokens": {
+              "cache_read": 633371,
+              "cache_write": 43671,
+              "calls": 10,
+              "input": 24,
+              "output": 6899,
+              "subagent_calls": 4
+            },
+            "wait_s": 0
+          },
+          "n": 2,
+          "outcome": "PASS",
+          "record": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.verification.json",
+          "skill": "requirement-review@1.6.0",
+          "skill_started_at": "2026-11-27T11:33:18Z",
+          "started_at": "2026-11-27T11:32:58Z",
+          "write_rejects": 5
         }
       ],
       "budget_used": {
@@ -112,7 +145,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -183,7 +216,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-23",
-  "updated_at": "2026-11-27T11:32:22Z",
+  "updated_at": "2026-11-27T11:36:38Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "7aaa0d7d7375f9a64a0eebe5d8173b8d1e4d63214d650a446e61fdc1b7828c97"
 }

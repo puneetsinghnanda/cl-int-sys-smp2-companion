@@ -1,27 +1,22 @@
 {
   "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md",
-  "artifact_sha256": "83422fcfe2dcb3cd14f6000085bc9f1f8dc43cc1c10f1f67488d17e3b115e2fa",
-  "attempt": 1,
+  "artifact_sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "70a0f6354e35e4fac678d488210a205a25dd0de8500369c55e1a2e5f88aba3a0",
+  "checks_sha256": "98656735e8b06bfefe0fa2f1637cb86fb2c2a238297c36096bd4705672bd8e3a",
   "claims": {
     "total": 10,
     "verified": 10
   },
-  "decided_at": "2026-11-27T11:32:22Z",
+  "decided_at": "2026-11-27T11:36:38Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
-  "findings_kept": [
-    {
-      "id": "F-1",
-      "severity": "major"
-    }
-  ],
+  "findings_kept": [],
   "gate_failures": [],
   "inputs": [],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "RETRY",
+  "outcome": "PASS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -29,15 +24,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "7a56123244fcfe3984bd52e63bef4dac46d29b6e230381ed668fd1472fa1d416",
   "product_changes": null,
-  "review_sha256": "4e6aec96e65e164c9dc59816be4c7dcfc07a1b49e6e56d6413c9419072a7ab34",
+  "review_sha256": "3cd54b69ec6c77bfaaf07c16e10fd2da388a6889f03bf847524bdef37e522a7b",
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.8,
+    "S3": 5.0,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -46,7 +41,7 @@
       "sensitive": false
     }
   },
-  "signature": "d0u_Z3U5EHYHyJW-rJYaG1FMIBPF77wtg_YzAkqBsKOgV45CR9BMU09K8UMEfiH30-z7uU0sy3oypdrh-sRWAQ",
+  "signature": "AzxzdUHA3rrExco9LLLj05YJJutXB4V_zdnYVT8qF55iOwGSyVknc5USARIuk9p62v4rKOCbO1XLavTh1vuZDw",
   "skill": "requirement-review@1.6.0",
   "step": "req",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

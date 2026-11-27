@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "step": "req",
-  "attempt": 1,
-  "artifact_sha256": "83422fcfe2dcb3cd14f6000085bc9f1f8dc43cc1c10f1f67488d17e3b115e2fa",
-  "package_sha256": "8f4649d33ec207ea6637d275b3043a4868851bdfa33186271dd910bb02a777be",
+  "attempt": 2,
+  "artifact_sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365",
+  "package_sha256": "f64cff248201f681dbb143a3abd7778114423d273b6561621420982a3884bf0f",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,28 +12,16 @@
     "version": "0.1.7",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 4.8,
+  "rubric_score": 5.0,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "Every acceptance criterion 1-8 maps to REQ-1..REQ-18; the user-story motivation, auto-refresh and data path are listed under Out of scope with reasons."},
-    {"id": "RR-R2", "score": 4, "reason": "Most REQs are single checkable behaviours; REQ-12 bundles the Fully booked label with the rule that doctors whose slots all passed stay listed."},
-    {"id": "RR-R3", "score": 5, "reason": "Known items cite ticket lines, baseline or IDE answers A-01/A-02; product claims C1-C10 check out against the code and PRD."},
-    {"id": "RR-R4", "score": 5, "reason": "No clash between ticket and baseline found; slot counting follows the shared slotStates rule, consistent with the booking rules and the hospital time zone constraint."},
-    {"id": "RR-R5", "score": 5, "reason": "Two real gaps were asked in the IDE with concrete options and defaults; no needless questions remain open."},
+    {"id": "RR-R1", "score": 5, "reason": "Acceptance criteria 1-8 map to REQ-1..REQ-18; the IDE-decided listing rule is REQ-19; motivation, auto-refresh and data path are Out of scope with reasons."},
+    {"id": "RR-R2", "score": 5, "reason": "Prior F-1 fixed: REQ-12 now holds only the Fully booked label and REQ-19 the all-slots-passed listing rule. Each REQ is one checkable behaviour."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known REQ cites ticket lines, the baseline, PRD or IDE answers A-01/A-02, and the cited entries say what the artifact claims."},
+    {"id": "RR-R4", "score": 5, "reason": "No clash with the baseline: passed slots not free matches booking rules; today uses the Asia/Kolkata constraint; no contact details agrees with DSH-9."},
+    {"id": "RR-R5", "score": 5, "reason": "Two real gaps were asked in the IDE with concrete options and defaults and answered; no needless questions remain open."},
     {"id": "RR-R6", "score": 5, "reason": "Plain wording; glossary terms (Dashboard, Slot, Period, Inactive, Tile) used consistently."}
   ],
-  "findings": [
-    {
-      "id": "F-1",
-      "severity": "major",
-      "category": "correctness",
-      "text": "REQ-12 is compound: it holds the Fully booked label (ticket criterion 4) and a separate listing rule from A-01 that a doctor whose slots today have all passed stays listed. These are two checks a tester would run separately.",
-      "cites": [
-        {"ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-12", "quote": "this includes a doctor whose slots today have all passed, who stays listed"},
-        {"ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01", "quote": "answer: Keep, show Fully booked (proposed default)"}
-      ],
-      "suggested_fix": "Split REQ-12: keep the Fully booked label in REQ-12 (cite ticket #L28) and add a new REQ for 'a doctor whose slots today have all passed stays listed' citing A-01."
-    }
-  ],
+  "findings": [],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/DashboardPage.tsx#L61", "quote": "<h2>Next appointments</h2>"}]},
     {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/services/doctorService.ts#L161", "quote": "taken ? 'BOOKED' : s.start.getTime() <= now ? 'PAST' : 'FREE'"}]},

@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "83422fcfe2dcb3cd14f6000085bc9f1f8dc43cc1c10f1f67488d17e3b115e2fa",
-  "attempt": 1,
+  "artifact_sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -103,28 +103,10 @@
       "verdict": "supported"
     }
   ],
-  "findings": [
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "this includes a doctor whose slots today have all passed, who stays listed",
-          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-12"
-        },
-        {
-          "quote": "answer: Keep, show Fully booked (proposed default)",
-          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Split REQ-12: keep the Fully booked label in REQ-12 (cite ticket #L28) and add a new REQ for 'a doctor whose slots today have all passed stays listed' citing A-01.",
-      "text": "REQ-12 is compound: it holds the Fully booked label (ticket criterion 4) and a separate listing rule from A-01 that a doctor whose slots today have all passed stays listed. These are two checks a tester would run separately."
-    }
-  ],
-  "package_sha256": "8f4649d33ec207ea6637d275b3043a4868851bdfa33186271dd910bb02a777be",
+  "findings": [],
+  "package_sha256": "f64cff248201f681dbb143a3abd7778114423d273b6561621420982a3884bf0f",
   "questions": [],
-  "recorded_at": "2026-11-27T11:32:17Z",
+  "recorded_at": "2026-11-27T11:36:37Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -135,27 +117,27 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "Every acceptance criterion 1-8 maps to REQ-1..REQ-18; the user-story motivation, auto-refresh and data path are listed under Out of scope with reasons.",
+      "reason": "Acceptance criteria 1-8 map to REQ-1..REQ-18; the IDE-decided listing rule is REQ-19; motivation, auto-refresh and data path are Out of scope with reasons.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs are single checkable behaviours; REQ-12 bundles the Fully booked label with the rule that doctors whose slots all passed stay listed.",
-      "score": 4
+      "reason": "Prior F-1 fixed: REQ-12 now holds only the Fully booked label and REQ-19 the all-slots-passed listing rule. Each REQ is one checkable behaviour.",
+      "score": 5
     },
     {
       "id": "RR-R3",
-      "reason": "Known items cite ticket lines, baseline or IDE answers A-01/A-02; product claims C1-C10 check out against the code and PRD.",
+      "reason": "Every known REQ cites ticket lines, the baseline, PRD or IDE answers A-01/A-02, and the cited entries say what the artifact claims.",
       "score": 5
     },
     {
       "id": "RR-R4",
-      "reason": "No clash between ticket and baseline found; slot counting follows the shared slotStates rule, consistent with the booking rules and the hospital time zone constraint.",
+      "reason": "No clash with the baseline: passed slots not free matches booking rules; today uses the Asia/Kolkata constraint; no contact details agrees with DSH-9.",
       "score": 5
     },
     {
       "id": "RR-R5",
-      "reason": "Two real gaps were asked in the IDE with concrete options and defaults; no needless questions remain open.",
+      "reason": "Two real gaps were asked in the IDE with concrete options and defaults and answered; no needless questions remain open.",
       "score": 5
     },
     {
@@ -164,7 +146,7 @@
       "score": 5
     }
   ],
-  "rubric_score": 4.8,
+  "rubric_score": 5.0,
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "schema": "review.v1",
   "status": "ok",
