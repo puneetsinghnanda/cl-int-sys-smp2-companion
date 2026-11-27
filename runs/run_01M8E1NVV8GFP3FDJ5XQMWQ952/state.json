@@ -2,7 +2,7 @@
   "active_session": {
     "host_hash": "h_4498e8e3",
     "session_id": "6ff6ca68-436f-4292-9313-708a6dabb095",
-    "since": "2026-11-27T08:24:17Z"
+    "since": "2026-11-27T08:56:34Z"
   },
   "branch": {
     "sample-system": {
@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T08:52:51Z",
+  "heartbeat_at": "2026-11-27T08:56:34Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -48,15 +48,18 @@
   },
   "prs": [],
   "questions": {
-    "answered_sha256": {},
-    "open_blocking": 2,
+    "answered_sha256": {
+      "Q-01": "5c33300dc4b63b7e0339f9697d6d0af779e8a4e7478ff8072ec318ad5ce39108",
+      "Q-02": "de800df92a6b59baeefa491b34080c5eb6910396d5793028c7036c88254d3155"
+    },
+    "open_blocking": 0,
     "open_non_blocking": 0,
     "round": 1
   },
-  "rev": 27,
+  "rev": 29,
   "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
   "schema": "run-state.v1",
-  "status": "PAUSED_INPUT",
+  "status": "RUNNING",
   "step_runners": {
     "ut": {
       "context": "full",
@@ -252,7 +255,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "WAITING_INPUT"
+      "status": "READY"
     },
     {
       "attempts": [],
@@ -287,7 +290,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-27T08:52:51Z",
+  "updated_at": "2026-11-27T08:56:34Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }

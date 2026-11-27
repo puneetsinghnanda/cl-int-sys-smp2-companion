@@ -5,7 +5,7 @@ ticket: HMS-34
 workflow: brownfield-small@1.0.0
 step: impl@1.4.0
 created_at: '2026-11-27T08:52:51Z'
-status: open
+status: answered
 ---
 
 # Open questions — HMS-34 (impl step)
@@ -22,13 +22,13 @@ Answer each question below the line `answer:`. Keep the ids. Then run:
   B. No, the tech lead writes the migration; implement does the rest
   C. Stop: change the design
 **Proposed default:** Yes, add the migration as designed (proposed default)
-answer:
-answered_by:
-decision:
+answer: A. Yes, add the migration as designed (proposed default)
+answered_by: eng-dffd
+decision: approve
 
 ## Q-02 · blocking · ask: tech lead
 **Question:** Unknown U-1 needs a decision
 **Proposed default:** none
-answer:
-answered_by:
-decision:
+answer: Same as Q-01: A. Yes, add the migration as designed
+answered_by: eng-dffd
+decision: approve
