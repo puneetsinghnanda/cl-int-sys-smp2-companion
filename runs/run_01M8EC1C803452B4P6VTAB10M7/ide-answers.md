@@ -24,3 +24,25 @@ entries as the user's own answers.
 - question: Q-02: A row shows the doctor's department. If that department is Inactive, should the row add a marker?
 - options: Append " (Inactive)" (proposed default) | Name only, no marker
 - answer: Append " (Inactive)" (proposed default)
+
+## A-03
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T11:50:40Z
+- answered_at: 2026-11-27T11:50:56Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_016CeCe1aMy6DxPrLaR6GrZy
+- question: Q-01: How should the dashboard page get the "On duty today" rows from the API?
+- options: Add onDuty to GET /api/dashboard (proposed default) | New GET /api/dashboard/on-duty
+- answer: Add onDuty to GET /api/dashboard (proposed default)
+
+## A-04
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T11:50:40Z
+- answered_at: 2026-11-27T11:50:56Z
+- answered_by: eng-3c51
+- tool_use_id: toolu_016CeCe1aMy6DxPrLaR6GrZy
+- question: Q-02: What shape should each on-duty row have, and how should the next free slot be sent?
+- options: nextFree as "HH:MM" label (proposed default) | nextFree as { start, label }
+- answer: nextFree as { start, label }

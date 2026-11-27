@@ -1,0 +1,342 @@
+{
+  "artifact_sha256": "a86e1c9b62e44012e519875200e02e518bd8103f4e383932dd9658479930fb09",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/dashboard.ts\"",
+          "ref": "context/generated/api-inventory.json#L88"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface Dashboard {",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L13"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "today: string;",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L14"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dashboard: new DashboardService(db, config, clock),",
+          "ref": "sample-system:api/src/services/index.ts#L37"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctors: new DoctorService(db, config, clock),",
+          "ref": "sample-system:api/src/services/index.ts#L34"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "private slotStates(blocks: AvailabilityBlock[], slotMinutes: number",
+          "ref": "sample-system:api/src/services/doctorService.ts#L158"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (states.length === 0) return { date, available: false, booked: null, free: null };",
+          "ref": "sample-system:api/src/services/doctorService.ts#L177"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async occupyingBetween(doctorId: number, from: Date, to: Date)",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L114"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async availability(id: number): Promise<AvailabilityBlock[]> {",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L131"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dp.status AS department_status",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L24"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY lower(d.full_name), d.id",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L94"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const label = `${String(Math.floor(m / 60)).padStart(2, '0')}",
+          "ref": "sample-system:api/src/lib/slots.ts#L42"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function isoWeekday(day: string): number {",
+          "ref": "sample-system:api/src/lib/time.ts#L84"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function localDay(instant: Date, tz: string): string {",
+          "ref": "sample-system:api/src/lib/time.ts#L62"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export interface Dashboard {",
+          "ref": "sample-system:web/src/api/types.ts#L138"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export function DashboardPage() {",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L17"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dashboard: (period: Period) => send<Dashboard>",
+          "ref": "sample-system:web/src/api/client.ts#L49"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<Link to={`/doctors/${d.id}?date=${n.date}`}>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L115"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{d.department.status === 'INACTIVE' && ' (Inactive)'}",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L74"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "phone: r.phone,",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L36"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Instants are stored in UTC.",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<h2>Next appointments</h2>",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L61"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "with OnDutyRow declared next to it",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md#components"
+        },
+        {
+          "quote": "type NextDay, type Page",
+          "ref": "sample-system:api/src/services/doctorService.ts#L13"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Declare OnDutyRow in api/src/types.ts next to NextDay and import it in both services.",
+      "text": "OnDutyRow is declared in dashboardService.ts but built by DoctorService.onDutyToday(), so doctorService imports a type from the service that depends on it; shared API types (NextDay, DoctorSummary) live in api/src/types.ts."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "takes today as `localDay(now, HOSPITAL_TZ)`",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md#overview"
+        },
+        {
+          "quote": "const today = window.to;",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L43"
+        },
+        {
+          "quote": "Doctor is a link to `/doctors/${doctorId}?date=${data.today}`",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md#components"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Have DashboardService.get() pass its now and today into doctors.onDutyToday(today, now) so one instant drives both.",
+      "text": "onDutyToday() derives today from its own clock read while the link uses Dashboard.today from lastDays in DashboardService; across local midnight the rows and the ?date= link can name different days."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "A doctor whose block gives no slot today is left out",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md#overview"
+        },
+        {
+          "quote": "The section has one row per `Active` doctor who has availability today.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-2"
+        },
+        {
+          "quote": "for (let m = from; m + slotMinutes <= to; m += slotMinutes) starts.push(m);",
+          "ref": "sample-system:api/src/lib/slots.ts#L15"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "State this as a default with its trade-off in the Known section, or list such a doctor as Fully booked to match REQ-2 literally.",
+      "text": "A doctor whose block today is shorter than the slot length is dropped, which narrows REQ-2 (one row per Active doctor with availability today); the choice is reasoned from Next 7 days but not traced to a requirement or answer."
+    }
+  ],
+  "package_sha256": "c6ed18bac73e747eaefe8ce330cc6e60cda25fef390e628a2c53cf83c93378a2",
+  "questions": [
+    {
+      "ask_role": "product_owner",
+      "blocking": false,
+      "finding_ref": "F-3",
+      "id": "Q-1",
+      "text": "Should an Active doctor whose availability block today is too short to hold one slot be hidden from On duty today, or listed as Fully booked?"
+    }
+  ],
+  "recorded_at": "2026-11-27T11:54:50Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Built on existing repo/service/page layering, slotStates and ?date= link; no new infra. OnDutyRow placed in dashboardService.ts while produced by DoctorService, against the shared api/src/types.ts pattern.",
+      "score": 4
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Story map covers S-1..S-7; two-block AC5, 04:00 local cases, PAST handling, Fully booked, sort tie-break, Period independence and DSH-9 are all addressed by named components.",
+      "score": 5
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Every new EP-1 field has name, type, nullability, format and example, including the UTC/local nextFree.start example; ACs can assert values exactly.",
+      "score": 5
+    },
+    {
+      "id": "DS-R4",
+      "reason": "All 22 claims check out against product code and inventory; endpoint shape and nextFree decided by cited IDE answers A-03 and A-04.",
+      "score": 5
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Trade-offs given for extending the endpoint, service placement, per-doctor queries and nextFree shape, each with its cost.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear, consistent, front matter and body agree.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.75,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

@@ -1,0 +1,81 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "AskUserQuestion"
+  ],
+  "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "architecture",
+      "conventions",
+      "module-map",
+      "api-inventory"
+    ],
+    "inputs": [
+      {
+        "name": "stories",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+        "schema": "stories.v1",
+        "sha256": "aff52115f9fdfadc010120f5dca462e696245658dd4c590d83c5ab683356b584"
+      },
+      {
+        "name": "intent",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md",
+        "schema": "intent.v1",
+        "sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365"
+      },
+      {
+        "name": "intent_baseline",
+        "path": "context/intent-baseline.md",
+        "schema": null,
+        "sha256": "9bfd821aeb2fb9524863e346707e049e4fcfb949a6e55b90223a79194946a215"
+      },
+      {
+        "name": "architecture",
+        "path": "context/architecture.md",
+        "schema": null,
+        "sha256": "9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a"
+      },
+      {
+        "name": "module_map",
+        "path": "context/generated/module-map.json",
+        "schema": null,
+        "sha256": "4158c8fcd239c22cb8f1029dd11f61d8839867ff8088bd9ab76197e2db96db4b"
+      },
+      {
+        "name": "api_inventory",
+        "path": "context/generated/api-inventory.json",
+        "schema": null,
+        "sha256": "ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9"
+      }
+    ],
+    "open_questions": []
+  },
+  "instruction_path": "runs/run_01M8EC1C803452B4P6VTAB10M7/instructions/design.a1.json",
+  "progress": {
+    "index": 3,
+    "total": 7
+  },
+  "retry": null,
+  "review": {
+    "package_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.review-package.json",
+    "write_to": "runs/run_01M8EC1C803452B4P6VTAB10M7/review-input/design.review.json"
+  },
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "say": "design: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "design@1.10.0",
+  "step": "design"
+}

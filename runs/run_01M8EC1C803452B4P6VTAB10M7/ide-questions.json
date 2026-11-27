@@ -37,6 +37,43 @@
       "status": "answered",
       "step": "req",
       "tool_use_id": "toolu_01M23RjSWXUid843YxjEoykC"
+    },
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-27T11:50:56Z",
+      "answers": [
+        "A-03",
+        "A-04"
+      ],
+      "ask_id": "ASK-02",
+      "asked_at": "2026-11-27T11:50:40Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Add onDuty to GET /api/dashboard (proposed default)",
+            "New GET /api/dashboard/on-duty"
+          ],
+          "text": "Q-01: How should the dashboard page get the \"On duty today\" rows from the API?"
+        },
+        {
+          "blocking": true,
+          "id": "Q-02",
+          "options": [
+            "nextFree as \"HH:MM\" label (proposed default)",
+            "nextFree as { start, label }"
+          ],
+          "text": "Q-02: What shape should each on-duty row have, and how should the next free slot be sent?"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "design",
+      "tool_use_id": "toolu_016CeCe1aMy6DxPrLaR6GrZy"
     }
   ],
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
