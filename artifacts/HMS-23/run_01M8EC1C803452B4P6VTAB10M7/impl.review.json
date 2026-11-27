@@ -1,0 +1,182 @@
+{
+  "artifact_sha256": "5f1a08cc4132d0ed0cd78adf43f0da120afc8fc78663562f2bfafcff1252965f",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "private slotStates(blocks: AvailabilityBlock[], slotMinutes: number, date: string, appointments: AppointmentSummary[], now: number)",
+          "ref": "sample-system:api/src/services/doctorService.ts#L191"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (states.length === 0) continue;",
+          "ref": "sample-system:api/src/services/doctorService.ts#L174"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "d.department_id, dp.name AS department_name, dp.status AS department_status",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L24"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "ORDER BY lower(d.full_name), d.id`,",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L147"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Appointments of one doctor that overlap [from, to), except cancelled ones.",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L113"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "dashboard: new DashboardService(db, config, clock, doctors),",
+          "ref": "sample-system:api/src/services/index.ts#L39"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const DATA: Dashboard = {",
+          "ref": "sample-system:web/src/__tests__/DashboardPage.test.tsx#L7"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<OnDutyTable rows={data.onDuty} today={data.today} />",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L62"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<dd>{d.department.name}{d.department.status === 'INACTIVE' && ' (Inactive)'}</dd>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L74"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: nextFree as { start, label }",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Add onDuty to GET /api/dashboard (proposed default)",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "sample-system:api/src/services/doctorService.ts#L191",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md#claim:C1"
+        },
+        {
+          "quote": "sample-system:api/src/services/doctorService.ts#L177",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md#claim:C2"
+        },
+        {
+          "quote": "if (states.length === 0) return { date, available: false, booked: null, free: null };",
+          "ref": "sample-system:api/src/services/doctorService.ts#L210"
+        }
+      ],
+      "claim_ref": "C2",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite every product line at one revision (pack_sha base or head_sha) consistently.",
+      "text": "Claims C1 and C2 cite doctorService.ts with mixed line numbering: L191 is slotStates only at head, while L177 matches the base; at head the states.length === 0 test of Next 7 days sits at L210."
+    }
+  ],
+  "package_sha256": "503166ec2c0855b7c6ef3a06fbe80b9a50eff0eef76faeb856462e6f27015567",
+  "questions": [],
+  "recorded_at": "2026-11-27T12:05:01Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "IM-R1",
+      "reason": "CO-1 to CO-6 and EP-1 match the design: onDutyOn SQL, onDutyToday via slotStates with states.length skip, nextFree {start,label}, container wiring, web type and OnDutyTable placed between tiles and Next appointments.",
+      "score": 5
+    },
+    {
+      "id": "IM-R2",
+      "reason": "Rules in services, SQL in the repository, parameterised query, strict types, no contact details or logging of personal data; matches the code-layout and data conventions.",
+      "score": 5
+    },
+    {
+      "id": "IM-R3",
+      "reason": "7 files, 113 added and 5 deleted lines, all needed by the design; the only test edit is the fixture field the type change forces.",
+      "score": 5
+    },
+    {
+      "id": "IM-R4",
+      "reason": "Empty list, all-past slots (free 0, nextFree null), no-slot days and Inactive departments are handled; no new endpoint or input, errors propagate through the existing handler. Per-doctor queries are an accepted design trade-off.",
+      "score": 4
+    },
+    {
+      "id": "IM-R5",
+      "reason": "Summary and Changes list match the diff file for file; claim C1 and C2 line citations mix head and base numbering of doctorService.ts.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.7,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "impl"
+}

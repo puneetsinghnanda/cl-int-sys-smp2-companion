@@ -1,0 +1,144 @@
+{
+  "artifact_sha256": "5f1a08cc4132d0ed0cd78adf43f0da120afc8fc78663562f2bfafcff1252965f",
+  "attempt": 1,
+  "finished_at": "2026-11-27T12:02:46Z",
+  "gates": [
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H1",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H2",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H3",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H4",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H5",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H6",
+      "pass": true,
+      "status": "pass"
+    },
+    {
+      "codes": [],
+      "detail": "",
+      "id": "H7",
+      "pass": true,
+      "status": "pass"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md",
+      "sha256": "a86e1c9b62e44012e519875200e02e518bd8103f4e383932dd9658479930fb09",
+      "verification_sha256": "74e34bc77d1bf6bc8967aa9cab8889a26a2ac02895c8e478cf6f82fa7e8f22f3"
+    },
+    {
+      "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+      "sha256": "aff52115f9fdfadc010120f5dca462e696245658dd4c590d83c5ab683356b584",
+      "verification_sha256": "18bef7bd86d8108e7414eae681a9ad5cf36678fe5746eb0f0f2c2c828ac89983"
+    }
+  ],
+  "product_changes": [
+    {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "diff_sha256": "cb3e9b7e8e18fd29835bc3a2f54bcaf18fcc4839a36dd0740c1353f5a522090f",
+      "files": [
+        "api/src/repositories/doctorRepo.ts",
+        "api/src/services/dashboardService.ts",
+        "api/src/services/doctorService.ts",
+        "api/src/services/index.ts",
+        "web/src/__tests__/DashboardPage.test.tsx",
+        "web/src/api/types.ts",
+        "web/src/pages/DashboardPage.tsx"
+      ],
+      "lines_added": 113,
+      "lines_deleted": 5,
+      "repo": "sample-system",
+      "tree_sha": "870965ee81e165d3649fad34a0e4d7764bda5f85"
+    }
+  ],
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "checks.v1",
+  "soft": [
+    {
+      "id": "GEN-SIZE-01",
+      "pass": true
+    },
+    {
+      "id": "SC-INJ-01",
+      "pass": true
+    }
+  ],
+  "started_at": "2026-11-27T12:00:20Z",
+  "step": "impl",
+  "tool_log_sha256": "d15de9b76f70091197ed05a4fc0aa5ad8837cd41b086cfc1a3245d4b0aacd3e7",
+  "tsl_version": "0.1.7",
+  "verifier": {
+    "image_digest": "sha256:b7bc7f900e06cf20dec76cfbaf7da78e54f08a05f169acc9cba01e3248e1dc4d",
+    "profile": "node-22@1",
+    "steps": [
+      {
+        "duration_ms": 16547,
+        "exit_code": 0,
+        "name": "build",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 35108,
+        "exit_code": 0,
+        "name": "test",
+        "report_sha256": null,
+        "status": "pass"
+      },
+      {
+        "duration_ms": 8141,
+        "exit_code": 0,
+        "name": "lint",
+        "report_sha256": "9300676fcee7fc85b159e9b355308d04d191436e7e96d8a93deec97410a6f27e",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 53141,
+        "exit_code": 0,
+        "name": "sast",
+        "report_sha256": "87b5638cac37cd59c76dc7b71d9857db6c88e9ab26ceb5821fe172378b0d4539",
+        "status": "pass"
+      },
+      {
+        "duration_ms": 1156,
+        "exit_code": 0,
+        "name": "secrets",
+        "report_sha256": "44db21a7136e1c4b99facc372571da85962dce6bfd05d6bdf4ade5a119c96131",
+        "status": "pass"
+      }
+    ]
+  }
+}

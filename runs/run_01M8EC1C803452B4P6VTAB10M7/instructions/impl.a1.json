@@ -1,0 +1,75 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "conventions",
+      "architecture",
+      "module-map"
+    ],
+    "inputs": [
+      {
+        "name": "design",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md",
+        "schema": "design.v1",
+        "sha256": "a86e1c9b62e44012e519875200e02e518bd8103f4e383932dd9658479930fb09"
+      },
+      {
+        "name": "stories",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+        "schema": "stories.v1",
+        "sha256": "aff52115f9fdfadc010120f5dca462e696245658dd4c590d83c5ab683356b584"
+      },
+      {
+        "name": "conventions",
+        "path": "context/conventions.md",
+        "schema": null,
+        "sha256": "dc53d94ec34eb193eeb06fdd0db19eb86a24c29f7d3c434e7c212d61038ca852"
+      },
+      {
+        "name": "module_map",
+        "path": "context/generated/module-map.json",
+        "schema": null,
+        "sha256": "4158c8fcd239c22cb8f1029dd11f61d8839867ff8088bd9ab76197e2db96db4b"
+      }
+    ],
+    "open_questions": [
+      {
+        "ask": "product owner",
+        "blocking": false,
+        "cite": "runs/run_01M8EC1C803452B4P6VTAB10M7/open-questions.md#q-01",
+        "id": "Q-01",
+        "question": "Should an Active doctor whose availability block today is too short to hold one slot be hidden from On duty today, or listed as Fully booked?"
+      }
+    ]
+  },
+  "instruction_path": "runs/run_01M8EC1C803452B4P6VTAB10M7/instructions/impl.a1.json",
+  "progress": {
+    "index": 4,
+    "total": 7
+  },
+  "retry": null,
+  "review": {
+    "package_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.review-package.json",
+    "write_to": "runs/run_01M8EC1C803452B4P6VTAB10M7/review-input/impl.review.json"
+  },
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "say": "impl: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "implement@1.5.0",
+  "step": "impl"
+}

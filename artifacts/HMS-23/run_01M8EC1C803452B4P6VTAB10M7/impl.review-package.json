@@ -1,0 +1,88 @@
+{
+  "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md",
+  "artifact_sha256": "5f1a08cc4132d0ed0cd78adf43f0da120afc8fc78663562f2bfafcff1252965f",
+  "attempt": 1,
+  "budget_tokens": 45000,
+  "checks_sha256": "bf1dc8e46a2512ef3e2213d7d9af41b2d9b0e6778cee2e9acbfeac3cf71a21f3",
+  "context_sections": [
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "architecture",
+      "included": true,
+      "path": "context/architecture.md"
+    },
+    {
+      "id": "module-map",
+      "included": true,
+      "path": "context/module-map.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "design",
+      "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/design.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md"
+    },
+    {
+      "name": "conventions",
+      "path": "context/conventions.md"
+    },
+    {
+      "name": "module_map",
+      "path": "context/generated/module-map.json"
+    }
+  ],
+  "package_sha256": "503166ec2c0855b7c6ef3a06fbe80b9a50eff0eef76faeb856462e6f27015567",
+  "prepared_at": "2026-11-27T12:03:01Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M8EC1C803452B4P6VTAB10M7/review-input/impl.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "IM-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "IM-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R4",
+        "weight": 0.2
+      },
+      {
+        "id": "IM-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/implement/rubric.md",
+    "sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md"
+    },
+    {
+      "name": "open-questions",
+      "path": "runs/run_01M8EC1C803452B4P6VTAB10M7/open-questions.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "implement@1.5.0",
+  "step": "impl",
+  "truncated": false
+}
