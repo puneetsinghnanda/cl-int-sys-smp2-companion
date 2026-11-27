@@ -1,0 +1,88 @@
+{
+  "artifact_path": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ut.md",
+  "artifact_sha256": "a553042f799946b0ce07d36b0932b917794c37cdcd31a3966520df68dd1d1176",
+  "attempt": 1,
+  "budget_tokens": 45000,
+  "checks_sha256": "e4b230cb1a2d759efa81d98ca027f794f53bd8473343c2a6772d4fb8456ac601",
+  "context_sections": [
+    {
+      "id": "test-strategy",
+      "included": true,
+      "path": "context/test-strategy.md"
+    },
+    {
+      "id": "conventions",
+      "included": true,
+      "path": "context/conventions.md"
+    },
+    {
+      "id": "test-layout",
+      "included": true,
+      "path": "context/test-layout.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "change",
+      "path": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/impl.md"
+    },
+    {
+      "name": "stories",
+      "path": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md"
+    },
+    {
+      "name": "test_strategy",
+      "path": "context/test-strategy.md"
+    },
+    {
+      "name": "test_layout",
+      "path": "context/generated/test-layout.json"
+    }
+  ],
+  "package_sha256": "0efc671e9659d5f98c4f9810bf29f7ccfe3613413fa946e1f190621c56912411",
+  "prepared_at": "2026-11-27T09:10:04Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/review-input/ut.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "UT-R1",
+        "weight": 0.3
+      },
+      {
+        "id": "UT-R2",
+        "weight": 0.25
+      },
+      {
+        "id": "UT-R3",
+        "weight": 0.2
+      },
+      {
+        "id": "UT-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "UT-R5",
+        "weight": 0.1
+      }
+    ],
+    "path": "skills/unit-test/rubric.md",
+    "sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md"
+    },
+    {
+      "name": "open-questions",
+      "path": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/open-questions.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "unit-test@1.4.0",
+  "step": "ut",
+  "truncated": false
+}

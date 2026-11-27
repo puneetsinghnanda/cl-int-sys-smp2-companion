@@ -1,0 +1,341 @@
+{
+  "artifact_sha256": "a553042f799946b0ce07d36b0932b917794c37cdcd31a3966520df68dd1d1176",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/test/appointments.test.ts\"",
+          "ref": "context/generated/test-layout.json#L15"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"web/src/__tests__/format.test.ts\"",
+          "ref": "context/generated/test-layout.json#L417"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: 24h after start time (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes: complete, no-show, cancel, reschedule (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Yes, but actor `system`",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-04"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Scheduled again (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-06"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: STALE for both (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-07"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "async markStale(actor: string): Promise<number> {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L136"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "WHERE status = 'SCHEDULED' AND starts_at <= $1",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L168"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (current.status !== 'SCHEDULED' && current.status !== 'STALE') {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L153"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "status = 'SCHEDULED', updated_at = now()",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L158"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "app.locals.ctx = createContext(db, config, clock);",
+          "ref": "sample-system:api/src/app.ts#L20"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const STALE_JOB_ACTOR = 'system';",
+          "ref": "sample-system:api/src/server.ts#L10"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const NOW = new Date('2026-10-19T02:30:00Z');",
+          "ref": "sample-system:api/test/helpers.ts#L10"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "doctor 1: 15-minute slots, Mon–Fri 09:00–12:00",
+          "ref": "sample-system:api/test/helpers.ts#L23"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STALE: 'Stale',",
+          "ref": "sample-system:web/src/lib/format.ts#L41"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STALE: 'Marked stale',",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L19"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED' || a.status === 'STALE';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L46"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "it('HMS-34 REQ-2 edge (S-1 AC2): one minute before 24h after its start",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L51"
+        }
+      ],
+      "claim_ref": "C2",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Start each test name with the requirement ID (for example 'REQ-2 edge ...') and put the HMS-34 ticket key in the describe block, which already carries it.",
+      "text": "Test names start with the ticket key 'HMS-34', not the requirement ID. The strategy asks for the name to start with the ID, so C2 holds only loosely."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "so exactly 24h counts",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ut.md#claim:C13"
+        },
+        {
+          "quote": "clock = after(start, DAY + MINUTE);",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L62"
+        }
+      ],
+      "claim_ref": "C13",
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Add a test that sets clock = after(start, DAY) and expects the appointment to be STALE.",
+      "text": "C13 says exactly 24h counts (starts_at <= cutoff), but no test runs the job at exactly start + 24h. Only DAY - MINUTE and DAY + MINUTE are tested, so the inclusive boundary is unverified."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "const start = (await detail(ids.a!)).startsAt as string;",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L61"
+        },
+        {
+          "quote": "expect((await detail(ids.b!)).status).toBe('STALE');",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L139"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Have each test book its own appointment, or say in the describe block that the tests are an ordered scenario.",
+      "text": "Each API test depends on state left by earlier tests (ids.a, ids.b, ids.g and the shared clock). Running one test alone, or in a different order, breaks the later ones (for example, S-1 AC1 needs the S-1 AC2 test to book 'a' first)."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "\"name\": \"test\",",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ut.checks.json#L111-L115"
+        },
+        {
+          "quote": "describe.skipIf(!pgAvailable())('Stale appointments (HMS-34)'",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L22"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Record the verifier's test report, or check it for skipped suites, before relying on the API tests for S-1 to S-4.",
+      "text": "The verifier's test step passed but has no report (report_sha256 null). The DB-backed API tests use describe.skipIf(!pgAvailable()), so there is no evidence that they ran rather than being skipped."
+    }
+  ],
+  "package_sha256": "0efc671e9659d5f98c4f9810bf29f7ccfe3613413fa946e1f190621c56912411",
+  "questions": [],
+  "recorded_at": "2026-11-27T09:11:44Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Tests cover markStale, the open-state guard, move() back to SCHEDULED, list filter, label, history line and detail actions. The server.ts timer, error log and clearInterval are untested, which the artifact states openly (U-1, Q-01).",
+      "score": 4
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check status, events, actor, HTTP codes and the job's return count. A few are weaker: the S-1 AC3 test ignores the job's count and events, and the web REQ-10 test only checks that a POST was sent.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Error paths are covered: cancel without reason (400), closed after Stale (409), reschedule into the past (400), unknown status filter (400), and a second job run. The inclusive cutoff at exactly 24h is not tested, only plus or minus one minute.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest with Supertest on a throwaway DB, fixed clock, and jsdom with Testing Library, all in the layout's test folders. Test names start with the ticket key HMS-34, not the requirement ID as the strategy asks.",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "The artifact gives no test counts or coverage numbers. It defers to the verifier and says the verifier skips coverage, which checks.json confirms (coverage status skip).",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.1,
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}
