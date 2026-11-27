@@ -2,7 +2,7 @@
   "active_session": {
     "host_hash": "h_4498e8e3",
     "session_id": "c48aca63-1292-4a65-aa7e-bd443580f084",
-    "since": "2026-11-27T10:09:55Z"
+    "since": "2026-11-27T10:45:59Z"
   },
   "branch": {
     "sample-system": {
@@ -15,7 +15,7 @@
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T10:43:04Z",
+  "heartbeat_at": "2026-11-27T10:45:59Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -48,15 +48,19 @@
   },
   "prs": [],
   "questions": {
-    "answered_sha256": {},
-    "open_blocking": 2,
-    "open_non_blocking": 1,
+    "answered_sha256": {
+      "Q-01": "b919a9795ca1dcfe2ab7679274f2fbdfd0de9f680b6abd03d6c8b2506265a1f2",
+      "Q-02": "7cb99be95f7859688d0b199ebedec490287a65f7a55d4d10be9b97cf8fa407db",
+      "Q-03": "de800df92a6b59baeefa491b34080c5eb6910396d5793028c7036c88254d3155"
+    },
+    "open_blocking": 0,
+    "open_non_blocking": 0,
     "round": 1
   },
-  "rev": 31,
+  "rev": 33,
   "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
   "schema": "run-state.v1",
-  "status": "PAUSED_INPUT",
+  "status": "RUNNING",
   "step_runners": {
     "ut": {
       "context": "artifacts",
@@ -252,7 +256,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "WAITING_INPUT"
+      "status": "READY"
     },
     {
       "attempts": [],
@@ -287,7 +291,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-27T10:43:04Z",
+  "updated_at": "2026-11-27T10:45:59Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }

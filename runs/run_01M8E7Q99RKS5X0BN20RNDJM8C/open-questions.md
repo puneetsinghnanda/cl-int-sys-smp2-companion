@@ -5,7 +5,7 @@ ticket: HMS-34
 workflow: brownfield-small@1.0.0
 step: impl@1.4.0
 created_at: '2026-11-27T10:43:04Z'
-status: open
+status: answered
 ---
 
 # Open questions — HMS-34 (impl step)
@@ -21,9 +21,9 @@ Answer each question below the line `answer:`. Keep the ids. Then run:
   A. Yes, add the migration as designed
   B. No, stop the run
 **Proposed default:** Yes, add the migration as designed
-answer:
-answered_by:
-decision:
+answer: A. Yes, add the migration as designed
+answered_by: eng-dffd
+decision: approve
 
 ## Q-02 · non-blocking · ask: tech lead
 **Question:** Who updates the companion's context/glossary.md (new Stale entry, updated Scheduled entry) for REQ-12, since this step edits only the product repo?
@@ -33,13 +33,13 @@ decision:
   A. Tech lead edits it when the PR is merged
   B. Next context refresh updates it
 **Proposed default:** Tech lead edits it when the PR is merged
-answer:
-answered_by:
-decision:
+answer: A. Tech lead edits it when the PR is merged
+answered_by: eng-dffd
+decision: approve
 
 ## Q-03 · blocking · ask: tech lead
 **Question:** Unknown U-1 needs a decision
 **Proposed default:** none
-answer:
-answered_by:
-decision:
+answer: Same as Q-01: A. Yes, add the migration as designed
+answered_by: eng-dffd
+decision: approve
