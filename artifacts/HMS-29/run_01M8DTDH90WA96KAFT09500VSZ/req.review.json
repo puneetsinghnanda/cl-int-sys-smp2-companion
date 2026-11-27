@@ -1,0 +1,169 @@
+{
+  "artifact_sha256": "ff03e26e49a1e532c308fc010cae551de526a9e156225092dc2de150e408fe5b",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "the number of doctors who",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ticket.md#L17-L18"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "An entry used by any doctor cannot be",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ticket.md#L18-L19"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The number of doctors is plain text",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ticket.md#L19"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "set the filter by hand (DOC-2)",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ticket.md#L19-L20"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The hospital staff who register patients",
+          "ref": "context/glossary.md#front-desk-staff"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "department or specialization kept for history",
+          "ref": "context/glossary.md#inactive"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "each linking to the list it",
+          "ref": "context/glossary.md#dashboard"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Staff manage doctors, patients and appointments end to end",
+          "ref": "context/intent-baseline.md#goals"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "\"1 doctor in <name>\" for a count of 1",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#requirements"
+        },
+        {
+          "quote": "options: Same pattern (proposed default) | Per kind | No singular form",
+          "ref": "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "In the A-01 answer entry, state what the 'Same pattern' option proposed (including the singular form) so REQ-6's strings trace to the answer.",
+      "text": "REQ-6 is marked known with the exact singular string \"1 doctor in <name>\", but A-01 only records the option label \"Same pattern\"; the singular wording is the artifact's reading of that label, not recorded text."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The tech lead still needs to add the glossary entries (non-blocking).",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#open-questions"
+        },
+        {
+          "quote": "with the glossary entries added by the tech lead later",
+          "ref": "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md#a-02"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Record the glossary additions as a non-blocking follow-up item routed to tech_lead.",
+      "text": "The glossary follow-up for the tech lead (from A-02) is mentioned only in prose; questions and unknowns are empty, so nothing tracks it."
+    }
+  ],
+  "package_sha256": "9d80e6771e403ef45c52152526a79f527247a05a8f0f93969824394e665a6acb",
+  "questions": [],
+  "recorded_at": "2026-11-27T06:25:04Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All six acceptance criteria map to REQ-1..REQ-8 (AC1 and AC6 split in two); background items and other link sites are under Out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "REQs are checkable; REQ-6 bundles the plural form, the singular form and both entry kinds in one REQ, and REQ-7/REQ-8 are broad 'unchanged' regression constraints.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Statuses rest on ticket lines and IDE answers; the exact singular string in REQ-6 is inferred from a short option label rather than recorded wording.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No clash between the ticket and the baseline goals, constraints or data-protection rules; none was resolved silently.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Q-01 and Q-02 were precise, had real options and went to an engineer; nothing is left blocking.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording; glossary terms Inactive and Front-desk staff used as defined, and missing terms flagged found: false.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.55,
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

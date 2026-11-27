@@ -1,0 +1,84 @@
+{
+  "artifact_path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md",
+  "artifact_sha256": "ff03e26e49a1e532c308fc010cae551de526a9e156225092dc2de150e408fe5b",
+  "attempt": 1,
+  "budget_tokens": 15000,
+  "checks_sha256": "008f669c2913bc2638646c138f85f08f9dbae1819c9d7b6a06f0833f2a111a37",
+  "context_sections": [
+    {
+      "id": "intent-baseline#goals",
+      "included": true,
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "id": "intent-baseline#constraints",
+      "included": true,
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "id": "glossary",
+      "included": true,
+      "path": "context/glossary.md"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ticket",
+      "path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ticket.md"
+    },
+    {
+      "name": "intent_baseline",
+      "path": "context/intent-baseline.md"
+    },
+    {
+      "name": "glossary",
+      "path": "context/glossary.md"
+    }
+  ],
+  "package_sha256": "9d80e6771e403ef45c52152526a79f527247a05a8f0f93969824394e665a6acb",
+  "prepared_at": "2026-11-27T06:23:59Z",
+  "prepared_by": "tsl@0.1.7",
+  "previous_findings": [],
+  "review_input_path": "runs/run_01M8DTDH90WA96KAFT09500VSZ/review-input/req.review.json",
+  "rubric": {
+    "items": [
+      {
+        "id": "RR-R1",
+        "weight": 0.25
+      },
+      {
+        "id": "RR-R2",
+        "weight": 0.2
+      },
+      {
+        "id": "RR-R3",
+        "weight": 0.25
+      },
+      {
+        "id": "RR-R4",
+        "weight": 0.15
+      },
+      {
+        "id": "RR-R5",
+        "weight": 0.1
+      },
+      {
+        "id": "RR-R6",
+        "weight": 0.05
+      }
+    ],
+    "path": "skills/requirement-review/rubric.md",
+    "sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "run_records": [
+    {
+      "name": "ide-answers",
+      "path": "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md"
+    }
+  ],
+  "schema": "review-package.v1",
+  "skill": "requirement-review@1.5.0",
+  "step": "req",
+  "truncated": false
+}
