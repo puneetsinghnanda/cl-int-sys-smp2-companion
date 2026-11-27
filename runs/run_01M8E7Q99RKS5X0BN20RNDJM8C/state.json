@@ -4,12 +4,18 @@
     "session_id": "c48aca63-1292-4a65-aa7e-bd443580f084",
     "since": "2026-11-27T10:09:55Z"
   },
-  "branch": {},
+  "branch": {
+    "sample-system": {
+      "base_sha": "7681f87749883d71abb4011d118366ca1242e1cc",
+      "head_sha": null,
+      "name": "tsl/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C"
+    }
+  },
   "created_at": "2026-11-27T10:09:55Z",
   "cursor": null,
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T10:38:19Z",
+  "heartbeat_at": "2026-11-27T10:43:04Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -43,14 +49,14 @@
   "prs": [],
   "questions": {
     "answered_sha256": {},
-    "open_blocking": 0,
-    "open_non_blocking": 0,
-    "round": 0
+    "open_blocking": 2,
+    "open_non_blocking": 1,
+    "round": 1
   },
-  "rev": 27,
+  "rev": 31,
   "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "PAUSED_INPUT",
   "step_runners": {
     "ut": {
       "context": "artifacts",
@@ -209,7 +215,35 @@
       "status": "DONE"
     },
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/impl.md",
+          "artifact_sha256": "f294e0cb09f4a02ca36c56626eb7cb51b443dd06e0abea0dbaf998b5525b4c9f",
+          "band": "Low",
+          "cause": "first",
+          "decided_at": "2026-11-27T10:43:04Z",
+          "feedback": null,
+          "inputs": [
+            {
+              "name": "design",
+              "sha256": "cd22c633358d52a27d9055d4efad6c44d657cc425c641ae2ca35993468701d8a",
+              "step": "design"
+            },
+            {
+              "name": "stories",
+              "sha256": "de964b65dc63706622cc2da9b738e4978b15ad686429c50dcbb5d068f9d8336e",
+              "step": "split"
+            }
+          ],
+          "n": 1,
+          "outcome": "NEEDS-INPUT",
+          "record": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/impl.verification.json",
+          "skill": "implement@1.4.0",
+          "skill_started_at": "2026-11-27T10:39:32Z",
+          "started_at": "2026-11-27T10:38:29Z"
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -218,7 +252,7 @@
       },
       "id": "impl",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "WAITING_INPUT"
     },
     {
       "attempts": [],
@@ -253,7 +287,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-27T10:38:19Z",
+  "updated_at": "2026-11-27T10:43:04Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "6ccd13fd6839200ae602cc359d1e2b11f20413fb015347f14790e6186f1cd912"
 }

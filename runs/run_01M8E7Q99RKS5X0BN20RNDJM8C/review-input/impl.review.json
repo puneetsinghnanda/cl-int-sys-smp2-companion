@@ -1,0 +1,58 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
+  "step": "impl",
+  "attempt": 1,
+  "artifact_sha256": "f294e0cb09f4a02ca36c56626eb7cb51b443dd06e0abea0dbaf998b5525b4c9f",
+  "package_sha256": "8d5dfb726ade5bd707e296d89d6cf0c2565715d922f7813e2d17b10876ca187f",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "eddc05c3a373b78661766d9a5b2b4b723dc596defc1778e9f97a64d04acc97be"
+  },
+  "rubric_score": 4.2,
+  "rubric_items": [
+    {"id": "IM-R1", "score": 4, "reason": "CO-1 and CO-3 to CO-8 match the design in the product code. CO-2 is held on the sensitive path with a blocking question, and CO-11 is outside the product repo. Both gaps are declared, not silent."},
+    {"id": "IM-R2", "score": 4, "reason": "Layering, 409 conflicts and message-only logging follow the conventions. One small typing gap: the repo close() status type now admits STALE."},
+    {"id": "IM-R3", "score": 5, "reason": "Seven files, 48 lines added and 8 deleted, all named by the design, and within the 400-line and 15-file limits. No sensitive path was edited without asking."},
+    {"id": "IM-R4", "score": 4, "reason": "Sweep failures are caught and logged with the message only, the timer is cleared on shutdown, and overlap errors on reschedule still map to 409. The repo close() type no longer excludes STALE as a target."},
+    {"id": "IM-R5", "score": 4, "reason": "The Changes list matches the diff file for file. But the note that the design asks for no regression tests is not in the design, which says tests call markStale()."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "correctness",
+      "text": "AppointmentRepo.close() still types its status as Exclude<AppointmentStatus, 'SCHEDULED'>. Since STALE joined the union, the compiler now lets close() set STALE, which only markStale() should do.",
+      "cites": [
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L175", "quote": "async close(id: number, status: Exclude<AppointmentStatus, 'SCHEDULED'>"},
+        {"ref": "sample-system:api/src/types.ts#L4", "quote": "'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW' | 'STALE'"}
+      ],
+      "suggested_fix": "Narrow the parameter to 'COMPLETED' | 'CANCELLED' | 'NO_SHOW', or to Exclude<AppointmentStatus, 'SCHEDULED' | 'STALE'>."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The summary says the design asks for no regression tests. The design says no such thing: it states that tests call markStale() at the AC's instant. The reason given for adding no tests is therefore not traceable to the design.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/impl.md#changes", "quote": "No tests added: the design asks for no regression tests; the unit-test step covers them."},
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#open-questions", "quote": "Tests call markStale() at the AC's instant."}
+      ],
+      "suggested_fix": "Reword it as: no tests added in this step; the unit-test step covers markStale() at the AC instants, as the design notes."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "tsl.yaml#L37", "quote": "sensitive_paths: [\"**/auth/**\", \"**/migrations/**\", \".github/**\"]"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-2", "quote": "Migration adding STALE to the status and event CHECKs"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10", "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-11", "quote": "New Stale glossary entry in companion context/glossary.md"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-08", "quote": "answer: In-process timer"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-09", "quote": "answer: Every hour"}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-03", "quote": "answer: Event, actor system"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only"}]}
+  ],
+  "questions": []
+}
