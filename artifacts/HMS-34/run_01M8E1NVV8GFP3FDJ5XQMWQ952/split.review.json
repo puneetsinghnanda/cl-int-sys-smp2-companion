@@ -1,0 +1,167 @@
+{
+  "artifact_sha256": "75a7d123b0e9c6c2abede2df9d1cedfa4c8cb1c4885b7f3d7d41dbe935908603",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "is still not marked Completed or rescheduled `24h after start time` is marked Stale.",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-2"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Appointments are marked Stale by a `Scheduled background job`",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-5"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Each change to Stale is recorded in appointment_event with actor `system`.",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-8"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`HOSPITAL_TZ`, default Asia/Kolkata)",
+          "ref": "context/architecture.md#time-and-slots"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "returns to the state `Scheduled again` at its new time",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-13"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Completed, Cancelled and No-show appointments are never marked Stale",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-7"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "a cancellation reason exists exactly when CANCELLED",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "context/architecture.md#time-and-slots",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md#claim:C4"
+        },
+        {
+          "quote": "- path: context/glossary.md",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md#L10"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add context/architecture.md and context/data-model.md to inputs with their sha256.",
+      "text": "Claims C4 and C7 cite context/architecture.md and context/data-model.md, but neither file is listed in the artifact's inputs with a sha256."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "AC1: Completed at 15:00 UTC on 9 March → still COMPLETED",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md#L106"
+        },
+        {
+          "quote": "AC1: Stale, staff mark Completed → COMPLETED.",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md#L113"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Render body ACs in the same Given/When/Then wording as the front matter.",
+      "text": "Body ACs for S-2, S-3 and S-4 use arrow shorthand that drops the Given/When/Then form and the start time stated in the front matter, so body and front matter read differently."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "(after 24h after start time, 10:00 UTC on 10 March)",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md#L99"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Write '(the 24h mark is 10:00 UTC on 10 March, so this run is after it)'.",
+      "text": "S-1 AC1 body wording 'after 24h after start time' is awkward and harder to read than the front-matter version."
+    }
+  ],
+  "package_sha256": "c27075010654a84fbae61bb44df60d5b1278ca501f9d6702b2991c2d879bc325",
+  "questions": [],
+  "recorded_at": "2026-11-27T08:37:51Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 13 known REQs are traced by at least one story; no assumed REQs exist.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are small and independent; S-1 bundles the status change with its audit event, which is acceptable but two outcomes.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then with 24h boundary on both sides and a time-zone case whose local and UTC dates differ; S-3 ACs are abstract with no concrete times.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "All values come from the intent or cited context (Asia/Kolkata from architecture); derived instants are computed inline.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Readable; the body uses shorthand arrows that drop Given/When/Then and mixes Stale/Scheduled casing with COMPLETED/CANCELLED enum names.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
