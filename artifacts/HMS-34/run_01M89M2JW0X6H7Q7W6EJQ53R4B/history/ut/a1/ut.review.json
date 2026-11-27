@@ -1,0 +1,232 @@
+{
+  "artifact_sha256": "31cb08e6f0a16cdfddcf7aba64726e7a6e455b95c19115ea95866dd79a734ce4",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "API tests use Vitest and Supertest against a throwaway PostgreSQL 16 with a fixed clock.",
+          "ref": "context/test-strategy.md#layers"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Without either, database tests are skipped.",
+          "ref": "context/test-strategy.md#database-for-tests"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The verifier skips coverage (the project has no coverage script)",
+          "ref": "context/test-strategy.md#gaps"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const NOW = new Date('2026-10-19T02:30:00Z');",
+          "ref": "sample-system:api/test/helpers.ts#L10"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "test:sample-system:api/test/appointments.test.ts",
+          "ref": "context/generated/test-layout.json#test:sample-system:api/test/appointments.test.ts"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "test:sample-system:web/src/__tests__/format.test.ts",
+          "ref": "context/generated/test-layout.json#test:sample-system:web/src/__tests__/format.test.ts"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "AppointmentService gains `markStale` and its actions accept STALE",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md#claim:C4"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STALE_JOB_INTERVAL_MS = 60 * MINUTE;",
+          "ref": "sample-system:api/src/jobs/staleJob.ts#L5"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "known: [S-1, S-2, S-3, S-4, S-5]",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L47"
+        },
+        {
+          "quote": "S-7: the patient page table shows the new label through STATUS_LABEL; the doctor page query is unchanged (CO-8).",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md#L117"
+        },
+        {
+          "quote": "then its upcoming appointments table lists the Scheduled one and not the Stale one, as before.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L113"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an API test that a patient's appointments include the Stale one with status STALE, and that the doctor page's upcoming list leaves it out. Or record S-7 under Known or Unknown with a reason.",
+      "text": "S-7 (patient page shows Stale; doctor page still excludes Stale) has no test and the artifact does not mention it. known lists only S-1 to S-5, but impl claims S-7 is changed behaviour."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "S-5: covered by the list filter test, the format test and the web badge test.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L85"
+        },
+        {
+          "quote": "when staff open the dashboard, then it shows the same tiles as before and no tile for Stale appointments.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L99"
+        },
+        {
+          "quote": "REQ-12, REQ-13, REQ-16]",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L46"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Add a dashboard API or web test with one Stale appointment that asserts the tile set and counts are unchanged, or narrow the S-5 Known line and say why AC4 is not tested.",
+      "text": "The artifact says S-5 is covered, but no test checks AC4 (the dashboard keeps the same tiles with no Stale tile, REQ-14). REQ-14 is also left out of trace."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "S-1: covered by the API database tests for one minute either side of 24h and for a future appointment.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L81"
+        },
+        {
+          "quote": "ids.open = (await book(app, 1, 1, MONDAY, '09:00')).body.id;",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L26"
+        },
+        {
+          "quote": "clock = new Date(at(TUESDAY, '10:01'));",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L53"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Check the open appointment at Tuesday 09:01, and add an exactly-24h case to pin the 'at least 24h' rule.",
+      "text": "The artifact says S-1 is tested one minute either side of 24h. The open appointment starts Monday 09:00 and is checked at Tuesday 10:01, which is 61 minutes after. The exact 24h boundary is never checked."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "Every PRD requirement has at least one test whose name starts with its ID",
+          "ref": "context/test-strategy.md#requirement-ids"
+        },
+        {
+          "quote": "it('HMS-34 regression: a closed appointment still offers no actions'",
+          "ref": "sample-system:web/src/__tests__/AppointmentDetailPage.test.tsx#L75"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Start each name with the REQ ID it proves, for example 'REQ-3 HMS-34: ...'.",
+      "text": "Test names start with 'HMS-34', not a requirement ID, and some carry no REQ ID at all. The strategy asks for names that start with the requirement ID."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "api/src/server.ts: CO-6, starts the job after listen from app.locals.ctx and stops it in shutdown.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md#L105"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "text": "No test covers the CO-6 wiring: the job starts after listen and stops in shutdown. Only startStaleJob is tested on its own."
+    }
+  ],
+  "package_sha256": "cae701e6ed49faf50ab8e694808c1ed1727d88850f1d11540531bbc34e923d31",
+  "questions": [],
+  "recorded_at": "2026-11-27T04:28:22Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "UT-R1",
+      "reason": "Job, service, actions, filter and detail page are tested, but S-7 (patient and doctor pages) and S-5 AC4 (dashboard tiles) have no test and no statement, and the server.ts start/stop wiring (CO-6) is untested.",
+      "score": 3
+    },
+    {
+      "id": "UT-R2",
+      "reason": "Assertions check observable status, history, actor, HTTP codes and timer calls. The S-1 'one minute after 24h' claim does not match the test, which checks 61 minutes after for the open appointment.",
+      "score": 4
+    },
+    {
+      "id": "UT-R3",
+      "reason": "Error paths covered: past reschedule 400, cancel without reason 400, closed 409, unknown status 400, job failure logging. The exact 24h boundary (at least 24h) is not tested.",
+      "score": 4
+    },
+    {
+      "id": "UT-R4",
+      "reason": "Vitest/Supertest, fixed clock, skipIf without a DB and jsdom web tests match the strategy. Some names start with HMS-34 and carry no requirement ID ('HMS-34 regression').",
+      "score": 4
+    },
+    {
+      "id": "UT-R5",
+      "reason": "No invented numbers. Passed tests are left to checks.json, and coverage is reported as not measured, which matches the verifier's coverage skip.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 3.8,
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "ut"
+}

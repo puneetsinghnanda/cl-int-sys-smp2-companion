@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "31cb08e6f0a16cdfddcf7aba64726e7a6e455b95c19115ea95866dd79a734ce4",
-  "attempt": 1,
+  "artifact_sha256": "220aabe415ee5b57a1693cdf0a0952aadf12aca04f89c1e561b9432342128766",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -91,57 +91,35 @@
       ],
       "claim_id": "C9",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<AppointmentTable items={p.appointments} hide=\"patient\" />",
+          "ref": "sample-system:web/src/pages/PatientDetailPage.tsx#L76"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<div className=\"tiles\">",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L40"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
     }
   ],
   "findings": [
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "known: [S-1, S-2, S-3, S-4, S-5]",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L47"
-        },
-        {
-          "quote": "S-7: the patient page table shows the new label through STATUS_LABEL; the doctor page query is unchanged (CO-8).",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md#L117"
-        },
-        {
-          "quote": "then its upcoming appointments table lists the Scheduled one and not the Stale one, as before.",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L113"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Add an API test that a patient's appointments include the Stale one with status STALE, and that the doctor page's upcoming list leaves it out. Or record S-7 under Known or Unknown with a reason.",
-      "text": "S-7 (patient page shows Stale; doctor page still excludes Stale) has no test and the artifact does not mention it. known lists only S-1 to S-5, but impl claims S-7 is changed behaviour."
-    },
-    {
-      "category": "correctness",
-      "cites": [
-        {
-          "quote": "S-5: covered by the list filter test, the format test and the web badge test.",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L85"
-        },
-        {
-          "quote": "when staff open the dashboard, then it shows the same tiles as before and no tile for Stale appointments.",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L99"
-        },
-        {
-          "quote": "REQ-12, REQ-13, REQ-16]",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L46"
-        }
-      ],
-      "id": "F-2",
-      "severity": "major",
-      "suggested_fix": "Add a dashboard API or web test with one Stale appointment that asserts the tile set and counts are unchanged, or narrow the S-5 Known line and say why AC4 is not tested.",
-      "text": "The artifact says S-5 is covered, but no test checks AC4 (the dashboard keeps the same tiles with no Stale tile, REQ-14). REQ-14 is also left out of trace."
-    },
     {
       "category": "correctness",
       "cites": [
         {
           "quote": "S-1: covered by the API database tests for one minute either side of 24h and for a future appointment.",
-          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L81"
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L99"
         },
         {
           "quote": "ids.open = (await book(app, 1, 1, MONDAY, '09:00')).body.id;",
@@ -152,10 +130,10 @@
           "ref": "sample-system:api/test/appointments-stale.test.ts#L53"
         }
       ],
-      "id": "F-3",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Check the open appointment at Tuesday 09:01, and add an exactly-24h case to pin the 'at least 24h' rule.",
-      "text": "The artifact says S-1 is tested one minute either side of 24h. The open appointment starts Monday 09:00 and is checked at Tuesday 10:01, which is 61 minutes after. The exact 24h boundary is never checked."
+      "suggested_fix": "Check the open appointment at Tuesday 09:01 (or exactly 09:00) so the test matches the stated boundary.",
+      "text": "Carried from a1 F-3: the artifact says S-1 is tested one minute either side of 24h. The open appointment starts Monday 09:00 but is checked at Tuesday 10:01, which is 61 minutes after. The exact 24h boundary is never checked."
     },
     {
       "category": "style",
@@ -169,10 +147,10 @@
           "ref": "sample-system:web/src/__tests__/AppointmentDetailPage.test.tsx#L75"
         }
       ],
-      "id": "F-4",
+      "id": "F-2",
       "severity": "minor",
       "suggested_fix": "Start each name with the REQ ID it proves, for example 'REQ-3 HMS-34: ...'.",
-      "text": "Test names start with 'HMS-34', not a requirement ID, and some carry no REQ ID at all. The strategy asks for names that start with the requirement ID."
+      "text": "Carried from a1 F-4: test names start with 'HMS-34', not a requirement ID, and some carry no REQ ID at all. The strategy asks for names that start with the requirement ID."
     },
     {
       "category": "completeness",
@@ -182,14 +160,31 @@
           "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md#L105"
         }
       ],
-      "id": "F-5",
+      "id": "F-3",
       "severity": "minor",
-      "text": "No test covers the CO-6 wiring: the job starts after listen and stops in shutdown. Only startStaleJob is tested on its own."
+      "text": "Carried from a1 F-5: no test covers the CO-6 wiring, where the job starts after listen and stops in shutdown. Only startStaleJob is tested on its own."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "S-5 AC4 the dashboard's counts are unchanged, none for Stale",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L91"
+        },
+        {
+          "quote": "expect(Object.keys(dashboard.totals).sort()).toEqual(",
+          "ref": "sample-system:api/test/appointments-stale.test.ts#L86"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Assert the expected totals values with the Stale appointment present, or reword the line to say the totals keep the same keys with none for Stale.",
+      "text": "The artifact says the dashboard's counts are unchanged, but the API test only compares the set of totals keys. It never asserts a count value with the Stale appointment present."
     }
   ],
-  "package_sha256": "cae701e6ed49faf50ab8e694808c1ed1727d88850f1d11540531bbc34e923d31",
+  "package_sha256": "3c8c052cfdeb0ed64d45b5f38a1c56aa81ba23384c029a50cdf71bf98e125da9",
   "questions": [],
-  "recorded_at": "2026-11-27T04:28:22Z",
+  "recorded_at": "2026-11-27T04:43:01Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -200,31 +195,31 @@
   "rubric_items": [
     {
       "id": "UT-R1",
-      "reason": "Job, service, actions, filter and detail page are tested, but S-7 (patient and doctor pages) and S-5 AC4 (dashboard tiles) have no test and no statement, and the server.ts start/stop wiring (CO-6) is untested.",
-      "score": 3
+      "reason": "Prior gaps closed: S-7 has API tests for the patient and doctor pages, and S-5 AC4 has API and web dashboard tests. Only the CO-6 server.ts start/stop wiring is still untested.",
+      "score": 4
     },
     {
       "id": "UT-R2",
-      "reason": "Assertions check observable status, history, actor, HTTP codes and timer calls. The S-1 'one minute after 24h' claim does not match the test, which checks 61 minutes after for the open appointment.",
+      "reason": "Assertions check status, history, actor, HTTP codes, badges and timer calls. Weak spots: the dashboard API test checks only the totals keys, not the counts it claims are unchanged, and the S-1 'one minute after 24h' check is really 61 minutes after.",
       "score": 4
     },
     {
       "id": "UT-R3",
-      "reason": "Error paths covered: past reschedule 400, cancel without reason 400, closed 409, unknown status 400, job failure logging. The exact 24h boundary (at least 24h) is not tested.",
+      "reason": "Error paths are covered: past reschedule 400, cancel without reason 400, closed 409, unknown status 400, job failure logging. The exact 24h boundary and a one-minute-after case are not tested.",
       "score": 4
     },
     {
       "id": "UT-R4",
-      "reason": "Vitest/Supertest, fixed clock, skipIf without a DB and jsdom web tests match the strategy. Some names start with HMS-34 and carry no requirement ID ('HMS-34 regression').",
+      "reason": "Vitest/Supertest, fixed clock, skipIf without a DB and jsdom web tests match the strategy. Test names still start with HMS-34 instead of the requirement ID.",
       "score": 4
     },
     {
       "id": "UT-R5",
-      "reason": "No invented numbers. Passed tests are left to checks.json, and coverage is reported as not measured, which matches the verifier's coverage skip.",
+      "reason": "No invented numbers. Pass results are left to checks.json, and coverage is reported as not measured, which matches the verifier's coverage skip.",
       "score": 5
     }
   ],
-  "rubric_score": 3.8,
+  "rubric_score": 4.1,
   "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
   "schema": "review.v1",
   "status": "ok",

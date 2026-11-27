@@ -2,7 +2,7 @@
 schema: ut-result.v1
 run_id: run_01M89M2JW0X6H7Q7W6EJQ53R4B
 step: ut
-attempt: 1
+attempt: 2
 skill: unit-test@1.4.0
 inputs:
   - path: artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md
@@ -15,6 +15,11 @@ inputs:
     sha256: c0752ab8543e23547679dbe34f6381f656d36b0eb5506efb2a56f94dcb729cd6
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "S-7 is now tested: the patient page lists the Stale appointment and the doctor page still leaves it out."
+  - id: F-2
+    how: "S-5 AC4 is now tested: the dashboard keeps its seven tiles and counts with none for Stale, and REQ-14 is traced."
 claims:
   - id: C1
     text: "API tests use `Vitest and Supertest` against a throwaway PostgreSQL 16 with a fixed clock."
@@ -43,36 +48,49 @@ claims:
   - id: C9
     text: "The job interval is `STALE_JOB_INTERVAL_MS = 60 * MINUTE`."
     cites: ["sample-system:api/src/jobs/staleJob.ts#L5"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-16]
-known: [S-1, S-2, S-3, S-4, S-5]
+  - id: C10
+    text: "The patient page renders its appointments with the shared `AppointmentTable`."
+    cites: ["sample-system:web/src/pages/PatientDetailPage.tsx#L76"]
+  - id: C11
+    text: "The dashboard renders its counts as tiles inside `tiles`."
+    cites: ["sample-system:web/src/pages/DashboardPage.tsx#L40"]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13, REQ-14, REQ-16]
+known: [S-1, S-2, S-3, S-4, S-5, S-7]
 assumed: []
 unknown: []
 questions: []
 code:
   - repo: sample-system
     base_sha: 303a76d72faecd80a0a849d2fb943b70d26129ea
-    head_sha: 2f089ad20d228914acbaa4e09ce7fa2d8d49ffd4
-    diff_sha256: da04e4f115ee23ed0b3789f4c232ea059208d4da42a3483472b4a30e9ded321d
+    head_sha: 961b4b6e31f3f41bae19fea6d36d7e6a8a2bf303
+    diff_sha256: f9e95e7020e9d0c4bb62257dc42b00701d8f971e5eac79ab000b41443d38a507
     files:
       - api/test/appointments-stale.test.ts
       - api/test/staleJob.test.ts
       - web/src/__tests__/AppointmentDetailPage.test.tsx
+      - web/src/__tests__/StaleViews.test.tsx
       - web/src/__tests__/format.test.ts
 ---
 # Unit tests: HMS-34
 
 ## Summary
 The tests cover the Stale job, the service and repository changes behind it, the staff actions on a
-Stale appointment, the list filter and the web appointment page. They use the project's Vitest set-up
-(C1) and name each test with HMS-34 and its REQ ids (C4). The job tests need no database and use fake
-timers. The API tests run against a test database with the fixed clock from the helpers (C5), and
-are skipped when the verifier has none (C2). No test data is real. tsl records the tests run and
-passed in checks.json when it runs the verifier (H3); coverage is not measured (C3).
+Stale appointment, the list filter, the patient, doctor and dashboard views, and the web appointment
+page. They use the project's Vitest set-up (C1) and name each test with HMS-34 and its REQ ids (C4).
+The job tests need no database and use fake timers. The API tests run against a test database with
+the fixed clock from the helpers (C5), and are skipped when the verifier has none (C2). No test data
+is real. tsl records the tests run and passed in checks.json when it runs the verifier (H3); coverage
+is not measured (C3).
+
+Resolved from review:
+- F-1: S-7 is now tested: the patient page lists the Stale appointment and the doctor page still leaves it out.
+- F-2: S-5 AC4 is now tested: the dashboard keeps its seven tiles and counts with none for Stale, and REQ-14 is traced.
 
 ## Tests
 - api/test/staleJob.test.ts (new): the job runs once at start with actor system, again every hour (C9) and not before, stops on the stop function, logs only the error message of a failed run and keeps running.
-- api/test/appointments-stale.test.ts (new, database): S-1 one minute before and after 24h past the start, and a future appointment untouched; S-2 Completed, Cancelled, No-show and rescheduled within the day are not marked Stale; the STALE history event by system; a second run changes nothing; S-5 the list filter by status STALE and an unknown status still rejected; S-3 complete, no-show and cancel (reason required) on Stale, and closed ones still refused; S-4 reschedule from Stale to a past slot refused, to a future slot Scheduled again, and the job then leaves it Scheduled. It exercises `markStale` (C8) through the app's service.
+- api/test/appointments-stale.test.ts (new, database): S-1 one minute before and after 24h past the start, and a future appointment untouched; S-2 Completed, Cancelled, No-show and rescheduled within the day are not marked Stale; the STALE history event by system; S-7 the patient page's appointments carry STALE and the doctor page's upcoming list leaves the Stale one out; S-5 AC4 the dashboard's counts are unchanged, none for Stale, and its next list leaves Stale out; a second run changes nothing; S-5 the list filter by status STALE and an unknown status still rejected; S-3 complete, no-show and cancel (reason required) on Stale, and closed ones still refused; S-4 reschedule from Stale to a past slot refused, to a future slot Scheduled again, and the job then leaves it Scheduled. It exercises `markStale` (C8) through the app's service.
 - web/src/__tests__/AppointmentDetailPage.test.tsx (new): the Stale badge, every action offered on Stale, the "Marked stale" history label by system, the reschedule picker starting on today for a past appointment and on its own day for a future one, and a closed appointment still offering no actions.
+- web/src/__tests__/StaleViews.test.tsx (new): the shared appointment table the patient page uses (C10) shows Stale and Scheduled badges per row; the dashboard keeps its seven tiles (C11) and has no Stale tile.
 - web/src/__tests__/format.test.ts (extended, C7): STATUS_LABEL labels STALE as Stale, after the existing statuses (the list filter's order).
 
 The existing appointment tests (C6) are left as they are; their behaviour does not change.
@@ -82,7 +100,8 @@ The existing appointment tests (C6) are left as they are; their behaviour does n
 - S-2: covered by the API database tests for each way an appointment leaves Scheduled within the day.
 - S-3: covered by the API database tests and the web page test for the actions.
 - S-4: covered by the API database tests for reschedule and by the web test for the picker's start day.
-- S-5: covered by the list filter test, the format test and the web badge test.
+- S-5: covered by the list filter test, the format test, the web badge test and, for AC4 (REQ-14), the API and web dashboard tests.
+- S-7: covered by the API patient and doctor page tests and the web appointment table test.
 
 ## Assumed
 None.

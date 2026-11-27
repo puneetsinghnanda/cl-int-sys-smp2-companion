@@ -1,25 +1,25 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md",
-  "artifact_sha256": "31cb08e6f0a16cdfddcf7aba64726e7a6e455b95c19115ea95866dd79a734ce4",
-  "attempt": 1,
-  "band": "Medium",
+  "artifact_sha256": "220aabe415ee5b57a1693cdf0a0952aadf12aca04f89c1e561b9432342128766",
+  "attempt": 2,
+  "band": "High",
   "caps": [],
-  "checks_sha256": "b3ef43ac00b2edd0c2ce671e19e14cbf9ac958d294507cc4155f8a8718138aec",
+  "checks_sha256": "a7a75b16799c86247b04a9f6d704453b8bfd595fc3f0942991b0064410fa6053",
   "claims": {
-    "total": 9,
-    "verified": 9
+    "total": 11,
+    "verified": 11
   },
-  "decided_at": "2026-11-27T04:28:30Z",
+  "decided_at": "2026-11-27T04:43:05Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-2",
-      "severity": "major"
+      "severity": "minor"
     },
     {
       "id": "F-3",
@@ -27,10 +27,6 @@
     },
     {
       "id": "F-4",
-      "severity": "minor"
-    },
-    {
-      "id": "F-5",
       "severity": "minor"
     }
   ],
@@ -48,7 +44,7 @@
     }
   ],
   "key_id": "key_01M4Z5DDZ8324GN4PB350G4J9Q",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -56,31 +52,31 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "32473a218ff7adde38a8fa838e864c1a90195269dffbc6ee3b7372493500a45f",
   "product_changes": [
     {
       "base_sha": "303a76d72faecd80a0a849d2fb943b70d26129ea",
-      "diff_sha256": "da04e4f115ee23ed0b3789f4c232ea059208d4da42a3483472b4a30e9ded321d",
+      "diff_sha256": "f9e95e7020e9d0c4bb62257dc42b00701d8f971e5eac79ab000b41443d38a507",
       "repo": "sample-system",
-      "tree_sha": "2f089ad20d228914acbaa4e09ce7fa2d8d49ffd4"
+      "tree_sha": "961b4b6e31f3f41bae19fea6d36d7e6a8a2bf303"
     }
   ],
-  "review_sha256": "37eb6ea678727cbf0bd8eb902fa81a62bf31a437d452894b2c2bca3e8a7fae4b",
+  "review_sha256": "99ff09ac0065ca33755812233f19d005e3c6f878b105f28b7af7e278f5bb6f6c",
   "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 3.8,
+    "S3": 4.1,
     "S4": 0,
     "S5": "fresh",
     "S6": {
-      "files": 4,
-      "lines": 264,
+      "files": 5,
+      "lines": 336,
       "sensitive": false
     }
   },
-  "signature": "v7oZvbDBUZqBMrpOtEE56HmK9_NLEuwPACNjYv0j-L6VGlsX4tB4cqxWl3BubTaMENIDCywypdD-BNe5h-IMDw",
+  "signature": "s1hUgP0XYXJNgzTxUeVtvOqsQRImXnSwegqZ3B6IbytlCWZWdfXzuA5JJixwf6D7BLH9jJ5p1YVcM-7GlKXqDA",
   "skill": "unit-test@1.4.0",
   "step": "ut",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
