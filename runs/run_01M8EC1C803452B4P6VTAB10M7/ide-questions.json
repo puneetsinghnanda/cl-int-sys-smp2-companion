@@ -1,0 +1,44 @@
+{
+  "asks": [
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-27T11:28:20Z",
+      "answers": [
+        "A-01",
+        "A-02"
+      ],
+      "ask_id": "ASK-01",
+      "asked_at": "2026-11-27T11:27:56Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Keep, show Fully booked (proposed default)",
+            "Hide the doctor",
+            "Keep, different label"
+          ],
+          "text": "Q-01: Acceptance criterion 1 lists every Active doctor with availability today. Once a doctor's last slot has started, they have 0 free slots and would show \"Fully booked\" (criterion 4), even if nobody booked them. How should the dashboard treat a doctor whose slots today have all passed?"
+        },
+        {
+          "blocking": true,
+          "id": "Q-02",
+          "options": [
+            "Append \" (Inactive)\" (proposed default)",
+            "Name only, no marker"
+          ],
+          "text": "Q-02: A row shows the doctor's department. If that department is Inactive, should the row add a marker?"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "req",
+      "tool_use_id": "toolu_01M23RjSWXUid843YxjEoykC"
+    }
+  ],
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "ide-questions.v1"
+}

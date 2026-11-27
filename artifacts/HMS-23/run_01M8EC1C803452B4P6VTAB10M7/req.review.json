@@ -1,0 +1,172 @@
+{
+  "artifact_sha256": "83422fcfe2dcb3cd14f6000085bc9f1f8dc43cc1c10f1f67488d17e3b115e2fa",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "<h2>Next appointments</h2>",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L61"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "taken ? 'BOOKED' : s.start.getTime() <= now ? 'PAST' : 'FREE'",
+          "ref": "sample-system:api/src/services/doctorService.ts#L161"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "the one slot-state rule shared by the day schedule and the next 7 days",
+          "ref": "sample-system:api/src/services/doctorService.ts#L157"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "free: states.filter((x) => x.state === 'FREE').length",
+          "ref": "sample-system:api/src/services/doctorService.ts#L182"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<Link to={`/doctors/${d.id}?date=${n.date}`}>{n.date}</Link>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L115"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{d.department.name}{d.department.status === 'INACTIVE' && ' (Inactive)'}",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L74"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The dashboard shows no medical history and no contact details.",
+          "ref": "sample-system:docs/PRD.md#L177"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<td>{s.label}</td>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L168"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{ value: '30d', label: 'Last 30 days' },",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L13"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "this includes a doctor whose slots today have all passed, who stays listed",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-12"
+        },
+        {
+          "quote": "answer: Keep, show Fully booked (proposed default)",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Split REQ-12: keep the Fully booked label in REQ-12 (cite ticket #L28) and add a new REQ for 'a doctor whose slots today have all passed stays listed' citing A-01.",
+      "text": "REQ-12 is compound: it holds the Fully booked label (ticket criterion 4) and a separate listing rule from A-01 that a doctor whose slots today have all passed stays listed. These are two checks a tester would run separately."
+    }
+  ],
+  "package_sha256": "8f4649d33ec207ea6637d275b3043a4868851bdfa33186271dd910bb02a777be",
+  "questions": [],
+  "recorded_at": "2026-11-27T11:32:17Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "Every acceptance criterion 1-8 maps to REQ-1..REQ-18; the user-story motivation, auto-refresh and data path are listed under Out of scope with reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are single checkable behaviours; REQ-12 bundles the Fully booked label with the rule that doctors whose slots all passed stay listed.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Known items cite ticket lines, baseline or IDE answers A-01/A-02; product claims C1-C10 check out against the code and PRD.",
+      "score": 5
+    },
+    {
+      "id": "RR-R4",
+      "reason": "No clash between ticket and baseline found; slot counting follows the shared slotStates rule, consistent with the booking rules and the hospital time zone constraint.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Two real gaps were asked in the IDE with concrete options and defaults; no needless questions remain open.",
+      "score": 5
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Plain wording; glossary terms (Dashboard, Slot, Period, Inactive, Tile) used consistently.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.8,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

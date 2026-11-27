@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "this includes a doctor whose slots today have all passed, who stays listed",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-12"
+        },
+        {
+          "quote": "answer: Keep, show Fully booked (proposed default)",
+          "ref": "runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-12 is compound: it holds the Fully booked label (ticket criterion 4) and a separate listing rule from A-01 that a doctor whose slots today have all passed stays listed. These are two checks a tester would run separately."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "feedback.v1",
+  "step": "req"
+}
