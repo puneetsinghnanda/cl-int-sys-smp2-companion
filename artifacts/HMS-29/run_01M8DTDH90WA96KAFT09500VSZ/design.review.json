@@ -1,0 +1,295 @@
+{
+  "artifact_sha256": "ce6e4a81a989a6955c8541075bcb6e4f7065649bf428f4976df6d9b3490ad016",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"RefList\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/SettingsPage.tsx:RefList"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"SettingsPage\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/SettingsPage.tsx:SettingsPage"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"RefEntry\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:RefEntry"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"/doctors\",",
+          "ref": "context/generated/api-inventory.json#ui:/doctors"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"DoctorsPage\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/pages/DoctorsPage.tsx:DoctorsPage"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [],
+      "claim_id": "C6",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [],
+      "claim_id": "C7",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [],
+      "claim_id": "C8",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"query\",",
+          "ref": "context/generated/module-map.json#sym:sample-system:web/src/api/client.ts:query"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/doctors.ts\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/doctors"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/departments.ts\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/departments"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/specializations.ts\",",
+          "ref": "context/generated/api-inventory.json#http:GET:/api/specializations"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "The web app talks to the API only through `web/src/api/client.ts`.",
+          "ref": "context/architecture.md#components"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [],
+      "claim_id": "C14",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [],
+      "claim_id": "C15",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [],
+      "claim_id": "C16",
+      "verdict": "not-checked"
+    },
+    {
+      "cites": [
+        {
+          "quote": "for both departments and specializations, and",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-6"
+        },
+        {
+          "quote": "answer: Same pattern (proposed default)",
+          "ref": "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md#a-01"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "rendered by `RefList` in web/src/pages/SettingsPage.tsx",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C1"
+        },
+        {
+          "quote": "the Doctors cell renders `Link` to `/doctors`",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#components"
+        },
+        {
+          "quote": "assumed: []",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#assumed"
+        }
+      ],
+      "claim_ref": "C1",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Cite the SettingsPage.tsx lines where RefList renders the Doctors cell, or list CO-1's rendering role under Assumed with \"implement must confirm\".",
+      "text": "CO-1 says RefList renders the Doctors cell and is changed, but the only cite is the RefList symbol id, which proves the name exists, not that it renders the department/specialization tables. Not marked Assumed."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "both come from the same `doctorCount`.",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#overview"
+        },
+        {
+          "quote": "The Settings count is a `doctor_count` of every doctor using the entry",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C14"
+        },
+        {
+          "quote": "already carries the id, name, status and doctor count each row needs (C3)",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#components"
+        }
+      ],
+      "claim_ref": "C3",
+      "id": "F-2",
+      "severity": "major",
+      "suggested_fix": "Cite sample-system:web/src/api/types.ts RefEntry lines with the exact field names and types, or mark them Assumed with \"implement must confirm\".",
+      "text": "The design reads `doctorCount` from the row, but its own C14 names the API value `doctor_count`. RefEntry's fields (id, name, status, count) are cited only by the symbol id, so the field name the link uses is unproven."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "The Settings count includes doctors of every status (C14), so the list and the count match",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#overview"
+        },
+        {
+          "quote": "empty when the parameter is absent",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C8"
+        },
+        {
+          "quote": "lists all 3 doctors, the Inactive one included, matching the count",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-1"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "suggested_fix": "Cite the doctors route/service/repository lines showing no status filter is applied when the parameter is absent, or mark it Assumed with \"implement must confirm\".",
+      "text": "REQ-3 match is argued from the UI status filter (C8) and the SQL count (C14) only; nothing cites that GET /api/doctors with no status returns doctors of every status, which AC2 of S-1/S-2 depends on."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "This needs no new prop. The cost is one small mapping in RefList.",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#overview"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "Cite the Kind type (module-map SettingsPage.tsx:Kind) and the RefList props lines, or mark as Assumed.",
+      "text": "The kind values \"departments\"/\"specializations\" and the claim that RefList already receives the kind (no new prop) are stated as fact with no citation."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "`query` drops empty values (C9)",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#overview"
+        },
+        {
+          "quote": "has a `query` helper that builds a URL query string from filter values",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C9"
+        }
+      ],
+      "claim_ref": "C9",
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:web/src/api/client.ts query lines, or state the literal link URL and drop the dependency on query.",
+      "text": "The behaviour that `query` drops empty values, and its output form (leading '?' or not), is asserted but only the symbol's existence is cited."
+    }
+  ],
+  "package_sha256": "4fa130daac365f099c1f4780dd059ccfcead5d2ce1834e20005752568d3de4f3",
+  "questions": [],
+  "recorded_at": "2026-11-27T06:37:29Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Web-only change inside existing SettingsPage.tsx, reusing the existing /doctors route, its URL filters, the query helper and Link; no new module, API, type or infrastructure.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story is mapped to components and every AC has a path, but the REQ-3 count/list match for S-1/S-2 AC2 rests on an uncited assumption about how GET /api/doctors treats a missing status.",
+      "score": 4
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Link URLs and the aria-label wording are exact and testable; no endpoint fields change. The row field the link reads (doctorCount) and the id format are not tied to the cited RefEntry type.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Several code behaviours (RefList renders the Doctors cell, RefEntry fields, Kind values, query dropping empty values, API status default) are cited only by a symbol id or not at all, yet assumed: [] is empty.",
+      "score": 3
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Four trade-off lines cover aria-label, helper location, param mapping and omitting status. Using the API client's query helper to build a router link is not weighed against a literal URL.",
+      "score": 4
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Short, consistent, with a clear story mapping and Known section.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.15,
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}

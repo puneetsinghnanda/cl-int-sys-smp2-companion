@@ -1,0 +1,73 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "rendered by `RefList` in web/src/pages/SettingsPage.tsx",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C1"
+        },
+        {
+          "quote": "the Doctors cell renders `Link` to `/doctors`",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#components"
+        },
+        {
+          "quote": "assumed: []",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#assumed"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "CO-1 says RefList renders the Doctors cell and is changed, but the only cite is the RefList symbol id, which proves the name exists, not that it renders the department/specialization tables. Not marked Assumed."
+    },
+    {
+      "cites": [
+        {
+          "quote": "both come from the same `doctorCount`.",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#overview"
+        },
+        {
+          "quote": "The Settings count is a `doctor_count` of every doctor using the entry",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C14"
+        },
+        {
+          "quote": "already carries the id, name, status and doctor count each row needs (C3)",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#components"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The design reads `doctorCount` from the row, but its own C14 names the API value `doctor_count`. RefEntry's fields (id, name, status, count) are cited only by the symbol id, so the field name the link uses is unproven."
+    },
+    {
+      "cites": [
+        {
+          "quote": "The Settings count includes doctors of every status (C14), so the list and the count match",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#overview"
+        },
+        {
+          "quote": "empty when the parameter is absent",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md#claim:C8"
+        },
+        {
+          "quote": "lists all 3 doctors, the Inactive one included, matching the count",
+          "ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-1"
+        }
+      ],
+      "id": "F-3",
+      "severity": "major",
+      "text": "REQ-3 match is argued from the UI status filter (C8) and the SQL count (C14) only; nothing cites that GET /api/doctors with no status returns doctors of every status, which AC2 of S-1/S-2 depends on."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2",
+    "F-3"
+  ],
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "schema": "feedback.v1",
+  "step": "design"
+}
