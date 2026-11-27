@@ -1,0 +1,80 @@
+{
+  "artifact_path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/design.md",
+  "artifact_sha256": "ce6e4a81a989a6955c8541075bcb6e4f7065649bf428f4976df6d9b3490ad016",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "f85036c151abab946522397345e1ffcc399ede75482e9d22d75c03554ec66984",
+  "claims": {
+    "total": 17,
+    "verified": 17
+  },
+  "decided_at": "2026-11-27T06:37:39Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "major"
+    },
+    {
+      "id": "F-2",
+      "severity": "major"
+    },
+    {
+      "id": "F-3",
+      "severity": "major"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    },
+    {
+      "id": "F-5",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md",
+      "sha256": "e3d898f637b4c06aca5f52dd5b2aa2e8805aa36cce0d6c292f70756d736be215",
+      "verification_sha256": "76af692ae470a1aa846ed6e5f18b3873c4a2e96bf83e0a5d278efe96623500f2"
+    },
+    {
+      "path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md",
+      "sha256": "ff03e26e49a1e532c308fc010cae551de526a9e156225092dc2de150e408fe5b",
+      "verification_sha256": "2b9a15a477d086655bbed654a549b71ffa97e5313142ce12a5707798fcab0327"
+    }
+  ],
+  "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
+  "outcome": "RETRY",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "957df53f636e36dee0d9ca6186e3f2f862e9d9e27e782ab6caf279efd4fd57ed",
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.15,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "K7paLx50IQ1sdIh1hbbdesLHGYyaPITM0qMwasdlb1tsQ1-9EnPyFnCdQuDKZZBZ6gnCQFXDXSbw4JxYpEy7CA",
+  "skill": "design@1.10.0",
+  "step": "design",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}

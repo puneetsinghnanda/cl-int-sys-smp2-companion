@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M8DTDH90WA96KAFT09500VSZ
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.10.0
 inputs:
   - path: artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md
@@ -19,16 +19,27 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-1
+    how: "C1 and C18 now cite the SettingsPage lines where RefList renders both tables and the Doctors cell."
+  - id: F-2
+    how: "C3 and C19 now cite the RefEntry `doctorCount` field and the API mapping from `doctor_count`."
+  - id: F-3
+    how: "C20 to C23 now cite that GET /api/doctors filters by status only when one is given."
 claims:
   - id: C1
-    text: "The department and specialization tables on the Settings page are rendered by `RefList` in web/src/pages/SettingsPage.tsx."
-    cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/SettingsPage.tsx:RefList"]
+    text: "The Settings page renders the department and the specialization table with `RefList`, once with kind departments and once with kind specializations."
+    cites:
+      - "context/generated/module-map.json#sym:sample-system:web/src/pages/SettingsPage.tsx:RefList"
+      - "sample-system:web/src/pages/SettingsPage.tsx#L16-L17"
   - id: C2
     text: "The Settings page component `SettingsPage` is declared in web/src/pages/SettingsPage.tsx, so that file exists."
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/SettingsPage.tsx:SettingsPage"]
   - id: C3
-    text: "Each Settings row is a `RefEntry`, the web type for a department or specialization with its doctor count."
-    cites: ["context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:RefEntry"]
+    text: "Each Settings row is a RefEntry whose doctor count field is `doctorCount`, next to id, name and status."
+    cites:
+      - "context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:RefEntry"
+      - "sample-system:web/src/api/types.ts#L18-L23"
   - id: C4
     text: "The doctor list is the web route `/doctors`."
     cites: ["context/generated/api-inventory.json#ui:/doctors"]
@@ -73,6 +84,24 @@ claims:
     cites:
       - "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/req.md#item:REQ-6"
       - "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md#a-01"
+  - id: C18
+    text: "In RefList, the Doctors cell of each row prints `e.doctorCount` as plain text today."
+    cites: ["sample-system:web/src/pages/SettingsPage.tsx#L61"]
+  - id: C19
+    text: "The API maps the SQL count to the response field with `doctorCount: Number(r.doctor_count)`, so the web field is the same count as C14."
+    cites: ["sample-system:api/src/repositories/referenceRepo.ts#L13"]
+  - id: C20
+    text: "The doctor list SQL adds a status condition only `if (f.status !== undefined)`."
+    cites: ["sample-system:api/src/repositories/doctorRepo.ts#L92"]
+  - id: C21
+    text: "The doctor service reads the status filter with `f.oneOf('status', RECORD_STATUSES)`, so a missing status parameter gives no status filter."
+    cites: ["sample-system:api/src/services/doctorService.ts#L45"]
+  - id: C22
+    text: "The doctor service reads `query.departmentId` and `query.specializationId` from the request query."
+    cites: ["sample-system:api/src/services/doctorService.ts#L40-L42"]
+  - id: C23
+    text: "The GET /api/doctors route passes `req.query` to the doctor service list."
+    cites: ["sample-system:api/src/routes/doctors.ts#L16"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8]
 known: [S-1, S-2, S-3, S-4, CO-1, CO-2, CO-3, CO-4, CO-5, EP-1, EP-2, EP-3]
 assumed: []
@@ -85,6 +114,8 @@ components:
     change: changed
     cites:
       - context/generated/module-map.json#sym:sample-system:web/src/pages/SettingsPage.tsx:RefList
+      - sample-system:web/src/pages/SettingsPage.tsx#L16-L17
+      - sample-system:web/src/pages/SettingsPage.tsx#L61
   - id: CO-2
     name: doctorsLinkLabel (accessible-name helper, local to web/src/pages/SettingsPage.tsx)
     module: module:sample-system:web
@@ -112,59 +143,83 @@ components:
     change: existing
     cites:
       - context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:RefEntry
+      - sample-system:web/src/api/types.ts#L18-L23
 endpoints:
   - id: EP-1
     method: GET
     path: /api/doctors
     change: existing
     fields: []
-    cites: ["context/generated/api-inventory.json#http:GET:/api/doctors"]
+    cites:
+      - context/generated/api-inventory.json#http:GET:/api/doctors
+      - sample-system:api/src/routes/doctors.ts#L16
+      - sample-system:api/src/services/doctorService.ts#L40-L45
+      - sample-system:api/src/repositories/doctorRepo.ts#L90-L92
   - id: EP-2
     method: GET
     path: /api/departments
     change: existing
     fields: []
-    cites: ["context/generated/api-inventory.json#http:GET:/api/departments"]
+    cites:
+      - context/generated/api-inventory.json#http:GET:/api/departments
+      - sample-system:api/src/repositories/referenceRepo.ts#L13
   - id: EP-3
     method: GET
     path: /api/specializations
     change: existing
     fields: []
-    cites: ["context/generated/api-inventory.json#http:GET:/api/specializations"]
+    cites:
+      - context/generated/api-inventory.json#http:GET:/api/specializations
+      - sample-system:api/src/repositories/referenceRepo.ts#L13
 answers: []
 ---
 # Design: HMS-29
 
 ## Overview
-This is a web-only change to the Settings page. In `RefList` (CO-1, C1), the Doctors cell of a
-row with a count above 0 becomes a react-router `Link` (C16) to the doctor list route `/doctors`
-(C4). A department row links to `/doctors?departmentId=<id>` and a specialization row to
-`/doctors?specializationId=<id>`. These are the URL parameters the doctor list already reads
-(C6, C7), and the link is built with the existing `query` helper (CO-4, C9). The link sets no
-`status` parameter, so the doctor list's status filter stays empty, which is "Any status" (C8).
-The Settings count includes doctors of every status (C14), so the list and the count match
-(REQ-3). A row with count 0 keeps the plain number (REQ-4). Active and Inactive rows take the
-same branch, and the doctor list's filter options include Inactive entries (C15), so the filter
-shows the entry's name for Inactive rows too (REQ-5). A small helper, `doctorsLinkLabel` (CO-2),
-builds the link's `aria-label`: "<n> doctors in <name>", or "1 doctor in <name>" when the count
-is 1 (C17). No API, type, database or doctor list change is needed (EP-1 to EP-3, CO-3, CO-5
-existing). That keeps REQ-7 and REQ-8.
+This is a web-only change to the Settings page. The page renders both tables with `RefList`, once
+for departments and once for specializations (CO-1, C1). Today each row's Doctors cell prints
+`e.doctorCount` as plain text (C18). That field is declared on `RefEntry` (C3). The API fills it
+from the SQL `doctor_count` (C19), which counts doctors of every status (C14).
+
+When the count is above 0, the cell becomes a react-router `Link` (C16) to the doctor list route
+`/doctors` (C4). A department row links to `/doctors?departmentId=<id>` and a specialization row
+to `/doctors?specializationId=<id>`. These are the URL parameters the doctor list already reads
+(C6, C7), and the link is built with the existing `query` helper (CO-4, C9).
+
+The link sets no `status` parameter, so the doctor list's status filter stays empty, which is
+"Any status" (C8). The doctor list passes its filters to GET /api/doctors through the API client
+(C13). The route hands `req.query` to the service (C23), which reads the department and
+specialization ids (C22). A missing status gives no status filter (C21), and the SQL adds a status
+condition only when one is given (C20). So the linked list returns doctors of every status and
+matches the Settings count (REQ-3).
+
+A row with count 0 keeps the plain number (REQ-4). Active and Inactive rows take the same branch,
+and the doctor list's filter options include Inactive entries (C15), so the filter shows the
+entry's name for Inactive rows too (REQ-5). A small new helper, `doctorsLinkLabel` (CO-2), builds
+the link's `aria-label`: "<n> doctors in <name>", or "1 doctor in <name>" when the count is 1
+(C17). No API, type, database or doctor list change is needed (EP-1 to EP-3, CO-3 and CO-5 stay
+as they are). That keeps REQ-7 and REQ-8.
 
 Trade-offs:
-- The `aria-label` replaces the visible number as the accessible name. Screen readers hear the full sentence while the visible column stays a bare number, as before (REQ-7). The cost is that the label must be kept in step with the visible count; both come from the same `doctorCount`.
+- The `aria-label` replaces the visible number as the accessible name. Screen readers hear the full sentence while the visible column stays a bare number, as before (REQ-7). The cost is that the label must stay in step with the visible count; both come from the same `doctorCount` field (C3).
 - `doctorsLinkLabel` lives in SettingsPage.tsx, not a shared lib. This keeps the change in one file. The cost is that a later screen would have to move it to share it.
 - The URL parameter name is chosen from the row's kind ("departments" gives `departmentId`, "specializations" gives `specializationId`). This needs no new prop. The cost is one small mapping in RefList.
-- The link sets no status parameter at all, rather than an explicit empty value. The doctor list treats a missing parameter as "Any status" (C8), and `query` drops empty values (C9).
+- The link leaves the status parameter out rather than sending an empty value. The doctor list treats a missing parameter as "Any status" (C8), and `query` drops empty values (C9).
+
+Resolved review findings:
+- F-1: C1 and C18 now cite the SettingsPage lines where RefList renders both tables and the Doctors cell.
+- F-2: C3 and C19 now cite the RefEntry `doctorCount` field and the API mapping from `doctor_count`.
+- F-3: C20 to C23 now cite that GET /api/doctors filters by status only when one is given.
 
 ## Components
-- CO-1 RefList, changed (module:sample-system:web): the Doctors cell renders `Link` to `/doctors` with `departmentId` or `specializationId` set to the row id, when `doctorCount` is above 0; otherwise the plain number. The other cells, the actions and the add form are untouched.
-- CO-2 doctorsLinkLabel, new (module:sample-system:web, local function in web/src/pages/SettingsPage.tsx, which exists per C2): (count, name) gives "<n> doctors in <name>", or "1 doctor in <name>" for a count of 1. Used as the link's `aria-label`.
-- CO-3 DoctorsPage, existing: already reads `departmentId`, `specializationId` and `status` from the URL (C6, C7, C8). Not changed.
+- CO-1 RefList, changed (module:sample-system:web): renders both Settings tables (C1). When `doctorCount` is above 0, the Doctors cell (C18) renders `Link` to `/doctors` with `departmentId` or `specializationId` set to the row id; otherwise it shows the plain number. The other cells, the actions and the add form are untouched.
+- CO-2 doctorsLinkLabel, new (module:sample-system:web, a local function in web/src/pages/SettingsPage.tsx, which exists per C2): (count, name) gives "<n> doctors in <name>", or "1 doctor in <name>" for a count of 1. Used as the link's `aria-label`.
+- CO-3 DoctorsPage, existing: already reads `departmentId`, `specializationId` and `status` from the URL (C5 to C8). Not changed.
 - CO-4 query, existing: builds the link's query string (C9). Not changed.
-- CO-5 RefEntry, existing: already carries the id, name, status and doctor count each row needs (C3). Not changed.
-- EP-1 GET /api/doctors, existing: no new or changed fields (C10).
-- EP-2 GET /api/departments, existing: no new or changed fields (C11).
-- EP-3 GET /api/specializations, existing: no new or changed fields (C12).
+- CO-5 RefEntry, existing: already has id, name, status and `doctorCount` (C3). Not changed.
+- EP-1 GET /api/doctors, existing: no new or changed fields. It filters by department and specialization when given, and by status only when given (C10, C20 to C23).
+- EP-2 GET /api/departments, existing: no new or changed fields. It returns `doctorCount` per entry (C11, C19).
+- EP-3 GET /api/specializations, existing: no new or changed fields. It returns `doctorCount` per entry (C12, C19).
 
 Story mapping:
 - S-1 (department link): CO-1, CO-3, CO-4, EP-1, EP-2.
@@ -173,15 +228,15 @@ Story mapping:
 - S-4 (rest unchanged): CO-1 changes only the Doctors cell; CO-3, CO-5 and EP-1 to EP-3 stay as they are.
 
 ## Known
-- S-1, S-2: served by CO-1 linking to the existing filters of CO-3 (C6, C7), with the count matching per C14.
-- S-3: served by CO-2, wording from A-01 (C17).
-- S-4: served by changing only the Doctors cell in CO-1; no API or doctor list change.
-- CO-1: RefList is a module-map symbol (C1).
-- CO-2: a new local function in SettingsPage.tsx, a file the module map proves exists (C2).
+- S-1, S-2: served by CO-1 linking to the existing filters of CO-3 (C6, C7). GET /api/doctors with no status returns every status (C20, C21), and the Settings count covers every status (C14, C19).
+- S-3: served by CO-2, with the wording from A-01 (C17).
+- S-4: served by changing only the Doctors cell in CO-1 (C18); no API or doctor list change.
+- CO-1: RefList renders both tables (C1), and its Doctors cell is at C18.
+- CO-2: a new local function in SettingsPage.tsx, a file the module map shows exists (C2).
 - CO-3: DoctorsPage is a module-map symbol (C5), at the route `/doctors` (C4).
 - CO-4: query is a module-map symbol (C9).
-- CO-5: RefEntry is a module-map symbol (C3).
-- EP-1, EP-2, EP-3: listed in the API inventory (C10, C11, C12); unchanged.
+- CO-5: RefEntry is declared with `doctorCount` (C3).
+- EP-1, EP-2, EP-3: listed in the API inventory (C10, C11, C12) and not changed.
 
 ## Assumed
 None.
