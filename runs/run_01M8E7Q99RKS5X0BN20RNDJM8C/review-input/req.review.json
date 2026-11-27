@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
   "step": "req",
-  "attempt": 1,
-  "artifact_sha256": "92391e2d6652d3ade4d2c2dad29d9d94891888830f8272c8f3de7d4879a2dedf",
-  "package_sha256": "0e6a92859b7283189f924f6b80f5990ecffb1099ebcd7922b6028994a47d59fd",
+  "attempt": 2,
+  "artifact_sha256": "f5e5e578aa75507ceb63ff21361a3ad8250648de451470e0318990ce245cbd09",
+  "package_sha256": "58ae7bae56afe40f2eb9bc58f1ff01e63b48e8c1c1d041b1ac0c9b2d5aee51ef",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,44 +12,21 @@
     "version": "0.1.7",
     "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
   },
-  "rubric_score": 4.2,
+  "rubric_score": 4.75,
   "rubric_items": [
-    {"id": "RR-R1", "score": 5, "reason": "All four ticket acceptance criteria map to REQ-1..REQ-5; the answered questions add REQ-6..REQ-12; trigger mechanism and dashboard tile are out of scope with reasons."},
-    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and checkable, but REQ-7 does not say which state a rescheduled Stale appointment ends in, so a tester cannot check the outcome."},
-    {"id": "RR-R3", "score": 4, "reason": "Statuses are backed by ticket lines and IDE answers; C7 cites the constraints section for UTC storage, which that section does not state; REQ-6 reads Cancelled into the answer 'closed'."},
-    {"id": "RR-R4", "score": 3, "reason": "The glossary clashes on Scheduled and Actor are recorded as mismatches with cites, but cancelling a past Stale appointment clashes with the glossary meaning of Cancelled and is not raised."},
-    {"id": "RR-R5", "score": 5, "reason": "Five questions with real options, all answered in the IDE by the engineer; no needless blocking."},
-    {"id": "RR-R6", "score": 4, "reason": "Plain and readable; glossary terms mostly consistent, apart from Cancelled being used for a past appointment."}
+    {"id": "RR-R1", "score": 5, "reason": "Ticket criteria 1-4 map to REQ-1..REQ-5; answers A-01..A-07 add REQ-6..REQ-12; trigger mechanism and dashboard tile are out of scope with reasons."},
+    {"id": "RR-R2", "score": 5, "reason": "Each REQ states one behaviour with a checkable condition; previous F-1 fixed: REQ-7 now says a rescheduled Stale appointment is Scheduled again (A-06)."},
+    {"id": "RR-R3", "score": 4, "reason": "Every REQ is backed by a ticket line or IDE answer; previous F-2 fixed via A-07. C7 still cites intent-baseline#constraints for UTC storage, which that section does not state."},
+    {"id": "RR-R4", "score": 5, "reason": "Glossary clashes on Scheduled, Actor and Cancelled were asked and answered, each recorded as a mismatch with a cite."},
+    {"id": "RR-R5", "score": 5, "reason": "Seven precise questions with real options, all answered in the IDE; none left open or blocking needlessly."},
+    {"id": "RR-R6", "score": 5, "reason": "Plain wording; glossary terms used consistently and the missing Stale term is flagged and gets an entry (REQ-12)."}
   ],
   "findings": [
     {
       "id": "F-1",
-      "severity": "major",
-      "category": "completeness",
-      "text": "REQ-7 lets staff reschedule a Stale appointment but does not say which state it ends in (Scheduled again or still Stale). Booking overlap rules only count Scheduled appointments, so the result changes slot behaviour and cannot be tested.",
-      "cites": [
-        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#item:REQ-7", "quote": "Staff can still reschedule a Stale appointment"},
-        {"ref": "context/intent-baseline.md#booking-rules", "quote": "A patient never has two overlapping Scheduled appointments."}
-      ],
-      "suggested_fix": "State in REQ-7 the state after a reschedule (for example back to Scheduled at the new time), or ask the product owner."
-    },
-    {
-      "id": "F-2",
-      "severity": "major",
-      "category": "consistency",
-      "text": "REQ-6 lets staff mark a Stale (past) appointment Cancelled, but the glossary defines Cancelled as called off before it took place. The answer said 'closed', so this clash is the artifact's reading and is not recorded as a mismatch or asked.",
-      "cites": [
-        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#item:REQ-6", "quote": "Staff can still mark a Stale appointment Completed, No-show or Cancelled"},
-        {"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place, with a reason"},
-        {"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-02", "quote": "answer: Can be closed or rescheduled"}
-      ],
-      "suggested_fix": "Record the Cancelled clash in A-02's mismatch, or limit REQ-6 to Completed and No-show unless the user confirms that Cancelled is allowed."
-    },
-    {
-      "id": "F-3",
       "severity": "minor",
       "category": "traceability",
-      "text": "C7 cites intent-baseline#constraints for 'instants are stored in UTC', but that section gives only the time zone and currency; UTC storage is in architecture#time-and-slots.",
+      "text": "Still open from a1 F-3: C7 cites intent-baseline#constraints for 'instants are stored in UTC', but that section gives only the time zone and currency; UTC storage is in architecture#time-and-slots.",
       "cites": [
         {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#claim:C7", "quote": "instants are stored in UTC"},
         {"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."},
@@ -59,10 +36,10 @@
       "suggested_fix": "Add context/architecture.md#time-and-slots to C7's cites."
     },
     {
-      "id": "F-4",
+      "id": "F-2",
       "severity": "minor",
       "category": "traceability",
-      "text": "The artifact cites context/data-model.md, context/architecture.md and context/system-baseline.md, but its inputs list only the ticket, the intent baseline and the glossary, so their hashes are not pinned.",
+      "text": "Still open from a1 F-4: the artifact cites context/data-model.md, context/architecture.md and context/system-baseline.md, but inputs list only the ticket, intent baseline and glossary, so those hashes are not pinned.",
       "cites": [
         {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#inputs", "quote": "- path: context/intent-baseline.md"},
         {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#item:REQ-8", "quote": "context/data-model.md#appointments"}
@@ -79,10 +56,9 @@
     {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/glossary.md#actor", "quote": "In the MVP always `staff`"}]},
     {"claim_id": "C7", "verdict": "unsupported", "cites": [{"ref": "context/intent-baseline.md#constraints", "quote": "Hospital time zone Asia/Kolkata, currency INR."}]},
     {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/system-baseline.md#key-flows", "quote": "a Scheduled appointment is rescheduled, cancelled with a reason, or marked Completed or No-show"}]},
-    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md#L16", "quote": "Appointments have a new state \"Stale\"."}]}
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md#L16", "quote": "Appointments have a new state \"Stale\"."}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#booking-rules", "quote": "A patient never has two overlapping Scheduled appointments."}]},
+    {"claim_id": "C11", "verdict": "supported", "cites": [{"ref": "context/glossary.md#cancelled", "quote": "An appointment called off before it took place"}]}
   ],
-  "questions": [
-    {"id": "Q-1", "text": "When staff reschedule a Stale appointment, does it go back to Scheduled at the new time (and count again for overlap checks), or does it keep some other state?", "ask_role": "product_owner", "blocking": false, "finding_ref": "F-1"},
-    {"id": "Q-2", "text": "Can staff mark a Stale (past) appointment Cancelled, even though the glossary defines Cancelled as called off before it took place, or only Completed or No-show?", "ask_role": "product_owner", "blocking": false, "finding_ref": "F-2"}
-  ]
+  "questions": []
 }

@@ -52,3 +52,23 @@ entries as the user's own answers.
 - question: Q-05: "Stale" is not in the glossary. Should the glossary gain an entry for it?
 - options: Add entry (proposed default) | No glossary entry
 - answer: Add entry (proposed default)
+
+## A-06
+- step: req
+- attempt: 2
+- asked_at: 2026-11-27T10:17:17Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01Hgu8F6PtSXiWrdSB1oFWUT
+- question: Q-06: When staff reschedule a Stale appointment to a new time, which state does it end in? Booking overlap rules only count Scheduled appointments.
+- options: Scheduled again (proposed default) | Stays Stale
+- answer: Scheduled again (proposed default)
+
+## A-07
+- step: req
+- attempt: 2
+- asked_at: 2026-11-27T10:17:17Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01Hgu8F6PtSXiWrdSB1oFWUT
+- question: Q-07: The glossary defines Cancelled as called off before it took place. Can staff mark a Stale (past) appointment Cancelled?
+- options: Yes, Cancelled allowed (proposed default) | No, only Completed or No-show
+- answer: Yes, Cancelled allowed (proposed default)

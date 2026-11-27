@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M8E7Q99RKS5X0BN20RNDJM8C
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md
@@ -41,6 +41,12 @@ claims:
   - id: C9
     text: "The glossary has no entry for `Stale`; the term comes from the ticket."
     cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md#L16"]
+  - id: C10
+    text: "Booking rules count only Scheduled appointments: `A patient never has two overlapping Scheduled appointments`."
+    cites: ["context/intent-baseline.md#booking-rules"]
+  - id: C11
+    text: "The glossary defines Cancelled as `called off before it took place`."
+    cites: ["context/glossary.md#cancelled"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12]
 known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12]
 assumed: []
@@ -53,19 +59,19 @@ requirements:
     statement: "Appointments have a new state `Stale`."
     cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md#L16"]
   - id: REQ-2
-    title: Scheduled appointment becomes Stale 24 hours after its start
+    title: Scheduled appointment becomes Stale 24h after its start
     type: functional
     status: known
     statement: "A Scheduled appointment that is still Scheduled `24h after start` time is marked Stale."
     cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md#L17-L18", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-01"]
   - id: REQ-3
-    title: Completed within 24 hours is not Stale
+    title: Completed in time is not Stale
     type: functional
     status: known
     statement: "A past Scheduled appointment marked `Completed` before 24h after start is not marked Stale."
     cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/ticket.md#L19", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-01"]
   - id: REQ-4
-    title: Rescheduled within 24 hours is not Stale
+    title: Rescheduled in time is not Stale
     type: functional
     status: known
     statement: "A past Scheduled appointment `rescheduled` before 24h after start is not marked Stale."
@@ -80,14 +86,14 @@ requirements:
     title: Staff can close a Stale appointment
     type: functional
     status: known
-    statement: "Staff can still mark a Stale appointment Completed, No-show or Cancelled (`Can be closed or rescheduled`)."
-    cites: ["runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-02"]
+    statement: "Staff can still mark a Stale appointment Completed, No-show or Cancelled (`Cancelled allowed`)."
+    cites: ["runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-02", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-07"]
   - id: REQ-7
-    title: Staff can reschedule a Stale appointment
+    title: Rescheduling a Stale appointment makes it Scheduled again
     type: functional
     status: known
-    statement: "Staff can still reschedule a Stale appointment (`Can be closed or rescheduled`)."
-    cites: ["runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-02"]
+    statement: "Staff can still reschedule a Stale appointment; it is then `Scheduled again` at its new time and counts for the booking overlap rules."
+    cites: ["runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-02", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-06", "context/intent-baseline.md#booking-rules"]
   - id: REQ-8
     title: Marking Stale is recorded in appointment history
     type: functional
@@ -152,6 +158,19 @@ answers:
     about: Q-05
     answer: "Add entry (proposed default)"
     requirements: [REQ-12]
+  - id: A-06
+    kind: question
+    about: Q-06
+    answer: "Scheduled again (proposed default)"
+    requirements: [REQ-7]
+  - id: A-07
+    kind: question
+    about: Q-07
+    answer: "Yes, Cancelled allowed (proposed default)"
+    requirements: [REQ-6]
+    mismatch:
+      text: "The glossary defines Cancelled as called off before it took place; the user decided a Stale (past) appointment can still be marked Cancelled."
+      cites: ["context/glossary.md#cancelled"]
 glossary:
   - {term: Scheduled, found: true}
   - {term: Completed, found: true}
@@ -164,21 +183,22 @@ glossary:
 # Requirements review: HMS-34
 
 ## Summary
-HMS-34 adds a new appointment state, Stale, for Scheduled appointments that are still open 24 hours
-after their start time, so they no longer look like upcoming appointments. Appointments that are
-Completed or rescheduled within that window are left alone. The main risks: no background jobs exist
-yet (C3), so the time-driven change is new to the system; the user decided Stale can still be closed
-or rescheduled, which differs from the glossary's "only Scheduled can change" (C5); and the change is
-recorded with a new actor `system`, which differs from the MVP rule that the actor is always staff (C6).
+HMS-34 adds a new appointment state, Stale, for Scheduled appointments that are still open 24h after
+their start time, so they no longer look like upcoming appointments. Appointments that are Completed
+or rescheduled within that window are left alone. The main risks: no background jobs exist yet (C3),
+so the time-driven change is new to the system; the user decided Stale can still be closed (including
+Cancelled) or rescheduled, which differs from the glossary (C5, C11); a rescheduled Stale appointment
+becomes Scheduled again and counts for the overlap rules (C10); and the change is recorded with a new
+actor `system`, which differs from the MVP rule that the actor is always staff (C6).
 
 ## Requirements
 - REQ-1 New appointment state Stale — known — Appointments have a new state Stale.
-- REQ-2 Becomes Stale 24 hours after start — known — A Scheduled appointment still Scheduled 24 hours after its start time is marked Stale.
-- REQ-3 Completed within 24 hours is not Stale — known.
-- REQ-4 Rescheduled within 24 hours is not Stale — known.
+- REQ-2 Becomes Stale 24h after start — known — A Scheduled appointment still Scheduled 24h after its start time is marked Stale.
+- REQ-3 Completed in time is not Stale — known.
+- REQ-4 Rescheduled in time is not Stale — known.
 - REQ-5 Only Scheduled appointments become Stale — known — Completed, Cancelled and No-show are never marked Stale.
 - REQ-6 Staff can close a Stale appointment — known — Completed, No-show or Cancelled.
-- REQ-7 Staff can reschedule a Stale appointment — known.
+- REQ-7 Rescheduling a Stale appointment makes it Scheduled again — known — it then counts for the booking overlap rules.
 - REQ-8 Marking Stale is recorded in appointment_event — known.
 - REQ-9 Actor for the Stale change is system — known.
 - REQ-10 Stale shown in list and on the appointment page — known.
@@ -187,9 +207,10 @@ recorded with a new actor `system`, which differs from the MVP rule that the act
 
 ## Known
 - REQ-1: ticket acceptance criterion 1.
-- REQ-2, REQ-3, REQ-4: ticket acceptance criteria 2 to 4, with "within one day" fixed as 24 hours after the start time by A-01.
+- REQ-2, REQ-3, REQ-4: ticket acceptance criteria 2 to 4, with "within one day" fixed as 24h after the start time by A-01.
 - REQ-5: ticket criterion 2 applies to Scheduled appointments only, and closed appointments never change (C4).
-- REQ-6, REQ-7: decided by A-02.
+- REQ-6: decided by A-02 and A-07.
+- REQ-7: decided by A-02 and A-06.
 - REQ-8, REQ-9: decided by A-03.
 - REQ-10, REQ-11: decided by A-04.
 - REQ-12: decided by A-05.
@@ -211,6 +232,8 @@ Answered in the IDE:
 - A-03 (Q-03, user): record the change, and with which actor? — "Event, actor system". Decides REQ-8, REQ-9. Mismatch: the glossary says the actor is always staff in the MVP; the user decided the actor is system.
 - A-04 (Q-04, user): where is Stale shown? — "Lists and page, with filter (proposed default)". Decides REQ-10, REQ-11.
 - A-05 (Q-05, user): add Stale to the glossary? — "Add entry (proposed default)". Decides REQ-12.
+- A-06 (Q-06, user): which state does a rescheduled Stale appointment end in? — "Scheduled again (proposed default)". Decides REQ-7.
+- A-07 (Q-07, user): can a Stale (past) appointment be marked Cancelled? — "Yes, Cancelled allowed (proposed default)". Decides REQ-6. Mismatch: the glossary defines Cancelled as called off before it took place; the user decided a Stale appointment can still be Cancelled.
 
 ## Out of scope
 - How the Stale change is triggered (scheduled job, check on read, or on startup) is a design decision, not a requirement; note that no background jobs exist yet (C3).
