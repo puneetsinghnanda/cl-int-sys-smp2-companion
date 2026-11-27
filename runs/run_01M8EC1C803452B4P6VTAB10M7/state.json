@@ -23,9 +23,9 @@
   },
   "cursor": null,
   "driver": "skill",
-  "end_reason": null,
+  "end_reason": "pr_opened",
   "gates": [],
-  "heartbeat_at": "2026-11-27T12:20:44Z",
+  "heartbeat_at": "2026-11-27T12:21:03Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -56,18 +56,25 @@
     },
     "tsl": "0.1.7"
   },
-  "prs": [],
+  "prs": [
+    {
+      "draft": true,
+      "number": 34,
+      "repo": "sample-system",
+      "url": "https://github.com/puneetsinghnanda/sample-health-mgmt-app/pull/34"
+    }
+  ],
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
     "open_non_blocking": 2,
     "round": 2
   },
-  "rev": 53,
+  "rev": 54,
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "run_loop": "code",
   "schema": "run-state.v1",
-  "status": "RUNNING",
+  "status": "COMPLETED",
   "step_runners": {
     "ut": {
       "context": "full",
@@ -509,12 +516,12 @@
       "attempts": [],
       "id": "pr",
       "kind": "pr",
-      "status": "PENDING"
+      "status": "DONE"
     }
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-23",
-  "updated_at": "2026-11-27T12:20:44Z",
+  "updated_at": "2026-11-27T12:21:03Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "7aaa0d7d7375f9a64a0eebe5d8173b8d1e4d63214d650a446e61fdc1b7828c97"
 }
