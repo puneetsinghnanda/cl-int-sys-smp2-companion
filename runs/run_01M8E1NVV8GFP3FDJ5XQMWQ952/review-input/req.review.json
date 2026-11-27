@@ -1,0 +1,69 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "step": "req",
+  "attempt": 1,
+  "artifact_sha256": "88c82ece9ac6d14f5c0f7bd258f94411d45fb896c4dc6b2fa6800b3b512160c3",
+  "package_sha256": "a99f770123955595756343cfac71e99f55a0d307b360d109478ee8c858237cf6",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d"
+  },
+  "rubric_score": 4.75,
+  "rubric_items": [
+    {"id": "RR-R1", "score": 5, "reason": "All four ticket acceptance criteria map to REQ-1..REQ-4; the display change and job frequency are listed under Out of scope with reasons."},
+    {"id": "RR-R2", "score": 4, "reason": "Most REQs are atomic and checkable; REQ-6 bundles four staff actions and does not say what state a rescheduled Stale appointment returns to."},
+    {"id": "RR-R3", "score": 5, "reason": "Every known item cites the ticket, the context pack or an IDE answer (a-01..a-05); the cited answers say what the artifact claims."},
+    {"id": "RR-R4", "score": 5, "reason": "Both baseline clashes (only Scheduled can change; actor always staff) were asked, answered and recorded as mismatches with glossary cites."},
+    {"id": "RR-R5", "score": 5, "reason": "Questions were real gaps (window, mechanism, mutability, actor, glossary) with concrete options; none remain open or blocking."},
+    {"id": "RR-R6", "score": 4, "reason": "Readable; status names switch between the data-model codes (SCHEDULED, NO_SHOW) and glossary terms (Scheduled, No-show) in one statement."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "major",
+      "category": "completeness",
+      "text": "REQ-6 is compound: four separate transitions (complete, no-show, cancel, reschedule) in one REQ. It also does not say what state a rescheduled Stale appointment ends in (Scheduled again?), so a tester cannot check that outcome.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-6", "quote": "Staff can still mark a Stale appointment Completed or No-show, cancel it or reschedule it (`complete, no-show, cancel, reschedule`)."},
+        {"ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03", "quote": "answer: Yes: complete, no-show, cancel, reschedule (proposed default)"}
+      ],
+      "suggested_fix": "Split REQ-6 into one REQ per transition. For the reschedule one, state the resulting status (presumably Scheduled) as assumed, based on A-03."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "The Out-of-scope reason says the ticket does not ask for a display change. But the ticket's stated goal is that a Stale appointment no longer looks like an upcoming Scheduled one, which is about how it is shown.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#out-of-scope", "quote": "the ticket does not ask for a display change"},
+        {"ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ticket.md#L14", "quote": "looking like an upcoming Scheduled appointment"}
+      ],
+      "suggested_fix": "Reword the reason: the status change alone satisfies the goal, and any list, filter or tile change is deferred to design."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "style",
+      "text": "REQ-1 mixes the database codes (SCHEDULED, NO_SHOW) with the glossary term Stale. Other REQs use the glossary forms Scheduled and No-show.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-1", "quote": "alongside SCHEDULED, COMPLETED, CANCELLED and NO_SHOW"}
+      ],
+      "suggested_fix": "Use the glossary terms Scheduled, Completed, Cancelled and No-show in requirement statements."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "COMPLETED, CANCELLED or NO_SHOW; a cancellation reason exists exactly when CANCELLED."}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/data-model.md#appointments", "quote": "`appointment_event` records every change with time and actor."}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "context/intent-baseline.md#closed-appointments", "quote": "Completed, Cancelled and No-show"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "context/glossary.md#actor", "quote": "In the MVP always `staff`"}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#time-and-slots", "quote": "Instants are stored in UTC."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/system-baseline.md#key-flows", "quote": "a Scheduled appointment is rescheduled, cancelled with a reason, or marked Completed or No-show."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/glossary.md#scheduled", "quote": "Only Scheduled appointments can change."}]}
+  ],
+  "questions": []
+}

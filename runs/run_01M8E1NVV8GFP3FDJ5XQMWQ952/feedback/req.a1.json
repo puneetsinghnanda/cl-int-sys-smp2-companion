@@ -1,0 +1,29 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Staff can still mark a Stale appointment Completed or No-show, cancel it or reschedule it (`complete, no-show, cancel, reschedule`).",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-6"
+        },
+        {
+          "quote": "answer: Yes: complete, no-show, cancel, reschedule (proposed default)",
+          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-6 is compound: four separate transitions (complete, no-show, cancel, reschedule) in one REQ. It also does not say what state a rescheduled Stale appointment ends in (Scheduled again?), so a tester cannot check that outcome."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
+  "schema": "feedback.v1",
+  "step": "req"
+}
