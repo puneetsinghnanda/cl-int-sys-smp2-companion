@@ -1,0 +1,73 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "step": "ut",
+  "attempt": 1,
+  "artifact_sha256": "b9203b86972b6c82ca2771e455b18a3d1d301431c743d5ca6f83804108859022",
+  "package_sha256": "2e292fe63dbb1fe8a7801a122ce67c12c23f9781533f166000df49f32664f48d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "246ced29d2995e13a7cbe52d6e036ed073c56dd3ed51874bf6da3e14b918a11f"
+  },
+  "rubric_score": 4.55,
+  "rubric_items": [
+    {"id": "UT-R1", "score": 5, "reason": "Every changed branch of RefList and doctorsLinkLabel is exercised: count > 0 link for both kinds, count 0 plain text, Inactive rows, plural and singular labels, plus row actions and add forms unchanged."},
+    {"id": "UT-R2", "score": 4, "reason": "Assertions check href, aria-label, visible text, request URLs and filter values. The fetch mock returns the same doctors for any filter, so 'lists only those 3 doctors' is not observably checked."},
+    {"id": "UT-R3", "score": 4, "reason": "Count 0, count 1, Inactive entries, a failed department list and clearing the filter are covered. Inactive-entry journeys and the specialization 'Any status' list content are checked only partly."},
+    {"id": "UT-R4", "score": 5, "reason": "Vitest, jsdom and Testing Library in web/src/__tests__, names start with the HMS-29 REQ id, fetch stubbed with vi.stubGlobal as in DoctorsPage.test.tsx. Only the test file changed."},
+    {"id": "UT-R5", "score": 5, "reason": "The 13 tests stated match the verifier test log, and coverage is not claimed because the verifier skipped it (exit 78)."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-1 AC1 and S-2 AC1 require the list to show only the filtered doctors, but the fetch mock returns the same 3 doctors for every /api/doctors URL. The tests prove the request parameter, not the narrowed list, yet Known says AC1 to AC4 are covered.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/SettingsPage.test.tsx#L45", "quote": "if (url.startsWith('/api/doctors')) return json(DOCTORS);"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-1", "quote": "then the doctor list opens with the Department filter set to Cardiology and lists only those 3 doctors"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ut.md#known", "quote": "S-1: AC1 to AC4 are covered by the department tests above."}
+      ],
+      "suggested_fix": "State in Known that the list narrowing comes from the existing API filter (REQ-8 unchanged) and the unit tests check only the departmentId/specializationId request, or make the mock answer per filter."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "S-1 AC4 and S-2 AC4 (Inactive entry opens the filtered list at Any status) are checked only through the link href and label; no test clicks an Inactive row's link into the doctor list.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/SettingsPage.test.tsx#L118", "quote": "expect(department.getAttribute('href')).toBe('/doctors?departmentId=2');"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-1", "quote": "Given an Inactive department used by 3 doctors, when staff select its count on the Settings page"}
+      ],
+      "suggested_fix": "Either add a journey test from Test Department 002 or say in Known that AC4 is covered by href equality with the Active path."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "The specialization journey test checks filter values only; it does not assert that 'Any status' is shown or that all 3 doctors, the Inactive one included, are listed (S-2 AC2), though Known says S-2 AC1 to AC4 are covered.",
+      "cites": [
+        {"ref": "sample-system:web/src/__tests__/SettingsPage.test.tsx#L206", "quote": "await waitFor(() => expect(select('Specialization').value).toBe('11'));"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#item:S-2", "quote": "lists all 3 doctors, the Inactive one included, matching the count"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ut.md#known", "quote": "S-2: AC1 to AC4 are covered by the specialization tests above."}
+      ],
+      "suggested_fix": "Add shown('Status') === 'Any status', the 3 doctor links and the Inactive badge check to the specialization journey test, as the department one does."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#layers", "quote": "Vitest with jsdom and Testing Library"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#requirement-ids", "quote": "Every PRD requirement has at least one test whose name starts with its ID"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#claim:C1", "quote": "The design marks `RefList`, which renders the Settings tables, as the changed component."}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#claim:C2", "quote": "The design adds a new local helper `doctorsLinkLabel` in SettingsPage.tsx for the link's accessible name."}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#claim:C4", "quote": "The doctor list reads its department filter from the URL parameter `departmentId`."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#claim:C5", "quote": "The doctor list reads its specialization filter from the URL parameter `specializationId`."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "runs/run_01M8DTDH90WA96KAFT09500VSZ/ide-answers.md#a-01", "quote": "answer: Same pattern (proposed default)"}, {"ref": "sample-system:web/src/pages/SettingsPage.tsx#L16", "quote": "return `${count} ${count === 1 ? 'doctor' : 'doctors'} in ${name}`;"}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/__tests__/DoctorsPage.test.tsx#L27", "quote": "vi.stubGlobal('fetch', fetchMock);"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md#claim:C9", "quote": "An entry used by any doctor `cannot be` deleted (REF-2)."}, {"ref": "sample-system:web/src/pages/SettingsPage.tsx#L86", "quote": "{e.doctorCount === 0 && ("}]},
+    {"claim_id": "C10", "verdict": "supported", "cites": [{"ref": "context/test-strategy.md#gaps", "quote": "The verifier skips coverage (the project has no coverage script)"}]}
+  ],
+  "questions": []
+}

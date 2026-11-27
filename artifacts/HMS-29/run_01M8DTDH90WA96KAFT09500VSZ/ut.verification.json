@@ -1,0 +1,79 @@
+{
+  "artifact_path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ut.md",
+  "artifact_sha256": "b9203b86972b6c82ca2771e455b18a3d1d301431c743d5ca6f83804108859022",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "395c310535154ccd4909963d41ff9c3ffd9a8ab6505651b399e856f47b63f266",
+  "claims": {
+    "total": 10,
+    "verified": 10
+  },
+  "decided_at": "2026-11-27T07:02:57Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md",
+      "sha256": "1071d8f70af8c5b0b6f2db524634df3c9f76a9a7ebf2a6669cdbe99127208150",
+      "verification_sha256": "7a5a127eb25a7dbab757bc3a0d1679f6b9c1d964e8941260507ed4dd3ab86a16"
+    },
+    {
+      "path": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/split.md",
+      "sha256": "e3d898f637b4c06aca5f52dd5b2aa2e8805aa36cce0d6c292f70756d736be215",
+      "verification_sha256": "76af692ae470a1aa846ed6e5f18b3873c4a2e96bf83e0a5d278efe96623500f2"
+    }
+  ],
+  "key_id": "key_01M77FBDN0DQ96SZ33BBPACWN4",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": [
+    {
+      "base_sha": "7fe6f1e63a41e73a07151c0af7e456bcad2ede8b",
+      "diff_sha256": "d95a4064d50a076b1a20d97beff3c198fdefffa537da72d74795a617b55de682",
+      "repo": "sample-system",
+      "tree_sha": "4a58830b9f87b5d7d65c6f4478e3b663da578425"
+    }
+  ],
+  "review_sha256": "4a287dc5e7aeab95ae2aad9274548e2add2d2c2b6b4ea632fbd97ca0e1434ce2",
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.55,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 1,
+      "lines": 236,
+      "sensitive": false
+    }
+  },
+  "signature": "uiTzVkSrUhIc6RoZZynaCmD67EEQip43Dd0sOS5U2InghQGrZPhtInsaVxGDgHO-YPFrI5iFksnwWoPeprYLCQ",
+  "skill": "unit-test@1.4.0",
+  "step": "ut",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
