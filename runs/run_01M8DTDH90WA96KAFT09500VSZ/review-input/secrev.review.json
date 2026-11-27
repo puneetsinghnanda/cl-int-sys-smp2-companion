@@ -1,0 +1,75 @@
+{
+  "schema": "review.v1",
+  "run_id": "run_01M8DTDH90WA96KAFT09500VSZ",
+  "step": "secrev",
+  "attempt": 1,
+  "artifact_sha256": "49d15e901da471d065c54a343258ed9b7f6ecdcf17d55f988a75d55a9e585239",
+  "package_sha256": "dde694a5bf1bffc5f6223a748b752ea30192a93c1def3bac542f73fa0c04574d",
+  "status": "ok",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "skill": "review",
+    "version": "0.1.7",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321"
+  },
+  "rubric_score": 4.8,
+  "rubric_items": [
+    {"id": "SC-R1", "score": 5, "reason": "I read SettingsPage.tsx L12-L17 and L72 and client.ts query(). Entry name goes only into a React-escaped aria-label, the href is a fixed path plus a URLSearchParams-encoded numeric id, and no route, auth or logging changed. No weakness was missed."},
+    {"id": "SC-R2", "score": 4, "reason": "Most claims cite the exact line (L72, client.ts L40-L42). C4 and C9 cite lines that do not prove the whole claim (impl claim C2, and the import this change itself adds)."},
+    {"id": "SC-R3", "score": 5, "reason": "Finding no weaknesses and calling the risk low fits a web-only change that adds no new surface."},
+    {"id": "SC-R4", "score": 5, "reason": "There are no findings, so no fix is needed. Each area checked (encoding, link target, surface) gives its reason."},
+    {"id": "SC-R5", "score": 5, "reason": "No false positives: the artifact reports no findings, and I found nothing that contradicts that."}
+  ],
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "The summary says the review covers the unit-test step's test file. But inputs list only impl.md, and the attached SAST hash is the impl verifier's report, not the ut verifier's (a1e0dd6a...), which scanned SettingsPage.test.tsx.",
+      "cites": [
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/secrev.md#summary", "quote": "plus the unit-test step's test file"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/secrev.md#scans", "quote": "report_sha256: 89bc9d78b7be90a3d6e5a7f8f835b2820b24425f94fa622b3019440ee463fa46"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/ut.checks.json#L126", "quote": "a1e0dd6a02a791ebc812308f768757e981425c9f2f2273087e06c625f4bc8bc8"}
+      ],
+      "suggested_fix": "Either drop the test file from the stated scope, or add ut.md to inputs and attach the ut SAST report hash as well."
+    },
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C9 cites SettingsPage.tsx#L2, but that is the Link import this change adds, so it does not prove react-router-dom was already a dependency. web/package.json#L16 proves it.",
+      "cites": [
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/secrev.md#claim:C9", "quote": "already a dependency of the web app, so no dependency is added"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#changes", "quote": "imports `Link` and `query`"},
+        {"ref": "sample-system:web/package.json#L16", "quote": "\"react-router-dom\": \"^6.28.0\""}
+      ],
+      "claim_ref": "C9",
+      "suggested_fix": "Cite sample-system:web/package.json#L16 for C9."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "traceability",
+      "text": "C4 says doctorsLinkLabel only joins the count and the name, but it cites impl claim C2, which only says the helper exists. The code line that proves it is SettingsPage.tsx#L16.",
+      "cites": [
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/secrev.md#claim:C4", "quote": "which only joins the count and the entry name"},
+        {"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#claim:C2", "quote": "The design adds a new local helper `doctorsLinkLabel` in SettingsPage.tsx for the link's accessible name."},
+        {"ref": "sample-system:web/src/pages/SettingsPage.tsx#L16", "quote": "return `${count} ${count === 1 ? 'doctor' : 'doctors'} in ${name}`;"}
+      ],
+      "claim_ref": "C4",
+      "suggested_fix": "Cite sample-system:web/src/pages/SettingsPage.tsx#L15-L17 for C4."
+    }
+  ],
+  "claims_checked": [
+    {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/SettingsPage.tsx#L72", "quote": "aria-label={doctorsLinkLabel(e.doctorCount, e.name)}"}]},
+    {"claim_id": "C2", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/SettingsPage.tsx#L72", "quote": "<Link to={`/doctors${query({ [DOCTOR_FILTER[kind]]: e.id })}`}"}, {"ref": "sample-system:web/src/pages/SettingsPage.tsx#L12", "quote": "{ departments: 'departmentId', specializations: 'specializationId' }"}]},
+    {"claim_id": "C3", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/api/client.ts#L40-L42", "quote": "const q = new URLSearchParams();"}]},
+    {"claim_id": "C4", "verdict": "supported", "cites": [{"ref": "sample-system:web/src/pages/SettingsPage.tsx#L16", "quote": "return `${count} ${count === 1 ? 'doctor' : 'doctors'} in ${name}`;"}]},
+    {"claim_id": "C5", "verdict": "supported", "cites": [{"ref": "artifacts/HMS-29/run_01M8DTDH90WA96KAFT09500VSZ/impl.md#claim:C8", "quote": "The endpoint `/api/doctors` stays existing; the design changes no API."}]},
+    {"claim_id": "C6", "verdict": "supported", "cites": [{"ref": "context/architecture.md#components", "quote": "The web app talks to the API only through `web/src/api/client.ts`."}]},
+    {"claim_id": "C7", "verdict": "supported", "cites": [{"ref": "context/architecture.md#identity", "quote": "In the MVP every request is the actor `staff` and every permission is granted."}]},
+    {"claim_id": "C8", "verdict": "supported", "cites": [{"ref": "context/conventions.md#logging-and-data", "quote": "Logs carry method, route and error message only, never request bodies, contact details or medical"}]},
+    {"claim_id": "C9", "verdict": "supported", "cites": [{"ref": "sample-system:web/package.json#L16", "quote": "\"react-router-dom\": \"^6.28.0\""}]}
+  ],
+  "questions": []
+}
