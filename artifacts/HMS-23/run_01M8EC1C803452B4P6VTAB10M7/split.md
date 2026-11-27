@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M8EC1C803452B4P6VTAB10M7
 step: split
-attempt: 1
+attempt: 2
 skill: story-split@1.6.0
 inputs:
   - {path: artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md, sha256: 69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365}
@@ -23,6 +23,8 @@ known: [S-1, S-2, S-3, S-4, S-5, S-6, S-7]
 assumed: []
 unknown: []
 questions: []
+resolves:
+  - {id: F-1, how: "S-3 AC4 and S-4 AC5 test the counts and the next free slot at 04:00 local, when the UTC date is still the previous day."}
 stories:
   - id: S-1
     title: "See which doctors are on duty today"
@@ -41,19 +43,21 @@ stories:
       - {id: AC3, text: "Given doctor A is on duty today and has a phone and an email stored, when staff open the dashboard, then doctor A's row shows neither the phone nor the email."}
   - id: S-3
     title: "See booked and free slots today, counted like the day schedule"
-    trace: [REQ-7, REQ-8]
+    trace: [REQ-3, REQ-7, REQ-8]
     acceptance_criteria:
       - {id: AC1, text: "Given doctor A's slots today start at 09:00, 09:30, 10:00, 10:30 and 11:00 local, the 09:00 slot has a Completed appointment, 09:30 a No-show, 10:30 a Scheduled one, 11:00 only a Cancelled one, 10:00 none, and now is 09:45 local, when staff open the dashboard, then doctor A's row shows booked 3 and free 2."}
       - {id: AC2, text: "Given doctor A's slots today start at 09:00 and 10:00 local, neither is booked, and now is 09:45 local, when staff open the dashboard, then doctor A's row shows booked 0 and free 1, because the passed 09:00 slot is neither booked nor free."}
       - {id: AC3, text: "Given any on-duty doctor at any time today, when staff compare the row with that doctor's day schedule for today, then the row's booked count equals the number of booked slots and its free count equals the number of free (\"Free: book\") slots in the day schedule."}
+      - {id: AC4, text: "Given now is 04:00 local on Saturday 28 November 2026 (Asia/Kolkata = UTC+05:30, so 22:30 UTC on Friday 27 November; local 00:00 to 05:29 is still the previous UTC date), doctor A's Saturday slots start at 04:30 and 05:00 local with the 05:00 slot booked, and doctor A's Friday slots start at 09:00, 09:30 and 10:00 local with none booked, when staff open the dashboard, then doctor A's row shows booked 1 and free 1, counted from Saturday's slots and not Friday's."}
   - id: S-4
     title: "See when each doctor's next free slot is"
-    trace: [REQ-9, REQ-12, REQ-19]
+    trace: [REQ-3, REQ-9, REQ-12, REQ-19]
     acceptance_criteria:
       - {id: AC1, text: "Given doctor A's slots today start at 09:00, 09:30 and 10:00 local, none is booked, and now is exactly 09:30 local, when staff open the dashboard, then doctor A's next free slot shows 10:00, the same label the day schedule shows for that slot, because a slot starting at now has not started after now."}
       - {id: AC2, text: "Given doctor A's 09:00 slot is free, the 10:00 slot is booked and the 11:00 slot is free, and now is 08:00 local, when staff open the dashboard, then doctor A's next free slot shows 09:00."}
       - {id: AC3, text: "Given doctor A's slots after now are all booked, when staff open the dashboard, then doctor A's row shows \"Fully booked\" instead of a time."}
       - {id: AC4, text: "Given doctor A's last slot today starts at 16:30 local, none of doctor A's slots today is booked, and now is 17:00 local, when staff open the dashboard, then doctor A is still listed, with free 0 and \"Fully booked\"."}
+      - {id: AC5, text: "Given now is 04:00 local on Saturday 28 November 2026 (Asia/Kolkata = UTC+05:30, so 22:30 UTC on Friday 27 November), doctor A's Saturday slots start at 04:30 and 05:00 local with neither booked, and doctor A's Friday slots start at 09:00 and 09:30 local, when staff open the dashboard, then doctor A's next free slot shows 04:30, not \"Fully booked\" and not a Friday time."}
   - id: S-5
     title: "Doctors with the most room come first"
     trace: [REQ-10, REQ-11]
@@ -93,17 +97,19 @@ Traces REQ-4, REQ-5, REQ-6, REQ-17. A doctor row stores a `phone` and an `email`
 - AC3: Given doctor A has a phone and an email stored, then the row shows neither.
 
 ### S-3 See booked and free slots today, counted like the day schedule
-Traces REQ-7, REQ-8. Slots held by Scheduled, Completed or No-show appointments are booked. A slot with only a Cancelled appointment is not booked (C1). An unbooked slot that has started is PAST, not free (C2).
+Traces REQ-3, REQ-7, REQ-8. Slots held by Scheduled, Completed or No-show appointments are booked. A slot with only a Cancelled appointment is not booked (C1). An unbooked slot that has started is PAST, not free (C2).
 - AC1: Given slots at 09:00, 09:30, 10:00, 10:30, 11:00, with 09:00 Completed, 09:30 No-show, 10:30 Scheduled, 11:00 Cancelled only, 10:00 empty, and now 09:45, then the row shows booked 3 and free 2.
 - AC2: Given unbooked slots at 09:00 and 10:00 and now 09:45, then the row shows booked 0 and free 1.
 - AC3: Given any on-duty doctor, then the booked and free counts equal the booked and "Free: book" slots of that doctor's day schedule for today.
+- AC4: Given now is 04:00 local on Saturday 28 November 2026 (22:30 UTC on Friday 27 November), Saturday slots at 04:30 and 05:00 with 05:00 booked, and unbooked Friday slots at 09:00, 09:30 and 10:00, then the row shows booked 1 and free 1, from Saturday's slots.
 
 ### S-4 See when each doctor's next free slot is
-Traces REQ-9, REQ-12, REQ-19. The time is shown as the slot `label` the day schedule shows (C7), the default stated in the requirements review.
+Traces REQ-3, REQ-9, REQ-12, REQ-19. The time is shown as the slot `label` the day schedule shows (C7), the default stated in the requirements review.
 - AC1: Given unbooked slots at 09:00, 09:30, 10:00 and now exactly 09:30, then the next free slot shows 10:00.
 - AC2: Given 09:00 free, 10:00 booked, 11:00 free and now 08:00, then the next free slot shows 09:00.
 - AC3: Given every slot after now is booked, then the row shows "Fully booked" instead of a time.
 - AC4: Given the last slot today starts at 16:30, nothing is booked and now is 17:00, then doctor A stays listed with free 0 and "Fully booked".
+- AC5: Given now is 04:00 local on Saturday 28 November 2026 (22:30 UTC on Friday 27 November), unbooked Saturday slots at 04:30 and 05:00, and Friday slots at 09:00 and 09:30, then the next free slot shows 04:30, not "Fully booked" and not a Friday time.
 
 ### S-5 Doctors with the most room come first
 Traces REQ-10, REQ-11.
@@ -122,11 +128,14 @@ Traces REQ-16, REQ-18.
 - AC2: Given upcoming Scheduled appointments exist, then the tiles, their links and the Next appointments list are the same as before.
 - AC3: Given no upcoming Scheduled appointments exist, then the tiles and the Next appointments list are the same as before.
 
+Resolved review findings:
+- F-1: S-3 AC4 and S-4 AC5 test the counts and the next free slot at 04:00 local, when the UTC date is still the previous day.
+
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-3, REQ-14 and REQ-15.
 - S-2: built from known REQ-4, REQ-5, REQ-6 and REQ-17; REQ-6 was decided in the IDE (runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-02).
-- S-3: built from known REQ-7 and REQ-8.
-- S-4: built from known REQ-9, REQ-12 and REQ-19; REQ-12 and REQ-19 were decided in the IDE (runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01).
+- S-3: built from known REQ-3, REQ-7 and REQ-8.
+- S-4: built from known REQ-3, REQ-9, REQ-12 and REQ-19; REQ-12 and REQ-19 were decided in the IDE (runs/run_01M8EC1C803452B4P6VTAB10M7/ide-answers.md#a-01).
 - S-5: built from known REQ-10 and REQ-11.
 - S-6: built from known REQ-13.
 - S-7: built from known REQ-16 and REQ-18.

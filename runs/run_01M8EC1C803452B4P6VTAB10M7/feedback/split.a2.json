@@ -1,0 +1,33 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "The section has one row per `Active` doctor who has availability today.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-2"
+        },
+        {
+          "quote": "local wall-clock times, no overlaps per weekday",
+          "ref": "context/data-model.md#L19"
+        },
+        {
+          "quote": "lists doctor A and does not list doctor B",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md#item:S-1"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "REQ-2 says one row per doctor, and a doctor can have several availability blocks on one weekday. No AC gives a doctor two blocks today, so a join that outputs one row per block (duplicate rows, split counts) passes every S-1, S-3 and S-4 AC."
+    }
+  ],
+  "from_attempt": 2,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "feedback.v1",
+  "step": "split"
+}

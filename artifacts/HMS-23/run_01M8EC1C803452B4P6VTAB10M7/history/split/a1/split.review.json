@@ -1,0 +1,174 @@
+{
+  "artifact_sha256": "b9f31de0fd478e75e641036cec2922151b0889202f834c376a9afd6ef5d2efee",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "a.status <> 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "taken ? 'BOOKED' : s.start.getTime() <= now ? 'PAST' : 'FREE'",
+          "ref": "sample-system:api/src/services/doctorService.ts#L161"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Today means the current day in the hospital time zone, `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-3"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:doctor.phone\"",
+          "ref": "context/generated/db-schema.json#L556"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:doctor.email\"",
+          "ref": "context/generated/db-schema.json#L500"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "?date=${n.date}",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L115"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<td>{s.label}</td>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L168"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "weekday 1 = Monday, local wall-clock times",
+          "ref": "context/data-model.md#doctors"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "d.department.status === 'INACTIVE' && ' (Inactive)'",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L74"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "Today means the current day in the hospital time zone, `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-3"
+        },
+        {
+          "quote": "then doctor A is listed and doctor B is not.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md#item:S-1"
+        },
+        {
+          "quote": "and now is 09:45 local, when staff open the dashboard, then doctor A's row shows booked 3 and free 2.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md#item:S-3"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an S-3 or S-4 AC at 04:00 local on Sat 28 Nov 2026 (22:30 UTC Fri). Give the doctor different slots and bookings on Saturday and Friday, and expect Saturday's booked, free and next free values.",
+      "text": "The time-zone boundary (REQ-3) is tested for listing (S-1 AC2) and the link (S-6 AC2), but not for booked/free/next-free counts. If counts used the UTC date at 04:00 local, they would come from Friday's slots and every AC would still pass."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "the tiles, their links and the Next appointments list show the same values as before this change.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md#item:S-7"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State concrete tile counts and Next appointments entries for a seeded dataset, or name the existing tests that must keep passing unchanged.",
+      "text": "S-7 AC2/AC3 compare against 'the same values as before this change' and name no expected values, so the observable check depends on a pre-change baseline the AC does not define."
+    }
+  ],
+  "package_sha256": "4b71fbafb9d947505a0d3a913882af455c33df7836a5277b750695964324c910",
+  "questions": [],
+  "recorded_at": "2026-11-27T11:41:14Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 19 known REQs (REQ-1 to REQ-19) are traced by at least one story; there are no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are small and each has a clear outcome. S-1 bundles listing, the time-zone rule, Inactive exclusion and the empty state, but they share one outcome.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "ACs are Given/When/Then and most discriminate: the cancelled slot, PAST vs FREE, start == now, name tie-break, and the UTC+05:30 date shift for listing and links. Counts are not tested at the time-zone boundary.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Values are illustrative test data or come from the intent; UTC+05:30 and 22:30 UTC are derived inline from Asia/Kolkata (REQ-3). The 28 Nov 2026 Saturday weekday is correct.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Clear and consistent terms. The body restates ACs in shortened form that drops some details (for example 'Active' in S-1 AC2), so it could drift from the front matter.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}
