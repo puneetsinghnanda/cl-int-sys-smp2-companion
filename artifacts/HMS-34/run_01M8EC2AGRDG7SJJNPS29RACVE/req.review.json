@@ -1,0 +1,206 @@
+{
+  "artifact_sha256": "8e2ddb5bb123f8be031d5e2f9432759e11d84750a0215fe72e56d9c2569eb1e5",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet. Reminders or clean-ups would be the first.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"path\": \"api/src/routes/appointments.ts\"",
+          "ref": "context/generated/api-inventory.json#http:POST:/api/appointments/:id/reschedule"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Status is SCHEDULED,",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "`appointment_event` records every change with time and actor.",
+          "ref": "context/data-model.md#appointments"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"name\": \"from_starts_at\"",
+          "ref": "context/generated/db-schema.json#column:appointment_event.from_starts_at"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP always `staff`",
+          "ref": "context/glossary.md#actor"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "exclusion constraints forbid overlapping Scheduled",
+          "ref": "context/architecture.md#double-booking"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`YYYYMMDDTHHMMSS__what.sql`)",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Hospital time zone Asia/Kolkata, currency INR.",
+          "ref": "context/intent-baseline.md#constraints"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "A `Periodic background job` in the API finds overdue Scheduled appointments and sets them to Stale",
+          "ref": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/req.md#item:REQ-6"
+        },
+        {
+          "quote": "answer: Periodic background job (proposed default)",
+          "ref": "runs/run_01M8EC2AGRDG7SJJNPS29RACVE/ide-answers.md#a-01"
+        }
+      ],
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Add an unknown and a non-blocking question for the job interval (or the maximum delay before marking), with a proposed default.",
+      "text": "REQ-6 says a periodic job marks Stale but gives no run interval or latency bound. Without one, nobody can check how soon after the 24-hour window an appointment must show as Stale."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "wherever an appointment's status is shown (lists, appointment page) (`Also add a list filter`)",
+          "ref": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/req.md#item:REQ-9"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Drop the filter quote from REQ-9 and keep it only in REQ-11.",
+      "text": "REQ-9 (show the label) quotes the A-06 answer 'Also add a list filter', which belongs to REQ-11. The label requirement reads as if it were about the filter."
+    },
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "Back-filling: the job's first run marks every existing overdue Scheduled appointment",
+          "ref": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/req.md#out-of-scope"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Either make it an assumed REQ with a basis, or phrase it only as 'no separate data migration: not asked in the ticket'.",
+      "text": "The out-of-scope back-filling item asserts a behaviour (the first run marks every existing overdue appointment) with no cite and no REQ. That is a decision recorded as an exclusion."
+    }
+  ],
+  "package_sha256": "9e3e12474241600a67f7cffc34f49787255c6570b6c0e6158e89232489e32295",
+  "questions": [
+    {
+      "ask_role": "tech_lead",
+      "blocking": false,
+      "finding_ref": "F-1",
+      "id": "Q-1",
+      "text": "How often should the Stale background job run, or what is the longest allowed delay between the 24-hour window ending and the appointment showing as Stale?"
+    }
+  ],
+  "recorded_at": "2026-11-27T11:32:25Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "7fd1b89b0395bdfaf64aa34b504522dd6caa3d814e3a2ba1ed7ee734385aa73d",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "RR-R1",
+      "reason": "All four ticket acceptance criteria map to REQ-1 to REQ-4; the window, mechanism, actor and UI follow-ups are covered, and the out-of-scope items give reasons.",
+      "score": 5
+    },
+    {
+      "id": "RR-R2",
+      "reason": "Most REQs are atomic and checkable. REQ-6 gives no run interval, so a tester cannot check how soon an overdue appointment becomes Stale.",
+      "score": 4
+    },
+    {
+      "id": "RR-R3",
+      "reason": "Every known REQ cites the ticket, the pack or an IDE answer. The out-of-scope back-filling line states job behaviour with no cite.",
+      "score": 4
+    },
+    {
+      "id": "RR-R4",
+      "reason": "The glossary clashes (only Scheduled changes, actor always staff) were asked as Q-03/Q-04, answered, and recorded as mismatches with cites.",
+      "score": 5
+    },
+    {
+      "id": "RR-R5",
+      "reason": "Q-05 is non-blocking, has real options and is correctly scoped. The job interval was never asked.",
+      "score": 4
+    },
+    {
+      "id": "RR-R6",
+      "reason": "Readable and uses glossary terms. REQ-9 quotes the list-filter answer, which confuses the label requirement with REQ-11.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M8EC2AGRDG7SJJNPS29RACVE",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "req"
+}

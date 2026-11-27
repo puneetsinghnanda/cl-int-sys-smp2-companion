@@ -1,0 +1,114 @@
+{
+  "asks": [
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-27T11:28:20Z",
+      "answers": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04"
+      ],
+      "ask_id": "ASK-01",
+      "asked_at": "2026-11-27T11:27:17Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "Q-01",
+          "options": [
+            "Periodic background job (proposed default)",
+            "Derived on read",
+            "Marked when lists are read"
+          ],
+          "text": "Q-01: How should appointments become Stale? The pack says no background jobs exist yet and that clean-ups would be the first one."
+        },
+        {
+          "blocking": true,
+          "id": "Q-02",
+          "options": [
+            "24 hours after starts_at (proposed default)",
+            "24 hours after ends_at",
+            "End of next hospital day"
+          ],
+          "text": "Q-02: When does the 'within one day' window end for a past Scheduled appointment?"
+        },
+        {
+          "blocking": true,
+          "id": "Q-03",
+          "options": [
+            "No, Stale never changes (proposed default)",
+            "Yes, can still be closed",
+            "Yes, can be rescheduled"
+          ],
+          "text": "Q-03: Once an appointment is Stale, can staff still change it (complete, no-show, cancel, reschedule)?"
+        },
+        {
+          "blocking": true,
+          "id": "Q-04",
+          "options": [
+            "staff (proposed default)",
+            "system"
+          ],
+          "text": "Q-04: Which actor should the appointment history record when an appointment is marked Stale?"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "req",
+      "tool_use_id": "toolu_016e4Vbr92AdQT5Qg2tUZSYx"
+    },
+    {
+      "agent_id": null,
+      "answered_at": "2026-11-27T11:29:18Z",
+      "answers": [
+        "A-05",
+        "A-06",
+        "A-07"
+      ],
+      "ask_id": "ASK-02",
+      "asked_at": "2026-11-27T11:28:32Z",
+      "attempt": 1,
+      "close_reason": null,
+      "closed_at": null,
+      "questions": [
+        {
+          "blocking": true,
+          "id": "REQ-7",
+          "options": [
+            "Yes, confirm",
+            "Also allow Cancel",
+            "Allow all closing actions"
+          ],
+          "text": "REQ-7: From your Q-03 answer, I assumed a Stale appointment can only be rescheduled (back to Scheduled), and cannot be marked Completed, No-show or Cancelled. Is that right?"
+        },
+        {
+          "blocking": true,
+          "id": "REQ-9",
+          "options": [
+            "Yes, confirm",
+            "Also add a list filter"
+          ],
+          "text": "REQ-9: I assumed the web app shows the status label 'Stale' wherever an appointment's status is shown today (lists, appointment page), because the ticket wants it not to look Scheduled. Is that right?"
+        },
+        {
+          "blocking": true,
+          "id": "REQ-10",
+          "options": [
+            "Yes, confirm",
+            "Show them flagged"
+          ],
+          "text": "REQ-10: I assumed Stale appointments never appear among the dashboard's next upcoming appointments. Is that right?"
+        }
+      ],
+      "source": "hook",
+      "status": "answered",
+      "step": "req",
+      "tool_use_id": "toolu_01HM86fx7soQdmgP8ktSpyeT"
+    }
+  ],
+  "run_id": "run_01M8EC2AGRDG7SJJNPS29RACVE",
+  "schema": "ide-questions.v1"
+}

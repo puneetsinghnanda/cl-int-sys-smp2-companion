@@ -6,11 +6,20 @@
   },
   "branch": {},
   "created_at": "2026-11-27T11:25:51Z",
+  "current_action": {
+    "action": "run_reviewer",
+    "agent_id": null,
+    "attempt": 1,
+    "driver": "skill",
+    "session_id": "712764a0-697a-4b34-adac-8c74dbaaebfe",
+    "started_at": "2026-11-27T11:31:04Z",
+    "step": "req"
+  },
   "cursor": null,
   "driver": "skill",
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T11:25:51Z",
+  "heartbeat_at": "2026-11-27T11:32:26Z",
   "owner": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
   "owner_pseudonym": "eng-dffd",
   "pack": {
@@ -45,10 +54,10 @@
   "questions": {
     "answered_sha256": {},
     "open_blocking": 0,
-    "open_non_blocking": 0,
-    "round": 0
+    "open_non_blocking": 2,
+    "round": 1
   },
-  "rev": 0,
+  "rev": 9,
   "run_id": "run_01M8EC2AGRDG7SJJNPS29RACVE",
   "run_loop": "code",
   "schema": "run-state.v1",
@@ -61,7 +70,42 @@
   },
   "steps": [
     {
-      "attempts": [],
+      "attempts": [
+        {
+          "accepted_default": true,
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/req.md",
+          "artifact_sha256": "8e2ddb5bb123f8be031d5e2f9432759e11d84750a0215fe72e56d9c2569eb1e5",
+          "band": "High",
+          "cause": "first",
+          "decided_at": "2026-11-27T11:32:26Z",
+          "feedback": null,
+          "inputs": [],
+          "metrics": {
+            "active_ms": 277000,
+            "models": [
+              "claude-opus-5-5"
+            ],
+            "source": "transcript",
+            "tokens": {
+              "cache_read": 1650618,
+              "cache_write": 85088,
+              "calls": 27,
+              "input": 58,
+              "output": 21464,
+              "subagent_calls": 5
+            },
+            "wait_s": 109
+          },
+          "n": 1,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/req.verification.json",
+          "skill": "requirement-review@1.6.0",
+          "skill_started_at": "2026-11-27T11:26:05Z",
+          "started_at": "2026-11-27T11:26:00Z",
+          "write_rejects": 4
+        }
+      ],
       "budget_used": {
         "checks": 0,
         "review": 0,
@@ -70,7 +114,7 @@
       },
       "id": "req",
       "kind": "skill",
-      "status": "PENDING"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -141,7 +185,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-34",
-  "updated_at": "2026-11-27T11:25:51Z",
+  "updated_at": "2026-11-27T11:32:26Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "7aaa0d7d7375f9a64a0eebe5d8173b8d1e4d63214d650a446e61fdc1b7828c97"
 }
