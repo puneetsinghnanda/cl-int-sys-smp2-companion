@@ -1,0 +1,53 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "known: [S-1, S-2, S-3, S-4, S-5]",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L47"
+        },
+        {
+          "quote": "S-7: the patient page table shows the new label through STATUS_LABEL; the doctor page query is unchanged (CO-8).",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/impl.md#L117"
+        },
+        {
+          "quote": "then its upcoming appointments table lists the Scheduled one and not the Stale one, as before.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L113"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "S-7 (patient page shows Stale; doctor page still excludes Stale) has no test and the artifact does not mention it. known lists only S-1 to S-5, but impl claims S-7 is changed behaviour."
+    },
+    {
+      "cites": [
+        {
+          "quote": "S-5: covered by the list filter test, the format test and the web badge test.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L85"
+        },
+        {
+          "quote": "when staff open the dashboard, then it shows the same tiles as before and no tile for Stale appointments.",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/split.md#L99"
+        },
+        {
+          "quote": "REQ-12, REQ-13, REQ-16]",
+          "ref": "artifacts/HMS-34/run_01M89M2JW0X6H7Q7W6EJQ53R4B/ut.md#L46"
+        }
+      ],
+      "id": "F-2",
+      "severity": "major",
+      "text": "The artifact says S-5 is covered, but no test checks AC4 (the dashboard keeps the same tiles with no Stale tile, REQ-14). REQ-14 is also left out of trace."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1",
+    "F-2"
+  ],
+  "run_id": "run_01M89M2JW0X6H7Q7W6EJQ53R4B",
+  "schema": "feedback.v1",
+  "step": "ut"
+}

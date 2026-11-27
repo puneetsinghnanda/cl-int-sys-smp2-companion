@@ -112,3 +112,13 @@ entries as the user's own answers.
 - question: Q-03: S-6 needs a glossary entry for Stale. The glossary is context/glossary.md in the context pack (this companion repo); the product repo has no glossary. Where should the entry be made, and by whom?
 - options: Context pack, glossary owner (proposed default) | Product repo docs
 - answer: Context pack, glossary owner (proposed default)
+
+## A-12
+- step: ut
+- attempt: 1
+- asked_at: 2026-11-27T04:14:32Z
+- answered_by: eng-dbe4
+- tool_use_id: toolu_01QNVDQBEiJedkjZbAENZUiA
+- question: Run 3 is meant to be the main-session baseline. I called plain `tsl next run_01M89M2JW0X6H7Q7W6EJQ53R4B --json` with no prefix, but it still returned data.runner = {mode: fork, context: full}. So tsl is choosing the step-runner by default, maybe from a leftover env var or a tsl config. The run skill says to use the `step` skill whenever data.runner is set, and that would make run 3 a second 'full' run instead of a baseline. The ut step is already open, so I can't check the environment without risking an E-POL-06 refusal in ut's log. How should I run ut in run 3?
+- options: Main session (baseline) | Follow tsl: step-runner full | Stop and investigate
+- answer: Main session (baseline)
