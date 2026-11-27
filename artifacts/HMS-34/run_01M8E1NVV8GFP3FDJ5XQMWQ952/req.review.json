@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "88c82ece9ac6d14f5c0f7bd258f94411d45fb896c4dc6b2fa6800b3b512160c3",
-  "attempt": 1,
+  "artifact_sha256": "47389008525cbbf3efa944cfba39e9e05ef3931e2e9a26a9acf835126f435647",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -35,7 +35,7 @@
     {
       "cites": [
         {
-          "quote": "Completed, Cancelled and No-show",
+          "quote": "appointments never change.",
           "ref": "context/intent-baseline.md#closed-appointments"
         }
       ],
@@ -85,23 +85,6 @@
   ],
   "findings": [
     {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "Staff can still mark a Stale appointment Completed or No-show, cancel it or reschedule it (`complete, no-show, cancel, reschedule`).",
-          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-6"
-        },
-        {
-          "quote": "answer: Yes: complete, no-show, cancel, reschedule (proposed default)",
-          "ref": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03"
-        }
-      ],
-      "id": "F-1",
-      "severity": "major",
-      "suggested_fix": "Split REQ-6 into one REQ per transition. For the reschedule one, state the resulting status (presumably Scheduled) as assumed, based on A-03.",
-      "text": "REQ-6 is compound: four separate transitions (complete, no-show, cancel, reschedule) in one REQ. It also does not say what state a rescheduled Stale appointment ends in (Scheduled again?), so a tester cannot check that outcome."
-    },
-    {
       "category": "consistency",
       "cites": [
         {
@@ -113,10 +96,10 @@
           "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ticket.md#L14"
         }
       ],
-      "id": "F-2",
+      "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Reword the reason: the status change alone satisfies the goal, and any list, filter or tile change is deferred to design.",
-      "text": "The Out-of-scope reason says the ticket does not ask for a display change. But the ticket's stated goal is that a Stale appointment no longer looks like an upcoming Scheduled one, which is about how it is shown."
+      "suggested_fix": "Reword the reason: the status change alone meets the goal, and any list, filter or tile change is left to design.",
+      "text": "Still open from attempt 1 (was F-2): the Out-of-scope reason says the ticket does not ask for a display change, but the ticket's goal is that a Stale appointment no longer looks like an upcoming Scheduled one."
     },
     {
       "category": "style",
@@ -124,17 +107,21 @@
         {
           "quote": "alongside SCHEDULED, COMPLETED, CANCELLED and NO_SHOW",
           "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-1"
+        },
+        {
+          "quote": "it ends in COMPLETED",
+          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md#item:REQ-6"
         }
       ],
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor",
       "suggested_fix": "Use the glossary terms Scheduled, Completed, Cancelled and No-show in requirement statements.",
-      "text": "REQ-1 mixes the database codes (SCHEDULED, NO_SHOW) with the glossary term Stale. Other REQs use the glossary forms Scheduled and No-show."
+      "text": "Still open from attempt 1 (was F-3): REQ-1 and the new REQ-6, REQ-10, REQ-11 use database codes (SCHEDULED, COMPLETED, NO_SHOW, CANCELLED) next to the glossary terms used elsewhere."
     }
   ],
-  "package_sha256": "a99f770123955595756343cfac71e99f55a0d307b360d109478ee8c858237cf6",
+  "package_sha256": "af3b64ee39d5afe23f6bc6e7c079b202a106a5acc663dc56b0f5f43848a9d5a9",
   "questions": [],
-  "recorded_at": "2026-11-27T08:32:21Z",
+  "recorded_at": "2026-11-27T08:35:27Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -145,17 +132,17 @@
   "rubric_items": [
     {
       "id": "RR-R1",
-      "reason": "All four ticket acceptance criteria map to REQ-1..REQ-4; the display change and job frequency are listed under Out of scope with reasons.",
+      "reason": "All four ticket acceptance criteria map to REQ-1..REQ-4; display change and job frequency are under Out of scope with reasons.",
       "score": 5
     },
     {
       "id": "RR-R2",
-      "reason": "Most REQs are atomic and checkable; REQ-6 bundles four staff actions and does not say what state a rescheduled Stale appointment returns to.",
-      "score": 4
+      "reason": "Previous F-1 fixed: the four Stale transitions are split into REQ-6, REQ-10, REQ-11, REQ-12, and REQ-13 states the outcome of rescheduling. Each REQ is one checkable behaviour.",
+      "score": 5
     },
     {
       "id": "RR-R3",
-      "reason": "Every known item cites the ticket, the context pack or an IDE answer (a-01..a-05); the cited answers say what the artifact claims.",
+      "reason": "Every known item cites the ticket, the context pack or an IDE answer (a-01..a-06); the cited answers say what the artifact claims.",
       "score": 5
     },
     {
@@ -165,16 +152,16 @@
     },
     {
       "id": "RR-R5",
-      "reason": "Questions were real gaps (window, mechanism, mutability, actor, glossary) with concrete options; none remain open or blocking.",
+      "reason": "Questions were real gaps with concrete options, including the new Q-05 on the rescheduled state; none remain open or blocking.",
       "score": 5
     },
     {
       "id": "RR-R6",
-      "reason": "Readable; status names switch between the data-model codes (SCHEDULED, NO_SHOW) and glossary terms (Scheduled, No-show) in one statement.",
+      "reason": "Readable; status names still switch between data-model codes (SCHEDULED, NO_SHOW, COMPLETED) and glossary terms (Scheduled, No-show, Completed).",
       "score": 4
     }
   ],
-  "rubric_score": 4.75,
+  "rubric_score": 4.95,
   "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
   "schema": "review.v1",
   "status": "ok",

@@ -52,3 +52,13 @@ entries as the user's own answers.
 - question: Q-04: "Stale" is not in the glossary. Should it be added with this meaning: "A Scheduled appointment whose start time passed 24 hours ago without being marked Completed or rescheduled; it stays open"?
 - options: Yes, add that entry (proposed default) | No glossary entry
 - answer: Yes, add that entry (proposed default)
+
+## A-06
+- step: req
+- attempt: 2
+- asked_at: 2026-11-27T08:33:03Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01Y7mnK4EFo7kLYwAKMz64DW
+- question: Q-05: When staff reschedule a Stale appointment to a new future time, what state does it end in?
+- options: Scheduled again (proposed default) | Stays Stale
+- answer: Scheduled again (proposed default)

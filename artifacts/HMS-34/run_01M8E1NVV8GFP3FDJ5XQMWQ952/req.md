@@ -2,7 +2,7 @@
 schema: intent.v1
 run_id: run_01M8E1NVV8GFP3FDJ5XQMWQ952
 step: req
-attempt: 1
+attempt: 2
 skill: requirement-review@1.5.0
 inputs:
   - path: artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ticket.md
@@ -38,8 +38,8 @@ claims:
   - id: C8
     text: "Only `Scheduled` appointments can change today."
     cites: ["context/glossary.md#scheduled"]
-trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
-known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9]
+trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
+known: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 assumed: []
 unknown: []
 requirements:
@@ -74,10 +74,10 @@ requirements:
     statement: "Appointments are marked Stale by a `Scheduled background job`, the system's first background job."
     cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-02", "context/architecture.md#open-points"]
   - id: REQ-6
-    title: Staff can still change a Stale appointment
+    title: Staff can mark a Stale appointment Completed
     type: functional
     status: known
-    statement: "Staff can still mark a Stale appointment Completed or No-show, cancel it or reschedule it (`complete, no-show, cancel, reschedule`)."
+    statement: "Staff can mark a Stale appointment Completed (`complete`); it ends in COMPLETED."
     cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03"]
   - id: REQ-7
     title: Closed appointments never become Stale
@@ -97,6 +97,30 @@ requirements:
     status: known
     statement: "The glossary gains a `Stale` entry: a Scheduled appointment whose start time passed 24 hours ago without being marked Completed or rescheduled; it stays open."
     cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-05"]
+  - id: REQ-10
+    title: Staff can mark a Stale appointment No-show
+    type: functional
+    status: known
+    statement: "Staff can mark a Stale appointment No-show (`no-show`); it ends in NO_SHOW."
+    cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03"]
+  - id: REQ-11
+    title: Staff can cancel a Stale appointment
+    type: functional
+    status: known
+    statement: "Staff can cancel a Stale appointment with a reason (`cancel`); it ends in CANCELLED."
+    cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03", "context/data-model.md#appointments"]
+  - id: REQ-12
+    title: Staff can reschedule a Stale appointment
+    type: functional
+    status: known
+    statement: "Staff can reschedule a Stale appointment (`reschedule`) to a new time."
+    cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-03"]
+  - id: REQ-13
+    title: A rescheduled Stale appointment is Scheduled again
+    type: functional
+    status: known
+    statement: "A Stale appointment that staff reschedule returns to the state `Scheduled again` at its new time, and can become Stale again later."
+    cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-06"]
 unknowns: []
 questions: []
 answers:
@@ -114,7 +138,7 @@ answers:
     kind: question
     about: Q-03
     answer: "Yes: complete, no-show, cancel, reschedule (proposed default)"
-    requirements: [REQ-6]
+    requirements: [REQ-6, REQ-10, REQ-11, REQ-12]
     mismatch:
       text: "The glossary says only Scheduled appointments can change; the user decided a Stale appointment can also be completed, marked no-show, cancelled or rescheduled."
       cites: ["context/glossary.md#scheduled"]
@@ -131,6 +155,11 @@ answers:
     about: Q-04
     answer: "Yes, add that entry (proposed default)"
     requirements: [REQ-9]
+  - id: A-06
+    kind: question
+    about: Q-05
+    answer: "Scheduled again (proposed default)"
+    requirements: [REQ-13]
 glossary:
   - {term: Scheduled, found: true}
   - {term: Completed, found: true}
@@ -146,21 +175,26 @@ glossary:
 HMS-34 asks for a new appointment state, Stale, for Scheduled appointments whose time has passed
 and that were neither marked Completed nor rescheduled within one day, so front-desk staff do not
 see them as upcoming. The user fixed "one day" as 24 hours after the start time, chose a scheduled
-background job to do the marking, kept Stale an open state staff can still change, and asked for
-the change to be recorded with a new actor `system`. Main risks: this is the system's first
-background job, and both the open Stale state and the `system` actor depart from today's glossary
-rules ("only Scheduled can change", "actor is always staff").
+background job to do the marking, kept Stale an open state staff can still complete, mark no-show,
+cancel or reschedule (a rescheduled one is Scheduled again), and asked for the change to be recorded
+with a new actor `system`. Main risks: this is the system's first background job, and both the open
+Stale state and the `system` actor depart from today's glossary rules ("only Scheduled can change",
+"actor is always staff").
 
 ## Requirements
 - REQ-1 New appointment state Stale (known): appointments have a new state Stale.
-- REQ-2 Overdue Scheduled appointment becomes Stale (known): Scheduled, start time more than 24 hours past, not Completed or rescheduled in that time → Stale.
-- REQ-3 Completed within 24 hours is not Stale (known).
-- REQ-4 Rescheduled within 24 hours is not Stale (known).
+- REQ-2 Overdue Scheduled appointment becomes Stale (known): still Scheduled, not Completed or rescheduled 24h after start time → Stale.
+- REQ-3 Completed within 24h is not Stale (known).
+- REQ-4 Rescheduled within 24h is not Stale (known).
 - REQ-5 Marking runs as a scheduled background job (known).
-- REQ-6 Staff can still change a Stale appointment (known): complete, no-show, cancel or reschedule.
+- REQ-6 Staff can mark a Stale appointment Completed (known): it ends in COMPLETED.
 - REQ-7 Closed appointments never become Stale (known).
 - REQ-8 Stale marking is recorded with actor system (known).
 - REQ-9 Glossary gains the term Stale (known).
+- REQ-10 Staff can mark a Stale appointment No-show (known): it ends in NO_SHOW.
+- REQ-11 Staff can cancel a Stale appointment (known): with a reason; it ends in CANCELLED.
+- REQ-12 Staff can reschedule a Stale appointment (known): to a new time.
+- REQ-13 A rescheduled Stale appointment is Scheduled again (known): it can go Stale again later.
 
 ## Known
 - REQ-1: ticket acceptance criterion 1.
@@ -168,10 +202,11 @@ rules ("only Scheduled can change", "actor is always staff").
 - REQ-3: ticket acceptance criterion 3, window from A-01.
 - REQ-4: ticket acceptance criterion 4, window from A-01.
 - REQ-5: A-02; no background jobs exist yet.
-- REQ-6: A-03.
+- REQ-6, REQ-10, REQ-11, REQ-12: A-03.
 - REQ-7: baseline closed-appointments rule; the ticket only targets Scheduled appointments.
 - REQ-8: A-04; appointment_event records every change.
 - REQ-9: A-05.
+- REQ-13: A-06.
 
 ## Assumed
 None.
@@ -185,9 +220,10 @@ None open.
 Answered in the IDE:
 - A-01 (Q-01, answered by eng-dffd): when does "one day" run from? → 24h after start time. Decides REQ-2, REQ-3, REQ-4.
 - A-02 (Q-02, answered by eng-dffd): how is Stale applied? → Scheduled background job. Decides REQ-5.
-- A-03 (Q-03, answered by eng-dffd): can staff still change a Stale appointment? → Yes: complete, no-show, cancel, reschedule. Decides REQ-6. Mismatch: the glossary says only Scheduled appointments can change; the user decided Stale ones can too.
+- A-03 (Q-03, answered by eng-dffd): can staff still change a Stale appointment? → Yes: complete, no-show, cancel, reschedule. Decides REQ-6, REQ-10, REQ-11, REQ-12. Mismatch: the glossary says only Scheduled appointments can change; the user decided Stale ones can too.
 - A-04 (REQ-8, answered by eng-dffd): record the change in appointment_event with actor staff? → Yes, but actor `system`. Decides REQ-8. Mismatch: the glossary says the MVP actor is always staff.
 - A-05 (Q-04, answered by eng-dffd): add Stale to the glossary? → Yes, add that entry. Decides REQ-9.
+- A-06 (Q-05, answered by eng-dffd): what state does a rescheduled Stale appointment end in? → Scheduled again. Decides REQ-13.
 
 ## Out of scope
 - How Stale appointments are shown in lists, filters or dashboard tiles: the ticket does not ask for a display change.

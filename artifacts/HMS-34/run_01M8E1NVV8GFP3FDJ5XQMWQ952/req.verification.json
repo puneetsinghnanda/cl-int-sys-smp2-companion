@@ -1,35 +1,31 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/req.md",
-  "artifact_sha256": "88c82ece9ac6d14f5c0f7bd258f94411d45fb896c4dc6b2fa6800b3b512160c3",
-  "attempt": 1,
+  "artifact_sha256": "47389008525cbbf3efa944cfba39e9e05ef3931e2e9a26a9acf835126f435647",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "adef2e755a6a5ebcc5071db470dcdb0cf9795f7528711fcc37254047b2d46f1a",
+  "checks_sha256": "f4f1876763763770fdc43c34187445132e442b0471710e8478cc199307b24caa",
   "claims": {
     "total": 8,
     "verified": 8
   },
-  "decided_at": "2026-11-27T08:32:27Z",
+  "decided_at": "2026-11-27T08:35:27Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
       "severity": "minor"
     },
     {
-      "id": "F-3",
+      "id": "F-2",
       "severity": "minor"
     }
   ],
   "gate_failures": [],
   "inputs": [],
   "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -37,15 +33,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "035c2e0f975c59e118d1e97687329312af18066d862014304dc7e103fae609e5",
   "product_changes": null,
-  "review_sha256": "8740a33589792dcd6ac3c9847b86b79a8c6c01b785a14d6789036470c62e3dda",
+  "review_sha256": "2fe757a3aac9c63e1db56df6cd38711d122b8c036a6bd2ed46ec3cda9d99525e",
   "run_id": "run_01M8E1NVV8GFP3FDJ5XQMWQ952",
   "schema": "verification.v1",
   "signals": {
     "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.75,
+    "S3": 4.95,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -54,7 +50,7 @@
       "sensitive": false
     }
   },
-  "signature": "MzmnvDDY-AJitCtAzuHvG48UluexUApXjuqEXzy9B-mP01O_xxJ6zW6ozYNTZPH1Zv4rwNrLSVWDMVEELUP4BQ",
+  "signature": "XH2n35TU_Z2x6q0gUVRRCTKFoQnuCA36dvGv2cbiIBpn2abJmqNLU6TXzi8Z3bf6DpJgo52PVB7ejVks3oPuDA",
   "skill": "requirement-review@1.5.0",
   "step": "req",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
