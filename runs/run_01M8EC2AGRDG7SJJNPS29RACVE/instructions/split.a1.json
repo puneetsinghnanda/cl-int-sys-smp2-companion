@@ -1,0 +1,64 @@
+{
+  "action": "run_step",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/split.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "glossary"
+    ],
+    "inputs": [
+      {
+        "name": "intent",
+        "path": "artifacts/HMS-34/run_01M8EC2AGRDG7SJJNPS29RACVE/req.md",
+        "schema": "intent.v1",
+        "sha256": "8e2ddb5bb123f8be031d5e2f9432759e11d84750a0215fe72e56d9c2569eb1e5"
+      },
+      {
+        "name": "glossary",
+        "path": "context/glossary.md",
+        "schema": null,
+        "sha256": "430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff"
+      }
+    ],
+    "open_questions": [
+      {
+        "ask": "tech lead",
+        "blocking": false,
+        "cite": "runs/run_01M8EC2AGRDG7SJJNPS29RACVE/open-questions.md#q-01",
+        "id": "Q-01",
+        "question": "How often should the Stale background job run, or what is the longest allowed delay between the 24-hour window ending and the appointment showing as Stale?"
+      },
+      {
+        "ask": "tech lead",
+        "blocking": false,
+        "cite": "runs/run_01M8EC2AGRDG7SJJNPS29RACVE/open-questions.md#q-05",
+        "id": "Q-05",
+        "question": "Q-05: `Stale` is not in the glossary. Add an entry?"
+      }
+    ]
+  },
+  "instruction_path": "runs/run_01M8EC2AGRDG7SJJNPS29RACVE/instructions/split.a1.json",
+  "progress": {
+    "index": 2,
+    "total": 7
+  },
+  "retry": null,
+  "run_id": "run_01M8EC2AGRDG7SJJNPS29RACVE",
+  "say": "req passed (PASS-WITH-FINDINGS, High) · split (2/7): attempt 1",
+  "schema": "next-action.v2",
+  "skill": "story-split@1.6.0",
+  "step": "split"
+}
