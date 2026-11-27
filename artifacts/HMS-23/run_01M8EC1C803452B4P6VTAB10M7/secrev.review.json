@@ -1,0 +1,181 @@
+{
+  "artifact_sha256": "aeb8fdda028a6f03ee94b9cd2ee655383338c0703250c7126790b52b64e7ebb8",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "requirePermission('dashboard:read'),",
+          "ref": "sample-system:api/src/routes/dashboard.ts#L10"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "b.doctor_id = d.id AND b.weekday = $1",
+          "ref": "sample-system:api/src/repositories/doctorRepo.ts#L146"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "for (const d of await repo.onDutyOn(isoWeekday(today))) {",
+          "ref": "sample-system:api/src/services/doctorService.ts#L170"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "fullName: d.fullName,",
+          "ref": "sample-system:api/src/services/doctorService.ts#L179"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<Link to={`/doctors/${r.doctorId}?date=${today}`}>{r.fullName}</Link>",
+          "ref": "sample-system:web/src/pages/DashboardPage.tsx#L89"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "never request bodies, contact details or medical",
+          "ref": "context/conventions.md#logging-and-data"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "In the MVP every request is the actor `staff` and every permission is granted.",
+          "ref": "context/architecture.md#identity"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "email: `doctor${doctors}@example.com`",
+          "ref": "sample-system:api/test/dashboard-on-duty.test.ts#L64"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "onDuty: await this.doctors.onDutyToday(),",
+          "ref": "sample-system:api/src/services/dashboardService.ts#L92"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const appointments = await appointmentRepo.occupyingBetween(d.id, start, end);",
+          "ref": "sample-system:api/src/services/doctorService.ts#L171"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "traceability",
+      "cites": [
+        {
+          "quote": "const states = this.slotStates(await repo.availability(d.id), d.slotMinutes, today, appointments, now.getTime());",
+          "ref": "sample-system:api/src/services/doctorService.ts#L172"
+        },
+        {
+          "quote": "Per on-duty doctor the service runs `occupyingBetween` plus an availability query.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/secrev.md#claim:C10"
+        }
+      ],
+      "claim_ref": "C10",
+      "id": "F-1",
+      "severity": "minor",
+      "suggested_fix": "Cite sample-system:api/src/services/doctorService.ts#L170-L172 for SF-1 and C10.",
+      "text": "SF-1 and C10 count two queries per doctor but cite L170-L171; the second (availability) query is on L172, outside the cited range."
+    },
+    {
+      "category": "style",
+      "cites": [
+        {
+          "quote": "It matters more because every request is currently a fully permitted `staff` actor (C7).",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/secrev.md#summary"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State the link (any caller can trigger the load repeatedly, no per-user limit) or drop the sentence.",
+      "text": "The summary says the query-count finding matters more because every request is a fully permitted staff actor; the link between MVP identity and per-doctor query cost is not explained and reads as a non sequitur."
+    }
+  ],
+  "package_sha256": "51fae4ec504cec1ba965242cd9043adf5d06cd026a2b3b5f901b38b8c4f4e64e",
+  "questions": [],
+  "recorded_at": "2026-11-27T12:20:42Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "f95e8217099a7d6f2f66bf2779f1ef4685986ae93447fb0988ac13d85d39c321",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SC-R1",
+      "reason": "Authz, injection, output encoding, data exposure, logging and test data all checked against the code; no real weakness found missing.",
+      "score": 5
+    },
+    {
+      "id": "SC-R2",
+      "reason": "Claims land on the exact lines, but SF-1 and C10 cite L170-L171 while the availability query it counts sits on L172.",
+      "score": 4
+    },
+    {
+      "id": "SC-R3",
+      "reason": "SF-1 is a per-doctor query cost with no security exposure; minor matches its impact.",
+      "score": 5
+    },
+    {
+      "id": "SC-R4",
+      "reason": "SF-1 gives a clear direction (batch availability and appointment reads into one query each) though not where the batched query would live.",
+      "score": 4
+    },
+    {
+      "id": "SC-R5",
+      "reason": "No false positives; the single finding is real in the code.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.65,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "secrev"
+}

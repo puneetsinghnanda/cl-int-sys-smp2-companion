@@ -1,0 +1,76 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/secrev.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "architecture",
+      "conventions",
+      "dependency-graph"
+    ],
+    "inputs": [
+      {
+        "name": "change",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/impl.md",
+        "schema": "change.v1",
+        "sha256": "5f1a08cc4132d0ed0cd78adf43f0da120afc8fc78663562f2bfafcff1252965f"
+      },
+      {
+        "name": "conventions",
+        "path": "context/conventions.md",
+        "schema": null,
+        "sha256": "dc53d94ec34eb193eeb06fdd0db19eb86a24c29f7d3c434e7c212d61038ca852"
+      },
+      {
+        "name": "architecture",
+        "path": "context/architecture.md",
+        "schema": null,
+        "sha256": "9faab093d10933a46f6473b25c80728f8745e597100e650cd2537bbafb2b595a"
+      }
+    ],
+    "open_questions": [
+      {
+        "ask": "product owner",
+        "blocking": false,
+        "cite": "runs/run_01M8EC1C803452B4P6VTAB10M7/open-questions.md#q-01",
+        "id": "Q-01",
+        "question": "Should an Active doctor whose availability block today is too short to hold one slot be hidden from On duty today, or listed as Fully booked?"
+      },
+      {
+        "ask": "tech lead",
+        "blocking": false,
+        "cite": "runs/run_01M8EC1C803452B4P6VTAB10M7/open-questions.md#q-02",
+        "id": "Q-02",
+        "question": "Does the verifier profile node-22@1 provide PostgreSQL 16 or HMS_TEST_DATABASE_URL, so the DB-backed API tests in dashboard-on-duty.test.ts actually ran rather than being skipped?"
+      }
+    ]
+  },
+  "instruction_path": "runs/run_01M8EC1C803452B4P6VTAB10M7/instructions/secrev.a1.json",
+  "progress": {
+    "index": 6,
+    "total": 7
+  },
+  "retry": null,
+  "review": {
+    "package_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/secrev.review-package.json",
+    "write_to": "runs/run_01M8EC1C803452B4P6VTAB10M7/review-input/secrev.review.json"
+  },
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "say": "secrev: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "secure-code-review@1.4.0",
+  "step": "secrev"
+}
