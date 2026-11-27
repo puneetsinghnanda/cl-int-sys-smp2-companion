@@ -1,0 +1,174 @@
+{
+  "artifact_sha256": "b8ad8d4b2845490787f96c0d8498671a409fa1dab260f23add534b096d63ee33",
+  "attempt": 2,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "a.status <> 'CANCELLED'",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L117"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "taken ? 'BOOKED' : s.start.getTime() <= now ? 'PAST' : 'FREE'",
+          "ref": "sample-system:api/src/services/doctorService.ts#L161"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "Today means the current day in the hospital time zone, `Asia/Kolkata`.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-3"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:doctor.phone\"",
+          "ref": "context/generated/db-schema.json#L556"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "\"id\": \"column:doctor.email\"",
+          "ref": "context/generated/db-schema.json#L500"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "?date=${n.date}",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L115"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "<td>{s.label}</td>",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L168"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "weekday 1 = Monday, local wall-clock times",
+          "ref": "context/data-model.md#L19"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "d.department.status === 'INACTIVE' && ' (Inactive)'",
+          "ref": "sample-system:web/src/pages/DoctorDetailPage.tsx#L74"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "The section has one row per `Active` doctor who has availability today.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md#item:REQ-2"
+        },
+        {
+          "quote": "local wall-clock times, no overlaps per weekday",
+          "ref": "context/data-model.md#L19"
+        },
+        {
+          "quote": "lists doctor A and does not list doctor B",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md#item:S-1"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Add an AC: doctor A has two blocks today (for example 09:00-10:00 and 14:00-15:00). Expect exactly one row for A, with booked, free and next free counted across both blocks.",
+      "text": "REQ-2 says one row per doctor, and a doctor can have several availability blocks on one weekday. No AC gives a doctor two blocks today, so a join that outputs one row per block (duplicate rows, split counts) passes every S-1, S-3 and S-4 AC."
+    },
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "show the same values as before this change.",
+          "ref": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md#item:S-7"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "State concrete tile counts and Next appointments entries for a seeded dataset, or name the existing dashboard tests that must keep passing unchanged.",
+      "text": "Not fixed from attempt 1: S-7 AC2 and AC3 still compare to 'the same values as before this change' and name no expected values. The check depends on a pre-change baseline that the AC does not define."
+    }
+  ],
+  "package_sha256": "8039cfc278a04fe3622b5daa12096ac4ce6b7f29bbb06e7923ca9ec1355e0b0c",
+  "questions": [],
+  "recorded_at": "2026-11-27T11:45:34Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "4d1477ea636432ef19235c60b7d01cb3277d342317bd9be101238990b4bacc01",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "SS-R1",
+      "reason": "All 19 known REQs (REQ-1 to REQ-19) are traced by at least one story; there are no assumed REQs.",
+      "score": 5
+    },
+    {
+      "id": "SS-R2",
+      "reason": "Stories are small, each with one clear outcome. S-1 groups listing, the time-zone rule, Inactive exclusion and the empty state, but they serve one outcome.",
+      "score": 4
+    },
+    {
+      "id": "SS-R3",
+      "reason": "Prior F-1 is fixed: S-3 AC4 and S-4 AC5 now discriminate at the UTC+05:30 date boundary. Gaps remain: no doctor has two blocks on one weekday (duplicate rows), and S-7 compares to an undefined baseline.",
+      "score": 4
+    },
+    {
+      "id": "SS-R4",
+      "reason": "Values are illustrative test data or come from the intent. UTC+05:30 and 22:30 UTC are derived inline from Asia/Kolkata (REQ-3), and 28 Nov 2026 is a Saturday.",
+      "score": 5
+    },
+    {
+      "id": "SS-R5",
+      "reason": "Clear and consistent terms. The body restates the ACs in a shorter form that drops details (for example the Given in S-2 AC2), so it could drift from the front matter.",
+      "score": 4
+    }
+  ],
+  "rubric_score": 4.45,
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "split"
+}

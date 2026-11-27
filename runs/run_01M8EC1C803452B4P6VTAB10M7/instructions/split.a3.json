@@ -1,0 +1,57 @@
+{
+  "action": "run_reviewer",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit"
+  ],
+  "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+  "attempt": 3,
+  "budget": {
+    "checks": "0/2",
+    "review": "2/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "glossary"
+    ],
+    "inputs": [
+      {
+        "name": "intent",
+        "path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md",
+        "schema": "intent.v1",
+        "sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365"
+      },
+      {
+        "name": "glossary",
+        "path": "context/glossary.md",
+        "schema": null,
+        "sha256": "430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff"
+      }
+    ],
+    "open_questions": []
+  },
+  "instruction_path": "runs/run_01M8EC1C803452B4P6VTAB10M7/instructions/split.a3.json",
+  "progress": {
+    "index": 2,
+    "total": 7
+  },
+  "retry": {
+    "cause": "retry_review",
+    "feedback": "runs/run_01M8EC1C803452B4P6VTAB10M7/feedback/split.a2.json",
+    "seeded_from": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/history/split/a2/split.md"
+  },
+  "review": {
+    "package_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.review-package.json",
+    "write_to": "runs/run_01M8EC1C803452B4P6VTAB10M7/review-input/split.review.json"
+  },
+  "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
+  "say": "split: checks passed, review",
+  "schema": "next-action.v2",
+  "skill": "story-split@1.6.0",
+  "step": "split"
+}

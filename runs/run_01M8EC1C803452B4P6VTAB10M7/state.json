@@ -9,17 +9,17 @@
   "current_action": {
     "action": "run_reviewer",
     "agent_id": null,
-    "attempt": 2,
+    "attempt": 3,
     "driver": "skill",
     "session_id": "04e08068-e2f8-489c-8b33-d7adace33ac6",
-    "started_at": "2026-11-27T11:43:48Z",
+    "started_at": "2026-11-27T11:47:29Z",
     "step": "split"
   },
   "cursor": null,
   "driver": "skill",
   "end_reason": null,
   "gates": [],
-  "heartbeat_at": "2026-11-27T11:45:36Z",
+  "heartbeat_at": "2026-11-27T11:48:46Z",
   "owner": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
   "owner_pseudonym": "eng-3c51",
   "pack": {
@@ -57,7 +57,7 @@
     "open_non_blocking": 0,
     "round": 0
   },
-  "rev": 25,
+  "rev": 30,
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "run_loop": "code",
   "schema": "run-state.v1",
@@ -189,7 +189,7 @@
         },
         {
           "answers_sha256": null,
-          "artifact": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+          "artifact": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/history/split/a2/split.md",
           "artifact_sha256": "b8ad8d4b2845490787f96c0d8498671a409fa1dab260f23add534b096d63ee33",
           "band": "High",
           "cause": "retry_review",
@@ -220,10 +220,48 @@
           },
           "n": 2,
           "outcome": "RETRY",
-          "record": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.verification.json",
+          "record": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/history/split/a2/split.verification.json",
           "skill": "story-split@1.6.0",
           "skill_started_at": "2026-11-27T11:41:49Z",
           "started_at": "2026-11-27T11:41:28Z"
+        },
+        {
+          "answers_sha256": null,
+          "artifact": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
+          "artifact_sha256": "aff52115f9fdfadc010120f5dca462e696245658dd4c590d83c5ab683356b584",
+          "band": "High",
+          "cause": "retry_review",
+          "decided_at": "2026-11-27T11:48:46Z",
+          "feedback": "runs/run_01M8EC1C803452B4P6VTAB10M7/feedback/split.a2.json",
+          "inputs": [
+            {
+              "name": "intent",
+              "sha256": "69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365",
+              "step": "req"
+            }
+          ],
+          "metrics": {
+            "active_ms": 179000,
+            "models": [
+              "claude-opus-5-5"
+            ],
+            "source": "transcript",
+            "tokens": {
+              "cache_read": 1079395,
+              "cache_write": 46167,
+              "calls": 11,
+              "input": 26,
+              "output": 6650,
+              "subagent_calls": 4
+            },
+            "wait_s": 0
+          },
+          "n": 3,
+          "outcome": "PASS-WITH-FINDINGS",
+          "record": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.verification.json",
+          "skill": "story-split@1.6.0",
+          "skill_started_at": "2026-11-27T11:46:06Z",
+          "started_at": "2026-11-27T11:45:47Z"
         }
       ],
       "budget_used": {
@@ -234,7 +272,7 @@
       },
       "id": "split",
       "kind": "skill",
-      "status": "IN_PROGRESS"
+      "status": "DONE"
     },
     {
       "attempts": [],
@@ -293,7 +331,7 @@
   ],
   "system": "SYS-SMP2",
   "ticket": "HMS-23",
-  "updated_at": "2026-11-27T11:45:36Z",
+  "updated_at": "2026-11-27T11:48:46Z",
   "workflow": "brownfield-small@1.0.0",
   "workflow_sha256": "7aaa0d7d7375f9a64a0eebe5d8173b8d1e4d63214d650a446e61fdc1b7828c97"
 }

@@ -1,24 +1,20 @@
 {
   "artifact_path": "artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/split.md",
-  "artifact_sha256": "b8ad8d4b2845490787f96c0d8498671a409fa1dab260f23add534b096d63ee33",
-  "attempt": 2,
+  "artifact_sha256": "aff52115f9fdfadc010120f5dca462e696245658dd4c590d83c5ab683356b584",
+  "attempt": 3,
   "band": "High",
   "caps": [],
-  "checks_sha256": "6de84dcf450567f232c281dc8da760a533e7961ba6e90b7d2dfaecb050951bcc",
+  "checks_sha256": "4af1aff4a974cd87924157144340ab58176b5a0905216cee0c91fdffa7aacf9c",
   "claims": {
     "total": 9,
     "verified": 9
   },
-  "decided_at": "2026-11-27T11:45:36Z",
+  "decided_at": "2026-11-27T11:48:46Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
     {
       "id": "F-1",
-      "severity": "major"
-    },
-    {
-      "id": "F-2",
       "severity": "minor"
     }
   ],
@@ -31,7 +27,7 @@
     }
   ],
   "key_id": "key_01M4ZAT978AW7WH5Y2GHCA6J7Y",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -39,9 +35,9 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": "3a233df80e20c9db1b1e961ebd9f335ff9ce33b4519ed64dee6ef7f4151dfe06",
+  "prev_attempt_sha256": "559c3c11028a0319e40c6b7a8f747aebb4f1072a87fc64284caa622b0d801bc3",
   "product_changes": null,
-  "review_sha256": "0fa013e368c0e03746665c096dfdea23218b1e462eb0a346d92f57d4bc49cf8f",
+  "review_sha256": "4c21d7c0d835d3f45a405853efd190b300c405a2ebf07217e1e4fb1f33e3403b",
   "run_id": "run_01M8EC1C803452B4P6VTAB10M7",
   "schema": "verification.v1",
   "signals": {
@@ -56,7 +52,7 @@
       "sensitive": false
     }
   },
-  "signature": "ikJNP6z3FYiFFJN6lPV4sjkB-BNe2G8webw24uM7M4HJZkLGICVaaVpfHjOYKAaynU-pzv5Nio_lGZnYzBP4Cg",
+  "signature": "ltUPOWNWD3vPMiUKMqjyuITm3zbH-k-X2m0NsSxMKjhSEuZfRhI2WOXN6oVgS2H2aYPG76IkVoYh3fIlG0npDA",
   "skill": "story-split@1.6.0",
   "step": "split",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

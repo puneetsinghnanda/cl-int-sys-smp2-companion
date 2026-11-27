@@ -2,7 +2,7 @@
 schema: stories.v1
 run_id: run_01M8EC1C803452B4P6VTAB10M7
 step: split
-attempt: 2
+attempt: 3
 skill: story-split@1.6.0
 inputs:
   - {path: artifacts/HMS-23/run_01M8EC1C803452B4P6VTAB10M7/req.md, sha256: 69e5f24b8ab6d28047031767176af38a9746fac0c500328b4336461cd9a40365}
@@ -24,7 +24,7 @@ assumed: []
 unknown: []
 questions: []
 resolves:
-  - {id: F-1, how: "S-3 AC4 and S-4 AC5 test the counts and the next free slot at 04:00 local, when the UTC date is still the previous day."}
+  - {id: F-1, how: "S-1 AC5 gives one doctor two availability blocks today and expects one row with counts from both blocks."}
 stories:
   - id: S-1
     title: "See which doctors are on duty today"
@@ -34,6 +34,7 @@ stories:
       - {id: AC2, text: "Given now is 04:00 local on Saturday 28 November 2026 (Asia/Kolkata = UTC+05:30, so 22:30 UTC on Friday 27 November; local 00:00 to 05:29 is still the previous UTC date), Active doctor A is available on Saturdays only and Active doctor B on Fridays only, when staff open the dashboard, then doctor A is listed and doctor B is not."}
       - {id: AC3, text: "Given doctor C is Inactive, has availability today and has more free slots today than any listed doctor, when staff open the dashboard, then doctor C is not listed."}
       - {id: AC4, text: "Given no Active doctor has availability today and Inactive doctor C has availability today, when staff open the dashboard, then the section shows \"No doctors on duty today\" and no rows."}
+      - {id: AC5, text: "Given Active doctor A has two availability blocks today, one with slots at 09:00 and 09:30 local and one with slots at 14:00 and 14:30 local, the 09:00 slot is booked, and now is 08:00 local, when staff open the dashboard, then the section shows exactly one row for doctor A, with booked 1, free 3 and next free slot 09:30."}
   - id: S-2
     title: "See who each on-duty doctor is, without contact details"
     trace: [REQ-4, REQ-5, REQ-6, REQ-17]
@@ -89,6 +90,7 @@ Traces REQ-1, REQ-2, REQ-3, REQ-14, REQ-15. On duty means an Active doctor with 
 - AC2: Given now is 04:00 local on Saturday 28 November 2026 (22:30 UTC on Friday 27 November), doctor A is available on Saturdays only and doctor B on Fridays only, when staff open the dashboard, then doctor A is listed and doctor B is not.
 - AC3: Given Inactive doctor C has availability today and more free slots than any listed doctor, when staff open the dashboard, then doctor C is not listed.
 - AC4: Given no Active doctor has availability today and only Inactive doctor C does, when staff open the dashboard, then the section shows "No doctors on duty today".
+- AC5: Given doctor A has two availability blocks today (slots at 09:00 and 09:30, and at 14:00 and 14:30), 09:00 booked and now 08:00, then the section shows exactly one row for doctor A, with booked 1, free 3 and next free slot 09:30.
 
 ### S-2 See who each on-duty doctor is, without contact details
 Traces REQ-4, REQ-5, REQ-6, REQ-17. A doctor row stores a `phone` and an `email` (C4, C5); neither may appear (DSH-9). The Inactive marker matches the doctor page (C9).
@@ -129,7 +131,8 @@ Traces REQ-16, REQ-18.
 - AC3: Given no upcoming Scheduled appointments exist, then the tiles and the Next appointments list are the same as before.
 
 Resolved review findings:
-- F-1: S-3 AC4 and S-4 AC5 test the counts and the next free slot at 04:00 local, when the UTC date is still the previous day.
+- F-1: S-1 AC5 gives one doctor two availability blocks today and expects one row with counts from both blocks.
+- Earlier attempt: S-3 AC4 and S-4 AC5 test the counts and the next free slot at 04:00 local, when the UTC date is still the previous day.
 
 ## Known
 - S-1: built from known REQ-1, REQ-2, REQ-3, REQ-14 and REQ-15.
