@@ -92,3 +92,13 @@ entries as the user's own answers.
 - question: Q-02: How often should the in-process timer run the Stale sweep? An appointment can stay Scheduled for up to this long after the 24h mark.
 - options: Every 5 minutes (proposed default) | Every 1 minute | Every 15 minutes
 - answer: Every hour
+
+## A-10
+- step: design
+- attempt: 2
+- asked_at: 2026-11-27T10:34:41Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01FoPZ9m3WnGA4KocP4K9EYd
+- question: C21: I assumed the Stale glossary entry goes in docs/PRD.md, but the PRD has no glossary section; the glossary is the companion's context/glossary.md, whose Scheduled entry ("Only Scheduled appointments can change") also goes stale. Where should the change go?
+- options: Glossary + PRD status | Glossary only | PRD status only
+- answer: Glossary only

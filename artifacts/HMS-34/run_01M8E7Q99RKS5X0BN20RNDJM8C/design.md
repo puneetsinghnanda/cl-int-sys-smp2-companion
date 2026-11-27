@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M8E7Q99RKS5X0BN20RNDJM8C
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.10.0
 inputs:
   - path: artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md
@@ -81,19 +81,22 @@ claims:
     text: "The timer runs the sweep `Every hour`."
     cites: ["runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-09"]
   - id: C21
-    text: "Assumed: the Stale glossary entry goes in the product's docs/PRD.md next to the appointment states, because the user chose to `Add entry`; implement must confirm."
-    cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#item:REQ-12"]
+    text: "The Stale entry goes in the companion's context/glossary.md, whose Scheduled entry (`Only Scheduled appointments can change`) is updated too; docs/PRD.md is left unchanged."
+    cites: ["context/glossary.md#scheduled", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-10"]
   - id: C22
     text: "AppointmentRepo writes history rows with `INSERT INTO appointment_event`, including the actor."
     cites: ["sample-system:api/src/repositories/appointmentRepo.ts#L173"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12]
-known: [CO-1, CO-2, CO-3, CO-4, CO-5, CO-6, CO-7, CO-8, CO-9, CO-10, EP-1, EP-2, EP-3, EP-4, EP-5, EP-6]
-assumed: [CO-11]
+known: [CO-1, CO-2, CO-3, CO-4, CO-5, CO-6, CO-7, CO-8, CO-9, CO-10, CO-11, EP-1, EP-2, EP-3, EP-4, EP-5, EP-6]
+assumed: []
 unknown: []
+resolves:
+  - id: F-1
+    how: "The Stale entry and the updated Scheduled entry go in context/glossary.md, and docs/PRD.md is unchanged."
 questions: []
 components:
   - id: CO-1
-    name: "API status type and list: add STALE to AppointmentStatus and APPOINTMENT_STATUSES (api/src/types.ts)"
+    name: "API AppointmentStatus and APPOINTMENT_STATUSES gain STALE"
     module: module:sample-system:api
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:api/src/types.ts:AppointmentStatus", "sample-system:api/src/types.ts#L5"]
@@ -106,7 +109,7 @@ components:
     name: "AppointmentRepo: markStale() and move() back to SCHEDULED"
     module: module:sample-system:api
     change: changed
-    cites: ["context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "sample-system:api/src/repositories/appointmentRepo.ts#L157", "sample-system:api/src/repositories/appointmentRepo.ts#L170"]
+    cites: ["context/generated/module-map.json#sym:sample-system:api/src/repositories/appointmentRepo.ts:AppointmentRepo", "sample-system:api/src/repositories/appointmentRepo.ts#L157", "sample-system:api/src/repositories/appointmentRepo.ts#L173"]
   - id: CO-4
     name: "AppointmentService: markStale() and guard accepting STALE"
     module: module:sample-system:api
@@ -118,12 +121,12 @@ components:
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:api/src/server.ts:shutdown", "sample-system:api/src/lib/time.ts#L8", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-08", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-09"]
   - id: CO-6
-    name: "Web status type: add STALE to AppointmentStatus (web/src/api/types.ts)"
+    name: "Web AppointmentStatus gains STALE"
     module: module:sample-system:web
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/api/types.ts:AppointmentStatus"]
   - id: CO-7
-    name: "STATUS_LABEL: add STALE: 'Stale' (web/src/lib/format.ts); this gives the badge label and the list filter option"
+    name: "STATUS_LABEL gains STALE: 'Stale'"
     module: module:sample-system:web
     change: changed
     cites: ["sample-system:web/src/lib/format.ts#L36"]
@@ -133,20 +136,20 @@ components:
     change: changed
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentDetailPage.tsx:AppointmentDetailPage", "sample-system:web/src/pages/AppointmentDetailPage.tsx#L44", "sample-system:web/src/pages/AppointmentDetailPage.tsx#L13"]
   - id: CO-9
-    name: "AppointmentsPage status filter (picks up Stale from STATUS_LABEL)"
+    name: "AppointmentsPage status filter (picks up Stale)"
     module: module:sample-system:web
     change: existing
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/pages/AppointmentsPage.tsx:AppointmentsPage", "sample-system:web/src/pages/AppointmentsPage.tsx#L34"]
   - id: CO-10
-    name: "StatusBadge (shows Stale from STATUS_LABEL)"
+    name: "StatusBadge (shows Stale)"
     module: module:sample-system:web
     change: existing
     cites: ["context/generated/module-map.json#sym:sample-system:web/src/components/StatusBadge.tsx:StatusBadge", "sample-system:web/src/components/StatusBadge.tsx#L5"]
   - id: CO-11
-    name: "Glossary entry for Stale in docs/PRD.md (assumed location; implement must confirm)"
-    module: module:sample-system:.
-    change: changed
-    cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md#item:REQ-12", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-05"]
+    name: "New Stale glossary entry in companion context/glossary.md"
+    module: companion:context/glossary.md
+    change: new
+    cites: ["context/glossary.md#scheduled", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-05", "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-10"]
 endpoints:
   - id: EP-1
     method: GET
@@ -211,6 +214,14 @@ answers:
     mismatch:
       text: "Story S-1 AC1 expects the state to be Stale when 24h after start is reached; with a sweep every hour, the stored state can lag that mark until the next run. Tests call markStale() at the AC's instant."
       cites: ["artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#item:S-1"]
+  - id: A-10
+    kind: assumption
+    about: C21
+    answer: "Glossary only"
+    decides: [CO-11, C21]
+    mismatch:
+      text: "The first design assumed the entry goes in docs/PRD.md; the user decided it goes only in the companion's context/glossary.md."
+      cites: ["context/glossary.md#scheduled"]
 ---
 # Design: HMS-34
 
@@ -225,6 +236,8 @@ event per row with actor `system`, in one transaction.
 Staff can still close or reschedule a Stale appointment. The `scheduled()` guard accepts SCHEDULED or
 STALE, and `move()` sets the status back to SCHEDULED. Because the overlap constraints cover only
 SCHEDULED rows (C5), a rescheduled appointment counts for double-booking again.
+
+The glossary change (CO-11) is in the companion repo's context/glossary.md, not in a product repo.
 
 Trade-offs:
 - Timer in `server.ts` and not in `createApp`: tests that build the app never start a timer, at the cost of the sweep being started only by the real process.
@@ -244,7 +257,7 @@ Trade-offs:
 - CO-8 (changed) AppointmentDetailPage shows the actions for SCHEDULED or STALE, and EVENT_LABEL gains `STALE: 'Marked stale'`.
 - CO-9 (existing) AppointmentsPage status filter lists Stale through STATUS_LABEL.
 - CO-10 (existing) StatusBadge shows Stale through STATUS_LABEL.
-- CO-11 (changed, assumed) Glossary entry for Stale in docs/PRD.md.
+- CO-11 (new, lives in the companion repo, outside the module map) Companion context/glossary.md gains a Stale entry: a Scheduled appointment still open 24h after start, which staff can still close or reschedule. The Scheduled entry no longer says only Scheduled appointments can change. docs/PRD.md is unchanged. Trade-off: the glossary the run reads stays correct, but the PRD status table still lists four statuses.
 - EP-1 (changed) GET /api/appointments: query `status` accepts STALE, for example `?status=STALE`; `items[].status` may be STALE.
 - EP-2 (changed) GET /api/appointments/:id: `status` may be STALE. `history[].event` may be STALE with `history[].actor` = system, and `history[].at` is an ISO 8601 UTC instant.
 - EP-3 (changed) POST /api/appointments/:id/reschedule: accepted from STALE; the result `status` is SCHEDULED.
@@ -256,9 +269,12 @@ Stories served: S-1 by CO-1 to CO-5. S-2 by CO-4 (Completed rows are no longer S
 
 ## Known
 - CO-1 to CO-10, EP-1 to EP-6: each file, type and line is cited from the module map, the api inventory or the product code at the pinned SHA. Timer behaviour comes from A-08 and A-09.
+- CO-11: the location is decided by A-10 (Glossary only).
+
+Resolves F-1: The Stale entry and the updated Scheduled entry go in context/glossary.md, and docs/PRD.md is unchanged.
 
 ## Assumed
-- CO-11 and C21: the Stale glossary entry goes in docs/PRD.md next to the appointment states. Basis: REQ-12 asks for a glossary entry, and the product's own docs live in docs/PRD.md. Implement must confirm.
+None.
 
 ## Unknown
 None.
@@ -269,3 +285,4 @@ None open.
 Answered in the IDE:
 - A-08 (Q-01): how should the API mark appointments Stale? — "In-process timer". Decides CO-4, CO-5, C19. Mismatch: the architecture says no background jobs exist yet; this is the first.
 - A-09 (Q-02): how often should the timer run? — "Every hour". Decides CO-5, C20. Mismatch: story S-1 AC1 expects Stale at the 24h mark; the stored state can lag until the next hourly run. Tests call markStale() at the AC's instant.
+- A-10 (C21): where does the Stale glossary entry go? — "Glossary only". Decides CO-11, C21. Mismatch: the first design assumed docs/PRD.md; the entry goes only in the companion's context/glossary.md.

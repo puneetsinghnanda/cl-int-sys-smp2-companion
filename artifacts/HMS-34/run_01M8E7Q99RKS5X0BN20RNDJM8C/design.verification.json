@@ -1,28 +1,18 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md",
-  "artifact_sha256": "833d93be8130384c77b4deecdfde5c3f432c63d465079ee3ae726fc170b57a55",
-  "attempt": 1,
+  "artifact_sha256": "cd22c633358d52a27d9055d4efad6c44d657cc425c641ae2ca35993468701d8a",
+  "attempt": 2,
   "band": "High",
   "caps": [],
-  "checks_sha256": "69c695e97d607dc87b97d0192e0f0b08e9e0c7050eac45341fc49460e3f25386",
+  "checks_sha256": "4a26496b158fd1f3aa7f1e376ebf9517265c6d5e97e79e56f76b64e800102687",
   "claims": {
     "total": 22,
-    "unverified": [
-      {
-        "id": "C21",
-        "reason": "reviewer: unsupported"
-      }
-    ],
-    "verified": 21
+    "verified": 22
   },
-  "decided_at": "2026-11-27T10:33:14Z",
+  "decided_at": "2026-11-27T10:38:19Z",
   "decided_by": "tsl@0.1.7",
   "findings_dropped": [],
   "findings_kept": [
-    {
-      "id": "F-1",
-      "severity": "major"
-    },
     {
       "id": "F-2",
       "severity": "minor"
@@ -42,6 +32,10 @@
     {
       "id": "F-6",
       "severity": "minor"
+    },
+    {
+      "id": "F-7",
+      "severity": "minor"
     }
   ],
   "gate_failures": [],
@@ -58,7 +52,7 @@
     }
   ],
   "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
-  "outcome": "RETRY",
+  "outcome": "PASS-WITH-FINDINGS",
   "pack": {
     "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
     "signed_at": "2026-11-12T08:22:30Z",
@@ -66,15 +60,15 @@
       "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
     }
   },
-  "prev_attempt_sha256": null,
+  "prev_attempt_sha256": "6c36c1dedc34b0ed25f1508331a8a4a19b804bb4fd6317483e5037da8c88e863",
   "product_changes": null,
-  "review_sha256": "162623ba0dabbf33a17a5caca0e163b0212016e9861f93c6cfe18619a3c1f398",
+  "review_sha256": "42021bf7605ab1adcb978c4001587cbe81b12545adad2859b3e04ffd1f620720",
   "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
   "schema": "verification.v1",
   "signals": {
-    "S1": 0.9643,
+    "S1": 1.0,
     "S2": 1.0,
-    "S3": 4.4,
+    "S3": 4.55,
     "S4": 0,
     "S5": "fresh",
     "S6": {
@@ -83,7 +77,7 @@
       "sensitive": false
     }
   },
-  "signature": "6hbd15ytB9gUI34tCstEmwXPVMnpNYituRzDpLiV5S-FnQKudG85ykaZMd7A0p7VgDwTdVMiY8quHFdGR_jHAw",
+  "signature": "VFE3wKcgwL78qjkHGlczJngT8oLjDia_HyDC8kp7vtmcs5_O_C0BP3QhH8fyCKJydUiFAfk7cE9DasjU5i1xDw",
   "skill": "design@1.10.0",
   "step": "design",
   "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"

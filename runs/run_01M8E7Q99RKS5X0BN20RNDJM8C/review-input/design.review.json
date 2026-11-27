@@ -2,9 +2,9 @@
   "schema": "review.v1",
   "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
   "step": "design",
-  "attempt": 1,
-  "artifact_sha256": "833d93be8130384c77b4deecdfde5c3f432c63d465079ee3ae726fc170b57a55",
-  "package_sha256": "3fb275f277e92b824e4cd04886b690e5d8a8724ae5d2b8aa1c7e4bb80d48f681",
+  "attempt": 2,
+  "artifact_sha256": "cd22c633358d52a27d9055d4efad6c44d657cc425c641ae2ca35993468701d8a",
+  "package_sha256": "df0888c458aca755058379e68bc5e663633ad3297d8d7175ee1f427b3313684b",
   "status": "ok",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -12,62 +12,85 @@
     "version": "0.1.7",
     "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388"
   },
-  "rubric_score": 4.4,
+  "rubric_score": 4.55,
   "rubric_items": [
-    {"id": "DS-R1", "score": 5, "reason": "Every component sits on an existing api, db or web module and follows the layering (service rules, repo SQL, new migration file). The one new piece, the in-process timer, was decided by A-08 and its mismatch is recorded."},
-    {"id": "DS-R2", "score": 4, "reason": "Every story has components mapped to it. But S-1 AC1 (Stale at exactly the 24h mark) is only met up to an hour late under the hourly sweep, and S-7's glossary entry is put in docs/PRD.md, not in the glossary the inputs actually use."},
-    {"id": "DS-R3", "score": 4, "reason": "Endpoint fields have type, nullability, format and example. Gaps: history[].event is typed string rather than an enum, the STALE event's from/to/note values are not given, and CO-5 does not say how server.ts builds the service and clock."},
-    {"id": "DS-R4", "score": 4, "reason": "Code claims are cited and check out against the pinned code. CO-11 is honestly marked Assumed, but its basis is weak: docs/PRD.md has no glossary, and context/glossary.md is the glossary that req and split use."},
-    {"id": "DS-R5", "score": 5, "reason": "Each non-obvious choice has a trade-off line: putting the timer in server.ts, running once at start, the hourly interval, keeping Stale out of the overlap constraints, and having no interval env setting."},
-    {"id": "DS-R6", "score": 5, "reason": "Clear and consistent. The front matter and body agree, and the stories-served line maps every story."}
+    {"id": "DS-R1", "score": 5, "reason": "Components sit on existing api, db and web modules and follow the layering, with a new migration file. The in-process timer was decided by A-08 and its mismatch with the architecture is recorded. CO-11 is the companion glossary, as A-10 decided."},
+    {"id": "DS-R2", "score": 4, "reason": "Every story is mapped, and S-7 now targets the glossary the inputs use (F-1 resolved). S-1 AC1 is still met up to an hour late under the hourly sweep, and the Stale badge has no style."},
+    {"id": "DS-R3", "score": 4, "reason": "Endpoint fields have type, nullability, format and example. history[].event is still a plain string, the STALE event's fromStartsAt/toStartsAt/note are not given, and how server.ts gets a service and clock is not stated."},
+    {"id": "DS-R4", "score": 5, "reason": "Code claims are cited and check out. CO-11 and the timer choices are decided by cited IDE answers A-08, A-09 and A-10, each with a recorded mismatch. Nothing is guessed."},
+    {"id": "DS-R5", "score": 5, "reason": "Trade-off lines cover timer placement, running at start, hourly interval, overlap constraints, no interval env setting, and glossary-only with the PRD left at four statuses."},
+    {"id": "DS-R6", "score": 5, "reason": "Clear and consistent. The front matter, components list, stories-served line and answers section agree."}
   ],
   "findings": [
-    {"id": "F-1", "severity": "major", "category": "correctness",
-     "text": "CO-11 puts the Stale glossary entry in docs/PRD.md, but the PRD has no glossary section. The glossary that req and split read is context/glossary.md, and its Scheduled entry also needs updating. The PRD status table and state diagram would need STALE too.",
-     "cites": [
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-11", "quote": "Glossary entry for Stale in docs/PRD.md (assumed location; implement must confirm)"},
-       {"ref": "context/glossary.md#scheduled", "quote": "An appointment that is booked and still open. Only Scheduled appointments can change."},
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#L10", "quote": "path: context/glossary.md"},
-       {"ref": "sample-system:docs/PRD.md#L126", "quote": "| Status | Scheduled, Completed, Cancelled, No-show |"}
-     ],
-     "claim_ref": "C21",
-     "suggested_fix": "Target context/glossary.md for the Stale entry and the Scheduled wording, and list the docs/PRD.md status table and state diagram as separate doc changes."},
-    {"id": "F-2", "severity": "minor", "category": "completeness",
-     "text": "With an hourly sweep, S-1 AC1 (Stale when the time reaches 24h after start) does not hold in the running system for up to an hour. Calling markStale() directly in tests checks the function, not the AC as written. The AC was not reworded.",
-     "cites": [
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#item:S-1", "quote": "when the time reaches 10:00 on 2 December (24h after start), then its state is Stale."},
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#open-questions", "quote": "Tests call markStale() at the AC's instant."}
-     ],
-     "suggested_fix": "Carry the accepted lag of up to one hour into the S-1 AC1 wording (or a note on it) so that later test steps don't treat it as a defect."},
-    {"id": "F-3", "severity": "minor", "category": "consistency",
-     "text": "The markStale UPDATE in CO-3 sets updated_by but not updated_at. Every existing status change in AppointmentRepo sets updated_at = now().",
-     "cites": [
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components", "quote": "SET status = 'STALE', updated_by = actor WHERE status = 'SCHEDULED'"},
-       {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L165", "quote": "SET status = $2, cancellation_reason = $3, updated_at = now(), updated_by = $4"}
-     ],
-     "suggested_fix": "Add updated_at = now() to the markStale UPDATE."},
-    {"id": "F-4", "severity": "minor", "category": "completeness",
-     "text": "CO-5 says server.ts calls markStale(), but server.ts holds only pool, config and app, and the service needs a db, config and clock. The design does not say how the timer gets an AppointmentService or which clock it uses.",
-     "cites": [
-       {"ref": "sample-system:api/src/server.ts#L7", "quote": "const app = createApp(pool, config);"},
-       {"ref": "sample-system:api/src/services/appointmentService.ts#L21", "quote": "private readonly clock: () => Date,"},
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components", "quote": "after listen, calls markStale() once, then `setInterval` every hour"}
-     ],
-     "suggested_fix": "State that server.ts builds new AppointmentService(pool, config, () => new Date()), or exposes the service from createApp."},
-    {"id": "F-5", "severity": "minor", "category": "completeness",
-     "text": "EP-2 types history[].event as a plain string while every other status field is a string enum. The STALE event's fromStartsAt, toStartsAt and note (null for this event) are not specified.",
-     "cites": [
-       {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:EP-2", "quote": "{name: \"history[].event\", type: string, nullable: false"},
-       {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L103", "quote": "fromStartsAt: e.from_starts_at?.toISOString() ?? null,"}
-     ],
-     "suggested_fix": "Type history[].event as a string enum, and add fromStartsAt, toStartsAt and note as null for the STALE event."},
-    {"id": "F-6", "severity": "minor", "category": "completeness",
-     "text": "StatusBadge builds its CSS class from the status, and styles.css has one class per status. No .badge-stale style is planned, so the Stale badge will render unstyled.",
-     "cites": [
-       {"ref": "sample-system:web/src/components/StatusBadge.tsx#L6", "quote": "className={`badge badge-${status.toLowerCase()}`}"},
-       {"ref": "sample-system:web/src/styles.css#L79", "quote": ".badge-no_show { background: #f1e8fd; color: #5b2b9b; }"}
-     ],
-     "suggested_fix": "Add a changed component for web/src/styles.css with a .badge-stale rule."}
+    {
+      "id": "F-2",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Still open: with an hourly sweep, S-1 AC1 (Stale when the time reaches 24h after start) can lag by up to an hour in the running system. Tests that call markStale() check the function, not the AC as written.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#item:S-1", "quote": "when the time reaches 10:00 on 2 December (24h after start), then its state is Stale."},
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#open-questions", "quote": "Tests call markStale() at the AC's instant."}
+      ],
+      "suggested_fix": "Put a note on S-1 AC1 that the accepted lag is up to one hour, so later test steps do not treat it as a defect."
+    },
+    {
+      "id": "F-3",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "Still open: the markStale UPDATE in CO-3 sets updated_by but not updated_at. Every existing status change in AppointmentRepo sets updated_at = now().",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components", "quote": "SET status = 'STALE', updated_by = actor WHERE status = 'SCHEDULED'"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L165", "quote": "SET status = $2, cancellation_reason = $3, updated_at = now(), updated_by = $4"}
+      ],
+      "suggested_fix": "Add updated_at = now() to the markStale UPDATE."
+    },
+    {
+      "id": "F-4",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Still open: CO-5 has server.ts call markStale(), but server.ts holds only pool, config and app. The design does not say how the timer gets an AppointmentService or which clock it uses.",
+      "cites": [
+        {"ref": "sample-system:api/src/server.ts#L7", "quote": "const app = createApp(pool, config);"},
+        {"ref": "sample-system:api/src/services/appointmentService.ts#L21", "quote": "private readonly clock: () => Date,"},
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components", "quote": "after listen, calls markStale() once, then `setInterval` every hour"}
+      ],
+      "suggested_fix": "State that server.ts builds new AppointmentService(pool, config, () => new Date()), or that createApp exposes the service."
+    },
+    {
+      "id": "F-5",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Still open: EP-2 types history[].event as a plain string, while the status fields are string enums. The STALE event's fromStartsAt, toStartsAt and note (null for this event) are not specified.",
+      "cites": [
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:EP-2", "quote": "{name: \"history[].event\", type: string, nullable: false"},
+        {"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L103", "quote": "fromStartsAt: e.from_starts_at?.toISOString() ?? null,"}
+      ],
+      "suggested_fix": "Type history[].event as a string enum, and list fromStartsAt, toStartsAt and note as null for the STALE event."
+    },
+    {
+      "id": "F-6",
+      "severity": "minor",
+      "category": "completeness",
+      "text": "Still open: StatusBadge builds its CSS class from the status, and styles.css has one class per status. CO-10 plans no .badge-stale style, so the Stale badge will have no style.",
+      "cites": [
+        {"ref": "sample-system:web/src/components/StatusBadge.tsx#L6", "quote": "className={`badge badge-${status.toLowerCase()}`}"},
+        {"ref": "sample-system:web/src/styles.css#L79", "quote": ".badge-no_show { background: #f1e8fd; color: #5b2b9b; }"},
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components", "quote": "CO-10 (existing) StatusBadge shows Stale through STATUS_LABEL."}
+      ],
+      "suggested_fix": "Add a changed component for web/src/styles.css with a .badge-stale rule."
+    },
+    {
+      "id": "F-7",
+      "severity": "minor",
+      "category": "consistency",
+      "text": "CO-11 updates the glossary's Scheduled entry but not its Actor entry, which says the actor is always staff. The STALE event now uses actor system (A-03), so that entry will be wrong too.",
+      "cites": [
+        {"ref": "context/glossary.md#actor", "quote": "Who made a change. In the MVP always `staff`; recorded in created_by, updated_by and appointment history."},
+        {"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-03", "quote": "answer: Event, actor system"},
+        {"ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components", "quote": "The Scheduled entry no longer says only Scheduled appointments can change."}
+      ],
+      "suggested_fix": "Have CO-11 also update the Actor entry so it says the actor is staff, or system for the automatic Stale change."
+    }
   ],
   "claims_checked": [
     {"claim_id": "C1", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/types.ts#L4", "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';"}]},
@@ -90,7 +113,7 @@
     {"claim_id": "C18", "verdict": "supported", "cites": [{"ref": "context/architecture.md#open-points", "quote": "No background jobs exist yet. Reminders or clean-ups would be the first."}]},
     {"claim_id": "C19", "verdict": "supported", "cites": [{"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-08", "quote": "answer: In-process timer"}]},
     {"claim_id": "C20", "verdict": "supported", "cites": [{"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-09", "quote": "answer: Every hour"}]},
-    {"claim_id": "C21", "verdict": "unsupported", "cites": [{"ref": "sample-system:docs/PRD.md#L126", "quote": "| Status | Scheduled, Completed, Cancelled, No-show |"}, {"ref": "context/glossary.md#scheduled", "quote": "Only Scheduled appointments can change."}]},
+    {"claim_id": "C21", "verdict": "supported", "cites": [{"ref": "context/glossary.md#scheduled", "quote": "Only Scheduled appointments can change."}, {"ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-10", "quote": "answer: Glossary only"}]},
     {"claim_id": "C22", "verdict": "supported", "cites": [{"ref": "sample-system:api/src/repositories/appointmentRepo.ts#L173", "quote": "INSERT INTO appointment_event (appointment_id, event, from_starts_at, to_starts_at, note, actor)"}]}
   ],
   "questions": []
