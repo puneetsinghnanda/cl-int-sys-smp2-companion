@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/impl.md",
-  "artifact_sha256": "ba9496dd8a660f87c9d37a88252508840df18131a52a829a03fe19701b115ee8",
-  "attempt": 1,
+  "artifact_sha256": "d16f96994ae53c5ec527f12300adf0d58bbbf03ef87b7976c08cea69203ec162",
+  "attempt": 2,
   "budget_tokens": 45000,
-  "checks_sha256": "a54a612745fb222c21256b3cffd2533dcdd645caceadaec04bbb7d418a14cf2d",
+  "checks_sha256": "b6ef4d2b943c27a96e2356616dfb74ab88701129c86ebbb85283ffb3452c6b42",
   "context_sections": [
     {
       "id": "conventions",
@@ -39,10 +39,15 @@
       "path": "context/generated/module-map.json"
     }
   ],
-  "package_sha256": "7dac617280dc9712287da09041e6b08f315b4a8e90db131a532e264c70867bc7",
-  "prepared_at": "2026-11-27T08:52:07Z",
+  "package_sha256": "bd8da37c25537683ec65592f5887c7b0c661815401fa512186f76546ed9ced0b",
+  "prepared_at": "2026-11-27T08:59:57Z",
   "prepared_by": "tsl@0.1.7",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    }
+  ],
   "review_input_path": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/review-input/impl.review.json",
   "rubric": {
     "items": [
@@ -75,6 +80,10 @@
     {
       "name": "ide-answers",
       "path": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md"
+    },
+    {
+      "name": "open-questions",
+      "path": "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/open-questions.md"
     }
   ],
   "schema": "review-package.v1",
