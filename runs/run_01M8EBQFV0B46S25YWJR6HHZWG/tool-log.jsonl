@@ -1,0 +1,2 @@
+{"attempt": 1, "code": null, "decision": "allow", "read_only": false, "session_id": "86237b06-a999-4d6b-b525-84dc3156be99", "step": "run", "target": "tsl next run_01M8EBQFV0B46S25YWJR6HHZWG --json", "tool": "Bash", "ts": "2026-11-27T11:20:16Z"}
+{"attempt": 1, "code": "E-POL-06", "decision": "deny", "session_id": "86237b06-a999-4d6b-b525-84dc3156be99", "step": "req", "target": "head -c 3000 context/manifest.json; echo; ls context context/generated; ls ..", "tool": "Bash", "ts": "2026-11-27T11:21:09Z"}

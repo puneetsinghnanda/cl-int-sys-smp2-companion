@@ -1,0 +1,58 @@
+{
+  "action": "run_step",
+  "allowed_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "AskUserQuestion"
+  ],
+  "artifact_path": "artifacts/HMS-23/run_01M8EBQFV0B46S25YWJR6HHZWG/req.md",
+  "attempt": 1,
+  "budget": {
+    "checks": "0/2",
+    "review": "0/2",
+    "verifier": "0/3"
+  },
+  "context": {
+    "answers": null,
+    "context_sections": [
+      "intent-baseline#goals",
+      "intent-baseline#constraints",
+      "glossary"
+    ],
+    "inputs": [
+      {
+        "name": "ticket",
+        "path": "artifacts/HMS-23/run_01M8EBQFV0B46S25YWJR6HHZWG/ticket.md",
+        "schema": "ticket-snapshot.v1",
+        "sha256": "57a00e03ee05c82d655beb6cd85baf5dd7cffadc317568e4446e4d04da010f6e"
+      },
+      {
+        "name": "intent_baseline",
+        "path": "context/intent-baseline.md",
+        "schema": null,
+        "sha256": "9bfd821aeb2fb9524863e346707e049e4fcfb949a6e55b90223a79194946a215"
+      },
+      {
+        "name": "glossary",
+        "path": "context/glossary.md",
+        "schema": null,
+        "sha256": "430a90e14c50f969f7f757089c61cf254eb21596ed6e60abb8bf59286822b9ff"
+      }
+    ],
+    "open_questions": []
+  },
+  "instruction_path": "runs/run_01M8EBQFV0B46S25YWJR6HHZWG/instructions/req.a1.json",
+  "progress": {
+    "index": 1,
+    "total": 7
+  },
+  "retry": null,
+  "run_id": "run_01M8EBQFV0B46S25YWJR6HHZWG",
+  "say": "req (1/7): attempt 1",
+  "schema": "next-action.v2",
+  "skill": "requirement-review@1.6.0",
+  "step": "req"
+}
