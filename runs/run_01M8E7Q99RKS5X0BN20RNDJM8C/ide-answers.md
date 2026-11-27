@@ -72,3 +72,23 @@ entries as the user's own answers.
 - question: Q-07: The glossary defines Cancelled as called off before it took place. Can staff mark a Stale (past) appointment Cancelled?
 - options: Yes, Cancelled allowed (proposed default) | No, only Completed or No-show
 - answer: Yes, Cancelled allowed (proposed default)
+
+## A-08
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T10:25:53Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01Hzhd4jRpy3GbEqBwMBXBMw
+- question: Q-01: No background jobs exist yet. How should the API mark Scheduled appointments Stale once 24h after start has passed?
+- options: Sweep on read (proposed default) | In-process timer | Both
+- answer: In-process timer
+
+## A-09
+- step: design
+- attempt: 1
+- asked_at: 2026-11-27T10:27:38Z
+- answered_by: eng-dffd
+- tool_use_id: toolu_01YNGXQTxFtcijgTZt32JKtJ
+- question: Q-02: How often should the in-process timer run the Stale sweep? An appointment can stay Scheduled for up to this long after the 24h mark.
+- options: Every 5 minutes (proposed default) | Every 1 minute | Every 15 minutes
+- answer: Every hour

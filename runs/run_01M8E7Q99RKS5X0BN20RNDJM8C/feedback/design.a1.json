@@ -1,0 +1,37 @@
+{
+  "dropped": [],
+  "findings": [
+    {
+      "cites": [
+        {
+          "quote": "Glossary entry for Stale in docs/PRD.md (assumed location; implement must confirm)",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-11"
+        },
+        {
+          "quote": "An appointment that is booked and still open. Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        },
+        {
+          "quote": "path: context/glossary.md",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#L10"
+        },
+        {
+          "quote": "| Status | Scheduled, Completed, Cancelled, No-show |",
+          "ref": "sample-system:docs/PRD.md#L126"
+        }
+      ],
+      "id": "F-1",
+      "severity": "major",
+      "text": "CO-11 puts the Stale glossary entry in docs/PRD.md, but the PRD has no glossary section. The glossary that req and split read is context/glossary.md, and its Scheduled entry also needs updating. The PRD status table and state diagram would need STALE too."
+    }
+  ],
+  "from_attempt": 1,
+  "gate_failures": [],
+  "kind": "review",
+  "must_resolve": [
+    "F-1"
+  ],
+  "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
+  "schema": "feedback.v1",
+  "step": "design"
+}

@@ -1,0 +1,394 @@
+{
+  "artifact_sha256": "833d93be8130384c77b4deecdfde5c3f432c63d465079ee3ae726fc170b57a55",
+  "attempt": 1,
+  "claims_checked": [
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';",
+          "ref": "sample-system:api/src/types.ts#L4"
+        }
+      ],
+      "claim_id": "C1",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const status = f.oneOf('status', APPOINTMENT_STATUSES);",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L35"
+        }
+      ],
+      "claim_id": "C2",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (status IN ('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L10"
+        }
+      ],
+      "claim_id": "C3",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
+        }
+      ],
+      "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": ") WHERE (status = 'SCHEDULED'),",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L21"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "if (current.status !== 'SCHEDULED') {",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L136"
+        }
+      ],
+      "claim_id": "C6",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "UPDATE appointment SET starts_at = $2, ends_at = $3, updated_at = now(), updated_by = $4 WHERE id = $1",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L157"
+        }
+      ],
+      "claim_id": "C7",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const DAY_MS = 24 * 60 * MINUTE;",
+          "ref": "sample-system:api/src/lib/time.ts#L9"
+        }
+      ],
+      "claim_id": "C8",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const MINUTE = 60_000;",
+          "ref": "sample-system:api/src/lib/time.ts#L8"
+        }
+      ],
+      "claim_id": "C9",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "function shutdown(): void {",
+          "ref": "sample-system:api/src/server.ts#L13"
+        }
+      ],
+      "claim_id": "C10",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export const STATUS_LABEL: Record<AppointmentStatus, string> = {",
+          "ref": "sample-system:web/src/lib/format.ts#L36"
+        }
+      ],
+      "claim_id": "C11",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "{Object.entries(STATUS_LABEL).map(([v, l]) =>",
+          "ref": "sample-system:web/src/pages/AppointmentsPage.tsx#L34"
+        }
+      ],
+      "claim_id": "C12",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "STATUS_LABEL[status];",
+          "ref": "sample-system:web/src/components/StatusBadge.tsx#L5"
+        }
+      ],
+      "claim_id": "C13",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const scheduled = a.status === 'SCHEDULED';",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L44"
+        }
+      ],
+      "claim_id": "C14",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "const EVENT_LABEL: Record<string, string> = {",
+          "ref": "sample-system:web/src/pages/AppointmentDetailPage.tsx#L13"
+        }
+      ],
+      "claim_id": "C15",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';",
+          "ref": "sample-system:web/src/api/types.ts#L3"
+        }
+      ],
+      "claim_id": "C16",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "New SQL files only, never edits to merged ones.",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C17",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "No background jobs exist yet. Reminders or clean-ups would be the first.",
+          "ref": "context/architecture.md#open-points"
+        }
+      ],
+      "claim_id": "C18",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: In-process timer",
+          "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-08"
+        }
+      ],
+      "claim_id": "C19",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: Every hour",
+          "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-09"
+        }
+      ],
+      "claim_id": "C20",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "| Status | Scheduled, Completed, Cancelled, No-show |",
+          "ref": "sample-system:docs/PRD.md#L126"
+        },
+        {
+          "quote": "Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "unsupported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "INSERT INTO appointment_event (appointment_id, event, from_starts_at, to_starts_at, note, actor)",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L173"
+        }
+      ],
+      "claim_id": "C22",
+      "verdict": "supported"
+    }
+  ],
+  "findings": [
+    {
+      "category": "correctness",
+      "cites": [
+        {
+          "quote": "Glossary entry for Stale in docs/PRD.md (assumed location; implement must confirm)",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-11"
+        },
+        {
+          "quote": "An appointment that is booked and still open. Only Scheduled appointments can change.",
+          "ref": "context/glossary.md#scheduled"
+        },
+        {
+          "quote": "path: context/glossary.md",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#L10"
+        },
+        {
+          "quote": "| Status | Scheduled, Completed, Cancelled, No-show |",
+          "ref": "sample-system:docs/PRD.md#L126"
+        }
+      ],
+      "claim_ref": "C21",
+      "id": "F-1",
+      "severity": "major",
+      "suggested_fix": "Target context/glossary.md for the Stale entry and the Scheduled wording, and list the docs/PRD.md status table and state diagram as separate doc changes.",
+      "text": "CO-11 puts the Stale glossary entry in docs/PRD.md, but the PRD has no glossary section. The glossary that req and split read is context/glossary.md, and its Scheduled entry also needs updating. The PRD status table and state diagram would need STALE too."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "when the time reaches 10:00 on 2 December (24h after start), then its state is Stale.",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md#item:S-1"
+        },
+        {
+          "quote": "Tests call markStale() at the AC's instant.",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#open-questions"
+        }
+      ],
+      "id": "F-2",
+      "severity": "minor",
+      "suggested_fix": "Carry the accepted lag of up to one hour into the S-1 AC1 wording (or a note on it) so that later test steps don't treat it as a defect.",
+      "text": "With an hourly sweep, S-1 AC1 (Stale when the time reaches 24h after start) does not hold in the running system for up to an hour. Calling markStale() directly in tests checks the function, not the AC as written. The AC was not reworded."
+    },
+    {
+      "category": "consistency",
+      "cites": [
+        {
+          "quote": "SET status = 'STALE', updated_by = actor WHERE status = 'SCHEDULED'",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components"
+        },
+        {
+          "quote": "SET status = $2, cancellation_reason = $3, updated_at = now(), updated_by = $4",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L165"
+        }
+      ],
+      "id": "F-3",
+      "severity": "minor",
+      "suggested_fix": "Add updated_at = now() to the markStale UPDATE.",
+      "text": "The markStale UPDATE in CO-3 sets updated_by but not updated_at. Every existing status change in AppointmentRepo sets updated_at = now()."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "const app = createApp(pool, config);",
+          "ref": "sample-system:api/src/server.ts#L7"
+        },
+        {
+          "quote": "private readonly clock: () => Date,",
+          "ref": "sample-system:api/src/services/appointmentService.ts#L21"
+        },
+        {
+          "quote": "after listen, calls markStale() once, then `setInterval` every hour",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#components"
+        }
+      ],
+      "id": "F-4",
+      "severity": "minor",
+      "suggested_fix": "State that server.ts builds new AppointmentService(pool, config, () => new Date()), or exposes the service from createApp.",
+      "text": "CO-5 says server.ts calls markStale(), but server.ts holds only pool, config and app, and the service needs a db, config and clock. The design does not say how the timer gets an AppointmentService or which clock it uses."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "{name: \"history[].event\", type: string, nullable: false",
+          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:EP-2"
+        },
+        {
+          "quote": "fromStartsAt: e.from_starts_at?.toISOString() ?? null,",
+          "ref": "sample-system:api/src/repositories/appointmentRepo.ts#L103"
+        }
+      ],
+      "id": "F-5",
+      "severity": "minor",
+      "suggested_fix": "Type history[].event as a string enum, and add fromStartsAt, toStartsAt and note as null for the STALE event.",
+      "text": "EP-2 types history[].event as a plain string while every other status field is a string enum. The STALE event's fromStartsAt, toStartsAt and note (null for this event) are not specified."
+    },
+    {
+      "category": "completeness",
+      "cites": [
+        {
+          "quote": "className={`badge badge-${status.toLowerCase()}`}",
+          "ref": "sample-system:web/src/components/StatusBadge.tsx#L6"
+        },
+        {
+          "quote": ".badge-no_show { background: #f1e8fd; color: #5b2b9b; }",
+          "ref": "sample-system:web/src/styles.css#L79"
+        }
+      ],
+      "id": "F-6",
+      "severity": "minor",
+      "suggested_fix": "Add a changed component for web/src/styles.css with a .badge-stale rule.",
+      "text": "StatusBadge builds its CSS class from the status, and styles.css has one class per status. No .badge-stale style is planned, so the Stale badge will render unstyled."
+    }
+  ],
+  "package_sha256": "3fb275f277e92b824e4cd04886b690e5d8a8724ae5d2b8aa1c7e4bb80d48f681",
+  "questions": [],
+  "recorded_at": "2026-11-27T10:33:09Z",
+  "recorded_by": "tsl@0.1.7",
+  "reviewer": {
+    "agent": "truminds:reviewer",
+    "rubric_sha256": "c902addbcf5c4e053d885cbbddda0c5f089d5a42a5d5bb3d77c09e77de6e0388",
+    "skill": "review",
+    "version": "0.1.7"
+  },
+  "rubric_items": [
+    {
+      "id": "DS-R1",
+      "reason": "Every component sits on an existing api, db or web module and follows the layering (service rules, repo SQL, new migration file). The one new piece, the in-process timer, was decided by A-08 and its mismatch is recorded.",
+      "score": 5
+    },
+    {
+      "id": "DS-R2",
+      "reason": "Every story has components mapped to it. But S-1 AC1 (Stale at exactly the 24h mark) is only met up to an hour late under the hourly sweep, and S-7's glossary entry is put in docs/PRD.md, not in the glossary the inputs actually use.",
+      "score": 4
+    },
+    {
+      "id": "DS-R3",
+      "reason": "Endpoint fields have type, nullability, format and example. Gaps: history[].event is typed string rather than an enum, the STALE event's from/to/note values are not given, and CO-5 does not say how server.ts builds the service and clock.",
+      "score": 4
+    },
+    {
+      "id": "DS-R4",
+      "reason": "Code claims are cited and check out against the pinned code. CO-11 is honestly marked Assumed, but its basis is weak: docs/PRD.md has no glossary, and context/glossary.md is the glossary that req and split use.",
+      "score": 4
+    },
+    {
+      "id": "DS-R5",
+      "reason": "Each non-obvious choice has a trade-off line: putting the timer in server.ts, running once at start, the hourly interval, keeping Stale out of the overlap constraints, and having no interval env setting.",
+      "score": 5
+    },
+    {
+      "id": "DS-R6",
+      "reason": "Clear and consistent. The front matter and body agree, and the stories-served line maps every story.",
+      "score": 5
+    }
+  ],
+  "rubric_score": 4.4,
+  "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
+  "schema": "review.v1",
+  "status": "ok",
+  "step": "design"
+}
