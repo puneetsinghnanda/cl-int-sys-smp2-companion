@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "97103949e791548113bc29ebb1cfc52564971d46ccdd89ae6baecb63442778cd",
-  "attempt": 1,
+  "artifact_sha256": "49e40dd8e05c2f3d0fe0da3f188d2de68b5fc4abce7931c55896c0850ac3d324",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -205,6 +205,16 @@
       ],
       "claim_id": "C20",
       "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
+        }
+      ],
+      "claim_id": "C21",
+      "verdict": "supported"
     }
   ],
   "findings": [
@@ -224,7 +234,7 @@
       "id": "F-1",
       "severity": "minor",
       "suggested_fix": "Drop the dateTime cite from C9 and keep A-10 (optionally add sample-system:web/src/lib/format.ts#L42).",
-      "text": "C9 cites the sibling symbol format.ts:dateTime as module-map evidence for STATUS_LABEL; the module map does not list STATUS_LABEL, so the only real basis is A-10."
+      "text": "Still open from attempt 1: C9 cites the sibling symbol format.ts:dateTime as module-map evidence for STATUS_LABEL; the module map does not list STATUS_LABEL, so the real basis is A-10."
     },
     {
       "category": "completeness",
@@ -241,24 +251,7 @@
       "id": "F-2",
       "severity": "minor",
       "suggested_fix": "State in CO-7 or EP-1 that the list filter gains a Stale option as a consequence, and that this is accepted.",
-      "text": "The appointments list page builds its status filter from STATUS_LABEL, so CO-7 also adds a Stale filter option; the design does not mention this side effect, and req put list/filter display out of scope."
-    },
-    {
-      "category": "completeness",
-      "cites": [
-        {
-          "quote": "format: \"adds STALE\"",
-          "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#item:EP-2"
-        },
-        {
-          "quote": "CHECK (event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'))",
-          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
-        }
-      ],
-      "id": "F-3",
-      "severity": "minor",
-      "suggested_fix": "Use format \"one of BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE\".",
-      "text": "EP-2 history[].event format is only 'adds STALE' instead of the full value set, unlike the status fields which list every value."
+      "text": "Still open: the appointments list page builds its status filter from STATUS_LABEL, so CO-7 also adds a Stale filter option; the design does not mention this side effect, and req put list/filter display out of scope."
     },
     {
       "category": "completeness",
@@ -272,10 +265,10 @@
           "ref": "sample-system:api/src/types.ts#L5"
         }
       ],
-      "id": "F-4",
+      "id": "F-3",
       "severity": "minor",
       "suggested_fix": "Name APPOINTMENT_STATUSES in CO-1.",
-      "text": "CO-1 says 'the status list used by the list filter gains it too' without naming APPOINTMENT_STATUSES in api/src/types.ts, the constant that must change."
+      "text": "Still open: CO-1 says 'the status list used by the list filter gains it too' without naming APPOINTMENT_STATUSES in api/src/types.ts, the constant that must change."
     },
     {
       "category": "completeness",
@@ -289,10 +282,10 @@
           "ref": "sample-system:api/src/app.ts#L20"
         }
       ],
-      "id": "F-5",
+      "id": "F-4",
       "severity": "minor",
       "suggested_fix": "State in CO-5 which context instance the timer uses to call markStale().",
-      "text": "CO-5 has server.ts call markStale(), but server.ts only holds the app and pool; the design does not say how it reaches the AppointmentService instance (app.locals.ctx or its own createContext)."
+      "text": "Still open: CO-5 has server.ts call markStale(), but server.ts only holds the app and pool; the design does not say how it reaches the AppointmentService instance (app.locals.ctx or its own createContext)."
     },
     {
       "category": "consistency",
@@ -302,15 +295,15 @@
           "ref": "artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/design.md#item:CO-9"
         }
       ],
-      "id": "F-6",
+      "id": "F-5",
       "severity": "minor",
       "suggested_fix": "Mark CO-9 as a companion context change outside the product modules.",
-      "text": "CO-9 is assigned to module:sample-system:. although its file is the companion's context/glossary.md, not a product module."
+      "text": "Still open: CO-9 is assigned to module:sample-system:. although its file is the companion's context/glossary.md, not a product module."
     }
   ],
-  "package_sha256": "b29ccaba4a1124600d0a781490d50589da8bfdc42ebd7e60a50b03a05f4195e0",
+  "package_sha256": "37db3f9ae5b15eea01cb4566fb2d7c370072972d96519043ab64710a7ccddd34",
   "questions": [],
-  "recorded_at": "2026-11-27T08:46:38Z",
+  "recorded_at": "2026-11-27T08:49:28Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -321,32 +314,32 @@
   "rubric_items": [
     {
       "id": "DS-R1",
-      "reason": "Built on the existing AppointmentRepo, AppointmentService guard, injected clock, DAY_MS, migration convention and server shutdown; the in-process timer was asked (A-09) and adds no infrastructure.",
+      "reason": "Built on existing AppointmentRepo, AppointmentService guard, injected clock, DAY_MS, migration convention and server shutdown; the in-process timer was asked (A-09) and adds no infrastructure.",
       "score": 5
     },
     {
       "id": "DS-R2",
-      "reason": "Story map covers S-1 to S-5; the cutoff starts_at <= now - DAY_MS satisfies the S-1 AC1-AC3 boundaries, S-2 by the SCHEDULED-only UPDATE, S-3/S-4 by the widened guard and move() resetting status.",
+      "reason": "Story map covers S-1 to S-5; cutoff starts_at <= now - DAY_MS meets S-1 AC1-AC3, S-2 via SCHEDULED-only UPDATE, S-3/S-4 via widened guard and move() resetting status, S-5 via CO-9.",
       "score": 5
     },
     {
       "id": "DS-R3",
-      "reason": "Endpoints and fields have type, nullability, format and example, but history[].event format is only 'adds STALE' and CO-1 does not name the APPOINTMENT_STATUSES list it changes.",
+      "reason": "history[].event now lists every value (F-3 fixed), but CO-1 still does not name the APPOINTMENT_STATUSES constant it changes.",
       "score": 4
     },
     {
       "id": "DS-R4",
-      "reason": "Choices are cited or decided by A-01..A-10; C9 relies on A-10 but also cites the sibling symbol format.ts:dateTime as module-map evidence for STATUS_LABEL.",
+      "reason": "Choices cited or decided by A-01..A-10; C9 still cites the sibling symbol format.ts:dateTime as module-map evidence for STATUS_LABEL.",
       "score": 4
     },
     {
       "id": "DS-R5",
-      "reason": "Trade-offs cover in-process timer with multiple instances, hourly lag, bulk UPDATE vs loop and concurrency, overlap re-entry on reschedule, and constant vs env interval.",
+      "reason": "Trade-offs cover multi-instance timer, hourly lag, bulk UPDATE and concurrency, overlap re-entry on reschedule, and constant vs env interval.",
       "score": 5
     },
     {
       "id": "DS-R6",
-      "reason": "Clear and consistent; CO-9 is placed on a product module although its file lives in the companion repo.",
+      "reason": "Clear and consistent; CO-9 is still placed on a product module although its file lives in the companion repo.",
       "score": 4
     }
   ],

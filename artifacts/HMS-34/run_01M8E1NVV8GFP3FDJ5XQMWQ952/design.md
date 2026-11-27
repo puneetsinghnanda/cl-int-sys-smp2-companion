@@ -2,7 +2,7 @@
 schema: design.v1
 run_id: run_01M8E1NVV8GFP3FDJ5XQMWQ952
 step: design
-attempt: 1
+attempt: 2
 skill: design@1.10.0
 inputs:
   - path: artifacts/HMS-34/run_01M8E1NVV8GFP3FDJ5XQMWQ952/split.md
@@ -19,6 +19,9 @@ inputs:
     sha256: ba024ab1b4b4151d26ce1afa77bd2dab1cec645ea737ce37f98e0e8674f795e9
 pack_sha:
   sample-system: 7681f87749883d71abb4011d118366ca1242e1cc
+resolves:
+  - id: F-3
+    how: "EP-2 history[].event now lists every value: BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE."
 claims:
   - id: C1
     text: "The API's appointment status type `AppointmentStatus` is declared in api/src/types.ts."
@@ -80,6 +83,9 @@ claims:
   - id: C20
     text: "The Stale change is recorded with actor `system`."
     cites: ["runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-04"]
+  - id: C21
+    text: "Today appointment_event.event is one of BOOKED, `RESCHEDULED`, CANCELLED, COMPLETED or NO_SHOW."
+    cites: ["sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"]
 trace: [REQ-1, REQ-2, REQ-3, REQ-4, REQ-5, REQ-6, REQ-7, REQ-8, REQ-9, REQ-10, REQ-11, REQ-12, REQ-13]
 known: [S-1, S-2, S-3, S-4, S-5, CO-1, CO-2, CO-3, CO-4, CO-5, CO-6, CO-7, CO-8, CO-9, EP-1, EP-2, EP-3, EP-4, EP-5, EP-6]
 assumed: []
@@ -146,10 +152,10 @@ endpoints:
     change: changed
     fields:
       - {name: status, type: string, nullable: false, format: "one of SCHEDULED, COMPLETED, CANCELLED, NO_SHOW, STALE", example: "STALE", status: known}
-      - {name: "history[].event", type: string, nullable: false, format: "adds STALE", example: "STALE", status: known}
+      - {name: "history[].event", type: string, nullable: false, format: "one of BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE", example: "STALE", status: known}
       - {name: "history[].actor", type: string, nullable: false, format: "system for the STALE event", example: "system", status: known}
       - {name: "history[].at", type: string, nullable: false, format: "ISO 8601 UTC instant (unchanged)", example: "2026-03-10T10:01:00.000Z", status: known}
-    cites: ["context/generated/api-inventory.json#http:GET:/api/appointments/:id", "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-07", "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-04"]
+    cites: ["context/generated/api-inventory.json#http:GET:/api/appointments/:id", "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35", "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-07", "runs/run_01M8E1NVV8GFP3FDJ5XQMWQ952/ide-answers.md#a-04"]
   - id: EP-3
     method: POST
     path: /api/appointments/:id/complete
@@ -229,14 +235,17 @@ Trade-offs:
 - CO-7 (changed) STATUS_LABEL in web/src/lib/format.ts: label `Stale`, shown by `StatusBadge`.
 - CO-8 (changed) `AppointmentDetailPage`: the action buttons show for SCHEDULED or STALE; the history list labels the `STALE` event.
 - CO-9 (new) a `Stale` entry in the companion's context/glossary.md, added by the tech lead (the context owner), not by the product change.
-- EP-1 (changed) GET /api/appointments: query `status` accepts `STALE`; `items[].status` may be `STALE`.
-- EP-2 (changed) GET /api/appointments/:id: `status` may be `STALE`; `history[].event` may be `STALE` with `history[].actor` = `system`; `history[].at` stays an ISO 8601 UTC instant.
+- EP-1 (changed) GET /api/appointments: query `status` accepts one of SCHEDULED, COMPLETED, CANCELLED, NO_SHOW, STALE; `items[].status` is one of the same values.
+- EP-2 (changed) GET /api/appointments/:id: `status` is one of SCHEDULED, COMPLETED, CANCELLED, NO_SHOW, STALE; `history[].event` is one of BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE; `history[].actor` is `system` for the STALE event; `history[].at` stays an ISO 8601 UTC instant.
 - EP-3 (changed) POST /api/appointments/:id/complete: also accepted from STALE; returns `COMPLETED`.
 - EP-4 (changed) POST /api/appointments/:id/no-show: also accepted from STALE; returns `NO_SHOW`.
 - EP-5 (changed) POST /api/appointments/:id/cancel: also accepted from STALE; returns `CANCELLED` with the reason.
 - EP-6 (changed) POST /api/appointments/:id/reschedule: also accepted from STALE; returns `SCHEDULED` at the new time.
 
 Story map: S-1 → CO-1, CO-2, CO-3, CO-4, CO-5, EP-2. S-2 → CO-3, CO-4 (the UPDATE only touches SCHEDULED rows past the cutoff). S-3 → CO-4, CO-7, CO-8, EP-3, EP-4, EP-5. S-4 → CO-3, CO-4, CO-8, EP-6. S-5 → CO-9.
+
+Resolved from review:
+- F-3: EP-2 history[].event now lists every value: BOOKED, RESCHEDULED, CANCELLED, COMPLETED, NO_SHOW, STALE.
 
 ## Known
 - S-1 to S-5: each story is served by the components in the story map.
