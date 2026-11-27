@@ -1,0 +1,71 @@
+{
+  "artifact_path": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/split.md",
+  "artifact_sha256": "de964b65dc63706622cc2da9b738e4978b15ad686429c50dcbb5d068f9d8336e",
+  "attempt": 1,
+  "band": "High",
+  "caps": [],
+  "checks_sha256": "f3fc8059cb3b5d57c38f132d854c9353f04abba4a4b0cc9fccd1290e1c550af9",
+  "claims": {
+    "total": 6,
+    "verified": 6
+  },
+  "decided_at": "2026-11-27T10:22:06Z",
+  "decided_by": "tsl@0.1.7",
+  "findings_dropped": [],
+  "findings_kept": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    },
+    {
+      "id": "F-3",
+      "severity": "minor"
+    },
+    {
+      "id": "F-4",
+      "severity": "minor"
+    }
+  ],
+  "gate_failures": [],
+  "inputs": [
+    {
+      "path": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/req.md",
+      "sha256": "f5e5e578aa75507ceb63ff21361a3ad8250648de451470e0318990ce245cbd09",
+      "verification_sha256": "b54d585257f2f9386f2f57dbc5b805950895a07cbe13fede01b4a1cc76db9925"
+    }
+  ],
+  "key_id": "key_01M4Z7PKRR1JEJ36QYKQVMVDPR",
+  "outcome": "PASS-WITH-FINDINGS",
+  "pack": {
+    "manifest_sha256": "ee4ca4306fab86d572b5327f8dce31f162c4e7d1c62650e72930ea3597e28840",
+    "signed_at": "2026-11-12T08:22:30Z",
+    "source_sha": {
+      "sample-system": "7681f87749883d71abb4011d118366ca1242e1cc"
+    }
+  },
+  "prev_attempt_sha256": null,
+  "product_changes": null,
+  "review_sha256": "895cefeab4401951b0c3d2c8b3e071099d36a7989dde77b376ded1f9055791b0",
+  "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
+  "schema": "verification.v1",
+  "signals": {
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 4.45,
+    "S4": 0,
+    "S5": "fresh",
+    "S6": {
+      "files": 0,
+      "lines": 0,
+      "sensitive": false
+    }
+  },
+  "signature": "1ydcrWvtcOy8AvMafIpC4ifZiRQsKQi7lQcoSZRRU5wfbv_O8vJsJUtKQiCGd9MbnqKmeKV6p5PDcjC8oBNpBg",
+  "skill": "story-split@1.5.0",
+  "step": "split",
+  "thresholds_sha256": "72bf8f26aa09d089ce8248c2536093c82c82c26d20474148652ad1453902b5f7"
+}
