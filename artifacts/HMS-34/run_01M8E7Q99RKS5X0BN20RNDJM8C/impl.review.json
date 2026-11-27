@@ -1,6 +1,6 @@
 {
-  "artifact_sha256": "f294e0cb09f4a02ca36c56626eb7cb51b443dd06e0abea0dbaf998b5525b4c9f",
-  "attempt": 1,
+  "artifact_sha256": "9c7839882c5643e20ac9cee5bc8a726a3b83b90d618288ee399d2e821e07a428",
+  "attempt": 2,
   "claims_checked": [
     {
       "cites": [
@@ -15,8 +15,8 @@
     {
       "cites": [
         {
-          "quote": "Migration adding STALE to the status and event CHECKs",
-          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-2"
+          "quote": "answer: A. Yes, add the migration as designed",
+          "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/open-questions.md#q-01"
         }
       ],
       "claim_id": "C2",
@@ -35,11 +35,31 @@
     {
       "cites": [
         {
-          "quote": "New Stale glossary entry in companion context/glossary.md",
-          "ref": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/design.md#item:CO-11"
+          "quote": "event IN ('BOOKED', 'RESCHEDULED', 'CANCELLED', 'COMPLETED', 'NO_SHOW')",
+          "ref": "sample-system:db/migrations/20261016T090300__create_appointments.sql#L35"
         }
       ],
       "claim_id": "C4",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "(`YYYYMMDDTHHMMSS__what.sql`)",
+          "ref": "context/conventions.md#database-changes"
+        }
+      ],
+      "claim_id": "C5",
+      "verdict": "supported"
+    },
+    {
+      "cites": [
+        {
+          "quote": "answer: A. Tech lead edits it when the PR is merged",
+          "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/open-questions.md#q-02"
+        }
+      ],
+      "claim_id": "C6",
       "verdict": "supported"
     },
     {
@@ -49,7 +69,7 @@
           "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-08"
         }
       ],
-      "claim_id": "C5",
+      "claim_id": "C7",
       "verdict": "supported"
     },
     {
@@ -59,7 +79,7 @@
           "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-09"
         }
       ],
-      "claim_id": "C6",
+      "claim_id": "C8",
       "verdict": "supported"
     },
     {
@@ -69,7 +89,7 @@
           "ref": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md#a-03"
         }
       ],
-      "claim_id": "C7",
+      "claim_id": "C9",
       "verdict": "supported"
     },
     {
@@ -79,7 +99,7 @@
           "ref": "context/conventions.md#logging-and-data"
         }
       ],
-      "claim_id": "C8",
+      "claim_id": "C10",
       "verdict": "supported"
     }
   ],
@@ -98,8 +118,8 @@
       ],
       "id": "F-1",
       "severity": "minor",
-      "suggested_fix": "Narrow the parameter to 'COMPLETED' | 'CANCELLED' | 'NO_SHOW', or to Exclude<AppointmentStatus, 'SCHEDULED' | 'STALE'>.",
-      "text": "AppointmentRepo.close() still types its status as Exclude<AppointmentStatus, 'SCHEDULED'>. Since STALE joined the union, the compiler now lets close() set STALE, which only markStale() should do."
+      "suggested_fix": "Narrow the parameter to Exclude<AppointmentStatus, 'SCHEDULED' | 'STALE'>.",
+      "text": "Still open from attempt 1: AppointmentRepo.close() types its status as Exclude<AppointmentStatus, 'SCHEDULED'>. With STALE in the union, close() may now set STALE, which only markStale() should do."
     },
     {
       "category": "traceability",
@@ -115,13 +135,13 @@
       ],
       "id": "F-2",
       "severity": "minor",
-      "suggested_fix": "Reword it as: no tests added in this step; the unit-test step covers markStale() at the AC instants, as the design notes.",
-      "text": "The summary says the design asks for no regression tests. The design says no such thing: it states that tests call markStale() at the AC's instant. The reason given for adding no tests is therefore not traceable to the design."
+      "suggested_fix": "Reword: no tests added in this step; the unit-test step covers markStale() at the AC instants, as the design notes.",
+      "text": "Still open from attempt 1: the artifact says the design asks for no regression tests. The design says no such thing; it says tests call markStale() at the AC's instant."
     }
   ],
-  "package_sha256": "8d5dfb726ade5bd707e296d89d6cf0c2565715d922f7813e2d17b10876ca187f",
+  "package_sha256": "3bbdeb5702fe099fcee1c898521c1b2659b42195640213b6ca2b955f940bd76b",
   "questions": [],
-  "recorded_at": "2026-11-27T10:43:03Z",
+  "recorded_at": "2026-11-27T10:50:28Z",
   "recorded_by": "tsl@0.1.7",
   "reviewer": {
     "agent": "truminds:reviewer",
@@ -132,31 +152,31 @@
   "rubric_items": [
     {
       "id": "IM-R1",
-      "reason": "CO-1 and CO-3 to CO-8 match the design in the product code. CO-2 is held on the sensitive path with a blocking question, and CO-11 is outside the product repo. Both gaps are declared, not silent.",
-      "score": 4
+      "reason": "CO-1 to CO-8 are in the code as designed, including the CO-2 migration now approved in Q-01. CO-9/CO-10 pick up Stale via STATUS_LABEL. CO-11 is handed to the tech lead per Q-02.",
+      "score": 5
     },
     {
       "id": "IM-R2",
-      "reason": "Layering, 409 conflicts and message-only logging follow the conventions. One small typing gap: the repo close() status type now admits STALE.",
+      "reason": "Migration file name follows YYYYMMDDTHHMMSS__what.sql, layering and message-only logging follow conventions. The repo close() status type still admits STALE (F-1 from attempt 1, not fixed).",
       "score": 4
     },
     {
       "id": "IM-R3",
-      "reason": "Seven files, 48 lines added and 8 deleted, all named by the design, and within the 400-line and 15-file limits. No sensitive path was edited without asking.",
+      "reason": "8 files, 56 added and 8 deleted lines, all named by the design and inside the 400-line/15-file limits. The sensitive migration path was asked (Q-01) and approved.",
       "score": 5
     },
     {
       "id": "IM-R4",
-      "reason": "Sweep failures are caught and logged with the message only, the timer is cleared on shutdown, and overlap errors on reschedule still map to 409. The repo close() type no longer excludes STALE as a target.",
+      "reason": "Sweep errors caught and logged with the message only, timer cleared on shutdown, guard still raises 409/404. The verifier's migration test passed, confirming ASM-1 constraint names. close() typing gap remains.",
       "score": 4
     },
     {
       "id": "IM-R5",
-      "reason": "The Changes list matches the diff file for file. But the note that the design asks for no regression tests is not in the design, which says tests call markStale().",
+      "reason": "Changes list matches the eight diff files. The note that the design asks for no regression tests is still not in the design (F-2 from attempt 1, not fixed).",
       "score": 4
     }
   ],
-  "rubric_score": 4.2,
+  "rubric_score": 4.5,
   "run_id": "run_01M8E7Q99RKS5X0BN20RNDJM8C",
   "schema": "review.v1",
   "status": "ok",

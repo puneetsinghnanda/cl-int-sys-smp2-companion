@@ -1,9 +1,9 @@
 {
   "artifact_path": "artifacts/HMS-34/run_01M8E7Q99RKS5X0BN20RNDJM8C/impl.md",
-  "artifact_sha256": "f294e0cb09f4a02ca36c56626eb7cb51b443dd06e0abea0dbaf998b5525b4c9f",
-  "attempt": 1,
+  "artifact_sha256": "9c7839882c5643e20ac9cee5bc8a726a3b83b90d618288ee399d2e821e07a428",
+  "attempt": 2,
   "budget_tokens": 45000,
-  "checks_sha256": "b3adff396f6f9685d8d7de88858c13b940374e57eb245fc4e9240fee492e4512",
+  "checks_sha256": "9dcb04ddc9386b09d94c09fd78c6688a1be4b7bcda18a6ac12ff33c47cf47720",
   "context_sections": [
     {
       "id": "conventions",
@@ -39,10 +39,19 @@
       "path": "context/generated/module-map.json"
     }
   ],
-  "package_sha256": "8d5dfb726ade5bd707e296d89d6cf0c2565715d922f7813e2d17b10876ca187f",
-  "prepared_at": "2026-11-27T10:41:44Z",
+  "package_sha256": "3bbdeb5702fe099fcee1c898521c1b2659b42195640213b6ca2b955f940bd76b",
+  "prepared_at": "2026-11-27T10:48:48Z",
   "prepared_by": "tsl@0.1.7",
-  "previous_findings": [],
+  "previous_findings": [
+    {
+      "id": "F-1",
+      "severity": "minor"
+    },
+    {
+      "id": "F-2",
+      "severity": "minor"
+    }
+  ],
   "review_input_path": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/review-input/impl.review.json",
   "rubric": {
     "items": [
@@ -75,6 +84,10 @@
     {
       "name": "ide-answers",
       "path": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/ide-answers.md"
+    },
+    {
+      "name": "open-questions",
+      "path": "runs/run_01M8E7Q99RKS5X0BN20RNDJM8C/open-questions.md"
     }
   ],
   "schema": "review-package.v1",
